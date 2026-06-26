@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vedicastro/chart_data.schema.json",
+  "title": "VedicAstro canonical chart_data",
+  "description": "The single canonical horoscope contract produced by CVCE /chart and stored in horoscopes.chart_data (JSONB). The portal's Muhurta sub-module consumes this shape via props. Keep in lockstep with app/chart.py + app/server.py:/chart.",
+  "type": "object",
+  "required": ["schemaVersion", "ayanamsa", "jd", "ascendant", "lagna", "planets", "natalSign", "vargas", "ashtakavarga"],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "1.0" },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "birth_datetime": { "type": "string" },
+        "birth_lat": { "type": "number" },
+        "birth_lon": { "type": "number" },
+        "birth_tz": { "type": "number" },
+        "engine": { "type": "string" }
+      }
+    },
+    "ayanamsa": { "type": "string" },
+    "jd": { "type": "number" },
+    "ascendant": { "$ref": "#/$defs/body" },
+    "lagna": {
+      "type": "object",
+      "required": ["rashi", "signIndex", "nakshatra", "pada"],
+      "properties": {
+        "rashi": { "type": "string" },
+        "signIndex": { "$ref": "#/$defs/signIndex" },
+        "nakshatra": { "type": "string" },
+        "pada": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "degInSign": { "type": "number" },
+        "degLabel": { "type": "string" }
+      }
+    },
+    "planets": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": { "$ref": "#/$defs/body" }
+    },
+    "natalSign": {
+      "type": "object",
+      "description": "planet name -> sign index 0..11",
+      "additionalProperties": { "$ref": "#/$defs/signIndex" }
+    },
+    "vargas": {
+      "type": "object",
+      "description": "Divisional charts keyed D1, D2, ... Each maps planet|'Lagna' -> sign index.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "signs"],
+        "properties": {
+          "name": { "type": "string" },
+          "signs": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/$defs/signIndex" }
+          }
+        }
+      }
+    },
+    "ashtakavarga": {
+      "type": "object",
+      "required": ["sav", "bav", "lagnaSignIdx"],
+      "properties": {
+        "sav": {
+          "type": "array",
+          "description": "Sarvashtakavarga bindus per sign 0..11 (totals 337).",
+          "items": { "type": "integer", "minimum": 0, "maximum": 56 },
+          "minItems": 12, "maxItems": 12
+        },
+        "bav": {
+          "type": "object",
+          "description": "Bhinnashtakavarga per contributor (Sun..Saturn, Lagna): 12 bindus each.",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 0, "maximum": 8 },
+            "minItems": 12, "maxItems": 12
+          }
+        },
+        "lagnaSignIdx": { "$ref": "#/$defs/signIndex" }
+      }
+    },
+    "dashas": {
+      "type": ["object", "null"],
+      "description": "Vimshottari maha/antar. current = raw PyJHora tuple; periods = flattened rows.",
+      "properties": {
+        "current": { "type": ["array", "null"] },
+        "periods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "maha": { "type": "string" },
+              "antara": { "type": ["string", "null"] },
+              "start": { "type": "string" },
+              "durationYears": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "shadbala": { "type": ["object", "null"] },
+    "yogas": { "type": ["object", "null"] },
+    "panchanga": { "type": ["object", "null"] },
+    "errors": {
+      "type": "object",
+      "description": "Present only if a guarded sub-engine failed; maps block name -> error string."
+    }
+  },
+  "$defs": {
+    "signIndex": { "type": "integer", "minimum": 0, "maximum": 11 },
+    "body": {
+      "type": "object",
+      "required": ["planet", "longitude", "signIndex", "rashi", "nakshatra", "pada"],
+      "properties": {
+        "planet": { "type": "string" },
+        "longitude": { "type": "number", "minimum": 0, "maximum": 360 },
+        "signIndex": { "$ref": "#/$defs/signIndex" },
+        "rashi": { "type": "string" },
+        "degInSign": { "type": "number" },
+        "degLabel": { "type": "string" },
+        "nakIndex": { "type": "integer", "minimum": 0, "maximum": 26 },
+        "nakshatra": { "type": "string" },
+        "pada": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "retro": { "type": "boolean" },
+        "dignity": { "type": ["string", "null"], "enum": ["exalted", "debilitated", "own", "neutral", null] },
+        "combust": { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+pyswisseph>=2.10.03
+PyJHora>=4.8.7
+jyotishganit>=0.1.0
+fastapi>=0.115.0
+uvicorn>=0.30.0
+geocoder
+geopy>=2.4.0
+pytz
+timezonefinder>=8.0
+numpy>=2.0
+pandas>=2.0

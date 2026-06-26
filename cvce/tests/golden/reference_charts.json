@@ -1,0 +1,31 @@
+{
+  "_note": "Authoritative reference charts for CVCE regression. Mohan's values come from his professionally cast horoscope PDF (Lahiri ayanamsa). Node (Rahu/Ketu) longitudes are asserted by sign only because PyJHora uses the mean node while many published charts use the true node (~1-2 deg difference, expected).",
+  "charts": [
+    {
+      "id": "mohan",
+      "birth": {
+        "birth_datetime": "1975-04-22T19:15:00",
+        "birth_lat": 12.2958,
+        "birth_lon": 76.6394,
+        "birth_tz": 5.5,
+        "ayanamsa": "LAHIRI",
+        "name": "Mohan"
+      },
+      "expect": {
+        "lagna": { "rashi": "Libra", "nakshatra": "Swati", "pada": 4 },
+        "planets": {
+          "Sun":     { "rashi": "Aries",     "nakshatra": "Ashwini",            "pada": 3, "dignity": "exalted" },
+          "Moon":    { "rashi": "Leo",       "nakshatra": "Purva Phalguni",     "pada": 4 },
+          "Mars":    { "rashi": "Aquarius",  "nakshatra": "Shatabhisha",        "pada": 3 },
+          "Mercury": { "rashi": "Aries",     "nakshatra": "Ashwini",            "pada": 4 },
+          "Jupiter": { "rashi": "Pisces",    "nakshatra": "Uttara Bhadrapada",  "pada": 4, "dignity": "own" },
+          "Venus":   { "rashi": "Taurus",    "nakshatra": "Rohini",             "pada": 2, "dignity": "own" },
+          "Saturn":  { "rashi": "Gemini",    "nakshatra": "Ardra",              "pada": 4 }
+        },
+        "nodes": { "Rahu": "Scorpio", "Ketu": "Taurus" },
+        "savTotal": 337,
+        "currentMahadasha": "Jupiter"
+      }
+    }
+  ]
+}

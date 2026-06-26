@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VedicAstro · Handoff Engine</title>
+<style>
+:root {
+  --bg: #0a0e1a; --card: #111827; --h: rgba(255,255,255,0.08); --h2: rgba(255,255,255,0.05);
+  --accent: #8b7338; --success: #4ade80; --warn: #fbbf24; --danger: #f87171; --info: #60a5fa;
+  --text: #e8edf6; --muted: #94a3b8; --indigo: #6366f1; --pink: #ec4899; --teal: #5EE6D0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.glass{background:var(--card);border:1px solid var(--h)}
+nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--h)}
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
+.btn{padding:8px 16px;border-radius:12px;border:1px solid var(--h);background:0 0;color:var(--text);cursor:pointer;font-size:13px;font-weight:600;transition:.2s}
+.btn:hover{background:rgba(255,255,255,0.05)}
+.btn-active{background:rgba(99,102,241,0.2);color:var(--indigo);border-color:rgba(99,102,241,0.3)}
+.badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.badge-done{background:rgba(74,222,128,0.15);color:var(--success)}
+.badge-progress{background:rgba(96,165,250,0.15);color:var(--info)}
+.badge-todo{background:rgba(148,163,184,0.15);color:var(--muted)}
+.badge-critical{background:rgba(248,113,113,0.15);color:var(--danger)}
+.progress-bar{height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;transition:width .5s}
+.kpi{background:var(--card);border:1px solid var(--h);border-radius:16px;padding:20px}
+.kpi-val{font-size:32px;font-weight:700;margin-top:4px}
+.metric-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.02);margin-bottom:4px}
+.timeline-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-right:12px}
+.timeline-line{position:absolute;left:4px;top:12px;bottom:-12px;width:2px;background:var(--h)}
+.card-module{background:var(--card);border:1px solid var(--h);border-radius:14px;padding:16px}
+.dep-arrow{color:var(--muted);font-size:11px}
+.tree-node{padding-left:20px;border-left:2px solid var(--h);margin-left:10px;margin-bottom:8px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+@media(max-width:900px){.grid-6{grid-template-columns:repeat(3,1fr)}.grid-3,.grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:56px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center;font-size:20px;font-weight:700">ॐ</div>
+      <div>
+        <span style="font-weight:700;font-size:17px">VedicAstro Handoff Engine</span>
+        <span class="badge" style="margin-left:8px;background:rgba(74,222,128,0.15);color:var(--success);font-size:9px">v3.0</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span style="font-size:11px;color:var(--muted)" id="last-updated">Live</span>
+      <button onclick="location.reload()" class="btn">↻ Refresh</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:20px">
+  <!-- KPI Bar -->
+  <div class="grid-5" style="margin-bottom:20px">
+    <div class="kpi"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Features Done</div><div class="kpi-val" id="kpi-done" style="color:var(--success)">0</div></div>
+    <div class="kpi"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">In Progress</div><div class="kpi-val" id="kpi-active" style="color:var(--info)">0</div></div>
+    <div class="kpi"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Overall Progress</div><div class="kpi-val" id="kpi-progress" style="color:var(--indigo)">0%</div></div>
+    <div class="kpi"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Modules</div><div class="kpi-val" id="kpi-modules" style="color:var(--teal)">0</div></div>
+    <div class="kpi"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Phase</div><div class="kpi-val" style="color:var(--warn)">3/4</div></div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap" id="tab-bar">
+    <button class="btn btn-active" data-tab="0">📊 Dashboard</button>
+    <button class="btn" data-tab="1">🏗 Blueprint</button>
+    <button class="btn" data-tab="2">🧩 Modules</button>
+    <button class="btn" data-tab="3">🤖 Agents</button>
+    <button class="btn" data-tab="4">📜 Progress Log</button>
+    <button class="btn" data-tab="5">🗺 Roadmap</button>
+  </div>
+
+  <!-- TAB 0: Dashboard -->
+  <div id="tab-0">
+    <div class="glass" style="padding:24px;border-radius:20px;margin-bottom:16px">
+      <h2 style="font-weight:600;margin-bottom:16px">Overall Progress</h2>
+      <div class="progress-bar" style="height:14px;margin-bottom:8px"><div class="progress-fill" id="main-bar" style="background:linear-gradient(90deg,var(--indigo),var(--teal))"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
+        <span>Phase 1: Backbone</span><span>Phase 2: UI/Quality</span><span>Phase 3: Engines</span><span>Phase 4: Advanced</span>
+      </div>
+    </div>
+    <div class="grid-3" id="feature-dashboard"></div>
+  </div>
+
+  <!-- TAB 1: Blueprint -->
+  <div id="tab-1" style="display:none">
+    <div class="glass" style="padding:20px;border-radius:20px;margin-bottom:16px">
+      <h2 style="font-weight:600;margin-bottom:16px">System Architecture Blueprint</h2>
+      <pre style="font-family:'Courier New',monospace;font-size:12px;line-height:1.8;color:var(--muted);overflow-x:auto">
+╔══════════════════════════════════════════════════════════════╗
+║                   VedicAstro System v3.0                      ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  ┌─────────────┐     ┌───────────────┐    ┌──────────────┐ ║
+║  │   PORTAL     │────▶│  CVCE ENGINE  │◀───│  PYJHORA     │ ║
+║  │ (Vercel)     │     │  (Fly.io)     │    │ (Swiss Eph)  │ ║
+║  │ Next.js 16   │     │  FastAPI      │    │              │ ║
+║  └──────┬───────┘     └───────┬───────┘    └──────────────┘ ║
+║         │                     │                              ║
+║         ▼                     ▼                              ║
+║  ┌─────────────┐     ┌───────────────┐    ┌──────────────┐ ║
+║  │  NEON DB    │     │ RULES ENGINE  │    │  GRAPH RAG   │ ║
+║  │ (Postgres)  │     │  rules.json   │    │ graph.json   │ ║
+║  └─────────────┘     └───────────────┘    └──────────────┘ ║
+║                                                              ║
+║  ┌─────────────────────────────────────────────────────┐    ║
+║  │            MUHURTA STANDALONE (FROZEN)                │    ║
+║  │         muhurtha.uvwx.me  |  In-browser JS            │    ║
+║  └─────────────────────────────────────────────────────┘    ║
+╚══════════════════════════════════════════════════════════════╝</pre>
+    </div>
+    <div class="grid-2" id="blueprint-deps"></div>
+  </div>
+
+  <!-- TAB 2: Modules -->
+  <div id="tab-2" style="display:none">
+    <div id="modules-list"></div>
+  </div>
+
+  <!-- TAB 3: Agents -->
+  <div id="tab-3" style="display:none">
+    <div class="grid-3" id="agent-grid"></div>
+  </div>
+
+  <!-- TAB 4: Progress Log -->
+  <div id="tab-4" style="display:none">
+    <div class="glass" style="padding:20px;border-radius:20px" id="progress-log"></div>
+  </div>
+
+  <!-- TAB 5: Roadmap -->
+  <div id="tab-5" style="display:none">
+    <div class="glass" style="padding:20px;border-radius:20px" id="roadmap"></div>
+  </div>
+</div>
+
+<script>
+// Complete module registry
+const MODULES = [
+  {id:"M01",name:"CVCE /chart",category:"Backend",phase:1,status:"Done",desc:"Canonical chart data with D1-D60, ashtakavarga, lagna, planets",inputs:["birth_datetime, lat, lon, tz"],outputs:["ChartData"],depends:[],usedBy:["M04","M14","M18"]},
+  {id:"M02",name:"CVCE /predict",category:"Backend",phase:1,status:"Done",desc:"Vedic prediction engine: panchanga, gochar, dasha, yogas, ashtakavarga synthesis",inputs:["date, chart data, janma rashi/nak"],outputs:["PredictionResult"],depends:["M01"],usedBy:["M07","M19"]},
+  {id:"M03",name:"GraphRAG Engine",category:"Backend",phase:1,status:"Done",desc:"Knowledge graph (553 nodes, 1439 links) semantic lookup for classical citations",inputs:["graph.json"],outputs:["ClassicalCitations"],depends:[],usedBy:["M07"]},
+  {id:"M04",name:"Neon DB + Encryption",category:"Infra",phase:1,status:"Done",desc:"Postgres with users+horoscopes tables, AES-256-GCM PII encryption, RLS",inputs:["DATABASE_URL, ENCRYPTION_KEY"],outputs:["PersistedData"],depends:[],usedBy:["M05","M06"]},
+  {id:"M05",name:"Google Auth + RBAC",category:"Infra",phase:1,status:"Done",desc:"NextAuth v5 Google OAuth, proxy RBAC, role-based access (free/pro/premium/admin)",inputs:["AUTH_GOOGLE_ID,SECRET"],outputs:["Session"],depends:["M04"],usedBy:["M06","M15"]},
+  {id:"M06",name:"Save/Load Charts",category:"Portal",phase:1,status:"Done",desc:"Server action to encrypt+save chart to Neon; dashboard shows saved list; FK-safe upsert",inputs:["ChartData, Session"],outputs:["SavedChart"],depends:["M04","M05"],usedBy:["M14"]},
+  {id:"M07",name:"GraphInsights UI",category:"Portal",phase:2,status:"Done",desc:"Tabbed panel: transit citations, yoga definitions, text conflicts, god node insights from GraphRAG",inputs:["GraphEnhancements"],outputs:["UI"],depends:["M02","M03"],usedBy:["M14"]},
+  {id:"M08",name:"Chart.svg Endpoint",category:"Backend",phase:2,status:"Done",desc:"Server-side South Indian Kundali SVG generation for PDF/OG/email, pure Python no deps",inputs:["birth_data, size"],outputs:["image/svg+xml"],depends:["M01"],usedBy:["M21"]},
+  {id:"M09",name:"SDLC Compliance",category:"Quality",phase:2,status:"Done",desc:"110-gap SDLC audit fixed: CSP, HSTS, CSP headers; Zod validation; error sanitization; CI pipeline",inputs:["next.config, proxy.ts"],outputs:["Compliant"],depends:[],usedBy:[]},
+  {id:"M10",name:"WCAG 2.2 Accessibility",category:"Quality",phase:2,status:"Done",desc:"Keyboard nav for SVG charts; ARIA labels/roles; focus-visible; 44px touch targets; reduced motion; skip link; color contrast fix (gold #8b7338)",inputs:["Components"],outputs:["Accessible"],depends:[],usedBy:[]},
+  {id:"M11",name:"CI + Typecheck",category:"Quality",phase:2,status:"Done",desc:"GitHub Actions CI (lint→typecheck→build); tsc --noEmit; Dependabot; .nvmrc; .editorconfig",inputs:[".github/"],outputs:["CI Pipeline"],depends:[],usedBy:[]},
+  {id:"M12",name:"CVCE /dasha-deep",category:"Backend",phase:3,status:"Done",desc:"5-level Vimshottari recursive tree (Maha, Antar, Pratyantar, Sookshma, Prana) from PyJHora",inputs:["birth_data"],outputs:["DashaTree"],depends:["M01"],usedBy:["M18"]},
+  {id:"M13",name:"CVCE /special-points",category:"Backend",phase:3,status:"Done",desc:"Mandi, Gulika, Bhrigu Bindu (Rahu-Moon midpoint) computed via PyJHora + swisseph",inputs:["birth_data"],outputs:["SpecialPoints"],depends:["M01"],usedBy:["M20"]},
+  {id:"M14",name:"Portal /vedicastro Page",category:"Portal",phase:3,status:"Done",desc:"Main chart page with BirthForm, ChartViewer, SaveChartButton, GraphInsights, all explorers",inputs:["ChartData, Session"],outputs:["FullPage"],depends:["M01","M06","M07"],usedBy:[]},
+  {id:"M15",name:"CVCE /koota-match",category:"Backend",phase:3,status:"Done",desc:"36-point Guna Milan with 8 koota breakdown + Kuja Dosha detection + cancellation rules",inputs:["bride_data, groom_data"],outputs:["CompatibilityScore"],depends:["M01"],usedBy:["M22"]},
+  {id:"M16",name:"CVCE /pushkar-navamsha",category:"Backend",phase:3,status:"Done",desc:"Pushkar degree flagging in /chart endpoint: 2 auspicious degree ranges per sign from BPHS",inputs:["planet_positions"],outputs:["pushkarFlags"],depends:["M01"],usedBy:["M14"]},
+  {id:"M17",name:"NakshatraExplorer",category:"Portal",phase:3,status:"Done",desc:"27 nakshatra grid: lord, deity, nature, gana, yoni, mythology. Filterable by lord/nature/gana",inputs:["StaticData"],outputs:["UI"],depends:[],usedBy:["M14"]},
+  {id:"M18",name:"DashaDeepTree",category:"Portal",phase:3,status:"Done",desc:"Recursive expandable Vimshottari tree to 5 levels. Mahadasha timeline chips. Current dasha highlighted.",inputs:["DashaTree"],outputs:["UI"],depends:["M12"],usedBy:["M14"]},
+  {id:"M19",name:"RashiExplorer",category:"Portal",phase:3,status:"Done",desc:"12-sign grid: element, modality, lord, dignity table, body parts, qualities. Filterable.",inputs:["StaticData"],outputs:["UI"],depends:[],usedBy:["M14"]},
+  {id:"M20",name:"SpecialPointsPanel",category:"Portal",phase:3,status:"Done",desc:"Mandi, Gulika, Bhrigu Bindu cards with meanings. Fetches from /special-points.",inputs:["SpecialPoints"],outputs:["UI"],depends:["M13"],usedBy:["M14"]},
+  {id:"M21",name:"KootaMatcher",category:"Portal",phase:3,status:"Done",desc:"Two-chart compatibility: partner forms → 36-point score card + 8 koota breakdown bars + Kuja Dosha",inputs:["CompatibilityScore"],outputs:["UI"],depends:["M15"],usedBy:["M14"]},
+  {id:"M22",name:"AllDashasPanel",category:"Portal",phase:4,status:"Done",desc:"Multi-dasha overview: Vimshottari, Yogini, Ashtottari side-by-side cards with current periods",inputs:["DashaData"],outputs:["UI"],depends:["M12"],usedBy:["M14"]},
+  {id:"M23",name:"VarshaphalaPanel",category:"Portal",phase:4,status:"Done",desc:"Solar return + Muntha calculation. Natal Sun position, SR Sun/Moon, progressed Lagna card.",inputs:["birth_data"],outputs:["UI"],depends:["M01"],usedBy:["M14"]},
+  {id:"M24",name:"AnimatedTransitEngine",category:"Portal",phase:4,status:"Done",desc:"Playable 12-month transit timeline with planet×sign grid, playhead, speed control, drag",inputs:["Positions×12months"],outputs:["UI"],depends:["M01"],usedBy:["M14"]},
+  {id:"M25",name:"GraphicalEphemeris",category:"Portal",phase:4,status:"Done",desc:"SVG year-view ephemeris: planet polylines across months × rashi bands, hover tooltips",inputs:["Positions×12months"],outputs:["SVG"],depends:["M01"],usedBy:["M14"]},
+  {id:"M26",name:"ExportPDFButton",category:"Portal",phase:4,status:"Done",desc:"One-click browser print with formatted chart+table+header/footer layout",inputs:["ChartData"],outputs:["PDF"],depends:["M01","M08"],usedBy:["M14"]},
+  {id:"M27",name:"MultiChartWorksheet",category:"Portal",phase:4,status:"Done",desc:"2×2 tabbed multi-varga view: D1, D9, D10, D12 side-by-side with KundaliChart component",inputs:["ChartData"],outputs:["UI"],depends:["M01"],usedBy:["M14"]},
+  {id:"M28",name:"KP System",category:"Backend",phase:4,status:"Done",desc:"Placidus house cusps via swisseph + star lords + sub-lords + sub-sub-lords + signification",inputs:["birth_data"],outputs:["KPData"],depends:["M01"],usedBy:["M29"]},
+  {id:"M29",name:"KPExplorer",category:"Portal",phase:4,status:"Done",desc:"KP system explorer: cusp table + planet table + signification summary",inputs:["KPData"],outputs:["UI"],depends:["M28"],usedBy:["M14"]},
+  {id:"M30",name:"Unified Rules Engine",category:"Backend",phase:4,status:"In Progress",desc:"Single rules.json DB (panchanga, transit, yoga, dasha, dignity) + RuleEngine O(1) lookups + /rules endpoint + predict_synthesis()",inputs:["rules.json, positions"],outputs:["RuleResults"],depends:["M01"],usedBy:["M02"]},
+];
+
+const AGENTS = [
+  {id:1,name:"Full-Stack MVP Builder",role:"Portal wiring, page assembly, DB integration",modules:["M06","M14"]},
+  {id:6,name:"Backend Systems Architect",role:"CVCE endpoints, dasha engines, KP system",modules:["M01","M02","M08","M12","M13","M15","M16","M28","M30"]},
+  {id:7,name:"Senior Frontend Engineer",role:"Explorers, charts, animated engines, PDFs",modules:["M07","M17","M18","M19","M20","M21","M22","M23","M24","M25","M26","M27","M29"]},
+  {id:14,name:"Knowledge & Intelligence Engineer",role:"GraphRAG, knowledge graph, classical rules",modules:["M03"]},
+  {id:13,name:"DBA & Data Platform",role:"Neon schema, encryption, RLS, data lifecycle",modules:["M04"]},
+  {id:9,name:"Production Security Auditor",role:"CSP, HSTS, input validation, error sanitization",modules:["M09"]},
+  {id:2,name:"Codebase Auditor",role:"SDLC compliance, architecture review, tech debt",modules:["M09"]},
+  {id:11,name:"QA & Test Automation",role:"CI pipeline, typecheck, Dependabot, linting",modules:["M11"]},
+  {id:10,name:"Senior DevOps & SRE",role:"Vercel config, Fly.io deploy, monitoring",modules:[]},
+];
+
+const PROGRESS_LOG = [
+  {date:"2026-06-25",phase:1,summary:"Phase 1 Complete: GraphRAG, Neon DB, Google Auth, Save/Load, CVCE CORS, core /chart /predict endpoints"},
+  {date:"2026-06-25",phase:2,summary:"Phase 2 Complete: GraphInsights UI, Chart.svg, SDLC 110-gap audit + CSP/HSTS/Zod/CI, WCAG 2.2 accessibility"},
+  {date:"2026-06-25",phase:3,summary:"Phase 3 Complete: 3 CVCE endpoints (/dasha-deep, /special-points, /koota-match), Pushkar Navamsha, 5 explorers (Nakshatra, Rashi, DashaTree, SpecialPoints, KootaMatcher)"},
+  {date:"2026-06-26",phase:4,summary:"Phase 4 Complete: 8 new modules (AllDashas, Varshaphala, AnimatedTransit, Ephemeris, PDF Export, MultiChart, KP System, KPExplorer). Unified Rules Engine with rules.json + /rules endpoint"},
+  {date:"2026-06-26",phase:4,summary:"Handoff Engine built: unified project tracker with 6 tabs (Dashboard, Blueprint, Modules, Agents, Progress Log, Roadmap) — single source of truth"},
+];
+
+const ROADMAP = [
+  {phase:1,name:"Backbone",items:[],done:true},
+  {phase:2,name:"UI & Quality",items:[],done:true},
+  {phase:3,name:"Exploration Engines",items:[],done:true},
+  {phase:4,name:"Advanced Features",items:[],done:false},
+];
+
+// Initialize
+let FEATURES = [];
+const DATA_URL = './feature-progress.json';
+
+async function loadProgress() {
+  try {
+    const res = await fetch(DATA_URL + '?t=' + Date.now());
+    FEATURES = (await res.json()).features;
+    document.getElementById('last-updated').textContent = 'Updated: ' + new Date().toLocaleTimeString();
+  } catch(e) {
+    FEATURES = [];
+  }
+  renderAll();
+  setInterval(loadProgress, 30000);
+}
+
+function updateKPIs() {
+  const done = MODULES.filter(m => m.status === "Done").length;
+  const inProgress = MODULES.filter(m => m.status === "In Progress").length;
+  const pct = Math.round((done / MODULES.length) * 100);
+  document.getElementById('kpi-done').textContent = done + '/30';
+  document.getElementById('kpi-active').textContent = inProgress;
+  document.getElementById('kpi-progress').textContent = pct + '%';
+  document.getElementById('kpi-modules').textContent = MODULES.length;
+  document.getElementById('main-bar').style.width = pct + '%';
+}
+
+function renderFeatureDashboard() {
+  const c = document.getElementById('feature-dashboard');
+  c.innerHTML = FEATURES.map(f => {
+    const c = f.status === "Done" ? "var(--success)" : f.status === "In Progress" ? "var(--info)" : "var(--muted)";
+    return `<div class="glass" style="padding:14px;border-radius:14px">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+        <div style="font-weight:600;font-size:13px">${f.id}. ${f.name}</div>
+        <span class="badge badge-${f.status.toLowerCase().replace(' ','-')}">${f.status}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px">${f.agent}</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${f.progress}%;background:${c}"></div></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:4px;text-align:right">Phase ${f.phase}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderBlueprint() {
+  const c = document.getElementById('blueprint-deps');
+  const deps = {};
+  MODULES.forEach(m => {
+    (m.depends || []).forEach(d => {
+      if (!deps[d]) deps[d] = [];
+      deps[d].push(m.id);
+    });
+  });
+  c.innerHTML = Object.entries(deps).slice(0,12).map(([dep,users]) => `
+    <div class="glass" style="padding:14px;border-radius:14px">
+      <div style="font-weight:600;font-size:13px;margin-bottom:6px;color:var(--teal)">${dep}</div>
+      <div style="color:var(--muted);font-size:12px">Used by:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
+        ${users.map(u => `<span class="badge" style="background:rgba(99,102,241,0.15);color:var(--indigo);font-size:10px">${u}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderModules() {
+  const c = document.getElementById('modules-list');
+  const byPhase = {};
+  MODULES.forEach(m => { if (!byPhase[m.phase]) byPhase[m.phase] = []; byPhase[m.phase].push(m); });
+  c.innerHTML = Object.entries(byPhase).sort().map(([phase, mods]) => `
+    <div class="glass" style="padding:20px;border-radius:20px;margin-bottom:16px">
+      <h3 style="font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+        <span class="badge badge-${phase==1?'done':phase==2?'done':phase==3?'done':'progress'}">Phase ${phase}</span>
+        ${mods[0].category === 'Backend' ? '🔧' : mods[0].category === 'Portal' ? '🎨' : '⚡'} ${mods.length} modules
+      </h3>
+      ${mods.map(m => `
+        <div class="card-module" style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div>
+              <span style="font-weight:600;font-size:14px">${m.id}: ${m.name}</span>
+              <span class="badge" style="margin-left:6px;font-size:9px;background:rgba(99,102,241,0.12);color:var(--indigo)">${m.category}</span>
+            </div>
+            <span class="badge badge-${m.status.toLowerCase()}">${m.status}</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px">${m.desc}</div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--muted)">
+            <span>📥 Inputs: ${m.inputs}</span>
+            <span>📤 Outputs: ${m.outputs}</span>
+          </div>
+          ${m.depends.length ? `<div style="margin-top:6px;font-size:11px"><span style="color:var(--warn)">Depends on:</span> ${m.depends.join(', ')}</div>` : ''}
+          ${m.usedBy.length ? `<div style="font-size:11px"><span style="color:var(--teal)">Used by:</span> ${m.usedBy.join(', ')}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function renderAgents() {
+  const c = document.getElementById('agent-grid');
+  c.innerHTML = AGENTS.map(a => {
+    const mods = MODULES.filter(m => a.modules.includes(m.id));
+    const done = mods.filter(m => m.status === "Done").length;
+    const pct = mods.length ? Math.round((done / mods.length) * 100) : 100;
+    const color = pct >= 100 ? "var(--success)" : pct >= 50 ? "var(--indigo)" : "var(--warn)";
+    return `<div class="glass" style="padding:16px;border-radius:14px">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+        <div style="font-weight:600;font-size:14px">Agent #${a.id}: ${a.name}</div>
+        <span style="font-family:monospace;font-size:14px;color:${color}">${pct}%</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${a.role}</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div style="margin-top:8px;font-size:11px;color:var(--muted)">${done}/${mods.length} modules done</div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:6px">
+        ${mods.map(m => `<span class="badge badge-${m.status.toLowerCase().replace(' ','-')}" style="font-size:9px">${m.id}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderProgressLog() {
+  const c = document.getElementById('progress-log');
+  c.innerHTML = `${PROGRESS_LOG.map((e,i) => `
+    <div style="position:relative;padding-left:28px;margin-bottom:20px">
+      <div class="timeline-dot" style="position:absolute;left:0;top:4px;background:${i===PROGRESS_LOG.length-1?'var(--indigo)':'var(--success)'}"></div>
+      ${i < PROGRESS_LOG.length-1 ? '<div class="timeline-line" style="top:14px;bottom:-10px"></div>' : ''}
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${e.date} · <span class="badge" style="font-size:9px">Phase ${e.phase}</span></div>
+      <div style="font-size:13px;line-height:1.6">${e.summary}</div>
+    </div>
+  `).join('')}
+  <div style="margin-top:16px;padding:12px;border-radius:10px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2)">
+    <span style="color:var(--indigo);font-weight:600">Next:</span> Deploy Rules Engine to Fly.io → integrate into /predict → update frontend to consume /rules
+  </div>`;
+}
+
+function renderRoadmap() {
+  ROADMAP[0].items = MODULES.filter(m => m.phase === 1).map(m => `${m.status==='Done'?'✅':m.status==='In Progress'?'🔄':'⬜'} ${m.id}: ${m.name}`);
+  ROADMAP[1].items = MODULES.filter(m => m.phase === 2).map(m => `${m.status==='Done'?'✅':m.status==='In Progress'?'🔄':'⬜'} ${m.id}: ${m.name}`);
+  ROADMAP[2].items = MODULES.filter(m => m.phase === 3).map(m => `${m.status==='Done'?'✅':m.status==='In Progress'?'🔄':'⬜'} ${m.id}: ${m.name}`);
+  ROADMAP[3].items = MODULES.filter(m => m.phase === 4).map(m => `${m.status==='Done'?'✅':m.status==='In Progress'?'🔄':'⬜'} ${m.id}: ${m.name}`);
+
+  const c = document.getElementById('roadmap');
+  c.innerHTML = ROADMAP.map(p => `
+    <div class="glass" style="padding:20px;border-radius:16px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:14px;height:14px;border-radius:50%;background:${p.done?'var(--success)':'var(--indigo)'}"></div>
+        <span style="font-weight:600;font-size:15px">Phase ${p.phase}: ${p.name}</span>
+        <span class="badge badge-${p.done?'done':'progress'}">${p.done?'COMPLETE':'IN PROGRESS'}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:2;font-family:monospace">
+        ${p.items.join('<br>')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function switchTab(e) {
+  const idx = parseInt(e.target.dataset.tab);
+  document.querySelectorAll('#tab-bar .btn').forEach(b => b.classList.remove('btn-active'));
+  e.target.classList.add('btn-active');
+  for(let i = 0; i <= 5; i++) {
+    document.getElementById('tab-' + i).style.display = i === idx ? 'block' : 'none';
+  }
+}
+
+function renderAll() {
+  updateKPIs();
+  renderFeatureDashboard();
+  renderBlueprint();
+  renderModules();
+  renderAgents();
+  renderProgressLog();
+  renderRoadmap();
+}
+
+document.querySelectorAll('#tab-bar .btn').forEach(b => b.addEventListener('click', switchTab));
+document.getElementById('tab-0').style.display = 'block';
+loadProgress();
+renderAll();
+</script>
+</body>
+</html>

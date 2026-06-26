@@ -1,0 +1,1376 @@
+{
+  "version": "1.0.0",
+  "constants": {
+    "planets": [
+      "Sun",
+      "Moon",
+      "Mars",
+      "Mercury",
+      "Jupiter",
+      "Venus",
+      "Saturn",
+      "Rahu",
+      "Ketu"
+    ],
+    "rashis": [
+      "Aries",
+      "Taurus",
+      "Gemini",
+      "Cancer",
+      "Leo",
+      "Virgo",
+      "Libra",
+      "Scorpio",
+      "Sagittarius",
+      "Capricorn",
+      "Aquarius",
+      "Pisces"
+    ],
+    "nakshatras": [
+      "Ashwini",
+      "Bharani",
+      "Krittika",
+      "Rohini",
+      "Mrigashira",
+      "Ardra",
+      "Punarvasu",
+      "Pushya",
+      "Ashlesha",
+      "Magha",
+      "Purva Phalguni",
+      "Uttara Phalguni",
+      "Hasta",
+      "Chitra",
+      "Swati",
+      "Vishakha",
+      "Anuradha",
+      "Jyeshtha",
+      "Mula",
+      "Purva Ashadha",
+      "Uttara Ashadha",
+      "Shravana",
+      "Dhanishtha",
+      "Shatabhisha",
+      "Purva Bhadrapada",
+      "Uttara Bhadrapada",
+      "Revati"
+    ],
+    "weekdays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ]
+  },
+  "categories": {
+    "panchanga": {
+      "tithi_groups": {
+        "Nanda": [
+          "Venus",
+          "Agni",
+          "Festive, initiating, structural expansion",
+          "good"
+        ],
+        "Bhadra": [
+          "Mercury",
+          "Prithvi",
+          "Stability, community, material growth",
+          "good"
+        ],
+        "Jaya": [
+          "Mars",
+          "Akasha",
+          "Overcoming resistance, winning conflicts",
+          "good"
+        ],
+        "Rikta": [
+          "Saturn",
+          "Vayu",
+          "Destruction of barriers, cleansing",
+          "bad"
+        ],
+        "Purna": [
+          "Jupiter",
+          "Jala",
+          "Ultimate fulfillment, permanence",
+          "good"
+        ]
+      },
+      "tithi_group_names": {
+        "1": "Nanda",
+        "2": "Bhadra",
+        "3": "Jaya",
+        "4": "Rikta",
+        "5": "Purna"
+      },
+      "dagdha_by_tithi": {
+        "1": [
+          "Libra",
+          "Capricorn"
+        ],
+        "2": [
+          "Sagittarius",
+          "Pisces"
+        ],
+        "3": [
+          "Leo",
+          "Capricorn"
+        ],
+        "4": [
+          "Taurus",
+          "Aquarius"
+        ],
+        "5": [
+          "Gemini",
+          "Virgo"
+        ],
+        "6": [
+          "Aries",
+          "Leo"
+        ],
+        "7": [
+          "Cancer",
+          "Sagittarius"
+        ],
+        "8": [
+          "Gemini",
+          "Virgo"
+        ],
+        "9": [
+          "Leo",
+          "Scorpio"
+        ],
+        "10": [
+          "Leo",
+          "Scorpio"
+        ],
+        "11": [
+          "Sagittarius",
+          "Pisces"
+        ],
+        "12": [
+          "Libra",
+          "Capricorn"
+        ],
+        "13": [
+          "Taurus",
+          "Leo"
+        ],
+        "14": [
+          "Gemini",
+          "Virgo",
+          "Sagittarius",
+          "Pisces"
+        ],
+        "15": [],
+        "30": []
+      },
+      "nak_nature": {
+        "Ashwini": "Light",
+        "Bharani": "Severe",
+        "Krittika": "Mixed",
+        "Rohini": "Fixed",
+        "Mrigashira": "Soft",
+        "Ardra": "Sharp",
+        "Punarvasu": "Movable",
+        "Pushya": "Light",
+        "Ashlesha": "Sharp",
+        "Magha": "Fierce",
+        "Purva Phalguni": "Fierce",
+        "Uttara Phalguni": "Fixed",
+        "Hasta": "Light",
+        "Chitra": "Soft",
+        "Swati": "Movable",
+        "Vishakha": "Mixed",
+        "Anuradha": "Soft",
+        "Jyeshtha": "Sharp",
+        "Mula": "Sharp",
+        "Purva Ashadha": "Fierce",
+        "Uttara Ashadha": "Fixed",
+        "Shravana": "Movable",
+        "Dhanishtha": "Movable",
+        "Shatabhisha": "Movable",
+        "Purva Bhadrapada": "Fierce",
+        "Uttara Bhadrapada": "Fixed",
+        "Revati": "Soft"
+      },
+      "nitya_yogas": [
+        {
+          "name": "Vishkambha",
+          "nature": "Inauspicious",
+          "lord": "Yama",
+          "deity": "Dharma"
+        },
+        {
+          "name": "Priti",
+          "nature": "Auspicious",
+          "lord": "Vishnu",
+          "deity": "Priti"
+        },
+        {
+          "name": "Ayushman",
+          "nature": "Auspicious",
+          "lord": "Chandra",
+          "deity": "Chandra"
+        },
+        {
+          "name": "Saubhagya",
+          "nature": "Auspicious",
+          "lord": "Brahma",
+          "deity": "Saubhagya"
+        },
+        {
+          "name": "Shobhana",
+          "nature": "Auspicious",
+          "lord": "Indra",
+          "deity": "Shobhana"
+        },
+        {
+          "name": "Atiganda",
+          "nature": "Inauspicious",
+          "lord": "Chandra",
+          "deity": "Atiganda"
+        },
+        {
+          "name": "Sukarma",
+          "nature": "Auspicious",
+          "lord": "Indra",
+          "deity": "Sukarma"
+        },
+        {
+          "name": "Dhriti",
+          "nature": "Auspicious",
+          "lord": "Varuna",
+          "deity": "Dhriti"
+        },
+        {
+          "name": "Shoola",
+          "nature": "Inauspicious",
+          "lord": "Shiva",
+          "deity": "Shoola"
+        },
+        {
+          "name": "Ganda",
+          "nature": "Inauspicious",
+          "lord": "Kubera",
+          "deity": "Ganda"
+        },
+        {
+          "name": "Vriddhi",
+          "nature": "Auspicious",
+          "lord": "Ganesha",
+          "deity": "Vriddhi"
+        },
+        {
+          "name": "Dhruva",
+          "nature": "Auspicious",
+          "lord": "Vishnu",
+          "deity": "Dhruva"
+        },
+        {
+          "name": "Vyaghata",
+          "nature": "Inauspicious",
+          "lord": "Brahma",
+          "deity": "Vyaghata"
+        },
+        {
+          "name": "Harshana",
+          "nature": "Auspicious",
+          "lord": "Vayu",
+          "deity": "Harshana"
+        },
+        {
+          "name": "Vajra",
+          "nature": "Inauspicious",
+          "lord": "Indra",
+          "deity": "Vajra"
+        },
+        {
+          "name": "Siddhi",
+          "nature": "Auspicious",
+          "lord": "Kartikeya",
+          "deity": "Siddhi"
+        },
+        {
+          "name": "Vyatipata",
+          "nature": "Inauspicious",
+          "lord": "Rudra",
+          "deity": "Vyatipata"
+        },
+        {
+          "name": "Variyan",
+          "nature": "Auspicious",
+          "lord": "Mitra",
+          "deity": "Variyan"
+        },
+        {
+          "name": "Parigha",
+          "nature": "Inauspicious",
+          "lord": "Vishwakarma",
+          "deity": "Parigha"
+        },
+        {
+          "name": "Shiva",
+          "nature": "Auspicious",
+          "lord": "Shiva",
+          "deity": "Shiva"
+        },
+        {
+          "name": "Siddha",
+          "nature": "Auspicious",
+          "lord": "Ganesha",
+          "deity": "Siddha"
+        },
+        {
+          "name": "Sadhya",
+          "nature": "Auspicious",
+          "lord": "Vishnu",
+          "deity": "Sadhya"
+        },
+        {
+          "name": "Shubha",
+          "nature": "Auspicious",
+          "lord": "Brahma",
+          "deity": "Shubha"
+        },
+        {
+          "name": "Shukla",
+          "nature": "Auspicious",
+          "lord": "Surya",
+          "deity": "Shukla"
+        },
+        {
+          "name": "Brahma",
+          "nature": "Auspicious",
+          "lord": "Brahma",
+          "deity": "Brahma"
+        },
+        {
+          "name": "Indra",
+          "nature": "Auspicious",
+          "lord": "Indra",
+          "deity": "Indra"
+        },
+        {
+          "name": "Vaidhriti",
+          "nature": "Inauspicious",
+          "lord": "Rudra",
+          "deity": "Vaidhriti"
+        }
+      ],
+      "karana_info": {
+        "Bava": {
+          "planet": "Movable",
+          "deity": "Indra",
+          "element": "Brahma",
+          "recommended": "Benefic"
+        },
+        "Balava": {
+          "planet": "Movable",
+          "deity": "Brahma",
+          "element": "Agni",
+          "recommended": "Benefic"
+        },
+        "Kaulava": {
+          "planet": "Fixed",
+          "deity": "Yama",
+          "element": "Kubera",
+          "recommended": "Benefic"
+        },
+        "Taitila": {
+          "planet": "Fixed",
+          "deity": "Kubera",
+          "element": "Varuna",
+          "recommended": "Benefic"
+        },
+        "Gara": {
+          "planet": "Fixed",
+          "deity": "Varuna",
+          "element": "Mitra",
+          "recommended": "Benefic"
+        },
+        "Vanija": {
+          "planet": "Movable",
+          "deity": "Mitra",
+          "element": "Manibhadra",
+          "recommended": "Benefic"
+        },
+        "Vishti": {
+          "planet": "Fixed",
+          "deity": "Nirriti",
+          "element": "Rakshasa",
+          "recommended": "Malefic"
+        },
+        "Shakuni": {
+          "planet": "Fixed",
+          "deity": "Rahu",
+          "element": "Kaliyuga Deva",
+          "recommended": "Malefic"
+        },
+        "Chatushpada": {
+          "planet": "Fixed",
+          "deity": "Ketu",
+          "element": "Rudra",
+          "recommended": "Malefic"
+        },
+        "Naga": {
+          "planet": "Fixed",
+          "deity": "Rahu",
+          "element": "Naga Deva",
+          "recommended": "Malefic"
+        },
+        "Kintughna": {
+          "planet": "Fixed",
+          "deity": "Ketu",
+          "element": "Vayu",
+          "recommended": "Benefic"
+        }
+      },
+      "nak_lord": {
+        "Ashwini": "Ketu",
+        "Bharani": "Venus",
+        "Krittika": "Sun",
+        "Rohini": "Moon",
+        "Mrigashira": "Mars",
+        "Ardra": "Rahu",
+        "Punarvasu": "Jupiter",
+        "Pushya": "Saturn",
+        "Ashlesha": "Mercury",
+        "Magha": "Ketu",
+        "Purva Phalguni": "Venus",
+        "Uttara Phalguni": "Sun",
+        "Hasta": "Moon",
+        "Chitra": "Mars",
+        "Swati": "Rahu",
+        "Vishakha": "Jupiter",
+        "Anuradha": "Saturn",
+        "Jyeshtha": "Mercury",
+        "Mula": "Ketu",
+        "Purva Ashadha": "Venus",
+        "Uttara Ashadha": "Sun",
+        "Shravana": "Moon",
+        "Dhanishtha": "Mars",
+        "Shatabhisha": "Rahu",
+        "Purva Bhadrapada": "Jupiter",
+        "Uttara Bhadrapada": "Saturn",
+        "Revati": "Mercury"
+      },
+      "vara_lord": {
+        "Sunday": "Sun",
+        "Monday": "Moon",
+        "Tuesday": "Mars",
+        "Wednesday": "Mercury",
+        "Thursday": "Jupiter",
+        "Friday": "Venus",
+        "Saturday": "Saturn"
+      }
+    },
+    "transit": {
+      "houses": {
+        "Sun": {
+          "good": [
+            3,
+            6,
+            10,
+            11
+          ],
+          "bad": [
+            1,
+            2,
+            4,
+            8,
+            9,
+            12
+          ],
+          "worst": [
+            5
+          ]
+        },
+        "Moon": {
+          "good": [
+            1,
+            3,
+            6,
+            7,
+            10,
+            11
+          ],
+          "bad": [
+            2,
+            4,
+            5,
+            12
+          ],
+          "worst": [
+            8
+          ]
+        },
+        "Mars": {
+          "good": [
+            3,
+            6,
+            11
+          ],
+          "bad": [
+            1,
+            2,
+            5,
+            7,
+            8,
+            9,
+            10,
+            12
+          ],
+          "worst": [
+            7
+          ]
+        },
+        "Mercury": {
+          "good": [
+            6,
+            8,
+            10,
+            11
+          ],
+          "bad": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7,
+            9,
+            12
+          ],
+          "worst": [
+            1
+          ]
+        },
+        "Jupiter": {
+          "good": [
+            2,
+            5,
+            7,
+            9,
+            11
+          ],
+          "bad": [
+            1,
+            3,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "worst": [
+            3
+          ]
+        },
+        "Venus": {
+          "good": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            11,
+            12
+          ],
+          "bad": [
+            7,
+            10
+          ],
+          "worst": [
+            6
+          ]
+        },
+        "Saturn": {
+          "good": [
+            3,
+            6,
+            9,
+            11
+          ],
+          "bad": [
+            2,
+            4,
+            5,
+            7,
+            8,
+            12
+          ],
+          "worst": [
+            1
+          ]
+        },
+        "Rahu": {
+          "good": [
+            3,
+            6,
+            11
+          ],
+          "bad": [
+            1,
+            2,
+            4,
+            7,
+            8,
+            10,
+            12
+          ],
+          "worst": [
+            9
+          ]
+        },
+        "Ketu": {
+          "good": [
+            3,
+            6,
+            11
+          ],
+          "bad": [
+            1,
+            2,
+            4,
+            7,
+            8,
+            10,
+            12
+          ],
+          "worst": [
+            9
+          ]
+        }
+      },
+      "vedha": {
+        "Sun": {
+          "3": 12,
+          "6": 5,
+          "10": 8,
+          "11": 9
+        },
+        "Moon": {
+          "1": 5,
+          "3": 9,
+          "6": 12,
+          "7": 2,
+          "10": 4,
+          "11": 8
+        },
+        "Mars": {
+          "3": 12,
+          "6": 5,
+          "11": 9
+        },
+        "Mercury": {
+          "6": 2,
+          "8": 4,
+          "10": 1,
+          "11": 9
+        },
+        "Jupiter": {
+          "2": 12,
+          "5": 4,
+          "7": 3,
+          "9": 10,
+          "11": 8
+        },
+        "Venus": {
+          "1": 8,
+          "2": 7,
+          "3": 1,
+          "4": 10,
+          "5": 9,
+          "8": 5,
+          "9": 11,
+          "11": 3,
+          "12": 6
+        },
+        "Saturn": {
+          "3": 12,
+          "6": 9,
+          "9": 5,
+          "11": 11
+        }
+      },
+      "vipareetha_vedha": {
+        "Sun": {
+          "1": 3,
+          "2": 4,
+          "4": 8,
+          "5": 9,
+          "8": 10,
+          "9": 11,
+          "12": 12
+        },
+        "Moon": {
+          "2": 4,
+          "4": 8,
+          "5": 9,
+          "12": 12
+        },
+        "Mars": {
+          "1": 3,
+          "2": 4,
+          "5": 9,
+          "8": 10,
+          "9": 11,
+          "12": 12
+        },
+        "Mercury": {
+          "1": 3,
+          "2": 4,
+          "3": 6,
+          "4": 8,
+          "5": 9,
+          "7": 10,
+          "9": 11,
+          "12": 12
+        },
+        "Jupiter": {
+          "1": 3,
+          "3": 6,
+          "4": 8,
+          "6": 5,
+          "8": 10,
+          "10": 11,
+          "12": 12
+        },
+        "Venus": {
+          "7": 10,
+          "10": 11
+        },
+        "Saturn": {
+          "2": 4,
+          "4": 8,
+          "5": 9,
+          "7": 10,
+          "8": 10,
+          "12": 12
+        }
+      },
+      "moorthi": {
+        "1": {
+          "name": "Swarna (Gold)",
+          "verdict": "shubh",
+          "description": "Excellent \u2014 success, wealth, honour"
+        },
+        "2": {
+          "name": "Rajatha (Silver)",
+          "verdict": "shubh",
+          "description": "Good \u2014 moderate success, comfort"
+        },
+        "3": {
+          "name": "Thambra (Copper)",
+          "verdict": "ashubh",
+          "description": "Poor \u2014 obstacles, worries"
+        },
+        "4": {
+          "name": "Loha (Iron)",
+          "verdict": "ashubh",
+          "description": "Worst \u2014 severe difficulties, loss"
+        },
+        "5": {
+          "name": "Rajatha (Silver)",
+          "verdict": "shubh",
+          "description": "Good \u2014 moderate success, comfort"
+        },
+        "6": {
+          "name": "Swarna (Gold)",
+          "verdict": "shubh",
+          "description": "Excellent \u2014 success, wealth, honour"
+        },
+        "7": {
+          "name": "Thambra (Copper)",
+          "verdict": "ashubh",
+          "description": "Poor \u2014 obstacles, worries"
+        },
+        "8": {
+          "name": "Loha (Iron)",
+          "verdict": "ashubh",
+          "description": "Worst \u2014 severe difficulties, loss"
+        },
+        "9": {
+          "name": "Rajatha (Silver)",
+          "verdict": "shubh",
+          "description": "Good \u2014 moderate success, comfort"
+        },
+        "10": {
+          "name": "Thambra (Copper)",
+          "verdict": "ashubh",
+          "description": "Poor \u2014 obstacles, worries"
+        },
+        "11": {
+          "name": "Swarna (Gold)",
+          "verdict": "shubh",
+          "description": "Excellent \u2014 success, wealth, honour"
+        },
+        "12": {
+          "name": "Loha (Iron)",
+          "verdict": "ashubh",
+          "description": "Worst \u2014 severe difficulties, loss"
+        }
+      },
+      "latta": {
+        "Sun": {
+          "distance": 12,
+          "direction": 1,
+          "effect": "Complete business ruined"
+        },
+        "Mars": {
+          "distance": 3,
+          "direction": 1,
+          "effect": "Death-class ruin; injury, accident, sibling conflict"
+        },
+        "Jupiter": {
+          "distance": 6,
+          "direction": 1,
+          "effect": "Death, misery to relations, fear"
+        },
+        "Saturn": {
+          "distance": 8,
+          "direction": 1,
+          "effect": "Many difficulties, danger to life"
+        },
+        "Venus": {
+          "distance": 5,
+          "direction": -1,
+          "effect": "Quarrels, marital disharmony"
+        },
+        "Mercury": {
+          "distance": 7,
+          "direction": -1,
+          "effect": "Loss of status, career collapse"
+        },
+        "Rahu": {
+          "distance": 9,
+          "direction": -1,
+          "effect": "Difficulties of all kinds, deception"
+        },
+        "Moon": {
+          "distance": 22,
+          "direction": -1,
+          "effect": "Humiliation, loss of honour, mental anxiety"
+        }
+      },
+      "tara": {
+        "1": {
+          "name": "Janma Tara",
+          "verdict": "Personal transformation, new beginnings, health focus",
+          "description": "ashubh"
+        },
+        "2": {
+          "name": "Sampat Tara",
+          "verdict": "Wealth, prosperity, gains, material comfort",
+          "description": "shubh"
+        },
+        "3": {
+          "name": "Vipat Tara",
+          "verdict": "Danger, accidents, losses, obstacles",
+          "description": "ashubh"
+        },
+        "4": {
+          "name": "Kshema Tara",
+          "verdict": "Security, well-being, recovery, protection",
+          "description": "shubh"
+        },
+        "5": {
+          "name": "Pratyak Tara",
+          "verdict": "Opposition, delays, hindrances, competition",
+          "description": "ashubh"
+        },
+        "6": {
+          "name": "Sadhana Tara",
+          "verdict": "Achievement, accomplishment, goal fulfillment",
+          "description": "shubh"
+        },
+        "7": {
+          "name": "Naidhana Tara",
+          "verdict": "Death-like suffering, endings, major transitions",
+          "description": "ashubh"
+        },
+        "8": {
+          "name": "Mitra Tara",
+          "verdict": "Friendship, support, alliances, help from others",
+          "description": "shubh"
+        },
+        "9": {
+          "name": "Parama Maitra Tara",
+          "verdict": "Highest friendship, ultimate support, divine grace",
+          "description": "shubh"
+        },
+        "10": {
+          "name": "Janma Tara (Paryaya 2)",
+          "verdict": "Reduced personal changes",
+          "description": "neutral"
+        },
+        "11": {
+          "name": "Sampat Tara (Paryaya 2)",
+          "verdict": "Moderate gains",
+          "description": "shubh"
+        },
+        "12": {
+          "name": "Vipat Tara (Paryaya 2)",
+          "verdict": "Reduced danger",
+          "description": "neutral"
+        },
+        "13": {
+          "name": "Kshema Tara (Paryaya 2)",
+          "verdict": "Moderate security",
+          "description": "shubh"
+        },
+        "14": {
+          "name": "Pratyak Tara (Paryaya 2)",
+          "verdict": "Minor delays",
+          "description": "neutral"
+        },
+        "15": {
+          "name": "Sadhana Tara (Paryaya 2)",
+          "verdict": "Moderate achievement",
+          "description": "shubh"
+        },
+        "16": {
+          "name": "Naidhana Tara (Paryaya 2)",
+          "verdict": "Significant but reduced suffering",
+          "description": "ashubh"
+        },
+        "17": {
+          "name": "Mitra Tara (Paryaya 2)",
+          "verdict": "Moderate support",
+          "description": "shubh"
+        },
+        "18": {
+          "name": "Parama Maitra Tara (Paryaya 2)",
+          "verdict": "High friendship",
+          "description": "shubh"
+        },
+        "19": {
+          "name": "Janma Tara (Paryaya 3)",
+          "verdict": "Mild personal changes",
+          "description": "neutral"
+        },
+        "20": {
+          "name": "Sampat Tara (Paryaya 3)",
+          "verdict": "Mild prosperity",
+          "description": "shubh"
+        },
+        "21": {
+          "name": "Vipat Tara (Paryaya 3)",
+          "verdict": "Minor obstacles",
+          "description": "neutral"
+        },
+        "22": {
+          "name": "Kshema Tara (Paryaya 3)",
+          "verdict": "Mild security",
+          "description": "shubh"
+        },
+        "23": {
+          "name": "Pratyak Tara (Paryaya 3)",
+          "verdict": "Minor opposition",
+          "description": "neutral"
+        },
+        "24": {
+          "name": "Sadhana Tara (Paryaya 3)",
+          "verdict": "Mild achievement",
+          "description": "shubh"
+        },
+        "25": {
+          "name": "Naidhana Tara (Paryaya 3)",
+          "verdict": "Minor endings",
+          "description": "neutral"
+        },
+        "26": {
+          "name": "Mitra Tara (Paryaya 3)",
+          "verdict": "Mild support",
+          "description": "shubh"
+        },
+        "27": {
+          "name": "Parama Maitra Tara (Paryaya 3)",
+          "verdict": "Highest friendship",
+          "description": "shubh"
+        }
+      }
+    },
+    "yogas": {
+      "pancha_mahapurusha": [
+        {
+          "name": "Ruchaka Yoga",
+          "planet": "Mars",
+          "condition": "Mars in own sign or exaltation in a Kendra (1, 4, 7, 10)",
+          "effect": "Energetic, courageous, military/leadership success, wealthy, famous",
+          "benefic": true
+        },
+        {
+          "name": "Bhadra Yoga",
+          "planet": "Mercury",
+          "condition": "Mercury in own sign or exaltation in a Kendra",
+          "effect": "Highly intelligent, eloquent, wealthy, long-lived, learned in all sciences",
+          "benefic": true
+        },
+        {
+          "name": "Hamsa Yoga",
+          "planet": "Jupiter",
+          "condition": "Jupiter in own sign or exaltation in a Kendra",
+          "effect": "Righteous, wealthy, respected, spiritual leader, beautiful appearance",
+          "benefic": true
+        },
+        {
+          "name": "Malavya Yoga",
+          "planet": "Venus",
+          "condition": "Venus in own sign or exaltation in a Kendra",
+          "effect": "Luxurious life, artistic talent, beautiful spouse, vehicles, good fortune",
+          "benefic": true
+        },
+        {
+          "name": "Sasa Yoga",
+          "planet": "Saturn",
+          "condition": "Saturn in own sign or exaltation in a Kendra",
+          "effect": "Authoritative, leader, disciplined, controls many people, long-lived",
+          "benefic": true
+        }
+      ],
+      "chandra": [
+        {
+          "name": "Sunapha Yoga",
+          "planet": "",
+          "condition": "Planet (other than Sun) in 2nd from Moon",
+          "effect": "Wealth, intelligence, fame, self-earned prosperity",
+          "benefic": true
+        },
+        {
+          "name": "Anapha Yoga",
+          "planet": "",
+          "condition": "Planet (other than Sun) in 12th from Moon",
+          "effect": "Prosperous, healthy, moral, famous, fond of luxuries",
+          "benefic": true
+        },
+        {
+          "name": "Durudhara Yoga",
+          "planet": "",
+          "condition": "Planets (other than Sun) in BOTH 2nd and 12th from Moon",
+          "effect": "Wealthy, generous, owns vehicles, well-educated, happy",
+          "benefic": true
+        },
+        {
+          "name": "Kemadruma Yoga",
+          "planet": "",
+          "condition": "No planet (other than Sun) in 2nd or 12th from Moon, AND no planet in Kendra from Lagna",
+          "effect": "Poverty, mental distress, isolation, struggle despite efforts",
+          "benefic": true
+        },
+        {
+          "name": "Adhi Yoga",
+          "planet": "",
+          "condition": "Benefics (Mercury, Jupiter, Venus) in 6th, 7th, and 8th from Moon",
+          "effect": "Leadership, authority, prosperous, respected, powerful",
+          "benefic": true
+        }
+      ],
+      "raja": [
+        {
+          "name": "Raja Yoga (Kendra-Kona)",
+          "planet": "",
+          "condition": "Lord of a Kendra (1,4,7,10) is with/aspected by lord of a Kona (1,5,9)",
+          "effect": "Authority, power, high position, royal favour, success",
+          "benefic": true
+        },
+        {
+          "name": "Raja Yoga (Mutual Kendra)",
+          "planet": "",
+          "condition": "Lords of Kendra houses in mutual exchange or conjunction",
+          "effect": "Prestige, recognition, leadership role, governmental authority",
+          "benefic": true
+        },
+        {
+          "name": "Dharma-Karma Adhipati Yoga",
+          "planet": "",
+          "condition": "Lord of 9th and 10th conjoined or in mutual exchange",
+          "effect": "Immense success, fame, righteous leadership, fortune through career",
+          "benefic": true
+        },
+        {
+          "name": "Raja Yoga (4-9 Connection)",
+          "planet": "",
+          "condition": "Lord of 4th and 9th in conjunction or mutual aspect",
+          "effect": "Wealth from property/vehicles, happy home, spiritual fortune",
+          "benefic": true
+        },
+        {
+          "name": "Raja Yoga (5-9 Connection)",
+          "planet": "",
+          "condition": "Lord of 5th and 9th conjoined or in Kendra to each other",
+          "effect": "Great fortune, wisdom, higher education, spiritual authority",
+          "benefic": true
+        },
+        {
+          "name": "Buddha-Aditya Yoga",
+          "planet": "",
+          "condition": "Mercury and Sun conjoined in any sign",
+          "effect": "High intelligence, education, writing ability, governmental position",
+          "benefic": true
+        },
+        {
+          "name": "Gaja-Kesari Yoga",
+          "planet": "",
+          "condition": "Jupiter in Kendra from Moon",
+          "effect": "Fame, respect, eloquence, wealthy, many followers",
+          "benefic": true
+        },
+        {
+          "name": "Lakshmi Yoga",
+          "planet": "",
+          "condition": "Venus and Jupiter in conjunction or mutual aspect in benefic signs",
+          "effect": "Wealth, beauty, prosperity, good fortune, happy marriage",
+          "benefic": true
+        }
+      ],
+      "dhana": [
+        {
+          "name": "Dhana Yoga (2nd lord + 11th lord)",
+          "planet": "",
+          "condition": "Lord of 2nd house associated with lord of 11th (or Jupiter)",
+          "effect": "Wealth accumulation, multiple income sources",
+          "benefic": true
+        },
+        {
+          "name": "Dhana Yoga (2nd lord + 5th lord)",
+          "planet": "",
+          "condition": "Lord of 2nd in 5th or vice versa with benefic influence",
+          "effect": "Wealth through speculation, children, creativity, education",
+          "benefic": true
+        },
+        {
+          "name": "Dhana Yoga (2nd lord + 9th lord)",
+          "planet": "",
+          "condition": "Lord of 2nd associated with lord of 9th",
+          "effect": "Wealth through fortune, inheritance, dharma, pilgrimage",
+          "benefic": true
+        },
+        {
+          "name": "Dhana Yoga (5th lord in Kendra/Kona)",
+          "planet": "",
+          "condition": "Lord of 5th in Kendra or Kona with benefic aspect",
+          "effect": "Wealth through intelligence, speculation, mantra, creativity",
+          "benefic": true
+        }
+      ],
+      "nabhasa": [
+        {
+          "name": "Rajju Yoga",
+          "planet": "",
+          "condition": "All planets in movable signs (Aries, Cancer, Libra, Capricorn)",
+          "effect": "Frequent travel, foreign residence, adventurous life",
+          "benefic": true
+        },
+        {
+          "name": "Musala Yoga",
+          "planet": "",
+          "condition": "All planets in fixed signs (Taurus, Leo, Scorpio, Aquarius)",
+          "effect": "Steady, determined, good at one profession, proud",
+          "benefic": true
+        },
+        {
+          "name": "Nala Yoga",
+          "planet": "",
+          "condition": "All planets in dual signs (Gemini, Virgo, Sagittarius, Pisces)",
+          "effect": "Versatile, good at many skills, helpful, social",
+          "benefic": true
+        },
+        {
+          "name": "Gada Yoga",
+          "planet": "",
+          "condition": "All planets in Kendra (1,4,7,10) OR two adjacent Kendras",
+          "effect": "Wealthy, strong, respected, authoritative",
+          "benefic": true
+        },
+        {
+          "name": "Shankha Yoga",
+          "planet": "",
+          "condition": "All planets in Panaphara (2,5,8,11) and Apoklima (3,6,9,12) \u2014 one in each type",
+          "effect": "Learned in scriptures, charitable, long-lived, wealthy, enjoys life",
+          "benefic": true
+        }
+      ],
+      "special": [
+        {
+          "name": "Viparita Raja Yoga",
+          "planet": "",
+          "condition": "Lord of 6th, 8th, or 12th in a Dusthana (6,8,12) or with another Dusthana lord",
+          "effect": "Success through adversity, triumph over enemies, wealth from unexpected sources",
+          "benefic": true
+        },
+        {
+          "name": "Neecha Bhanga Raja Yoga",
+          "planet": "",
+          "condition": "Debilitated planet gets cancellation \u2014 lord of debilitation sign in Kendra from Moon/Lagna OR exalted lord aspects debilitated planet",
+          "effect": "Rise from humble beginnings, success after struggles, Raja Yoga despite debilitation",
+          "benefic": true
+        },
+        {
+          "name": "Parivartana Yoga (Exchange Yoga)",
+          "planet": "",
+          "condition": "Two planets in mutual exchange of signs (each in the other's sign)",
+          "effect": "Exchange of karakatwas, mutual support, combined effects of both houses",
+          "benefic": true
+        }
+      ]
+    },
+    "dasha": {
+      "vimshottari": {
+        "order": [
+          "Ketu",
+          "Venus",
+          "Sun",
+          "Moon",
+          "Mars",
+          "Rahu",
+          "Jupiter",
+          "Saturn",
+          "Mercury"
+        ],
+        "periods": {
+          "Ketu": 7,
+          "Venus": 20,
+          "Sun": 6,
+          "Moon": 10,
+          "Mars": 7,
+          "Rahu": 18,
+          "Jupiter": 16,
+          "Saturn": 19,
+          "Mercury": 17
+        }
+      },
+      "yogini": {
+        "order": [
+          "Mangala",
+          "Pingala",
+          "Dhanya",
+          "Bhramari",
+          "Bhadrika",
+          "Ulka",
+          "Siddha",
+          "Sankata"
+        ],
+        "periods": {
+          "Mangala": 1,
+          "Pingala": 2,
+          "Dhanya": 3,
+          "Bhramari": 4,
+          "Bhadrika": 5,
+          "Ulka": 6,
+          "Siddha": 7,
+          "Sankata": 8
+        }
+      }
+    },
+    "dignity": {
+      "exalted": {
+        "Sun": {
+          "sign": "A",
+          "degree": "r"
+        },
+        "Moon": {
+          "sign": "T",
+          "degree": "a"
+        },
+        "Mars": {
+          "sign": "C",
+          "degree": "a"
+        },
+        "Mercury": {
+          "sign": "V",
+          "degree": "i"
+        },
+        "Jupiter": {
+          "sign": "C",
+          "degree": "a"
+        },
+        "Venus": {
+          "sign": "P",
+          "degree": "i"
+        },
+        "Saturn": {
+          "sign": "L",
+          "degree": "i"
+        }
+      },
+      "debilitated": {
+        "Sun": {
+          "sign": "L",
+          "degree": "i"
+        },
+        "Moon": {
+          "sign": "S",
+          "degree": "c"
+        },
+        "Mars": {
+          "sign": "C",
+          "degree": "a"
+        },
+        "Mercury": {
+          "sign": "P",
+          "degree": "i"
+        },
+        "Jupiter": {
+          "sign": "C",
+          "degree": "a"
+        },
+        "Venus": {
+          "sign": "V",
+          "degree": "i"
+        },
+        "Saturn": {
+          "sign": "A",
+          "degree": "r"
+        }
+      },
+      "benefics": [
+        "Moon",
+        "Jupiter",
+        "Venus",
+        "Mercury"
+      ],
+      "malefics": [
+        "Sun",
+        "Saturn",
+        "Ketu",
+        "Rahu",
+        "Mars"
+      ],
+      "lordship": {
+        "Sun": [
+          "Leo"
+        ],
+        "Moon": [
+          "Cancer"
+        ],
+        "Mars": [
+          "Aries",
+          "Scorpio"
+        ],
+        "Mercury": [
+          "Gemini",
+          "Virgo"
+        ],
+        "Jupiter": [
+          "Sagittarius",
+          "Pisces"
+        ],
+        "Venus": [
+          "Taurus",
+          "Libra"
+        ],
+        "Saturn": [
+          "Capricorn",
+          "Aquarius"
+        ]
+      }
+    }
+  }
+}

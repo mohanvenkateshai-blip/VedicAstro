@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Build & Cache
+.next/
+.vercel/
+dist/
+.pytest_cache/
+.DS_Store
+
+# Large Data
+*.dat
+*.bsp
+
+# Env & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS
+.DS_Store

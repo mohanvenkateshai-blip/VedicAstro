@@ -1,0 +1,34 @@
+# Fly.io deployment for the VedicAstro CVCE.
+# Deploy from this directory:  fly deploy
+app = "vedicastro-cvce"
+primary_region = "lhr"   # London — closest Fly region to Ireland
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  CVCE_HOST = "0.0.0.0"
+  CVCE_PORT = "8400"
+  CVCE_DEFAULT_AYANAMSA = "LAHIRI"
+  CVCE_VARGAS = "1,2,3,4,7,9,10,12,16,24,30,60"
+  # CORS: tightened to the portal origin once the portal is deployed.
+  # Until then, allow local dev origins only.
+  CVCE_ALLOWED_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173,https://portal-omega-two-10.vercel.app"
+
+[http_service]
+  internal_port = 8400
+  force_https = true
+  auto_stop_machines = "stop"      # scale to zero when idle (cost ≈ 0)
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "20s"
+    method = "GET"
+    path = "/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"                    # numpy/pandas/pyswisseph need headroom
