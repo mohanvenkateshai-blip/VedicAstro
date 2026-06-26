@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VedicAstro • Agent Engineering Dashboard</title>
+    <style>
+        :root {
+            --bg: #0a0e1a; --card: #111827; --hairline: rgba(255,255,255,0.08);
+            --accent: #8b7338; --success: #4ade80; --warn: #fbbf24; --danger: #f87171;
+            --text: #e8edf6; --muted: #94a3b8; --indigo: #6366f1;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .glass { background: var(--card); border: 1px solid var(--hairline); }
+        nav { background: var(--bg); border-bottom: 1px solid var(--hairline); position: sticky; top: 0; z-index: 50; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .btn { padding: 8px 16px; border-radius: 12px; border: 1px solid var(--hairline); background: transparent; color: var(--text); cursor: pointer; font-size: 13px; font-weight: 600; }
+        .btn-primary { background: var(--indigo); border-color: var(--indigo); }
+        .tab-active { background: rgba(99,102,241,0.15); color: var(--indigo); }
+        .progress-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+        .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+        .kpi-card { padding: 20px; border-radius: 20px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+        @media(max-width:768px){ .grid-6{grid-template-columns:repeat(3,1fr)} .grid-4{grid-template-columns:1fr} }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:56px">
+        <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center;font-size:18px">ॐ</div>
+            <span style="font-weight:600;font-size:18px">VedicAstro EC</span>
+            <span class="status-badge" style="background:rgba(74,222,128,0.1);color:var(--success)">8 AGENTS</span>
+            <span style="font-size:10px;color:var(--muted)" id="last-updated">Live</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px">
+            <div style="text-align:center">
+                <div style="font-size:10px;color:var(--muted)">FEATURES</div>
+                <div style="font-size:22px;font-weight:700;color:var(--success);font-family:monospace" id="global-progress">60%</div>
+            </div>
+            <button onclick="advanceAll()" class="btn btn-primary">Advance All</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="padding-top:28px">
+    <h1 style="font-size:32px;font-weight:600">Engineering Command Center</h1>
+    <p style="color:var(--muted);margin-top:4px">Vedic Astrology Feature Build — 8-agent AI engineering team</p>
+
+    <!-- KPIs -->
+    <div class="grid-6" style="margin:24px 0">
+        <div class="glass kpi-card"><div style="font-size:10px;color:var(--muted)">FEATURES DONE</div><div style="font-size:28px;font-weight:600;margin-top:4px" id="kpi-done">8/20</div></div>
+        <div class="glass kpi-card"><div style="font-size:10px;color:var(--muted)">IN PROGRESS</div><div style="font-size:28px;font-weight:600;margin-top:4px" id="kpi-active">4</div></div>
+        <div class="glass kpi-card"><div style="font-size:10px;color:var(--muted)">AVG PROGRESS</div><div style="font-size:28px;font-weight:600;margin-top:4px" id="kpi-avg">60%</div></div>
+        <div class="glass kpi-card"><div style="font-size:10px;color:var(--muted)">ISSUES</div><div style="font-size:28px;font-weight:600;margin-top:4px;color:var(--warn)" id="kpi-issues">2</div></div>
+        <div class="glass kpi-card"><div style="font-size:10px;color:var(--muted)">HEALTH</div><div style="font-size:28px;font-weight:600;margin-top:4px;color:var(--success)" id="kpi-health">92</div></div>
+        <div class="glass kpi-card"><div style="font-size:10px;color:var(--muted)">PHASE</div><div style="font-size:28px;font-weight:600;margin-top:4px">2/3</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:20px">
+        <button onclick="switchTab(0)" class="btn tab-btn tab-active" id="tab-btn-0">Feature Grid</button>
+        <button onclick="switchTab(1)" class="btn tab-btn" id="tab-btn-1">Agent Health</button>
+        <button onclick="switchTab(2)" class="btn tab-btn" id="tab-btn-2">Dependency Map</button>
+        <button onclick="switchTab(3)" class="btn tab-btn" id="tab-btn-3">Escalations</button>
+    </div>
+
+    <!-- Tab 0: Feature Grid -->
+    <div id="tab-content-0">
+        <div class="grid-4" id="feature-grid"></div>
+    </div>
+
+    <!-- Tab 1: Agent Health -->
+    <div id="tab-content-1" class="hidden">
+        <div class="glass" style="padding:20px;border-radius:20px">
+            <h3 style="font-weight:600;margin-bottom:16px">Agent Health Ranking</h3>
+            <div id="health-ranking"></div>
+        </div>
+    </div>
+
+    <!-- Tab 2: Dependency Map -->
+    <div id="tab-content-2" class="hidden">
+        <div class="glass" style="padding:20px;border-radius:20px">
+            <h3 style="font-weight:600;margin-bottom:16px">Dependency Graph</h3>
+            <div id="dep-map" style="font-family:monospace;font-size:13px;line-height:2;color:var(--muted)"></div>
+        </div>
+    </div>
+
+    <!-- Tab 3: Escalations -->
+    <div id="tab-content-3" class="hidden">
+        <div class="glass" style="padding:20px;border-radius:20px">
+            <h3 style="font-weight:600;margin-bottom:16px">Active Escalations</h3>
+            <div id="esc-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const DATA_URL = './feature-progress.json';
+let features = [];
+let refreshInterval = null;
+
+async function loadProgress() {
+    try {
+        const res = await fetch(DATA_URL + '?t=' + Date.now());
+        const data = await res.json();
+        features = data.features;
+        document.getElementById('last-updated').textContent = new Date(data.updated).toLocaleString();
+    } catch(e) {
+        console.warn('Could not load progress file, using embedded data');
+        features = getFallbackData();
+    }
+    renderAll();
+}
+
+function getFallbackData() {
+    return [
+        { id:"F01",name:"GraphRAG /predict",agent:"Knowledge Engineer (14)",progress:100,status:"Done",phase:1 },
+        { id:"F02",name:"CVCE CORS tighten",agent:"Security Auditor (9)",progress:100,status:"Done",phase:1 },
+        { id:"F03",name:"Neon DB + encryption",agent:"DBA (13)",progress:100,status:"Done",phase:1 },
+        { id:"F04",name:"Google Auth + RBAC",agent:"Full-Stack (1)",progress:100,status:"Done",phase:1 },
+        { id:"F05",name:"Save/Load charts",agent:"Full-Stack (1)",progress:100,status:"Done",phase:1 },
+        { id:"F06",name:"GraphInsights UI",agent:"Frontend (7)",progress:100,status:"Done",phase:2 },
+        { id:"F07",name:"Chart.svg endpoint",agent:"Backend (6)",progress:100,status:"Done",phase:2 },
+        { id:"F08",name:"SDLC audit + fixes",agent:"Auditor (2)",progress:100,status:"Done",phase:2 },
+        { id:"F09",name:"CSP + security headers",agent:"Security (9)",progress:100,status:"Done",phase:2 },
+        { id:"F10",name:"WCAG 2.2 accessibility",agent:"Frontend (7)",progress:100,status:"Done",phase:2 },
+        { id:"F11",name:"CI + typecheck",agent:"QA (11)",progress:100,status:"Done",phase:2 },
+        { id:"F12",name:"CVCE /dasha-deep",agent:"Backend (6)",progress:0,status:"Todo",phase:3 },
+        { id:"F13",name:"CVCE /special-points",agent:"Backend (6)",progress:0,status:"Todo",phase:3 },
+        { id:"F14",name:"CVCE /koota-match",agent:"Backend (6)",progress:0,status:"Todo",phase:3 },
+        { id:"F15",name:"Pushkar Navamsha badge",agent:"Backend (6)",progress:0,status:"Todo",phase:3 },
+        { id:"F16",name:"NakshatraExplorer",agent:"Frontend (7)",progress:0,status:"Todo",phase:3 },
+        { id:"F17",name:"RashiExplorer",agent:"Frontend (7)",progress:0,status:"Todo",phase:3 },
+        { id:"F18",name:"DashaDeepTree",agent:"Frontend (7)",progress:0,status:"Todo",phase:3 },
+        { id:"F19",name:"SpecialPointsPanel",agent:"Frontend (7)",progress:0,status:"Todo",phase:3 },
+        { id:"F20",name:"KootaMatcher",agent:"Frontend (7)",progress:0,status:"Todo",phase:3 },
+    ];
+}
+
+function startAutoRefresh() {
+    if (refreshInterval) clearInterval(refreshInterval);
+    refreshInterval = setInterval(loadProgress, 30000);
+}
+
+const agents = [
+    { id:6, name:"Backend Architect", features:["F07","F12","F13","F14","F15"] },
+    { id:7, name:"Frontend Engineer", features:["F06","F10","F16","F17","F18","F19","F20"] },
+    { id:1, name:"Full-Stack MVP Builder", features:["F04","F05"] },
+    { id:14, name:"Knowledge Engineer", features:["F01"] },
+    { id:13, name:"DBA", features:["F03"] },
+    { id:9, name:"Security Auditor", features:["F02","F09"] },
+    { id:2, name:"Codebase Auditor", features:["F08"] },
+    { id:11, name:"QA Engineer", features:["F11"] },
+];
+
+function agentHealth(agent) {
+    const agFeatures = features.filter(f => agent.features.includes(f.id));
+    return Math.round(agFeatures.reduce((s,f) => s + (f.status === "Done" ? 100 : f.progress), 0) / agFeatures.length);
+}
+
+function renderFeatureGrid() {
+    const c = document.getElementById('feature-grid');
+    c.innerHTML = features.map(f => {
+        const color = f.status === "Done" ? "var(--success)" : f.status === "In Progress" ? "var(--indigo)" : "var(--muted)";
+        return `<div class="glass" style="padding:16px;border-radius:16px">
+            <div style="display:flex;justify-content:space-between;align-items:start">
+                <div>
+                    <div style="font-weight:600;font-size:14px">${f.name}</div>
+                    <div style="font-size:11px;color:var(--muted);margin-top:2px">${f.agent} · Phase ${f.phase}</div>
+                </div>
+                <span class="status-badge" style="background:${color}15;color:${color}">${f.status}</span>
+            </div>
+            <div class="progress-bar" style="margin-top:12px">
+                <div class="progress-fill" style="width:${f.progress}%;background:${color}"></div>
+            </div>
+            <div style="font-size:10px;color:var(--muted);margin-top:4px;text-align:right">${f.progress}%</div>
+        </div>`;
+    }).join('');
+}
+
+function renderHealth() {
+    const c = document.getElementById('health-ranking');
+    const sorted = agents.map(a => ({...a, health: agentHealth(a)})).sort((a,b) => b.health - a.health);
+    c.innerHTML = sorted.map(a => `<div style="display:flex;justify-content:space-between;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.02);margin-bottom:6px">
+        <span>${a.name} <span style="color:var(--muted);font-size:11px">(${a.features.length} features)</span></span>
+        <span style="font-family:monospace;color:var(--success);font-weight:600">${a.health}</span>
+    </div>`).join('');
+}
+
+function renderDepMap() {
+    const c = document.getElementById('dep-map');
+    c.innerHTML = `
+        <div style="margin-bottom:16px;color:var(--warn)">⬤ Phase 3 (pending) &nbsp; ⬤ Phase 2 (done) &nbsp; ⬤ Phase 1 (done)</div>
+        CVCE /dasha-deep ─────→ DashaDeepTree.tsx<br>
+        CVCE /special-points ──→ SpecialPointsPanel.tsx<br>
+        CVCE /koota-match ─────→ KootaMatcher.tsx<br>
+        GraphRAG ──────────────→ NakshatraExplorer + RashiExplorer<br>
+        CVCE /chart ───────────→ PushkarBadge.tsx<br>
+        Neon DB ───────────────→ Save/Load charts → Dashboard<br>
+        NextAuth ──────────────→ SaveChartButton<br>
+    `;
+}
+
+function renderEscalations() {
+    document.getElementById('esc-list').innerHTML = `
+        <div style="padding:12px;border-radius:12px;background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.2);margin-bottom:8px">
+            <b style="color:var(--warn)">ESC-001</b> Backend Architect → CVCE endpoints not built yet · <span style="color:var(--warn)">Blocking Phase 3 frontend</span>
+        </div>
+        <div style="padding:12px;border-radius:12px;background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.2)">
+            <b style="color:var(--success)">ESC-002</b> QA Engineer → No test framework · Resolved: CI pipeline added with typecheck
+        </div>
+    `;
+}
+
+function updateKPIs() {
+    const done = features.filter(f => f.status === "Done").length;
+    const inProgress = features.filter(f => f.status === "In Progress").length;
+    const avg = Math.round(features.reduce((s,f) => s + f.progress, 0) / features.length);
+    document.getElementById('kpi-done').textContent = done + '/20';
+    document.getElementById('kpi-active').textContent = inProgress;
+    document.getElementById('kpi-avg').textContent = avg + '%';
+    document.getElementById('global-progress').textContent = avg + '%';
+}
+
+function advanceAll() {
+    features.filter(f => f.status === "Todo").forEach(f => {
+        if (f.progress < 100) f.progress += 20;
+        if (f.progress >= 100) f.status = "Done";
+    });
+    renderAll();
+}
+
+function switchTab(i) {
+    for (let j = 0; j <= 3; j++) {
+        document.getElementById('tab-content-' + j).style.display = j === i ? 'block' : 'none';
+        document.getElementById('tab-btn-' + j).classList.toggle('tab-active', j === i);
+    }
+}
+
+function renderAll() {
+    renderFeatureGrid();
+    renderHealth();
+    renderDepMap();
+    renderEscalations();
+    updateKPIs();
+}
+
+// Start: load progress then auto-refresh
+loadProgress();
+startAutoRefresh();
+document.getElementById('tab-content-0').style.display = 'block';
+</script>
+</body>
+</html>
