@@ -37,25 +37,34 @@ async function _execute(strings: TemplateStringsArray, ...values: unknown[]): Pr
   return s(strings as any, ...values);
 }
 
-/** Run queries in one transaction with RLS context set for the user. */
+type SqlQuery = ReturnType<NeonQueryFunction<any, any>>;
+
+/**
+ * Run a query with RLS context set in the same Neon transaction.
+ * `makeQuery` must return a tagged-template query (not a Promise).
+ */
 export async function withUserContext<T>(
   userId: string,
-  fn: (tx: NeonQueryFunction<any, any>) => Promise<T>,
+  makeQuery: (s: NeonQueryFunction<any, any>) => SqlQuery,
 ): Promise<T> {
   const s = await getSql();
   if (!s) throw new Error("DATABASE_URL not configured");
 
   const txFn = (s as NeonQueryFunction<any, any> & { transaction?: Function })
     .transaction;
+
   if (typeof txFn !== "function") {
     await setRlsContext(userId);
-    return fn(s);
+    return (await makeQuery(s)) as T;
   }
 
-  return txFn.call(s, async (tx: NeonQueryFunction<any, any>) => {
-    await tx`SELECT set_config('app.current_user_id', ${userId}, true)`;
-    return fn(tx);
-  });
+  const results = await txFn.call(s, [
+    s`SELECT set_config('app.current_user_id', ${userId}, true)`,
+    makeQuery(s),
+  ]);
+
+  const last = Array.isArray(results) ? results[results.length - 1] : results;
+  return last as T;
 }
 
 export async function healthCheck(): Promise<boolean> {

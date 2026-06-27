@@ -80,18 +80,13 @@ export async function saveHoroscope(
     /* encryption optional */
   }
 
-  return withUserContext(userId, async (tx) => {
-    const rows = await tx`
-      INSERT INTO horoscopes (user_id, name, chart_data)
-      VALUES (${userId}, ${name}, ${JSON.stringify(data)})
-      RETURNING id
-    `;
-    const all = rows as { id: string }[];
-    return all[0]?.id ?? null;
-  }).catch((e) => {
-    console.error("Failed to save horoscope:", e);
-    throw e;
-  });
+  const rows = await withUserContext(userId, (s) => s`
+    INSERT INTO horoscopes (user_id, name, chart_data)
+    VALUES (${userId}, ${name}, ${JSON.stringify(data)}::jsonb)
+    RETURNING id
+  `);
+  const all = rows as { id: string }[];
+  return all[0]?.id ?? null;
 }
 
 /** Get a user's saved horoscopes (decrypts PII). */
@@ -104,15 +99,13 @@ export async function getHoroscopes(userId: string): Promise<
   }>
 > {
   try {
-    const rows = await withUserContext(userId, async (tx) => {
-      return tx`
-        SELECT id, name, chart_data, created_at
-        FROM horoscopes
-        WHERE user_id = ${userId}
-        ORDER BY created_at DESC
-        LIMIT 50
-      `;
-    });
+    const rows = await withUserContext(userId, (s) => s`
+      SELECT id, name, chart_data, created_at
+      FROM horoscopes
+      WHERE user_id = ${userId}
+      ORDER BY created_at DESC
+      LIMIT 50
+    `);
     const { decryptChartData } = await import("./encrypt");
     const all = rows as {
       id: string;
