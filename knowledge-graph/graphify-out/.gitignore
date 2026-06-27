@@ -1,0 +1,9 @@
+# Local graphify build artifacts — not source of truth
+.graphify_*
+graph.json.bak*
+graph-gemini.json
+graph-grok.json
+batch/
+batch-*/
+cache/ast/
+cache/deepseek/
