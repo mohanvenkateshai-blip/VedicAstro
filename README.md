@@ -63,7 +63,7 @@ the graph as the primary rules source is **Phase 4** (see `STATUS.md`).
 | 0 | Consolidation & clean-up | ✅ Complete |
 | 1 | Unified monorepo / version control | ✅ Complete |
 | 2 | CVCE recovery on Fly.io | ✅ Complete |
-| 3 | Formal gap analysis (`docs/GAP_ANALYSIS.md`) | Pending |
+| 3 | Formal gap analysis (`docs/GAP_ANALYSIS.md`) | ✅ Complete |
 | 4 | GraphRAG as `/predict` rules source | Pending |
 | 5+ | Feature build-out, Postgres + auth/RBAC | Pending |
 
