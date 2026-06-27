@@ -64,6 +64,13 @@ Option C — Neon SQL Editor (no local URL needed):
   process.exit(1);
 }
 
+if (url.includes("YOUR_USER") || url.includes("YOUR_PASS") || url.includes("YOUR_HOST")) {
+  console.error(
+    "Replace YOUR_USER, YOUR_PASS, and YOUR_HOST with your real Neon connection string.",
+  );
+  process.exit(1);
+}
+
 const schemaPath = join(root, "src/lib/auth/schema.sql");
 const sqlText = readFileSync(schemaPath, "utf8");
 const statements = sqlText
@@ -75,7 +82,7 @@ const sql = neon(url);
 
 for (const stmt of statements) {
   console.log("→", stmt.split("\n")[0].slice(0, 72), "…");
-  await sql(stmt);
+  await sql.query(stmt);
 }
 
 console.log("✓ Schema applied (%d statements)", statements.length);
