@@ -238,6 +238,11 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
                 results.sade_sati = {"phase": "rise", **SADE_SATI_PHASES["rise"]}
             elif sat_house == 2:
                 results.sade_sati = {"phase": "setting", **SADE_SATI_PHASES["setting"]}
+            elif sat_house == 4:
+                results.ashtama_shani = {
+                    "house": 4,
+                    "effect": "Kantaka Shani — Saturn in 4th from Janma Rasi; domestic stress, property delays",
+                }
             elif sat_house == 8:
                 results.ashtama_shani = {"house": 8,
                                           "effect": "Ashtama Shani — Saturn in 8th from Janma Rasi; obstacles, delays, health issues"}
