@@ -329,7 +329,7 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
       <div className="flex items-center gap-3 flex-wrap">
         <SectionHeading>Ashtakavarga (SAV)</SectionHeading>
         <span className="text-xs font-mono text-text-muted">
-          total {akv.total} {akv.total === 337 ? "✓" : "⚠"}
+          post-shodhana total {akv.total}
         </span>
       </div>
 
@@ -338,7 +338,7 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
         {akv.sav_annotated.map((row) => (
           <div key={row.sign} className="flex items-center gap-2 text-xs font-mono">
             <span className="w-14 text-text-muted shrink-0">{row.sign.slice(0, 3)}</span>
-            <div className="flex-1 h-3 bg-surface-subtle rounded-sm overflow-hidden">
+            <div className="flex-1 h-3 bg-hairline/40 rounded-sm overflow-hidden">
               <div
                 className={`h-full rounded-sm transition-all ${BAND_COLORS[row.band] || "bg-amber-400"}`}
                 style={{ width: `${(row.bindus / maxBindus) * 100}%` }}
@@ -354,7 +354,7 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
 
       {/* Planet BAV totals */}
       <div>
-        <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Planet totals (BAV)</h4>
+        <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Planet totals (BAV, post-shodhana)</h4>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-mono text-text-muted">
           {Object.entries(akv.planet_totals).map(([planet, total]) => (
             <span key={planet}>
@@ -363,6 +363,9 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
           ))}
         </div>
       </div>
+      <p className="text-xs text-text-muted">
+        Trikona + Ekadhipatya Shodhana applied per BPHS Ch.67. Shaded: depleted &lt;25, standard 25–27, good 28–29, excellent 30+.
+      </p>
     </Card>
   );
 }
