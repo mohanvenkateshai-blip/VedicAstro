@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phases 9–12 complete — Hiranya report fully wired; CVCE golden tests 7/7; portal build clean; uncommitted local diff pending commit)*
+*Last Updated: June 27, 2026 (Phases 9–12 complete — Hiranya report deployed; `ecac235`+`1057018` on main; CVCE v27 on Fly; portal on Vercel)*
 
 ---
 
@@ -170,7 +170,7 @@ python3 -m http.server 5599 # http://localhost:5599
 |:---|:---|:---|
 | **CVCE (Fly)** | `fly deploy` from `cvce/` | **Live** — dasha fix + `/report/facts` deployed earlier June 27 |
 | **Portal (Vercel)** | `vercel --prod` or Git push → `main` | **Live** — `dpl_3jpCeJNPpLBZvqsaqNU8Kwk6nKvr` aliased to portal-omega-two-10 |
-| **Git** | `git push origin main` | **Synced** — `b002f0d` on `main` = `origin/main` (commits `c3e2777`, `7d6eae0`, `b002f0d`) |
+| **Git** | `git push origin main` | **Synced** — `1057018` on `main` = `origin/main` (Phase 9–12 commits `ecac235`, `1057018`) |
 
 **Handoff files:** `STATUS.md` (this file) + `CONTEXT.md`. Update both after major deploys.
 
