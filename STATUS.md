@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phase 4 complete — GraphRAG rules source)*
+*Last Updated: June 27, 2026 (Phase 5 in progress — Yogas UI live)*
 
 ---
 
@@ -33,7 +33,7 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Status:** Substantial, needs auth/DB integration and styling refinement.
 * **Key Achievements:** 16 structured routes (chart entry at **`/vedicastro`**, not `/horoscope`), SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, etc.
 * **Missing/Stalled:**
-  - Yogas page is a placeholder.
+  - Yogas page wired to CVCE `/yogas` + shadbala/SAV from chart payload (Phase 5).
   - NextAuth is a null-session scaffold; Postgres and Row-Level Security are not integrated.
   - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
@@ -81,7 +81,9 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - *Status:* **Completed.**
 
 ### Phase 5+: Feature Build-out & Integrations
-- [ ] Implement and wire missing features mapped during the Phase 3 gap analysis (Yogas panel, Ashtottari dasha, animated transits, etc.).
+- [x] Wire `/chart/yogas` UI to CVCE yogas + strength panels (YogasPanel, server-fetched chart).
+- [x] Fix dasha/special chart sub-routes to pass live chart data to explorer panels.
+- [ ] Implement remaining gap-analysis items (yoga detection engine gaps, Ashtottari, gochar rule fixes).
 - [ ] Integrate Postgres and database schema with Row-Level Security.
 - [ ] Build NextAuth and proxy-layer RBAC (free/pro/premium/admin roles).
 
