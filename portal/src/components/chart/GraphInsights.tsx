@@ -77,27 +77,81 @@ export function GraphInsights({ data }: { data: GraphEnhancements }) {
   );
 }
 
+function ordinal(n: number): string {
+  if (n === 1) return "1st";
+  if (n === 2) return "2nd";
+  if (n === 3) return "3rd";
+  if (n >= 11 && n <= 13) return `${n}th`;
+  const v = n % 10;
+  if (v === 1) return `${n}st`;
+  if (v === 2) return `${n}nd`;
+  if (v === 3) return `${n}rd`;
+  return `${n}th`;
+}
+
+/** Collapse verbose graph node labels into readable citation lines. */
+function pickDisplayEffects(
+  effects: { effect?: string; description?: string; relation?: string }[],
+  verdict?: string,
+): { primary: string | null; tags: string[] } {
+  const seen = new Set<string>();
+  let primary: string | null = null;
+  const tags: string[] = [];
+
+  const skip = (txt: string) =>
+    /transit houses from moon|gochara vedha pairs|life-area effect:|benefic effect:|malefic effect:/i.test(
+      txt,
+    ) || /^\d+(st|nd|rd|th) house from Moon/i.test(txt);
+
+  for (const e of effects) {
+    let txt = (e.effect || e.description || "").trim();
+    if (!txt || skip(txt)) continue;
+    // Strip redundant prefixes from graph labels
+    txt = txt
+      .replace(/^Life-area effect:\s*/i, "")
+      .replace(/:\s*.*effect:\s*/i, ": ")
+      .replace(/\s+/g, " ");
+    const key = txt.toLowerCase().slice(0, 80);
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    if (!primary && txt.length > 12) {
+      // Prefer an effect that matches the transit verdict
+      const lower = txt.toLowerCase();
+      if (
+        verdict === "ashubh" &&
+        (lower.includes("loss") ||
+          lower.includes("danger") ||
+          lower.includes("disease") ||
+          lower.includes("obstacle"))
+      ) {
+        primary = txt;
+      } else if (
+        verdict === "shubh" &&
+        (lower.includes("gain") ||
+          lower.includes("wealth") ||
+          lower.includes("promotion") ||
+          lower.includes("raja yoga"))
+      ) {
+        primary = txt;
+      } else if (!primary) {
+        primary = txt;
+      }
+    } else if (tags.length < 3 && txt.length <= 48) {
+      tags.push(txt);
+    }
+  }
+
+  return { primary, tags };
+}
+
 function TransitTab({ citations, prefersReduced }: { citations: TransitCitation[]; prefersReduced: boolean | null }) {
   return (
     <div className="grid gap-3">
       {citations.map((c, i) => {
         const effects = c.classical_effects ?? [];
-        // Categorize: meaningful effects vs house listing data
-        const meaningfulEffects = effects.filter(e => {
-          const txt = (e.effect || e.description || "").toLowerCase();
-          return !txt.includes("transit houses from moon") 
-            && !txt.includes("gochara vedha pairs")
-            && !txt.includes("life-area effect");
-        });
-        const housePills = effects.filter(e => {
-          const txt = (e.effect || e.description || "");
-          return txt.match(/^\d+(st|nd|rd|th) house from Moon/i);
-        });
-        const effectDescriptions = effects.filter(e => {
-          const txt = (e.effect || e.description || "").toLowerCase();
-          return txt.includes("life-area effect") || txt.includes("benefic effect") || txt.includes("malefic effect");
-        });
-        
+        const { primary, tags } = pickDisplayEffects(effects, c.verdict);
+
         return (
         <motion.div
           key={c.planet}
@@ -106,11 +160,13 @@ function TransitTab({ citations, prefersReduced }: { citations: TransitCitation[
           transition={{ delay: i * 0.04 }}
           className="rounded-xl border border-hairline p-3 hover:bg-[color-mix(in_srgb,var(--color-accent)_3%,transparent)] transition-colors"
         >
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
             <span className="text-sm font-medium">{c.planet}</span>
             {c.rashi && <span className="text-xs text-text-muted font-mono">in {c.rashi}</span>}
             {c.house_from_janma != null && (
-              <span className="text-xs text-text-muted font-mono">· {c.house_from_janma}th from Moon</span>
+              <span className="text-xs text-text-muted font-mono">
+                · {ordinal(c.house_from_janma)} from Moon
+              </span>
             )}
             {c.verdict && (
               <span className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded ${c.verdict === "shubh" ? "bg-success/15 text-success" : c.verdict === "ashubh" ? "bg-danger/15 text-danger" : "bg-warning/15 text-warning"}`}>
@@ -118,30 +174,23 @@ function TransitTab({ citations, prefersReduced }: { citations: TransitCitation[
               </span>
             )}
           </div>
-          {effectDescriptions.length > 0 && (
-            <div className="mb-2">
-              {effectDescriptions.slice(0, 3).map((e, j) => (
-                <p key={j} className="text-xs text-text-muted leading-relaxed">
-                  {(e.effect || e.description || "").replace(/Life-area effect: /i, "").replace(/: .*effect: /i, ": ")}
-                </p>
+          {primary && (
+            <p className="text-xs text-text-muted leading-relaxed mb-2 line-clamp-3">
+              {primary}
+            </p>
+          )}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {tags.map((t, j) => (
+                <span key={j} className="text-[10px] px-2 py-0.5 rounded-full border border-hairline text-text-muted truncate max-w-[200px]">
+                  {t}
+                </span>
               ))}
             </div>
           )}
-          <div className="flex flex-wrap gap-1">
-            {housePills.slice(0, 4).map((e, j) => (
-              <span key={j} className="text-[10px] px-2 py-0.5 rounded-full border border-hairline text-text-muted">
-                {e.effect || e.description || ""}
-              </span>
-            ))}
-            {meaningfulEffects.length === 0 && housePills.length === 0 && effects.slice(0, 3).map((e, j) => (
-              <span key={j} className="text-[10px] px-2 py-0.5 rounded-full border border-hairline text-text-muted">
-                {(e.effect || e.description || "").substring(0, 60)}
-              </span>
-            ))}
-          </div>
-          {c.vedha_pairs && (
-            <p className="mt-2 text-[11px] text-warning">
-              {c.vedha_pairs.split(";")[0]}
+          {c.vedha_pairs && !c.vedha_pairs.includes("NO Vedha") && (
+            <p className="mt-2 text-[11px] text-warning line-clamp-1" title={c.vedha_pairs}>
+              Vedha active
             </p>
           )}
         </motion.div>

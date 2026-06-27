@@ -13,6 +13,7 @@ activity name) and returns enriched output with:
 
 from __future__ import annotations
 
+import re
 from typing import Optional
 
 from .graph import GraphRAG
@@ -69,6 +70,33 @@ class PredictionEnhancer:
 
     # ── Private helpers ───────────────────────────────────────────────────
 
+    def _filter_effects(self, effects: list, verdict: str) -> list:
+        """Return at most 4 deduplicated, readable effects (skip graph metadata noise)."""
+        out: list[dict] = []
+        seen: set[str] = set()
+        skip_re = (
+            "transit houses from moon",
+            "gochara vedha pairs",
+            "life-area effect:",
+            "benefic effect:",
+            "malefic effect:",
+        )
+        for e in effects:
+            txt = (e.get("effect") or "").strip()
+            low = txt.lower()
+            if not txt or any(s in low for s in skip_re):
+                continue
+            if re.match(r"^\d+(st|nd|rd|th) house from moon", low):
+                continue
+            key = low[:72]
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(e)
+            if len(out) >= 4:
+                break
+        return out
+
     def _transit_citations(self, planet_predictions: list) -> list[dict]:
         """For each transiting planet, find classical effect descriptions."""
         citations = []
@@ -91,7 +119,7 @@ class PredictionEnhancer:
                         "confidence": e.get("confidence", 1.0),
                         "relation": e.get("relation", ""),
                     }
-                    for e in effects[:8]
+                    for e in self._filter_effects(effects, getattr(pp, "verdict", "neutral"))
                 ],
             }
             if vedha_info:
