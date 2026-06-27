@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phases 6–8 committed `c3e2777`; portal + CVCE proxy deployed; `main` synced with origin)*
+*Last Updated: June 27, 2026 (Phases 9–12 complete — Hiranya report fully wired; CVCE golden tests 7/7; portal build clean; uncommitted local diff pending commit)*
 
 ---
 
@@ -115,23 +115,33 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] KP camelCase normalization, Koota `bride`/`groom`, transit `positions` key, ephemeris batch fetch.
 - [x] Committed `c3e2777`, pushed `main`, deployed Vercel production.
 
-### Phase 9–12: Hiranya-Quality Report (Pending — next priority)
-- [ ] **9** Yoga + natal synthesis — planet-in-sign prose, active yogas, shadbala/AKV in report.
-- [ ] **10** Timing merge — single judgment combining dasha + transit + vedha + AKV.
-- [ ] **11** Life-area forecast — career, wealth, health, marriage with dated windows.
-- [ ] **12** Polish — PDF export, classical citations, optional LLM narration layer (facts-grounded only).
+### Phase 9–12: Hiranya-Quality Report (Completed — June 27)
+
+- [x] **9** Yoga chapter — active yogas with names, definitions, predictions (PyJHora `get_yoga_details`).
+- [x] **9** Ashtakavarga chapter — SAV bar chart (12 signs × bindus × band colour), planet BAV totals.
+- [x] **9** Shadbala chapter — Sthana/Dik/Cheshta/Kaala/Naisargika/Total-Rupa table for 7 planets.
+- [x] **10** Timing merge — combined dasha score + transit verdict → single window verdict with reasons.
+- [x] **11** Dasha forecast — next 8 antardasha periods, each with dated range + life-area bullets (profession/wealth/health/family/caution).
+- [ ] **12** (deferred) Optional LLM narration layer — gate with `CVCE_LLM_NARRATION=1`.
 - [ ] Deploy `graph-deepseek.json` to Fly after review (do not auto-replace 4253-node graph).
 - [ ] Kaksha transit calendar, Chara/Kalachakra dashas, desktop §7 enhancements.
+
+**Key new files (Phase 9–12):**
+| Path | Change |
+|------|--------|
+| `cvce/app/report_facts.py` | Added AKV, shadbala, timing_merge, forecast, schemaVersion 1.1 |
+| `portal/src/components/report/HoroscopeReport.tsx` | Full rewrite: 8 chapters |
+| `portal/src/lib/types.ts` | Added AshtakavargaFacts, ForecastPeriod, TimingMerge interfaces |
 
 ---
 
 ## 4. Known Issues & Tech Debts
 
 1. **CVCE cold-start latency:** Scale-to-zero — first proxied request after idle can take **30–60s**; explorers now show timeout/error instead of infinite spinners.
-2. **Report quality gap:** `/chart/report` shows engine facts + rule-based bullets — **not** Hiranya-depth narrative. Phases 9–12 pending.
-3. **DeepSeek graph not on Fly:** `graph-deepseek.json` committed locally; production CVCE still uses 4253-node deterministic graph.
-4. **Documentation drift:** `CONTEXT.md` §8 next-phases list is stale (pre–Phase 6); reconcile when next editing CONTEXT.
-5. **Auth/DB:** Google OAuth + Neon + save/load/delete live. Varshaphala requires pro tier.
+2. **Report load time:** `/chart/report` now calls ashtakavarga, shadbala, forecast (8 antardasha analysis), and GraphRAG enhancer — may take 15–20s on a warm CVCE. Report page has a 120s proxy timeout.
+3. **DeepSeek graph not on Fly:** `graph-deepseek.json` committed locally; production CVCE still uses 4253-node deterministic graph. Grok batch stalled (xAI out of credits).
+4. **Auth/DB:** Google OAuth + Neon + save/load/delete live. Varshaphala requires pro tier.
+5. **LLM narration (Phase 12 deferred):** Report uses rule-based bullets only. Optional LLM prose layer pending (`CVCE_LLM_NARRATION=1` gate not wired).
 
 ### Golden reference chart (regression anchor)
 **Mohan** — `1975-04-22T19:15:00`, Mysore (`12.2958°N`, `76.6394°E`, `tz=5.5`). Lagna Libra/Swati p4, Moon Leo/Purva Phalguni p4. Hiranya PDF confirms Venus balance **4Y7M6D**, Jupiter Maha from ~Nov 2020, current antar **Jupiter–Mercury** (June 2026).

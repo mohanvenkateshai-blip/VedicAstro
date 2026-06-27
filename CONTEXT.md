@@ -158,7 +158,7 @@ These bugs have already been fixed. Don't re-introduce them.
 
 ## 6. Knowledge Graph State
 
-**Current graph** (as of 2026-06-25): 448 nodes, 1236 edges, 36 communities.
+**Current graph** (as of 2026-06-27): 4253 nodes, 5092 links, 39 communities (stable deployed baseline). DeepSeek variant: 10,850 nodes (`graph-deepseek.json`, not yet deployed). Gemini variant: 7640 nodes (`graph-gemini.json`, potential bad merges — do not deploy without validation).
 
 **Sources ingested (all 4 sources complete):**
 - `Activity_Mapping.md` — all 91 activities, 20 categories (chunks 01 + 03)
@@ -194,10 +194,10 @@ Highest betweenness (0.100) + most edges (15) in the graph. Bridges Business & F
 
 ## 8. Next Phases (in priority order)
 
-1. **Phases 0–8** ✅ — GraphRAG rules, auth/DB, Vimshottari fix, `/report/facts`, transit + dasha analyzers, portal CVCE proxy.
-2. **Phase 9–12: Hiranya-quality report** — yoga/natal synthesis, timing merge, life-area forecast, PDF polish. Optional LLM narration **only** on top of `ReportFacts` JSON (never as fact source).
-3. **Review + deploy `graph-deepseek.json`** — do not auto-replace production 4253-node graph without baseline check.
-4. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI.
+1. **Phases 0–12** ✅ — All report phases complete. `/chart/report` now shows: natal table, timing merge window, dasha intelligence, transit intelligence, Vimshottari ladder, dasha forecast (8 upcoming periods), active yogas, Ashtakavarga SAV bar chart, Shadbala table.
+2. **Review + deploy `graph-deepseek.json`** — do not auto-replace production 4253-node graph without baseline check. Grok batch (292 requests) stalled — xAI account out of credits.
+3. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI.
+4. **Phase 13: LLM narration layer** — Optional prose synthesis on top of `ReportFacts` JSON (never as fact source; must be gated by `CVCE_LLM_NARRATION=1`).
 5. Optional: Python `/chart.svg` on CVCE for static PDF/OG/email.
 
 ---

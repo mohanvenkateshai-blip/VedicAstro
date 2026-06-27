@@ -293,6 +293,46 @@ export interface DashaIntelligence {
   classical_basis: string[];
 }
 
+export interface SavAnnotated {
+  sign: string;
+  bindus: number;
+  band: "excellent" | "good" | "standard" | "depleted";
+}
+
+export interface AshtakavargaFacts {
+  bav: Record<string, number[]>;
+  sav: number[];
+  sav_annotated: SavAnnotated[];
+  planet_totals: Record<string, number>;
+  total: number;
+}
+
+export interface ForecastPeriod {
+  maha: string;
+  antar: string;
+  start: string;
+  end: string;
+  durationYears: number;
+  isCurrent: boolean;
+  verdict: "shubh" | "ashubh" | "mixed";
+  score: number;
+  summary: string;
+  profession: string[];
+  wealth: string[];
+  health: string[];
+  family: string[];
+  caution: string[];
+}
+
+export interface TimingMerge {
+  verdict: "shubh" | "ashubh" | "mixed";
+  label: string;
+  score: number;
+  dasha_score: number;
+  transit_verdict: string;
+  reasons: string[];
+}
+
 export interface ReportFacts {
   schemaVersion: string;
   meta: {
@@ -323,7 +363,15 @@ export interface ReportFacts {
   };
   dasha_intelligence?: DashaIntelligence | null;
   transit_intelligence?: TransitIntelligence | null;
-  yogas?: { activeCount?: number; yogas?: Record<string, { name?: string; prediction?: string }> };
+  timing_merge?: TimingMerge | null;
+  forecast?: ForecastPeriod[] | null;
+  yogas?: {
+    activeCount?: number;
+    totalChecked?: number | null;
+    yogas?: Record<string, { name?: string; definition?: string; prediction?: string }>;
+  } | null;
+  ashtakavarga?: AshtakavargaFacts | null;
+  shadbala?: Record<string, Record<string, number | null>> | null;
   panchanga?: Record<string, unknown> | null;
 }
 
