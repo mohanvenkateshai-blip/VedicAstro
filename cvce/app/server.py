@@ -23,7 +23,7 @@ from collections import defaultdict
 from typing import Optional
 
 from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import Response
+from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -204,6 +204,31 @@ def health():
 
 
 @app.get("/")
+def index():
+    """Browser-friendly landing — CVCE is an API; use the portal for the UI."""
+    return JSONResponse({
+        "service": "VedicAstro CVCE",
+        "description": "Canonical Vedic Calculation Engine (API only — no web UI here)",
+        "status": "ok",
+        "engine": "PyJHora",
+        "version": getattr(const, "_APP_VERSION", "4.8.7"),
+        "portal": "https://portal-omega-two-10.vercel.app/vedicastro",
+        "status_page": "https://portal-omega-two-10.vercel.app/status",
+        "endpoints": {
+            "health": "GET /health",
+            "chart": "POST /chart",
+            "predict": "POST /predict",
+            "yogas": "POST /yogas",
+            "docs": "GET /docs",
+        },
+        "example": {
+            "chart": "curl -s https://vedicastro-cvce.fly.dev/chart -H 'content-type: application/json' "
+                      "-d '{\"birth_datetime\":\"1975-04-22T19:15:00\",\"birth_lat\":12.2958,"
+                      "\"birth_lon\":76.6394,\"birth_tz\":5.5,\"name\":\"Mohan\"}'",
+        },
+    })
+
+
 @app.get("/favicon.ico")
 def favicon():
     return Response(status_code=204)
