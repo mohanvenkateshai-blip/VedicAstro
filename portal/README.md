@@ -4,7 +4,7 @@ The web portal for VedicShastra AI — Next.js 16 (App Router) + React 19 +
 Tailwind v4, implementing the `DESIGN.md` system. Server-renders horoscopes by
 calling the hosted **CVCE** engine; deployed to Vercel.
 
-**Live:** https://portal-omega-two-10.vercel.app  ·  `/horoscope` casts a chart.
+**Live:** https://portal-omega-two-10.vercel.app  ·  `/vedicastro` casts a chart.
 
 ## Architecture
 
@@ -24,7 +24,7 @@ mirrored in `src/lib/types.ts` (kept in lockstep with
 src/
   app/
     page.tsx              landing (premium/calm, per DESIGN.md)
-    horoscope/page.tsx    birth form + server-rendered chart (defaults to a demo)
+    vedicastro/page.tsx    birth form + server-rendered chart (defaults to a demo)
     layout.tsx            header, fonts, theme (no-flash), footer
     globals.css           DESIGN.md tokens (light + dark via .dark)
   components/

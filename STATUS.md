@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 26, 2026 (Active Session: Phase 1)*
+*Last Updated: June 27, 2026 (Active Session: Phase 2 — CVCE recovery)*
 
 ---
 
@@ -26,23 +26,24 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Missing/Stalled:**
   - GraphRAG is not wired as the rules source for `/predict` (currently using hardcoded `transit_rules.py`).
   - Ashtottari dasha calculations are missing (PyJHora lacks the module on Fly).
-  - Version Control: **Not initialized under Git.**
+  - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
 ### B. Portal (Web Application)
 * **Location:** `portal/` (Next.js 16.2.x, React 19, Tailwind v4)
 * **Status:** Substantial, needs auth/DB integration and styling refinement.
-* **Key Achievements:** 16 structured routes, SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, etc.
+* **Key Achievements:** 16 structured routes (chart entry at **`/vedicastro`**, not `/horoscope`), SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, etc.
 * **Missing/Stalled:**
   - Yogas page is a placeholder.
   - NextAuth is a null-session scaffold; Postgres and Row-Level Security are not integrated.
-  - Version Control: Git initialized locally, but has **no remote** and 90% of the active app (`components/`, `lib/`, `api/`, `app/(main)`) is **untracked** (never committed).
+  - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
 ### C. Knowledge Graph (Rules & Citations Base)
 * **Location:** `knowledge-graph/` (Python tools, JSON database)
 * **Status:** Ingestion Complete (448 nodes, 1236 edges, 36 communities).
 * **Key Achievements:** Fully ingested `Activity_Mapping.md` (91 activities), `Gochar_Phaladeepika_Pulippani.md`, `BPHS Vol 1`, and `Phaladeepika_Mantreswara.md`. Key finding: Rohiṇī identified as the central hub of the Muhurta network.
+* **GraphRAG scope (important):** Citation enrichment via `PredictionEnhancer` is **done** (see `portal/docs/feature-progress.json` F01). Routing `/predict` rule selection through `graph.json` queries is **not done** — Phase 4 (F31).
 * **Missing/Stalled:**
-  - Version Control: **Not initialized under Git.**
+  - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
 ---
 
@@ -57,9 +58,9 @@ We are strictly following a **phase-by-phase execution sequence with review gate
 - [x] Align CONTEXT.md and verify all reference pointers.
 - *Status:* **Completed.** Review gate passed.
 
-### Phase 1: Unified Version Control Foundation (In Progress)
-- [ ] Initialize `VedicAstro/` as a clean, single Git monorepo. Add a proper `.gitignore` and push to new remote `mohanvenkateshai-blip/VedicAstro`.
-- [ ] Separately, resolve the 5 modified files in the frozen `panchanga_muhurtha` repository (investigate if they match the live site, commit locally, and push to origin safely without triggering accidental Vercel redeploys).
+### Phase 1: Unified Version Control Foundation (Completed)
+- [x] Initialize `VedicAstro/` as a clean, single Git monorepo. Add a proper `.gitignore` and push to new remote `mohanvenkateshai-blip/VedicAstro`.
+- [x] Separately, resolve the 5 modified files in the frozen `panchanga_muhurtha` repository (investigated diff, committed additive chart refactors, and pushed to origin).
 
 ### Phase 2: CVCE Recovery & Diagnostics
 - [ ] Run Fly CLI diagnostics on the `vedicastro-cvce` app (logs, status, scaling configurations).
@@ -82,11 +83,12 @@ We are strictly following a **phase-by-phase execution sequence with review gate
 
 ## 4. Known Issues & Tech Debts
 
-1. **CVCE Connection Timeout:** Live engine at `vedicastro-cvce.fly.dev` is currently unreachable.
-2. **Untracked Portal Files:** Serious risk of code loss due to missing git commits in `portal/`.
+1. **CVCE Connection Timeout:** Live engine at `vedicastro-cvce.fly.dev` is currently unreachable (Phase 2 target).
+2. **Documentation drift (reconciled June 27):** Root `README.md` and `portal/docs/feature-progress.json` now align with this file on CVCE offline status, `/vedicastro` route, and GraphRAG scope (enrichment vs rules source).
 3. **Stale Paths in Docs:** Legacy scripts or local path references (e.g. `/home/claude/work`) left behind by previous tools.
 4. **Ashtottari Dasha Module Missing:** PyJHora on Fly lacks this.
 5. **Transit Citations Verbose:** Citations require categorization on the enhancer-side.
+6. **Auth/DB scaffold only:** NextAuth, Neon client, and save/load code exist but production RBAC + RLS are Phase 5+ (see F03–F05 in `feature-progress.json`).
 
 ---
 
