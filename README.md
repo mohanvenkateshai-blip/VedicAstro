@@ -52,10 +52,20 @@ See [`portal/README.md`](portal/README.md).
 
 ## Knowledge graph & GraphRAG scope
 
-The offline knowledge graph (`knowledge-graph/graphify-out/graph.json`, ~448 nodes)
+The offline knowledge graph (`knowledge-graph/graphify-out/graph.json`, 553 nodes as of June 2026)
 is **ingestion-complete**. GraphRAG powers **citation enrichment** (`PredictionEnhancer`)
 and **transit house rules** for `/predict` when `CVCE_GRAPH_AS_RULES=1` (enabled on Fly).
 Unset the env var to fall back to hardcoded `transit_rules.py` for regression safety.
+
+After re-running graphify, sync the deploy copy:
+
+```bash
+./scripts/sync-graph.sh          # copy graphify-out → cvce/graph_rag/graph.json
+./scripts/sync-graph.sh --check  # verify counts match (no copy)
+./scripts/sync-graph.sh --deploy # copy + fly deploy
+```
+
+Live graph stats: [portal /status](https://portal-omega-two-10.vercel.app/status) → **Knowledge graph (GraphRAG)** section.
 
 ## Roadmap (phased — see STATUS.md for detail)
 

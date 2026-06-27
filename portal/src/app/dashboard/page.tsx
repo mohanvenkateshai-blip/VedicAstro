@@ -3,6 +3,8 @@ import { getHoroscopes, dbHealthy } from "@/lib/auth/index";
 import { signOut } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { DeleteChartButton } from "@/components/DeleteChartButton";
+import { maxSavedCharts } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +29,8 @@ export default async function DashboardPage() {
           <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
           <p className="mt-1 text-sm text-text-muted">
             Signed in as {session.email} · {session.role} tier
+            {" · "}
+            {charts.length}/{maxSavedCharts(session.role)} saved
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -86,12 +90,11 @@ export default async function DashboardPage() {
               const href = `/vedicastro?name=${encodeURIComponent(c.name)}&date=${birthDate}&time=${birthTime}&lat=${meta.birth_lat ?? ""}&lon=${meta.birth_lon ?? ""}&tz=${meta.birth_tz ?? ""}`;
 
               return (
-              <Link
+              <div
                 key={c.id}
-                href={href}
                 className="flex items-center justify-between gap-4 px-5 py-3 hover:bg-[color-mix(in_srgb,var(--color-accent)_3%,transparent)] transition-colors"
               >
-                <div className="min-w-0">
+                <Link href={href} className="min-w-0 flex-1">
                   <div className="text-sm font-medium">{c.name}</div>
                   <div className="mt-0.5 text-xs text-text-muted flex flex-wrap gap-x-2 gap-y-0.5">
                     {birthDate && (
@@ -104,9 +107,12 @@ export default async function DashboardPage() {
                       Saved {new Date(c.created_at).toLocaleDateString()}
                     </span>
                   </div>
+                </Link>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs text-text-muted font-mono">{c.id.slice(0, 8)}</span>
+                  <DeleteChartButton id={c.id} />
                 </div>
-                <span className="shrink-0 text-xs text-text-muted font-mono">{c.id.slice(0, 8)}</span>
-              </Link>
+              </div>
             );
             })}
           </div>

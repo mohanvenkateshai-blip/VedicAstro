@@ -204,17 +204,14 @@ def compute_ashtakavarga(natal_sign: dict, lagna_sign_idx: int) -> AshtakavargaR
                 arr[(base + dist - 1) % 12] += 1
         bav[planet] = arr
 
-    # SAV: sum all BAVs = 337 (mathematical invariant, BPHS Ch.67)
-    sav = [0] * 12
+    # Apply Trikona Shodhana per BPHS Ch.67, then Ekadhipatya on SAV
     for planet in bav:
-        for s in range(12):
-            sav[s] += bav[planet][s]
-    # Trikona Shodhana deferred — requires redistribution logic to preserve SAV=337
+        bav[planet] = _trikona_shodhana(bav[planet])
 
-    # Planet totals
+    sav = [sum(bav[p][s] for p in bav) for s in range(12)]
+    sav = _ekadhipatya_shodhana(bav, sav)
+
     planet_totals = {p: sum(bav[p]) for p in bav}
-
-    # Verify invariant: SAV sum = 337
     total_sav = sum(sav)
 
     return AshtakavargaResult(
@@ -280,7 +277,7 @@ def _get_band(bindus: int) -> tuple:
         return SAV_BANDS["excellent"]
     if bindus >= 28:
         return SAV_BANDS["good"]
-    if bindus >= 22:
+    if bindus >= 25:
         return SAV_BANDS["standard"]
     return SAV_BANDS["depleted"]
 

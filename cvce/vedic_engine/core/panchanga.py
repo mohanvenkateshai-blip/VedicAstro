@@ -333,6 +333,7 @@ class PanchangaResult:
     tithi_num: int
     tithi_paksha: str
     tithi_group: str
+    tithi_lord: str
     tithi_verdict: str
     tithi_end_hr: float
 
@@ -411,6 +412,7 @@ def compute_panchanga(date_str: str = None, time_str: str = "12:00",
     tip = tithi_num if tithi_num <= 15 else (30 if tithi_num == 30 else tithi_num - 15)
     group = "Purna" if tithi_num == 30 else tithi_group(tip)
     grp_qual = GROUP_INFO.get(group, ("", "", "", "neutral"))[3]
+    tithi_lord = GROUP_INFO.get(group, ("", "", "", "neutral"))[0]
     tithi_end = end_clock(ts)
 
     # Nakshatra
@@ -458,7 +460,7 @@ def compute_panchanga(date_str: str = None, time_str: str = "12:00",
         date=date_str, time=time_str, lat=lat, lon=lon, tz=tz,
         weekday=weekday, sunrise=sunrise, sunset=sunset,
         tithi_name=tithi_name(tip, tithi_num), tithi_num=tithi_num,
-        tithi_paksha=paksha, tithi_group=group, tithi_verdict=tithi_v,
+        tithi_paksha=paksha, tithi_group=group, tithi_lord=tithi_lord, tithi_verdict=tithi_v,
         tithi_end_hr=tithi_end,
         nakshatra=nak_name, nakshatra_nature=nak_nature,
         nakshatra_lord=nak_lord, nakshatra_verdict=nak_v,

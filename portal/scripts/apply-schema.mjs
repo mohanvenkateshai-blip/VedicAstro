@@ -34,16 +34,31 @@ function loadEnvFile(path) {
 }
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-loadEnvFile(join(root, ".env.local"));
+const envLocalPath = join(root, ".env.local");
+loadEnvFile(envLocalPath);
 loadEnvFile(join(root, ".env"));
 
 // Allow: npm run db:schema -- 'postgres://...'
 const cliUrl = process.argv[2]?.trim();
 const url = (cliUrl || process.env.DATABASE_URL)?.trim();
+
+function envLocalHasEmptyDatabaseUrl() {
+  if (!existsSync(envLocalPath)) return false;
+  return readFileSync(envLocalPath, "utf8")
+    .split("\n")
+    .some((line) => {
+      const t = line.trim();
+      if (!t.startsWith("DATABASE_URL=")) return false;
+      const val = t.slice("DATABASE_URL=".length).trim().replace(/^["']|["']$/g, "");
+      return val.length === 0;
+    });
+}
+
 if (!url) {
+  const vercelRedacted = envLocalHasEmptyDatabaseUrl();
   console.error(`
 DATABASE_URL is missing or empty.
-
+${vercelRedacted ? "\nYour .env.local has DATABASE_URL=\"\" — Vercel CLI never downloads secret values.\nRemove that line and paste the real Neon URL from the Vercel dashboard (Reveal).\n" : ""}
 Option A — paste connection string for this run only (safest):
   DATABASE_URL='postgres://USER:PASS@HOST/DB?sslmode=require' npm run db:schema
 
@@ -53,13 +68,14 @@ Option B — add to portal/.env.local (get value from Vercel or Neon):
   Vercel:  https://vercel.com → vedicastro → Settings → Environment Variables → DATABASE_URL → Reveal
   Neon:    https://console.neon.tech → project teal-prism → Connect → connection string
 
-  Tip: also add DATABASE_URL to the **Development** environment in Vercel so
-  \`vercel env pull\` works locally for \`npm run dev\`.
+  Note: \`vercel env pull\` and \`vercel env run\` cannot expose DATABASE_URL locally.
 
 Option C — Neon SQL Editor (no local URL needed):
   1. Open Neon console → SQL Editor
   2. Paste contents of: portal/src/lib/auth/schema.sql
   3. Run
+
+Production schema is already applied if /status shows Neon as "connected".
 `);
   process.exit(1);
 }
@@ -80,9 +96,24 @@ const statements = sqlText
 
 const sql = neon(url);
 
+async function runStatement(stmt) {
+  // Neon serverless v1.1+: use sql.query() for raw DDL — NOT sql(stmt)
+  return sql.query(stmt, []);
+}
+
 for (const stmt of statements) {
   console.log("→", stmt.split("\n")[0].slice(0, 72), "…");
-  await sql.query(stmt);
+  try {
+    await runStatement(stmt);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    if (msg.includes("tagged-template")) {
+      console.error(
+        "\nNeon driver API error: use sql.query(stmt), not sql(stmt). Update apply-schema.mjs and retry.",
+      );
+    }
+    throw e;
+  }
 }
 
 console.log("✓ Schema applied (%d statements)", statements.length);

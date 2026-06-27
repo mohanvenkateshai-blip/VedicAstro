@@ -16,6 +16,8 @@
 import { getSession as authSession } from "./session";
 import { sql, withUserContext } from "@/lib/db";
 import type { Role, Session } from "./types";
+import { redirect } from "next/navigation";
+import { hasAtLeast } from "./types";
 
 export type { Role, Session } from "./types";
 export { ROLE_RANK, hasAtLeast, PROTECTED_PREFIXES, ADMIN_PREFIXES } from "./types";
@@ -24,6 +26,14 @@ export { isAuthConfigured, isDatabaseConfigured } from "@/lib/auth-config";
 /** Replace the old scaffold getSession() with real NextAuth session. */
 export async function getSession(): Promise<Session | null> {
   return authSession();
+}
+
+/** Require signed-in session; optionally enforce minimum role tier. */
+export async function requireSession(minRole: Role = "free"): Promise<Session> {
+  const session = await getSession();
+  if (!session) redirect("/auth/signin?callbackUrl=/dashboard");
+  if (!hasAtLeast(session.role, minRole)) redirect("/dashboard?error=tier");
+  return session;
 }
 
 /** Create or update a user after OAuth sign-in. Called from auth callback. */
@@ -145,6 +155,25 @@ export async function getHoroscopes(userId: string): Promise<
   }
 
   return out;
+}
+
+/** Delete a saved horoscope (RLS-scoped). */
+export async function deleteHoroscope(userId: string, horoscopeId: string): Promise<boolean> {
+  const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
+    DELETE FROM horoscopes
+    WHERE id = ${horoscopeId}::uuid AND user_id = ${userId}
+    RETURNING id
+  `);
+  return rows.length > 0;
+}
+
+/** Count saved charts for tier limits. */
+export async function countHoroscopes(userId: string): Promise<number> {
+  const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
+    SELECT COUNT(*)::int AS n FROM horoscopes WHERE user_id = ${userId}
+  `);
+  const n = rows[0]?.n;
+  return typeof n === "number" ? n : Number(n) || 0;
 }
 
 /** Check if DB is healthy */

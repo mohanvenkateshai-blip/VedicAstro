@@ -110,9 +110,10 @@ class YoginiDasha:
     lord: str
     start_date: str
     end_date: str
-    duration_years: int
+    duration_years: float
     nature: str
     effect: str
+    antardashas: list = field(default_factory=list)
 
 
 @dataclass
@@ -127,7 +128,10 @@ class DashaResult:
     all_mahadashas: list = field(default_factory=list)
 
     # Yogini
+    balance_of_yogini: float = 0
     yogini_start: Optional[YoginiDasha] = None
+    current_yogini: Optional[YoginiDasha] = None
+    current_yogini_antardasha: Optional[DashaPeriod] = None
     all_yoginis: list = field(default_factory=list)
 
     # Synthesis
@@ -310,13 +314,27 @@ def compute_vimshottari(birth_date: str, birth_time: str = "12:00",
     return result
 
 
-def compute_yogini(birth_date: str, birth_nakshatra: str = None,
-                    query_date: str = None) -> list:
-    """Compute Yogini Dasha periods.
+def _yogini_antardashas(maha_years: float, start_date: str) -> list:
+    """Proportional Yogini antardashas within a Mahadasha."""
+    antars = []
+    current = start_date
+    for sub in YOGINI_ORDER:
+        sub_years = (maha_years * YOGINI_PERIODS[sub]) / 36.0
+        end = _add_years(current, sub_years)
+        antars.append({
+            "yogini": sub,
+            "start": current,
+            "end": end,
+            "years": sub_years,
+        })
+        current = end
+    return antars
 
-    The Yogini Dasha starts from the birth nakshatra's assigned Yogini.
-    Total cycle is 36 years (sum of all 8 Yoginis).
-    """
+
+def compute_yogini(birth_date: str, birth_nakshatra: str = None,
+                    birth_moon_lon: float = None,
+                    query_date: str = None) -> list:
+    """Compute Yogini Dasha periods with birth balance and antardashas."""
     start_yogini = _yogini_start(birth_nakshatra)
     if start_yogini is None:
         return []
@@ -324,26 +342,37 @@ def compute_yogini(birth_date: str, birth_nakshatra: str = None,
     if query_date is None:
         query_date = datetime.now().strftime("%Y-%m-%d")
 
-    start_idx = YOGINI_ORDER.index(start_yogini)
+    nak_span = 360 / 27
+    nak_idx = NAKSHATRAS.index(birth_nakshatra)
+    if birth_moon_lon is not None:
+        nak_start = nak_idx * nak_span
+        elapsed_fraction = ((birth_moon_lon % 360) - nak_start) / nak_span
+        elapsed_fraction = max(0.0, min(1.0, elapsed_fraction))
+    else:
+        elapsed_fraction = 0.5
 
+    start_idx = YOGINI_ORDER.index(start_yogini)
     yoginis = []
-    # Balance of Yogini at birth: proportional to nakshatra position
-    # (same fraction as Vimshottari — Moon's position within nakshatra)
     current = birth_date
+
     for i in range(8):
         idx = (start_idx + i) % 8
         name = YOGINI_ORDER[idx]
-        years = YOGINI_PERIODS[name]
+        full_years = YOGINI_PERIODS[name]
+        years = full_years * (1 - elapsed_fraction) if i == 0 else float(full_years)
         end = _add_years(current, years)
         info = YOGINI_EFFECTS[name]
+        antars = _yogini_antardashas(years, current)
         yoginis.append(YoginiDasha(
             yogini=name, lord=info["lord"],
             start_date=current, end_date=end,
             duration_years=years,
             nature=info["nature"],
             effect=info["effect"],
+            antardashas=antars,
         ))
         current = end
+        elapsed_fraction = 0.0
 
     return yoginis
 
@@ -362,11 +391,32 @@ def compute_dasha(birth_date: str, birth_time: str = "12:00",
                                    query_date=query_date)
 
     # Yogini Dasha
-    yoginis = compute_yogini(birth_date, birth_nakshatra, query_date)
-    result.all_yoginis = [y for y in yoginis if y.start_date <= query_date <= y.end_date]
+    yoginis = compute_yogini(
+        birth_date, birth_nakshatra,
+        birth_moon_lon=birth_moon_lon,
+        query_date=query_date,
+    )
+    result.all_yoginis = yoginis
 
-    if result.all_yoginis:
-        result.yogini_start = result.all_yoginis[0]
+    if yoginis:
+        first_balance = yoginis[0].duration_years
+        result.balance_of_yogini = first_balance
+        result.yogini_start = yoginis[0]
+
+    for y in yoginis:
+        if y.start_date <= query_date <= y.end_date:
+            result.current_yogini = y
+            for ad in y.antardashas:
+                if ad["start"] <= query_date < ad["end"]:
+                    result.current_yogini_antardasha = DashaPeriod(
+                        planet=ad["yogini"],
+                        start_date=ad["start"],
+                        end_date=ad["end"],
+                        duration_years=ad["years"],
+                        level="Yogini-Antar",
+                    )
+                    break
+            break
 
     # Build summary
     parts = []
@@ -379,9 +429,13 @@ def compute_dasha(birth_date: str, birth_time: str = "12:00",
         parts.append(f"  Dasha effect: {DASHA_EFFECTS.get(m.planet, '')}")
         parts.append(f"  Score: {result.dasha_score}")
 
-    if result.yogini_start:
-        y = result.yogini_start
-        parts.append(f"Yogini: {y.yogini} ({y.nature}) — {y.effect[:60]}...")
+    if result.current_yogini:
+        y = result.current_yogini
+        parts.append(f"Yogini: {y.yogini} Mahadasha ({y.start_date} → {y.end_date})")
+        ya = result.current_yogini_antardasha
+        if ya:
+            parts.append(f"  {ya.planet} Antardasha ({ya.start_date} → {ya.end_date})")
+        parts.append(f"  Nature: {y.nature} — {y.effect[:60]}...")
 
     result.summary = "\n".join(parts)
     return result

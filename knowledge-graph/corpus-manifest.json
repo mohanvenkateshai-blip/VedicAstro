@@ -1,0 +1,150 @@
+{
+  "sources": {
+    "Activity_Mapping.md": {
+      "bytes": 49277,
+      "sha256": "722fd553ae98fe30",
+      "path": "raw/Activity_Mapping.md"
+    },
+    "Ashtakavarga_System_Comprehensive_Handbook.md": {
+      "bytes": 14630,
+      "sha256": "3cfdc42151d2d5e0",
+      "path": "raw/Ashtakavarga_System_Comprehensive_Handbook.md"
+    },
+    "Brihat_Parasara_Hora_Sastra_Vol_1.md": {
+      "bytes": 1373469,
+      "sha256": "5b9d52391c5a44b7",
+      "path": "raw/Brihat_Parasara_Hora_Sastra_Vol_1.md"
+    },
+    "Do_Ghati_Muhurta_Comprehensive_Handbook.md": {
+      "bytes": 26937,
+      "sha256": "7a971294fbaa4165",
+      "path": "raw/Do_Ghati_Muhurta_Comprehensive_Handbook.md"
+    },
+    "Do_Ghati_Muhurta_Reference_Mysuru_Athlone.md": {
+      "bytes": 7482,
+      "sha256": "0f5f306c3c1c47c3",
+      "path": "raw/Do_Ghati_Muhurta_Reference_Mysuru_Athlone.md"
+    },
+    "FireShot Capture 034 - Vara Tithi Nakshatra Yogas - Celestial Alignments for Auspicious Be_ - [blog.cosmicinsights.net].md": {
+      "bytes": 3976,
+      "sha256": "7f19d243c9bbe569",
+      "path": "raw/FireShot Capture 034 - Vara Tithi Nakshatra Yogas - Celestial Alignments for Auspicious Be_ - [blog.cosmicinsights.net].md"
+    },
+    "Gochar_Phaladeepika_Pulippani.md": {
+      "bytes": 560117,
+      "sha256": "34965133b3de94f7",
+      "path": "raw/Gochar_Phaladeepika_Pulippani.md"
+    },
+    "Hora_Sara.md": {
+      "bytes": 777217,
+      "sha256": "8b15e8f8dd1d6e1e",
+      "path": "raw/Hora_Sara.md"
+    },
+    "Jaimini_Sutras.md": {
+      "bytes": 295325,
+      "sha256": "68bc8aa8a09a5762",
+      "path": "raw/Jaimini_Sutras.md"
+    },
+    "Jyotish_Yoga_Handbook_101.md": {
+      "bytes": 14760,
+      "sha256": "4b5a10702aae584b",
+      "path": "raw/Jyotish_Yoga_Handbook_101.md"
+    },
+    "Panchang_analysis_medhraj.md": {
+      "bytes": 3700,
+      "sha256": "98e934de22033130",
+      "path": "raw/Panchang_analysis_medhraj.md"
+    },
+    "Phaladeepika_English_Translation.md": {
+      "bytes": 1018577,
+      "sha256": "d9da8a5eb03436af",
+      "path": "raw/Phaladeepika_English_Translation.md"
+    },
+    "Phaladeepika_Mantreswara.md": {
+      "bytes": 475064,
+      "sha256": "e9b48af42e5c1be7",
+      "path": "raw/Phaladeepika_Mantreswara.md"
+    },
+    "Predict_Effectively_Through_Yogini_Dasha.md": {
+      "bytes": 101675,
+      "sha256": "5522066f47573915",
+      "path": "raw/Predict_Effectively_Through_Yogini_Dasha.md"
+    },
+    "Predicting_Through_Jaimini_Astrology.md": {
+      "bytes": 212185,
+      "sha256": "5c7e5e13b9b179f4",
+      "path": "raw/Predicting_Through_Jaimini_Astrology.md"
+    },
+    "Ravi_Yoga_Vedic_Astrology_Guide.md": {
+      "bytes": 4210,
+      "sha256": "d33d91cf1f6161c8",
+      "path": "raw/Ravi_Yoga_Vedic_Astrology_Guide.md"
+    },
+    "SBC_Vedha_and_Panchang_Reference_Guide.md": {
+      "bytes": 10639,
+      "sha256": "594a9e57eeb04ab4",
+      "path": "raw/SBC_Vedha_and_Panchang_Reference_Guide.md"
+    },
+    "Sarvartha_Chintamani.md": {
+      "bytes": 1063958,
+      "sha256": "74c5cad23cf98f7b",
+      "path": "raw/Sarvartha_Chintamani.md"
+    },
+    "Tara_Balam_Muhurta_Handbook.md": {
+      "bytes": 41905,
+      "sha256": "906a71eee7127010",
+      "path": "raw/Tara_Balam_Muhurta_Handbook.md"
+    },
+    "Tithi Astrology Master Reference Guide.md": {
+      "bytes": 18483,
+      "sha256": "f5f6e9cb892375fd",
+      "path": "raw/Tithi Astrology Master Reference Guide.md"
+    },
+    "Tithi\u2013Va\u0304ra Yoga Handbook.md": {
+      "bytes": 7352,
+      "sha256": "4445466cfebdaece",
+      "path": "raw/Tithi\u2013Va\u0304ra Yoga Handbook.md"
+    },
+    "To build an automated yoga and Muhurta computing engine.md": {
+      "bytes": 23179,
+      "sha256": "420993420262f840",
+      "path": "raw/To build an automated yoga and Muhurta computing engine.md"
+    },
+    "Vedic_Astrology_Panchang_Handbook.md": {
+      "bytes": 6394,
+      "sha256": "bc08697afbe75775",
+      "path": "raw/Vedic_Astrology_Panchang_Handbook.md"
+    },
+    "Vedic_Astrology_Tithi_Guide.md": {
+      "bytes": 3118,
+      "sha256": "66f58b1b612f0c41",
+      "path": "raw/Vedic_Astrology_Tithi_Guide.md"
+    },
+    "gemini-code-1780093366483.md": {
+      "bytes": 3732,
+      "sha256": "96c1fa0f7b3b2d1d",
+      "path": "raw/gemini-code-1780093366483.md"
+    },
+    "muhurta_yogas.md": {
+      "bytes": 22874,
+      "sha256": "f9d78c0b7b18e06d",
+      "path": "raw/muhurta_yogas.md"
+    },
+    "utpata_mrityu_kana_siddhi_handbook.md": {
+      "bytes": 4776,
+      "sha256": "bee3c8729052186c",
+      "path": "raw/utpata_mrityu_kana_siddhi_handbook.md"
+    },
+    "vedic_astrology_unified_handbook.md": {
+      "bytes": 16242,
+      "sha256": "77d32e87fa3f8587",
+      "path": "raw/vedic_astrology_unified_handbook.md"
+    },
+    "vedic_yoga_logic_engine.md": {
+      "bytes": 15828,
+      "sha256": "8cee1f8f580b2011",
+      "path": "raw/vedic_yoga_logic_engine.md"
+    }
+  },
+  "count": 29
+}

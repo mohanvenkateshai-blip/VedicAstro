@@ -123,6 +123,8 @@ LATTA_RULES = {
     "Mercury": (7, -1, "Loss of status, career collapse", "GPD-Ch1.6"),
     "Rahu": (9, -1, "Difficulties of all kinds, deception", "GPD-Ch1.6"),
     "Moon": (22, -1, "Humiliation, loss of honour, mental anxiety", "GPD-Ch1.6"),
+    # Ketu mirrors Rahu (GPD convention — nodes share star-affliction logic)
+    "Ketu": (9, -1, "Difficulties, sudden reversals, karmic obstacles", "GPD-Ch1.6"),
 }
 
 # =====================================================================
@@ -264,18 +266,38 @@ TARA_RESULTS = {
 }
 
 
+def _tara_exceptions(count: int, rem: int, paryaya: int) -> list:
+    """Classical Tara exceptions (GPD Ch.24)."""
+    exceptions = []
+    if count == 22:
+        exceptions.append(
+            "22nd Nakshatra (Vainasika) — destructive exception; avoid major durable events."
+        )
+    if count == 27:
+        exceptions.append(
+            "27th from Janma — Parama Maitra but restricted for marriage/travel/shaving; avoid 2nd half."
+        )
+    if rem == 1 and paryaya == 1:
+        exceptions.append("Janma Tara — negative effect lifts after midday.")
+    return exceptions
+
+
 def tara_of(count: int) -> dict:
     """Compute Tara classification from count (1-27) from Janma Nakshatra."""
     if count < 1:
         return None
     if count in TARA_RESULTS:
+        rem = count % 9 if count % 9 != 0 else 9
+        paryaya_num = TARA_RESULTS[count][4]
         return {
             "name": TARA_RESULTS[count][0],
             "description": TARA_RESULTS[count][1],
             "verdict": TARA_RESULTS[count][2],
             "paryaya": TARA_RESULTS[count][3],
+            "paryaya_num": paryaya_num,
             "count": count,
-            "rem": count % 9 if count % 9 != 0 else 9,
+            "rem": rem,
+            "exceptions": _tara_exceptions(count, rem, paryaya_num),
         }
     # Generic for high counts
     paryaya = 1 if count <= 9 else (2 if count <= 18 else 3)

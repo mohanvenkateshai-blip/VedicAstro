@@ -17,6 +17,8 @@ async function getSql(): Promise<NeonQueryFunction<any, any> | null> {
     try {
       const mod = await import("@neondatabase/serverless");
       _sql = mod.neon(url);
+      const { ensureSchema } = await import("@/lib/auth/migrate");
+      await ensureSchema();
       return _sql;
     } catch (e) {
       console.error("Failed to initialize Neon:", e);

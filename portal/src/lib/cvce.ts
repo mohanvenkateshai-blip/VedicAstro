@@ -52,6 +52,25 @@ export async function getChart(birth: BirthInput): Promise<ChartData> {
   return (await res.json()) as ChartData;
 }
 
+/** Horary chart for the current moment at the given location. */
+export async function getPrashna(params: {
+  lat: number;
+  lon: number;
+  tz: number;
+  datetime?: string;
+}): Promise<ChartData> {
+  const body: Record<string, unknown> = {
+    birth_lat: params.lat,
+    birth_lon: params.lon,
+    birth_tz: params.tz,
+    name: "Prashna",
+    ayanamsa: "LAHIRI",
+  };
+  if (params.datetime) body.birth_datetime = params.datetime;
+
+  return post<ChartData>("/prashna", body, 0);
+}
+
 async function post<T>(path: string, body: unknown, revalidate = 60 * 60): Promise<T> {
   const res = await fetch(`${CVCE_BASE_URL}${path}`, {
     method: "POST",

@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phase 5 — chart workspace URL params, Ashtottari fixed)*
+*Last Updated: June 27, 2026 (graph corpus 4253 nodes live; graphify deep extract partial; git uncommitted)*
 
 ---
 
@@ -32,20 +32,21 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ### B. Portal (Web Application)
 * **Location:** `portal/` (Next.js 16.2.x, React 19, Tailwind v4)
-* **Status:** Substantial, needs auth/DB integration and styling refinement.
-* **Key Achievements:** 16 structured routes (chart entry at **`/vedicastro`**, not `/horoscope`), SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, etc.
+* **Status:** Substantial; auth/DB live in production.
+* **Key Achievements:** 16 structured routes (chart entry at **`/vedicastro`**, not `/horoscope`), SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, Bhava, Graha, Prashna, etc.
 * **Missing/Stalled:**
-  - Chart workspace `/chart/*` routes share birth details via URL query params (June 27).
-  - NextAuth is a null-session scaffold; Postgres and Row-Level Security are not integrated.
+  - Varshaphala gated to **pro** tier; free users redirected from `/chart/varshaphala`.
+  - Desktop-suite items (30-cell worksheets, print profiles) remain out of web scope.
   - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
 ### C. Knowledge Graph (Rules & Citations Base)
 * **Location:** `knowledge-graph/` (Python tools, JSON database)
-* **Status:** Ingestion Complete (448 nodes, 1236 edges, 36 communities).
-* **Key Achievements:** Fully ingested `Activity_Mapping.md` (91 activities), `Gochar_Phaladeepika_Pulippani.md`, `BPHS Vol 1`, and `Phaladeepika_Mantreswara.md`. Key finding: Rohiṇī identified as the central hub of the Muhurta network.
-* **GraphRAG scope (important):** Citation enrichment via `PredictionEnhancer` is **done** (F01). Transit house rules from graph when `CVCE_GRAPH_AS_RULES=1` — **done** (F31, Phase 4).
-* **Missing/Stalled:**
-  - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
+* **Status:** **Production graph live — 4253 nodes, 5092 links, 28 hyperedges** (June 27).
+* **Build pipeline:** `scripts/sync-gyan-to-raw.sh` → `scripts/gyan-corpus-extract.py` (deterministic, 29 `raw/*.md`) → `knowledge-graph/graphify-out/graph.json` → `scripts/sync-graph.sh --deploy` (Fly).
+* **GraphRAG scope:** Citation enrichment **done**. Transit + muhurta rules from graph when `CVCE_GRAPH_AS_RULES=1` / `CVCE_GRAPH_AS_MUHURTA=1` — **done**. Engine wiring: `muhurta_rules_provider.py`, `muhurta_yogas.py`.
+* **Gemini deep extract (graphify):** Partial. Paid billing enabled on AI Studio (`gen-lang-client-0385751724`). `gemini-3.5-flash` deep run hit **503 high-demand** on ~7/23 chunks; failed merges must **not** be deployed (prunes deterministic nodes). **35 manifest entries** still missing `semantic_hash` → safe to retry incrementally.
+* **Stale artifact:** `cvce/data/graph.json` (448 nodes) — unused by runtime; remove or re-sync.
+* **Version Control:** Large local diff **not committed** — see §6 below.
 
 ---
 
@@ -89,8 +90,11 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] Fix Ashtottari dasha in `/dashas` (PyJHora nested lord tuple parsing).
 - [x] Dedupe GraphInsights transit citations (server + client filters).
 - [x] Auth/DB wiring — Google sub as user id, RLS on horoscopes, Neon probe on `/status`.
-- [ ] Implement remaining gap-analysis items (yoga detection engine gaps, gochar rule fixes).
-- [ ] RBAC tier gating (free/pro/premium/admin) in proxy and feature flags.
+- [x] RBAC tier gating — save limits, `requireSession()`, Varshaphala pro gate.
+- [x] Delete saved charts + dashboard UX.
+- [x] Bhava / Graha explorers, Prashna page, sidebar Export PDF + Classical Sources.
+- [x] Engine audit fixes — yoga detection gaps, gochar (Ketu Latta, Tara exceptions, Kantaka 7th, Vipareetha Vedha), Yogini balance+antardasha, Trikona Shodhana.
+- [ ] Kaksha transit calendar (A1 remainder), Chara/Kalachakra dashas, desktop §7 enhancements.
 
 ---
 
@@ -100,7 +104,7 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 2. **Documentation drift (reconciled June 27):** Root `README.md` and `portal/docs/feature-progress.json` now align with this file on CVCE offline status, `/vedicastro` route, and GraphRAG scope (enrichment vs rules source).
 3. **Stale Paths in Docs:** Legacy scripts or local path references (e.g. `/home/claude/work`) left behind by previous tools.
 4. **Transit citations (fixed June 27):** GraphInsights now collapses noisy graph metadata server- and client-side.
-5. **Auth/DB (Phase 5):** Google OAuth + Neon env on Vercel. Run `node portal/scripts/apply-schema.mjs` once against Neon to enable RLS. Tier-based RBAC still pending.
+5. **Auth/DB (Phase 5):** Google OAuth + Neon + save/load/delete live. Tier limits enforced on save; Varshaphala requires pro.
 
 ---
 
@@ -117,3 +121,15 @@ cd portal && npm run dev
 cd Panchang/panchanga_muhurtha
 python3 -m http.server 5599 # http://localhost:5599
 ```
+
+---
+
+## 6. Git, Vercel & Fly Deploy State (June 27)
+
+| Surface | How it deploys | Current state |
+|:---|:---|:---|
+| **CVCE (Fly)** | `fly deploy` / `./scripts/sync-graph.sh --deploy` from local | **Live** — graph 4253 nodes; engine fixes deployed from **uncommitted** local files |
+| **Portal (Vercel)** | Git push to `main` → Vercel build (typical) | **Partial** — Neon migrate + auth work on production; many Phase 5 portal files still **only local** (uncommitted) |
+| **Git** | Manual `git commit` + `git push` | **`main` has large uncommitted diff** — agents do not auto-commit unless you ask |
+
+**Handoff files:** `STATUS.md` (this file) + `CONTEXT.md` are the living handoff. Update both after major deploys; `CONTEXT.md` still shows legacy “277+ nodes” in topology diagram — reconcile when committing.

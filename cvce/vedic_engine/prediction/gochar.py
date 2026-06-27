@@ -59,6 +59,7 @@ class GocharResult:
     moorthy: Optional[dict] = None
     sade_sati: Optional[dict] = None
     ashtama_shani: Optional[dict] = None
+    kantaka_shani: Optional[dict] = None
     tara_balam: Optional[dict] = None
     overall_verdict: str = "neutral"
     overall_score: int = 0
@@ -165,6 +166,24 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
                             pred.score = 0
                         break
 
+            # Vipareetha Vedha — malefic transit softened when blocker occupies vedha house
+            vip = VIPAREETHA_VEDHA.get(planet, {})
+            if pred.house_quality in ("bad", "worst") and house in vip:
+                vedha_house = vip[house]
+                for tp in panch.transit:
+                    tp_rashi = rashi_index(tp["lon"])
+                    tp_house = ((tp_rashi - j_rashi_idx + 12) % 12) + 1
+                    if tp_house == vedha_house:
+                        pred.vipareetha_vedha_active = True
+                        pred.vipareetha_vedha_by = tp["planet"]
+                        pred.score = min(pred.score + 4, -1)
+                        if pred.verdict == "ashubh":
+                            pred.verdict = "neutral"
+                        pred.effects.append(
+                            f"Vipareetha Vedha by {tp['planet']} — severity reduced"
+                        )
+                        break
+
             # Combustion check (transiting planet near transiting Sun)
             sun_row = next((t for t in panch.transit if t["planet"] == "Sun"), None)
             if planet != "Sun" and sun_row and row["rashi"] == sun_row["rashi"]:
@@ -239,13 +258,20 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             elif sat_house == 2:
                 results.sade_sati = {"phase": "setting", **SADE_SATI_PHASES["setting"]}
             elif sat_house == 4:
-                results.ashtama_shani = {
+                results.kantaka_shani = {
                     "house": 4,
                     "effect": "Kantaka Shani — Saturn in 4th from Janma Rasi; domestic stress, property delays",
                 }
+            elif sat_house == 7:
+                results.kantaka_shani = {
+                    "house": 7,
+                    "effect": "Kantaka Shani — Saturn in 7th from Janma Rasi; danger to spouse, loss of status",
+                }
             elif sat_house == 8:
-                results.ashtama_shani = {"house": 8,
-                                          "effect": "Ashtama Shani — Saturn in 8th from Janma Rasi; obstacles, delays, health issues"}
+                results.ashtama_shani = {
+                    "house": 8,
+                    "effect": "Ashtama Shani — Saturn in 8th from Janma Rasi; obstacles, delays, health issues",
+                }
 
     # Tara Balam
     if j_nak_idx is not None:
@@ -261,9 +287,19 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
     scores = [p.score for p in results.planet_predictions]
     results.overall_score = sum(scores) if scores else 0
 
+    if results.moorthy:
+        if results.moorthy.get("verdict") == "shubh":
+            results.overall_score += 5
+        elif results.moorthy.get("verdict") == "ashubh":
+            results.overall_score -= 5
+
     if results.sade_sati:
         results.overall_score -= 15
-    if results.tara_balam and results.tara_balam["verdict"] == "ashubh":
+    if results.kantaka_shani:
+        results.overall_score -= 10
+    if results.ashtama_shani:
+        results.overall_score -= 8
+    if results.tara_balam and results.tara_balam.get("verdict") == "ashubh":
         results.overall_score -= 8
 
     if results.overall_score >= 15:
@@ -284,8 +320,21 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
     if results.sade_sati:
         parts.append(f"Sade Sati: {results.sade_sati['phase']} phase — {results.sade_sati['effect']}")
     if results.tara_balam:
+        tara_line = (
+            f"Tara Balam: {results.tara_balam['name']} "
+            f"({results.tara_balam['verdict']}, Paryaya {results.tara_balam['paryaya']})"
+        )
+        parts.append(tara_line)
+        for exc in results.tara_balam.get("exceptions") or []:
+            parts.append(f"Tara note: {exc}")
+    if results.kantaka_shani:
+        parts.append(results.kantaka_shani["effect"])
+    if results.ashtama_shani:
+        parts.append(results.ashtama_shani["effect"])
+    if results.moorthy:
         parts.append(
-            f"Tara Balam: {results.tara_balam['name']} ({results.tara_balam['verdict']}, Paryaya {results.tara_balam['paryaya']})")
+            f"Moorthi Nirnaya: {results.moorthy['name']} — {results.moorthy['description']}"
+        )
     results.synthesis = " | ".join(parts) if parts else "No natal chart — transit-only analysis"
 
     return results

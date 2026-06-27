@@ -324,6 +324,35 @@ def _is_in_kona(house: int) -> bool:
     return house in KONA
 
 
+CLASSICAL_GRAHAS = frozenset({"Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"})
+PANAPHARA = [2, 5, 8, 11]
+APOKLIMA = [3, 6, 9, 12]
+
+
+def _sign_lord(rashi_name: str) -> str:
+    for planet, signs in PLANET_OWNERSHIP.items():
+        if rashi_name in signs:
+            return planet
+    return ""
+
+
+def _lords_conjunct_or_exchange(
+    h1: int, h2: int, lagna_idx: int, planet_rashis: dict,
+) -> tuple[bool, list[str]]:
+    """True when house lords are conjunct or in mutual sign exchange."""
+    lord1 = _get_house_lord(h1, lagna_idx)
+    lord2 = _get_house_lord(h2, lagna_idx)
+    if not lord1 or not lord2 or lord1 not in planet_rashis or lord2 not in planet_rashis:
+        return False, []
+    if planet_rashis[lord1] == planet_rashis[lord2]:
+        return True, [lord1, lord2]
+    r1 = RASHIS[planet_rashis[lord1]]
+    r2 = RASHIS[planet_rashis[lord2]]
+    if r1 in PLANET_OWNERSHIP.get(lord2, []) and r2 in PLANET_OWNERSHIP.get(lord1, []):
+        return True, [lord1, lord2]
+    return False, []
+
+
 def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                   moon_rashi_idx: int = None) -> list:
     """Detect all yogas present in a natal chart.
@@ -412,16 +441,16 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                 source="BPHS-Ch35", benefic=True, confidence=1.0
             ))
         if not planets_in_2nd and not planets_in_12th:
-            # Check Kemadruma cancellation: benefic in Kendra from Lagna OR Moon in Kendra
+            # Kemadruma cancellation: benefic in Kendra from Lagna or Moon
             has_kendra_benefic = False
             for p in planet_rashis:
                 if p in BENEFICS - {"Moon"}:
-                    if planet_house(p) in KENDRA:
+                    if planet_house(p) in KENDRA or planet_house_from_moon(p) in KENDRA:
                         has_kendra_benefic = True
                         break
-            # Also check if Moon itself is in a Kendra from Lagna
             moon_house = planet_house("Moon") if "Moon" in planet_rashis else -1
-            if moon_house in KENDRA: has_kendra_benefic = True
+            if moon_house in KENDRA:
+                has_kendra_benefic = True
             if not has_kendra_benefic:
                 detected.append(DetectedYoga(
                     name="Kemadruma Yoga", category="Chandra",
@@ -437,18 +466,20 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                     source="BPHS-Ch35", benefic=True, confidence=0.8
                 ))
 
-        # Adhi Yoga: benefics in 6th, 7th, 8th from Moon
-        benefics_in_678 = []
+        # Adhi Yoga: benefic in each of 6th, 7th, and 8th from Moon
+        benefic_houses_678: set[int] = set()
+        adhi_planets: list[str] = []
         for p in planet_rashis:
             if p in BENEFICS and p != "Moon":
                 h = planet_house_from_moon(p)
-                if h in [6, 7, 8]:
-                    benefics_in_678.append(p)
-        if len(benefics_in_678) >= 3:
+                if h in (6, 7, 8):
+                    benefic_houses_678.add(h)
+                    adhi_planets.append(p)
+        if benefic_houses_678 >= {6, 7, 8}:
             detected.append(DetectedYoga(
                 name="Adhi Yoga", category="Chandra",
                 description="Leadership, authority, prosperity, respected, powerful",
-                planets_involved=benefics_in_678,
+                planets_involved=adhi_planets,
                 source="BPHS-Ch35", benefic=True, confidence=1.0
             ))
 
@@ -481,6 +512,94 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                 description="Wealth, beauty, prosperity, good fortune, happy marriage",
                 planets_involved=["Venus", "Jupiter"],
                 source="PD-Ch7", benefic=True, confidence=1.0
+            ))
+
+    # ---- Raja Yogas (house-lord connections) ----
+    for k_h in KENDRA:
+        for ko_h in KONA:
+            if k_h == ko_h:
+                continue
+            ok, lords = _lords_conjunct_or_exchange(k_h, ko_h, lagna_sign_idx, planet_rashis)
+            if ok:
+                detected.append(DetectedYoga(
+                    name="Raja Yoga (Kendra-Kona)",
+                    category="Raja",
+                    description=RAJA_YOGAS[0]["effect"],
+                    planets_involved=lords,
+                    source="BPHS-Ch36", benefic=True, confidence=0.9,
+                ))
+
+    for h1, h2 in [(1, 4), (1, 10), (4, 7), (4, 10), (7, 10)]:
+        ok, lords = _lords_conjunct_or_exchange(h1, h2, lagna_sign_idx, planet_rashis)
+        if ok:
+            detected.append(DetectedYoga(
+                name="Raja Yoga (Mutual Kendra)",
+                category="Raja",
+                description=RAJA_YOGAS[1]["effect"],
+                planets_involved=lords,
+                source="BPHS-Ch36", benefic=True, confidence=0.9,
+            ))
+
+    for name, h1, h2, src in [
+        ("Dharma-Karma Adhipati Yoga", 9, 10, "PD-Ch6"),
+        ("Raja Yoga (4-9 Connection)", 4, 9, "SC-Ch8"),
+        ("Raja Yoga (5-9 Connection)", 5, 9, "SC-Ch8"),
+    ]:
+        ok, lords = _lords_conjunct_or_exchange(h1, h2, lagna_sign_idx, planet_rashis)
+        if ok:
+            detected.append(DetectedYoga(
+                name=name, category="Raja",
+                description=f"Lords of {h1}th and {h2}th houses linked",
+                planets_involved=lords,
+                source=src, benefic=True, confidence=0.9,
+            ))
+
+    # ---- Dhana Yogas ----
+    for h1, h2, label in [(2, 11, "2nd lord + 11th lord"), (2, 5, "2nd lord + 5th lord"), (2, 9, "2nd lord + 9th lord")]:
+        ok, lords = _lords_conjunct_or_exchange(h1, h2, lagna_sign_idx, planet_rashis)
+        if ok:
+            detected.append(DetectedYoga(
+                name=f"Dhana Yoga ({label})",
+                category="Dhana",
+                description=DHANA_YOGAS[0]["effect"],
+                planets_involved=lords,
+                source="PD-Ch7", benefic=True, confidence=0.9,
+            ))
+
+    lord5 = _get_house_lord(5, lagna_sign_idx)
+    if lord5 in planet_rashis:
+        h5 = planet_house(lord5)
+        if h5 in KENDRA or h5 in KONA:
+            detected.append(DetectedYoga(
+                name="Dhana Yoga (5th lord in Kendra/Kona)",
+                category="Dhana",
+                description=DHANA_YOGAS[3]["effect"],
+                planets_involved=[lord5],
+                source="PD-Ch7", benefic=True, confidence=0.85,
+            ))
+
+    # ---- Neecha Bhanga Raja Yoga ----
+    for p, rashi_idx in planet_rashis.items():
+        if p not in DEBILITATION:
+            continue
+        if RASHIS[rashi_idx] != DEBILITATION[p]:
+            continue
+        debil_lord = _sign_lord(DEBILITATION[p])
+        exalt_sign = EXALTATION.get(p, "")
+        exalt_lord = _sign_lord(exalt_sign) if exalt_sign else ""
+        cancelled = False
+        if debil_lord in planet_rashis:
+            if planet_house(debil_lord) in KENDRA or planet_house_from_moon(debil_lord) in KENDRA:
+                cancelled = True
+        if exalt_lord in planet_rashis and planet_rashis[exalt_lord] == rashi_idx:
+            cancelled = True
+        if cancelled:
+            detected.append(DetectedYoga(
+                name="Neecha Bhanga Raja Yoga",
+                category="Raja",
+                description=SC_YOGAS[1]["effect"],
+                planets_involved=[p],
+                source="BPHS-Ch36", benefic=True, confidence=0.85,
             ))
 
     # ---- Viparita Raja Yoga ----
@@ -517,15 +636,41 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
             source="SC-Ch8", benefic=True, confidence=1.0
         ))
 
-    # ---- Nabhasa Yogas ----
-    if planet_rashis:
+    # ---- Nabhasa Yogas (classical seven grahas) ----
+    graha_rashis = {p: planet_rashis[p] for p in CLASSICAL_GRAHAS if p in planet_rashis}
+    if len(graha_rashis) >= 7:
+        graha_houses = [planet_house(p) for p in graha_rashis]
+
+        if all(h in KENDRA for h in graha_houses):
+            detected.append(DetectedYoga(
+                name="Gada Yoga", category="Nabhasa",
+                description=NABHASA_YOGAS[3]["effect"],
+                planets_involved=list(graha_rashis.keys()),
+                source="BPHS-Ch12", benefic=True, confidence=0.85,
+            ))
+
+        in_pana = all(h in PANAPHARA for h in graha_houses)
+        in_apo = all(h in APOKLIMA for h in graha_houses)
+        mixed_ps = (
+            any(h in PANAPHARA for h in graha_houses)
+            and any(h in APOKLIMA for h in graha_houses)
+            and all(h in PANAPHARA + APOKLIMA for h in graha_houses)
+        )
+        if in_pana or in_apo or mixed_ps:
+            detected.append(DetectedYoga(
+                name="Shankha Yoga", category="Nabhasa",
+                description=NABHASA_YOGAS[4]["effect"],
+                planets_involved=list(graha_rashis.keys()),
+                source="BPHS-Ch12", benefic=True, confidence=0.8,
+            ))
+
         rashi_types = []
-        for p_rashi in planet_rashis.values():
-            if p_rashi in [0, 3, 6, 9]:  # Movable
+        for p_rashi in graha_rashis.values():
+            if p_rashi in [0, 3, 6, 9]:
                 rashi_types.append("movable")
-            elif p_rashi in [1, 4, 7, 10]:  # Fixed
+            elif p_rashi in [1, 4, 7, 10]:
                 rashi_types.append("fixed")
-            else:  # Dual
+            else:
                 rashi_types.append("dual")
 
         unique = set(rashi_types)
@@ -534,22 +679,22 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                 detected.append(DetectedYoga(
                     name="Rajju Yoga", category="Nabhasa",
                     description="Frequent travel, foreign residence, adventurous",
-                    planets_involved=list(planet_rashis.keys()),
-                    source="BPHS-Ch12", benefic=True, confidence=0.8
+                    planets_involved=list(graha_rashis.keys()),
+                    source="BPHS-Ch12", benefic=True, confidence=0.8,
                 ))
             elif "fixed" in unique:
                 detected.append(DetectedYoga(
                     name="Musala Yoga", category="Nabhasa",
                     description="Steady, determined, good at one profession",
-                    planets_involved=list(planet_rashis.keys()),
-                    source="BPHS-Ch12", benefic=True, confidence=0.8
+                    planets_involved=list(graha_rashis.keys()),
+                    source="BPHS-Ch12", benefic=True, confidence=0.8,
                 ))
             elif "dual" in unique:
                 detected.append(DetectedYoga(
                     name="Nala Yoga", category="Nabhasa",
                     description="Versatile, good at many skills, helpful",
-                    planets_involved=list(planet_rashis.keys()),
-                    source="BPHS-Ch12", benefic=True, confidence=0.8
+                    planets_involved=list(graha_rashis.keys()),
+                    source="BPHS-Ch12", benefic=True, confidence=0.8,
                 ))
 
     return detected

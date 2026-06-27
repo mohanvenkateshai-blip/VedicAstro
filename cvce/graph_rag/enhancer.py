@@ -66,6 +66,10 @@ class PredictionEnhancer:
             if pn:
                 enhancement["panchanga_insights"] = pn
 
+        # 5. Muhurta yoga citations from graph
+        if hasattr(r, "muhurta_yogas") and r.muhurta_yogas:
+            enhancement["muhurta_citations"] = r.muhurta_yogas.get("active", [])
+
         return enhancement
 
     # ── Private helpers ───────────────────────────────────────────────────

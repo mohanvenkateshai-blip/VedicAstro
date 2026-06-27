@@ -97,6 +97,16 @@ class BirthRequest(BaseModel):
     name: Optional[str] = None
 
 
+class PrashnaRequest(BaseModel):
+    """Horary chart — defaults to current UTC moment."""
+    birth_lat: float
+    birth_lon: float
+    birth_tz: float = 0.0
+    birth_datetime: Optional[str] = None
+    ayanamsa: str = settings.DEFAULT_AYANAMSA
+    name: Optional[str] = "Prashna"
+
+
 # --- panchanga helper (shared by /panchanga and /chart) -------------------
 def _panchanga(jd: float, place) -> dict:
     def label(arr, names, base=1):
@@ -201,32 +211,6 @@ def health():
             "version": getattr(const, "_APP_VERSION", "4.8.7"),
             "ayanamsa": settings.DEFAULT_AYANAMSA,
             "vargas": settings.VARGAS}
-
-
-@app.get("/")
-def index():
-    """Browser-friendly landing — CVCE is an API; use the portal for the UI."""
-    return JSONResponse({
-        "service": "VedicAstro CVCE",
-        "description": "Canonical Vedic Calculation Engine (API only — no web UI here)",
-        "status": "ok",
-        "engine": "PyJHora",
-        "version": getattr(const, "_APP_VERSION", "4.8.7"),
-        "portal": "https://portal-omega-two-10.vercel.app/vedicastro",
-        "status_page": "https://portal-omega-two-10.vercel.app/status",
-        "endpoints": {
-            "health": "GET /health",
-            "chart": "POST /chart",
-            "predict": "POST /predict",
-            "yogas": "POST /yogas",
-            "docs": "GET /docs",
-        },
-        "example": {
-            "chart": "curl -s https://vedicastro-cvce.fly.dev/chart -H 'content-type: application/json' "
-                      "-d '{\"birth_datetime\":\"1975-04-22T19:15:00\",\"birth_lat\":12.2958,"
-                      "\"birth_lon\":76.6394,\"birth_tz\":5.5,\"name\":\"Mohan\"}'",
-        },
-    })
 
 
 @app.get("/favicon.ico")
@@ -463,6 +447,55 @@ except Exception:
     orchestrator = None
 
 
+@app.get("/")
+def index():
+    """Browser-friendly landing — CVCE is an API; use the portal for the UI."""
+    graph_rag = None
+    if _GRAPH_AVAILABLE and _enhancer is not None:
+        try:
+            from graph_rag.rules_provider import active_transit_rules
+            graph_rag = {
+                "available": True,
+                "stats": _enhancer.graph.stats,
+                "rules_source": "graph" if active_transit_rules() else "hardcoded",
+                "graph_as_rules_env": graph_rules_enabled(),
+            }
+        except Exception:
+            graph_rag = {"available": True, "stats": _enhancer.graph.stats}
+
+    payload = {
+        "service": "VedicAstro CVCE",
+        "description": "Canonical Vedic Calculation Engine (API only — no web UI here)",
+        "status": "ok",
+        "engine": "PyJHora",
+        "version": getattr(const, "_APP_VERSION", "4.8.7"),
+        "portal": "https://portal-omega-two-10.vercel.app/vedicastro",
+        "status_page": "https://portal-omega-two-10.vercel.app/status",
+        "graph_rag": graph_rag,
+        "endpoints": {
+            "health": "GET /health",
+            "predict_health": "GET /predict/health",
+            "chart": "POST /chart",
+            "predict": "POST /predict",
+            "prashna": "POST /prashna",
+            "yogas": "POST /yogas",
+            "dasha_deep": "POST /dasha-deep",
+            "kp_system": "POST /kp-system",
+            "varshaphala": "POST /varshaphala",
+            "orchestrate": "POST /orchestrate",
+            "docs": "GET /docs",
+        },
+        "example": {
+            "chart": "curl -s https://vedicastro-cvce.fly.dev/chart -H 'content-type: application/json' "
+                      "-d '{\"birth_datetime\":\"1975-04-22T19:15:00\",\"birth_lat\":12.2958,"
+                      "\"birth_lon\":76.6394,\"birth_tz\":5.5,\"name\":\"Mohan\"}'",
+            "prashna": "curl -s https://vedicastro-cvce.fly.dev/prashna -H 'content-type: application/json' "
+                       "-d '{\"birth_lat\":12.97,\"birth_lon\":77.59,\"birth_tz\":5.5}'",
+        },
+    }
+    return JSONResponse(payload)
+
+
 class PredictionRequest(BaseModel):
     date: str = Field(default="")
     time: str = Field(default="12:00")
@@ -498,7 +531,8 @@ def predict(req: PredictionRequest):
         "summary": r.summary,
         "panchanga": {
             "tithi": {"name": panch.tithi_name, "paksha": panch.tithi_paksha, "num": panch.tithi_num,
-                      "group": panch.tithi_group, "verdict": panch.tithi_verdict} if panch else None,
+                      "group": panch.tithi_group, "lord": getattr(panch, "tithi_lord", None),
+                      "verdict": panch.tithi_verdict} if panch else None,
             "vaar": panch.weekday if panch else None,
             "nakshatra": {"name": panch.nakshatra, "nature": panch.nakshatra_nature,
                           "lord": panch.nakshatra_lord, "verdict": panch.nakshatra_verdict} if panch else None,
@@ -521,6 +555,8 @@ def predict(req: PredictionRequest):
             ] if gochar else [],
             "moorthy": gochar.moorthy if gochar else None,
             "sade_sati": gochar.sade_sati if gochar else None,
+            "kantaka_shani": gochar.kantaka_shani if gochar else None,
+            "ashtama_shani": gochar.ashtama_shani if gochar else None,
             "tara_balam": gochar.tara_balam if gochar else None,
         } if gochar else None,
         "dasha": {
@@ -551,6 +587,7 @@ def predict(req: PredictionRequest):
                 for p, d in r.ashtakavarga.transit_sav.items()
             } if r.ashtakavarga.transit_sav else {},
         } if r.ashtakavarga else None,
+        "muhurta_yogas": r.muhurta_yogas,
         "warnings": r.warnings,
         "transit_summary": getattr(r, "transit_summary", ""),
         "rules_source": "graph" if (_GRAPH_AVAILABLE and graph_rules_enabled()) else "hardcoded",
@@ -1242,14 +1279,21 @@ def all_dashas(req: BirthRequest):
 # =====================================================================
 
 @app.post("/prashna")
-def prashna():
-    """Horary chart — cast a chart for the current moment at the given location."""
-    from datetime import datetime as dt_now
-    now = dt_now.utcnow()
-    return {
-        "datetime": now.isoformat(),
-        "note": "POST /chart with current datetime for full horary chart",
-    }
+def prashna(req: PrashnaRequest):
+    """Horary chart — cast for the query moment (defaults to now UTC)."""
+    from datetime import datetime, timezone
+
+    dt_str = req.birth_datetime
+    if not dt_str:
+        dt_str = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+    return chart(BirthRequest(
+        birth_datetime=dt_str,
+        birth_lat=req.birth_lat,
+        birth_lon=req.birth_lon,
+        birth_tz=req.birth_tz,
+        ayanamsa=req.ayanamsa,
+        name=req.name or "Prashna",
+    ))
 
 
 VARSHA_MUNTHA_SIGNS = [

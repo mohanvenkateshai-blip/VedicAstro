@@ -1,5 +1,6 @@
 -- VedicAstro Portal — PostgreSQL schema
--- Run: node scripts/apply-schema.mjs  (requires DATABASE_URL)
+-- Applied automatically on Vercel when DATABASE_URL is set (first DB connection).
+-- Manual: POST /api/db/migrate with Bearer AUTH_SECRET, or npm run db:schema:remote
 
 CREATE TABLE IF NOT EXISTS users (
   id            TEXT PRIMARY KEY,                     -- Google OAuth sub

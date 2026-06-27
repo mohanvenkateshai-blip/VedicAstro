@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { 
   Compass, Orbit, Clock, Sparkles, Gauge, Star, 
-  Heart, Sun, Crosshair, BookOpen, Download, Target 
+  Heart, Sun, Crosshair, BookOpen, Download, Target,
+  Home, CircleDot, HelpCircle,
 } from "lucide-react";
 
 const TABS = [
@@ -12,15 +13,18 @@ const TABS = [
   { id: "transits", label: "Transits", icon: Orbit, href: "/chart/transits", engine: "Gochar Phala" },
   { id: "dasha", label: "Dasha Timeline", icon: Clock, href: "/chart/dasha", engine: "Dasha Phala" },
   { id: "yogas", label: "Yogas & Strength", icon: Sparkles, href: "/chart/yogas", engine: "Yoga + Bala" },
+  { id: "bhava", label: "Bhava Explorer", icon: Home, href: "/chart/bhava", engine: "Bhava Phala" },
+  { id: "graha", label: "Graha Explorer", icon: CircleDot, href: "/chart/graha", engine: "Graha Phala" },
   { id: "special", label: "Special Points", icon: Target, href: "/chart/special", engine: "Special Points" },
   { id: "kp", label: "KP System", icon: Crosshair, href: "/chart/kp", engine: "KP Engine" },
   { id: "varshaphala", label: "Solar Return", icon: Sun, href: "/chart/varshaphala", engine: "Varshaphala" },
   { id: "compatibility", label: "Compatibility", icon: Heart, href: "/compatibility", engine: "Koota Milan" },
+  { id: "prashna", label: "Prashna", icon: HelpCircle, href: "/prashna", engine: "Horary" },
 ];
 
 const BOTTOM_TABS = [
-  { id: "sources", label: "Classical Sources", icon: BookOpen, engine: "Shastra Pramana" },
-  { id: "export", label: "Export PDF", icon: Download, engine: "Rendering" },
+  { id: "sources", label: "Classical Sources", icon: BookOpen, href: "/chart/sources", engine: "Shastra Pramana" },
+  { id: "export", label: "Export PDF", icon: Download, href: "/chart/export", engine: "Rendering" },
 ];
 
 export function ChartSidebar() {
@@ -60,14 +64,21 @@ export function ChartSidebar() {
       </div>
       {BOTTOM_TABS.map((tab) => {
         const Icon = tab.icon;
+        const href = qs ? `${tab.href}?${qs}` : tab.href;
+        const isActive = pathname === tab.href;
         return (
-          <button
+          <Link
             key={tab.id}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-text-muted hover:text-text-main hover:bg-white/3 transition-colors text-left w-full"
+            href={href}
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
+              isActive
+                ? "bg-accent/15 text-accent font-medium"
+                : "text-text-muted hover:text-text-main hover:bg-white/3"
+            }`}
           >
             <Icon size={15} />
             <span>{tab.label}</span>
-          </button>
+          </Link>
         );
       })}
     </nav>

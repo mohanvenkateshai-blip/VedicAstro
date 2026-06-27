@@ -27,6 +27,7 @@ from ..prediction.gochar import compute_gochar, GocharResult
 from ..prediction.dasha import compute_dasha, DashaResult
 from ..prediction.yoga import detect_yogas, DetectedYoga
 from ..prediction.ashtakavarga import compute_ashtakavarga, compute_transit_ashtakavarga, AshtakavargaResult
+from ..prediction.muhurta_yogas import evaluate_muhurta_yogas, muhurta_yogas_to_dict, MuhurtaYogaResult
 
 
 @dataclass
@@ -54,6 +55,7 @@ class VedicPrediction:
     dasha: Optional[dict] = None
     yogas: Optional[list] = None
     ashtakavarga: Optional[dict] = None
+    muhurta_yogas: Optional[dict] = None
 
     # Synthesis
     overall_verdict: str = "neutral"
@@ -109,6 +111,34 @@ class VedicPredictor:
         # 1. Compute Panchanga (always)
         result.panchanga = compute_panchanga(date, time, lat, lon, tz)
 
+        # 1b. Muhurta vara/tithi yogas (graph-backed when available)
+        if result.panchanga:
+            graph_hits = None
+            try:
+                from graph_rag.muhurta_rules_provider import active_muhurta_rules
+                rules = active_muhurta_rules()
+                if rules and result.panchanga:
+                    p = result.panchanga
+                    tip = p.tithi_num if p.tithi_num <= 15 else (
+                        15 if p.tithi_num == 30 else p.tithi_num - 15
+                    )
+                    graph_hits = rules.yoga_hits(
+                        ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"][
+                            ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].index(p.weekday)
+                        ],
+                        p.tithi_group,
+                        tip,
+                    )
+            except Exception:
+                graph_hits = None
+            my = evaluate_muhurta_yogas(
+                result.panchanga.weekday,
+                result.panchanga.tithi_num,
+                result.panchanga.nakshatra,
+                graph_hits=graph_hits,
+            )
+            result.muhurta_yogas = muhurta_yogas_to_dict(my)
+
         # 2. Compute Gochar / Transit (requires Janma Rashi)
         if janma_rashi:
             result.gochar = compute_gochar(
@@ -159,7 +189,7 @@ class VedicPredictor:
             r.detailed_predictions.append({
                 "domain": "Panchanga",
                 "items": [
-                    f"Tithi: {p.tithi_name} ({p.tithi_paksha}) — {p.tithi_group} group — {p.tithi_verdict}",
+                    f"Tithi: {p.tithi_name} ({p.tithi_paksha}) — {p.tithi_group} group — Lord {p.tithi_lord} — {p.tithi_verdict}",
                     f"Vaar: {p.weekday} — Lord {['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn'][['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].index(p.weekday)]}",
                     f"Nakshatra: {p.nakshatra} — {p.nakshatra_nature} nature — Lord {p.nakshatra_lord}",
                     f"Yoga: {p.yoga_name} — {p.yoga_nature} — {p.yoga_verdict}",
@@ -203,6 +233,19 @@ class VedicPredictor:
                     "items": [f"{t['name']} — count {t['count']} from Janma Nak — {t['verdict']} (Paryaya {t['paryaya']})"]
                 })
 
+        # Muhurta vara/tithi yogas
+        if r.muhurta_yogas:
+            my = r.muhurta_yogas
+            items = [my.get("summary", "")]
+            for hit in my.get("active", [])[:6]:
+                items.append(f"{hit.get('name')}: {hit.get('detail')} [{hit.get('source', '')}]")
+            r.detailed_predictions.append({
+                "domain": "Muhurta Yogas",
+                "verdict": my.get("overall", "neutral"),
+                "score": my.get("score", 0),
+                "items": [i for i in items if i],
+            })
+
         # Overall score
         scores = []
         if r.panchanga:
@@ -210,6 +253,8 @@ class VedicPredictor:
             scores.append(pv.get(r.panchanga.tithi_verdict, 0))
             scores.append(pv.get(r.panchanga.yoga_verdict, 0))
             scores.append(pv.get(r.panchanga.karana_verdict, 0))
+        if r.muhurta_yogas:
+            scores.append(r.muhurta_yogas.get("score", 0))
         if r.gochar:
             scores.append(r.gochar.overall_score)
         if r.dasha:

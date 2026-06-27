@@ -35,7 +35,7 @@ It is the single source of truth for system topology, immutable constraints, and
               ┌──────────────────────────────────────┐
               │  Knowledge Graph (offline artifact)   │
               │  knowledge-graph/graphify-out/        │
-              │  graph.json — 277+ nodes, 435+ links  │
+              │  graph.json — 4253 nodes, 5092 links   │
               │  → future: wired into /predict        │
               └──────────────────────────────────────┘
 ```
@@ -104,7 +104,7 @@ It is the single source of truth for system topology, immutable constraints, and
 - Output in `knowledge-graph/graphify-out/` — do not edit `graph.json` manually
 - Python interpreter: `$(cat knowledge-graph/graphify-out/.graphify_python)`
 - Extraction chunks: `.graphify_chunk_01.json` (cats 1-12, Activity_Mapping), `.graphify_chunk_02.json` (Gochar_Phaladeepika), `.graphify_chunk_03.json` (cats 13-23 + appendices, Activity_Mapping) — chunk_03 may still be in progress
-- To extend: add files to `raw/`, then run `/graphify raw --update`
+- To extend: add files to `raw/`, then run `/graphify raw --update`, then `./scripts/sync-graph.sh`
 - graph.json structure: keys are `nodes`, `links` (NOT `edges`), `hyperedges`
 
 ---
