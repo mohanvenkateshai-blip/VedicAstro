@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { saveChart } from "@/lib/actions";
 import type { ChartData } from "@/lib/types";
 
@@ -42,6 +43,14 @@ export function SaveChartButton({ chart, chartName }: { chart: ChartData; chartN
       >
         {status === "saving" ? "Saving…" : status === "saved" ? "✓ Saved" : status === "error" ? "✕ Retry" : "Save to my charts"}
       </button>
+      {status === "saved" && (
+        <Link
+          href="/dashboard"
+          className="text-xs text-accent hover:underline whitespace-nowrap"
+        >
+          View dashboard →
+        </Link>
+      )}
       {errorMsg && (
         <span className="text-xs text-danger max-w-[200px] truncate">{errorMsg}</span>
       )}

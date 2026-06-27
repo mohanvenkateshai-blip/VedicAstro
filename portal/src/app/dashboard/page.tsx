@@ -4,12 +4,21 @@ import { signOut } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/auth/signin");
 
   const dbOk = await dbHealthy();
-  const charts = session ? await getHoroscopes(session.userId).catch(() => []) : [];
+  let charts: Awaited<ReturnType<typeof getHoroscopes>> = [];
+  let loadError: string | null = null;
+  try {
+    charts = await getHoroscopes(session.userId);
+  } catch (e) {
+    loadError = e instanceof Error ? e.message : "Could not load saved charts";
+    console.error("dashboard getHoroscopes:", loadError);
+  }
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
@@ -46,6 +55,12 @@ export default async function DashboardPage() {
       {!dbOk && (
         <div className="rounded-xl border border-warning/40 bg-warning/5 p-4 text-sm text-warning mb-6">
           Database not connected — charts won&apos;t be saved. Set DATABASE_URL in your environment.
+        </div>
+      )}
+
+      {loadError && (
+        <div className="rounded-xl border border-danger/40 bg-danger/5 p-4 text-sm text-danger mb-6">
+          {loadError}
         </div>
       )}
 

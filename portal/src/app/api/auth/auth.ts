@@ -60,10 +60,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
     async jwt({ token, user, account }) {
-      if (user) {
+      if (account?.providerAccountId) {
+        token.id = account.providerAccountId;
+        token.sub = account.providerAccountId;
+      } else if (user) {
         const id = googleUserId(user, account);
         token.id = id;
         token.sub = id;
+      }
+      if (user || account?.providerAccountId) {
+        const id = (token.id ?? token.sub) as string;
         try {
           const { getUser } = await import("@/lib/auth/index");
           const dbUser = id ? await getUser(id) : null;

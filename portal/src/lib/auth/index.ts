@@ -66,6 +66,17 @@ export async function getUser(id: string): Promise<{
   }
 }
 
+/** Ensure users row exists (FK for horoscopes). */
+export async function ensureUser(id: string, email: string): Promise<void> {
+  await sql`
+    INSERT INTO users (id, email)
+    VALUES (${id}, ${email})
+    ON CONFLICT (id) DO UPDATE SET
+      email = EXCLUDED.email,
+      updated_at = now()
+  `;
+}
+
 /** Save a horoscope chart for a user. Encrypts birth PII before storing. */
 export async function saveHoroscope(
   userId: string,
@@ -80,13 +91,13 @@ export async function saveHoroscope(
     /* encryption optional */
   }
 
-  const rows = await withUserContext(userId, (s) => s`
+  const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
     INSERT INTO horoscopes (user_id, name, chart_data)
     VALUES (${userId}, ${name}, ${JSON.stringify(data)}::jsonb)
     RETURNING id
   `);
-  const all = rows as { id: string }[];
-  return all[0]?.id ?? null;
+  const id = rows[0]?.id;
+  return typeof id === "string" ? id : null;
 }
 
 /** Get a user's saved horoscopes (decrypts PII). */
@@ -98,30 +109,42 @@ export async function getHoroscopes(userId: string): Promise<
     created_at: string;
   }>
 > {
-  try {
-    const rows = await withUserContext(userId, (s) => s`
-      SELECT id, name, chart_data, created_at
-      FROM horoscopes
-      WHERE user_id = ${userId}
-      ORDER BY created_at DESC
-      LIMIT 50
-    `);
-    const { decryptChartData } = await import("./encrypt");
-    const all = rows as {
-      id: string;
-      name: string;
-      chart_data: Record<string, unknown>;
-      created_at: string;
-    }[];
-    return await Promise.all(
-      all.map(async (r) => ({
-        ...r,
-        chart_data: await decryptChartData(r.chart_data),
-      })),
-    );
-  } catch {
-    return [];
+  const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
+    SELECT id, name, chart_data, created_at
+    FROM horoscopes
+    WHERE user_id = ${userId}
+    ORDER BY created_at DESC
+    LIMIT 50
+  `);
+
+  const { decryptChartData } = await import("./encrypt");
+  const out: Array<{
+    id: string;
+    name: string;
+    chart_data: Record<string, unknown>;
+    created_at: string;
+  }> = [];
+
+  for (const r of rows) {
+    let chart_data = r.chart_data;
+    if (typeof chart_data === "string") {
+      try {
+        chart_data = JSON.parse(chart_data);
+      } catch {
+        continue;
+      }
+    }
+    if (!chart_data || typeof chart_data !== "object") continue;
+
+    out.push({
+      id: String(r.id),
+      name: String(r.name),
+      chart_data: await decryptChartData(chart_data as Record<string, unknown>),
+      created_at: String(r.created_at),
+    });
   }
+
+  return out;
 }
 
 /** Check if DB is healthy */

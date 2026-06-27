@@ -27,6 +27,24 @@ async function getSql(): Promise<NeonQueryFunction<any, any> | null> {
   return _initPromise;
 }
 
+/** Normalize Neon / transaction results to an array of row objects. */
+export function rowsFrom(result: unknown): Record<string, unknown>[] {
+  if (result == null) return [];
+  if (Array.isArray(result)) {
+    if (result.length === 0) return [];
+    const first = result[0];
+    if (typeof first === "object" && first !== null && !Array.isArray(first)) {
+      return result as Record<string, unknown>[];
+    }
+    return [];
+  }
+  if (typeof result === "object" && "rows" in result) {
+    const rows = (result as { rows: unknown }).rows;
+    return Array.isArray(rows) ? (rows as Record<string, unknown>[]) : [];
+  }
+  return [];
+}
+
 export function sql(strings: TemplateStringsArray, ...values: unknown[]): Promise<any> {
   return _execute(strings, ...values);
 }
@@ -55,7 +73,8 @@ export async function withUserContext<T>(
 
   if (typeof txFn !== "function") {
     await setRlsContext(userId);
-    return (await makeQuery(s)) as T;
+    const raw = await makeQuery(s);
+    return rowsFrom(raw) as T;
   }
 
   const results = await txFn.call(s, [
@@ -64,7 +83,7 @@ export async function withUserContext<T>(
   ]);
 
   const last = Array.isArray(results) ? results[results.length - 1] : results;
-  return last as T;
+  return rowsFrom(last) as T;
 }
 
 export async function healthCheck(): Promise<boolean> {
