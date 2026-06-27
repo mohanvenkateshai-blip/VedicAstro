@@ -273,4 +273,4 @@ Ordered by impact × dependency alignment with roadmap:
 
 ---
 
-*Phase 3 complete — review gate pending user sign-off before Phase 4 execution.*
+*Phases 0–4 complete. Phase 5+ backlog in [docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md).*

@@ -49,14 +49,14 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ## 3. Active Roadmap (Phased Sequence)
 
-We are strictly following a **phase-by-phase execution sequence with review gates**. Each phase requires user sign-off before proceeding.
+Phases run **sequentially** — completed work is committed and deployed; nothing blocks on a manual “review” step unless you explicitly pause.
 
 ### Phase 0: Consolidation & Clean-up (Completed)
 - [x] Create `VedicAstro/STATUS.md` (this living document) as the single source of truth.
 - [x] Archive fragmented handoffs from `Panchang/` and `portal/docs/` to `VedicAstro/docs/archive/`.
 - [x] Relocate misplaced/untracked VedicAstro files and scripts out of the frozen Panchang repository to keep it purely untouched.
 - [x] Align CONTEXT.md and verify all reference pointers.
-- *Status:* **Completed.** Review gate passed.
+- *Status:* **Completed.**
 
 ### Phase 1: Unified Version Control Foundation (Completed)
 - [x] Initialize `VedicAstro/` as a clean, single Git monorepo. Add a proper `.gitignore` and push to new remote `mohanvenkateshai-blip/VedicAstro`.
@@ -67,18 +67,18 @@ We are strictly following a **phase-by-phase execution sequence with review gate
 - [x] Resolve the outage and ensure local + hosted tests pass.
 - [x] Verify that portal `/vedicastro` displays live, precise coordinates from CVCE.
 - *Root cause:* `SyntaxError` in `server.py:1157` (mis-indented inner `except` in ashtottari fallback) — crash loop, max 10 restarts, machine stopped. Fixed locally, 7 golden tests pass, deployed `deployment-01KW3C35GQ537SB15YNQDXRJTS` (machine v26).
-- *Status:* **Completed.** Review gate pending user sign-off.
+- *Status:* **Completed.**
 
 ### Phase 3: Comprehensive Gap Analysis
 - [x] Build a formal `VedicAstro/docs/GAP_ANALYSIS.md` cross-referencing all 7 major systems and 51 enhancements from the professional Requirements document to map exact completeness (Done / Partial / Missing). This maps our long-term build-out plan.
 - *Deliverable:* [docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md) — 7 systems, 51-enhancement index, audit-driven P0/P1 backlog, Phase 5+ priorities.
-- *Status:* **Completed.** Review gate pending user sign-off.
+- *Status:* **Completed.**
 
 ### Phase 4: GraphRAG predicting
 - [x] Route the `/predict` endpoint rules to query the offline `graph.json` directly (via `graph_rag/rules_provider.py` → planet/house links) instead of using the hardcoded `transit_rules.py` file.
 - [x] Retain hardcoded fallback with env-gate `CVCE_GRAPH_AS_RULES` for regression safety (unset/0 = hardcoded; 1 = graph rules). Enabled on Fly production.
 - *Deliverable:* `graph_rag/rules_provider.py`, gochar integration, `rules_source` in `/predict` response, tests in `tests/test_graph_rules.py`.
-- *Status:* **Completed.** Review gate pending user sign-off.
+- *Status:* **Completed.**
 
 ### Phase 5+: Feature Build-out & Integrations
 - [ ] Implement and wire missing features mapped during the Phase 3 gap analysis (Yogas panel, Ashtottari dasha, animated transits, etc.).
