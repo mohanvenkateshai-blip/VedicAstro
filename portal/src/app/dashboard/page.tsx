@@ -77,21 +77,38 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="divide-y divide-hairline">
-            {charts.map((c) => (
+            {charts.map((c) => {
+              const meta = (c.chart_data.meta ?? {}) as Record<string, unknown>;
+              const birthDt =
+                typeof meta.birth_datetime === "string" ? meta.birth_datetime : "";
+              const birthDate = birthDt.slice(0, 10);
+              const birthTime = birthDt.slice(11, 16);
+              const href = `/vedicastro?name=${encodeURIComponent(c.name)}&date=${birthDate}&time=${birthTime}&lat=${meta.birth_lat ?? ""}&lon=${meta.birth_lon ?? ""}&tz=${meta.birth_tz ?? ""}`;
+
+              return (
               <Link
                 key={c.id}
-                href={`/vedicastro?name=${encodeURIComponent(c.name)}&date=${(c.chart_data.meta as any)?.birth_datetime?.slice(0, 10) ?? ""}&time=${(c.chart_data.meta as any)?.birth_datetime?.slice(11, 16) ?? ""}&lat=${(c.chart_data.meta as any)?.birth_lat ?? ""}&lon=${(c.chart_data.meta as any)?.birth_lon ?? ""}&tz=${(c.chart_data.meta as any)?.birth_tz ?? ""}`}
-                className="flex items-center justify-between px-5 py-3 hover:bg-[color-mix(in_srgb,var(--color-accent)_3%,transparent)] transition-colors"
+                href={href}
+                className="flex items-center justify-between gap-4 px-5 py-3 hover:bg-[color-mix(in_srgb,var(--color-accent)_3%,transparent)] transition-colors"
               >
-                <div>
-                  <span className="text-sm font-medium">{c.name}</span>
-                  <span className="ml-3 text-xs text-text-muted">
-                    {new Date(c.created_at).toLocaleDateString()}
-                  </span>
+                <div className="min-w-0">
+                  <div className="text-sm font-medium">{c.name}</div>
+                  <div className="mt-0.5 text-xs text-text-muted flex flex-wrap gap-x-2 gap-y-0.5">
+                    {birthDate && (
+                      <span>
+                        Born {birthDate}
+                        {birthTime ? ` · ${birthTime}` : ""}
+                      </span>
+                    )}
+                    <span className="text-text-muted/70">
+                      Saved {new Date(c.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-xs text-text-muted font-mono">{c.id.slice(0, 8)}</span>
+                <span className="shrink-0 text-xs text-text-muted font-mono">{c.id.slice(0, 8)}</span>
               </Link>
-            ))}
+            );
+            })}
           </div>
         )}
       </div>
