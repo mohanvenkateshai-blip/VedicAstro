@@ -3,7 +3,9 @@
 The VedicShastra AI portal — a premium, accurate, rule-based Vedic Astrology
 platform. Built in phases on top of a hardened Swiss-Ephemeris calculation core.
 
-**Living status:** see [`STATUS.md`](STATUS.md) for current service health, roadmap phases, and the single source of truth for what is live vs pending.
+**Live status page:** https://portal-omega-two-10.vercel.app/status (probes Portal, CVCE, Muhūrta on each load)
+
+**Living status (docs):** see [`STATUS.md`](STATUS.md) for roadmap, phase history, and the single source of truth for what is live vs pending.
 
 ## Relationship to the standalone Muhurta module
 

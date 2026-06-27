@@ -47,6 +47,13 @@ export function SiteHeader() {
             Learn
           </Link>
           <Link
+            href="/status"
+            aria-current={pathname === "/status" ? "page" : undefined}
+            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
+          >
+            Status
+          </Link>
+          <Link
             href="/dashboard"
             aria-current={pathname === "/dashboard" ? "page" : undefined}
             className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"

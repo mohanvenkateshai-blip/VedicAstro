@@ -32,6 +32,6 @@
     {"id": "F27", "name": "All Dashas Panel", "progress": 90, "status": "Done", "phase": 4},
     {"id": "F28", "name": "Orchestration Engine", "progress": 100, "status": "Done", "phase": 4},
     {"id": "F29", "name": "Unified Rules Engine", "progress": 100, "status": "Done", "phase": 4, "notes": "Graph rules via CVCE_GRAPH_AS_RULES; hardcoded fallback when unset"},
-    {"id": "F32", "name": "Yogas & Strength UI", "progress": 100, "status": "Done", "phase": 5},
+    {"id": "F32", "name": "Yogas & Strength UI", "progress": 100, "status": "Done", "phase": 5}
   ]
 }

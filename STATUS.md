@@ -8,6 +8,8 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ## 1. Service Health & Deployments
 
+**Live dashboard:** [portal-omega-two-10.vercel.app/status](https://portal-omega-two-10.vercel.app/status) — HTTP probes on each visit.
+
 | Component | Live URL / Connection | Hosted On | Status | Notes |
 |:---|:---|:---|:---|:---|
 | **Portal** | [portal-omega-two-10.vercel.app](https://portal-omega-two-10.vercel.app) | Vercel | 🟢 LIVE (HTTP 200) | UI functional; `/vedicastro` server-renders charts via CVCE (verified June 27). |
