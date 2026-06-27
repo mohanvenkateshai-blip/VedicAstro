@@ -1127,6 +1127,60 @@ def kp_system(req: BirthRequest):
 # Additional Dasha Systems — Chara, Ashtottari, Yogini, Kalachakra, Drig
 # =====================================================================
 
+def _now_jd() -> float:
+    from datetime import datetime, timezone
+    import swisseph as swe
+    now = datetime.now(timezone.utc)
+    return swe.julday(now.year, now.month, now.day,
+                      now.hour + now.minute / 60 + now.second / 3600)
+
+
+def _parse_dasha_lords(lords) -> tuple[int | None, int | None]:
+    """Normalize PyJHora lord tuples: (maha,) or (maha, antara, ...)."""
+    if isinstance(lords, int):
+        return lords, None
+    if isinstance(lords, (list, tuple)) and lords:
+        maha = lords[0] if isinstance(lords[0], int) else None
+        antara = lords[1] if len(lords) > 1 and isinstance(lords[1], int) else None
+        return maha, antara
+    return None, None
+
+
+def _ashtottari_current(jd, place, lord_name):
+    """Running Ashtottari maha/antara at query time, with classical applicability."""
+    from jhora import const
+    from jhora.horoscope.chart import charts
+    from jhora.horoscope.dhasa.graha import ashtottari
+
+    pp = charts.rasi_chart(jd, place)
+    if not ashtottari.applicability_check(pp):
+        return {
+            "maha": None,
+            "antara": None,
+            "applicable": False,
+            "reason": (
+                "Not applicable per Parasara — Rahu must occupy a kendra or trikona "
+                "from the lagna lord (excluding the lagna itself). Use Vimshottari for this chart."
+            ),
+        }
+
+    run = ashtottari.get_running_dhasa_for_given_date(
+        _now_jd(),
+        jd,
+        place,
+        dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
+    )
+    if not run:
+        return None
+    row = run[-1] if isinstance(run, list) else run
+    maha, antara = _parse_dasha_lords(row[0])
+    return {
+        "maha": lord_name(maha) if maha is not None else None,
+        "antara": lord_name(antara) if antara is not None else None,
+        "applicable": True,
+    }
+
+
 @app.post("/dashas")
 def all_dashas(req: BirthRequest):
     """Compute multiple dasha systems for a birth chart.
@@ -1143,19 +1197,18 @@ def all_dashas(req: BirthRequest):
 
     result = {}
 
-    # Vimshottari (already computed elsewhere, but include for completeness)
+    # Vimshottari — PyJHora returns (running_lords_tuple, full_timeline)
     try:
         from jhora.horoscope.dhasa.graha import vimsottari
         v = vimsottari.get_vimsottari_dhasa_bhukthi(jd, place)
-        cur = v[0] if v and len(v) > 0 else None
+        cur = v[0] if isinstance(v, tuple) and v else None
+        maha, antara = _parse_dasha_lords(cur)
         result["vimshottari"] = {
-            "maha": lord_name(cur[0]) if cur else None,
-            "antara": lord_name(cur[1]) if cur and len(cur) > 1 else None,
+            "maha": lord_name(maha) if maha is not None else None,
+            "antara": lord_name(antara) if antara is not None else None,
         }
     except Exception:
         result["vimshottari"] = None
-    
-    print("[all_dashas] vimshottari done, computing yogini...", flush=True)
 
     # Yogini Dasha
     try:
@@ -1170,27 +1223,12 @@ def all_dashas(req: BirthRequest):
     except Exception:
         result["yogini"] = None
 
-    # Ashtottari Dasha
+    # Ashtottari Dasha — running period via get_running_dhasa_for_given_date
     try:
-        from jhora.horoscope.dhasa.graha import ashtottari
-        a = ashtottari.get_ashtottari_dhasa_bhukthi(jd, place)
-        cur = a[0] if a and len(a) > 0 else None
-        result["ashtottari"] = {
-            "maha": lord_name(cur[0]) if cur else None,
-            "antara": lord_name(cur[1]) if cur and len(cur) > 1 else None,
-        }
-    except Exception:
-        # Fallback: try simplified mahadasa-only lookup
-        try:
-            from jhora.horoscope.dhasa.graha import ashtottari as ash2
-            md = ash2.ashtottari_mahadasa(jd, place)
-            result["ashtottari"] = {
-                "maha": lord_name(md[0][0]) if md and len(md) > 0 else None,
-                "antara": None,
-            }
-        except Exception as e:
-            print(f"[all_dashas] ashtottari fallback failed: {type(e).__name__}: {e}", flush=True)
-            result["ashtottari"] = None
+        result["ashtottari"] = _ashtottari_current(jd, place, lord_name)
+    except Exception as e:
+        print(f"[all_dashas] ashtottari failed: {type(e).__name__}: {e}", flush=True)
+        result["ashtottari"] = None
 
     return {
         "birth_datetime": req.birth_datetime,

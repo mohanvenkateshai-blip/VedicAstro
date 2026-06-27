@@ -10,6 +10,8 @@ import type { ChartData } from "@/lib/types";
 interface DashaItem {
   maha: string | null;
   antara: string | null;
+  applicable?: boolean;
+  reason?: string;
 }
 
 interface YoginiPeriod {
@@ -214,6 +216,24 @@ function DashaCard({
               style={{ color: "var(--color-text-muted)" }}
             >
               No active period data
+            </p>
+          )}
+        </div>
+      ) : data.applicable === false ? (
+        <div className="flex-1 flex flex-col items-center justify-center gap-2 px-1">
+          <p
+            className="text-xs text-center py-2 leading-relaxed"
+            style={{ color: "var(--color-text-muted)" }}
+          >
+            Not applicable for this chart
+          </p>
+          {data.reason && (
+            <p
+              className="text-[10px] text-center leading-relaxed line-clamp-4"
+              style={{ color: "var(--color-text-muted)" }}
+              title={data.reason}
+            >
+              {data.reason}
             </p>
           )}
         </div>
