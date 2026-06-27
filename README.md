@@ -21,17 +21,12 @@ data — it has zero impact on, or dependency from, the standalone.
 | `docs/chart_data.schema.json` — canonical horoscope contract | ✅ |
 | Golden regression suite (reference charts + independent cross-check) | ✅ 7 passing |
 | Containerization for hosting | ✅ Dockerfile + `fly.toml` |
-| **Hosted on Fly.io** | 🔴 **offline** (Phase 2 recovery) |
+| **Hosted on Fly.io** | 🟢 **live** (scale-to-zero, ~3–4s cold start) |
 
 **Engine URL:** https://vedicastro-cvce.fly.dev  (Fly app `vedicastro-cvce`, region `lhr`,
 1 GB VM, scale-to-zero). Health: `GET /health`. Canonical chart: `POST /chart`.
 
-As of June 2026 the hosted engine is **unreachable** (connection timeout). Chart
-routes on the portal depend on CVCE server-to-server calls and will fail or degrade
-until Phase 2 recovery is complete. Local engine + golden tests still pass.
-
 ```bash
-# When CVCE is back online:
 curl -s https://vedicastro-cvce.fly.dev/chart -H 'content-type: application/json' \
   -d '{"birth_datetime":"1975-04-22T19:15:00","birth_lat":12.2958,"birth_lon":76.6394,"birth_tz":5.5,"name":"Mohan"}'
 ```
@@ -67,7 +62,7 @@ the graph as the primary rules source is **Phase 4** (see `STATUS.md`).
 |-------|-------|--------|
 | 0 | Consolidation & clean-up | ✅ Complete |
 | 1 | Unified monorepo / version control | ✅ Complete |
-| 2 | CVCE recovery on Fly.io | 🔴 In progress |
+| 2 | CVCE recovery on Fly.io | ✅ Complete |
 | 3 | Formal gap analysis (`docs/GAP_ANALYSIS.md`) | Pending |
 | 4 | GraphRAG as `/predict` rules source | Pending |
 | 5+ | Feature build-out, Postgres + auth/RBAC | Pending |

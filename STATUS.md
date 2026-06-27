@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Active Session: Phase 2 — CVCE recovery)*
+*Last Updated: June 27, 2026 (Phase 2 complete — CVCE restored)*
 
 ---
 
@@ -10,8 +10,8 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 | Component | Live URL / Connection | Hosted On | Status | Notes |
 |:---|:---|:---|:---|:---|
-| **Portal** | [portal-omega-two-10.vercel.app](https://portal-omega-two-10.vercel.app) | Vercel | 🟢 LIVE (HTTP 200) | UI is functional; Server-Side `/chart` renders will fail or degrade when CVCE is offline. |
-| **CVCE (Engine)** | [vedicastro-cvce.fly.dev](https://vedicastro-cvce.fly.dev) | Fly.io (LHR) | 🔴 OFFLINE (HTTP 000) | Connection timeout (40s). Investigating in Phase 2 (cold start vs crashed/suspended). |
+| **Portal** | [portal-omega-two-10.vercel.app](https://portal-omega-two-10.vercel.app) | Vercel | 🟢 LIVE (HTTP 200) | UI functional; `/vedicastro` server-renders charts via CVCE (verified June 27). |
+| **CVCE (Engine)** | [vedicastro-cvce.fly.dev](https://vedicastro-cvce.fly.dev) | Fly.io (LHR) | 🟢 LIVE (HTTP 200) | Restored June 27 — fixed `server.py` ashtottari `except` indentation crash loop; redeployed v26. Scale-to-zero (~3–4s cold start). |
 | **Muhūrta** | [muhurtha.uvwx.me](https://muhurtha.uvwx.me) | Fly.io (IAD) | 🟢 LIVE (HTTP 200) | **Frozen standalone.** Fully complete. Untouched per directive. |
 | **Database** | Neon Postgres (teal-prism) | Neon (LHR) | 🟢 ACTIVE | Credentials loaded in Portal. |
 
@@ -63,9 +63,11 @@ We are strictly following a **phase-by-phase execution sequence with review gate
 - [x] Separately, resolve the 5 modified files in the frozen `panchanga_muhurtha` repository (investigated diff, committed additive chart refactors, and pushed to origin).
 
 ### Phase 2: CVCE Recovery & Diagnostics
-- [ ] Run Fly CLI diagnostics on the `vedicastro-cvce` app (logs, status, scaling configurations).
-- [ ] Resolve the outage and ensure local + hosted tests pass.
-- [ ] Verify that portal `/chart` displays live, precise coordinates from CVCE.
+- [x] Run Fly CLI diagnostics on the `vedicastro-cvce` app (logs, status, scaling configurations).
+- [x] Resolve the outage and ensure local + hosted tests pass.
+- [x] Verify that portal `/vedicastro` displays live, precise coordinates from CVCE.
+- *Root cause:* `SyntaxError` in `server.py:1157` (mis-indented inner `except` in ashtottari fallback) — crash loop, max 10 restarts, machine stopped. Fixed locally, 7 golden tests pass, deployed `deployment-01KW3C35GQ537SB15YNQDXRJTS` (machine v26).
+- *Status:* **Completed.** Review gate pending user sign-off.
 
 ### Phase 3: Comprehensive Gap Analysis
 - [ ] Build a formal `VedicAstro/docs/GAP_ANALYSIS.md` cross-referencing all 7 major systems and 51 enhancements from the professional Requirements document to map exact completeness (Done / Partial / Missing). This maps our long-term build-out plan.
@@ -83,7 +85,7 @@ We are strictly following a **phase-by-phase execution sequence with review gate
 
 ## 4. Known Issues & Tech Debts
 
-1. **CVCE Connection Timeout:** Live engine at `vedicastro-cvce.fly.dev` is currently unreachable (Phase 2 target).
+1. **CVCE cold-start latency:** Scale-to-zero adds ~3–4s on first request after idle; not an outage.
 2. **Documentation drift (reconciled June 27):** Root `README.md` and `portal/docs/feature-progress.json` now align with this file on CVCE offline status, `/vedicastro` route, and GraphRAG scope (enrichment vs rules source).
 3. **Stale Paths in Docs:** Legacy scripts or local path references (e.g. `/home/claude/work`) left behind by previous tools.
 4. **Ashtottari Dasha Module Missing:** PyJHora on Fly lacks this.

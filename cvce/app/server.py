@@ -1154,9 +1154,9 @@ def all_dashas(req: BirthRequest):
                 "maha": lord_name(md[0][0]) if md and len(md) > 0 else None,
                 "antara": None,
             }
-    except Exception as e:
-        print(f"[all_dashas] ashtottari failed: {type(e).__name__}: {e}", flush=True)
-        result["ashtottari"] = None
+        except Exception as e:
+            print(f"[all_dashas] ashtottari fallback failed: {type(e).__name__}: {e}", flush=True)
+            result["ashtottari"] = None
 
     return {
         "birth_datetime": req.birth_datetime,
