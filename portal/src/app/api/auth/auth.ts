@@ -11,6 +11,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import type { Role } from "@/lib/auth/types";
+import { isAuthConfigured } from "@/lib/auth-config";
 
 declare module "next-auth" {
   interface User {
@@ -24,21 +25,32 @@ declare module "@auth/core/adapters" {
   }
 }
 
+function googleUserId(
+  user: { id?: string },
+  account?: { providerAccountId?: string | null } | null,
+) {
+  return account?.providerAccountId ?? user.id ?? "";
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID!,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
-    }),
-  ],
+  providers: isAuthConfigured()
+    ? [
+        Google({
+          clientId: process.env.AUTH_GOOGLE_ID!,
+          clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+        }),
+      ]
+    : [],
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === "google" && user.id && user.email) {
+      if (account?.provider === "google" && user.email) {
+        const id = googleUserId(user, account);
+        if (!id) return false;
         try {
           const { upsertUser } = await import("@/lib/auth/index");
           await upsertUser({
-            id: user.id as string,
-            email: user.email as string,
+            id,
+            email: user.email,
             name: user.name ?? undefined,
           });
         } catch {
@@ -47,12 +59,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
+        const id = googleUserId(user, account);
+        token.id = id;
+        token.sub = id;
         try {
           const { getUser } = await import("@/lib/auth/index");
-          const dbUser = await getUser(user.id as string);
+          const dbUser = id ? await getUser(id) : null;
           token.role = dbUser?.role ?? "free";
         } catch {
           token.role = "free";
@@ -62,8 +76,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).id = token.id as string;
-        (session.user as any).role = token.role ?? "free";
+        const id = (token.id ?? token.sub) as string;
+        (session.user as { id?: string }).id = id;
+        (session.user as { role?: Role }).role = (token.role as Role) ?? "free";
       }
       return session;
     },

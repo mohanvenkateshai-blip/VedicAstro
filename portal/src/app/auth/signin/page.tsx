@@ -1,9 +1,36 @@
 import { signIn, auth } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
+import { isAuthConfigured } from "@/lib/auth-config";
 
-export default async function SignIn() {
+type SP = { callbackUrl?: string };
+
+export default async function SignIn({
+  searchParams,
+}: {
+  searchParams: Promise<SP>;
+}) {
+  const { callbackUrl } = await searchParams;
+  const redirectTo = callbackUrl?.startsWith("/") ? callbackUrl : "/dashboard";
+
+  if (!isAuthConfigured()) {
+    return (
+      <div className="mx-auto max-w-md px-6 py-24">
+        <div className="rounded-2xl border border-warning/40 bg-warning/5 p-8 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">Sign-in unavailable</h1>
+          <p className="mt-2 text-sm text-text-muted">
+            Google OAuth is not configured on this deployment. Set AUTH_SECRET,
+            AUTH_GOOGLE_ID, and AUTH_GOOGLE_SECRET in the environment.
+          </p>
+          <a href="/vedicastro" className="mt-6 inline-block text-sm text-accent hover:underline">
+            ← Continue without signing in
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   const session = await auth();
-  if (session?.user) redirect("/dashboard");
+  if (session?.user) redirect(redirectTo);
 
   return (
     <div className="mx-auto max-w-md px-6 py-24">
@@ -15,7 +42,7 @@ export default async function SignIn() {
         <form
           action={async () => {
             "use server";
-            await signIn("google", { redirectTo: "/dashboard" });
+            await signIn("google", { redirectTo });
           }}
           className="mt-6"
         >

@@ -13,13 +13,13 @@
  *   - ENCRYPTION_KEY (256-bit key for birth PII)
  */
 
-import { auth } from "@/app/api/auth/auth";
 import { getSession as authSession } from "./session";
-import { sql, setRlsContext } from "@/lib/db";
+import { sql, withUserContext } from "@/lib/db";
 import type { Role, Session } from "./types";
 
 export type { Role, Session } from "./types";
 export { ROLE_RANK, hasAtLeast, PROTECTED_PREFIXES, ADMIN_PREFIXES } from "./types";
+export { isAuthConfigured, isDatabaseConfigured } from "@/lib/auth-config";
 
 /** Replace the old scaffold getSession() with real NextAuth session. */
 export async function getSession(): Promise<Session | null> {
@@ -72,56 +72,58 @@ export async function saveHoroscope(
   name: string,
   chartData: Record<string, unknown>,
 ): Promise<string | null> {
+  let data = chartData;
   try {
-    let data = chartData;
-    try {
-      const { encryptChartData } = await import("./encrypt");
-      data = await encryptChartData(chartData);
-    } catch { /* encryption optional */ }
+    const { encryptChartData } = await import("./encrypt");
+    data = await encryptChartData(chartData);
+  } catch {
+    /* encryption optional */
+  }
 
-    // Ensure the user row exists before inserting (FK constraint)
-    await sql`
-      INSERT INTO users (id, email, name)
-      VALUES (${userId}, ${userId}, ${name ?? 'Anonymous'})
-      ON CONFLICT (id) DO NOTHING
-    `;
-
-    await setRlsContext(userId);
-    const rows = await sql`
+  return withUserContext(userId, async (tx) => {
+    const rows = await tx`
       INSERT INTO horoscopes (user_id, name, chart_data)
       VALUES (${userId}, ${name}, ${JSON.stringify(data)})
       RETURNING id
     `;
-    const all = rows as any[];
-    return all[0]?.id as string ?? null;
-  } catch (e) {
+    const all = rows as { id: string }[];
+    return all[0]?.id ?? null;
+  }).catch((e) => {
     console.error("Failed to save horoscope:", e);
     throw e;
-  }
+  });
 }
 
 /** Get a user's saved horoscopes (decrypts PII). */
-export async function getHoroscopes(userId: string): Promise<Array<{
-  id: string;
-  name: string;
-  chart_data: Record<string, unknown>;
-  created_at: string;
-}>> {
+export async function getHoroscopes(userId: string): Promise<
+  Array<{
+    id: string;
+    name: string;
+    chart_data: Record<string, unknown>;
+    created_at: string;
+  }>
+> {
   try {
-    await setRlsContext(userId);
-    const rows = await sql`
-      SELECT id, name, chart_data, created_at
-      FROM horoscopes
-      WHERE user_id = ${userId}
-      ORDER BY created_at DESC
-      LIMIT 50
-    `;
+    const rows = await withUserContext(userId, async (tx) => {
+      return tx`
+        SELECT id, name, chart_data, created_at
+        FROM horoscopes
+        WHERE user_id = ${userId}
+        ORDER BY created_at DESC
+        LIMIT 50
+      `;
+    });
     const { decryptChartData } = await import("./encrypt");
-    const all = rows as any[];
+    const all = rows as {
+      id: string;
+      name: string;
+      chart_data: Record<string, unknown>;
+      created_at: string;
+    }[];
     return await Promise.all(
       all.map(async (r) => ({
         ...r,
-        chart_data: await decryptChartData(r.chart_data as Record<string, unknown>),
+        chart_data: await decryptChartData(r.chart_data),
       })),
     );
   } catch {

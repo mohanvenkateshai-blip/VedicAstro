@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { ButtonLink } from "./ui/Button";
 
-export function SiteHeader() {
+export function SiteHeader({ signedIn = false }: { signedIn?: boolean }) {
   const pathname = usePathname();
 
   return (
@@ -54,11 +54,11 @@ export function SiteHeader() {
             Status
           </Link>
           <Link
-            href="/dashboard"
-            aria-current={pathname === "/dashboard" ? "page" : undefined}
+            href={signedIn ? "/dashboard" : "/auth/signin"}
+            aria-current={pathname === "/dashboard" || pathname === "/auth/signin" ? "page" : undefined}
             className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
-            Dashboard
+            {signedIn ? "Dashboard" : "Sign in"}
           </Link>
           <ThemeToggle />
           <ButtonLink href="/chart" variant="primary" className="!px-4 !py-3 text-sm">

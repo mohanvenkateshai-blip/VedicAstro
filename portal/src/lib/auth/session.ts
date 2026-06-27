@@ -29,15 +29,14 @@ export const getSession = cache(async (): Promise<Session | null> => {
 
   try {
     const s = await auth();
-    if (!s?.user?.id) return null;
-
-    // Role comes from JWT token, set in the jwt callback
-    const role: Role = (s.user as any).role ?? "free";
+    const user = s.user as { id?: string; email?: string | null; role?: Role };
+    const userId = user.id ?? (s as { userId?: string }).userId;
+    if (!userId) return null;
 
     return {
-      userId: s.user.id as string,
-      email: s.user.email as string,
-      role,
+      userId,
+      email: user.email ?? "",
+      role: user.role ?? "free",
     };
   } catch {
     return null;

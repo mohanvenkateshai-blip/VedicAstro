@@ -1,5 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { getHoroscopes, dbHealthy } from "@/lib/auth/index";
+import { signOut } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -19,12 +20,27 @@ export default async function DashboardPage() {
             Signed in as {session.email} · {session.role} tier
           </p>
         </div>
-        <Link
-          href="/vedicastro"
-          className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-[#1a1206] hover:bg-accent-strong transition-colors"
-        >
-          Cast a chart
-        </Link>
+        <div className="flex items-center gap-4">
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/vedicastro" });
+            }}
+          >
+            <button
+              type="submit"
+              className="text-sm text-text-muted hover:text-text-main transition-colors"
+            >
+              Sign out
+            </button>
+          </form>
+          <Link
+            href="/vedicastro"
+            className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-[#1a1206] hover:bg-accent-strong transition-colors"
+          >
+            Cast a chart
+          </Link>
+        </div>
       </div>
 
       {!dbOk && (

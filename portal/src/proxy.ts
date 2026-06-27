@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { hasAtLeast, PROTECTED_PREFIXES, ADMIN_PREFIXES } from "@/lib/auth/types";
+import { PROTECTED_PREFIXES, ADMIN_PREFIXES } from "@/lib/auth/types";
+import { isAuthConfigured } from "@/lib/auth-config";
 
 /**
  * Edge proxy — RBAC enforcement for protected routes.
@@ -13,7 +14,7 @@ import { hasAtLeast, PROTECTED_PREFIXES, ADMIN_PREFIXES } from "@/lib/auth/types
  * the old scaffold getSession() returns null and pages handle it.
  */
 export function proxy(req: NextRequest) {
-  const hasAuth = !!process.env.AUTH_SECRET;
+  const hasAuth = isAuthConfigured();
   if (!hasAuth) return NextResponse.next();
 
   const { pathname } = req.nextUrl;

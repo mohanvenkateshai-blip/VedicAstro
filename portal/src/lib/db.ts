@@ -37,6 +37,27 @@ async function _execute(strings: TemplateStringsArray, ...values: unknown[]): Pr
   return s(strings as any, ...values);
 }
 
+/** Run queries in one transaction with RLS context set for the user. */
+export async function withUserContext<T>(
+  userId: string,
+  fn: (tx: NeonQueryFunction<any, any>) => Promise<T>,
+): Promise<T> {
+  const s = await getSql();
+  if (!s) throw new Error("DATABASE_URL not configured");
+
+  const txFn = (s as NeonQueryFunction<any, any> & { transaction?: Function })
+    .transaction;
+  if (typeof txFn !== "function") {
+    await setRlsContext(userId);
+    return fn(s);
+  }
+
+  return txFn.call(s, async (tx: NeonQueryFunction<any, any>) => {
+    await tx`SELECT set_config('app.current_user_id', ${userId}, true)`;
+    return fn(tx);
+  });
+}
+
 export async function healthCheck(): Promise<boolean> {
   try {
     const s = await getSql();
@@ -54,5 +75,7 @@ export async function setRlsContext(userId: string | null) {
     const s = await getSql();
     if (!s) return;
     await (s as any)`SELECT set_config('app.current_user_id', ${userId}, true)`;
-  } catch { /* non-fatal */ }
+  } catch {
+    /* non-fatal */
+  }
 }

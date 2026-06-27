@@ -1,5 +1,8 @@
 import "server-only";
 
+import { healthCheck } from "@/lib/db";
+import { isAuthConfigured, isDatabaseConfigured } from "@/lib/auth-config";
+
 export interface ServiceProbe {
   name: string;
   url: string;
@@ -58,7 +61,7 @@ async function probe(
 
 /** Live health probes — used by /status page. */
 export async function getLiveServiceHealth(): Promise<ServiceProbe[]> {
-  const [cvce, predict, muhurta, portal] = await Promise.all([
+  const [cvce, predict, muhurta, portal, dbOk] = await Promise.all([
     probe(`${CVCE}/health`, "CVCE"),
     probe(`${CVCE}/predict/health`, "predict"),
     probe("https://muhurtha.uvwx.me/", "Muhurta"),
@@ -68,6 +71,7 @@ export async function getLiveServiceHealth(): Promise<ServiceProbe[]> {
         : "https://portal-omega-two-10.vercel.app/",
       "Portal",
     ),
+    healthCheck(),
   ]);
 
   let cvceNotes = cvce.detail;
@@ -96,6 +100,20 @@ export async function getLiveServiceHealth(): Promise<ServiceProbe[]> {
       role: "Frozen standalone (Fly IAD)",
       ...muhurta,
       notes: "iframe embed only",
+    },
+    {
+      name: "Neon Postgres",
+      url: "https://neon.tech",
+      role: "Saved charts + user roles",
+      ok: dbOk,
+      httpStatus: dbOk ? 200 : 0,
+      latencyMs: 0,
+      detail: isDatabaseConfigured()
+        ? dbOk
+          ? "connected"
+          : "DATABASE_URL set but unreachable"
+        : "DATABASE_URL not set",
+      notes: isAuthConfigured() ? "auth configured" : "auth env missing",
     },
   ];
 }

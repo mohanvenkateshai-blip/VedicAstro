@@ -1,10 +1,8 @@
 -- VedicAstro Portal — PostgreSQL schema
--- Run on Neon database before deploying auth.
-
--- Sessions managed by NextAuth (JWT + cookie), no session table needed
+-- Run: node scripts/apply-schema.mjs  (requires DATABASE_URL)
 
 CREATE TABLE IF NOT EXISTS users (
-  id            TEXT PRIMARY KEY,                     -- Google sub
+  id            TEXT PRIMARY KEY,                     -- Google OAuth sub
   email         TEXT UNIQUE NOT NULL,
   name          TEXT,
   role          TEXT NOT NULL DEFAULT 'free'          -- free | pro | premium | admin
@@ -24,4 +22,13 @@ CREATE TABLE IF NOT EXISTS horoscopes (
 
 CREATE INDEX IF NOT EXISTS idx_horoscopes_user ON horoscopes (user_id);
 CREATE INDEX IF NOT EXISTS idx_horoscopes_user_created ON horoscopes (user_id, created_at DESC);
+
+-- Row-level security: horoscopes visible only when app.current_user_id matches
+ALTER TABLE horoscopes ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS horoscopes_isolate ON horoscopes;
+CREATE POLICY horoscopes_isolate ON horoscopes
+  FOR ALL
+  USING (user_id = current_setting('app.current_user_id', true))
+  WITH CHECK (user_id = current_setting('app.current_user_id', true));
 
