@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phase 3 complete — gap analysis)*
+*Last Updated: June 27, 2026 (Phase 4 complete — GraphRAG rules source)*
 
 ---
 
@@ -24,7 +24,7 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Status:** Substantial, needs stabilization and GraphRAG wiring.
 * **Key Achievements:** ~24 functional endpoints implementing core calculations (Astrology, Dashas, Yogas, KP, Varshaphala, Prashna). 7 golden tests passing.
 * **Missing/Stalled:**
-  - GraphRAG is not wired as the rules source for `/predict` (currently using hardcoded `transit_rules.py`).
+  - GraphRAG routes `/predict` transit house rules through `graph.json` when `CVCE_GRAPH_AS_RULES=1` (Phase 4); hardcoded `transit_rules.py` fallback when unset.
   - Ashtottari dasha calculations are missing (PyJHora lacks the module on Fly).
   - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
@@ -41,7 +41,7 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Location:** `knowledge-graph/` (Python tools, JSON database)
 * **Status:** Ingestion Complete (448 nodes, 1236 edges, 36 communities).
 * **Key Achievements:** Fully ingested `Activity_Mapping.md` (91 activities), `Gochar_Phaladeepika_Pulippani.md`, `BPHS Vol 1`, and `Phaladeepika_Mantreswara.md`. Key finding: Rohiṇī identified as the central hub of the Muhurta network.
-* **GraphRAG scope (important):** Citation enrichment via `PredictionEnhancer` is **done** (see `portal/docs/feature-progress.json` F01). Routing `/predict` rule selection through `graph.json` queries is **not done** — Phase 4 (F31).
+* **GraphRAG scope (important):** Citation enrichment via `PredictionEnhancer` is **done** (F01). Transit house rules from graph when `CVCE_GRAPH_AS_RULES=1` — **done** (F31, Phase 4).
 * **Missing/Stalled:**
   - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
@@ -75,8 +75,10 @@ We are strictly following a **phase-by-phase execution sequence with review gate
 - *Status:* **Completed.** Review gate pending user sign-off.
 
 ### Phase 4: GraphRAG predicting
-- [ ] Route the `/predict` endpoint rules to query the offline `graph.json` directly (via `graph_rag/graph.py` queries) instead of using the hardcoded `transit_rules.py` file.
-- [ ] Retain hardcoded fallback with env-gate `CVCE_GRAPH_AS_RULES` for regression safety.
+- [x] Route the `/predict` endpoint rules to query the offline `graph.json` directly (via `graph_rag/rules_provider.py` → planet/house links) instead of using the hardcoded `transit_rules.py` file.
+- [x] Retain hardcoded fallback with env-gate `CVCE_GRAPH_AS_RULES` for regression safety (unset/0 = hardcoded; 1 = graph rules). Enabled on Fly production.
+- *Deliverable:* `graph_rag/rules_provider.py`, gochar integration, `rules_source` in `/predict` response, tests in `tests/test_graph_rules.py`.
+- *Status:* **Completed.** Review gate pending user sign-off.
 
 ### Phase 5+: Feature Build-out & Integrations
 - [ ] Implement and wire missing features mapped during the Phase 3 gap analysis (Yogas panel, Ashtottari dasha, animated transits, etc.).

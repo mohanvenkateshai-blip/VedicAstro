@@ -1,9 +1,9 @@
 {
   "updated": "2026-06-27T00:00:00Z",
-  "notes": "GraphRAG F01 = citation enrichment only; F31 = Phase 4 rules-source wiring. Auth/DB (F03–F05) = code scaffold; production wiring pending Phase 5+. See STATUS.md.",
+  "notes": "GraphRAG F01 = citation enrichment; F31 = graph transit rules (CVCE_GRAPH_AS_RULES). Auth/DB (F03–F05) = Phase 5+. See STATUS.md.",
   "features": [
     {"id": "F01", "name": "GraphRAG citation enrichment", "progress": 100, "status": "Done", "phase": 1},
-    {"id": "F31", "name": "GraphRAG /predict rules source", "progress": 0, "status": "Not started", "phase": 4},
+    {"id": "F31", "name": "GraphRAG /predict rules source", "progress": 100, "status": "Done", "phase": 4},
     {"id": "F02", "name": "CVCE CORS", "progress": 100, "status": "Done", "phase": 1},
     {"id": "F03", "name": "Neon DB + encryption", "progress": 60, "status": "Partial", "phase": 5},
     {"id": "F04", "name": "Google Auth", "progress": 50, "status": "Partial", "phase": 5},
@@ -31,7 +31,7 @@
     {"id": "F26", "name": "Varshaphala", "progress": 100, "status": "Done", "phase": 4},
     {"id": "F27", "name": "All Dashas Panel", "progress": 90, "status": "Done", "phase": 4},
     {"id": "F28", "name": "Orchestration Engine", "progress": 100, "status": "Done", "phase": 4},
-    {"id": "F29", "name": "Unified Rules Engine", "progress": 70, "status": "Partial", "phase": 4, "notes": "Hardcoded transit_rules.py; graph as rules source is F31 / Phase 4"},
+    {"id": "F29", "name": "Unified Rules Engine", "progress": 100, "status": "Done", "phase": 4, "notes": "Graph rules via CVCE_GRAPH_AS_RULES; hardcoded fallback when unset"},
     {"id": "F30", "name": "Handoff Engine", "progress": 100, "status": "Done", "phase": 4}
   ]
 }

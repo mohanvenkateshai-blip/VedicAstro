@@ -11,6 +11,8 @@ primary_region = "lhr"   # London — closest Fly region to Ireland
   CVCE_PORT = "8400"
   CVCE_DEFAULT_AYANAMSA = "LAHIRI"
   CVCE_VARGAS = "1,2,3,4,7,9,10,12,16,24,30,60"
+  # Phase 4: graph.json as /predict transit rules source (set 0 for hardcoded fallback)
+  CVCE_GRAPH_AS_RULES = "1"
   # CORS: tightened to the portal origin once the portal is deployed.
   # Until then, allow local dev origins only.
   CVCE_ALLOWED_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173,https://portal-omega-two-10.vercel.app"

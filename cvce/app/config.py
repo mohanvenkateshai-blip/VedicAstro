@@ -69,6 +69,11 @@ class Settings:
     RATE_LIMIT_REQUESTS: int = int(os.environ.get("CVCE_RATE_LIMIT_REQUESTS", "60"))
     RATE_LIMIT_WINDOW: int = int(os.environ.get("CVCE_RATE_LIMIT_WINDOW", "60"))
 
+    # GraphRAG: use graph.json for /predict transit house rules (default off → hardcoded fallback)
+    GRAPH_AS_RULES: bool = os.environ.get("CVCE_GRAPH_AS_RULES", "").strip().lower() in (
+        "1", "true", "yes", "on"
+    )
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:

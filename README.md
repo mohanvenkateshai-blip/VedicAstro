@@ -51,10 +51,9 @@ See [`portal/README.md`](portal/README.md).
 ## Knowledge graph & GraphRAG scope
 
 The offline knowledge graph (`knowledge-graph/graphify-out/graph.json`, ~448 nodes)
-is **ingestion-complete**. GraphRAG today powers **citation enrichment only** —
-`PredictionEnhancer` attaches classical-text citations to `/predict` output. Rule
-selection for `/predict` still uses hardcoded Python (`transit_rules.py`). Wiring
-the graph as the primary rules source is **Phase 4** (see `STATUS.md`).
+is **ingestion-complete**. GraphRAG powers **citation enrichment** (`PredictionEnhancer`)
+and **transit house rules** for `/predict` when `CVCE_GRAPH_AS_RULES=1` (enabled on Fly).
+Unset the env var to fall back to hardcoded `transit_rules.py` for regression safety.
 
 ## Roadmap (phased — see STATUS.md for detail)
 
@@ -64,7 +63,7 @@ the graph as the primary rules source is **Phase 4** (see `STATUS.md`).
 | 1 | Unified monorepo / version control | ✅ Complete |
 | 2 | CVCE recovery on Fly.io | ✅ Complete |
 | 3 | Formal gap analysis (`docs/GAP_ANALYSIS.md`) | ✅ Complete |
-| 4 | GraphRAG as `/predict` rules source | Pending |
+| 4 | GraphRAG as `/predict` rules source | ✅ Complete |
 | 5+ | Feature build-out, Postgres + auth/RBAC | Pending |
 
 Later integrations (not yet started): prop-driven Muhūrta fork, production

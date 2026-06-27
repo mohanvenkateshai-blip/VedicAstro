@@ -410,11 +410,15 @@ except Exception:
 # GraphRAG enhancement layer (optional — present if knowledge-graph exists)
 try:
     from graph_rag import PredictionEnhancer
+    from graph_rag.rules_provider import graph_rules_enabled
     _enhancer = PredictionEnhancer()
     _GRAPH_AVAILABLE = True
 except Exception:
     _GRAPH_AVAILABLE = False
     _enhancer = None
+
+    def graph_rules_enabled() -> bool:
+        return False
 
 # Unified Rules Engine
 try:
@@ -524,17 +528,22 @@ def predict(req: PredictionRequest):
         } if r.ashtakavarga else None,
         "warnings": r.warnings,
         "transit_summary": getattr(r, "transit_summary", ""),
+        "rules_source": "graph" if (_GRAPH_AVAILABLE and graph_rules_enabled()) else "hardcoded",
         "graph_enhancements": _graph_enhance(r, req) if _GRAPH_AVAILABLE else None,
     }
 
 
 @app.get("/predict/health")
 def predict_health():
+    from graph_rag.rules_provider import graph_rules_enabled, active_transit_rules
+    graph_rules = active_transit_rules()
     return {"engine": "vedic-prediction-engine",
             "version": _predictor.version if _ENGINE_AVAILABLE else "0.0.0",
             "available": _ENGINE_AVAILABLE,
             "graph_rag": {"available": _GRAPH_AVAILABLE,
-                          "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None},
+                          "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None,
+                          "rules_source": "graph" if graph_rules else "hardcoded",
+                          "graph_as_rules_env": graph_rules_enabled()},
             "rules_engine": {"available": _RULES_AVAILABLE}}
 
 

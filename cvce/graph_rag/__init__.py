@@ -12,5 +12,6 @@ Philosophy:
 
 from .graph import GraphRAG
 from .enhancer import PredictionEnhancer
+from .rules_provider import GraphTransitRules, graph_rules_enabled, active_transit_rules
 
-__all__ = ["GraphRAG", "PredictionEnhancer"]
+__all__ = ["GraphRAG", "PredictionEnhancer", "GraphTransitRules", "graph_rules_enabled", "active_transit_rules"]

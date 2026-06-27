@@ -19,6 +19,12 @@ from ..rules.transit_rules import (
     reconcile_dasha_transit
 )
 
+try:
+    from graph_rag.rules_provider import active_transit_rules
+except ImportError:
+    def active_transit_rules():
+        return None
+
 PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
 
 
@@ -106,24 +112,29 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             house = ((planet_rashi_idx - j_rashi_idx + 12) % 12) + 1  # 1-indexed
             pred.house_from_janma = house
 
-            # Determine house quality from TRANSIT_HOUSES
-            rules = TRANSIT_HOUSES.get(planet, {})
-            if house in rules.get("worst", []):
-                pred.house_quality = "worst"
-                pred.verdict = "ashubh"
-                pred.score = -10
-            elif house in rules.get("bad", []):
-                pred.house_quality = "bad"
-                pred.verdict = "ashubh"
-                pred.score = -5
-            elif house in rules.get("good", []):
-                pred.house_quality = "good"
-                pred.verdict = "shubh"
-                pred.score = 7
+            # Determine house quality — graph rules when CVCE_GRAPH_AS_RULES=1
+            graph_rules = active_transit_rules()
+            if graph_rules is not None:
+                pred.house_quality, pred.verdict, pred.score = graph_rules.house_quality(planet, house)
+                rules = graph_rules.transit_houses(planet)
             else:
-                pred.house_quality = "neutral"
-                pred.verdict = "neutral"
-                pred.score = 0
+                rules = TRANSIT_HOUSES.get(planet, {})
+                if house in rules.get("worst", []):
+                    pred.house_quality = "worst"
+                    pred.verdict = "ashubh"
+                    pred.score = -10
+                elif house in rules.get("bad", []):
+                    pred.house_quality = "bad"
+                    pred.verdict = "ashubh"
+                    pred.score = -5
+                elif house in rules.get("good", []):
+                    pred.house_quality = "good"
+                    pred.verdict = "shubh"
+                    pred.score = 7
+                else:
+                    pred.house_quality = "neutral"
+                    pred.verdict = "neutral"
+                    pred.score = 0
 
             # Exaltation/Debilitation override
             if natal_sign and planet in natal_sign:
@@ -182,7 +193,9 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
                         pred.verdict = "neutral"
 
             # Build effect descriptions
-            if pred.house_quality == "good":
+            if graph_rules is not None:
+                pred.effects.extend(graph_rules.transit_effects(planet, house)[:6])
+            elif pred.house_quality == "good":
                 pred.effects.append(f"In {house}th from Janma Rasi — favourable position")
             elif pred.house_quality == "bad":
                 pred.effects.append(f"In {house}th from Janma Rasi — unfavourable position")
