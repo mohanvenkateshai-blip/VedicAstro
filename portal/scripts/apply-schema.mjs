@@ -28,6 +28,7 @@ function loadEnvFile(path) {
     ) {
       val = val.slice(1, -1);
     }
+    if (!val) continue;
     if (!process.env[key]) process.env[key] = val;
   }
 }
@@ -36,21 +37,29 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 loadEnvFile(join(root, ".env.local"));
 loadEnvFile(join(root, ".env"));
 
-const url = process.env.DATABASE_URL?.trim();
+// Allow: npm run db:schema -- 'postgres://...'
+const cliUrl = process.argv[2]?.trim();
+const url = (cliUrl || process.env.DATABASE_URL)?.trim();
 if (!url) {
   console.error(`
 DATABASE_URL is missing or empty.
 
-You are already in the portal/ folder — run:
-  npm run db:schema
+Option A — paste connection string for this run only (safest):
+  DATABASE_URL='postgres://USER:PASS@HOST/DB?sslmode=require' npm run db:schema
 
-If .env.local has DATABASE_URL="" (Vercel often omits secrets on pull), paste your
-Neon connection string into .env.local:
+Option B — add to portal/.env.local (get value from Vercel or Neon):
+  DATABASE_URL=postgres://...
 
-  DATABASE_URL=postgres://user:pass@host/db?sslmode=require
+  Vercel:  https://vercel.com → vedicastro → Settings → Environment Variables → DATABASE_URL → Reveal
+  Neon:    https://console.neon.tech → project teal-prism → Connect → connection string
 
-Get it from: Vercel → Project → Settings → Environment Variables → DATABASE_URL
-         or: Neon console → Connection string
+  Tip: also add DATABASE_URL to the **Development** environment in Vercel so
+  \`vercel env pull\` works locally for \`npm run dev\`.
+
+Option C — Neon SQL Editor (no local URL needed):
+  1. Open Neon console → SQL Editor
+  2. Paste contents of: portal/src/lib/auth/schema.sql
+  3. Run
 `);
   process.exit(1);
 }
