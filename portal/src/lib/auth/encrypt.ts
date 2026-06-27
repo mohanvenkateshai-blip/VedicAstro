@@ -6,7 +6,8 @@
  * chart_data before storing in the horoscopes table.
  */
 
-const ALGO = "AES-256-GCM";
+/** Web Crypto uses "AES-GCM"; key size (256-bit) comes from the 32-byte raw key. */
+const ALGO = "AES-GCM";
 const KEY_LEN = 32; // 256 bits
 
 let _keyPromise: Promise<CryptoKey | null> | null = null;
@@ -18,13 +19,20 @@ function getKey(): Promise<CryptoKey | null> {
     _keyPromise = Promise.resolve(null);
     return _keyPromise;
   }
-  _keyPromise = crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(raw.padEnd(KEY_LEN, "0").slice(0, KEY_LEN)),
-    { name: ALGO },
-    false,
-    ["encrypt", "decrypt"],
-  );
+  _keyPromise = (async () => {
+    try {
+      return await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(raw.padEnd(KEY_LEN, "0").slice(0, KEY_LEN)),
+        { name: ALGO },
+        false,
+        ["encrypt", "decrypt"],
+      );
+    } catch (e) {
+      console.error("ENCRYPTION_KEY could not be loaded:", e);
+      return null;
+    }
+  })();
   return _keyPromise;
 }
 
