@@ -1,4 +1,5 @@
-import { getChart, getGraphInsights, CvceError } from "@/lib/cvce";
+import { getGraphInsights } from "@/lib/cvce";
+import { loadChartFromSearchParams } from "@/lib/load-chart";
 import { ChartViewer } from "@/components/chart/ChartViewer";
 import { GraphInsights } from "@/components/chart/GraphInsights";
 import { SaveChartButton } from "@/components/SaveChartButton";
@@ -17,22 +18,9 @@ import { MultiChartWorksheet } from "@/components/explorers/MultiChartWorksheet"
 import { BirthForm } from "@/components/BirthForm";
 import { Card, CardLabel } from "@/components/ui/Card";
 import { getSession } from "@/lib/auth";
-import { birthInputSchema } from "@/lib/validate";
-import type { BirthInput, GraphEnhancements } from "@/lib/types";
-
-// A known-good demo birth (Mohan) so the page renders a real chart on first load.
-const DEMO = {
-  name: "Mohan",
-  date: "1975-04-22",
-  time: "19:15",
-  place: "Mysore, IN",
-  lat: "12.2958",
-  lon: "76.6394",
-  tz: "5.5",
-};
+import type { GraphEnhancements } from "@/lib/types";
 
 type SP = Record<string, string | string[] | undefined>;
-const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 
 export default async function HoroscopePage({
   searchParams,
@@ -40,47 +28,16 @@ export default async function HoroscopePage({
   searchParams: Promise<SP>;
 }) {
   const sp = await searchParams;
-  const f = {
-    name: one(sp.name) ?? DEMO.name,
-    date: one(sp.date) ?? DEMO.date,
-    time: one(sp.time) ?? DEMO.time,
-    place: one(sp.place) ?? DEMO.place,
-    lat: one(sp.lat) ?? DEMO.lat,
-    lon: one(sp.lon) ?? DEMO.lon,
-    tz: one(sp.tz) ?? DEMO.tz,
-  };
+  const { defaults: f, chart, error: loadError } = await loadChartFromSearchParams(sp);
 
-  const birthLat = Number(f.lat);
-  const birthLon = Number(f.lon);
-  const birthTz = Number(f.tz);
-  let error: string | null = null;
-  if (isNaN(birthLat) || isNaN(birthLon) || isNaN(birthTz)) {
-    error = "Invalid coordinates — please check latitude, longitude, and timezone.";
-  }
-
-  const birth: BirthInput = {
-    name: f.name,
-    birth_datetime: `${f.date}T${(f.time || "12:00").slice(0, 5)}:00`,
-    birth_lat: birthLat,
-    birth_lon: birthLon,
-    birth_tz: birthTz,
-  };
-
-  let chart = null;
   let graphData: GraphEnhancements | null = null;
   let session = null;
-  if (!error) {
-    try {
-      birthInputSchema.parse(birth);
-      chart = await getChart(birth);
-      if (chart) {
-        graphData = await getGraphInsights(chart).catch(() => null);
-      }
-      session = await getSession().catch(() => null);
-    } catch (e) {
-      error = e instanceof CvceError ? e.message : "Unexpected error computing the chart.";
-    }
+  if (chart) {
+    graphData = await getGraphInsights(chart).catch(() => null);
+    session = await getSession().catch(() => null);
   }
+
+  const error = loadError;
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-10">

@@ -26,7 +26,13 @@ export interface Defaults {
 const field = "w-full rounded-lg border border-hairline bg-card px-3 py-2 text-sm outline-none focus:border-accent transition-colors";
 const label = "block text-xs font-medium text-text-muted mb-1.5";
 
-export function BirthForm({ defaults }: { defaults: Defaults }) {
+export function BirthForm({
+  defaults,
+  action = "/vedicastro",
+}: {
+  defaults: Defaults;
+  action?: string;
+}) {
   const [place, setPlace] = useState(defaults.place);
   const [lat, setLat] = useState(defaults.lat);
   const [lon, setLon] = useState(defaults.lon);
@@ -41,7 +47,7 @@ export function BirthForm({ defaults }: { defaults: Defaults }) {
 
   return (
     <Card className="p-6 h-fit lg:sticky lg:top-24">
-      <form method="get" action="/vedicastro" className="flex flex-col gap-4">
+      <form method="get" action={action} className="flex flex-col gap-4">
         <div>
           <label className={label} htmlFor="name">Name</label>
           <input id="name" name="name" defaultValue={defaults.name} className={field} placeholder="Optional" />

@@ -1,3 +1,29 @@
+import { loadChartFromSearchParams } from "@/lib/load-chart";
 import { Card } from "@/components/ui/Card";
 import { VarshaphalaPanel } from "@/components/explorers/VarshaphalaPanel";
-export default function Page() { return (<div className="space-y-6"><Card className="p-5"><h2 className="font-semibold text-lg">Varshaphala</h2></Card><VarshaphalaPanel /></div>); }
+
+type SP = Record<string, string | string[] | undefined>;
+
+export default async function VarshaphalaPage({
+  searchParams,
+}: {
+  searchParams: Promise<SP>;
+}) {
+  const { chart, error } = await loadChartFromSearchParams(await searchParams);
+
+  return (
+    <div className="space-y-6">
+      <Card className="p-5">
+        <h2 className="font-[family-name:var(--font-display)] font-semibold text-lg">
+          Varshaphala
+        </h2>
+      </Card>
+      {error ? (
+        <Card className="p-6 border-danger/40">
+          <p className="text-sm text-danger">{error}</p>
+        </Card>
+      ) : null}
+      {chart ? <VarshaphalaPanel chart={chart} /> : null}
+    </div>
+  );
+}

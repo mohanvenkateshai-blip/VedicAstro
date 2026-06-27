@@ -1,25 +1,16 @@
-import { getChart } from "@/lib/cvce";
+import { loadChartFromSearchParams } from "@/lib/load-chart";
 import { Card } from "@/components/ui/Card";
 import { DashaDeepTree } from "@/components/explorers/DashaDeepTree";
 import { AllDashasPanel } from "@/components/explorers/AllDashasPanel";
-import type { BirthInput } from "@/lib/types";
 
-const DEMO: BirthInput = {
-  name: "Mohan",
-  birth_datetime: "1975-04-22T19:15:00",
-  birth_lat: 12.2958,
-  birth_lon: 76.6394,
-  birth_tz: 5.5,
-};
+type SP = Record<string, string | string[] | undefined>;
 
-export default async function DashaPage() {
-  let chart = null;
-  let error: string | null = null;
-  try {
-    chart = await getChart(DEMO);
-  } catch (e) {
-    error = e instanceof Error ? e.message : "Could not load chart";
-  }
+export default async function DashaPage({
+  searchParams,
+}: {
+  searchParams: Promise<SP>;
+}) {
+  const { chart, error } = await loadChartFromSearchParams(await searchParams);
 
   return (
     <div className="space-y-6">
@@ -35,7 +26,7 @@ export default async function DashaPage() {
       ) : null}
       {chart ? (
         <>
-          <DashaDeepTree />
+          <DashaDeepTree chart={chart} />
           <AllDashasPanel chart={chart} />
         </>
       ) : null}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { 
   Compass, Orbit, Clock, Sparkles, Gauge, Star, 
   Heart, Sun, Crosshair, BookOpen, Download, Target 
@@ -25,6 +25,8 @@ const BOTTOM_TABS = [
 
 export function ChartSidebar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const qs = searchParams.toString();
 
   return (
     <nav className="flex flex-col gap-0.5 w-56" aria-label="Chart analysis sections">
@@ -34,10 +36,11 @@ export function ChartSidebar() {
       {TABS.map((tab) => {
         const Icon = tab.icon;
         const isActive = pathname === tab.href || (pathname === "/chart" && tab.id === "overview");
+        const href = qs ? `${tab.href}?${qs}` : tab.href;
         return (
           <Link
             key={tab.id}
-            href={tab.href}
+            href={href}
             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
               isActive
                 ? "bg-accent/15 text-accent font-medium"

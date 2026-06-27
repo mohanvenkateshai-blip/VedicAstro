@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phase 5 in progress — Yogas UI live)*
+*Last Updated: June 27, 2026 (Phase 5 — chart workspace URL params, Ashtottari fixed)*
 
 ---
 
@@ -27,7 +27,7 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Key Achievements:** ~24 functional endpoints implementing core calculations (Astrology, Dashas, Yogas, KP, Varshaphala, Prashna). 7 golden tests passing.
 * **Missing/Stalled:**
   - GraphRAG routes `/predict` transit house rules through `graph.json` when `CVCE_GRAPH_AS_RULES=1` (Phase 4); hardcoded `transit_rules.py` fallback when unset.
-  - Ashtottari dasha calculations are missing (PyJHora lacks the module on Fly).
+  - Ashtottari dasha via `/dashas` — fixed PyJHora response parsing (June 27).
   - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
 ### B. Portal (Web Application)
@@ -35,7 +35,7 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Status:** Substantial, needs auth/DB integration and styling refinement.
 * **Key Achievements:** 16 structured routes (chart entry at **`/vedicastro`**, not `/horoscope`), SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, etc.
 * **Missing/Stalled:**
-  - Yogas page wired to CVCE `/yogas` + shadbala/SAV from chart payload (Phase 5).
+  - Chart workspace `/chart/*` routes share birth details via URL query params (June 27).
   - NextAuth is a null-session scaffold; Postgres and Row-Level Security are not integrated.
   - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
 
@@ -85,7 +85,10 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 ### Phase 5+: Feature Build-out & Integrations
 - [x] Wire `/chart/yogas` UI to CVCE yogas + strength panels (YogasPanel, server-fetched chart).
 - [x] Fix dasha/special chart sub-routes to pass live chart data to explorer panels.
-- [ ] Implement remaining gap-analysis items (yoga detection engine gaps, Ashtottari, gochar rule fixes).
+- [x] Share birth params across `/chart/*` via URL (sidebar preserves query string).
+- [x] Fix Ashtottari dasha in `/dashas` (PyJHora nested lord tuple parsing).
+- [x] Dedupe GraphInsights transit citations (server + client filters).
+- [ ] Implement remaining gap-analysis items (yoga detection engine gaps, gochar rule fixes).
 - [ ] Integrate Postgres and database schema with Row-Level Security.
 - [ ] Build NextAuth and proxy-layer RBAC (free/pro/premium/admin roles).
 
@@ -96,9 +99,8 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 1. **CVCE cold-start latency:** Scale-to-zero adds ~3–4s on first request after idle; not an outage.
 2. **Documentation drift (reconciled June 27):** Root `README.md` and `portal/docs/feature-progress.json` now align with this file on CVCE offline status, `/vedicastro` route, and GraphRAG scope (enrichment vs rules source).
 3. **Stale Paths in Docs:** Legacy scripts or local path references (e.g. `/home/claude/work`) left behind by previous tools.
-4. **Ashtottari Dasha Module Missing:** PyJHora on Fly lacks this.
-5. **Transit Citations Verbose:** Citations require categorization on the enhancer-side.
-6. **Auth/DB scaffold only:** NextAuth, Neon client, and save/load code exist but production RBAC + RLS are Phase 5+ (see F03–F05 in `feature-progress.json`).
+4. **Transit citations (fixed June 27):** GraphInsights now collapses noisy graph metadata server- and client-side.
+5. **Auth/DB scaffold only:** NextAuth, Neon client, and save/load code exist but production RBAC + RLS are Phase 5+ (see F03–F05 in `feature-progress.json`).
 
 ---
 
