@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "ci": "npm run lint && npm run typecheck && npm run build"
+    "ci": "npm run lint && npm run typecheck && npm run build",
+    "db:schema": "node scripts/apply-schema.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
