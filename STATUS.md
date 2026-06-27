@@ -88,9 +88,9 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] Share birth params across `/chart/*` via URL (sidebar preserves query string).
 - [x] Fix Ashtottari dasha in `/dashas` (PyJHora nested lord tuple parsing).
 - [x] Dedupe GraphInsights transit citations (server + client filters).
+- [x] Auth/DB wiring — Google sub as user id, RLS on horoscopes, Neon probe on `/status`.
 - [ ] Implement remaining gap-analysis items (yoga detection engine gaps, gochar rule fixes).
-- [ ] Integrate Postgres and database schema with Row-Level Security.
-- [ ] Build NextAuth and proxy-layer RBAC (free/pro/premium/admin roles).
+- [ ] RBAC tier gating (free/pro/premium/admin) in proxy and feature flags.
 
 ---
 
@@ -100,7 +100,7 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 2. **Documentation drift (reconciled June 27):** Root `README.md` and `portal/docs/feature-progress.json` now align with this file on CVCE offline status, `/vedicastro` route, and GraphRAG scope (enrichment vs rules source).
 3. **Stale Paths in Docs:** Legacy scripts or local path references (e.g. `/home/claude/work`) left behind by previous tools.
 4. **Transit citations (fixed June 27):** GraphInsights now collapses noisy graph metadata server- and client-side.
-5. **Auth/DB scaffold only:** NextAuth, Neon client, and save/load code exist but production RBAC + RLS are Phase 5+ (see F03–F05 in `feature-progress.json`).
+5. **Auth/DB (Phase 5):** Google OAuth + Neon env on Vercel. Run `node portal/scripts/apply-schema.mjs` once against Neon to enable RLS. Tier-based RBAC still pending.
 
 ---
 
