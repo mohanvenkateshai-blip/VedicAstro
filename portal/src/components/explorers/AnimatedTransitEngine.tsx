@@ -4,11 +4,9 @@ import { useState, useEffect, useRef, useCallback, useReducer, useMemo } from "r
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
 import { motion } from "motion/react";
 import type { ChartData, Dignity } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 // ── Constants ───────────────────────────────────────────────────────────────
-
-const CVCE_BASE_URL =
-  process.env.NEXT_PUBLIC_CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
 const PLANET_COLORS: Record<string, string> = {
   Sun: "#f59e0b",
@@ -74,7 +72,8 @@ interface TransitPlanet {
   dignity?: Dignity;
 }
 
-interface TransitResponse {
+interface PositionsResponse {
+  positions?: TransitPlanet[];
   planets?: TransitPlanet[];
   [key: string]: unknown;
 }
@@ -210,15 +209,16 @@ export default function AnimatedTransitEngine({ chart }: { chart?: ChartData }) 
         const responses = await Promise.all(
           months.map((date) => {
             const dateStr = date.toISOString().slice(0, 10);
-            return fetch(`${CVCE_BASE_URL}/positions`, {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify({ datetime: dateStr + "T12:00:00", lat, lon, tz_offset: tz, ayanamsa: "LAHIRI" }),
-            }).then(async (res) => {
-              if (!res.ok) {
-                throw new Error(`Engine returned ${res.status} for ${dateStr}`);
-              }
-              return (await res.json()) as TransitResponse;
+            return postCvce<PositionsResponse>("positions", {
+              datetime: `${dateStr}T12:00:00`,
+              lat,
+              lon,
+              tz_offset: tz,
+              ayanamsa: "LAHIRI",
+            }).catch((e) => {
+              throw new Error(
+                e instanceof Error ? e.message : `Engine error for ${dateStr}`,
+              );
             });
           }),
         );
@@ -227,7 +227,8 @@ export default function AnimatedTransitEngine({ chart }: { chart?: ChartData }) 
 
         const grid: CellData[][] = PLANETS.map((planet) =>
           responses.map((res) => {
-            const p = res.planets?.find((bp) => bp.planet === planet);
+            const list = res.positions ?? res.planets ?? [];
+            const p = list.find((bp) => bp.planet === planet);
             return {
               signIndex: p?.signIndex ?? 0,
               dignity: p?.dignity ?? undefined,

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Sun, Calendar, ArrowRight, Loader } from "lucide-react";
 import { motion } from "motion/react";
 import type { ChartData } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -25,9 +26,6 @@ interface VarshaphalaData {
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
-
-const CVCE_URL =
-  process.env.NEXT_PUBLIC_CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
 const ACCENT = "#d4b483";
 const ACCENT_STRONG = "#c5a46e";
@@ -76,22 +74,12 @@ export function VarshaphalaPanel({ chart }: { chart?: ChartData }) {
     setError(null);
 
     try {
-      const res = await fetch(`${CVCE_URL}/varshaphala`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          birth_datetime: chart.meta.birth_datetime,
-          birth_lat: chart.meta.birth_lat,
-          birth_lon: chart.meta.birth_lon,
-          birth_tz: chart.meta.birth_tz,
-        }),
+      const json = await postCvce<VarshaphalaData>("varshaphala", {
+        birth_datetime: chart.meta.birth_datetime,
+        birth_lat: chart.meta.birth_lat,
+        birth_lon: chart.meta.birth_lon,
+        birth_tz: chart.meta.birth_tz,
       });
-
-      if (!res.ok) {
-        throw new Error(`Engine returned ${res.status}`);
-      }
-
-      const json: VarshaphalaData = await res.json();
       setData(json);
     } catch (e) {
       setError(
@@ -112,22 +100,12 @@ export function VarshaphalaPanel({ chart }: { chart?: ChartData }) {
       setData(null);
 
       try {
-        const res = await fetch(`${CVCE_URL}/varshaphala`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            birth_datetime: chart.meta.birth_datetime,
-            birth_lat: chart.meta.birth_lat,
-            birth_lon: chart.meta.birth_lon,
-            birth_tz: chart.meta.birth_tz,
-          }),
+        const json = await postCvce<VarshaphalaData>("varshaphala", {
+          birth_datetime: chart.meta.birth_datetime,
+          birth_lat: chart.meta.birth_lat,
+          birth_lon: chart.meta.birth_lon,
+          birth_tz: chart.meta.birth_tz,
         });
-
-        if (!res.ok) {
-          throw new Error(`Engine returned ${res.status}`);
-        }
-
-        const json: VarshaphalaData = await res.json();
         if (!cancelled) {
           setData(json);
         }

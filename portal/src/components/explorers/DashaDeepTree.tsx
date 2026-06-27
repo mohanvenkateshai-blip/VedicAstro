@@ -5,6 +5,7 @@ import { Clock, ChevronDown, ChevronRight, Loader } from "lucide-react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -12,12 +13,26 @@ export interface DashaNode {
   level: number;
   lord: string;
   start: string;
+  end?: string;
   durationYears: number;
   subPeriods: DashaNode[];
 }
 
+export interface DashaLadderRow {
+  level: number;
+  levelLabel: string;
+  lord: string;
+  lords: string[];
+  start: string;
+  end: string;
+  durationYears: number;
+}
+
 export interface DashaDeepData {
   current: string[];
+  currentLadder?: DashaLadderRow[];
+  balanceAtBirth?: { lord: string; years: number; months: number; days: number; label: string };
+  antardashaTable?: { maha: string; antara: string; start: string; durationYears: number }[];
   dashaTree: DashaNode[];
 }
 
@@ -29,9 +44,6 @@ export interface DashaDeepProps {
 // ── Constants ───────────────────────────────────────────────────────────────
 
 const MAX_DEPTH = 5;
-
-const CVCE_URL =
-  process.env.NEXT_PUBLIC_CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
 const LEVEL_LABELS: Record<number, string> = {
   1: "Mahadasha",
@@ -60,6 +72,51 @@ function calcPercent(startISO: string, durationYears: number): number {
 
 function yearFromISO(iso: string): string {
   return new Date(iso).getFullYear().toString();
+}
+
+function fmtRange(start: string, end?: string) {
+  const sy = start.slice(0, 10);
+  const ey = end?.slice(0, 10);
+  return ey ? `${sy} → ${ey}` : sy;
+}
+
+function CurrentLadder({ ladder }: { ladder: DashaLadderRow[] }) {
+  if (!ladder.length) return null;
+  return (
+    <div
+      className="rounded-xl border p-4 space-y-2"
+      style={{
+        borderColor: "rgba(124, 58, 237, 0.30)",
+        backgroundColor: "rgba(124, 58, 237, 0.06)",
+      }}
+    >
+      <p
+        className="text-[11px] font-mono uppercase tracking-wider"
+        style={{ color: DASHA.main }}
+      >
+        Running now
+      </p>
+      {ladder.map((row) => (
+        <div
+          key={row.level}
+          className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm"
+        >
+          <span
+            className="text-[10px] font-mono uppercase tracking-wide shrink-0"
+            style={{ color: DASHA.soft }}
+          >
+            {row.levelLabel}
+          </span>
+          <span className="font-semibold" style={{ color: DASHA.main }}>
+            {row.lord}
+          </span>
+          <span className="text-xs font-mono text-text-muted tabular-nums">
+            {fmtRange(row.start, row.end)}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function fmtDuration(years: number): string {
@@ -281,10 +338,10 @@ function DashaNodeCard({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mt-1 text-[11px]">
-          <span className="flex items-center gap-1 text-text-muted">
+        <div className="flex items-center gap-3 mt-1 text-[11px] flex-wrap">
+          <span className="flex items-center gap-1 text-text-muted font-mono tabular-nums">
             <Clock className="w-3 h-3" />
-            {yearFromISO(node.start)}
+            {fmtRange(node.start, node.end)}
           </span>
           <span className="text-text-muted font-mono">
             {fmtDuration(node.durationYears)}
@@ -422,6 +479,8 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
   const data = externalData ?? fetchedData;
   const mahadashas = data?.dashaTree ?? [];
   const current = data?.current ?? [];
+  const ladder = data?.currentLadder ?? [];
+  const balance = data?.balanceAtBirth;
 
   // ── Auto-fetch from CVCE when chart is provided without dashaData ─────────
 
@@ -435,22 +494,12 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
       setError(null);
 
       try {
-        const res = await fetch(`${CVCE_URL}/dasha-deep`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            birth_datetime: chart!.meta!.birth_datetime,
-            birth_lat: chart!.meta!.birth_lat,
-            birth_lon: chart!.meta!.birth_lon,
-            birth_tz: chart!.meta!.birth_tz,
-          }),
+        const json = await postCvce<DashaDeepData>("dasha-deep", {
+          birth_datetime: chart!.meta!.birth_datetime,
+          birth_lat: chart!.meta!.birth_lat,
+          birth_lon: chart!.meta!.birth_lon,
+          birth_tz: chart!.meta!.birth_tz,
         });
-
-        if (!res.ok) {
-          throw new Error(`Engine returned ${res.status}`);
-        }
-
-        const json: DashaDeepData = await res.json();
 
         if (!cancelled) {
           setFetchedData(json);
@@ -557,6 +606,15 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
 
   return (
     <div className="space-y-4">
+      {balance ? (
+        <p className="text-xs font-mono text-text-muted">
+          Balance at birth:{" "}
+          <span style={{ color: DASHA.main }}>{balance.label}</span>
+        </p>
+      ) : null}
+
+      {ladder.length > 0 ? <CurrentLadder ladder={ladder} /> : null}
+
       {/* ── Mahadasha timeline ─────────────────────────────────────────── */}
       <div className="overflow-x-auto -mx-1 px-1 pb-1">
         <div className="flex gap-2 min-w-min">

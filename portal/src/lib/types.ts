@@ -138,12 +138,60 @@ export interface MuhurtaResult {
 }
 
 export interface GraphEnhancements {
+  transit_intelligence?: TransitIntelligence | null;
   transit_citations?: TransitCitation[];
   yoga_citations?: YogaCitation[];
   text_conflicts?: TextConflict[];
   god_node_insights?: GodNodeInsight[];
   panchanga_insights?: PanchangaInsight[];
-  graph_stats?: { nodes: number; links: number; hyperedges: number; communities: number };
+  natal_insights?: PanchangaInsight[];
+  muhurta_citations?: MuhurtaCitation[];
+  graph_stats?: {
+    nodes: number;
+    links: number;
+    hyperedges?: number;
+    communities?: number;
+    source_files?: number;
+  };
+}
+
+export interface TransitIntelligence {
+  date: string;
+  janma_rashi?: string | null;
+  overall_verdict: string;
+  overall_score: number;
+  day_summary: string;
+  dasha_context?: string | null;
+  moorthy_note?: string | null;
+  tara_note?: string | null;
+  planets: PlanetTransitAnalysis[];
+  top_drivers: string[];
+}
+
+export interface PlanetTransitAnalysis {
+  planet: string;
+  rashi: string;
+  nakshatra: string;
+  house_from_janma?: number | null;
+  retrograde: boolean;
+  final_verdict: string;
+  score: number;
+  primary_driver: string;
+  root_cause: string;
+  aggravating: string[];
+  mitigating: string[];
+  positive_impact: string[];
+  negative_impact: string[];
+  factors: TransitFactor[];
+  summary: string;
+  classical_basis: string[];
+}
+
+export interface TransitFactor {
+  role: string;
+  weight: number;
+  summary: string;
+  source?: string;
 }
 
 export interface TransitCitation {
@@ -181,7 +229,22 @@ export interface GodNodeInsight {
 export interface PanchangaInsight {
   type: string;
   value: string;
-  graph_matches?: { id: string; label: string; score: number; community: number }[];
+  graph_matches?: GraphMatch[];
+}
+
+export interface GraphMatch {
+  id: string;
+  label: string;
+  score: number;
+  community: number;
+  source_file?: string;
+}
+
+export interface MuhurtaCitation {
+  name: string;
+  nature: string;
+  source?: string;
+  detail?: string;
 }
 
 export interface DayWindows {
@@ -190,6 +253,78 @@ export interface DayWindows {
   gulika: { start: number; end: number };
   sunrise?: number;
   sunset?: number;
+}
+
+export interface DashaLadderRow {
+  level: number;
+  levelLabel: string;
+  lord: string;
+  lords: string[];
+  start: string;
+  end: string;
+  durationYears: number;
+}
+
+export interface DashaIntelligence {
+  maha_lord: string;
+  antar_lord: string;
+  pratyantar_lord?: string | null;
+  maha_start: string;
+  maha_end: string;
+  antar_start: string;
+  antar_end: string;
+  lagna?: string | null;
+  janma_rashi?: string | null;
+  final_verdict: string;
+  score: number;
+  primary_driver: string;
+  root_cause: string;
+  maha_houses: number[];
+  antar_houses: number[];
+  aggravating: string[];
+  mitigating: string[];
+  profession: string[];
+  wealth: string[];
+  health: string[];
+  family: string[];
+  caution: string[];
+  factors: { role: string; weight: number; summary: string }[];
+  summary: string;
+  classical_basis: string[];
+}
+
+export interface ReportFacts {
+  schemaVersion: string;
+  meta: {
+    name?: string | null;
+    birth_datetime: string;
+    query_date: string;
+    ayanamsa: string;
+    engine: string;
+  };
+  natal: {
+    lagna: { rashi?: string; degree?: string; nakshatra?: string; pada?: number };
+    moon: { rashi?: string; nakshatra?: string; pada?: number };
+    planets: {
+      planet: string;
+      rashi?: string;
+      degree?: string;
+      nakshatra?: string;
+      pada?: number;
+      dignity?: string;
+      retrograde?: boolean;
+    }[];
+  };
+  dashas: {
+    balanceAtBirth: { lord: string; label: string };
+    current: string[];
+    currentLadder: DashaLadderRow[];
+    antardashaTable: { maha: string; antara: string; start: string; durationYears: number }[];
+  };
+  dasha_intelligence?: DashaIntelligence | null;
+  transit_intelligence?: TransitIntelligence | null;
+  yogas?: { activeCount?: number; yogas?: Record<string, { name?: string; prediction?: string }> };
+  panchanga?: Record<string, unknown> | null;
 }
 
 export const RASHIS = [

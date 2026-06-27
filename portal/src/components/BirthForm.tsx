@@ -29,9 +29,12 @@ const label = "block text-xs font-medium text-text-muted mb-1.5";
 export function BirthForm({
   defaults,
   action = "/vedicastro",
+  sticky = false,
 }: {
   defaults: Defaults;
   action?: string;
+  /** Pin form while scrolling — only on wide sidebar layouts (e.g. /vedicastro). */
+  sticky?: boolean;
 }) {
   const [place, setPlace] = useState(defaults.place);
   const [lat, setLat] = useState(defaults.lat);
@@ -46,7 +49,7 @@ export function BirthForm({
   }
 
   return (
-    <Card className="p-6 h-fit lg:sticky lg:top-24">
+    <Card className={`p-6 h-fit${sticky ? " lg:sticky lg:top-24" : ""}`}>
       <form method="get" action={action} className="flex flex-col gap-4">
         <div>
           <label className={label} htmlFor="name">Name</label>

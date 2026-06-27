@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { Sparkles, Loader, AlertCircle, TrendingUp } from "lucide-react";
 import type { ChartData } from "@/lib/types";
-
-const CVCE_URL =
-  process.env.NEXT_PUBLIC_CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
+import { postCvce } from "@/lib/cvce-client";
 
 interface YogaEntry {
   name?: string;
@@ -109,18 +107,12 @@ export function YogasPanel({ chart }: YogasPanelProps) {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`${CVCE_URL}/yogas`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            birth_datetime: chart.meta!.birth_datetime,
-            birth_lat: chart.meta!.birth_lat,
-            birth_lon: chart.meta!.birth_lon,
-            birth_tz: chart.meta!.birth_tz,
-          }),
+        const json = await postCvce<YogasPayload>("yogas", {
+          birth_datetime: chart.meta!.birth_datetime,
+          birth_lat: chart.meta!.birth_lat,
+          birth_lon: chart.meta!.birth_lon,
+          birth_tz: chart.meta!.birth_tz,
         });
-        if (!res.ok) throw new Error(`Engine returned ${res.status}`);
-        const json = (await res.json()) as YogasPayload;
         if (!cancelled) setRemote(json);
       } catch (e) {
         if (!cancelled) {

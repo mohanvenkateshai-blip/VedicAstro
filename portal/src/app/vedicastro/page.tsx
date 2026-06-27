@@ -63,7 +63,7 @@ export default async function HoroscopePage({
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
-        <BirthForm defaults={f} />
+        <BirthForm defaults={f} sticky />
 
         <div className="min-w-0">
           {error ? (

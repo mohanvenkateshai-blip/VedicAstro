@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Loader } from "lucide-react";
 import type { ChartData } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 const PLANET_COLORS: Record<string, string> = {
   Sun: "#f59e0b",
@@ -130,15 +131,41 @@ export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) 
       if (!chart?.meta?.birth_datetime) return;
 
       const year = new Date().getFullYear();
+      const lat = chart.meta.birth_lat ?? 12.3;
+      const lon = chart.meta.birth_lon ?? 76.65;
+      const tz = chart.meta.birth_tz ?? 5.5;
       setLoading(true);
       setError(null);
 
       try {
-        const res = await fetch(
-          `/positions?birth_datetime=${encodeURIComponent(chart.meta?.birth_datetime!)}&birth_lat=${chart.meta?.birth_lat}&birth_lon=${chart.meta?.birth_lon}&birth_tz=${chart.meta?.birth_tz}&year=${year}`,
+        const months = Array.from({ length: 12 }, (_, i) => {
+          const d = new Date(year, i, 15);
+          return d.toISOString().slice(0, 10);
+        });
+
+        const responses = await Promise.all(
+          months.map((dateStr) =>
+            postCvce<{ positions?: { planet: string; longitude: number }[] }>(
+              "positions",
+              {
+                datetime: `${dateStr}T12:00:00`,
+                lat,
+                lon,
+                tz_offset: tz,
+                ayanamsa: "LAHIRI",
+              },
+            ),
+          ),
         );
-        if (!res.ok) throw new Error(`Server returned ${res.status}`);
-        const json: MonthlyPosition[] = await res.json();
+
+        const json: MonthlyPosition[] = months.map((dateStr, i) => {
+          const row: MonthlyPosition = { date: dateStr };
+          for (const p of responses[i]?.positions ?? []) {
+            row[p.planet] = p.longitude;
+          }
+          return row;
+        });
+
         if (!cancelled) setPositions(json);
       } catch (e) {
         if (!cancelled) {

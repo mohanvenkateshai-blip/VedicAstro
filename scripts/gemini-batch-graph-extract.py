@@ -30,6 +30,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 KG = ROOT / "knowledge-graph"
 GRAPH_PATH = KG / "graphify-out" / "graph.json"
+GRAPH_GEMINI = KG / "graphify-out" / "graph-gemini.json"
 BATCH_DIR = KG / "graphify-out" / "batch"
 JOB_META = BATCH_DIR / "last-job.json"
 FILE_CHAR_CAP = 20_000
@@ -378,15 +379,21 @@ def cmd_merge(args: argparse.Namespace) -> int:
         return 1
 
     if args.dry_run:
-        print("dry-run: not writing graph.json")
+        print("dry-run: not writing output graph")
         return 0
 
-    GRAPH_PATH.write_text(json.dumps(merged, indent=2), encoding="utf-8")
-    print(f"✓ wrote {GRAPH_PATH}")
+    out_path = Path(args.output) if getattr(args, "output", None) else GRAPH_PATH
+    if not out_path.is_absolute():
+        out_path = KG / "graphify-out" / out_path.name if out_path.parent == Path(".") else out_path
+    out_path.write_text(json.dumps(merged, indent=2), encoding="utf-8")
+    print(f"✓ wrote {out_path}")
 
     if args.deploy:
         sync = ROOT / "scripts" / "sync-graph.sh"
         subprocess.run([str(sync), "--deploy"], cwd=ROOT, check=True)
+    if getattr(args, "deploy_gemini", False):
+        sync = ROOT / "scripts" / "sync-graph.sh"
+        subprocess.run([str(sync), "--gemini", "--deploy"], cwd=ROOT, check=True)
     return 0
 
 
@@ -426,8 +433,10 @@ def main() -> int:
 
     p_merge = sub.add_parser("merge", help="Download results and merge additively")
     p_merge.add_argument("--job")
+    p_merge.add_argument("--output", help="Output graph path (default: graph.json; use graph-gemini.json for gemini line)")
     p_merge.add_argument("--dry-run", action="store_true")
     p_merge.add_argument("--deploy", action="store_true", help="Run sync-graph.sh --deploy")
+    p_merge.add_argument("--deploy-gemini", action="store_true", help="Run sync-graph.sh --gemini --deploy")
 
     p_run = sub.add_parser("run", help="prepare → submit → wait → merge")
     p_run.add_argument("--deploy", action="store_true")

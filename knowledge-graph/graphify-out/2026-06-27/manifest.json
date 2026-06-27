@@ -1,0 +1,257 @@
+{
+  "chunks/.graphify_chunk_jaimini_goel.json": {
+    "mtime": 1782380652.6948054,
+    "ast_hash": "387199f3b72d2b3c54ac0689fe62d5ba",
+    "semantic_hash": ""
+  },
+  "chunks/.graphify_chunk_yogini_goel.json": {
+    "mtime": 1782380331.8985758,
+    "ast_hash": "0cc867636a42505ff5a55ffe447e1847",
+    "semantic_hash": ""
+  },
+  "corpus-manifest.json": {
+    "mtime": 1782533156.5533414,
+    "ast_hash": "045a8e1c1f2c58be82d2a71d7cb19e57",
+    "semantic_hash": ""
+  },
+  "merge_chunk03.py": {
+    "mtime": 1782362860.3104765,
+    "ast_hash": "204f5210f10bde7b4ee0aa4526fea763",
+    "semantic_hash": ""
+  },
+  "digests/Hora_Sara_digest.md": {
+    "mtime": 1782380379.716968,
+    "ast_hash": "c88def4641d20c27d5b9115f57a94194",
+    "semantic_hash": ""
+  },
+  "digests/Jaimini_Goel_digest.md": {
+    "mtime": 1782380104.2005844,
+    "ast_hash": "9a1003bee9aa56e4cab79bfa437ba4be",
+    "semantic_hash": ""
+  },
+  "digests/Jaimini_Sutras_digest.md": {
+    "mtime": 1782380198.0648527,
+    "ast_hash": "be89b5c35506f0cd769fe6436488c8e3",
+    "semantic_hash": ""
+  },
+  "digests/Phaladeepika_VB_digest.md": {
+    "mtime": 1782380283.1361456,
+    "ast_hash": "bcd55e1bcb459c73900bf8590b600a02",
+    "semantic_hash": ""
+  },
+  "digests/Sarvartha_Chintamani_digest.md": {
+    "mtime": 1782380215.297393,
+    "ast_hash": "3f1dbc78622060aa9273ce5876704218",
+    "semantic_hash": ""
+  },
+  "digests/Yogini_Dasha_Goel_digest.md": {
+    "mtime": 1782380053.548159,
+    "ast_hash": "a95cb0249de312febff80a80306e8d12",
+    "semantic_hash": ""
+  },
+  "raw/Activity_Mapping.md": {
+    "mtime": 1782322298.1654663,
+    "ast_hash": "f82698a89d015c406ded24da8fc8a136",
+    "semantic_hash": ""
+  },
+  "raw/Brihat_Parasara_Hora_Sastra_Vol_1.md": {
+    "mtime": 1782363780.65898,
+    "ast_hash": "1f9cf8e088fabb6833cd6329bdcc4140",
+    "semantic_hash": ""
+  },
+  "raw/Gochar_Phaladeepika_Pulippani.md": {
+    "mtime": 1782322298.1711996,
+    "ast_hash": "893c69207bc842b255a6c1edac14e89c",
+    "semantic_hash": ""
+  },
+  "raw/Hora_Sara.md": {
+    "mtime": 1782533156.5116878,
+    "ast_hash": "f5cc41a14791983e262dc3397d7027a2",
+    "semantic_hash": ""
+  },
+  "raw/Jaimini_Sutras.md": {
+    "mtime": 1782533156.5263426,
+    "ast_hash": "3766254d8b656fbf06829493a0cc3e60",
+    "semantic_hash": ""
+  },
+  "raw/Jyotish_Yoga_Handbook_101.md": {
+    "mtime": 1782533156.4685886,
+    "ast_hash": "bcee4dd03fbd637f06404fc6ff75b3a7",
+    "semantic_hash": ""
+  },
+  "raw/Panchang_analysis_medhraj.md": {
+    "mtime": 1782533156.4469628,
+    "ast_hash": "634f09c55f05e079d3b208ae7338d76a",
+    "semantic_hash": ""
+  },
+  "raw/Phaladeepika_English_Translation.md": {
+    "mtime": 1782533156.5207167,
+    "ast_hash": "b825cfd385fe025606d32e4d492a719d",
+    "semantic_hash": ""
+  },
+  "raw/Predicting_Through_Jaimini_Astrology.md": {
+    "mtime": 1782533156.4907556,
+    "ast_hash": "d2a276c7ab7aaa473dae8790365a2397",
+    "semantic_hash": ""
+  },
+  "raw/Ravi_Yoga_Vedic_Astrology_Guide.md": {
+    "mtime": 1782533156.4614503,
+    "ast_hash": "99b1bd4c0a838014e32e4bf763d09ca1",
+    "semantic_hash": ""
+  },
+  "raw/SBC_Vedha_and_Panchang_Reference_Guide.md": {
+    "mtime": 1782533156.4396446,
+    "ast_hash": "ebcd3ec401e3c113210ef8c8b3052d15",
+    "semantic_hash": ""
+  },
+  "raw/Sarvartha_Chintamani.md": {
+    "mtime": 1782533156.515578,
+    "ast_hash": "50c75d4cdfb76c140a398117bf4c20d6",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/utpata_mrityu_kana_siddhi_handbook.md": {
+    "mtime": 1782533156.4135683,
+    "ast_hash": "65f6ff404c25e03cd6e153c1db1b191b",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/muhurta_yogas.md": {
+    "mtime": 1782533156.418221,
+    "ast_hash": "88325cc1f06af784f1488cc7fd80ec85",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Vedic_Astrology_Panchang_Handbook.md": {
+    "mtime": 1782533156.4216623,
+    "ast_hash": "a01424a97fc0ce23fe994e0ce3f01fdb",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/gemini-code-1780093366483.md": {
+    "mtime": 1782533156.4256587,
+    "ast_hash": "52ee3bb1e8dabfe5c01eb5ce51b80ed5",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Tithi Astrology Master Reference Guide.md": {
+    "mtime": 1782533156.4292848,
+    "ast_hash": "d00133f7f23e35ca0eb862f52c86bbe5",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Vedic_Astrology_Tithi_Guide.md": {
+    "mtime": 1782533156.4325924,
+    "ast_hash": "b98d5be8a1e3b7c225d451a23a717484",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Gochar_Phaladeepika_Pulippani.md": {
+    "mtime": 1782322298.1711996,
+    "ast_hash": "893c69207bc842b255a6c1edac14e89c",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/vedic_yoga_logic_engine.md": {
+    "mtime": 1782533156.4363887,
+    "ast_hash": "ac83d767dfde067f3b1bf42933e6ed3b",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/SBC_Vedha_and_Panchang_Reference_Guide.md": {
+    "mtime": 1782533156.4396446,
+    "ast_hash": "ebcd3ec401e3c113210ef8c8b3052d15",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Predicting_Through_Jaimini_Astrology.md": {
+    "mtime": 1782533156.4907556,
+    "ast_hash": "d2a276c7ab7aaa473dae8790365a2397",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/FireShot Capture 034 - Vara Tithi Nakshatra Yogas - Celestial Alignments for Auspicious Be_ - [blog.cosmicinsights.net].md": {
+    "mtime": 1782533156.4438212,
+    "ast_hash": "7d95960498e7d3bf09d65b58513618ce",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Panchang_analysis_medhraj.md": {
+    "mtime": 1782533156.4469628,
+    "ast_hash": "634f09c55f05e079d3b208ae7338d76a",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/To build an automated yoga and Muhurta computing engine.md": {
+    "mtime": 1782533156.4510024,
+    "ast_hash": "f1a4ee3acda2473e2415c4820542340e",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Ashtakavarga_System_Comprehensive_Handbook.md": {
+    "mtime": 1782533156.4542708,
+    "ast_hash": "411d597947f94b6a18799babe15cb7a7",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Predict_Effectively_Through_Yogini_Dasha.md": {
+    "mtime": 1782533156.494675,
+    "ast_hash": "90cf1464fb497daab2ea4654a5093543",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Brihat_Parasara_Hora_Sastra_Vol_1.md": {
+    "mtime": 1782363780.65898,
+    "ast_hash": "1f9cf8e088fabb6833cd6329bdcc4140",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Phaladeepika_Mantreswara.md": {
+    "mtime": 1782363780.6617944,
+    "ast_hash": "b23aa5acec11827370216f58f108e39b",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Hora_Sara.md": {
+    "mtime": 1782533156.5116878,
+    "ast_hash": "f5cc41a14791983e262dc3397d7027a2",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Activity_Mapping.md": {
+    "mtime": 1782322298.1654663,
+    "ast_hash": "f82698a89d015c406ded24da8fc8a136",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Sarvartha_Chintamani.md": {
+    "mtime": 1782533156.515578,
+    "ast_hash": "50c75d4cdfb76c140a398117bf4c20d6",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Do_Ghati_Muhurta_Comprehensive_Handbook.md": {
+    "mtime": 1782533156.4576538,
+    "ast_hash": "da31e1ee91a1c57b866cc001264d6e6a",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Phaladeepika_English_Translation.md": {
+    "mtime": 1782533156.5207167,
+    "ast_hash": "b825cfd385fe025606d32e4d492a719d",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Ravi_Yoga_Vedic_Astrology_Guide.md": {
+    "mtime": 1782533156.4614503,
+    "ast_hash": "99b1bd4c0a838014e32e4bf763d09ca1",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Tithi\u2013Va\u0304ra Yoga Handbook.md": {
+    "mtime": 1782533156.4643776,
+    "ast_hash": "885666a065209cf765c83c7a102e386c",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jyotish_Yoga_Handbook_101.md": {
+    "mtime": 1782533156.4685886,
+    "ast_hash": "bcee4dd03fbd637f06404fc6ff75b3a7",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jaimini_Sutras.md": {
+    "mtime": 1782533156.5263426,
+    "ast_hash": "3766254d8b656fbf06829493a0cc3e60",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/vedic_astrology_unified_handbook.md": {
+    "mtime": 1782533156.472107,
+    "ast_hash": "7fba4aa8ca7c6d9d8a2132f309ff64dd",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Do_Ghati_Muhurta_Reference_Mysuru_Athlone.md": {
+    "mtime": 1782533156.4760485,
+    "ast_hash": "ecd1b5ee46344027b94ceb8747b9f8ea",
+    "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Tara_Balam_Muhurta_Handbook.md": {
+    "mtime": 1782533156.479425,
+    "ast_hash": "9804d0f18cb23c5879ac3f026343de09",
+    "semantic_hash": ""
+  }
+}

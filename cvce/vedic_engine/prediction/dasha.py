@@ -314,18 +314,33 @@ def compute_vimshottari(birth_date: str, birth_time: str = "12:00",
     return result
 
 
-def _yogini_antardashas(maha_years: float, start_date: str) -> list:
-    """Proportional Yogini antardashas within a Mahadasha."""
+def _add_days(date_str: str, days: float) -> str:
+    """Add days to a date string."""
+    y, m, d = map(int, date_str.split("-"))
+    dt = datetime(y, m, d) + timedelta(days=days)
+    return dt.strftime("%Y-%m-%d")
+
+
+def _yogini_antardashas(maha_name: str, maha_years: int, start_date: str) -> list:
+    """Yogini antardashas per Goel p.12: days = maha_years × antar_years × 10.
+
+    The sequence starts from the mahadasha lord itself and proceeds in Yogini
+    order cyclically through all 8 Yoginis.
+    """
     antars = []
     current = start_date
-    for sub in YOGINI_ORDER:
-        sub_years = (maha_years * YOGINI_PERIODS[sub]) / 36.0
-        end = _add_years(current, sub_years)
+    start_idx = YOGINI_ORDER.index(maha_name)
+    for i in range(8):
+        sub_name = YOGINI_ORDER[(start_idx + i) % 8]
+        sub_years = YOGINI_PERIODS[sub_name]
+        days = maha_years * sub_years * 10
+        end = _add_days(current, days)
         antars.append({
-            "yogini": sub,
+            "yogini": sub_name,
             "start": current,
             "end": end,
-            "years": sub_years,
+            "days": days,
+            "years": days / 365.25,
         })
         current = end
     return antars
@@ -362,7 +377,7 @@ def compute_yogini(birth_date: str, birth_nakshatra: str = None,
         years = full_years * (1 - elapsed_fraction) if i == 0 else float(full_years)
         end = _add_years(current, years)
         info = YOGINI_EFFECTS[name]
-        antars = _yogini_antardashas(years, current)
+        antars = _yogini_antardashas(name, YOGINI_PERIODS[name], current)
         yoginis.append(YoginiDasha(
             yogini=name, lord=info["lord"],
             start_date=current, end_date=end,

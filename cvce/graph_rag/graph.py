@@ -360,11 +360,17 @@ class GraphRAG:
 
     @property
     def stats(self) -> dict:
+        sources = {
+            n.get("source_file", "")
+            for n in self.nodes
+            if n.get("source_file")
+        }
         return {
             "nodes": len(self.nodes),
             "links": len(self.links),
             "hyperedges": len(self.hyperedges),
             "communities": len(self._community_nodes),
+            "source_files": len(sources),
             "loaded": self._loaded,
         }
 

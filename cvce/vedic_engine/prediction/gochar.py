@@ -283,6 +283,8 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             if tara:
                 results.tara_balam = tara
 
+    _apply_special_transit_overrides(results)
+
     # Overall scoring
     scores = [p.score for p in results.planet_predictions]
     results.overall_score = sum(scores) if scores else 0
@@ -338,3 +340,34 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
     results.synthesis = " | ".join(parts) if parts else "No natal chart — transit-only analysis"
 
     return results
+
+
+def _apply_special_transit_overrides(results: GocharResult) -> None:
+    """Named transits (Ashtama Shani, Sade Sati, etc.) override per-planet verdicts."""
+    for pred in results.planet_predictions:
+        house = pred.house_from_janma
+        if pred.planet == "Saturn" and house is not None:
+            if results.ashtama_shani and house == 8:
+                pred.verdict = "ashubh"
+                pred.house_quality = "worst"
+                pred.score = min(pred.score, -12)
+                pred.effects.append(results.ashtama_shani["effect"])
+            elif results.kantaka_shani and house == results.kantaka_shani.get("house"):
+                pred.verdict = "ashubh"
+                pred.house_quality = "bad"
+                pred.score = min(pred.score, -10)
+                pred.effects.append(results.kantaka_shani["effect"])
+            elif results.sade_sati and house in (12, 1, 2):
+                pred.verdict = "ashubh"
+                pred.house_quality = "worst" if house == 1 else "bad"
+                pred.score = min(pred.score, -15 if house == 1 else -12)
+                pred.effects.append(
+                    f"Sade Sati {results.sade_sati['phase']} phase — {results.sade_sati['effect']}"
+                )
+        if pred.planet == "Moon" and house == 8:
+            pred.verdict = "ashubh"
+            pred.house_quality = "worst"
+            pred.score = min(pred.score, -10)
+            pred.effects.append(
+                "Chandrashtama — Moon in 8th from natal Moon; heightened sensitivity and strain"
+            )

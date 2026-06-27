@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Star, AlertTriangle, Target } from "lucide-react";
 import type { ChartData } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 interface SpecialPoint {
   name: string;
@@ -46,21 +47,12 @@ export function SpecialPointsPanel({ chart }: { chart: ChartData | undefined }) 
     async function fetchPoints() {
       setState("loading");
       try {
-        const res = await fetch(
-          "https://vedicastro-cvce.fly.dev/special-points",
-          {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({
-              birth_datetime: chart?.meta?.birth_datetime,
-              birth_lat: chart?.meta?.birth_lat,
-              birth_lon: chart?.meta?.birth_lon,
-              birth_tz: chart?.meta?.birth_tz,
-            }),
-          }
-        );
-        if (!res.ok) throw new Error(`Engine returned ${res.status}`);
-        const json = (await res.json()) as SpecialPointsResponse;
+        const json = await postCvce<SpecialPointsResponse>("special-points", {
+          birth_datetime: chart?.meta?.birth_datetime,
+          birth_lat: chart?.meta?.birth_lat,
+          birth_lon: chart?.meta?.birth_lon,
+          birth_tz: chart?.meta?.birth_tz,
+        });
         if (!cancelled) {
           setData(json);
           setState("success");

@@ -142,27 +142,15 @@ def _panchanga(jd: float, place) -> dict:
 
 
 def _dasha(jd: float, place) -> dict:
-    from jhora.horoscope.dhasa.graha import vimsottari
-    bhukthi = vimsottari.get_vimsottari_dhasa_bhukthi(jd, place)
-    current = bhukthi[0] if isinstance(bhukthi, (list, tuple)) and len(bhukthi) else None
-    periods = bhukthi[1] if isinstance(bhukthi, (list, tuple)) and len(bhukthi) > 1 else bhukthi
+    from app.dasha_vimshottari import antardasha_table, birth_balance, running_ladder
 
-    def lord_name(pid):
-        return PLANET_NAMES[pid] if 0 <= pid < len(PLANET_NAMES) else str(pid)
-
-    rows = []
-    for p in (periods or []):
-        try:
-            lords, start, years = p[0], p[1], p[2]
-            rows.append({
-                "maha": lord_name(lords[0]),
-                "antara": lord_name(lords[1]) if len(lords) > 1 else None,
-                "start": f"{int(start[0]):04d}-{int(start[1]):02d}-{int(start[2]):02d}",
-                "durationYears": round(float(years), 4),
-            })
-        except Exception:
-            continue
-    return {"current": list(current) if current is not None else None, "periods": rows}
+    ladder = running_ladder(jd, place, depth=5)
+    return {
+        "balanceAtBirth": birth_balance(jd, place),
+        "currentLadder": ladder,
+        "current": ladder[-1]["lords"] if ladder else None,
+        "periods": antardasha_table(jd, place),
+    }
 
 
 def _shadbala(jd: float, place) -> dict:
@@ -420,6 +408,10 @@ except Exception:
 try:
     from graph_rag import PredictionEnhancer
     from graph_rag.rules_provider import graph_rules_enabled
+    from graph_rag.graph_grok import grok_graph_stats, grok_graph_available
+    from graph_rag.graph_gemini import gemini_graph_stats
+    from graph_rag.graph_glm import glm_graph_stats
+    from graph_rag.graph_deepseek import deepseek_graph_stats
     _enhancer = PredictionEnhancer()
     _GRAPH_AVAILABLE = True
 except Exception:
@@ -428,6 +420,21 @@ except Exception:
 
     def graph_rules_enabled() -> bool:
         return False
+
+    def grok_graph_stats():
+        return None
+
+    def grok_graph_available() -> bool:
+        return False
+
+    def gemini_graph_stats():
+        return None
+
+    def glm_graph_stats():
+        return None
+
+    def deepseek_graph_stats():
+        return None
 
 # Unified Rules Engine
 try:
@@ -475,6 +482,10 @@ def index():
         "endpoints": {
             "health": "GET /health",
             "predict_health": "GET /predict/health",
+            "predict_health_grok": "GET /predict/health/grok",
+            "predict_health_gemini": "GET /predict/health/gemini",
+            "predict_health_glm": "GET /predict/health/glm",
+            "predict_health_deepseek": "GET /predict/health/deepseek",
             "chart": "POST /chart",
             "predict": "POST /predict",
             "prashna": "POST /prashna",
@@ -599,6 +610,10 @@ def predict(req: PredictionRequest):
 def predict_health():
     from graph_rag.rules_provider import graph_rules_enabled, active_transit_rules
     graph_rules = active_transit_rules()
+    grok_stats = grok_graph_stats()
+    gemini_stats = gemini_graph_stats()
+    glm_stats = glm_graph_stats()
+    deepseek_stats = deepseek_graph_stats()
     return {"engine": "vedic-prediction-engine",
             "version": _predictor.version if _ENGINE_AVAILABLE else "0.0.0",
             "available": _ENGINE_AVAILABLE,
@@ -606,7 +621,92 @@ def predict_health():
                           "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None,
                           "rules_source": "graph" if graph_rules else "hardcoded",
                           "graph_as_rules_env": graph_rules_enabled()},
+            "graph_rag_grok": grok_stats,
+            "graph_rag_gemini": gemini_stats,
+            "graph_rag_glm": glm_stats,
+            "graph_rag_deepseek": deepseek_stats,
             "rules_engine": {"available": _RULES_AVAILABLE}}
+
+
+@app.get("/predict/health/grok")
+def predict_health_grok():
+    """Experimental Grok-enriched graph stats (does not affect /predict rules)."""
+    stats = grok_graph_stats()
+    if stats is None:
+        raise HTTPException(
+            status_code=404,
+            detail="graph-grok.json not deployed — run scripts/build-graph-grok.py && sync-graph.sh --grok",
+        )
+    return {
+        "initiative": "grok",
+        "production_unchanged": True,
+        "graph_rag": stats,
+        "compare": {
+            "production_endpoint": "/predict/health",
+            "promote_when": "beats_baseline is true and quality spot-check passes",
+        },
+    }
+
+
+@app.get("/predict/health/gemini")
+def predict_health_gemini():
+    """Experimental Gemini batch-enriched graph stats (does not affect /predict rules)."""
+    stats = gemini_graph_stats()
+    if stats is None:
+        raise HTTPException(
+            status_code=404,
+            detail="graph-gemini.json not deployed — run gemini-batch merge --output graph-gemini.json",
+        )
+    return {
+        "initiative": "gemini",
+        "production_unchanged": True,
+        "graph_rag": stats,
+        "compare": {
+            "production_endpoint": "/predict/health",
+            "grok_endpoint": "/predict/health/grok",
+        },
+    }
+
+
+@app.get("/predict/health/glm")
+def predict_health_glm():
+    """Experimental GLM 5.2 batch graph stats (does not affect /predict rules)."""
+    stats = glm_graph_stats()
+    if stats is None:
+        raise HTTPException(
+            status_code=404,
+            detail="graph-glm.json not deployed — run glm-batch-graph-extract.py merge",
+        )
+    return {
+        "initiative": "glm",
+        "model": "glm-5.2",
+        "production_unchanged": True,
+        "graph_rag": stats,
+        "compare": {
+            "production_endpoint": "/predict/health",
+            "gemini_endpoint": "/predict/health/gemini",
+        },
+    }
+
+
+@app.get("/predict/health/deepseek")
+def predict_health_deepseek():
+    stats = deepseek_graph_stats()
+    if stats is None:
+        raise HTTPException(
+            status_code=404,
+            detail="graph-deepseek.json not deployed — run deepseek-graph-extract.py run",
+        )
+    return {
+        "initiative": "deepseek",
+        "model": "deepseek-v4-flash",
+        "production_unchanged": True,
+        "graph_rag": stats,
+        "compare": {
+            "production_endpoint": "/predict/health",
+            "gemini_endpoint": "/predict/health/gemini",
+        },
+    }
 
 
 # =====================================================================
@@ -736,7 +836,12 @@ def _graph_enhance(r, req: PredictionRequest) -> dict | None:
     if not _GRAPH_AVAILABLE or _enhancer is None:
         return None
     try:
-        return _enhancer.enhance(r, natal_sign=req.natal_signs)
+        return _enhancer.enhance(
+            r,
+            natal_sign=req.natal_signs,
+            janma_nakshatra=req.janma_nakshatra,
+            janma_rashi=req.janma_rashi,
+        )
     except Exception:
         return {"error": "graph enhancement failed", "graph_stats": _enhancer.graph.stats}
 
@@ -786,57 +891,46 @@ def chart_svg_endpoint(req: SvgRequest):
 
 @app.post("/dasha-deep")
 def dasha_deep(req: BirthRequest):
-    """Vimshottari Dasha to 5 levels: Maha, Antar, Pratyantar, Sookshma, Prana.
-    Returns recursive tree with start dates and period lengths."""
-    from jhora.horoscope.dhasa.graha import vimsottari
+    """Vimshottari to 5 levels: Maha → Antar → Pratyantar → Sookshma → Prana."""
+    from app.dasha_vimshottari import dasha_deep_payload
 
     set_ayanamsa(req.ayanamsa)
     dt = parse_dt(req.birth_datetime)
     jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
 
-    def lord_name(pid):
-        return PLANET_NAMES[pid] if 0 <= pid < len(PLANET_NAMES) else str(pid)
-
-    bhukthi = vimsottari.get_vimsottari_dhasa_bhukthi(jd, place)
-    current = bhukthi[0] if len(bhukthi) else None
-    periods = bhukthi[1] if len(bhukthi) > 1 else []
-
-    def fmt_date(y, m, d):
-        return f"{int(y):04d}-{int(m):02d}-{int(d):02d}"
-
-    def build_tree(level: int, periods_list: list) -> list:
-        if level > 5 or not periods_list:
-            return []
-        rows = []
-        for p in periods_list:
-            try:
-                lords = p[0]
-                start = p[1]
-                years = p[2] if len(p) > 2 else 0
-                lord = lord_name(lords[0])
-                start_date = fmt_date(start[0], start[1], start[2])
-                # PyJHora vimsottari: p[0]=lords, p[1]=(y,m,d,frac), p[2]=years, p[3]=sub-periods list
-                children = build_tree(level + 1, p[3]) if len(p) > 3 and isinstance(p[3], (list, tuple)) else []
-                rows.append({
-                    "level": level,
-                    "lord": lord,
-                    "start": start_date,
-                    "durationYears": round(float(years), 4),
-                    "subPeriods": children,
-                })
-            except Exception:
-                continue
-        return rows
-
-    tree = build_tree(1, periods)
-    current_named = [lord_name(c) for c in current] if current else None
-
+    payload = dasha_deep_payload(jd, place, max_level=5)
     return {
         "birth_datetime": req.birth_datetime,
         "jd": jd,
-        "current": current_named,
-        "dashaTree": tree,
+        **payload,
     }
+
+
+class ReportFactsRequest(BirthRequest):
+    query_date: Optional[str] = None
+    query_time: str = "12:00"
+    include_dasha_tree: bool = False
+
+
+@app.post("/report/facts")
+def report_facts(req: ReportFactsRequest):
+    """Unified horoscope facts + dasha/transit intelligence for the report UI."""
+    from app.report_facts import build_report_facts
+
+    try:
+        return build_report_facts(
+            birth_datetime=req.birth_datetime,
+            birth_lat=req.birth_lat,
+            birth_lon=req.birth_lon,
+            birth_tz=req.birth_tz,
+            ayanamsa=req.ayanamsa,
+            name=req.name,
+            query_date=req.query_date,
+            query_time=req.query_time,
+            include_dasha_tree=req.include_dasha_tree,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Report facts failed: {e}") from e
 
 
 class SpecialPointsResponse(BaseModel):
@@ -1234,17 +1328,24 @@ def all_dashas(req: BirthRequest):
 
     result = {}
 
-    # Vimshottari — PyJHora returns (running_lords_tuple, full_timeline)
+    # Vimshottari — running period (NOT birth balance tuple from get_vimsottari_dhasa_bhukthi[0])
     try:
-        from jhora.horoscope.dhasa.graha import vimsottari
-        v = vimsottari.get_vimsottari_dhasa_bhukthi(jd, place)
-        cur = v[0] if isinstance(v, tuple) and v else None
-        maha, antara = _parse_dasha_lords(cur)
+        from app.dasha_vimshottari import birth_balance, running_ladder
+
+        ladder = running_ladder(jd, place, depth=2)
+        maha_row = ladder[0] if ladder else None
+        antar_row = ladder[1] if len(ladder) > 1 else None
         result["vimshottari"] = {
-            "maha": lord_name(maha) if maha is not None else None,
-            "antara": lord_name(antara) if antara is not None else None,
+            "maha": maha_row["lord"] if maha_row else None,
+            "antara": antar_row["lord"] if antar_row else None,
+            "mahaStart": maha_row["start"] if maha_row else None,
+            "mahaEnd": maha_row["end"] if maha_row else None,
+            "antaraStart": antar_row["start"] if antar_row else None,
+            "antaraEnd": antar_row["end"] if antar_row else None,
+            "balanceAtBirth": birth_balance(jd, place),
         }
-    except Exception:
+    except Exception as e:
+        print(f"[all_dashas] vimshottari failed: {type(e).__name__}: {e}", flush=True)
         result["vimshottari"] = None
 
     # Yogini Dasha

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Heart, Loader, AlertTriangle } from "lucide-react";
+import { postCvce } from "@/lib/cvce-client";
 
 interface PartnerInput {
   name: string;
@@ -51,6 +52,54 @@ const KOOTA_ORDER = [
   "Bhakoot",
   "Nadi",
 ];
+
+const KOOTA_API_KEYS: Record<string, string> = {
+  Varna: "varna",
+  Vashya: "vashya",
+  Tara: "tara",
+  Yoni: "yoni",
+  Graha: "grahaMaitri",
+  Gana: "gana",
+  Bhakoot: "bhakoot",
+  Nadi: "nadi",
+};
+
+interface KootaApiResponse {
+  totalScore: number;
+  verdict: string;
+  breakdown: Record<string, { score: number; max: number; name?: string }>;
+  kujaDosha?: {
+    bride: boolean;
+    groom: boolean;
+    note?: string;
+  };
+}
+
+function mapKootaResponse(raw: KootaApiResponse): KootaResult {
+  const breakdown = raw.breakdown ?? {};
+  return {
+    total_score: raw.totalScore,
+    verdict: raw.verdict,
+    kootas: KOOTA_ORDER.map((name) => {
+      const item = breakdown[KOOTA_API_KEYS[name]];
+      return { name, score: item?.score ?? 0, max: item?.max ?? 0 };
+    }),
+    kuja_dosha_a: {
+      has_dosha: raw.kujaDosha?.bride ?? false,
+      cancellation:
+        raw.kujaDosha?.bride && raw.kujaDosha?.groom
+          ? raw.kujaDosha.note ?? "Both partners Manglik — dosha cancelled"
+          : null,
+    },
+    kuja_dosha_b: {
+      has_dosha: raw.kujaDosha?.groom ?? false,
+      cancellation:
+        raw.kujaDosha?.bride && raw.kujaDosha?.groom
+          ? raw.kujaDosha.note ?? "Both partners Manglik — dosha cancelled"
+          : null,
+    },
+  };
+}
 
 const DEFAULT_PARTNER_A: PartnerInput = {
   name: "Mohan",
@@ -210,28 +259,21 @@ export function KootaMatcher() {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("/koota-match", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          partner_a: {
-            name: partnerA.name || "Partner A",
-            birth_datetime: partnerA.birth_datetime,
-            birth_lat: parseFloat(partnerA.birth_lat) || 0,
-            birth_lon: parseFloat(partnerA.birth_lon) || 0,
-            birth_tz: parseFloat(partnerA.birth_tz) || 0,
-          },
-          partner_b: {
-            name: partnerB.name || "Partner B",
-            birth_datetime: partnerB.birth_datetime,
-            birth_lat: parseFloat(partnerB.birth_lat) || 0,
-            birth_lon: parseFloat(partnerB.birth_lon) || 0,
-            birth_tz: parseFloat(partnerB.birth_tz) || 0,
-          },
-        }),
+      const raw = await postCvce<KootaApiResponse>("koota-match", {
+        bride: {
+          birth_datetime: partnerA.birth_datetime,
+          birth_lat: parseFloat(partnerA.birth_lat) || 0,
+          birth_lon: parseFloat(partnerA.birth_lon) || 0,
+          birth_tz: parseFloat(partnerA.birth_tz) || 0,
+        },
+        groom: {
+          birth_datetime: partnerB.birth_datetime,
+          birth_lat: parseFloat(partnerB.birth_lat) || 0,
+          birth_lon: parseFloat(partnerB.birth_lon) || 0,
+          birth_tz: parseFloat(partnerB.birth_tz) || 0,
+        },
       });
-      if (!res.ok) throw new Error(`Server returned ${res.status}`);
-      setResult((await res.json()) as KootaResult);
+      setResult(mapKootaResponse(raw));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Matching failed.");
     } finally {

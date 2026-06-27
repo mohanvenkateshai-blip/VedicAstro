@@ -13,6 +13,7 @@ import re
 from typing import Optional
 
 from .graph import GraphRAG
+from vedic_engine.rules.transit_rules import TRANSIT_HOUSES
 
 # Relation types extracted from Gochar Phaladeepika in graph.json
 _GOOD = frozenset({
@@ -127,32 +128,31 @@ class GraphTransitRules:
         })
 
     def house_quality(self, planet: str, house: int) -> tuple[str, str, int]:
-        """Return (house_quality, verdict, score) matching gochar logic."""
+        """Return (house_quality, verdict, score). Graph first; hardcoded Pulippani fallback."""
         rules = self.transit_houses(planet)
-        if house in rules.get("worst", []):
-            return "worst", "ashubh", -10
-        if house in rules.get("bad", []):
-            return "bad", "ashubh", -5
-        if house in rules.get("good", []):
-            return "good", "shubh", 7
-        return "neutral", "neutral", 0
+        hard = TRANSIT_HOUSES.get(planet, {})
+
+        def classify(r: dict) -> tuple[str, str, int] | None:
+            if house in r.get("worst", []):
+                return "worst", "ashubh", -10
+            if house in r.get("bad", []):
+                return "bad", "ashubh", -5
+            if house in r.get("good", []):
+                return "good", "shubh", 7
+            return None
+
+        return classify(rules) or classify(hard) or ("neutral", "neutral", 0)
 
     def transit_effects(self, planet: str, house: int) -> list[str]:
-        """Classical effect strings from graph nodes for this transit."""
-        effects = []
-        for e in self.graph.transit_effects(planet, house):
-            label = e.get("effect", "")
-            if label:
-                src = e.get("source", "")
-                effects.append(f"{label}" + (f" ({src})" if src else ""))
-        quality, _, _ = self.house_quality(planet, house)
+        """Short house verdict lines only (no raw graph dump)."""
+        quality, verdict, _ = self.house_quality(planet, house)
         if quality == "good":
-            effects.insert(0, f"In {house}th from Janma Rasi — favourable (graph rule)")
-        elif quality == "bad":
-            effects.insert(0, f"In {house}th from Janma Rasi — unfavourable (graph rule)")
-        elif quality == "worst":
-            effects.insert(0, f"In {house}th from Janma Rasi — WORST position (graph rule)")
-        return effects
+            return [f"In {house}th from Janma Rasi — favourable (Pulippani Table 12)"]
+        if quality == "bad":
+            return [f"In {house}th from Janma Rasi — unfavourable (Pulippani Table 12)"]
+        if quality == "worst":
+            return [f"In {house}th from Janma Rasi — worst position; caution advised"]
+        return [f"In {house}th from Janma Rasi — neutral house for {planet}"]
 
     @property
     def stats(self) -> dict:

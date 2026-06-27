@@ -14,8 +14,10 @@ activity name) and returns enriched output with:
 from __future__ import annotations
 
 import re
+from dataclasses import asdict
 from typing import Optional
 
+from vedic_engine.synthesis.transit_analyzer import TransitImpactAnalyzer
 from .graph import GraphRAG
 
 
@@ -24,29 +26,64 @@ class PredictionEnhancer:
 
     def __init__(self):
         self.graph = GraphRAG()
+        self._transit_analyzer = TransitImpactAnalyzer()
 
-    def enhance(self, prediction_result, natal_sign: dict | None = None) -> dict:
+    def enhance(
+        self,
+        prediction_result,
+        natal_sign: dict | None = None,
+        janma_nakshatra: str | None = None,
+        janma_rashi: str | None = None,
+    ) -> dict:
         """Enrich a prediction result with graph-sourced data.
 
         Args:
             prediction_result: VedicPrediction dataclass or dict with
                 panchanga, gochar, dasha, yogas, ashtakavarga fields.
             natal_sign: dict of planet → rashi_index (0=Aries), optional.
+            janma_nakshatra: birth Moon nakshatra name, optional.
+            janma_rashi: birth Moon rashi name, optional.
 
         Returns:
             Dict with keys: transit_citations, yoga_citations,
             text_conflicts, god_node_insights, graph_stats.
         """
         r = prediction_result
+        yogas = getattr(r, "yogas", None) or []
+
+        dasha_maha = None
+        dasha_antar = None
+        dasha_score = 0
+        if hasattr(r, "dasha") and r.dasha:
+            if r.dasha.current_mahadasha:
+                dasha_maha = r.dasha.current_mahadasha.planet
+            if r.dasha.current_antardasha:
+                dasha_antar = r.dasha.current_antardasha.planet
+            dasha_score = getattr(r.dasha, "dasha_score", 0) or 0
+
+        transit_intel = None
+        if hasattr(r, "gochar") and r.gochar:
+            analyzed = self._transit_analyzer.analyze(
+                r.gochar,
+                natal_sign=natal_sign,
+                dasha_maha=dasha_maha,
+                dasha_antar=dasha_antar,
+                dasha_score=dasha_score,
+                ashtakavarga=getattr(r, "ashtakavarga", None),
+            )
+            if analyzed:
+                transit_intel = asdict(analyzed)
+
         enhancement = {
+            "transit_intelligence": transit_intel,
             "transit_citations": [],
             "yoga_citations": [],
-            "text_conflicts": self.graph.contradictions()[:10],
+            "text_conflicts": self._chart_conflicts(natal_sign, yogas),
             "god_node_insights": [],
             "graph_stats": self.graph.stats,
         }
 
-        # 1. Transit effect citations
+        # Legacy citation blocks (secondary; UI prefers transit_intelligence)
         if hasattr(r, "gochar") and r.gochar and r.gochar.planet_predictions:
             enhancement["transit_citations"] = self._transit_citations(
                 r.gochar.planet_predictions
@@ -59,6 +96,11 @@ class PredictionEnhancer:
         # 3. God nodes most relevant to natal chart
         if natal_sign:
             enhancement["god_node_insights"] = self._god_node_insights(natal_sign)
+
+        # 3b. Natal chart corpus matches (birth nakshatra / Moon sign)
+        natal = self._natal_insights(janma_nakshatra, janma_rashi)
+        if natal:
+            enhancement["natal_insights"] = natal
 
         # 4. Panchanga-day activations
         if hasattr(r, "panchanga") and r.panchanga:
@@ -74,32 +116,67 @@ class PredictionEnhancer:
 
     # ── Private helpers ───────────────────────────────────────────────────
 
+    @staticmethod
+    def _normalize_effect_text(txt: str) -> str:
+        """Strip graph extraction prefixes; keep readable classical prose."""
+        txt = re.sub(r"\s+", " ", (txt or "").strip())
+        txt = re.sub(r"^Life-area effect:\s*", "", txt, flags=re.I)
+        txt = re.sub(r"^Benefic effect:\s*", "", txt, flags=re.I)
+        txt = re.sub(r"^Malefic effect:\s*", "", txt, flags=re.I)
+        return txt.strip()
+
+    @staticmethod
+    def _is_metadata_only(txt: str) -> bool:
+        low = txt.lower()
+        if not txt or len(txt) < 8:
+            return True
+        if "transit houses from moon" in low or "gochara vedha pairs" in low:
+            return True
+        if re.match(r"^\d+(st|nd|rd|th) house from moon", low):
+            return True
+        if low.startswith("vedha pairs:") and len(txt) < 120:
+            return True
+        return False
+
     def _filter_effects(self, effects: list, verdict: str) -> list:
-        """Return at most 4 deduplicated, readable effects (skip graph metadata noise)."""
+        """Return up to 4 deduplicated, readable effects (metadata rows skipped)."""
         out: list[dict] = []
         seen: set[str] = set()
-        skip_re = (
-            "transit houses from moon",
-            "gochara vedha pairs",
-            "life-area effect:",
-            "benefic effect:",
-            "malefic effect:",
-        )
         for e in effects:
-            txt = (e.get("effect") or "").strip()
-            low = txt.lower()
-            if not txt or any(s in low for s in skip_re):
+            raw = (e.get("effect") or "").strip()
+            txt = self._normalize_effect_text(raw)
+            if self._is_metadata_only(txt):
                 continue
-            if re.match(r"^\d+(st|nd|rd|th) house from moon", low):
-                continue
-            key = low[:72]
+            key = txt.lower()[:72]
             if key in seen:
                 continue
             seen.add(key)
-            out.append(e)
+            cleaned = dict(e)
+            cleaned["effect"] = txt
+            out.append(cleaned)
             if len(out) >= 4:
                 break
         return out
+
+    def _chart_conflicts(self, natal_sign: dict | None, yogas: list) -> list[dict]:
+        """Contradictions mentioning this chart's planets or detected yogas."""
+        all_c = self.graph.contradictions()
+        if not natal_sign:
+            return all_c[:8]
+        keywords: set[str] = set()
+        for p in natal_sign:
+            if p and p != "Lagna":
+                keywords.add(p.lower())
+        for y in yogas:
+            name = getattr(y, "name", str(y)).lower()
+            for part in re.findall(r"[a-z]{4,}", name):
+                keywords.add(part)
+        matched = []
+        for c in all_c:
+            blob = f"{c.get('source', '')} {c.get('target', '')}".lower()
+            if any(k in blob for k in keywords):
+                matched.append(c)
+        return (matched or all_c)[:8]
 
     def _transit_citations(self, planet_predictions: list) -> list[dict]:
         """For each transiting planet, find classical effect descriptions."""
@@ -143,8 +220,60 @@ class PredictionEnhancer:
                 if search:
                     info = {"yoga": name, "search_matches": search}
             if info:
+                if not info.get("descriptions"):
+                    label = (info.get("label") or "").strip()
+                    if label and len(label) > 24 and label.lower() != name.lower():
+                        info["descriptions"] = [label]
                 citations.append(info)
         return citations
+
+    def _natal_insights(
+        self,
+        janma_nakshatra: str | None,
+        janma_rashi: str | None,
+    ) -> list[dict] | None:
+        """Corpus passages for birth Moon nakshatra and sign."""
+        insights: list[dict] = []
+        if janma_nakshatra:
+            matches = self._readable_matches(
+                self.graph.search(f"{janma_nakshatra} nakshatra", top_n=6)
+            )
+            if matches:
+                insights.append({
+                    "type": "birth_nakshatra",
+                    "value": janma_nakshatra,
+                    "graph_matches": matches,
+                })
+        if janma_rashi:
+            matches = self._readable_matches(
+                self.graph.search(f"{janma_rashi} rashi moon", top_n=4)
+            )
+            if matches:
+                insights.append({
+                    "type": "birth_rashi",
+                    "value": janma_rashi,
+                    "graph_matches": matches,
+                })
+        return insights or None
+
+    @staticmethod
+    def _readable_matches(matches: list[dict] | None) -> list[dict]:
+        """Drop header junk; keep labels that read like citations."""
+        if not matches:
+            return []
+        out: list[dict] = []
+        for m in matches:
+            label = re.sub(r"\s+", " ", (m.get("label") or "").strip())
+            if len(label) < 12 or len(label) > 220:
+                continue
+            if label.isupper() and len(label) > 40:
+                continue
+            if "\n\n" in label:
+                label = label.split("\n\n")[0].strip()
+            out.append({**m, "label": label})
+            if len(out) >= 5:
+                break
+        return out
 
     def _god_node_insights(self, natal_sign: dict) -> list[dict]:
         """Find which god nodes (high-centrality concepts) are relevant.
@@ -156,8 +285,11 @@ class PredictionEnhancer:
 
         relevant = []
         for gn in gnodes:
-            label = gn["label"].lower()
-            is_relevant = any(p.lower() in label for p in planets_in_chart)
+            raw_label = gn["label"]
+            if not self._readable_label(raw_label):
+                continue
+            label = raw_label.lower()
+            is_relevant = any(p.lower() in label for p in planets_in_chart if p != "Lagna")
             if is_relevant or any(
                 r in label
                 for r in [
@@ -167,24 +299,38 @@ class PredictionEnhancer:
                 ]
             ):
                 neighbours = self.graph.neighbours(gn["id"], depth=1)
+                concepts = [
+                    self._normalize_effect_text(n.get("label", ""))
+                    for n in neighbours["nodes"][:12]
+                    if n.get("id") != gn["id"] and self._readable_label(n.get("label", ""))
+                ]
                 relevant.append({
-                    "god_node": gn["label"],
+                    "god_node": raw_label,
                     "degree": gn["degree"],
                     "community": gn["community"],
-                    "connected_concepts": [
-                        n.get("label", "")
-                        for n in neighbours["nodes"][:12]
-                        if n.get("id") != gn["id"]
-                    ],
+                    "connected_concepts": concepts[:8],
                 })
         return relevant[:8]
+
+    @staticmethod
+    def _readable_label(label: str) -> bool:
+        label = (label or "").strip()
+        if len(label) < 4 or len(label) > 90:
+            return False
+        if label.isupper() and len(label) > 28:
+            return False
+        if label.count("\n") > 1:
+            return False
+        return True
 
     def _panchanga_insights(self, panchanga) -> list[dict] | None:
         """Search for graph insights based on today's panchanga values."""
         insights = []
         nak_name = getattr(panchanga, "nakshatra", "")
         if nak_name:
-            search = self.graph.search(f"{nak_name} nakshatra", top_n=5)
+            search = self._readable_matches(
+                self.graph.search(f"{nak_name} nakshatra", top_n=6)
+            )
             if search:
                 insights.append({
                     "type": "nakshatra",
@@ -193,7 +339,9 @@ class PredictionEnhancer:
                 })
         tithi = getattr(panchanga, "tithi_name", "")
         if tithi:
-            search = self.graph.search(f"{tithi} tithi", top_n=3)
+            search = self._readable_matches(
+                self.graph.search(f"{tithi} tithi", top_n=4)
+            )
             if search:
                 insights.append({
                     "type": "tithi",

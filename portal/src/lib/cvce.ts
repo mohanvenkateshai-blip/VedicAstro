@@ -13,6 +13,7 @@ import type {
   DayWindows,
   GraphEnhancements,
   MuhurtaResult,
+  ReportFacts,
 } from "./types";
 
 const CVCE_BASE_URL =
@@ -83,6 +84,15 @@ async function post<T>(path: string, body: unknown, revalidate = 60 * 60): Promi
     throw new CvceError(`Engine returned an error for ${path}.`);
   }
   return (await res.json()) as T;
+}
+
+/** Unified report facts — natal, dasha ladder, dasha + transit intelligence. */
+export async function getReportFacts(birth: BirthInput): Promise<ReportFacts> {
+  return post<ReportFacts>(
+    "/report/facts",
+    { ayanamsa: "LAHIRI", ...birth },
+    60 * 30,
+  );
 }
 
 export interface MuhurtaQuery {

@@ -4,12 +4,18 @@ import { useState, useEffect, useCallback } from "react";
 import { Clock, Loader, AlertCircle } from "lucide-react";
 import { motion } from "motion/react";
 import type { ChartData } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
 interface DashaItem {
   maha: string | null;
   antara: string | null;
+  mahaStart?: string | null;
+  mahaEnd?: string | null;
+  antaraStart?: string | null;
+  antaraEnd?: string | null;
+  balanceAtBirth?: { label: string };
   applicable?: boolean;
   reason?: string;
 }
@@ -27,9 +33,6 @@ interface DashaSystemsData {
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
-
-const CVCE_URL =
-  process.env.NEXT_PUBLIC_CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
 const THEMES = {
   vimshottari: {
@@ -141,6 +144,24 @@ function DashaCard({
                 {data.antara}
               </span>
             </div>
+          )}
+
+          {dashaKey === "vimshottari" && data.balanceAtBirth?.label && (
+            <p className="text-[11px] font-mono text-text-muted pt-1">
+              Birth balance: {data.balanceAtBirth.label}
+            </p>
+          )}
+
+          {dashaKey === "vimshottari" && data.mahaStart && data.mahaEnd && (
+            <p className="text-[11px] font-mono text-text-muted">
+              Maha {data.mahaStart.slice(0, 10)} → {data.mahaEnd.slice(0, 10)}
+            </p>
+          )}
+
+          {dashaKey === "vimshottari" && data.antaraStart && data.antaraEnd && (
+            <p className="text-[11px] font-mono text-text-muted">
+              Antar {data.antaraStart.slice(0, 10)} → {data.antaraEnd.slice(0, 10)}
+            </p>
           )}
 
           {data.upcoming && data.upcoming.length > 0 && (
@@ -265,22 +286,15 @@ export function AllDashasPanel({ chart }: { chart?: ChartData }) {
     setError(null);
 
     try {
-      const res = await fetch(`${CVCE_URL}/dashas`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
+      const json = await postCvce<{ dashas?: DashaSystemsData } & DashaSystemsData>(
+        "dashas",
+        {
           birth_datetime: chart.meta.birth_datetime,
           birth_lat: chart.meta.birth_lat,
           birth_lon: chart.meta.birth_lon,
           birth_tz: chart.meta.birth_tz,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Engine returned ${res.status}`);
-      }
-
-      const json: any = await res.json();
+        },
+      );
       setData(json.dashas ?? json);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load dasha data");
@@ -299,22 +313,15 @@ export function AllDashasPanel({ chart }: { chart?: ChartData }) {
       setData(null);
 
       try {
-        const res = await fetch(`${CVCE_URL}/dashas`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
+        const json = await postCvce<{ dashas?: DashaSystemsData } & DashaSystemsData>(
+          "dashas",
+          {
             birth_datetime: chart.meta.birth_datetime,
             birth_lat: chart.meta.birth_lat,
             birth_lon: chart.meta.birth_lon,
             birth_tz: chart.meta.birth_tz,
-          }),
-        });
-
-        if (!res.ok) {
-          throw new Error(`Engine returned ${res.status}`);
-        }
-
-        const json: any = await res.json();
+          },
+        );
         if (!cancelled) {
           setData(json.dashas ?? json);
         }

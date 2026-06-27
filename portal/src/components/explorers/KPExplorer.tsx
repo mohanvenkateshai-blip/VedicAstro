@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Loader, Star, Target } from "lucide-react";
 import { clsx } from "clsx";
 import type { ChartData } from "@/lib/types";
+import { postCvce } from "@/lib/cvce-client";
 
 interface KPCusp {
   bhava: number;
@@ -26,9 +27,6 @@ interface KPSystemResponse {
   cusps: KPCusp[];
   planets: KPPlanet[];
 }
-
-const CVCE_URL =
-  process.env.NEXT_PUBLIC_CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
 const STAR_LORD_COLOR = "#c5a46e";
 const SUB_LORD_COLOR = "#7c3aed";
@@ -102,6 +100,43 @@ function tableCellStyle(color?: string): React.CSSProperties {
   return color ? { color, fontWeight: 500 } : {};
 }
 
+/** CVCE returns camelCase; normalize for the table UI. */
+function normalizeKP(raw: Record<string, unknown>): KPSystemResponse {
+  const cuspsRaw = (raw.cusps as Record<string, unknown>[]) ?? [];
+  const planetsRaw = (raw.planets as Record<string, unknown>[]) ?? [];
+
+  const cusps: KPCusp[] = cuspsRaw.map((c, i) => {
+    const rashi = String(c.rashi ?? "");
+    const degLabel = String(c.degLabel ?? "");
+    return {
+      bhava: Number(c.bhava ?? i + 1),
+      cusp_label:
+        String(c.cusp_label ?? "") ||
+        (rashi && degLabel ? `${rashi} ${degLabel}` : rashi || "—"),
+      star_lord: String(c.star_lord ?? c.starLord ?? ""),
+      sub_lord: String(c.sub_lord ?? c.subLord ?? ""),
+      sub_sub_lord: String(c.sub_sub_lord ?? c.subSubLord ?? ""),
+    };
+  });
+
+  const planets: KPPlanet[] = planetsRaw.map((p) => {
+    const rashi = String(p.rashi ?? "");
+    const degLabel = String(p.degLabel ?? "");
+    return {
+      planet: String(p.planet ?? p.name ?? ""),
+      rashi_label:
+        String(p.rashi_label ?? "") ||
+        (rashi && degLabel ? `${rashi} ${degLabel}` : rashi || "—"),
+      retro: Boolean(p.retro),
+      bhava: Number(p.bhava ?? 0),
+      star_lord: String(p.star_lord ?? p.starLord ?? ""),
+      sub_lord: String(p.sub_lord ?? p.subLord ?? ""),
+    };
+  });
+
+  return { cusps, planets };
+}
+
 export function KPExplorer({ chart }: { chart?: ChartData }) {
   const [data, setData] = useState<KPSystemResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -122,24 +157,14 @@ export function KPExplorer({ chart }: { chart?: ChartData }) {
       setData(null);
 
       try {
-        const res = await fetch(`${CVCE_URL}/kp-system`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            birth_datetime,
-            birth_lat,
-            birth_lon,
-            birth_tz,
-          }),
+        const json = await postCvce<Record<string, unknown>>("kp-system", {
+          birth_datetime,
+          birth_lat,
+          birth_lon,
+          birth_tz,
         });
-
-        if (!res.ok) {
-          throw new Error(`Engine returned ${res.status}`);
-        }
-
-        const json: KPSystemResponse = await res.json();
         if (!cancelled) {
-          setData(json);
+          setData(normalizeKP(json));
         }
       } catch (e) {
         if (!cancelled) {

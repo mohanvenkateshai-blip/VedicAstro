@@ -52,3 +52,18 @@ def test_predict_health_rules_source(monkeypatch):
     data = health.json()
     if data.get("available"):
         assert data["graph_rag"]["rules_source"] in ("graph", "hardcoded")
+    assert "graph_rag_grok" in data
+
+
+def test_predict_health_grok_endpoint():
+    from fastapi.testclient import TestClient
+    from app.server import app
+
+    client = TestClient(app)
+    resp = client.get("/predict/health/grok")
+    if resp.status_code == 200:
+        body = resp.json()
+        assert body["initiative"] == "grok"
+        assert body["graph_rag"]["nodes"] >= 4253
+    else:
+        assert resp.status_code == 404

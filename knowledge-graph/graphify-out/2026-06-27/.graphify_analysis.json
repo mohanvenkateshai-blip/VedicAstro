@@ -1,0 +1,1045 @@
+{
+  "communities": {
+    "0": [
+      "jaimini_sutras_amatyakaraka",
+      "jaimini_sutras_argala",
+      "jaimini_sutras_arudha_lagna",
+      "jaimini_sutras_atmakaraka",
+      "jaimini_sutras_bhattotpala",
+      "jaimini_sutras_brahma_planet",
+      "jaimini_sutras_drigdasa",
+      "jaimini_sutras_jaimini",
+      "jaimini_sutras_katapayadi_system",
+      "jaimini_sutras_maheswara_planet",
+      "jaimini_sutras_parasara",
+      "jaimini_sutras_rudra_planet",
+      "jaimini_sutras_shoola_dasa",
+      "jaimini_sutras_suryanarain_rao",
+      "jaimini_sutras_trikona_dasa",
+      "jaimini_sutras_upapada_lagna",
+      "jaimini_sutras_varahamihira",
+      "jaimini_sutras_vyasa",
+      "jaimini_sutras_yogardhadasa"
+    ],
+    "1": [
+      "adh_26_transits",
+      "adh_28_upasamhara",
+      "horaratna_book",
+      "jyotish_yoga_handbook_101_dasha_transit_trigger",
+      "jyotish_yoga_handbook_101_kemadruma",
+      "jyotish_yoga_handbook_101_neechabhanga_raja",
+      "jyotish_yoga_handbook_101_pancha_mahapurusha",
+      "jyotish_yoga_handbook_101_vipareeta_raja",
+      "jyotish_yoga_handbook_101_yoga",
+      "mantreswara_author",
+      "phaladeepika_book",
+      "phaladeepika_english_translation_bhavas",
+      "phaladeepika_english_translation_subrahmanya_sastri",
+      "rajavijaya_book",
+      "sarvatobhadra_chakra",
+      "sbc_vedha_and_panchang_reference_guide_vedha"
+    ],
+    "2": [
+      "adh_22_kalachakra",
+      "adh_23_ashtakavarga",
+      "brihat_jataka_book",
+      "chanakya_astrologer",
+      "jatakaparijata_book",
+      "jeevasarman_astrologer",
+      "manittha_astrologer",
+      "maya_astrologer",
+      "satyacharya_astrologer",
+      "varahamihira_astrologer"
+    ],
+    "3": [
+      "activity_mapping",
+      "bphs",
+      "hora_sara_digest",
+      "jaimini_goel_digest",
+      "jaimini_sutras_digest",
+      "phaladeepika_vb_digest",
+      "sarvartha_chintamani_digest",
+      "yogini_dasha_goel_digest"
+    ],
+    "4": [
+      "hora_sara_amsayurdaya",
+      "hora_sara_ashtakavarga",
+      "hora_sara_jeevasarma",
+      "hora_sara_manitha",
+      "hora_sara_prithuyasas",
+      "hora_sara_siddhasena",
+      "hora_sara_varaha_mihira",
+      "hora_sara_yavana"
+    ],
+    "5": [
+      "ashtakavarga_system_comprehensive_handbook_ashtakavarga",
+      "do_ghati_muhurta_comprehensive_handbook_do_ghati",
+      "do_ghati_muhurta_comprehensive_handbook_nakshatra_mapping",
+      "fireshot_capture_034_vara_tithi_nakshatra_yogas_yogas",
+      "phaladeepika_mantreswara_phaladeepika",
+      "phaladeepika_mantreswara_shadbala",
+      "phaladeepika_mantreswara_yogas"
+    ],
+    "6": [
+      "bph_chapter_31",
+      "bph_chapter_32",
+      "bph_chapter_33",
+      "brihat_parasara_hora_sastra_vol_1_page_425",
+      "brihat_parasara_hora_sastra_vol_1_page_436",
+      "brihat_parasara_hora_sastra_vol_1_page_446"
+    ],
+    "7": [
+      "hora_sara_conception_and_birth",
+      "hora_sara_divisions_of_rasis",
+      "hora_sara_evils_at_birth",
+      "hora_sara_longevity_special_rules",
+      "hora_sara_planetary_character",
+      "hora_sara_planetary_strengths"
+    ],
+    "8": [
+      "ashtakavarga_system_comprehensive_handbook_bav",
+      "ashtakavarga_system_comprehensive_handbook_kaksha",
+      "ashtakavarga_system_comprehensive_handbook_sav",
+      "ashtakavarga_system_comprehensive_handbook_shodhana",
+      "ashtakavarga_system_comprehensive_handbook_shodhya_pinda"
+    ],
+    "9": [
+      "brihat_parasara_hora_sastra_vol_1_anshayu",
+      "brihat_parasara_hora_sastra_vol_1_longevity",
+      "brihat_parasara_hora_sastra_vol_1_maraka_planets",
+      "brihat_parasara_hora_sastra_vol_1_nisargayu",
+      "brihat_parasara_hora_sastra_vol_1_pindayu"
+    ],
+    "10": [
+      "brihat_parasara_hora_sastra_vol_1_avasthas_of_planets",
+      "brihat_parasara_hora_sastra_vol_1_penury_yogas",
+      "brihat_parasara_hora_sastra_vol_1_raja_yogas",
+      "brihat_parasara_hora_sastra_vol_1_royal_association_yogas",
+      "brihat_parasara_hora_sastra_vol_1_wealth_yogas"
+    ],
+    "11": [
+      "gochar_phaladeepika_pulippani_example_horoscopes",
+      "gochar_phaladeepika_pulippani_jupiters_transit_in_gemini",
+      "gochar_phaladeepika_pulippani_sudharsana_chakra",
+      "gochar_phaladeepika_pulippani_transit_and_eclipses",
+      "gochar_phaladeepika_pulippani_transit_over_natal_planets"
+    ],
+    "12": [
+      "panchang_analysis_medhraj_nakshatra",
+      "panchang_analysis_medhraj_panchang",
+      "panchang_analysis_medhraj_tithi",
+      "panchang_analysis_medhraj_vaar",
+      "panchang_analysis_medhraj_vedha"
+    ],
+    "13": [
+      "sarvartha_chintamani_first_house",
+      "sarvartha_chintamani_fourth_house",
+      "sarvartha_chintamani_second_house",
+      "sarvartha_chintamani_third_house",
+      "sarvartha_chintamani_vargas"
+    ],
+    "14": [
+      "bph_chapter_34",
+      "bph_chapter_35",
+      "brihat_parasara_hora_sastra_vol_1_page_451",
+      "brihat_parasara_hora_sastra_vol_1_page_461"
+    ],
+    "15": [
+      "brihat_parasara_hora_sastra_vol_1_amala_yoga",
+      "brihat_parasara_hora_sastra_vol_1_kemadruma_yoga",
+      "brihat_parasara_hora_sastra_vol_1_lunar_yogas",
+      "brihat_parasara_hora_sastra_vol_1_solar_yogas"
+    ],
+    "16": [
+      "predicting_through_jaimini_astrology_brahma",
+      "predicting_through_jaimini_astrology_brahma_dasha",
+      "predicting_through_jaimini_astrology_sthira_dasha"
+    ],
+    "17": [
+      "adh_24_horasara_ashtakavarga",
+      "horasara_book"
+    ],
+    "18": [
+      "bph_chapter_30",
+      "brihat_parasara_hora_sastra_vol_1_page_421"
+    ],
+    "19": [
+      "bph_chapter_36",
+      "brihat_parasara_hora_sastra_vol_1_page_479"
+    ],
+    "20": [
+      "bph_chapter_37",
+      "brihat_parasara_hora_sastra_vol_1_page_501"
+    ],
+    "21": [
+      "bph_chapter_38",
+      "brihat_parasara_hora_sastra_vol_1_page_524"
+    ],
+    "22": [
+      "predicting_through_jaimini_astrology_chara_dasha",
+      "predicting_through_jaimini_astrology_narayan_dasha"
+    ],
+    "23": [
+      "predicting_through_jaimini_astrology_parashar_hora_lagna",
+      "predicting_through_jaimini_astrology_varnada_lagna"
+    ],
+    "24": [
+      "sarvartha_chintamani_aakekar",
+      "sarvartha_chintamani_kuja"
+    ],
+    "25": [
+      "sarvartha_chintamani_budha",
+      "sarvartha_chintamani_kanya"
+    ],
+    "26": [
+      "sarvartha_chintamani_chandra",
+      "sarvartha_chintamani_vrishabha"
+    ],
+    "27": [
+      "sarvartha_chintamani_guru",
+      "sarvartha_chintamani_karka"
+    ],
+    "28": [
+      "sarvartha_chintamani_jook",
+      "sarvartha_chintamani_shani"
+    ],
+    "29": [
+      "sarvartha_chintamani_meshaj",
+      "sarvartha_chintamani_surya"
+    ],
+    "30": [
+      "sarvartha_chintamani_rishph",
+      "sarvartha_chintamani_shukra"
+    ],
+    "31": [
+      "adh_25_upagrahas"
+    ],
+    "32": [
+      "adh_27_pravrajya"
+    ],
+    "33": [
+      "brihat_parasara_hora_sastra_vol_1_bheri_yoga"
+    ],
+    "34": [
+      "brihat_parasara_hora_sastra_vol_1_chaamara_yoga"
+    ],
+    "35": [
+      "brihat_parasara_hora_sastra_vol_1_harihara_brahama_yoga"
+    ],
+    "36": [
+      "brihat_parasara_hora_sastra_vol_1_kahala_yoga"
+    ],
+    "37": [
+      "brihat_parasara_hora_sastra_vol_1_kalanidhi_yoga"
+    ],
+    "38": [
+      "brihat_parasara_hora_sastra_vol_1_kalpadruma_yoga"
+    ],
+    "39": [
+      "brihat_parasara_hora_sastra_vol_1_khadaga_yoga"
+    ],
+    "40": [
+      "brihat_parasara_hora_sastra_vol_1_koorma_yoga"
+    ],
+    "41": [
+      "brihat_parasara_hora_sastra_vol_1_kusuma_yoga"
+    ],
+    "42": [
+      "brihat_parasara_hora_sastra_vol_1_lagnadhi_yoga"
+    ],
+    "43": [
+      "brihat_parasara_hora_sastra_vol_1_lakshmi_yoga"
+    ],
+    "44": [
+      "brihat_parasara_hora_sastra_vol_1_matsya_yoga"
+    ],
+    "45": [
+      "brihat_parasara_hora_sastra_vol_1_mridanga_yoga"
+    ],
+    "46": [
+      "brihat_parasara_hora_sastra_vol_1_page_407"
+    ],
+    "47": [
+      "brihat_parasara_hora_sastra_vol_1_page_408"
+    ],
+    "48": [
+      "brihat_parasara_hora_sastra_vol_1_page_409"
+    ],
+    "49": [
+      "brihat_parasara_hora_sastra_vol_1_page_410"
+    ],
+    "50": [
+      "brihat_parasara_hora_sastra_vol_1_page_411"
+    ],
+    "51": [
+      "brihat_parasara_hora_sastra_vol_1_page_412"
+    ],
+    "52": [
+      "brihat_parasara_hora_sastra_vol_1_page_413"
+    ],
+    "53": [
+      "brihat_parasara_hora_sastra_vol_1_page_414"
+    ],
+    "54": [
+      "brihat_parasara_hora_sastra_vol_1_page_415"
+    ],
+    "55": [
+      "brihat_parasara_hora_sastra_vol_1_page_416"
+    ],
+    "56": [
+      "brihat_parasara_hora_sastra_vol_1_page_417"
+    ],
+    "57": [
+      "brihat_parasara_hora_sastra_vol_1_page_418"
+    ],
+    "58": [
+      "brihat_parasara_hora_sastra_vol_1_page_419"
+    ],
+    "59": [
+      "brihat_parasara_hora_sastra_vol_1_page_420"
+    ],
+    "60": [
+      "brihat_parasara_hora_sastra_vol_1_page_422"
+    ],
+    "61": [
+      "brihat_parasara_hora_sastra_vol_1_page_423"
+    ],
+    "62": [
+      "brihat_parasara_hora_sastra_vol_1_page_424"
+    ],
+    "63": [
+      "brihat_parasara_hora_sastra_vol_1_page_426"
+    ],
+    "64": [
+      "brihat_parasara_hora_sastra_vol_1_page_427"
+    ],
+    "65": [
+      "brihat_parasara_hora_sastra_vol_1_page_428"
+    ],
+    "66": [
+      "brihat_parasara_hora_sastra_vol_1_page_429"
+    ],
+    "67": [
+      "brihat_parasara_hora_sastra_vol_1_page_430"
+    ],
+    "68": [
+      "brihat_parasara_hora_sastra_vol_1_page_431"
+    ],
+    "69": [
+      "brihat_parasara_hora_sastra_vol_1_page_432"
+    ],
+    "70": [
+      "brihat_parasara_hora_sastra_vol_1_page_433"
+    ],
+    "71": [
+      "brihat_parasara_hora_sastra_vol_1_page_434"
+    ],
+    "72": [
+      "brihat_parasara_hora_sastra_vol_1_page_435"
+    ],
+    "73": [
+      "brihat_parasara_hora_sastra_vol_1_page_437"
+    ],
+    "74": [
+      "brihat_parasara_hora_sastra_vol_1_page_438"
+    ],
+    "75": [
+      "brihat_parasara_hora_sastra_vol_1_page_439"
+    ],
+    "76": [
+      "brihat_parasara_hora_sastra_vol_1_page_440"
+    ],
+    "77": [
+      "brihat_parasara_hora_sastra_vol_1_page_441"
+    ],
+    "78": [
+      "brihat_parasara_hora_sastra_vol_1_page_442"
+    ],
+    "79": [
+      "brihat_parasara_hora_sastra_vol_1_page_443"
+    ],
+    "80": [
+      "brihat_parasara_hora_sastra_vol_1_page_444"
+    ],
+    "81": [
+      "brihat_parasara_hora_sastra_vol_1_page_445"
+    ],
+    "82": [
+      "brihat_parasara_hora_sastra_vol_1_page_447"
+    ],
+    "83": [
+      "brihat_parasara_hora_sastra_vol_1_page_448"
+    ],
+    "84": [
+      "brihat_parasara_hora_sastra_vol_1_page_449"
+    ],
+    "85": [
+      "brihat_parasara_hora_sastra_vol_1_page_450"
+    ],
+    "86": [
+      "brihat_parasara_hora_sastra_vol_1_page_452"
+    ],
+    "87": [
+      "brihat_parasara_hora_sastra_vol_1_page_453"
+    ],
+    "88": [
+      "brihat_parasara_hora_sastra_vol_1_page_454"
+    ],
+    "89": [
+      "brihat_parasara_hora_sastra_vol_1_page_455"
+    ],
+    "90": [
+      "brihat_parasara_hora_sastra_vol_1_page_456"
+    ],
+    "91": [
+      "brihat_parasara_hora_sastra_vol_1_page_457"
+    ],
+    "92": [
+      "brihat_parasara_hora_sastra_vol_1_page_458"
+    ],
+    "93": [
+      "brihat_parasara_hora_sastra_vol_1_page_459"
+    ],
+    "94": [
+      "brihat_parasara_hora_sastra_vol_1_page_460"
+    ],
+    "95": [
+      "brihat_parasara_hora_sastra_vol_1_page_462"
+    ],
+    "96": [
+      "brihat_parasara_hora_sastra_vol_1_page_463"
+    ],
+    "97": [
+      "brihat_parasara_hora_sastra_vol_1_page_464"
+    ],
+    "98": [
+      "brihat_parasara_hora_sastra_vol_1_page_465"
+    ],
+    "99": [
+      "brihat_parasara_hora_sastra_vol_1_page_466"
+    ],
+    "100": [
+      "brihat_parasara_hora_sastra_vol_1_page_467"
+    ],
+    "101": [
+      "brihat_parasara_hora_sastra_vol_1_page_468"
+    ],
+    "102": [
+      "brihat_parasara_hora_sastra_vol_1_page_469"
+    ],
+    "103": [
+      "brihat_parasara_hora_sastra_vol_1_page_470"
+    ],
+    "104": [
+      "brihat_parasara_hora_sastra_vol_1_page_471"
+    ],
+    "105": [
+      "brihat_parasara_hora_sastra_vol_1_page_472"
+    ],
+    "106": [
+      "brihat_parasara_hora_sastra_vol_1_page_473"
+    ],
+    "107": [
+      "brihat_parasara_hora_sastra_vol_1_page_474"
+    ],
+    "108": [
+      "brihat_parasara_hora_sastra_vol_1_page_475"
+    ],
+    "109": [
+      "brihat_parasara_hora_sastra_vol_1_page_476"
+    ],
+    "110": [
+      "brihat_parasara_hora_sastra_vol_1_page_477"
+    ],
+    "111": [
+      "brihat_parasara_hora_sastra_vol_1_page_478"
+    ],
+    "112": [
+      "brihat_parasara_hora_sastra_vol_1_page_480"
+    ],
+    "113": [
+      "brihat_parasara_hora_sastra_vol_1_page_481"
+    ],
+    "114": [
+      "brihat_parasara_hora_sastra_vol_1_page_482"
+    ],
+    "115": [
+      "brihat_parasara_hora_sastra_vol_1_page_483"
+    ],
+    "116": [
+      "brihat_parasara_hora_sastra_vol_1_page_484"
+    ],
+    "117": [
+      "brihat_parasara_hora_sastra_vol_1_page_485"
+    ],
+    "118": [
+      "brihat_parasara_hora_sastra_vol_1_page_486"
+    ],
+    "119": [
+      "brihat_parasara_hora_sastra_vol_1_page_487"
+    ],
+    "120": [
+      "brihat_parasara_hora_sastra_vol_1_page_488"
+    ],
+    "121": [
+      "brihat_parasara_hora_sastra_vol_1_page_489"
+    ],
+    "122": [
+      "brihat_parasara_hora_sastra_vol_1_page_490"
+    ],
+    "123": [
+      "brihat_parasara_hora_sastra_vol_1_page_491"
+    ],
+    "124": [
+      "brihat_parasara_hora_sastra_vol_1_page_492"
+    ],
+    "125": [
+      "brihat_parasara_hora_sastra_vol_1_page_493"
+    ],
+    "126": [
+      "brihat_parasara_hora_sastra_vol_1_page_494"
+    ],
+    "127": [
+      "brihat_parasara_hora_sastra_vol_1_page_495"
+    ],
+    "128": [
+      "brihat_parasara_hora_sastra_vol_1_page_496"
+    ],
+    "129": [
+      "brihat_parasara_hora_sastra_vol_1_page_497"
+    ],
+    "130": [
+      "brihat_parasara_hora_sastra_vol_1_page_498"
+    ],
+    "131": [
+      "brihat_parasara_hora_sastra_vol_1_page_499"
+    ],
+    "132": [
+      "brihat_parasara_hora_sastra_vol_1_page_500"
+    ],
+    "133": [
+      "brihat_parasara_hora_sastra_vol_1_page_502"
+    ],
+    "134": [
+      "brihat_parasara_hora_sastra_vol_1_page_503"
+    ],
+    "135": [
+      "brihat_parasara_hora_sastra_vol_1_page_504"
+    ],
+    "136": [
+      "brihat_parasara_hora_sastra_vol_1_page_505"
+    ],
+    "137": [
+      "brihat_parasara_hora_sastra_vol_1_page_506"
+    ],
+    "138": [
+      "brihat_parasara_hora_sastra_vol_1_page_507"
+    ],
+    "139": [
+      "brihat_parasara_hora_sastra_vol_1_page_508"
+    ],
+    "140": [
+      "brihat_parasara_hora_sastra_vol_1_page_509"
+    ],
+    "141": [
+      "brihat_parasara_hora_sastra_vol_1_page_510"
+    ],
+    "142": [
+      "brihat_parasara_hora_sastra_vol_1_page_511"
+    ],
+    "143": [
+      "brihat_parasara_hora_sastra_vol_1_page_512"
+    ],
+    "144": [
+      "brihat_parasara_hora_sastra_vol_1_page_513"
+    ],
+    "145": [
+      "brihat_parasara_hora_sastra_vol_1_page_514"
+    ],
+    "146": [
+      "brihat_parasara_hora_sastra_vol_1_page_515"
+    ],
+    "147": [
+      "brihat_parasara_hora_sastra_vol_1_page_516"
+    ],
+    "148": [
+      "brihat_parasara_hora_sastra_vol_1_page_517"
+    ],
+    "149": [
+      "brihat_parasara_hora_sastra_vol_1_page_518"
+    ],
+    "150": [
+      "brihat_parasara_hora_sastra_vol_1_page_519"
+    ],
+    "151": [
+      "brihat_parasara_hora_sastra_vol_1_page_520"
+    ],
+    "152": [
+      "brihat_parasara_hora_sastra_vol_1_page_521"
+    ],
+    "153": [
+      "brihat_parasara_hora_sastra_vol_1_page_522"
+    ],
+    "154": [
+      "brihat_parasara_hora_sastra_vol_1_page_523"
+    ],
+    "155": [
+      "brihat_parasara_hora_sastra_vol_1_page_525"
+    ],
+    "156": [
+      "brihat_parasara_hora_sastra_vol_1_page_526"
+    ],
+    "157": [
+      "brihat_parasara_hora_sastra_vol_1_page_527"
+    ],
+    "158": [
+      "brihat_parasara_hora_sastra_vol_1_page_528"
+    ],
+    "159": [
+      "brihat_parasara_hora_sastra_vol_1_parvata_yoga"
+    ],
+    "160": [
+      "brihat_parasara_hora_sastra_vol_1_sankha_yoga"
+    ],
+    "161": [
+      "brihat_parasara_hora_sastra_vol_1_sharada_yoga"
+    ],
+    "162": [
+      "brihat_parasara_hora_sastra_vol_1_shrinatha_yoga"
+    ],
+    "163": [
+      "gochar_phaladeepika_pulippani_sarvato_bhadra_chakra"
+    ],
+    "164": [
+      "gochar_phaladeepika_pulippani_thripatha_chakra"
+    ],
+    "165": [
+      "gochar_phaladeepika_pulippani_transits_miscellaneous"
+    ],
+    "166": [
+      "hora_sara_moola_dasa"
+    ],
+    "167": [
+      "hora_sara_pancha_maha_purusha_yogas"
+    ],
+    "168": [
+      "hora_sara_pindayurdaya"
+    ],
+    "169": [
+      "hora_sara_vimshottari_dasa"
+    ],
+    "170": [
+      "jaimini_sutras_chandra_dasa"
+    ],
+    "171": [
+      "merge_chunk03"
+    ],
+    "172": [
+      "predicting_through_jaimini_astrology_argala"
+    ],
+    "173": [
+      "predicting_through_jaimini_astrology_atmanadi_dasha"
+    ],
+    "174": [
+      "predicting_through_jaimini_astrology_ghatika_lagna"
+    ],
+    "175": [
+      "predicting_through_jaimini_astrology_maheswara"
+    ],
+    "176": [
+      "predicting_through_jaimini_astrology_mandook_dasha"
+    ],
+    "177": [
+      "predicting_through_jaimini_astrology_narayan_shoola_dasha"
+    ],
+    "178": [
+      "predicting_through_jaimini_astrology_navamsha_dasha"
+    ],
+    "179": [
+      "predicting_through_jaimini_astrology_rudra"
+    ],
+    "180": [
+      "predicting_through_jaimini_astrology_trikon_dasha"
+    ],
+    "181": [
+      "predicting_through_jaimini_astrology_vkhl"
+    ],
+    "182": [
+      "ravi_yoga_vedic_astrology_guide_ravi_yoga"
+    ],
+    "183": [
+      "sarvartha_chintamani_eighth_house"
+    ],
+    "184": [
+      "sarvartha_chintamani_eleventh_house"
+    ],
+    "185": [
+      "sarvartha_chintamani_fifth_house"
+    ],
+    "186": [
+      "sarvartha_chintamani_hndrog"
+    ],
+    "187": [
+      "sarvartha_chintamani_jaiva"
+    ],
+    "188": [
+      "sarvartha_chintamani_kaurpya"
+    ],
+    "189": [
+      "sarvartha_chintamani_ketu"
+    ],
+    "190": [
+      "sarvartha_chintamani_mandi"
+    ],
+    "191": [
+      "sarvartha_chintamani_mithun"
+    ],
+    "192": [
+      "sarvartha_chintamani_ninth_house"
+    ],
+    "193": [
+      "sarvartha_chintamani_pranpada"
+    ],
+    "194": [
+      "sarvartha_chintamani_rahu"
+    ],
+    "195": [
+      "sarvartha_chintamani_seventh_house"
+    ],
+    "196": [
+      "sarvartha_chintamani_shashtiamsha"
+    ],
+    "197": [
+      "sarvartha_chintamani_simha"
+    ],
+    "198": [
+      "sarvartha_chintamani_sixth_house"
+    ],
+    "199": [
+      "sarvartha_chintamani_tenth_house"
+    ],
+    "200": [
+      "sarvartha_chintamani_twelfth_house"
+    ],
+    "201": [
+      "sbc_vedha_and_panchang_reference_guide_dagdha_rashi"
+    ]
+  },
+  "cohesion": {
+    "0": 0.10526315789473684,
+    "1": 0.125,
+    "2": 0.2,
+    "3": 0.35714285714285715,
+    "4": 0.2857142857142857,
+    "5": 0.2857142857142857,
+    "6": 0.3333333333333333,
+    "7": 0.3333333333333333,
+    "8": 0.4,
+    "9": 0.4,
+    "10": 0.4,
+    "11": 0.4,
+    "12": 0.4,
+    "13": 0.4,
+    "14": 0.5,
+    "15": 0.5,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0,
+    "59": 1.0,
+    "60": 1.0,
+    "61": 1.0,
+    "62": 1.0,
+    "63": 1.0,
+    "64": 1.0,
+    "65": 1.0,
+    "66": 1.0,
+    "67": 1.0,
+    "68": 1.0,
+    "69": 1.0,
+    "70": 1.0,
+    "71": 1.0,
+    "72": 1.0,
+    "73": 1.0,
+    "74": 1.0,
+    "75": 1.0,
+    "76": 1.0,
+    "77": 1.0,
+    "78": 1.0,
+    "79": 1.0,
+    "80": 1.0,
+    "81": 1.0,
+    "82": 1.0,
+    "83": 1.0,
+    "84": 1.0,
+    "85": 1.0,
+    "86": 1.0,
+    "87": 1.0,
+    "88": 1.0,
+    "89": 1.0,
+    "90": 1.0,
+    "91": 1.0,
+    "92": 1.0,
+    "93": 1.0,
+    "94": 1.0,
+    "95": 1.0,
+    "96": 1.0,
+    "97": 1.0,
+    "98": 1.0,
+    "99": 1.0,
+    "100": 1.0,
+    "101": 1.0,
+    "102": 1.0,
+    "103": 1.0,
+    "104": 1.0,
+    "105": 1.0,
+    "106": 1.0,
+    "107": 1.0,
+    "108": 1.0,
+    "109": 1.0,
+    "110": 1.0,
+    "111": 1.0,
+    "112": 1.0,
+    "113": 1.0,
+    "114": 1.0,
+    "115": 1.0,
+    "116": 1.0,
+    "117": 1.0,
+    "118": 1.0,
+    "119": 1.0,
+    "120": 1.0,
+    "121": 1.0,
+    "122": 1.0,
+    "123": 1.0,
+    "124": 1.0,
+    "125": 1.0,
+    "126": 1.0,
+    "127": 1.0,
+    "128": 1.0,
+    "129": 1.0,
+    "130": 1.0,
+    "131": 1.0,
+    "132": 1.0,
+    "133": 1.0,
+    "134": 1.0,
+    "135": 1.0,
+    "136": 1.0,
+    "137": 1.0,
+    "138": 1.0,
+    "139": 1.0,
+    "140": 1.0,
+    "141": 1.0,
+    "142": 1.0,
+    "143": 1.0,
+    "144": 1.0,
+    "145": 1.0,
+    "146": 1.0,
+    "147": 1.0,
+    "148": 1.0,
+    "149": 1.0,
+    "150": 1.0,
+    "151": 1.0,
+    "152": 1.0,
+    "153": 1.0,
+    "154": 1.0,
+    "155": 1.0,
+    "156": 1.0,
+    "157": 1.0,
+    "158": 1.0,
+    "159": 1.0,
+    "160": 1.0,
+    "161": 1.0,
+    "162": 1.0,
+    "163": 1.0,
+    "164": 1.0,
+    "165": 1.0,
+    "166": 1.0,
+    "167": 1.0,
+    "168": 1.0,
+    "169": 1.0,
+    "170": 1.0,
+    "171": 1.0,
+    "172": 1.0,
+    "173": 1.0,
+    "174": 1.0,
+    "175": 1.0,
+    "176": 1.0,
+    "177": 1.0,
+    "178": 1.0,
+    "179": 1.0,
+    "180": 1.0,
+    "181": 1.0,
+    "182": 1.0,
+    "183": 1.0,
+    "184": 1.0,
+    "185": 1.0,
+    "186": 1.0,
+    "187": 1.0,
+    "188": 1.0,
+    "189": 1.0,
+    "190": 1.0,
+    "191": 1.0,
+    "192": 1.0,
+    "193": 1.0,
+    "194": 1.0,
+    "195": 1.0,
+    "196": 1.0,
+    "197": 1.0,
+    "198": 1.0,
+    "199": 1.0,
+    "200": 1.0,
+    "201": 1.0
+  },
+  "gods": [
+    {
+      "id": "jaimini_sutras_jaimini",
+      "label": "Maharishi Jaimini",
+      "degree": 14
+    },
+    {
+      "id": "adh_22_kalachakra",
+      "label": "Adhyaya XXII: Kalachakra Dasa",
+      "degree": 8
+    },
+    {
+      "id": "bphs",
+      "label": "Brihat Parasara Hora Sastra",
+      "degree": 6
+    },
+    {
+      "id": "hora_sara_prithuyasas",
+      "label": "Prithuyasas",
+      "degree": 5
+    },
+    {
+      "id": "jyotish_yoga_handbook_101_yoga",
+      "label": "Yoga (Jyotish)",
+      "degree": 5
+    },
+    {
+      "id": "mantreswara_author",
+      "label": "Mantreswara",
+      "degree": 5
+    },
+    {
+      "id": "phaladeepika_vb_digest",
+      "label": "Phaladeepika (Viswa Bharati Edition) \u2014 Structured Digest",
+      "degree": 4
+    },
+    {
+      "id": "brihat_parasara_hora_sastra_vol_1_longevity",
+      "label": "Longevity (Ayurdaya)",
+      "degree": 4
+    },
+    {
+      "id": "jaimini_sutras_suryanarain_rao",
+      "label": "Professor B. Suryanarain Rao",
+      "degree": 4
+    },
+    {
+      "id": "sarvartha_chintamani_vargas",
+      "label": "Vargas (Divisions)",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Activity Mapping \u2014 Vedic Muhurta Significators, Criteria & Combinations",
+      "target": "Brihat Parasara Hora Sastra",
+      "source_files": [
+        "raw/Activity_Mapping.md",
+        "digests/Jaimini_Sutras_digest.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; peripheral node `Activity Mapping \u2014 Vedic Muhurta Significators, Criteria & Combinations` unexpectedly reaches hub `Brihat Parasara Hora Sastra`"
+    },
+    {
+      "source": "Activity Mapping \u2014 Vedic Muhurta Significators, Criteria & Combinations",
+      "target": "Phaladeepika (Viswa Bharati Edition) \u2014 Structured Digest",
+      "source_files": [
+        "raw/Activity_Mapping.md",
+        "digests/Phaladeepika_VB_digest.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "references",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "Sarvartha Chintamani \u2014 Structured Digest",
+      "target": "Phaladeepika (Viswa Bharati Edition) \u2014 Structured Digest",
+      "source_files": [
+        "digests/Sarvartha_Chintamani_digest.md",
+        "digests/Phaladeepika_VB_digest.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "semantically_similar_to",
+      "why": "inferred connection - not explicitly stated in source; semantically similar concepts with no structural link"
+    },
+    {
+      "source": "Mantreswara",
+      "target": "Pancha Mahapurusha Yoga",
+      "source_files": [
+        "raw/Phaladeepika_English_Translation.md",
+        "raw/Jyotish_Yoga_Handbook_101.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "references",
+      "why": "inferred connection - not explicitly stated in source; peripheral node `Pancha Mahapurusha Yoga` unexpectedly reaches hub `Mantreswara`"
+    },
+    {
+      "source": "Predicting Through Jaimini Astrology (V.P. Goel) \u2014 Structured Digest",
+      "target": "Brihat Parasara Hora Sastra",
+      "source_files": [
+        "digests/Jaimini_Goel_digest.md",
+        "digests/Jaimini_Sutras_digest.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `Predicting Through Jaimini Astrology (V.P. Goel) \u2014 Structured Digest` unexpectedly reaches hub `Brihat Parasara Hora Sastra`"
+    }
+  ],
+  "tokens": {
+    "input": 65311,
+    "output": 2903
+  }
+}

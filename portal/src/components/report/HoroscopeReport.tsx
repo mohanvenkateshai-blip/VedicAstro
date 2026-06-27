@@ -1,0 +1,208 @@
+import { Card } from "@/components/ui/Card";
+import type { ReportFacts } from "@/lib/types";
+import type { BirthDefaults } from "@/lib/birth-params";
+
+function VerdictBadge({ verdict }: { verdict: string }) {
+  const tone =
+    verdict === "shubh"
+      ? "text-emerald-700 bg-emerald-500/10 border-emerald-500/30"
+      : verdict === "ashubh"
+        ? "text-red-700 bg-red-500/10 border-red-500/30"
+        : "text-amber-800 bg-amber-500/10 border-amber-500/30";
+  return (
+    <span className={`text-xs font-mono uppercase px-2 py-0.5 rounded-md border ${tone}`}>
+      {verdict}
+    </span>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  if (!items?.length) return <p className="text-sm text-text-muted">—</p>;
+  return (
+    <ul className="text-sm text-text-main space-y-1.5 list-disc pl-4">
+      {items.map((t, i) => (
+        <li key={i}>{t}</li>
+      ))}
+    </ul>
+  );
+}
+
+export function HoroscopeReport({
+  defaults,
+  report,
+  error,
+}: {
+  defaults: BirthDefaults;
+  report: ReportFacts | null;
+  error: string | null;
+}) {
+  if (error) {
+    return (
+      <Card className="p-6 border-danger/40">
+        <p className="text-sm text-danger">{error}</p>
+      </Card>
+    );
+  }
+  if (!report) return null;
+
+  const di = report.dasha_intelligence;
+  const ti = report.transit_intelligence;
+  const natal = report.natal;
+
+  return (
+    <div className="space-y-6">
+      <Card className="p-5 space-y-2">
+        <h2 className="font-[family-name:var(--font-display)] font-semibold text-lg">
+          Horoscope Report
+        </h2>
+        <p className="text-sm text-text-muted">
+          {defaults.name} · born {defaults.date} {defaults.time} · {defaults.place}
+        </p>
+        <p className="text-xs font-mono text-text-muted">
+          Judged for {report.meta.query_date} · {report.meta.ayanamsa} · {report.meta.engine}
+        </p>
+        {report.dashas.balanceAtBirth?.label ? (
+          <p className="text-sm font-mono pt-1">
+            Balance at birth:{" "}
+            <span className="text-accent">{report.dashas.balanceAtBirth.label}</span>
+          </p>
+        ) : null}
+      </Card>
+
+      <Card className="p-5 space-y-3">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+          Natal summary
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+          <div>
+            <span className="text-text-muted">Lagna</span>
+            <p className="font-medium">
+              {natal.lagna.rashi} {natal.lagna.degree} · {natal.lagna.nakshatra} p
+              {natal.lagna.pada}
+            </p>
+          </div>
+          <div>
+            <span className="text-text-muted">Moon</span>
+            <p className="font-medium">
+              {natal.moon.rashi} · {natal.moon.nakshatra} p{natal.moon.pada}
+            </p>
+          </div>
+          <div>
+            <span className="text-text-muted">Running dasha</span>
+            <p className="font-medium font-mono">
+              {report.dashas.current.slice(0, 2).join(" / ")}
+            </p>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs font-mono">
+            <thead>
+              <tr className="text-left text-text-muted border-b border-hairline">
+                <th className="py-2 pr-3">Planet</th>
+                <th className="py-2 pr-3">Rāśi</th>
+                <th className="py-2 pr-3">Degree</th>
+                <th className="py-2 pr-3">Nakṣatra</th>
+                <th className="py-2">Dignity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {natal.planets
+                .filter((p) => p.planet !== "Lagna")
+                .map((p) => (
+                  <tr key={p.planet} className="border-b border-hairline/60">
+                    <td className="py-1.5 pr-3 font-medium">{p.planet}</td>
+                    <td className="py-1.5 pr-3">{p.rashi}</td>
+                    <td className="py-1.5 pr-3 tabular-nums">{p.degree}</td>
+                    <td className="py-1.5 pr-3">
+                      {p.nakshatra} p{p.pada}
+                    </td>
+                    <td className="py-1.5">{p.dignity || "—"}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {di ? (
+        <Card className="p-5 space-y-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+              Dasha intelligence
+            </h3>
+            <VerdictBadge verdict={di.final_verdict} />
+            <span className="text-xs font-mono text-text-muted">score {di.score}</span>
+          </div>
+          <p className="text-sm leading-relaxed">{di.summary}</p>
+          <p className="text-xs font-mono text-text-muted">{di.root_cause}</p>
+          <p className="text-sm">
+            <span className="text-text-muted">Primary driver:</span> {di.primary_driver}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Profession</h4>
+              <BulletList items={di.profession} />
+            </div>
+            <div>
+              <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Wealth</h4>
+              <BulletList items={di.wealth} />
+            </div>
+            <div>
+              <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Health</h4>
+              <BulletList items={di.health} />
+            </div>
+            <div>
+              <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Family</h4>
+              <BulletList items={di.family} />
+            </div>
+          </div>
+          {di.caution?.length ? (
+            <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
+              <h4 className="text-xs font-mono uppercase text-amber-800 mb-2">Caution</h4>
+              <BulletList items={di.caution} />
+            </div>
+          ) : null}
+        </Card>
+      ) : null}
+
+      {ti ? (
+        <Card className="p-5 space-y-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+              Transit intelligence
+            </h3>
+            <VerdictBadge verdict={ti.overall_verdict} />
+          </div>
+          <p className="text-sm leading-relaxed">{ti.day_summary}</p>
+          {ti.top_drivers?.length ? (
+            <p className="text-xs font-mono text-text-muted">
+              Key drivers: {ti.top_drivers.join(" · ")}
+            </p>
+          ) : null}
+        </Card>
+      ) : null}
+
+      <Card className="p-5 space-y-3">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+          Vimshottari ladder (now)
+        </h3>
+        <div className="space-y-2">
+          {report.dashas.currentLadder.map((row) => (
+            <div
+              key={row.level}
+              className="flex flex-wrap gap-x-4 gap-y-1 text-sm border-b border-hairline/50 pb-2"
+            >
+              <span className="text-xs font-mono uppercase text-text-muted w-28">
+                {row.levelLabel}
+              </span>
+              <span className="font-semibold text-accent">{row.lord}</span>
+              <span className="text-xs font-mono text-text-muted tabular-nums">
+                {row.start.slice(0, 10)} → {row.end.slice(0, 10)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+}

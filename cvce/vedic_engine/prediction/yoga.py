@@ -233,15 +233,9 @@ NABHASA_YOGAS = [
     },
     {
         "name": "Gada Yoga",
-        "condition": "All planets in Kendra (1,4,7,10) OR two adjacent Kendras",
+        "condition": "All planets occupy two successive angular houses (e.g., 1st and 4th, 4th and 7th, 7th and 10th, or 10th and 1st)",
         "effect": "Wealthy, strong, respected, authoritative",
-        "source": "BPHS-Ch12",
-    },
-    {
-        "name": "Shankha Yoga",
-        "condition": "All planets in Panaphara (2,5,8,11) and Apoklima (3,6,9,12) — one in each type",
-        "effect": "Learned in scriptures, charitable, long-lived, wealthy, enjoys life",
-        "source": "BPHS-Ch12",
+        "source": "BPHS-Ch12-v9",
     },
 ]
 
@@ -466,21 +460,27 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                     source="BPHS-Ch35", benefic=True, confidence=0.8
                 ))
 
-        # Adhi Yoga: benefic in each of 6th, 7th, and 8th from Moon
+        # Adhi Yoga: benefic (Jupiter, Venus, Mercury) in 6th, 7th, or 8th from Moon
+        # Benefics must not be conjunct the Sun (Hora Sara Ch.19 v.1)
+        sun_rashi = planet_rashis.get("Sun")
         benefic_houses_678: set[int] = set()
         adhi_planets: list[str] = []
-        for p in planet_rashis:
-            if p in BENEFICS and p != "Moon":
-                h = planet_house_from_moon(p)
-                if h in (6, 7, 8):
-                    benefic_houses_678.add(h)
-                    adhi_planets.append(p)
+        for p in ("Jupiter", "Venus", "Mercury"):
+            if p not in planet_rashis:
+                continue
+            # Exclude if conjunct Sun
+            if sun_rashi is not None and planet_rashis[p] == sun_rashi:
+                continue
+            h = planet_house_from_moon(p)
+            if h in (6, 7, 8):
+                benefic_houses_678.add(h)
+                adhi_planets.append(p)
         if benefic_houses_678 >= {6, 7, 8}:
             detected.append(DetectedYoga(
                 name="Adhi Yoga", category="Chandra",
                 description="Leadership, authority, prosperity, respected, powerful",
                 planets_involved=adhi_planets,
-                source="BPHS-Ch35", benefic=True, confidence=1.0
+                source="BPHS-Ch35", benefic=True, confidence=0.9
             ))
 
     # ---- Gaja-Kesari Yoga ----
@@ -508,7 +508,7 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
     if "Venus" in planet_rashis and "Jupiter" in planet_rashis:
         if planet_rashis["Venus"] == planet_rashis["Jupiter"]:
             detected.append(DetectedYoga(
-                name="Lakshmi Yoga", category="Dhana",
+                name="Lakshmi Yoga", category="Raja",
                 description="Wealth, beauty, prosperity, good fortune, happy marriage",
                 planets_involved=["Venus", "Jupiter"],
                 source="PD-Ch7", benefic=True, confidence=1.0
@@ -641,28 +641,17 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
     if len(graha_rashis) >= 7:
         graha_houses = [planet_house(p) for p in graha_rashis]
 
-        if all(h in KENDRA for h in graha_houses):
-            detected.append(DetectedYoga(
-                name="Gada Yoga", category="Nabhasa",
-                description=NABHASA_YOGAS[3]["effect"],
-                planets_involved=list(graha_rashis.keys()),
-                source="BPHS-Ch12", benefic=True, confidence=0.85,
-            ))
-
-        in_pana = all(h in PANAPHARA for h in graha_houses)
-        in_apo = all(h in APOKLIMA for h in graha_houses)
-        mixed_ps = (
-            any(h in PANAPHARA for h in graha_houses)
-            and any(h in APOKLIMA for h in graha_houses)
-            and all(h in PANAPHARA + APOKLIMA for h in graha_houses)
-        )
-        if in_pana or in_apo or mixed_ps:
-            detected.append(DetectedYoga(
-                name="Shankha Yoga", category="Nabhasa",
-                description=NABHASA_YOGAS[4]["effect"],
-                planets_involved=list(graha_rashis.keys()),
-                source="BPHS-Ch12", benefic=True, confidence=0.8,
-            ))
+        # Gada Yoga: all 7 grahas in exactly two successive angular houses (BPHS Ch.37 v.9)
+        successive_kendra_pairs = [(1, 4), (4, 7), (7, 10), (10, 1)]
+        for pair in successive_kendra_pairs:
+            if all(h in pair for h in graha_houses):
+                detected.append(DetectedYoga(
+                    name="Gada Yoga", category="Nabhasa",
+                    description=NABHASA_YOGAS[3]["effect"],
+                    planets_involved=list(graha_rashis.keys()),
+                    source="BPHS-Ch12-v9", benefic=True, confidence=0.85,
+                ))
+                break
 
         rashi_types = []
         for p_rashi in graha_rashis.values():

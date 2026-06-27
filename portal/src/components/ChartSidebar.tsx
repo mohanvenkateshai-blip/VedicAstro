@@ -5,11 +5,12 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { 
   Compass, Orbit, Clock, Sparkles, Gauge, Star, 
   Heart, Sun, Crosshair, BookOpen, Download, Target,
-  Home, CircleDot, HelpCircle,
+  Home, CircleDot, HelpCircle, FileText,
 } from "lucide-react";
 
 const TABS = [
   { id: "overview", label: "Chart Overview", icon: Compass, href: "/chart", engine: "Janma Kundali" },
+  { id: "report", label: "Horoscope Report", icon: FileText, href: "/chart/report", engine: "Synthesis" },
   { id: "transits", label: "Transits", icon: Orbit, href: "/chart/transits", engine: "Gochar Phala" },
   { id: "dasha", label: "Dasha Timeline", icon: Clock, href: "/chart/dasha", engine: "Dasha Phala" },
   { id: "yogas", label: "Yogas & Strength", icon: Sparkles, href: "/chart/yogas", engine: "Yoga + Bala" },

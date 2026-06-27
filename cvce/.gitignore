@@ -6,3 +6,7 @@ __pycache__/
 .DS_Store
 hip_main.dat
 graph_rag/graph.json
+graph_rag/graph-grok.json
+graph_rag/graph-gemini.json
+graph_rag/graph-glm.json
+graph_rag/graph-deepseek.json
