@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (graph corpus 4253 nodes live; graphify deep extract partial; git uncommitted)*
+*Last Updated: June 27, 2026 (Phases 6–8 committed `c3e2777`; portal + CVCE proxy deployed; `main` synced with origin)*
 
 ---
 
@@ -12,8 +12,8 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 | Component | Live URL / Connection | Hosted On | Status | Notes |
 |:---|:---|:---|:---|:---|
-| **Portal** | [portal-omega-two-10.vercel.app](https://portal-omega-two-10.vercel.app) | Vercel | 🟢 LIVE (HTTP 200) | UI functional; `/vedicastro` server-renders charts via CVCE (verified June 27). |
-| **CVCE (Engine)** | [vedicastro-cvce.fly.dev](https://vedicastro-cvce.fly.dev) | Fly.io (LHR) | 🟢 LIVE (HTTP 200) | Restored June 27 — fixed `server.py` ashtottari `except` indentation crash loop; redeployed v26. Scale-to-zero (~3–4s cold start). |
+| **Portal** | [portal-omega-two-10.vercel.app](https://portal-omega-two-10.vercel.app) | Vercel | 🟢 LIVE | `/api/cvce/*` proxy for explorers; `/chart/report` Horoscope Report; Transit Intelligence panel (June 27 evening deploy). |
+| **CVCE (Engine)** | [vedicastro-cvce.fly.dev](https://vedicastro-cvce.fly.dev) | Fly.io (LHR) | 🟢 LIVE | Vimshottari fix (`dasha_vimshottari.py`), `/report/facts`, transit/dasha analyzers. Scale-to-zero — first request after idle can take **30–60s** via proxy. |
 | **Muhūrta** | [muhurtha.uvwx.me](https://muhurtha.uvwx.me) | Fly.io (IAD) | 🟢 LIVE (HTTP 200) | **Frozen standalone.** Fully complete. Untouched per directive. |
 | **Database** | Neon Postgres (teal-prism) | Neon (LHR) | 🟢 ACTIVE | Credentials loaded in Portal. |
 
@@ -23,30 +23,29 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ### A. CVCE (Canonical Vedic Calculation Engine)
 * **Location:** `cvce/` (Python 3.12, FastAPI)
-* **Status:** Substantial, needs stabilization and GraphRAG wiring.
-* **Key Achievements:** ~24 functional endpoints implementing core calculations (Astrology, Dashas, Yogas, KP, Varshaphala, Prashna). 7 golden tests passing.
+* **Status:** Core calculations stable; synthesis layer growing.
+* **Key Achievements:** ~25 endpoints. **Vimshottari fix** — `get_vimsottari_dhasa_bhukthi()[0]` is birth balance, not running lords; tree via `vimsottari_immediate_children`. **`POST /report/facts`** — unified natal + dasha ladder + `DashaImpactAnalyzer` + `TransitAnalyzer`. Golden tests passing.
 * **Missing/Stalled:**
-  - GraphRAG routes `/predict` transit house rules through `graph.json` when `CVCE_GRAPH_AS_RULES=1` (Phase 4); hardcoded `transit_rules.py` fallback when unset.
-  - Ashtottari dasha via `/dashas` — fixed PyJHora response parsing (June 27).
-  - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
+  - `graph-deepseek.json` (10,850 nodes) **not** deployed to Fly — production still on deterministic 4253-node graph.
+  - Hiranya-level report prose (Phases 9–12) — facts API exists; narrative chapters not built.
+  - Kaksha calendar, Chara/Kalachakra dashas.
 
 ### B. Portal (Web Application)
 * **Location:** `portal/` (Next.js 16.2.x, React 19, Tailwind v4)
-* **Status:** Substantial; auth/DB live in production.
-* **Key Achievements:** 16 structured routes (chart entry at **`/vedicastro`**, not `/horoscope`), SVG KundaliChart, DashaDeepTree, and explorers for KP, Koota Milan, Varshaphala, Nakshatras, Bhava, Graha, Prashna, etc.
+* **Status:** Production-aligned with `main`.
+* **Key Achievements:** Chart workspace + **`/chart/report`**. **`/api/cvce/[...path]`** — server proxy so client explorers survive Fly cold starts. Fixed KP field mapping, Koota `bride`/`groom` body, transit `positions` key. GraphInsights → Transit Intelligence panel.
 * **Missing/Stalled:**
-  - Varshaphala gated to **pro** tier; free users redirected from `/chart/varshaphala`.
-  - Desktop-suite items (30-cell worksheets, print profiles) remain out of web scope.
-  - Version Control: ✅ Unified monorepo at `github.com/mohanvenkateshai-blip/VedicAstro`.
+  - Report page is **scaffolding** — not Hiranya-depth (no yogas/AKV/varshaphala chapters in UI yet).
+  - Varshaphala gated to **pro** tier.
+  - Desktop-suite items out of web scope.
 
 ### C. Knowledge Graph (Rules & Citations Base)
 * **Location:** `knowledge-graph/` (Python tools, JSON database)
-* **Status:** **Production graph live — 4253 nodes, 5092 links, 28 hyperedges** (June 27).
-* **Build pipeline:** `scripts/sync-gyan-to-raw.sh` → `scripts/gyan-corpus-extract.py` (deterministic, 29 `raw/*.md`) → `knowledge-graph/graphify-out/graph.json` → `scripts/sync-graph.sh --deploy` (Fly).
-* **GraphRAG scope:** Citation enrichment **done**. Transit + muhurta rules from graph when `CVCE_GRAPH_AS_RULES=1` / `CVCE_GRAPH_AS_MUHURTA=1` — **done**. Engine wiring: `muhurta_rules_provider.py`, `muhurta_yogas.py`.
-* **Gemini deep extract (graphify):** Partial. Paid billing enabled on AI Studio (`gen-lang-client-0385751724`). `gemini-3.5-flash` deep run hit **503 high-demand** on ~7/23 chunks; failed merges must **not** be deployed (prunes deterministic nodes). **35 manifest entries** still missing `semantic_hash` → safe to retry incrementally.
-* **Stale artifact:** `cvce/data/graph.json` (448 nodes) — unused by runtime; remove or re-sync.
-* **Version Control:** Large local diff **not committed** — see §6 below.
+* **Status:** **Production graph — 4253 nodes** on Fly. **DeepSeek extract — 10,850 nodes** in `graph-deepseek.json` (committed, not deployed).
+* **Build pipeline:** `scripts/sync-gyan-to-raw.sh` → `gyan-corpus-extract.py` → `graphify-out/graph.json` → `scripts/sync-graph.sh --deploy`. Alternate extractors: `deepseek-graph-extract.py`, `grok-batch-graph-extract.py`, `glm-batch-graph-extract.py`.
+* **GraphRAG:** Citation enrichment + transit/muhurta rules when `CVCE_GRAPH_AS_RULES=1` — **done on production**.
+* **Removed:** stale `cvce/data/graph.json` (448 nodes) — deleted in `c3e2777`.
+* **Version Control:** ✅ `main` at `b002f0d` (June 27 evening).
 
 ---
 
@@ -83,7 +82,7 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - *Deliverable:* `graph_rag/rules_provider.py`, gochar integration, `rules_source` in `/predict` response, tests in `tests/test_graph_rules.py`.
 - *Status:* **Completed.**
 
-### Phase 5+: Feature Build-out & Integrations
+### Phase 5+: Feature Build-out & Integrations (Completed items)
 - [x] Wire `/chart/yogas` UI to CVCE yogas + strength panels (YogasPanel, server-fetched chart).
 - [x] Fix dasha/special chart sub-routes to pass live chart data to explorer panels.
 - [x] Share birth params across `/chart/*` via URL (sidebar preserves query string).
@@ -94,17 +93,48 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] Delete saved charts + dashboard UX.
 - [x] Bhava / Graha explorers, Prashna page, sidebar Export PDF + Classical Sources.
 - [x] Engine audit fixes — yoga detection gaps, gochar (Ketu Latta, Tara exceptions, Kantaka 7th, Vipareetha Vedha), Yogini balance+antardasha, Trikona Shodhana.
-- [ ] Kaksha transit calendar (A1 remainder), Chara/Kalachakra dashas, desktop §7 enhancements.
+
+### Phase 6: Vimshottari Dasha Fix (Completed — June 27)
+- [x] Root cause: birth balance `(4,7,7)` misread as Jupiter/Rahu lords.
+- [x] `cvce/app/dasha_vimshottari.py` — `running_ladder`, `mahadasha_tree`, `birth_balance`.
+- [x] `/dasha-deep`, `/dashas` wired; verified Mohan → Venus balance, Jupiter–Mercury antar.
+- [x] Deployed CVCE + portal.
+
+### Phase 7: Report Facts API (Completed — June 27)
+- [x] `cvce/app/report_facts.py` + `POST /report/facts`.
+- [x] Portal `/chart/report` + `HoroscopeReport.tsx` + `getReportFacts()` in `cvce.ts`.
+
+### Phase 8: Dasha + Transit Intelligence (Completed — first slice)
+- [x] `transit_analyzer.py` — layered gochar judgment (Ashtama Shani overrides, etc.).
+- [x] `dasha_analyzer.py` — lordship/dignity/life-area bullets.
+- [x] GraphInsights rewritten → Transit Intelligence panel.
+
+### Phase 6b: Portal Module Stability (Completed — June 27 evening)
+- [x] `portal/src/app/api/cvce/[...path]/route.ts` — server proxy (120s timeout).
+- [x] `portal/src/lib/cvce-client.ts` — all explorers route through proxy.
+- [x] KP camelCase normalization, Koota `bride`/`groom`, transit `positions` key, ephemeris batch fetch.
+- [x] Committed `c3e2777`, pushed `main`, deployed Vercel production.
+
+### Phase 9–12: Hiranya-Quality Report (Pending — next priority)
+- [ ] **9** Yoga + natal synthesis — planet-in-sign prose, active yogas, shadbala/AKV in report.
+- [ ] **10** Timing merge — single judgment combining dasha + transit + vedha + AKV.
+- [ ] **11** Life-area forecast — career, wealth, health, marriage with dated windows.
+- [ ] **12** Polish — PDF export, classical citations, optional LLM narration layer (facts-grounded only).
+- [ ] Deploy `graph-deepseek.json` to Fly after review (do not auto-replace 4253-node graph).
+- [ ] Kaksha transit calendar, Chara/Kalachakra dashas, desktop §7 enhancements.
 
 ---
 
 ## 4. Known Issues & Tech Debts
 
-1. **CVCE cold-start latency:** Scale-to-zero adds ~3–4s on first request after idle; not an outage.
-2. **Documentation drift (reconciled June 27):** Root `README.md` and `portal/docs/feature-progress.json` now align with this file on CVCE offline status, `/vedicastro` route, and GraphRAG scope (enrichment vs rules source).
-3. **Stale Paths in Docs:** Legacy scripts or local path references (e.g. `/home/claude/work`) left behind by previous tools.
-4. **Transit citations (fixed June 27):** GraphInsights now collapses noisy graph metadata server- and client-side.
-5. **Auth/DB (Phase 5):** Google OAuth + Neon + save/load/delete live. Tier limits enforced on save; Varshaphala requires pro.
+1. **CVCE cold-start latency:** Scale-to-zero — first proxied request after idle can take **30–60s**; explorers now show timeout/error instead of infinite spinners.
+2. **Report quality gap:** `/chart/report` shows engine facts + rule-based bullets — **not** Hiranya-depth narrative. Phases 9–12 pending.
+3. **DeepSeek graph not on Fly:** `graph-deepseek.json` committed locally; production CVCE still uses 4253-node deterministic graph.
+4. **Documentation drift:** `CONTEXT.md` §8 next-phases list is stale (pre–Phase 6); reconcile when next editing CONTEXT.
+5. **Auth/DB:** Google OAuth + Neon + save/load/delete live. Varshaphala requires pro tier.
+
+### Golden reference chart (regression anchor)
+**Mohan** — `1975-04-22T19:15:00`, Mysore (`12.2958°N`, `76.6394°E`, `tz=5.5`). Lagna Libra/Swati p4, Moon Leo/Purva Phalguni p4. Hiranya PDF confirms Venus balance **4Y7M6D**, Jupiter Maha from ~Nov 2020, current antar **Jupiter–Mercury** (June 2026).
 
 ---
 
@@ -124,12 +154,23 @@ python3 -m http.server 5599 # http://localhost:5599
 
 ---
 
-## 6. Git, Vercel & Fly Deploy State (June 27)
+## 6. Git, Vercel & Fly Deploy State (June 27 evening)
 
 | Surface | How it deploys | Current state |
 |:---|:---|:---|
-| **CVCE (Fly)** | `fly deploy` / `./scripts/sync-graph.sh --deploy` from local | **Live** — graph 4253 nodes; engine fixes deployed from **uncommitted** local files |
-| **Portal (Vercel)** | Git push to `main` → Vercel build (typical) | **Partial** — Neon migrate + auth work on production; many Phase 5 portal files still **only local** (uncommitted) |
-| **Git** | Manual `git commit` + `git push` | **`main` has large uncommitted diff** — agents do not auto-commit unless you ask |
+| **CVCE (Fly)** | `fly deploy` from `cvce/` | **Live** — dasha fix + `/report/facts` deployed earlier June 27 |
+| **Portal (Vercel)** | `vercel --prod` or Git push → `main` | **Live** — `dpl_3jpCeJNPpLBZvqsaqNU8Kwk6nKvr` aliased to portal-omega-two-10 |
+| **Git** | `git push origin main` | **Synced** — `b002f0d` on `main` = `origin/main` (commits `c3e2777`, `7d6eae0`, `b002f0d`) |
 
-**Handoff files:** `STATUS.md` (this file) + `CONTEXT.md` are the living handoff. Update both after major deploys; `CONTEXT.md` still shows legacy “277+ nodes” in topology diagram — reconcile when committing.
+**Handoff files:** `STATUS.md` (this file) + `CONTEXT.md`. Update both after major deploys.
+
+**Key new files (June 27):**
+| Path | Purpose |
+|:---|:---|
+| `cvce/app/dasha_vimshottari.py` | Correct Vimshottari ladder + tree |
+| `cvce/app/report_facts.py` | Unified report payload |
+| `cvce/vedic_engine/synthesis/transit_analyzer.py` | Layered gochar judgment |
+| `cvce/vedic_engine/synthesis/dasha_analyzer.py` | Dasha impact bullets |
+| `portal/src/app/api/cvce/[...path]/route.ts` | CVCE server proxy |
+| `portal/src/lib/cvce-client.ts` | Browser-safe CVCE client |
+| `portal/src/components/report/HoroscopeReport.tsx` | Report UI (scaffolding) |

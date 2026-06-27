@@ -35,8 +35,8 @@ It is the single source of truth for system topology, immutable constraints, and
               ┌──────────────────────────────────────┐
               │  Knowledge Graph (offline artifact)   │
               │  knowledge-graph/graphify-out/        │
-              │  graph.json — 4253 nodes, 5092 links   │
-              │  → future: wired into /predict        │
+              │  graph.json — 4253 nodes (prod); deepseek 10,850 (not deployed) │
+              │  → wired into /predict when CVCE_GRAPH_AS_RULES=1             │
               └──────────────────────────────────────┘
 ```
 
@@ -57,7 +57,8 @@ It is the single source of truth for system topology, immutable constraints, and
 - **The Muhūrta standalone is FROZEN.** `Panchang/panchanga_muhurtha/` is byte-for-byte frozen. Never edit it. The portal's `/muhurta` tab is ONLY an `<iframe src="muhurtha.uvwx.me">` — nothing else.
 - **Accuracy = hosted Swiss-Ephemeris only.** No in-browser Keplerian fallback. No approximate calculations. PyJHora + sidereal Lahiri ayanamsa only.
 - **Canonical contract = `docs/chart_data.schema.json`.** `cvce/app/chart.py`, `server.py:/chart`, and `portal/src/lib/types.ts` MUST stay in lockstep with this schema. Change the schema → change all three simultaneously.
-- **Browser never hits CVCE directly.** `portal/src/lib/cvce.ts` is `server-only`. All CVCE calls are server-side Next.js fetches.
+- **Browser never hits CVCE directly for charts.** `portal/src/lib/cvce.ts` is `server-only` for `/chart`, `/report/facts`, muhurta, etc.
+- **Client explorers use the CVCE proxy.** `portal/src/lib/cvce-client.ts` → `POST /api/cvce/{endpoint}` → Fly. Never call `vedicastro-cvce.fly.dev` from client components (cold-start timeouts, CSP).
 - **No local cusp calculation in the portal.** Any sidereal astronomy must go through the CVCE API.
 
 ### Python (CVCE)
@@ -193,11 +194,11 @@ Highest betweenness (0.100) + most edges (15) in the graph. Bridges Business & F
 
 ## 8. Next Phases (in priority order)
 
-1. **Knowledge graph — COMPLETE** ✅ (448 nodes, 1236 edges, 4 sources ingested, FINDINGS.md has Finding 01)
-2. **Wire graph.json into `/predict`** as GraphRAG rules source (replaces hardcoded `vedic_engine` rules)
-3. **Postgres + real auth/RBAC** — NextAuth + `users` table + encrypt birth PII + RLS + wire into `proxy.ts` seam (free/pro/premium/admin)
-4. Optional: Python `/chart.svg` endpoint on CVCE for static PDF/OG/email
-5. Optional: Fix Vercel Deployment Protection for clean public URL
+1. **Phases 0–8** ✅ — GraphRAG rules, auth/DB, Vimshottari fix, `/report/facts`, transit + dasha analyzers, portal CVCE proxy.
+2. **Phase 9–12: Hiranya-quality report** — yoga/natal synthesis, timing merge, life-area forecast, PDF polish. Optional LLM narration **only** on top of `ReportFacts` JSON (never as fact source).
+3. **Review + deploy `graph-deepseek.json`** — do not auto-replace production 4253-node graph without baseline check.
+4. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI.
+5. Optional: Python `/chart.svg` on CVCE for static PDF/OG/email.
 
 ---
 
