@@ -173,7 +173,18 @@ function DashaIntelCard({ di }: { di: NonNullable<ReportFacts["dasha_intelligenc
 
 // ─── Transit intelligence ────────────────────────────────────────────────────
 
-function TransitIntelCard({ ti }: { ti: NonNullable<ReportFacts["transit_intelligence"]> }) {
+function TransitIntelCard({
+  ti,
+  nextShubhDays,
+}: {
+  ti: NonNullable<ReportFacts["transit_intelligence"]>;
+  nextShubhDays?: ReportFacts["next_shubh_days"];
+}) {
+  const isNegative =
+    ti.overall_verdict === "ashubh" || ti.overall_verdict === "mixed";
+  const showLookAhead =
+    isNegative && nextShubhDays && nextShubhDays.length > 0;
+
   return (
     <Card className="p-5 space-y-3">
       <div className="flex flex-wrap items-center gap-3">
@@ -185,6 +196,34 @@ function TransitIntelCard({ ti }: { ti: NonNullable<ReportFacts["transit_intelli
         <p className="text-xs font-mono text-text-muted">
           Key drivers: {ti.top_drivers.join(" · ")}
         </p>
+      ) : null}
+
+      {showLookAhead ? (
+        <div className="mt-3 pt-3 border-t border-hairline space-y-2">
+          <p className="text-xs font-mono uppercase tracking-wider text-emerald-500">
+            Next favourable days
+          </p>
+          {nextShubhDays!.map((day) => (
+            <div
+              key={day.date}
+              className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 text-xs"
+            >
+              <span className="font-mono font-semibold text-emerald-400 tabular-nums shrink-0">
+                {new Date(day.date + "T12:00:00").toLocaleDateString("en-IN", {
+                  weekday: "short",
+                  day: "numeric",
+                  month: "short",
+                })}
+              </span>
+              <span className="text-text-muted leading-snug">{day.summary}</span>
+              {day.top_drivers?.length ? (
+                <span className="text-text-muted/60 font-mono shrink-0">
+                  {day.top_drivers.join(" · ")}
+                </span>
+              ) : null}
+            </div>
+          ))}
+        </div>
       ) : null}
     </Card>
   );
@@ -487,7 +526,9 @@ export function HoroscopeReport({
       {di ? <DashaIntelCard di={di} /> : null}
 
       {/* Transit intelligence */}
-      {ti ? <TransitIntelCard ti={ti} /> : null}
+      {ti ? (
+        <TransitIntelCard ti={ti} nextShubhDays={report.next_shubh_days} />
+      ) : null}
 
       {/* Vimshottari ladder */}
       <DashaLadderCard report={report} />

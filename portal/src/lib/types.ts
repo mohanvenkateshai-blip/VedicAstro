@@ -350,6 +350,13 @@ export interface TimingMerge {
   reasons: string[];
 }
 
+export interface ShubhDay {
+  date: string;
+  summary: string;
+  score: number;
+  top_drivers: string[];
+}
+
 export interface ReportFacts {
   schemaVersion: string;
   meta: {
@@ -380,6 +387,7 @@ export interface ReportFacts {
   };
   dasha_intelligence?: DashaIntelligence | null;
   transit_intelligence?: TransitIntelligence | null;
+  next_shubh_days?: ShubhDay[] | null;
   timing_merge?: TimingMerge | null;
   forecast?: ForecastPeriod[] | null;
   yogas?: {

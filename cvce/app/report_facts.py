@@ -89,6 +89,63 @@ def _compute_timing_merge(dasha_intel: dict | None, transit_intel: dict | None) 
     }
 
 
+def _next_shubh_days(
+    from_date: str,
+    lat: float,
+    lon: float,
+    tz: float,
+    janma_rashi: str | None,
+    janma_nakshatra: str | None,
+    natal_sign: dict | None,
+    dasha_maha: str | None = None,
+    dasha_antar: str | None = None,
+    dasha_score: int = 0,
+    limit: int = 3,
+    max_scan: int = 90,
+) -> list[dict]:
+    """Scan forward from from_date to find the next shubh transit days."""
+    from vedic_engine.prediction.gochar import compute_gochar
+    from vedic_engine.synthesis.transit_analyzer import TransitImpactAnalyzer
+
+    analyzer = TransitImpactAnalyzer()
+    start = date.fromisoformat(from_date) + timedelta(days=1)
+    results: list[dict] = []
+
+    for i in range(max_scan):
+        d = start + timedelta(days=i)
+        date_str = d.isoformat()
+        try:
+            gochar = compute_gochar(
+                date_str=date_str,
+                lat=lat,
+                lon=lon,
+                tz=tz,
+                janma_rashi=janma_rashi,
+                janma_nakshatra=janma_nakshatra,
+                natal_sign=natal_sign,
+            )
+            intel = analyzer.analyze(
+                gochar,
+                natal_sign=natal_sign,
+                dasha_maha=dasha_maha,
+                dasha_antar=dasha_antar,
+                dasha_score=dasha_score,
+            )
+            if intel and intel.overall_verdict == "shubh":
+                results.append({
+                    "date": date_str,
+                    "summary": intel.day_summary,
+                    "score": intel.overall_score,
+                    "top_drivers": intel.top_drivers[:2],
+                })
+                if len(results) >= limit:
+                    break
+        except Exception:
+            continue
+
+    return results
+
+
 def _compute_forecast(
     antar_table: list[dict],
     lagna_rashi: str | None,
@@ -297,6 +354,24 @@ def build_report_facts(
         today_str=query_date,
     )
 
+    # --- Next shubh days (only when transit is not already shubh) ---
+    next_shubh_days: list[dict] = []
+    if transit_verdict != "shubh":
+        try:
+            d_maha = dasha_intel.get("maha_lord") if dasha_intel else None
+            d_antar = dasha_intel.get("antar_lord") if dasha_intel else None
+            d_score = dasha_intel.get("score", 0) if dasha_intel else 0
+            next_shubh_days = _next_shubh_days(
+                query_date,
+                birth_lat, birth_lon, birth_tz,
+                janma_rashi, janma_nakshatra, natal_sign,
+                dasha_maha=d_maha,
+                dasha_antar=d_antar,
+                dasha_score=d_score,
+            )
+        except Exception:
+            pass
+
     # --- Planet table ---
     planet_table = [
         {
@@ -352,6 +427,7 @@ def build_report_facts(
         },
         "dasha_intelligence": dasha_intel,
         "transit_intelligence": transit_intel,
+        "next_shubh_days": next_shubh_days,
         "timing_merge": timing_merge,
         "forecast": forecast,
         "yogas": {
