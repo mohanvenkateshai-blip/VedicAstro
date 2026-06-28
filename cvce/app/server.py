@@ -1137,6 +1137,46 @@ def dasha_predict_yogini(req: BirthRequest):
     return {"predictions": predictions}
 
 
+class FructificationRequest(BirthRequest):
+    system: str              # "yogini", "vimshottari", "ashtottari"
+    maha_lord: str           # Yogini deity name (for Yogini) or planet name
+    antar_lord: str
+    maha_start: str          # ISO date
+    maha_end: str            # ISO date
+    antar_start: str         # ISO date
+    antar_end: str           # ISO date
+
+
+@app.post("/fructification")
+def fructification_endpoint(req: FructificationRequest):
+    """
+    Fructification windows within a dasha antardasha period.
+
+    Classical basis (Phaladeepika Ch.26 / Goel 2002/2006):
+      The dasha period defines the DOMAIN of events (career, wealth, health, family).
+      Saturn + Jupiter double-transit from Janma Rashi (and Progressed Lagna for Yogini)
+      determines the TIMING — the specific months within the AD when the dasha promise
+      actually manifests as events.
+
+    Vedha (GPD Ch.22) cancels benefic transits when another planet occupies the Vedha house.
+    Ashtakavarga SAV bindus (BPHS Ch.67) weight the fructification strength.
+    """
+    from app.fructification import fructify
+    return fructify(
+        birth_datetime=req.birth_datetime,
+        birth_lat=req.birth_lat,
+        birth_lon=req.birth_lon,
+        birth_tz=req.birth_tz,
+        system=req.system,
+        maha_lord=req.maha_lord,
+        antar_lord=req.antar_lord,
+        maha_start=req.maha_start,
+        maha_end=req.maha_end,
+        antar_start=req.antar_start,
+        antar_end=req.antar_end,
+    )
+
+
 class DashaSeriesRequest(BirthRequest):
     maha_lord: str
     antar_lord: str

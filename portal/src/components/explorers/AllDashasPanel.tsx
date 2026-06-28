@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { Clock, Loader, AlertCircle, ChevronDown } from "lucide-react";
-import type { DashaPrediction } from "@/lib/types";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { Clock, Loader, AlertCircle, ChevronDown, Zap } from "lucide-react";
+import type { DashaPrediction, FructificationResult, FructificationWindow } from "@/lib/types";
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
@@ -146,6 +146,129 @@ function MahaChip({ lord, yoginiName, start, durationYears, isCurrent, isExpande
   );
 }
 
+// ── Fructification Panel ───────────────────────────────────────────────────
+
+const STRENGTH_STYLE: Record<string, { color: string; label: string }> = {
+  exceptional: { color: "#fbbf24", label: "Exceptional" },
+  strong:      { color: "#34d399", label: "Strong" },
+  moderate:    { color: "#60a5fa", label: "Moderate" },
+  limited:     { color: "#94a3b8", label: "Limited" },
+};
+
+function FructificationPanel({ result, color }: { result: FructificationResult; color: string }) {
+  if (result.total_windows === 0) {
+    return (
+      <div className="rounded-lg border px-3 py-2.5 space-y-1"
+        style={{ borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)" }}>
+        <p className="text-[10px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color }}>
+          <Zap className="w-3 h-3" /> Fructification Windows
+        </p>
+        <p className="text-[11px] text-text-muted leading-relaxed">
+          No overlapping Saturn+Jupiter benefic transit found within this antardasha window.
+          The dasha promise may still operate through other mechanisms (benefic MD lord transit,
+          natal promise activation) — the classical double-transit signature is absent here.
+        </p>
+        <p className="text-[10px] text-text-muted font-mono opacity-60 mt-1">
+          {result.source.split("|")[0].trim()}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-lg border px-3 py-2.5 space-y-2.5"
+      style={{ borderColor: `${color}22`, backgroundColor: `${color}06` }}>
+      <div className="flex items-center justify-between flex-wrap gap-1">
+        <p className="text-[10px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color }}>
+          <Zap className="w-3 h-3" />
+          Fructification Windows — {result.total_windows} found
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {result.reference_points.map((rp) => (
+            <span key={rp.label} className="text-[9px] font-mono px-1.5 py-0.5 rounded-full"
+              style={{ backgroundColor: `${color}18`, color }}>
+              {rp.label}: {rp.sign}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {result.progressed_lagna && (
+        <p className="text-[10px] font-mono text-text-muted leading-relaxed">
+          Progressed Lagna (cycle {result.progressed_lagna.cycle}): {result.progressed_lagna.progressed_lagna}
+          {" · "}{result.progressed_lagna.contributing_nak_name} nakshatra
+          {" · "}<span style={{ color }}>Star Lord: {result.progressed_lagna.star_lord}</span>
+        </p>
+      )}
+
+      <div className="space-y-2">
+        {result.windows.map((w, i) => (
+          <FructificationWindowCard key={i} window={w} color={color} />
+        ))}
+      </div>
+
+      <p className="text-[9px] text-text-muted font-mono opacity-50">
+        {result.source.split("|")[0].trim()}
+      </p>
+    </div>
+  );
+}
+
+function FructificationWindowCard({ window: w, color }: { window: FructificationWindow; color: string }) {
+  const style = STRENGTH_STYLE[w.strength] ?? STRENGTH_STYLE.moderate;
+  return (
+    <div className="rounded-lg border px-3 py-2 space-y-1.5"
+      style={{ borderColor: `${style.color}30`, backgroundColor: `${style.color}08` }}>
+      <div className="flex items-center justify-between flex-wrap gap-1">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-mono font-semibold tabular-nums" style={{ color: style.color }}>
+            {w.start.slice(0, 7)} → {w.end.slice(0, 7)}
+          </span>
+          <span className="text-[9px] px-1.5 py-0.5 rounded-full font-mono"
+            style={{ backgroundColor: `${style.color}22`, color: style.color }}>
+            {style.label}
+          </span>
+          <span className="text-[9px] font-mono text-text-muted">
+            {w.duration_months}m
+          </span>
+        </div>
+        {w.sav_bindus !== null && (
+          <span className="text-[9px] font-mono" style={{ color: style.color }}>
+            SAV {w.sav_bindus} bindus
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+        <span className="text-[10px] font-mono text-text-muted">
+          ♄ {w.saturn.sign} · {w.saturn.house}th house
+        </span>
+        <span className="text-[10px] font-mono text-text-muted">
+          ♃ {w.jupiter.sign} · {w.jupiter.house}th house
+        </span>
+        <span className="text-[9px] font-mono text-text-muted opacity-70">
+          from {w.ref_label}
+        </span>
+      </div>
+
+      <p className="text-[10px] text-text-muted leading-relaxed">
+        {w.narrative}
+      </p>
+
+      {w.domains.length > 0 && (
+        <div className="flex flex-wrap gap-1 pt-0.5">
+          {w.domains.map((d) => (
+            <span key={d} className="text-[9px] font-mono px-1.5 py-0.5 rounded-full capitalize"
+              style={{ backgroundColor: `${color}14`, color }}>
+              {d}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Antardasha row ────────────────────────────────────────────────────────
 
 const DOMAIN_LABELS: { key: keyof DashaPrediction; label: string; warn: boolean }[] = [
@@ -156,12 +279,17 @@ const DOMAIN_LABELS: { key: keyof DashaPrediction; label: string; warn: boolean 
   { key: "caution", label: "Caution", warn: true  },
 ];
 
-function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, lagnaOn, mahaLord, prediction, onClick }: {
+function AntarRow({
+  node, isCurrent, isOpen, color, border, bg, chart, moonOn, lagnaOn,
+  mahaLord, mahaNode, prediction, system, onClick,
+}: {
   node: TreeNode; isCurrent: boolean; isOpen: boolean;
   color: string; border: string; bg: string;
   chart?: ChartData; moonOn: boolean; lagnaOn: boolean;
   mahaLord: string;
+  mahaNode: TreeNode;
   prediction?: DashaPrediction | null;
+  system: string;
   onClick: () => void;
 }) {
   const canChart = !!(chart?.meta?.birth_datetime && node.start && node.end);
@@ -169,6 +297,32 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
   const domains = prediction
     ? DOMAIN_LABELS.filter((d) => (prediction[d.key] as string[]).length > 0)
     : [];
+
+  // Fructification — lazy fetch when expanded
+  const [fructResult, setFructResult] = useState<FructificationResult | null>(null);
+  const [fructLoading, setFructLoading] = useState(false);
+  const fetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (!isOpen || fetchedRef.current || !chart?.meta?.birth_datetime) return;
+    fetchedRef.current = true;
+    setFructLoading(true);
+
+    const birth = chart.meta;
+    postCvce<FructificationResult>("fructification", {
+      birth_datetime: birth.birth_datetime,
+      birth_lat: birth.birth_lat,
+      birth_lon: birth.birth_lon,
+      birth_tz: birth.birth_tz,
+      system,
+      maha_lord: mahaNode.yoginiName ?? mahaNode.lord,
+      antar_lord: node.yoginiName ?? node.lord,
+      maha_start: mahaNode.start,
+      maha_end: mahaNode.end,
+      antar_start: node.start,
+      antar_end: node.end,
+    }).then(setFructResult).catch(() => {}).finally(() => setFructLoading(false));
+  }, [isOpen, chart?.meta?.birth_datetime, system, mahaNode, node]);
 
   return (
     <div className="mb-1">
@@ -235,6 +389,17 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
                     </div>
                   ))}
                 </div>
+              )}
+
+              {/* Fructification windows */}
+              {fructLoading && (
+                <div className="flex items-center gap-2 text-text-muted">
+                  <Loader className="w-3 h-3 animate-spin" />
+                  <span className="text-[10px] font-mono">Computing fructification windows…</span>
+                </div>
+              )}
+              {fructResult && (
+                <FructificationPanel result={fructResult} color={color} />
               )}
 
               {/* Transit chart */}
@@ -489,6 +654,8 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                         moonOn={moonOn}
                         lagnaOn={lagnaOn}
                         mahaLord={data.dashaTree[expandedMaha].lord}
+                        mahaNode={data.dashaTree[expandedMaha]}
+                        system={dashaKey}
                         prediction={(() => {
                           const maha = data.dashaTree[expandedMaha];
                           const mahaKey = maha.yoginiName ?? maha.lord;

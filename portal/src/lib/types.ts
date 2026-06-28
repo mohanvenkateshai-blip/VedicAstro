@@ -297,6 +297,43 @@ export interface DashaPredictions {
   predictions: Record<string, DashaPrediction>;
 }
 
+/** A single fructification window — when dasha events actually manifest. */
+export interface FructificationWindow {
+  start: string;
+  end: string;
+  duration_months: number;
+  ref_label: string;
+  saturn: { house: number; sign: string };
+  jupiter: { house: number; sign: string };
+  sav_bindus: number | null;
+  strength: "exceptional" | "strong" | "moderate" | "limited";
+  domains: string[];
+  narrative: string;
+  score: number;
+}
+
+/** Full /fructification response. */
+export interface FructificationResult {
+  system: string;
+  maha_lord: string;
+  antar_lord: string;
+  antar_start: string;
+  antar_end: string;
+  janma_rashi: string;
+  natal_lagna: string;
+  reference_points: { label: string; sign: string }[];
+  progressed_lagna: {
+    contributing_nak: number;
+    contributing_nak_name: string;
+    star_lord: string;
+    cycle: number;
+    progressed_lagna: string;
+  } | null;
+  windows: FructificationWindow[];
+  total_windows: number;
+  source: string;
+}
+
 /** One data point in the Dasha time-series chart. */
 export interface DashaSeriesPoint {
   date: string;

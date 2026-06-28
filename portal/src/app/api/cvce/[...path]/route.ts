@@ -14,6 +14,7 @@ const ALLOWED = new Set([
   "dasha-series",
   "dasha-predict",
   "dasha-predict-yogini",
+  "fructification",
   "dashas",
   "gochar",
   "kp-system",

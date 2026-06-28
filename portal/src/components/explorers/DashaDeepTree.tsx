@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { Clock, ChevronDown, ChevronRight, Loader } from "lucide-react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { Clock, ChevronDown, ChevronRight, Loader, Zap } from "lucide-react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
-import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow, DashaPrediction } from "@/lib/types";
+import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow, DashaPrediction, FructificationResult, FructificationWindow } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { DashaSeriesChart } from "./DashaSeriesChart";
 
@@ -65,6 +65,86 @@ function VerdictBadge({
   );
 }
 
+// ── Fructification (shared with AllDashasPanel) ───────────────────────────────
+
+const STRENGTH_STYLE_V: Record<string, { color: string; label: string }> = {
+  exceptional: { color: "#fbbf24", label: "Exceptional" },
+  strong:      { color: "#34d399", label: "Strong" },
+  moderate:    { color: "#60a5fa", label: "Moderate" },
+  limited:     { color: "#94a3b8", label: "Limited" },
+};
+
+function FructWindowCard({ w }: { w: FructificationWindow }) {
+  const s = STRENGTH_STYLE_V[w.strength] ?? STRENGTH_STYLE_V.moderate;
+  return (
+    <div className="rounded-lg border px-3 py-2 space-y-1.5"
+      style={{ borderColor: `${s.color}30`, backgroundColor: `${s.color}08` }}>
+      <div className="flex items-center justify-between flex-wrap gap-1">
+        <span className="text-[10px] font-mono font-semibold tabular-nums" style={{ color: s.color }}>
+          {w.start.slice(0,7)} → {w.end.slice(0,7)}
+        </span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[9px] px-1.5 py-0.5 rounded-full font-mono"
+            style={{ backgroundColor: `${s.color}22`, color: s.color }}>
+            {s.label}
+          </span>
+          {w.sav_bindus !== null && (
+            <span className="text-[9px] font-mono" style={{ color: s.color }}>SAV {w.sav_bindus}</span>
+          )}
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+        <span className="text-[10px] font-mono text-text-muted">♄ {w.saturn.sign} · {w.saturn.house}th</span>
+        <span className="text-[10px] font-mono text-text-muted">♃ {w.jupiter.sign} · {w.jupiter.house}th</span>
+        <span className="text-[9px] font-mono text-text-muted opacity-60">from {w.ref_label}</span>
+      </div>
+      <p className="text-[10px] text-text-muted leading-relaxed">{w.narrative}</p>
+    </div>
+  );
+}
+
+function VimsFructPanel({ result }: { result: FructificationResult }) {
+  const color = DASHA.main;
+  if (result.total_windows === 0) {
+    return (
+      <div className="rounded-lg border px-3 py-2.5 space-y-1"
+        style={{ borderColor: "rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.02)" }}>
+        <p className="text-[10px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color }}>
+          <Zap className="w-3 h-3" /> Fructification Windows
+        </p>
+        <p className="text-[11px] text-text-muted">
+          No Saturn+Jupiter double-transit overlap in this antardasha.
+          The dasha promise may still operate through other mechanisms.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="rounded-lg border px-3 py-2.5 space-y-2.5"
+      style={{ borderColor: `${color}22`, backgroundColor: `${color}06` }}>
+      <div className="flex items-center justify-between flex-wrap gap-1">
+        <p className="text-[10px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color }}>
+          <Zap className="w-3 h-3" /> Fructification — {result.total_windows} window{result.total_windows > 1 ? "s" : ""}
+        </p>
+        <div className="flex flex-wrap gap-1">
+          {result.reference_points.map((rp) => (
+            <span key={rp.label} className="text-[9px] font-mono px-1.5 py-0.5 rounded-full"
+              style={{ backgroundColor: `${color}18`, color }}>
+              {rp.label}: {rp.sign}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-2">
+        {result.windows.map((w, i) => <FructWindowCard key={i} w={w} />)}
+      </div>
+      <p className="text-[9px] text-text-muted font-mono opacity-50">
+        {result.source.split("|")[0].trim()}
+      </p>
+    </div>
+  );
+}
+
 // ── Antardasha expanded panel ─────────────────────────────────────────────────
 // Shown when a level-2 (Antardasha) node is expanded.
 // Contains: time-series chart + life-domain bullets from dasha_intel.
@@ -74,6 +154,8 @@ function AntardashaPanel({
   level,
   mahaLord,
   antarLord,
+  mahaStart,
+  mahaEnd,
   chart,
   moonOn,
   lagnaOn,
@@ -82,6 +164,8 @@ function AntardashaPanel({
   level: number;
   mahaLord: string;
   antarLord: string;
+  mahaStart?: string;
+  mahaEnd?: string;
   chart?: ChartData;
   moonOn: boolean;
   lagnaOn: boolean;
@@ -101,6 +185,31 @@ function AntardashaPanel({
 
   const canShowChart =
     !!chart?.meta?.birth_datetime && !!node.start && !!node.end;
+
+  // Fructification — fetch once on mount (panel only renders when expanded)
+  const [fructResult, setFructResult] = useState<FructificationResult | null>(null);
+  const [fructLoading, setFructLoading] = useState(false);
+  const fetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (fetchedRef.current || !chart?.meta?.birth_datetime || level !== 2 || !mahaStart || !mahaEnd) return;
+    fetchedRef.current = true;
+    setFructLoading(true);
+    const birth = chart.meta;
+    postCvce<FructificationResult>("fructification", {
+      birth_datetime: birth.birth_datetime,
+      birth_lat: birth.birth_lat,
+      birth_lon: birth.birth_lon,
+      birth_tz: birth.birth_tz,
+      system: "vimshottari",
+      maha_lord: mahaLord,
+      antar_lord: node.lord,
+      maha_start: mahaStart,
+      maha_end: mahaEnd,
+      antar_start: node.start.slice(0, 10),
+      antar_end: (node.end ?? node.start).slice(0, 10),
+    }).then(setFructResult).catch(() => {}).finally(() => setFructLoading(false));
+  }, [chart?.meta?.birth_datetime, level, mahaLord, mahaStart, mahaEnd, node.lord, node.start, node.end]);
 
   return (
     <motion.div
@@ -161,6 +270,17 @@ function AntardashaPanel({
             ))}
           </div>
         </div>
+      )}
+
+      {/* ── Fructification windows ── */}
+      {level === 2 && fructLoading && (
+        <div className="flex items-center gap-2 text-text-muted">
+          <Loader className="w-3 h-3 animate-spin" />
+          <span className="text-[10px] font-mono">Computing fructification windows…</span>
+        </div>
+      )}
+      {level === 2 && fructResult && (
+        <VimsFructPanel result={fructResult} />
       )}
     </motion.div>
   );
@@ -487,11 +607,15 @@ function DashaLevel({
   currentDepth,
   mahaLord,
   antarLord,
+  mahaStart,
+  mahaEnd,
   chart,
   moonOn = true,
   lagnaOn = false,
 }: {
   nodes: DashaNode[];
+  mahaStart?: string;
+  mahaEnd?: string;
   level: number;
   parentPath: string;
   expanded: Set<string>;
@@ -556,8 +680,10 @@ function DashaLevel({
           const hasChildren = node.subPeriods && node.subPeriods.length > 0;
           const canExpand = hasChildren && level < MAX_DEPTH;
 
-          // At level 1, this node IS the Mahadasha — thread its lord down
+          // At level 1, this node IS the Mahadasha — thread its lord and dates down
           const effectiveMahaLord = level === 1 ? node.lord : mahaLord;
+          const effectiveMahaStart = level === 1 ? node.start.slice(0, 10) : mahaStart;
+          const effectiveMahaEnd   = level === 1 ? (node.end ?? node.start).slice(0, 10) : mahaEnd;
 
           return (
             <div key={nodePath}>
@@ -577,6 +703,8 @@ function DashaLevel({
                     level={level}
                     mahaLord={effectiveMahaLord ?? ""}
                     antarLord={antarLord ?? ""}
+                    mahaStart={effectiveMahaStart}
+                    mahaEnd={effectiveMahaEnd}
                     chart={chart}
                     moonOn={moonOn}
                     lagnaOn={lagnaOn}
@@ -594,6 +722,8 @@ function DashaLevel({
                   currentDepth={currentDepth + 1}
                   mahaLord={effectiveMahaLord}
                   antarLord={level === 2 ? node.lord : antarLord}
+                  mahaStart={effectiveMahaStart}
+                  mahaEnd={effectiveMahaEnd}
                   chart={chart}
                   moonOn={moonOn}
                   lagnaOn={lagnaOn}
