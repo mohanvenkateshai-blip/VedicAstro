@@ -180,27 +180,110 @@ function TransitIntelCard({
   ti: NonNullable<ReportFacts["transit_intelligence"]>;
   nextShubhDays?: ReportFacts["next_shubh_days"];
 }) {
+  const favorable = (ti.planets ?? []).filter((p) => p.final_verdict === "shubh");
+  const unfavorable = (ti.planets ?? []).filter(
+    (p) => p.final_verdict === "ashubh" || p.final_verdict === "mixed",
+  );
   const isNegative =
     ti.overall_verdict === "ashubh" || ti.overall_verdict === "mixed";
   const showLookAhead =
     isNegative && nextShubhDays && nextShubhDays.length > 0;
 
   return (
-    <Card className="p-5 space-y-3">
+    <Card className="p-5 space-y-4">
+      {/* Header */}
       <div className="flex flex-wrap items-center gap-3">
         <SectionHeading>Transit intelligence</SectionHeading>
         <VerdictBadge verdict={ti.overall_verdict} />
+        <span className="text-xs font-mono text-text-muted ml-auto">
+          score {ti.overall_score > 0 ? "+" : ""}{ti.overall_score}
+        </span>
       </div>
-      <p className="text-sm leading-relaxed">{ti.day_summary}</p>
-      {ti.top_drivers?.length ? (
-        <p className="text-xs font-mono text-text-muted">
-          Key drivers: {ti.top_drivers.join(" · ")}
-        </p>
-      ) : null}
 
+      {/* Context pills */}
+      <div className="flex flex-wrap gap-2 text-xs">
+        {ti.dasha_context ? (
+          <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent font-mono">
+            {ti.dasha_context}
+          </span>
+        ) : null}
+        {ti.moorthy_note ? (
+          <span className={`px-2 py-0.5 rounded-md font-mono ${
+            ti.moorthy_note.toLowerCase().includes("gold") || ti.moorthy_note.toLowerCase().includes("silver")
+              ? "bg-emerald-500/10 text-emerald-400"
+              : ti.moorthy_note.toLowerCase().includes("copper")
+                ? "bg-amber-500/10 text-amber-400"
+                : "bg-red-500/10 text-red-400"
+          }`}>
+            Moorthi · {ti.moorthy_note}
+          </span>
+        ) : null}
+        {ti.tara_note ? (
+          <span className={`px-2 py-0.5 rounded-md font-mono ${
+            ti.tara_note.toLowerCase().includes("ashubh") || ti.tara_note.toLowerCase().includes("unfav")
+              ? "bg-red-500/10 text-red-400"
+              : "bg-emerald-500/10 text-emerald-400"
+          }`}>
+            Tara · {ti.tara_note}
+          </span>
+        ) : null}
+      </div>
+
+      {/* Planet split — favourable / unfavourable */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {favorable.length > 0 && (
+          <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3 space-y-2">
+            <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-500">
+              Favourable ({favorable.length})
+            </p>
+            {favorable.map((p) => (
+              <div key={p.planet} className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-emerald-400">{p.planet}</span>
+                  <span className="text-[10px] font-mono text-text-muted">
+                    {p.rashi} · H{p.house_from_janma}
+                  </span>
+                </div>
+                {p.primary_driver ? (
+                  <p className="text-[11px] text-text-muted leading-snug">{p.primary_driver}</p>
+                ) : null}
+                {p.positive_impact?.slice(0, 1).map((imp, i) => (
+                  <p key={i} className="text-[11px] text-emerald-400/70 leading-snug">{imp}</p>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {unfavorable.length > 0 && (
+          <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-3 space-y-2">
+            <p className="text-[10px] font-mono uppercase tracking-wider text-red-400">
+              Caution ({unfavorable.length})
+            </p>
+            {unfavorable.slice(0, 4).map((p) => (
+              <div key={p.planet} className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-red-400">{p.planet}</span>
+                  <span className="text-[10px] font-mono text-text-muted">
+                    {p.rashi} · H{p.house_from_janma}
+                  </span>
+                </div>
+                {p.primary_driver ? (
+                  <p className="text-[11px] text-text-muted leading-snug">{p.primary_driver}</p>
+                ) : null}
+                {p.mitigating?.slice(0, 1).map((m, i) => (
+                  <p key={i} className="text-[11px] text-amber-400/70 leading-snug">↳ {m}</p>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Next favourable days */}
       {showLookAhead ? (
-        <div className="mt-3 pt-3 border-t border-hairline space-y-2">
-          <p className="text-xs font-mono uppercase tracking-wider text-emerald-500">
+        <div className="pt-3 border-t border-hairline space-y-2">
+          <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-500">
             Next favourable days
           </p>
           {nextShubhDays!.map((day) => (
