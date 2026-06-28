@@ -417,7 +417,7 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
             </div>
           )}
 
-          {/* Expanded Mahadasha → Antardasha list */}
+          {/* Expanded Mahadasha → full-span spectrum chart + Antardasha list */}
           <AnimatePresence>
             {expandedMaha !== null && data.dashaTree[expandedMaha] && (
               <motion.div
@@ -428,6 +428,27 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                 transition={{ duration: 0.22 }}
                 className="overflow-hidden space-y-1"
               >
+                {/* Mahadasha overview spectrum — full time window */}
+                {chart?.meta?.birth_datetime && (
+                  <div className="rounded-xl border p-3.5 mb-3"
+                    style={{ borderColor: t.border, backgroundColor: t.bg }}>
+                    <p className="text-[10px] font-mono uppercase tracking-wider mb-3" style={{ color: t.color }}>
+                      {data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} Mahadasha — Full Span Overview
+                    </p>
+                    <DashaSeriesChart
+                      chart={chart}
+                      mahaLord={data.dashaTree[expandedMaha].lord}
+                      antarLord={data.dashaTree[expandedMaha].lord}
+                      startDate={data.dashaTree[expandedMaha].start}
+                      endDate={data.dashaTree[expandedMaha].end}
+                      dashaScore={0}
+                      moonOn={moonOn}
+                      lagnaOn={lagnaOn}
+                      title={`${data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} · ${fmtDuration(data.dashaTree[expandedMaha].durationYears)}`}
+                    />
+                  </div>
+                )}
+
                 {data.dashaTree[expandedMaha].subPeriods.length > 0 ? (
                   data.dashaTree[expandedMaha].subPeriods.map((antar, j) => {
                     const key = `${expandedMaha}-${j}`;
