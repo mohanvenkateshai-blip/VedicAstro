@@ -77,42 +77,55 @@ function ScoreTooltip({ active, payload, label }: {
   );
 }
 
-// ── Event markers (slow-planet sign changes) ──────────────────────────────────
+// ── Planet colour coding ──────────────────────────────────────────────────────
+
+const PLANET_COLOR: Record<string, string> = {
+  Saturn: "#7c3aed", Jupiter: "#f59e0b", Rahu: "#64748b", Ketu: "#94a3b8",
+  Mars: "#ef4444", Sun: "#f97316", Moon: "#a78bfa",
+  Mercury: "#22c55e", Venus: "#ec4899",
+};
+
+// ── Event markers — two-column layout ────────────────────────────────────────
 
 function EventList({ events }: { events: DashaSeriesEvent[] }) {
-  // Filter to slow planets only (Saturn, Jupiter, Rahu/Ketu) for the list
-  const notable = events.filter((e) =>
-    ["Saturn", "Jupiter", "Rahu", "Ketu"].includes(e.planet),
+  if (!events.length) return null;
+
+  const half = Math.ceil(events.length / 2);
+  const col1 = events.slice(0, half);
+  const col2 = events.slice(half);
+
+  const Row = ({ e }: { e: DashaSeriesEvent }) => (
+    <div className="flex items-center gap-1.5 text-[10px]">
+      <span className="font-mono tabular-nums text-text-muted w-14 shrink-0">
+        {fmtMonth(e.date)}
+      </span>
+      <span
+        className="font-mono shrink-0 w-[52px]"
+        style={{ color: PLANET_COLOR[e.planet] ?? "#94a3b8" }}
+      >
+        {e.planet}
+      </span>
+      <span className="text-text-muted truncate">
+        {e.from_rashi} → {e.to_rashi}
+        {e.house_from_moon ? ` h${e.house_from_moon}` : ""}
+      </span>
+    </div>
   );
-  if (!notable.length) return null;
 
   return (
-    <div className="mt-3 space-y-1.5">
-      <p className="text-[9px] font-mono uppercase tracking-widest text-text-muted">
+    <div className="mt-3">
+      <p className="text-[9px] font-mono uppercase tracking-widest text-text-muted mb-1.5">
         Planetary Sign Changes
       </p>
-      {notable.map((e, i) => {
-        const isGood = e.transit_score_at_event > 0;
-        return (
-          <div key={i} className="flex items-start gap-2 text-[11px]">
-            <span
-              className="shrink-0 font-mono text-[10px] tabular-nums text-text-muted w-20"
-            >
-              {fmtMonth(e.date)}
-            </span>
-            <span
-              className="font-mono shrink-0"
-              style={{ color: isGood ? SHUBH : ASHUBH }}
-            >
-              {e.planet}
-            </span>
-            <span className="text-text-muted">
-              {e.from_rashi} → {e.to_rashi}
-              {e.house_from_moon ? ` (house ${e.house_from_moon})` : ""}
-            </span>
-          </div>
-        );
-      })}
+      <div className="flex gap-0">
+        <div className="flex-1 space-y-1 pr-3">
+          {col1.map((e, i) => <Row key={i} e={e} />)}
+        </div>
+        <div className="w-px bg-hairline shrink-0" />
+        <div className="flex-1 space-y-1 pl-3">
+          {col2.map((e, i) => <Row key={i} e={e} />)}
+        </div>
+      </div>
     </div>
   );
 }
