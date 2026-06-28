@@ -92,16 +92,29 @@ async function post<T>(path: string, body: unknown, revalidate = 60 * 60): Promi
  * Cached 24h — dasha periods are deterministic per birth input.
  */
 export async function getDashaDeep(birth: BirthInput): Promise<DashaDeepData> {
-  return post<DashaDeepData>(
-    "/dasha-deep",
-    {
-      birth_datetime: birth.birth_datetime,
-      birth_lat: birth.birth_lat,
-      birth_lon: birth.birth_lon,
-      birth_tz: birth.birth_tz,
-    },
-    60 * 60 * 24,
-  );
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20_000);
+  try {
+    const res = await fetch(`${CVCE_BASE_URL}/dasha-deep`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        birth_datetime: birth.birth_datetime,
+        birth_lat: birth.birth_lat,
+        birth_lon: birth.birth_lon,
+        birth_tz: birth.birth_tz,
+      }),
+      signal: controller.signal,
+      cache: "no-store",
+    });
+    if (!res.ok) throw new CvceError(`Engine error for /dasha-deep`);
+    return (await res.json()) as DashaDeepData;
+  } catch (e) {
+    if (e instanceof CvceError) throw e;
+    throw new CvceError("Dasha engine unavailable");
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /** Unified report facts — natal, dasha ladder, dasha + transit intelligence. */
