@@ -9,6 +9,8 @@ const CVCE_BASE_URL =
 /** Endpoints the portal may proxy — keep this list tight. */
 const ALLOWED = new Set([
   "dasha-deep",
+  "dasha-deep-yogini",
+  "dasha-deep-ashtottari",
   "dasha-series",
   "dasha-predict",
   "dashas",
