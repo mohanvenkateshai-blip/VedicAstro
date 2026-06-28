@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 27, 2026 (Phases 9–12 complete — Hiranya report deployed; `ecac235`+`1057018` on main; CVCE v27 on Fly; portal on Vercel)*
+*Last Updated: June 28, 2026 (Corpus vault → Supabase + admin graph explorer)*
 
 ---
 
@@ -184,3 +184,28 @@ python3 -m http.server 5599 # http://localhost:5599
 | `portal/src/app/api/cvce/[...path]/route.ts` | CVCE server proxy |
 | `portal/src/lib/cvce-client.ts` | Browser-safe CVCE client |
 | `portal/src/components/report/HoroscopeReport.tsx` | Report UI (scaffolding) |
+
+---
+
+## 7. Core Jyotisha Ingest + Corpus Vault (June 28)
+
+**Goal:** Ingest 20 classical texts → `knowledge-graph/raw/*.md` → `graph-core-jyotisha.json` → **Supabase private vault** (not public git/GCS).
+
+| Lane | Status | Notes |
+|:---|:---|:---|
+| **Raw markdown** | ✅ 49 files | `knowledge-graph/raw/` (~16 MB) |
+| **Graph (local)** | ✅ 16,485 nodes / 27,330 links | `graph-core-jyotisha.json` |
+| **Supabase vault** | ✅ Synced | Postgres `graph_nodes`/`graph_links` + Storage bucket `corpus-vault` (private, RLS deny-all) |
+| **GCS** | ✅ Locked down | Processing scratch only — lifecycle + no public IAM (`scripts/gcp-lockdown.sh`) |
+| **Admin explorer** | ✅ `/admin/knowledge` | Service-role APIs + admin RBAC; mini neighborhood graph viz |
+
+**Sync pipeline (final step after GCP pull):**
+```bash
+scripts/gcp-sync-results.sh          # GCS → local raw/ + cache, then Supabase sync
+python3 scripts/supabase-corpus-sync.py --skip-gcp --incremental   # local-only re-sync
+npm run db:corpus-schema             # apply portal/supabase-corpus-schema.sql (Supabase CLI)
+```
+
+**GCP:** Project `united-skyline-500618-t0`, bucket `gs://united-skyline-500618-t0-vedicastro-corpus`. Production `graph.json` on Fly unchanged until manual `--promote`.
+
+**Later:** `corpus_chunks` + vector embeddings for hybrid search (schema stub in master bundle — not started).

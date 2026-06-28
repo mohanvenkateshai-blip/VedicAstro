@@ -28,3 +28,6 @@ dist/
 
 # Misplaced graphify scratch output
 knowledge-graph/raw/graphify-out/
+
+# Supabase CLI local state
+supabase/.temp/

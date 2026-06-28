@@ -10,10 +10,12 @@
     "typecheck": "tsc --noEmit",
     "ci": "npm run lint && npm run typecheck && npm run build",
     "db:schema": "node scripts/apply-schema.mjs",
-    "db:schema:remote": "node scripts/migrate-remote.mjs"
+    "db:schema:remote": "node scripts/migrate-remote.mjs",
+    "db:corpus-schema": "bash ../scripts/apply-supabase-corpus-schema.sh"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
+    "@supabase/supabase-js": "^2.108.2",
     "clsx": "^2.1.1",
     "jspdf-html2canvas": "^1.6.0",
     "lucide-react": "^1.21.0",

@@ -22,6 +22,7 @@ import { hasAtLeast } from "./types";
 export type { Role, Session } from "./types";
 export { ROLE_RANK, hasAtLeast, PROTECTED_PREFIXES, ADMIN_PREFIXES } from "./types";
 export { isAuthConfigured, isDatabaseConfigured } from "@/lib/auth-config";
+import { isAdminEmail } from "@/lib/auth-config";
 
 /** Replace the old scaffold getSession() with real NextAuth session. */
 export async function getSession(): Promise<Session | null> {
@@ -42,13 +43,18 @@ export async function upsertUser(params: {
   email: string;
   name?: string;
 }): Promise<void> {
+  const role: Role = isAdminEmail(params.email) ? "admin" : "free";
   try {
     await sql`
-      INSERT INTO users (id, email, name)
-      VALUES (${params.id}, ${params.email}, ${params.name ?? null})
+      INSERT INTO users (id, email, name, role)
+      VALUES (${params.id}, ${params.email}, ${params.name ?? null}, ${role})
       ON CONFLICT (id) DO UPDATE SET
         email = ${params.email},
         name = COALESCE(${params.name ?? null}, users.name),
+        role = CASE
+          WHEN ${role} = 'admin' THEN 'admin'
+          ELSE users.role
+        END,
         updated_at = now()
     `;
   } catch (e) {

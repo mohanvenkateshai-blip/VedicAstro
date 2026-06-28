@@ -11,6 +11,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import type { Role } from "@/lib/auth/types";
+import { isAdminEmail } from "@/lib/auth-config";
 import { isAuthConfigured } from "@/lib/auth-config";
 
 declare module "next-auth" {
@@ -73,7 +74,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         try {
           const { getUser } = await import("@/lib/auth/index");
           const dbUser = id ? await getUser(id) : null;
-          token.role = dbUser?.role ?? "free";
+          const email = (user?.email ?? token.email) as string | undefined;
+          if (email && isAdminEmail(email)) {
+            token.role = "admin";
+          } else {
+            token.role = dbUser?.role ?? "free";
+          }
         } catch {
           token.role = "free";
         }

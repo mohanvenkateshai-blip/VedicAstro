@@ -10,3 +10,14 @@ export function isAuthConfigured(): boolean {
 export function isDatabaseConfigured(): boolean {
   return !!process.env.DATABASE_URL;
 }
+
+export function adminEmailsFromEnv(): string[] {
+  return (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+export function isAdminEmail(email: string): boolean {
+  return adminEmailsFromEnv().includes(email.trim().toLowerCase());
+}
