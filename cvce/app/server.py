@@ -1634,26 +1634,45 @@ def all_dashas(req: BirthRequest):
         print(f"[all_dashas] vimshottari failed: {type(e).__name__}: {e}", flush=True)
         result["vimshottari"] = None
 
-    # Yogini Dasha
+    # Yogini Dasha — iterate ALL rows to find the one containing today
     try:
         from jhora.horoscope.dhasa.graha import yogini
         from jhora.panchanga.drik import Date as DrikDate
-        y = yogini.get_dhasa_bhukthi(DrikDate(dt.year, dt.month, dt.day), (dt.hour, dt.minute, dt.second), place)
-        cy = y[0] if y and len(y) > 0 else None
-        lords = cy[0] if cy and isinstance(cy[0], (list, tuple)) else None
-        maha_name  = lord_name(lords[0]) if lords and len(lords) > 0 else (str(cy[0]) if cy else None)
-        antar_name = lord_name(lords[1]) if lords and len(lords) > 1 else (str(cy[1]) if cy and len(cy) > 1 else None)
-        # Extract dates: row format = [lords_tuple, start_gregorian_tuple, duration_years]
+        from datetime import date as _d, timedelta as _td
+
+        y = yogini.get_dhasa_bhukthi(
+            DrikDate(dt.year, dt.month, dt.day),
+            (dt.hour, dt.minute, dt.second),
+            place,
+        )
+        today = _d.today()
+        cy = None
         antar_start_str = antar_end_str = None
-        if cy and len(cy) >= 3:
+
+        # Find the row whose date window contains today
+        for row in (y or []):
             try:
-                from datetime import date as _d, timedelta as _td
-                st, dur = cy[1], float(cy[2])
+                st  = row[1]
+                dur = float(row[2])
                 if isinstance(st, (list, tuple)) and len(st) >= 3:
-                    antar_start_str = fmt_date(int(st[0]), int(st[1]), int(st[2]))
-                    antar_end_str = (_d(int(st[0]), int(st[1]), int(st[2])) + _td(days=int(dur * 365.25))).isoformat()
-            except Exception as _e:
-                print(f"[yogini] date extraction: {_e}", flush=True)
+                    s = _d(int(st[0]), int(st[1]), int(st[2]))
+                    e = s + _td(days=int(dur * 365.25))
+                    if s <= today <= e:
+                        cy = row
+                        antar_start_str = s.isoformat()
+                        antar_end_str   = e.isoformat()
+                        break
+            except Exception:
+                continue
+
+        # Fallback: use first row for lords even if dates not found
+        if cy is None:
+            cy = y[0] if y else None
+
+        lords      = cy[0] if cy and isinstance(cy[0], (list, tuple)) else None
+        maha_name  = lord_name(lords[0]) if lords and len(lords) > 0 else None
+        antar_name = lord_name(lords[1]) if lords and len(lords) > 1 else None
+
         result["yogini"] = {
             "maha": maha_name, "antara": antar_name,
             "antaraStart": antar_start_str, "antaraEnd": antar_end_str,
