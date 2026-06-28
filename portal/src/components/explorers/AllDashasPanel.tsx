@@ -248,7 +248,7 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
                   dashaScore={0}
                   moonOn={moonOn}
                   lagnaOn={lagnaOn}
-                  title={`${mahaLord} / ${node.lord}`}
+                  title={`${mahaLord} / ${node.yoginiName ?? node.lord}`}
                 />
               )}
             </div>
@@ -441,7 +441,12 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                         moonOn={moonOn}
                         lagnaOn={lagnaOn}
                         mahaLord={data.dashaTree[expandedMaha].lord}
-                        prediction={predictions[`${data.dashaTree[expandedMaha].lord}/${antar.lord}`] ?? null}
+                        prediction={(() => {
+                          const maha = data.dashaTree[expandedMaha];
+                          const mahaKey = maha.yoginiName ?? maha.lord;
+                          const antarKey = antar.yoginiName ?? antar.lord;
+                          return predictions[`${mahaKey}/${antarKey}`] ?? null;
+                        })()}
                         onClick={() => setExpandedAntar((prev) => (prev === key ? null : key))}
                       />
                     );
