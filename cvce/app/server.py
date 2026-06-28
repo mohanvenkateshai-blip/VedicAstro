@@ -905,7 +905,7 @@ def dasha_deep(req: BirthRequest):
     # Annotate levels 1 (Maha) and 2 (Antar) with shubh/ashubh verdict.
     # Level 1 uses self-self combination (Vedic proxy for the whole Mahadasha period).
     try:
-        geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa)
+        geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
         planets = geometry.get("planets") or []
         moon = next((p for p in planets if p.get("planet") == "Moon"), None)
         lagna_rashi = (geometry.get("lagna") or {}).get("rashi")
