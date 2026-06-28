@@ -10,6 +10,7 @@ import "server-only";
 import type {
   BirthInput,
   ChartData,
+  DashaDeepData,
   DayWindows,
   GraphEnhancements,
   MuhurtaResult,
@@ -84,6 +85,24 @@ async function post<T>(path: string, body: unknown, revalidate = 60 * 60): Promi
     throw new CvceError(`Engine returned an error for ${path}.`);
   }
   return (await res.json()) as T;
+}
+
+/**
+ * Full 5-level Vimshottari tree + current ladder.
+ * Computed server-side to avoid Vercel function timeout on the client proxy.
+ * Cached 30 min — deterministic for a given birth.
+ */
+export async function getDashaDeep(birth: BirthInput): Promise<DashaDeepData> {
+  return post<DashaDeepData>(
+    "/dasha-deep",
+    {
+      birth_datetime: birth.birth_datetime,
+      birth_lat: birth.birth_lat,
+      birth_lon: birth.birth_lon,
+      birth_tz: birth.birth_tz,
+    },
+    60 * 30,
+  );
 }
 
 /** Unified report facts — natal, dasha ladder, dasha + transit intelligence. */

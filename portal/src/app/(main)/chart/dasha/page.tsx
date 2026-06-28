@@ -1,4 +1,5 @@
 import { loadChartFromSearchParams } from "@/lib/load-chart";
+import { getDashaDeep } from "@/lib/cvce";
 import { Card } from "@/components/ui/Card";
 import { DashaDeepTree } from "@/components/explorers/DashaDeepTree";
 import { AllDashasPanel } from "@/components/explorers/AllDashasPanel";
@@ -10,7 +11,13 @@ export default async function DashaPage({
 }: {
   searchParams: Promise<SP>;
 }) {
-  const { chart, error } = await loadChartFromSearchParams(await searchParams);
+  const { chart, birth, error } = await loadChartFromSearchParams(await searchParams);
+
+  // Prefetch the expensive 5-level dasha tree server-side so it arrives with
+  // the page — avoids the Vercel function timeout that kills client-side fetches.
+  const dashaDeep = chart
+    ? await getDashaDeep(birth).catch(() => null)
+    : null;
 
   return (
     <div className="space-y-6">
@@ -26,7 +33,7 @@ export default async function DashaPage({
       ) : null}
       {chart ? (
         <>
-          <DashaDeepTree chart={chart} />
+          <DashaDeepTree chart={chart} dashaData={dashaDeep ?? undefined} />
           <AllDashasPanel chart={chart} />
         </>
       ) : null}

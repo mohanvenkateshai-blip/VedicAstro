@@ -4,37 +4,11 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Clock, ChevronDown, ChevronRight, Loader } from "lucide-react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
-import type { ChartData } from "@/lib/types";
+import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 
-// ── Types ───────────────────────────────────────────────────────────────────
-
-export interface DashaNode {
-  level: number;
-  lord: string;
-  start: string;
-  end?: string;
-  durationYears: number;
-  subPeriods: DashaNode[];
-}
-
-export interface DashaLadderRow {
-  level: number;
-  levelLabel: string;
-  lord: string;
-  lords: string[];
-  start: string;
-  end: string;
-  durationYears: number;
-}
-
-export interface DashaDeepData {
-  current: string[];
-  currentLadder?: DashaLadderRow[];
-  balanceAtBirth?: { lord: string; years: number; months: number; days: number; label: string };
-  antardashaTable?: { maha: string; antara: string; start: string; durationYears: number }[];
-  dashaTree: DashaNode[];
-}
+// Re-export for consumers that previously imported from here
+export type { DashaDeepData, DashaNode, DashaLadderRow };
 
 export interface DashaDeepProps {
   chart?: ChartData;

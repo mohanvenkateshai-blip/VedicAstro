@@ -265,6 +265,23 @@ export interface DashaLadderRow {
   durationYears: number;
 }
 
+export interface DashaNode {
+  level: number;
+  lord: string;
+  start: string;
+  end?: string;
+  durationYears: number;
+  subPeriods: DashaNode[];
+}
+
+export interface DashaDeepData {
+  current: string[];
+  currentLadder?: DashaLadderRow[];
+  balanceAtBirth?: { lord: string; years: number; months: number; days: number; label: string };
+  antardashaTable?: { maha: string; antara: string; start: string; durationYears: number }[];
+  dashaTree: DashaNode[];
+}
+
 export interface DashaIntelligence {
   maha_lord: string;
   antar_lord: string;
