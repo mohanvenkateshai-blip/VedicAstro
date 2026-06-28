@@ -31,12 +31,21 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
     Parse flat period rows into a Mahadasha tree + running ladder.
 
     flat_rows: [(lords_tuple, (Y,M,D,...), duration_years), ...]
+
+    NOTE: some dasha modules (Yogini, Ashtottari) only emit depth=2
+    (antardasha) rows — they never emit depth=1 Mahadasha rows.
+    We derive Mahadasha nodes by grouping the antardasha rows.
+
     Returns: (tree, current_ladder)
     """
     today = _d.today()
-    by_depth: dict[int, dict] = {}
-    mahas:    dict[int, dict] = {}          # maha_id -> node data
-    antars:   dict[tuple, dict] = {}        # (maha_id, antar_id) -> node data
+    by_depth: dict[int, dict]  = {}   # depth -> running row info
+    mahas:    dict[int, dict]  = {}   # maha_id -> node
+    antars:   dict[tuple, dict] = {}  # (maha_id, antar_id) -> node
+
+    # Track antardasha start/end per maha for derivation
+    maha_min_start: dict[int, _d] = {}
+    maha_max_end:   dict[int, _d] = {}
 
     for row in (flat_rows or []):
         try:
@@ -59,6 +68,7 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
                     "lord": _lord_name(lords[depth - 1]),
                     "start": _fmt(st),
                     "end":   e.isoformat(),
+                    "_lords": lords,   # keep for ladder derivation
                 }
 
             if depth == 1:
@@ -73,26 +83,58 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
                     }
 
             elif depth == 2:
-                key = (lords[0], lords[1])
+                mid, aid = lords[0], lords[1]
+                key = (mid, aid)
                 if key not in antars:
                     antars[key] = {
-                        "lord": _lord_name(lords[1]),
+                        "lord": _lord_name(aid),
                         "start": _fmt(st),
                         "end":   e.isoformat(),
                         "durationYears": round(dur, 4),
                         "_sort": s,
-                        "_maha": lords[0],
+                        "_maha": mid,
                     }
+                # Track Mahadasha extent from its antardasha rows
+                if mid not in maha_min_start or s < maha_min_start[mid]:
+                    maha_min_start[mid] = s
+                if mid not in maha_max_end or e > maha_max_end[mid]:
+                    maha_max_end[mid] = e
 
         except Exception:
             continue
 
-    # Sort mahas by start date
-    sorted_mahas = sorted(mahas.items(), key=lambda x: x[1]["_sort"])
+    # If no depth=1 rows, derive Mahadashas from antardasha groups
+    if not mahas and antars:
+        for mid in set(k[0] for k in antars.keys()):
+            ms = maha_min_start.get(mid)
+            me = maha_max_end.get(mid)
+            if ms and me:
+                dur_years = round((me - ms).days / 365.25, 4)
+                mahas[mid] = {
+                    "lord": _lord_name(mid),
+                    "start": ms.isoformat(),
+                    "end":   me.isoformat(),
+                    "durationYears": dur_years,
+                    "_sort": ms,
+                }
 
-    # Build tree
+    # If ladder missing depth=1 but has depth=2, derive Mahadasha entry
+    if 1 not in by_depth and 2 in by_depth:
+        lords2 = by_depth[2].get("_lords")
+        if lords2 and len(lords2) >= 1:
+            mid = lords2[0]
+            if mid in mahas:
+                m = mahas[mid]
+                by_depth[1] = {
+                    "levelLabel": "Mahadasha",
+                    "lord": m["lord"],
+                    "start": m["start"],
+                    "end":   m["end"],
+                }
+
+    # Build tree sorted by Mahadasha start date
     tree: list[dict] = []
-    for mid, maha in sorted_mahas:
+    for mid, maha in sorted(mahas.items(), key=lambda x: x[1]["_sort"]):
         antar_nodes = sorted(
             [v for (m, _), v in antars.items() if m == mid],
             key=lambda x: x["_sort"],
@@ -116,7 +158,11 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
             ],
         })
 
-    ladder = [by_depth[d] for d in sorted(by_depth.keys())]
+    # Clean up internal keys from ladder entries
+    ladder = [
+        {k: v for k, v in by_depth[d].items() if not k.startswith("_")}
+        for d in sorted(by_depth.keys())
+    ]
     return tree, ladder
 
 
