@@ -28,6 +28,11 @@ function fmtMonth(iso: string): string {
   return d.toLocaleDateString("en-IN", { month: "short", year: "2-digit" });
 }
 
+function fmtEvent(iso: string): string {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-IN", { month: "short", year: "numeric" });
+}
+
 function fmtFull(iso: string): string {
   return new Date(iso).toLocaleDateString("en-IN", {
     day: "numeric", month: "short", year: "numeric",
@@ -96,8 +101,8 @@ function EventList({ events }: { events: DashaSeriesEvent[] }) {
 
   const Row = ({ e }: { e: DashaSeriesEvent }) => (
     <div className="flex items-center gap-1.5 text-[10px]">
-      <span className="font-mono tabular-nums text-text-muted w-14 shrink-0">
-        {fmtMonth(e.date)}
+      <span className="font-mono tabular-nums text-text-muted w-16 shrink-0">
+        {fmtEvent(e.date)}
       </span>
       <span
         className="font-mono shrink-0 w-[52px]"
@@ -158,14 +163,14 @@ function StatsBar({ stats, dashaScore }: {
           <span style={{ color: SHUBH }}>
             {stats.peak.score > 0 ? "+" : ""}{stats.peak.score}
           </span>{" "}
-          ({fmtMonth(stats.peak.date)})
+          ({fmtEvent(stats.peak.date)})
         </span>
         <span>
           Worst:{" "}
           <span style={{ color: ASHUBH }}>
             {stats.trough.score > 0 ? "+" : ""}{stats.trough.score}
           </span>{" "}
-          ({fmtMonth(stats.trough.date)})
+          ({fmtEvent(stats.trough.date)})
         </span>
         <span>
           Dasha base:{" "}
