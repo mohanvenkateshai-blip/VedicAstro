@@ -32,20 +32,18 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
 
     flat_rows: [(lords_tuple, (Y,M,D,...), duration_years), ...]
 
-    NOTE: some dasha modules (Yogini, Ashtottari) only emit depth=2
-    (antardasha) rows — they never emit depth=1 Mahadasha rows.
-    We derive Mahadasha nodes by grouping the antardasha rows.
+    Yogini and Ashtottari only emit depth=2 (antardasha) rows.
+    We group consecutive rows by Mahadasha to form blocks — this correctly
+    handles repeating cycles (Yogini repeats every 36 years).
 
     Returns: (tree, current_ladder)
     """
     today = _d.today()
-    by_depth: dict[int, dict]  = {}   # depth -> running row info
-    mahas:    dict[int, dict]  = {}   # maha_id -> node
-    antars:   dict[tuple, dict] = {}  # (maha_id, antar_id) -> node
 
-    # Track antardasha start/end per maha for derivation
-    maha_min_start: dict[int, _d] = {}
-    maha_max_end:   dict[int, _d] = {}
+    # ── Step 1: collect and sort all valid depth=2 rows ─────────────────────
+
+    parsed: list[tuple[_d, tuple, str, str, float]] = []
+    # (start_date, lords, start_str, end_str, dur_years)
 
     for row in (flat_rows or []):
         try:
@@ -53,98 +51,125 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
             st    = row[1]
             dur   = float(row[2])
             depth = len(lords) if isinstance(lords, (list, tuple)) else 0
-            if depth == 0:
+            if depth < 1:
                 continue
             if not (isinstance(st, (list, tuple)) and len(st) >= 3):
                 continue
-
             s = _to_date(st)
             e = _end_date(st, dur)
-
-            # Running period at this depth (first match wins)
-            if depth not in by_depth and s <= today <= e:
-                by_depth[depth] = {
-                    "levelLabel": LEVEL_LABELS.get(depth, f"Level {depth}"),
-                    "lord": _lord_name(lords[depth - 1]),
-                    "start": _fmt(st),
-                    "end":   e.isoformat(),
-                    "_lords": lords,   # keep for ladder derivation
-                }
-
-            if depth == 1:
-                mid = lords[0]
-                if mid not in mahas:
-                    mahas[mid] = {
-                        "lord": _lord_name(mid),
-                        "start": _fmt(st),
-                        "end":   e.isoformat(),
-                        "durationYears": round(dur, 4),
-                        "_sort": s,
-                    }
-
-            elif depth == 2:
-                mid, aid = lords[0], lords[1]
-                key = (mid, aid)
-                if key not in antars:
-                    antars[key] = {
-                        "lord": _lord_name(aid),
-                        "start": _fmt(st),
-                        "end":   e.isoformat(),
-                        "durationYears": round(dur, 4),
-                        "_sort": s,
-                        "_maha": mid,
-                    }
-                # Track Mahadasha extent from its antardasha rows
-                if mid not in maha_min_start or s < maha_min_start[mid]:
-                    maha_min_start[mid] = s
-                if mid not in maha_max_end or e > maha_max_end[mid]:
-                    maha_max_end[mid] = e
-
+            parsed.append((s, lords, _fmt(st), e.isoformat(), dur))
         except Exception:
             continue
 
-    # If no depth=1 rows, derive Mahadashas from antardasha groups
-    if not mahas and antars:
-        for mid in set(k[0] for k in antars.keys()):
-            ms = maha_min_start.get(mid)
-            me = maha_max_end.get(mid)
-            if ms and me:
-                dur_years = round((me - ms).days / 365.25, 4)
-                mahas[mid] = {
-                    "lord": _lord_name(mid),
-                    "start": ms.isoformat(),
-                    "end":   me.isoformat(),
-                    "durationYears": dur_years,
-                    "_sort": ms,
+    parsed.sort(key=lambda x: x[0])
+
+    # ── Step 2: group into Mahadasha blocks (contiguous by maha_id) ──────────
+
+    # Each block = one Mahadasha occurrence (handles repeating cycles)
+    blocks: list[dict] = []  # {mid, lord, start, end, antars: [...]}
+    current_mid = None
+    current_block: dict | None = None
+
+    for s, lords, start_str, end_str, dur in parsed:
+        depth = len(lords)
+
+        if depth == 2:
+            mid, aid = lords[0], lords[1]
+
+            if mid != current_mid:
+                # New Mahadasha block starts
+                if current_block is not None:
+                    blocks.append(current_block)
+                current_mid = mid
+                current_block = {
+                    "mid":   mid,
+                    "lord":  _lord_name(mid),
+                    "start": start_str,
+                    "end":   end_str,      # will be updated
+                    "_start": s,
+                    "_end":   _d.fromisoformat(end_str),
+                    "antars": [],
                 }
 
-    # If ladder missing depth=1 but has depth=2, derive Mahadasha entry
-    if 1 not in by_depth and 2 in by_depth:
-        lords2 = by_depth[2].get("_lords")
-        if lords2 and len(lords2) >= 1:
-            mid = lords2[0]
-            if mid in mahas:
-                m = mahas[mid]
-                by_depth[1] = {
-                    "levelLabel": "Mahadasha",
-                    "lord": m["lord"],
-                    "start": m["start"],
-                    "end":   m["end"],
+            # Extend Mahadasha end to cover this antardasha
+            antar_end = _d.fromisoformat(end_str)
+            if current_block and antar_end > current_block["_end"]:
+                current_block["_end"] = antar_end
+                current_block["end"]  = end_str
+
+            if current_block is not None:
+                current_block["antars"].append({
+                    "lord":  _lord_name(aid),
+                    "start": start_str,
+                    "end":   end_str,
+                    "durationYears": round(dur, 4),
+                    "_start": s,
+                })
+
+        elif depth == 1:
+            mid = lords[0]
+            if mid != current_mid:
+                if current_block is not None:
+                    blocks.append(current_block)
+                current_mid = mid
+                current_block = {
+                    "mid":   mid,
+                    "lord":  _lord_name(mid),
+                    "start": start_str,
+                    "end":   end_str,
+                    "_start": s,
+                    "_end":   _d.fromisoformat(end_str),
+                    "antars": [],
                 }
 
-    # Build tree sorted by Mahadasha start date
-    tree: list[dict] = []
-    for mid, maha in sorted(mahas.items(), key=lambda x: x[1]["_sort"]):
-        antar_nodes = sorted(
-            [v for (m, _), v in antars.items() if m == mid],
-            key=lambda x: x["_sort"],
-        )
-        tree.append({
+    if current_block is not None:
+        blocks.append(current_block)
+
+    # Compute each Mahadasha's durationYears from its actual start/end
+    for b in blocks:
+        b["durationYears"] = round((b["_end"] - b["_start"]).days / 365.25, 4)
+
+    # ── Step 3: build running ladder ─────────────────────────────────────────
+
+    running_maha_block: dict | None = None
+    running_antar: dict | None = None
+
+    for b in blocks:
+        if b["_start"] <= today <= b["_end"]:
+            running_maha_block = b
+            for a in b["antars"]:
+                ae = _d.fromisoformat(a["end"])
+                as_ = a["_start"]
+                if as_ <= today <= ae:
+                    running_antar = a
+                    break
+            break
+
+    ladder: list[dict] = []
+    if running_maha_block:
+        ladder.append({
+            "levelLabel": "Mahadasha",
+            "lord":  running_maha_block["lord"],
+            "start": running_maha_block["start"],
+            "end":   running_maha_block["end"],
+        })
+    if running_antar:
+        ladder.append({
+            "levelLabel": "Antardasha",
+            "lord":  running_antar["lord"],
+            "start": running_antar["start"],
+            "end":   running_antar["end"],
+        })
+
+    # ── Step 4: build tree ────────────────────────────────────────────────────
+
+    tree = [
+        {
             "level": 1,
-            "lord":  maha["lord"],
-            "start": maha["start"],
-            "end":   maha["end"],
-            "durationYears": maha["durationYears"],
+            "lord":  b["lord"],
+            "start": b["start"],
+            "end":   b["end"],
+            "durationYears": b["durationYears"],
             "subPeriods": [
                 {
                     "level": 2,
@@ -154,15 +179,12 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
                     "durationYears": a["durationYears"],
                     "subPeriods": [],
                 }
-                for a in antar_nodes
+                for a in sorted(b["antars"], key=lambda x: x["_start"])
             ],
-        })
-
-    # Clean up internal keys from ladder entries
-    ladder = [
-        {k: v for k, v in by_depth[d].items() if not k.startswith("_")}
-        for d in sorted(by_depth.keys())
+        }
+        for b in blocks
     ]
+
     return tree, ladder
 
 
