@@ -33,9 +33,8 @@ const DASHA = {
 } as const;
 
 const VERDICT_CFG = {
-  shubh:  { bg: "rgba(16,185,129,0.12)",  color: "#10b981", label: "Shubh"  },
-  ashubh: { bg: "rgba(239,68,68,0.12)",   color: "#ef4444", label: "Ashubh" },
-  mixed:  { bg: "rgba(245,158,11,0.12)",  color: "#f59e0b", label: "Mixed"  },
+  shubh:  { bg: "rgba(16,185,129,0.12)", color: "#10b981", label: "Shubh"  },
+  ashubh: { bg: "rgba(239,68,68,0.12)",  color: "#ef4444", label: "Ashubh" },
 } as const;
 
 // ── Verdict badge ────────────────────────────────────────────────────────────
@@ -50,9 +49,7 @@ function VerdictBadge({
   size?: "xs" | "sm";
 }) {
   if (!verdict) return null;
-  const cfg = VERDICT_CFG[verdict as keyof typeof VERDICT_CFG] ?? {
-    bg: "rgba(139,92,246,0.10)", color: DASHA.soft, label: verdict,
-  };
+  const cfg = VERDICT_CFG[verdict as keyof typeof VERDICT_CFG] ?? VERDICT_CFG.ashubh;
   const scoreStr = score != null ? ` ${score > 0 ? "+" : ""}${score}` : "";
   return (
     <span

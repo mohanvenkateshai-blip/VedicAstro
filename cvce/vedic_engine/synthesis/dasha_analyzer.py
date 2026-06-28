@@ -109,11 +109,7 @@ def _dignity(planet: str, rashi: str) -> str:
 
 
 def _verdict(score: int) -> str:
-    if score >= 4:
-        return "shubh"
-    if score <= -4:
-        return "ashubh"
-    return "mixed"
+    return "shubh" if score > 0 else "ashubh"
 
 
 class DashaImpactAnalyzer:
