@@ -30,7 +30,7 @@ function fmtMonth(iso: string): string {
 
 function fmtEvent(iso: string): string {
   const d = new Date(iso);
-  return d.toLocaleDateString("en-IN", { month: "short", year: "numeric" });
+  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 }
 
 function fmtFull(iso: string): string {
@@ -89,32 +89,66 @@ const PLANET_COLOR: Record<string, string> = {
   Mars: "#ef4444", Sun: "#f97316", Mercury: "#22c55e", Venus: "#ec4899",
 };
 
-// ── Event markers — two-column layout ────────────────────────────────────────
+// ── Event markers — two-column layout with TODAY divider ─────────────────────
+
+type EventItem =
+  | { kind: "event"; e: DashaSeriesEvent; past: boolean }
+  | { kind: "today" };
 
 function EventList({ events }: { events: DashaSeriesEvent[] }) {
   if (!events.length) return null;
 
-  const half = Math.ceil(events.length / 2);
-  const col1 = events.slice(0, half);
-  const col2 = events.slice(half);
+  const todayISO = new Date().toISOString().slice(0, 10);
 
-  const Row = ({ e }: { e: DashaSeriesEvent }) => (
-    <div className="flex items-center gap-1.5 text-[10px]">
-      <span className="font-mono tabular-nums text-text-muted w-16 shrink-0">
-        {fmtEvent(e.date)}
-      </span>
-      <span
-        className="font-mono shrink-0 w-[52px]"
-        style={{ color: PLANET_COLOR[e.planet] ?? "#94a3b8" }}
-      >
-        {e.planet}
-      </span>
-      <span className="text-text-muted truncate">
-        {e.from_rashi} → {e.to_rashi}
-        {e.house_from_moon ? ` h${e.house_from_moon}` : ""}
-      </span>
-    </div>
-  );
+  // Build flat item list with a TODAY marker inserted at the right position
+  const items: EventItem[] = [];
+  let markerInserted = false;
+  for (const e of events) {
+    if (!markerInserted && e.date > todayISO) {
+      items.push({ kind: "today" });
+      markerInserted = true;
+    }
+    items.push({ kind: "event", e, past: e.date <= todayISO });
+  }
+  if (!markerInserted) {
+    items.push({ kind: "today" }); // all events are in the past
+  }
+
+  const half = Math.ceil(items.length / 2);
+  const col1 = items.slice(0, half);
+  const col2 = items.slice(half);
+
+  const Row = ({ item }: { item: EventItem }) => {
+    if (item.kind === "today") {
+      return (
+        <div className="flex items-center gap-1.5 py-0.5 my-0.5">
+          <div className="flex-1 h-px" style={{ backgroundColor: "#eab30855" }} />
+          <span className="text-[9px] font-mono font-semibold" style={{ color: "#eab308" }}>
+            TODAY
+          </span>
+          <div className="flex-1 h-px" style={{ backgroundColor: "#eab30855" }} />
+        </div>
+      );
+    }
+    const { e, past } = item;
+    return (
+      <div className="flex items-center gap-1.5 text-[10px]" style={{ opacity: past ? 0.45 : 1 }}>
+        <span className="font-mono tabular-nums text-text-muted w-[76px] shrink-0">
+          {fmtEvent(e.date)}
+        </span>
+        <span
+          className="font-mono shrink-0 w-[54px]"
+          style={{ color: PLANET_COLOR[e.planet] ?? "#94a3b8" }}
+        >
+          {e.planet}
+        </span>
+        <span className="text-text-muted truncate">
+          {e.from_rashi} → {e.to_rashi}
+          {e.house_from_moon ? ` h${e.house_from_moon}` : ""}
+        </span>
+      </div>
+    );
+  };
 
   return (
     <div className="mt-3">
@@ -122,12 +156,12 @@ function EventList({ events }: { events: DashaSeriesEvent[] }) {
         Planetary Sign Changes
       </p>
       <div className="flex gap-0">
-        <div className="flex-1 space-y-1 pr-3">
-          {col1.map((e, i) => <Row key={i} e={e} />)}
+        <div className="flex-1 space-y-0.5 pr-3">
+          {col1.map((item, i) => <Row key={i} item={item} />)}
         </div>
         <div className="w-px bg-hairline shrink-0" />
-        <div className="flex-1 space-y-1 pl-3">
-          {col2.map((e, i) => <Row key={i} e={e} />)}
+        <div className="flex-1 space-y-0.5 pl-3">
+          {col2.map((item, i) => <Row key={i} item={item} />)}
         </div>
       </div>
     </div>
