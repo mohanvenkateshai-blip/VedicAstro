@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Allow up to 60s — CVCE cold start + heavy endpoints (positions × 12, dasha-deep)
+export const maxDuration = 60;
+
 const CVCE_BASE_URL =
   process.env.CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
