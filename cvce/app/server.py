@@ -1572,10 +1572,29 @@ def _ashtottari_current(jd, place, lord_name):
         return None
     row = run[-1] if isinstance(run, list) else run
     maha, antara = _parse_dasha_lords(row[0])
+    # Extract start/end dates: row format = [lords_tuple, start_tuple_or_jd, duration_years]
+    antar_start_str = antar_end_str = None
+    try:
+        from datetime import date as _d, timedelta as _td
+        from jhora import utils as _u
+        if len(row) >= 2:
+            st = row[1]
+            if isinstance(st, (list, tuple)) and len(st) >= 3:
+                antar_start_str = f"{int(st[0]):04d}-{int(st[1]):02d}-{int(st[2]):02d}"
+            elif isinstance(st, (int, float)):
+                st_g = _u.jd_to_gregorian(float(st))
+                antar_start_str = f"{int(st_g[0]):04d}-{int(st_g[1]):02d}-{int(st_g[2]):02d}"
+        if antar_start_str and len(row) >= 3:
+            dur = float(row[2])
+            antar_end_str = (_d.fromisoformat(antar_start_str) + _td(days=int(dur * 365.25))).isoformat()
+    except Exception as _e:
+        print(f"[ashtottari] date extraction: {_e}", flush=True)
     return {
         "maha": lord_name(maha) if maha is not None else None,
         "antara": lord_name(antara) if antara is not None else None,
         "applicable": True,
+        "antaraStart": antar_start_str,
+        "antaraEnd": antar_end_str,
     }
 
 
@@ -1621,11 +1640,26 @@ def all_dashas(req: BirthRequest):
         from jhora.panchanga.drik import Date as DrikDate
         y = yogini.get_dhasa_bhukthi(DrikDate(dt.year, dt.month, dt.day), (dt.hour, dt.minute, dt.second), place)
         cy = y[0] if y and len(y) > 0 else None
+        lords = cy[0] if cy and isinstance(cy[0], (list, tuple)) else None
+        maha_name  = lord_name(lords[0]) if lords and len(lords) > 0 else (str(cy[0]) if cy else None)
+        antar_name = lord_name(lords[1]) if lords and len(lords) > 1 else (str(cy[1]) if cy and len(cy) > 1 else None)
+        # Extract dates: row format = [lords_tuple, start_gregorian_tuple, duration_years]
+        antar_start_str = antar_end_str = None
+        if cy and len(cy) >= 3:
+            try:
+                from datetime import date as _d, timedelta as _td
+                st, dur = cy[1], float(cy[2])
+                if isinstance(st, (list, tuple)) and len(st) >= 3:
+                    antar_start_str = fmt_date(int(st[0]), int(st[1]), int(st[2]))
+                    antar_end_str = (_d(int(st[0]), int(st[1]), int(st[2])) + _td(days=int(dur * 365.25))).isoformat()
+            except Exception as _e:
+                print(f"[yogini] date extraction: {_e}", flush=True)
         result["yogini"] = {
-            "maha": lord_name(cy[0][0]) if cy and len(cy) > 0 and isinstance(cy[0], (list, tuple)) else (str(cy[0]) if cy else None),
-            "antara": lord_name(cy[0][1]) if cy and len(cy) > 0 and len(cy[0]) > 1 and isinstance(cy[0], (list, tuple)) else (str(cy[1]) if cy and len(cy) > 1 else None),
+            "maha": maha_name, "antara": antar_name,
+            "antaraStart": antar_start_str, "antaraEnd": antar_end_str,
         }
-    except Exception:
+    except Exception as e:
+        print(f"[all_dashas] yogini failed: {type(e).__name__}: {e}", flush=True)
         result["yogini"] = None
 
     # Ashtottari Dasha — running period via get_running_dhasa_for_given_date
