@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { 
-  Compass, Orbit, Clock, Sparkles, Gauge, Star, 
-  Heart, Sun, Crosshair, BookOpen, Download, Target,
-  Home, CircleDot, HelpCircle, FileText,
+import {
+  Compass, Orbit, Clock, Sparkles,
+  Sun, Crosshair, BookOpen, Download, Target,
+  Home, CircleDot, FileText,
 } from "lucide-react";
 
 const TABS = [
@@ -19,8 +19,6 @@ const TABS = [
   { id: "special", label: "Special Points", icon: Target, href: "/chart/special", engine: "Special Points" },
   { id: "kp", label: "KP System", icon: Crosshair, href: "/chart/kp", engine: "KP Engine" },
   { id: "varshaphala", label: "Solar Return", icon: Sun, href: "/chart/varshaphala", engine: "Varshaphala" },
-  { id: "compatibility", label: "Compatibility", icon: Heart, href: "/compatibility", engine: "Koota Milan" },
-  { id: "prashna", label: "Prashna", icon: HelpCircle, href: "/prashna", engine: "Horary" },
 ];
 
 const BOTTOM_TABS = [

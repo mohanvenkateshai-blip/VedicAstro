@@ -17,51 +17,37 @@ export function SiteHeader({ signedIn = false }: { signedIn?: boolean }) {
             VedicShastra <span className="text-accent">AI</span>
           </span>
         </Link>
-        <nav aria-label="Main navigation" className="flex items-center gap-2">
-          <Link
-            href="/chart"
-            aria-current={pathname?.startsWith("/chart") ? "page" : undefined}
-            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
-          >
-            Cast Chart
-          </Link>
+        <nav aria-label="Main navigation" className="flex items-center gap-1">
           <Link
             href="/compatibility"
             aria-current={pathname === "/compatibility" ? "page" : undefined}
-            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
+            className="hidden sm:inline px-3 py-2 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
             Compatibility
           </Link>
           <Link
             href="/muhurta"
             aria-current={pathname === "/muhurta" ? "page" : undefined}
-            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
+            className="hidden sm:inline px-3 py-2 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
             Muhūrta
           </Link>
           <Link
             href="/learn/nakshatras"
             aria-current={pathname?.startsWith("/learn") ? "page" : undefined}
-            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
+            className="hidden sm:inline px-3 py-2 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
             Learn
           </Link>
           <Link
-            href="/status"
-            aria-current={pathname === "/status" ? "page" : undefined}
-            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
-          >
-            Status
-          </Link>
-          <Link
             href={signedIn ? "/dashboard" : "/auth/signin"}
             aria-current={pathname === "/dashboard" || pathname === "/auth/signin" ? "page" : undefined}
-            className="hidden sm:inline px-3 py-3 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
+            className="hidden sm:inline px-3 py-2 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
             {signedIn ? "Dashboard" : "Sign in"}
           </Link>
           <ThemeToggle />
-          <ButtonLink href="/chart" variant="primary" className="!px-4 !py-3 text-sm">
+          <ButtonLink href="/chart" variant="primary" className="!px-4 !py-2 text-sm">
             Cast a chart
           </ButtonLink>
         </nav>

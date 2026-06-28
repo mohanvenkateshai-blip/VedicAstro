@@ -26,10 +26,10 @@ export default async function Home() {
               charts. Grounded in the classical texts, never sugar-coated.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <ButtonLink href="/vedicastro" variant="accent">
+              <ButtonLink href="/chart" variant="accent">
                 Cast your chart
               </ButtonLink>
-              <ButtonLink href="/vedicastro" variant="ghost">
+              <ButtonLink href="/chart?name=Mohan&date=1975-04-22&time=19:15&lat=12.2958&lon=76.6394&tz=5.5&place=Mysore" variant="ghost">
                 See a sample
               </ButtonLink>
             </div>
