@@ -494,11 +494,6 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
           style={{ color: t.color }}>
           {t.label}
         </h3>
-        <div className="flex items-center gap-3">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">View from</span>
-          <Toggle label="Moon"      checked={moonOn}  color="#60a5fa" onChange={toggleMoon} />
-          <Toggle label="Ascendant" checked={lagnaOn} color="#f59e0b" onChange={toggleLagna} />
-        </div>
       </div>
 
       {/* Not applicable — full stop, no tree */}
@@ -619,9 +614,16 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                 {chart?.meta?.birth_datetime && (
                   <div className="rounded-xl border p-3.5 mb-3"
                     style={{ borderColor: t.border, backgroundColor: t.bg }}>
-                    <p className="text-[10px] font-mono uppercase tracking-wider mb-3" style={{ color: t.color }}>
-                      {data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} Mahadasha — Full Span Overview
-                    </p>
+                    <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                      <p className="text-[10px] font-mono uppercase tracking-wider" style={{ color: t.color }}>
+                        {data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} Mahadasha — Full Span Overview
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[9px] font-mono uppercase tracking-wider text-text-muted">View from</span>
+                        <Toggle label="Moon"      checked={moonOn}  color="#60a5fa" onChange={toggleMoon} />
+                        <Toggle label="Ascendant" checked={lagnaOn} color="#f59e0b" onChange={toggleLagna} />
+                      </div>
+                    </div>
                     <DashaSeriesChart
                       chart={chart}
                       mahaLord={data.dashaTree[expandedMaha].lord}

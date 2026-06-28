@@ -248,9 +248,9 @@ function PlanetToggles({
                 onClick={() => onToggle(p)}
                 className="text-[10px] font-mono px-2 py-0.5 rounded-full border transition-colors duration-150"
                 style={{
-                  backgroundColor: on ? `${PLANET_COLOR[p]}18` : "transparent",
-                  color: on ? PLANET_COLOR[p] : "var(--color-text-muted)",
-                  borderColor: on ? `${PLANET_COLOR[p]}66` : "var(--color-hairline)",
+                  backgroundColor: on ? `${PLANET_COLOR[p]}22` : "rgba(255,255,255,0.06)",
+                  color: on ? PLANET_COLOR[p] : "var(--color-text-main)",
+                  borderColor: on ? `${PLANET_COLOR[p]}88` : "rgba(255,255,255,0.18)",
                 }}
               >
                 {p}
