@@ -1,0 +1,37 @@
+{
+  "converted": {
+    "Brihat_Parasara_Hora_Sastra_Vol_2.md": {
+      "source_pdf": "BPHS - 2 RSanthanam.pdf",
+      "method": "text",
+      "bytes": 768096
+    },
+    "Bhrigu_Samhita_TMRao.md": {
+      "source_pdf": "Book. Bhrigu Samhita T.M.Rao_text.pdf",
+      "method": "text",
+      "bytes": 411558
+    },
+    "Uttara_Kalamrita.md": {
+      "source_pdf": "Kalidasa_-_Uttara_Kalamrita.pdf",
+      "method": "text",
+      "bytes": 428006
+    },
+    "Laghu_Parashari.md": {
+      "source_pdf": "Laghu Parashari OPVerma.pdf",
+      "method": "text",
+      "bytes": 290463
+    },
+    "Prasna_Marga_Part_2.md": {
+      "source_pdf": "Prasna Marga Part 2 by BV Raman.pdf",
+      "method": "text",
+      "bytes": 559937
+    },
+    "Brihat_Jataka.md": {
+      "source_pdf": "Varaha_Mihira_-_Brihat_Jataka.pdf",
+      "method": "text",
+      "bytes": 339390
+    }
+  },
+  "extracted": {},
+  "manifest_count": 35,
+  "updated_at": "2026-06-28T16:14:25.685787+00:00"
+}

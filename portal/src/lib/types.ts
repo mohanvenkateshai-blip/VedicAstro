@@ -302,6 +302,9 @@ export interface DashaSeriesPoint {
   date: string;
   transit_score: number;
   combined_score: number;
+  lagna_transit_score: number;
+  lagna_combined_score: number;
+  planet_scores: Record<string, number>;
   verdict: "shubh" | "ashubh";
   key_planet: string | null;
   key_note: string | null;
@@ -331,6 +334,8 @@ export interface DashaSeriesData {
     total_months: number;
     peak: { date: string; score: number };
     trough: { date: string; score: number };
+    lagna_peak: { date: string; score: number };
+    lagna_trough: { date: string; score: number };
   };
 }
 

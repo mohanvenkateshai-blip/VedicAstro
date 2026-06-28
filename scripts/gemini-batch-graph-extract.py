@@ -62,11 +62,16 @@ def _client():
 
 
 def _corpus_paths() -> list[Path]:
+    only = os.environ.get("INGEST_ONLY_MD", "").strip()
+    only_md = [x.strip() for x in only.split(",") if x.strip()] or None
     paths: list[Path] = []
     for sub in ("raw", "digests"):
         d = KG / sub
         if d.is_dir():
             paths.extend(sorted(d.glob("*.md")))
+    if only_md:
+        allow = {n if n.endswith(".md") else f"{n}.md" for n in only_md}
+        paths = [p for p in paths if p.name in allow]
     return paths
 
 

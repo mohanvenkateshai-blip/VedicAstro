@@ -260,6 +260,7 @@ def mahadasha_tree(
 
 def dasha_deep_payload(jd: float, place, max_level: int = 5) -> dict:
     """Full /dasha-deep response."""
+    # Running ladder uses get_running_dhasa_for_given_date — fast even at depth 5.
     ladder = running_ladder(jd, place, depth=max_level)
     current_lords = ladder[-1]["lords"] if ladder else []
     deep_path = None
@@ -270,12 +271,17 @@ def dasha_deep_payload(jd: float, place, max_level: int = 5) -> dict:
         if run and len(run) >= 2:
             deep_path = run[1][0]
 
+    # Cap tree at level 3 (Pratyantar). PyJHora's bulk Sookshma/Prana generation
+    # (get_vimsottari_dhasa_bhukthi at depth 4-5) produces ~59K entries and hangs
+    # for certain birth-time configurations near nakshatra boundaries.
+    tree_max = min(max_level, 3)
+
     return {
         "balanceAtBirth": birth_balance(jd, place),
         "current": current_lords,
         "currentLadder": ladder,
         "antardashaTable": antardasha_table(jd, place),
         "dashaTree": mahadasha_tree(
-            jd, place, max_level=max_level, deep_antar_path=deep_path,
+            jd, place, max_level=tree_max, deep_antar_path=deep_path,
         ),
     }

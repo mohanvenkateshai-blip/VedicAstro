@@ -40,11 +40,11 @@ export function SiteHeader({ signedIn = false }: { signedIn?: boolean }) {
             Learn
           </Link>
           <Link
-            href={signedIn ? "/dashboard" : "/auth/signin"}
-            aria-current={pathname === "/dashboard" || pathname === "/auth/signin" ? "page" : undefined}
+            href="/dashboard"
+            aria-current={pathname === "/dashboard" ? "page" : undefined}
             className="hidden sm:inline px-3 py-2 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
-            {signedIn ? "Dashboard" : "Sign in"}
+            Dashboard
           </Link>
           <ThemeToggle />
           <ButtonLink href="/chart" variant="primary" className="!px-4 !py-2 text-sm">

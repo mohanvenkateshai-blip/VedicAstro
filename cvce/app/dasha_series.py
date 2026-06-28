@@ -52,6 +52,7 @@ def build_dasha_series(
     janma_rashi: Optional[str],
     janma_nakshatra: Optional[str],
     natal_sign: Optional[dict],
+    lagna_rashi: Optional[str] = None,
     interval_days: int = 30,
 ) -> dict:
     """
@@ -71,8 +72,9 @@ def build_dasha_series(
 
     analyzer = TransitImpactAnalyzer()
 
-    # Slow planets whose sign changes create notable inflection points
-    SLOW_PLANETS = ("Saturn", "Jupiter", "Rahu", "Ketu", "Mars")
+    # Track sign changes for all planets except Moon — Moon changes sign every
+    # 2-3 days, so monthly sampling produces noisy and misleading Moon entries
+    ALL_PLANETS = ("Sun", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu")
 
     series: list[dict] = []
     events: list[dict] = []
@@ -86,6 +88,7 @@ def build_dasha_series(
                 janma_rashi=janma_rashi,
                 janma_nakshatra=janma_nakshatra,
                 natal_sign=natal_sign,
+                lagna_rashi=lagna_rashi,
             )
             ti = analyzer.analyze(
                 g,
@@ -94,8 +97,10 @@ def build_dasha_series(
                 dasha_antar=antar_lord,
                 dasha_score=dasha_score,
             )
-            transit_score  = ti.overall_score if ti else 0
-            combined_score = dasha_score + transit_score
+            transit_score        = ti.overall_score if ti else 0
+            lagna_transit_score  = g.lagna_overall_score if g else 0
+            combined_score       = dasha_score + transit_score
+            lagna_combined_score = dasha_score + lagna_transit_score
             verdict = "shubh" if combined_score > 0 else "ashubh"
 
             # Key driver for this date (most impactful planet)
@@ -107,19 +112,27 @@ def build_dasha_series(
                 key_planet = dominant.get("planet")
                 key_note   = dominant.get("primary_driver", "")[:80]
 
+            planet_scores = {
+                pred.planet: pred.score
+                for pred in (g.planet_predictions if g else [])
+            }
+
             series.append({
-                "date":           d.isoformat(),
-                "transit_score":  transit_score,
-                "combined_score": combined_score,
-                "verdict":        verdict,
-                "key_planet":     key_planet,
-                "key_note":       key_note,
+                "date":                d.isoformat(),
+                "transit_score":       transit_score,
+                "combined_score":      combined_score,
+                "lagna_transit_score": lagna_transit_score,
+                "lagna_combined_score": lagna_combined_score,
+                "planet_scores":       planet_scores,
+                "verdict":             verdict,
+                "key_planet":          key_planet,
+                "key_note":            key_note,
             })
 
-            # Detect sign changes in slow planets → inflection events
+            # Detect sign changes across all planets → visible events
             if g and g.planet_predictions:
                 for pred in g.planet_predictions:
-                    if pred.planet not in SLOW_PLANETS:
+                    if pred.planet not in ALL_PLANETS:
                         continue
                     rashi_now = pred.rashi
                     rashi_prev = prev_rashis.get(pred.planet)
@@ -148,11 +161,13 @@ def build_dasha_series(
             "dasha_score": dasha_score, "series": [], "events": [], "stats": {},
         }
 
-    scores = [s["combined_score"] for s in series]
     peak   = max(series, key=lambda s: s["combined_score"])
     trough = min(series, key=lambda s: s["combined_score"])
     shubh_count  = sum(1 for s in series if s["combined_score"] > 0)
     ashubh_count = len(series) - shubh_count
+
+    lagna_peak   = max(series, key=lambda s: s["lagna_combined_score"])
+    lagna_trough = min(series, key=lambda s: s["lagna_combined_score"])
 
     return {
         "maha_lord":    maha_lord,
@@ -164,7 +179,9 @@ def build_dasha_series(
             "shubh_months":  shubh_count,
             "ashubh_months": ashubh_count,
             "total_months":  len(series),
-            "peak":   {"date": peak["date"],   "score": peak["combined_score"]},
-            "trough": {"date": trough["date"], "score": trough["combined_score"]},
+            "peak":          {"date": peak["date"],         "score": peak["combined_score"]},
+            "trough":        {"date": trough["date"],       "score": trough["combined_score"]},
+            "lagna_peak":    {"date": lagna_peak["date"],   "score": lagna_peak["lagna_combined_score"]},
+            "lagna_trough":  {"date": lagna_trough["date"], "score": lagna_trough["lagna_combined_score"]},
         },
     }

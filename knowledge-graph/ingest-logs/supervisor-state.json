@@ -1,0 +1,13 @@
+{
+  "started_at": "2026-06-28T16:39:08.174640+00:00",
+  "phases": {
+    "deepseek_text": "running",
+    "marker_ocr": "pending",
+    "deepseek_ocr": "pending",
+    "gemini_batch": "pending",
+    "merge": "pending"
+  },
+  "pids": {},
+  "logs": {},
+  "updated_at": "2026-06-28T16:41:12.225008+00:00"
+}

@@ -71,12 +71,20 @@ function VerdictBadge({
 
 function AntardashaPanel({
   node,
+  level,
   mahaLord,
+  antarLord,
   chart,
+  moonOn,
+  lagnaOn,
 }: {
   node: DashaNode;
+  level: number;
   mahaLord: string;
+  antarLord: string;
   chart?: ChartData;
+  moonOn: boolean;
+  lagnaOn: boolean;
 }) {
   const pred = node.prediction;
   const domains = pred
@@ -110,11 +118,20 @@ function AntardashaPanel({
       {canShowChart && (
         <DashaSeriesChart
           chart={chart!}
-          mahaLord={mahaLord}
-          antarLord={node.lord}
+          mahaLord={level === 1 ? node.lord : mahaLord}
+          antarLord={level === 1 ? node.lord : level === 2 ? node.lord : antarLord}
           startDate={node.start.slice(0, 10)}
           endDate={(node.end ?? node.start).slice(0, 10)}
-          dashaScore={pred?.dasha_score ?? 0}
+          dashaScore={node.score ?? pred?.dasha_score ?? 0}
+          title={
+            level === 1
+              ? `Auspiciousness — ${node.lord} Mahadasha`
+              : level === 2
+                ? `Auspiciousness — ${mahaLord} Maha / ${node.lord} Antar`
+                : `Auspiciousness — ${antarLord} Antar / ${node.lord} Pratyantar`
+          }
+          moonOn={moonOn}
+          lagnaOn={lagnaOn}
         />
       )}
 
@@ -469,7 +486,10 @@ function DashaLevel({
   current,
   currentDepth,
   mahaLord,
+  antarLord,
   chart,
+  moonOn = true,
+  lagnaOn = false,
 }: {
   nodes: DashaNode[];
   level: number;
@@ -479,7 +499,10 @@ function DashaLevel({
   current: string[];
   currentDepth: number;
   mahaLord?: string;
+  antarLord?: string;
   chart?: ChartData;
+  moonOn?: boolean;
+  lagnaOn?: boolean;
 }) {
   if (!nodes || nodes.length === 0) return null;
 
@@ -548,11 +571,15 @@ function DashaLevel({
                 onToggle={onToggle}
               />
               <AnimatePresence>
-                {isExpanded && level === 2 && (
+                {isExpanded && level >= 2 && level <= 3 && (
                   <AntardashaPanel
                     node={node}
+                    level={level}
                     mahaLord={effectiveMahaLord ?? ""}
+                    antarLord={antarLord ?? ""}
                     chart={chart}
+                    moonOn={moonOn}
+                    lagnaOn={lagnaOn}
                   />
                 )}
               </AnimatePresence>
@@ -566,7 +593,10 @@ function DashaLevel({
                   current={current}
                   currentDepth={currentDepth + 1}
                   mahaLord={effectiveMahaLord}
+                  antarLord={level === 2 ? node.lord : antarLord}
                   chart={chart}
+                  moonOn={moonOn}
+                  lagnaOn={lagnaOn}
                 />
               )}
             </div>
@@ -584,6 +614,11 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
   const [loading, setLoading] = useState(() => !externalData && !!chart?.meta?.birth_datetime);
   const [error, setError] = useState<string | null>(null);
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
+  const [moonOn, setMoonOn] = useState(true);
+  const [lagnaOn, setLagnaOn] = useState(false);
+
+  function toggleMoon(v: boolean) { if (!v && !lagnaOn) return; setMoonOn(v); }
+  function toggleLagna(v: boolean) { if (!v && !moonOn) return; setLagnaOn(v); }
 
   const data = externalData ?? fetchedData;
   const mahadashas = data?.dashaTree ?? [];
@@ -724,6 +759,45 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
 
       {ladder.length > 0 ? <CurrentLadder ladder={ladder} /> : null}
 
+      {/* ── Moon / Lagna transit perspective toggles ────────────────────── */}
+      <div className="flex items-center gap-4 py-1">
+        <span className="text-[9px] font-mono uppercase tracking-widest text-text-muted" title="Total transit score of all 9 planets, evaluated from this reference point">View from</span>
+
+        {/* Moon toggle */}
+        <label className="flex items-center gap-1.5 cursor-pointer select-none">
+          <input type="checkbox" className="sr-only" checked={moonOn} onChange={(e) => toggleMoon(e.target.checked)} />
+          <span
+            className="relative inline-flex w-7 h-[14px] rounded-full transition-colors duration-200"
+            style={{ backgroundColor: moonOn ? "#60a5fa" : "var(--color-hairline)" }}
+          >
+            <span
+              className="absolute top-[2px] w-[10px] h-[10px] rounded-full bg-white transition-transform duration-200"
+              style={{ transform: moonOn ? "translateX(14px)" : "translateX(2px)" }}
+            />
+          </span>
+          <span className="text-[10px] font-mono transition-colors" style={{ color: moonOn ? "#60a5fa" : "var(--color-text-muted)" }}>
+            Moon
+          </span>
+        </label>
+
+        {/* Lagna toggle */}
+        <label className="flex items-center gap-1.5 cursor-pointer select-none">
+          <input type="checkbox" className="sr-only" checked={lagnaOn} onChange={(e) => toggleLagna(e.target.checked)} />
+          <span
+            className="relative inline-flex w-7 h-[14px] rounded-full transition-colors duration-200"
+            style={{ backgroundColor: lagnaOn ? "#f59e0b" : "var(--color-hairline)" }}
+          >
+            <span
+              className="absolute top-[2px] w-[10px] h-[10px] rounded-full bg-white transition-transform duration-200"
+              style={{ transform: lagnaOn ? "translateX(14px)" : "translateX(2px)" }}
+            />
+          </span>
+          <span className="text-[10px] font-mono transition-colors" style={{ color: lagnaOn ? "#f59e0b" : "var(--color-text-muted)" }}>
+            Ascendant
+          </span>
+        </label>
+      </div>
+
       {/* ── Mahadasha timeline ─────────────────────────────────────────── */}
       <div className="overflow-x-auto -mx-1 px-1 pb-1">
         <div className="flex gap-2 min-w-min">
@@ -758,18 +832,39 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
             const mahadasha = mahadashas[idx];
             if (!mahadasha) return null;
 
+            // Chips already show the Mahadasha row, so start DashaLevel at
+            // level=2 (Antardasha) with parentPath=the real mahadasha index.
+            // This keeps paths consistent: antardasha paths are "4-0", "4-1", …
+            // matching what buildCurrentPaths and toggleNode produce.
             return (
               <div key={path}>
-                <DashaLevel
-                  nodes={[mahadasha]}
+                {/* Mahadasha-level chart — shown directly, not via DashaLevel */}
+                <AntardashaPanel
+                  node={mahadasha}
                   level={1}
-                  parentPath=""
-                  expanded={expandedPaths}
-                  onToggle={toggleNode}
-                  current={current}
-                  currentDepth={0}
+                  mahaLord={mahadasha.lord}
+                  antarLord={mahadasha.lord}
                   chart={chart}
+                  moonOn={moonOn}
+                  lagnaOn={lagnaOn}
                 />
+
+                {/* Antardasha children */}
+                {mahadasha.subPeriods.length > 0 && (
+                  <DashaLevel
+                    nodes={mahadasha.subPeriods}
+                    level={2}
+                    parentPath={path}
+                    expanded={expandedPaths}
+                    onToggle={toggleNode}
+                    current={current}
+                    currentDepth={1}
+                    mahaLord={mahadasha.lord}
+                    chart={chart}
+                    moonOn={moonOn}
+                    lagnaOn={lagnaOn}
+                  />
+                )}
               </div>
             );
           })}

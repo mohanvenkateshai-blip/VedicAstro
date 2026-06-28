@@ -47,6 +47,9 @@ class TransitPrediction:
     latta: Optional[dict] = None  # {kicked_nak, hits_janma, effect, mitigated}
     natal_override: Optional[str] = None  # exaltation/debilitation override
     score: int = 0  # -10 to +10
+    # Lagna-based parallel scoring (same house-quality tables, different reference)
+    house_from_lagna: Optional[int] = None
+    lagna_score: int = 0
 
 
 @dataclass
@@ -63,13 +66,15 @@ class GocharResult:
     tara_balam: Optional[dict] = None
     overall_verdict: str = "neutral"
     overall_score: int = 0
+    lagna_overall_score: int = 0   # parallel score computed from Lagna reference
     synthesis: str = ""
 
 
 def compute_gochar(date_str: str = None, time_str: str = "12:00",
                     lat: float = 12.30, lon: float = 76.65, tz: float = 5.5,
                     janma_rashi: str = None, janma_nakshatra: str = None,
-                    natal_sign: dict = None) -> GocharResult:
+                    natal_sign: dict = None,
+                    lagna_rashi: str = None) -> GocharResult:
     """Compute transit (gochar) predictions for a given date and optional natal chart.
 
     Args:
@@ -85,6 +90,7 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
 
     j_rashi_idx = RASHIS.index(janma_rashi) if janma_rashi and janma_rashi in RASHIS else None
     j_nak_idx = NAKSHATRAS.index(janma_nakshatra) if janma_nakshatra and janma_nakshatra in NAKSHATRAS else None
+    l_rashi_idx = RASHIS.index(lagna_rashi) if lagna_rashi and lagna_rashi in RASHIS else None
 
     results = GocharResult(
         date=panch.date,
@@ -233,6 +239,26 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             if pred.combustion and pred.combustion["is_combust"]:
                 pred.effects.append(f"Combust — within {pred.combustion['diff_deg']}° of Sun")
 
+        # Lagna-based house scoring — same house-quality tables, Lagna as house 1.
+        # Vedha, Sade-Sati, Tara Balam are Moon-centric; not applied here.
+        if l_rashi_idx is not None:
+            planet_rashi_idx = rashi_index(row["lon"])
+            l_house = ((planet_rashi_idx - l_rashi_idx + 12) % 12) + 1
+            pred.house_from_lagna = l_house
+            graph_rules = active_transit_rules()
+            if graph_rules is not None:
+                _, _, pred.lagna_score = graph_rules.house_quality(planet, l_house)
+            else:
+                rules = TRANSIT_HOUSES.get(planet, {})
+                if l_house in rules.get("worst", []):
+                    pred.lagna_score = -10
+                elif l_house in rules.get("bad", []):
+                    pred.lagna_score = -5
+                elif l_house in rules.get("good", []):
+                    pred.lagna_score = 7
+                else:
+                    pred.lagna_score = 0
+
         results.planet_predictions.append(pred)
 
     # Moorthy Nirnaya (if Janma Rashi known)
@@ -310,6 +336,12 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
         results.overall_verdict = "neutral"
     else:
         results.overall_verdict = "ashubh"
+
+    # Lagna-based overall score — pure planet house scores from Lagna (no Moon modifiers)
+    if l_rashi_idx is not None:
+        results.lagna_overall_score = sum(
+            p.lagna_score for p in results.planet_predictions
+        )
 
     # Synthesis
     good = [p for p in results.planet_predictions if p.verdict == "shubh"]

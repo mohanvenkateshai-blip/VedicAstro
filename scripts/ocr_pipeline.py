@@ -321,8 +321,8 @@ def main():
                         help="Directory containing source PDFs")
     parser.add_argument("--output-dir", type=str, default="/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/extracted_markdown",
                         help="Directory to save output markdown files")
-    parser.add_argument("--lang", type=str, default="eng+san",
-                        help="Tesseract languages to use (e.g. 'eng', 'eng+san', 'eng+hin')")
+    parser.add_argument("--lang", type=str, default="eng",
+                        help="Tesseract languages (default: eng for English+IAST books)")
     parser.add_argument("--allow-bypass", action="store_true",
                         help="Allow digital text extraction bypass (not recommended for scanned files)")
     parser.add_argument("--workers", type=int, default=None,

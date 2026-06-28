@@ -10,10 +10,25 @@
       "sha256": "3cfdc42151d2d5e0",
       "path": "raw/Ashtakavarga_System_Comprehensive_Handbook.md"
     },
+    "Bhrigu_Samhita_TMRao.md": {
+      "bytes": 411558,
+      "sha256": "57defd9554b6860d",
+      "path": "raw/Bhrigu_Samhita_TMRao.md"
+    },
+    "Brihat_Jataka.md": {
+      "bytes": 339390,
+      "sha256": "6565dbe4b1075e1a",
+      "path": "raw/Brihat_Jataka.md"
+    },
     "Brihat_Parasara_Hora_Sastra_Vol_1.md": {
       "bytes": 1373469,
       "sha256": "5b9d52391c5a44b7",
       "path": "raw/Brihat_Parasara_Hora_Sastra_Vol_1.md"
+    },
+    "Brihat_Parasara_Hora_Sastra_Vol_2.md": {
+      "bytes": 768096,
+      "sha256": "1570742b533d6fca",
+      "path": "raw/Brihat_Parasara_Hora_Sastra_Vol_2.md"
     },
     "Do_Ghati_Muhurta_Comprehensive_Handbook.md": {
       "bytes": 26937,
@@ -50,6 +65,11 @@
       "sha256": "4b5a10702aae584b",
       "path": "raw/Jyotish_Yoga_Handbook_101.md"
     },
+    "Laghu_Parashari.md": {
+      "bytes": 290463,
+      "sha256": "a915ada1c6d27116",
+      "path": "raw/Laghu_Parashari.md"
+    },
     "Panchang_analysis_medhraj.md": {
       "bytes": 3700,
       "sha256": "98e934de22033130",
@@ -64,6 +84,11 @@
       "bytes": 475064,
       "sha256": "e9b48af42e5c1be7",
       "path": "raw/Phaladeepika_Mantreswara.md"
+    },
+    "Prasna_Marga_Part_2.md": {
+      "bytes": 559937,
+      "sha256": "8d5f5195c2e9d3bc",
+      "path": "raw/Prasna_Marga_Part_2.md"
     },
     "Predict_Effectively_Through_Yogini_Dasha.md": {
       "bytes": 101675,
@@ -110,6 +135,11 @@
       "sha256": "420993420262f840",
       "path": "raw/To build an automated yoga and Muhurta computing engine.md"
     },
+    "Uttara_Kalamrita.md": {
+      "bytes": 428006,
+      "sha256": "a03cada468a470ed",
+      "path": "raw/Uttara_Kalamrita.md"
+    },
     "Vedic_Astrology_Panchang_Handbook.md": {
       "bytes": 6394,
       "sha256": "bc08697afbe75775",
@@ -146,5 +176,5 @@
       "path": "raw/vedic_yoga_logic_engine.md"
     }
   },
-  "count": 29
+  "count": 35
 }

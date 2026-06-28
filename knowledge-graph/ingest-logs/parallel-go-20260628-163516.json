@@ -1,0 +1,29 @@
+{
+  "started_at": "2026-06-28T16:35:16.948410+00:00",
+  "lanes": [
+    {
+      "name": "deepseek",
+      "pid": 76475,
+      "log": "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/lane-a-deepseek-20260628-163516.log"
+    },
+    {
+      "name": "marker",
+      "pid": 76476,
+      "log": "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/lane-b-marker-20260628-163516.log"
+    }
+  ],
+  "text_books": [
+    "Brihat_Jataka.md",
+    "Brihat_Parasara_Hora_Sastra_Vol_2.md",
+    "Bhrigu_Samhita_TMRao.md",
+    "Laghu_Parashari.md",
+    "Prasna_Marga_Part_2.md",
+    "Uttara_Kalamrita.md"
+  ],
+  "ocr_priority": [
+    "2015.312156.Jataka-Parijata.pdf",
+    "saravaliofkalyan01kalyuoft.pdf",
+    "Vedanga Jyotisa Lagadha -  Kupanna Sastry , K.V.Sarma.pdf",
+    "Panangadu_Nambudhiri_-_Prasna_Marga_(Part_I).pdf"
+  ]
+}

@@ -1077,6 +1077,7 @@ def dasha_series(req: DashaSeriesRequest):
     janma_rashi      = moon.get("rashi")      if moon else None
     janma_nakshatra  = moon.get("nakshatra")  if moon else None
     natal_sign       = geometry.get("natalSign")
+    lagna_rashi      = (geometry.get("lagna") or {}).get("rashi")
 
     return build_dasha_series(
         maha_lord=req.maha_lord,
@@ -1090,8 +1091,86 @@ def dasha_series(req: DashaSeriesRequest):
         janma_rashi=janma_rashi,
         janma_nakshatra=janma_nakshatra,
         natal_sign=natal_sign,
+        lagna_rashi=lagna_rashi,
         interval_days=max(14, min(90, req.interval_days)),
     )
+
+
+class GocharRequest(BirthRequest):
+    query_date: Optional[str] = None
+    query_time: str = "12:00"
+
+
+@app.post("/gochar")
+def gochar_endpoint(req: GocharRequest):
+    """
+    Full Gochar (transit) interpretation for a given date against the natal chart.
+
+    Returns per-planet house positions from natal Moon and Lagna, quality ratings,
+    scores, effects, and any active special transits (Sade Sati, Ashtama Shani, etc.).
+    """
+    from app.chart import build_chart_geometry
+    from vedic_engine.prediction.gochar import compute_gochar
+    from datetime import datetime as _dt
+
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+
+    geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
+    planets_data = geometry.get("planets") or []
+    moon = next((p for p in planets_data if p.get("planet") == "Moon"), None)
+    janma_rashi     = moon.get("rashi")     if moon else None
+    janma_nakshatra = moon.get("nakshatra") if moon else None
+    natal_sign      = geometry.get("natalSign")
+    lagna_rashi     = (geometry.get("lagna") or {}).get("rashi")
+
+    query_date = req.query_date or _dt.now().strftime("%Y-%m-%d")
+
+    g = compute_gochar(
+        date_str=query_date,
+        time_str=req.query_time,
+        lat=req.birth_lat, lon=req.birth_lon, tz=req.birth_tz,
+        janma_rashi=janma_rashi,
+        janma_nakshatra=janma_nakshatra,
+        natal_sign=natal_sign,
+        lagna_rashi=lagna_rashi,
+    )
+
+    return {
+        "date":                query_date,
+        "janma_rashi":         janma_rashi,
+        "janma_nakshatra":     janma_nakshatra,
+        "lagna_rashi":         lagna_rashi,
+        "overall_score":       g.overall_score,
+        "overall_verdict":     g.overall_verdict,
+        "lagna_overall_score": g.lagna_overall_score,
+        "synthesis":           g.synthesis,
+        "moorthy":             g.moorthy,
+        "sade_sati":           g.sade_sati,
+        "ashtama_shani":       g.ashtama_shani,
+        "kantaka_shani":       g.kantaka_shani,
+        "tara_balam":          g.tara_balam,
+        "planets": [
+            {
+                "planet":                  p.planet,
+                "rashi":                   p.rashi,
+                "nakshatra":               p.nakshatra,
+                "retrograde":              p.retrograde,
+                "house_from_janma":        p.house_from_janma,
+                "house_from_lagna":        p.house_from_lagna,
+                "verdict":                 p.verdict,
+                "house_quality":           p.house_quality,
+                "score":                   p.score,
+                "lagna_score":             p.lagna_score,
+                "effects":                 p.effects[:2],
+                "vedha_active":            p.vedha_active,
+                "vedha_by":                p.vedha_by,
+                "vipareetha_vedha_active": p.vipareetha_vedha_active,
+            }
+            for p in g.planet_predictions
+        ],
+    }
 
 
 class ReportFactsRequest(BirthRequest):
@@ -1649,6 +1728,96 @@ def varshaphala(req: BirthRequest):
             "note": "Muntha = progressed Lagna (1 sign per year). Its lord gives the annual theme.",
         },
     }
+
+
+# ── Place search — backed by PyJHora's GeoNames dataset ─────────────────────
+
+def _load_places_db() -> list[tuple[str, str, str, str, float, float, float]]:
+    """Load GeoNames CSVs from PyJHora installation. Returns list of
+    (place_name, alternate_names_lower, state, country, lat, lon, tz)."""
+    import csv
+    import pathlib
+    import jhora as _jhora
+
+    data_dir = pathlib.Path(_jhora.__file__).parent / "data"
+    rows: list[tuple] = []
+
+    for fname in ("geonames_places_5k_IN.csv", "geonames_places_5k.csv"):
+        fpath = data_dir / fname
+        if not fpath.exists():
+            continue
+        with open(fpath, newline="", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                try:
+                    rows.append((
+                        row["place_name"],
+                        (row["alternate_names"] or "").lower(),
+                        row.get("state", ""),
+                        row.get("country", ""),
+                        float(row["latitude"]),
+                        float(row["longitude"]),
+                        float(row["timezone_hours"]),
+                    ))
+                except (KeyError, ValueError):
+                    continue
+    return rows
+
+_places_cache: list | None = None
+
+def _get_places() -> list:
+    global _places_cache
+    if _places_cache is None:
+        _places_cache = _load_places_db()
+    return _places_cache
+
+
+@app.get("/places")
+def search_places(q: str = ""):
+    """Search GeoNames city database. Returns top 8 matches with lat/lon/tz.
+    Searches place_name and alternate_names (transliterations included)."""
+    q = q.strip()
+    if len(q) < 2:
+        return {"results": []}
+
+    ql = q.lower()
+    places = _get_places()
+    results = []
+    seen: set[str] = set()
+
+    # Pass 1: exact prefix on place_name (highest priority)
+    # Pass 2: prefix in alternate_names
+    # Pass 3: substring in place_name
+    for mode in ("prefix_name", "prefix_alt", "substr_name"):
+        if len(results) >= 6:
+            break
+        for name, alts, state, country, lat, lon, tz in places:
+            if len(results) >= 6:
+                break
+            key = f"{name}|{state}|{country}"
+            if key in seen:
+                continue
+            nl = name.lower()
+            if mode == "prefix_name":
+                match = nl.startswith(ql)
+            elif mode == "prefix_alt":
+                match = any(a.startswith(ql) for a in alts.split("|") if a)
+            else:
+                match = ql in nl
+            if match:
+                seen.add(key)
+                label_parts = [p for p in [name, state, country] if p]
+                results.append({
+                    "name": name,
+                    "label": ", ".join(label_parts),
+                    "state": state,
+                    "country": country,
+                    "lat": round(lat, 4),
+                    "lon": round(lon, 4),
+                    "tz": tz,
+                })
+
+    return {"results": results}
 
 
 if __name__ == "__main__":
