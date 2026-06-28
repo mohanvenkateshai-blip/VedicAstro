@@ -337,15 +337,37 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
       </div>
 
       {/* Not applicable — full stop, no tree */}
-      {data && !data.applicable && (
-        <div className="rounded-xl border p-4 space-y-1.5"
+      {data && data.applicable === false && (
+        <div className="rounded-xl border p-4 space-y-3"
           style={{ borderColor: "rgba(239,68,68,0.3)", backgroundColor: "rgba(239,68,68,0.06)" }}>
-          <p className="text-[11px] font-mono font-semibold" style={{ color: "#f87171" }}>
-            Not Applicable — BPHS (Parasara)
+          <p className="text-[11px] font-mono font-semibold tracking-wide" style={{ color: "#f87171" }}>
+            Not Applicable for this chart — BPHS (Parasara)
           </p>
-          <p className="text-[11px] leading-relaxed text-text-muted">
-            {data.applicabilityNote}
-          </p>
+          <div className="space-y-2">
+            <p className="text-[11px] font-mono text-text-muted leading-relaxed">
+              Ashtottari Dasha is a conditional system. BPHS requires{" "}
+              <span className="text-text-main">both</span> conditions at birth:
+            </p>
+            <ul className="space-y-1.5 pl-3">
+              <li className="text-[11px] leading-snug text-text-muted flex gap-2">
+                <span style={{ color: "#f87171" }}>1.</span>
+                <span>Rahu must be in a Kendra (1st, 4th, 7th, 10th) or Trikona (5th, 9th) from the Lagna Lord — but <em>not</em> in the Lagna itself</span>
+              </li>
+              <li className="text-[11px] leading-snug text-text-muted flex gap-2">
+                <span style={{ color: "#f87171" }}>2.</span>
+                <span>Daytime birth during Krishna Paksha (waning Moon), <em>or</em> nighttime birth during Shukla Paksha (waxing Moon)</span>
+              </li>
+            </ul>
+            {data.applicabilityNote && (
+              <p className="text-[11px] font-mono leading-relaxed mt-1 pt-2 border-t"
+                style={{ color: "#f87171", borderColor: "rgba(239,68,68,0.2)" }}>
+                This chart: {data.applicabilityNote.replace("Ashtottari Dasha does not apply to this chart per BPHS (Parasara). Both conditions must be satisfied: (1) Rahu in kendra/trikona from Lagna Lord, not in Lagna; and (2) daytime birth during Krishna Paksha or nighttime birth during Shukla Paksha. Failed: ", "")}
+              </p>
+            )}
+            <p className="text-[10px] text-text-muted font-mono pt-1">
+              Note: Applicability is determined once from the birth chart and holds for the native&apos;s entire life — it is not period-specific.
+            </p>
+          </div>
         </div>
       )}
 

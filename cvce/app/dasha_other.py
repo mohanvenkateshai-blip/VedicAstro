@@ -247,9 +247,11 @@ def yogini_deep_payload(jd: float, place, dt) -> dict:
     tree, ladder = _build_tree_and_ladder(flat)
     tree, ladder = _enrich_yogini(tree, ladder)
     return {
-        "system":        "yogini",
-        "currentLadder": ladder,
-        "dashaTree":     tree,
+        "system":            "yogini",
+        "applicable":        True,   # Yogini has no conditional applicability — applies universally
+        "applicabilityNote": None,
+        "currentLadder":     ladder,
+        "dashaTree":         tree,
     }
 
 
