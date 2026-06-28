@@ -889,6 +889,26 @@ def chart_svg_endpoint(req: SvgRequest):
 # Phase 3: Deep dasha, special points, koota matching
 # =====================================================================
 
+@app.post("/dasha-deep-yogini")
+def dasha_deep_yogini(req: BirthRequest):
+    """Yogini Mahadasha tree with running ladder."""
+    from app.dasha_other import yogini_deep_payload
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+    return yogini_deep_payload(jd, place, dt)
+
+
+@app.post("/dasha-deep-ashtottari")
+def dasha_deep_ashtottari(req: BirthRequest):
+    """Ashtottari Mahadasha tree with running ladder. Always computed; applicability shown as note."""
+    from app.dasha_other import ashtottari_deep_payload
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+    return ashtottari_deep_payload(jd, place)
+
+
 @app.post("/dasha-deep")
 def dasha_deep(req: BirthRequest):
     """Vimshottari to 5 levels + shubh/ashubh verdict on Maha and Antar nodes."""
