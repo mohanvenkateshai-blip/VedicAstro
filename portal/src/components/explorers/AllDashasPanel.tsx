@@ -12,6 +12,7 @@ import { DashaSeriesChart } from "./DashaSeriesChart";
 interface LadderRow {
   levelLabel: string;
   lord: string;
+  yoginiName?: string;
   start?: string | null;
   end?: string | null;
 }
@@ -19,6 +20,7 @@ interface LadderRow {
 interface TreeNode {
   level: number;
   lord: string;
+  yoginiName?: string;   // Yogini deity name (Mangala, Pingala, etc.)
   start: string;
   end: string;
   durationYears: number;
@@ -103,12 +105,15 @@ function Toggle({ label, checked, color, onChange }: {
 
 // ── Mahadasha chip (same style as DashaDeepTree) ──────────────────────────
 
-function MahaChip({ lord, start, durationYears, isCurrent, isExpanded, color, border, bg, onClick }: {
-  lord: string; start: string; durationYears: number;
+function MahaChip({ lord, yoginiName, start, durationYears, isCurrent, isExpanded, color, border, bg, onClick }: {
+  lord: string; yoginiName?: string; start: string; durationYears: number;
   isCurrent: boolean; isExpanded: boolean;
   color: string; border: string; bg: string;
   onClick: () => void;
 }) {
+  const primary   = yoginiName ?? lord;
+  const secondary = yoginiName ? `(${lord})` : null;
+
   return (
     <button
       onClick={onClick}
@@ -116,12 +121,16 @@ function MahaChip({ lord, start, durationYears, isCurrent, isExpanded, color, bo
       style={{
         backgroundColor: isCurrent ? bg : isExpanded ? `${bg}` : "transparent",
         borderColor:     isCurrent ? color : isExpanded ? border : "var(--color-hairline)",
-        opacity: 1,
       }}
     >
       <span className="text-xs font-mono font-semibold" style={{ color: isCurrent ? color : "var(--color-text-main)" }}>
-        {lord}
+        {primary}
       </span>
+      {secondary && (
+        <span className="text-[9px] font-mono" style={{ color: isCurrent ? color : "var(--color-text-muted)", opacity: 0.7 }}>
+          {secondary}
+        </span>
+      )}
       <span className="text-[10px] font-mono" style={{ color: isCurrent ? color : "var(--color-text-muted)" }}>
         {yearFrom(start)} · {fmtDuration(durationYears)}
       </span>
@@ -146,6 +155,7 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
   onClick: () => void;
 }) {
   const canChart = !!(chart?.meta?.birth_datetime && node.start && node.end);
+  const displayName = node.yoginiName ? `${node.yoginiName} (${node.lord})` : node.lord;
 
   return (
     <div className="mb-1">
@@ -160,7 +170,7 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
             <span className="text-sm font-medium" style={{ color: isCurrent ? color : "var(--color-text-main)" }}>
-              {node.lord}
+              {displayName}
             </span>
             {isCurrent && (
               <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-md leading-none"
@@ -311,7 +321,9 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                     style={{ color: t.color, opacity: 0.7 }}>
                     {row.levelLabel}
                   </span>
-                  <span className="text-sm font-semibold" style={{ color: t.color }}>{row.lord}</span>
+                  <span className="text-sm font-semibold" style={{ color: t.color }}>
+                    {row.yoginiName ? `${row.yoginiName} (${row.lord})` : row.lord}
+                  </span>
                   {row.start && row.end && (
                     <span className="text-[11px] font-mono tabular-nums text-text-muted">
                       {row.start.slice(0,10)} → {row.end.slice(0,10)}
@@ -330,9 +342,10 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                   <MahaChip
                     key={i}
                     lord={node.lord}
+                    yoginiName={node.yoginiName}
                     start={node.start}
                     durationYears={node.durationYears}
-                    isCurrent={node.lord === runningMaha}
+                    isCurrent={node.lord === runningMaha && node.start === data.currentLadder[0]?.start}
                     isExpanded={expandedMaha === i}
                     color={t.color}
                     border={t.border}
