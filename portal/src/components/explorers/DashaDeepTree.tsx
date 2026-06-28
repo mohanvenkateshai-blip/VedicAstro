@@ -446,7 +446,7 @@ function DashaLevel({
 
 export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps) {
   const [fetchedData, setFetchedData] = useState<DashaDeepData | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(() => !externalData && !!chart?.meta?.birth_datetime);
   const [error, setError] = useState<string | null>(null);
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 

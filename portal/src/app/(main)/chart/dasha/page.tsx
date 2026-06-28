@@ -4,9 +4,8 @@ import { Card } from "@/components/ui/Card";
 import { DashaDeepTree } from "@/components/explorers/DashaDeepTree";
 import { AllDashasPanel } from "@/components/explorers/AllDashasPanel";
 
-// Allow 30 s for the server-side getDashaDeep call (CVCE warm = ~5 s,
-// cold start = up to 20 s; on abort the component falls back to client fetch).
-export const maxDuration = 30;
+// Allow 60s for SSR dasha-deep (optimized engine ~3–8s warm).
+export const maxDuration = 60;
 
 type SP = Record<string, string | string[] | undefined>;
 
@@ -17,8 +16,7 @@ export default async function DashaPage({
 }) {
   const { chart, birth, error } = await loadChartFromSearchParams(await searchParams);
 
-  // Prefetch the expensive 5-level dasha tree server-side so it arrives with
-  // the page — avoids the Vercel function timeout that kills client-side fetches.
+  // Prefetch dasha tree server-side — single request, cached 24h per birth.
   const dashaDeep = chart
     ? await getDashaDeep(birth).catch(() => null)
     : null;

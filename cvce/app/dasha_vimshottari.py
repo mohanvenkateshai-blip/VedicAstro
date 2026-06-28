@@ -120,32 +120,58 @@ def antardasha_table(jd: float, place) -> list[dict]:
     return rows
 
 
-def _build_children(
-    path: tuple,
-    start_t,
-    end_t,
-    jd: float,
-    place,
-    level: int,
+def _period_end(start_t, years: float):
+    """Gregorian end tuple from start tuple + duration in years."""
+    from jhora import const, utils
+    from jhora.panchanga import drik
+
+    y, m, d = int(start_t[0]), int(start_t[1]), int(start_t[2])
+    fh = float(start_t[3]) if len(start_t) > 3 else 0.0
+    start_jd = utils.julian_day_number(drik.Date(y, m, d), (fh, 0, 0))
+    end_jd = start_jd + float(years) * const.sidereal_year
+    return utils.jd_to_gregorian(end_jd)
+
+
+_DEPTH_FOR_LEVEL = {
+    3: const.MAHA_DHASA_DEPTH.PRATYANTARA,
+    4: const.MAHA_DHASA_DEPTH.SOOKSHMA,
+    5: const.MAHA_DHASA_DEPTH.PRANA,
+}
+
+
+def _subtree_from_flat(
+    flat_periods: list,
+    prefix: tuple,
+    child_level: int,
     max_level: int,
 ) -> list[dict]:
-    if level >= max_level:
+    """Build nested nodes from one bulk get_vimsottari_dhasa_bhukthi() slice."""
+    if child_level > max_level:
         return []
-    children = vimsottari.vimsottari_immediate_children(
-        path, start_t, parent_end=end_t, jd=jd, place=place,
-    )
+
+    groups: dict[tuple, tuple] = {}
+    for p in flat_periods:
+        lords, start_t, dur = p[0], p[1], p[2]
+        if len(lords) < child_level:
+            continue
+        if lords[: len(prefix)] != prefix:
+            continue
+        key = lords[:child_level]
+        if key not in groups or start_t < groups[key][0]:
+            groups[key] = (start_t, dur, lords)
+
     nodes = []
-    for child in children:
-        child_path, c_start, c_end = child[0], child[1], child[2]
-        child_lord = child_path[-1]
+    for key in sorted(groups.keys(), key=lambda k: groups[k][0]):
+        start_t, dur, lords = groups[key]
+        end_t = _period_end(start_t, float(dur))
         nodes.append({
-            "level": level + 1,
-            "lord": lord_name(child_lord),
-            "start": _fmt_date(c_start),
-            "end": _fmt_date(c_end),
-            "durationYears": round(_duration_years(c_start, c_end), 4),
-            "subPeriods": _build_children(
-                child_path, c_start, c_end, jd, place, level + 1, max_level,
+            "level": child_level,
+            "lord": lord_name(lords[-1]),
+            "start": _fmt_date(start_t),
+            "end": _fmt_date(end_t),
+            "durationYears": round(float(dur), 4),
+            "subPeriods": _subtree_from_flat(
+                flat_periods, lords, child_level + 1, max_level,
             ),
         })
     return nodes
@@ -158,14 +184,35 @@ def mahadasha_tree(
     deep_antar_path: tuple | None = None,
 ) -> list[dict]:
     """
-    Nine Mahadashas; each includes all Antardashas.
-    If deep_antar_path is set (e.g. (4, 3) Jupiter–Mercury), that antar gets
-  levels 3–5 nested; others stop at Antar.
+    Nine Mahadashas with Antardashas; levels 3–5 nested only under the running antar.
+
+    Uses one bulk PyJHora call for antars (81 rows, ~0.2s) instead of 9×
+    vimsottari_immediate_children (~20s). Deep levels use one more bulk fetch
+  filtered to the running maha–antar path.
     """
+    max_level = max(1, min(5, max_level))
     maha_map = vimsottari.vimsottari_mahadasa(jd, place)
     items = list(maha_map.items())
-    tree = []
 
+    _, antar_periods = vimsottari.get_vimsottari_dhasa_bhukthi(
+        jd, place, dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
+    )
+    antars_by_maha: dict[int, list] = {}
+    for p in antar_periods:
+        antars_by_maha.setdefault(p[0][0], []).append(p)
+
+    deep_flat: list = []
+    if max_level > 2 and deep_antar_path and len(deep_antar_path) >= 2:
+        _, deep_flat = vimsottari.get_vimsottari_dhasa_bhukthi(
+            jd, place, dhasa_level_index=_DEPTH_FOR_LEVEL[max_level],
+        )
+        m_id, a_id = deep_antar_path[0], deep_antar_path[1]
+        deep_flat = [
+            p for p in deep_flat
+            if len(p[0]) >= 2 and p[0][0] == m_id and p[0][1] == a_id
+        ]
+
+    tree = []
     for idx, (m_lord, m_start_jd) in enumerate(items):
         if idx < len(items) - 1:
             m_end_jd = items[idx + 1][1]
@@ -174,27 +221,26 @@ def mahadasha_tree(
         m_start_t = utils.jd_to_gregorian(m_start_jd)
         m_end_t = utils.jd_to_gregorian(m_end_jd)
 
-        antars = vimsottari.vimsottari_immediate_children(
-            (m_lord,), m_start_t, parent_end=m_end_t, jd=jd, place=place,
-        )
         antar_nodes = []
-        for child in antars:
-            child_path, a_start, a_end = child[0], child[1], child[2]
-            a_lord = child_path[-1]
+        for p in antars_by_maha.get(m_lord, []):
+            lords, start_t, years = p[0], p[1], p[2]
+            a_lord = lords[1]
+            end_t = _period_end(start_t, float(years))
             deep = (
                 deep_antar_path is not None
                 and len(deep_antar_path) >= 2
                 and deep_antar_path[0] == m_lord
                 and deep_antar_path[1] == a_lord
+                and max_level > 2
             )
             antar_nodes.append({
                 "level": 2,
                 "lord": lord_name(a_lord),
-                "start": _fmt_date(a_start),
-                "end": _fmt_date(a_end),
-                "durationYears": round(_duration_years(a_start, a_end), 4),
+                "start": _fmt_date(start_t),
+                "end": _fmt_date(end_t),
+                "durationYears": round(float(years), 4),
                 "subPeriods": (
-                    _build_children(child_path, a_start, a_end, jd, place, 2, max_level)
+                    _subtree_from_flat(deep_flat, lords[:2], 3, max_level)
                     if deep
                     else []
                 ),
