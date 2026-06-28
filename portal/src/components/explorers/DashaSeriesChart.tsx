@@ -86,8 +86,7 @@ function ScoreTooltip({ active, payload, label }: {
 
 const PLANET_COLOR: Record<string, string> = {
   Saturn: "#7c3aed", Jupiter: "#f59e0b", Rahu: "#64748b", Ketu: "#94a3b8",
-  Mars: "#ef4444", Sun: "#f97316", Moon: "#a78bfa",
-  Mercury: "#22c55e", Venus: "#ec4899",
+  Mars: "#ef4444", Sun: "#f97316", Mercury: "#22c55e", Venus: "#ec4899",
 };
 
 // ── Event markers — two-column layout ────────────────────────────────────────
