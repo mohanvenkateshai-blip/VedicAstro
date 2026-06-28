@@ -4,6 +4,10 @@ import { Card } from "@/components/ui/Card";
 import { DashaDeepTree } from "@/components/explorers/DashaDeepTree";
 import { AllDashasPanel } from "@/components/explorers/AllDashasPanel";
 
+// Allow 30 s for the server-side getDashaDeep call (CVCE warm = ~5 s,
+// cold start = up to 20 s; on abort the component falls back to client fetch).
+export const maxDuration = 30;
+
 type SP = Record<string, string | string[] | undefined>;
 
 export default async function DashaPage({

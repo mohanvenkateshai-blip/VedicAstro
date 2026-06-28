@@ -89,20 +89,37 @@ async function post<T>(path: string, body: unknown, revalidate = 60 * 60): Promi
 
 /**
  * Full 5-level Vimshottari tree + current ladder.
- * Computed server-side to avoid Vercel function timeout on the client proxy.
- * Cached 30 min — deterministic for a given birth.
+ * Uses its own fetch with a hard 20 s abort so the SSR page never hangs when
+ * CVCE is cold. On abort the caller's .catch(() => null) fires and the page
+ * renders immediately; DashaDeepTree then retries client-side via the proxy
+ * (which has maxDuration = 60 to cover the cold start).
  */
 export async function getDashaDeep(birth: BirthInput): Promise<DashaDeepData> {
-  return post<DashaDeepData>(
-    "/dasha-deep",
-    {
-      birth_datetime: birth.birth_datetime,
-      birth_lat: birth.birth_lat,
-      birth_lon: birth.birth_lon,
-      birth_tz: birth.birth_tz,
-    },
-    60 * 30,
-  );
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20_000);
+
+  try {
+    const res = await fetch(`${CVCE_BASE_URL}/dasha-deep`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        birth_datetime: birth.birth_datetime,
+        birth_lat: birth.birth_lat,
+        birth_lon: birth.birth_lon,
+        birth_tz: birth.birth_tz,
+      }),
+      signal: controller.signal,
+      next: { revalidate: 60 * 30 },
+    });
+    if (!res.ok) throw new CvceError(`Engine error for /dasha-deep`);
+    return (await res.json()) as DashaDeepData;
+  } catch (e) {
+    if (e instanceof CvceError) throw e;
+    // AbortError or network error — caller handles with .catch(() => null)
+    throw new CvceError("Dasha engine unavailable");
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /** Unified report facts — natal, dasha ladder, dasha + transit intelligence. */
