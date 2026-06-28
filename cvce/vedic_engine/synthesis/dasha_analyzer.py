@@ -13,6 +13,48 @@ from typing import Any, Optional
 from ..core.panchanga import RASHIS
 from ..rules.transit_rules import EXALT_SIGN, DEBIL_SIGN, OWN_SIGN
 
+# ── Natural planetary friendships/enmities (BPHS Ch.3, Phaladeepika Ch.2) ─────
+# Used to judge how Maha and Antar lords cooperate or conflict.
+# Source: BPHS Ch.3 "Naisargika Maitri" table; PD Ch.20 sl.1-15.
+
+NATURAL_FRIENDS: dict[str, set] = {
+    "Sun":     {"Moon", "Mars", "Jupiter"},
+    "Moon":    {"Sun", "Mercury"},
+    "Mars":    {"Sun", "Moon", "Jupiter"},
+    "Mercury": {"Sun", "Venus"},
+    "Jupiter": {"Sun", "Moon", "Mars"},
+    "Venus":   {"Mercury", "Saturn"},
+    "Saturn":  {"Mercury", "Venus"},
+    "Rahu":    {"Saturn", "Venus"},    # BPHS convention for nodes
+    "Ketu":    {"Mars", "Jupiter"},
+}
+
+NATURAL_ENEMIES: dict[str, set] = {
+    "Sun":     {"Venus", "Saturn"},
+    "Moon":    {"Rahu", "Ketu"},
+    "Mars":    {"Mercury"},
+    "Mercury": {"Moon"},
+    "Jupiter": {"Mercury", "Venus"},
+    "Venus":   {"Sun", "Moon"},
+    "Saturn":  {"Sun", "Moon", "Mars"},
+    "Rahu":    {"Sun", "Moon"},
+    "Ketu":    {"Sun", "Moon"},
+}
+
+# ── Yogakaraka by Lagna (Phaladeepika Ch.20 sl.45-53, BPHS Ch.34) ────────────
+# A planet ruling both a Kendra (1,4,7,10) AND a Trikona (1,5,9) from the Lagna
+# is called Yogakaraka and gives Raja Yoga results during its Dasha.
+# Lagna lord also rules the 1st (both Kendra+Trikona) but is treated separately.
+
+YOGAKARAKA_BY_LAGNA: dict[str, str] = {
+    "Cancer":    "Mars",     # Mars: 5th (Scorpio, trikona) + 10th (Aries, kendra)
+    "Leo":       "Mars",     # Mars: 4th (Scorpio, kendra) + 9th (Aries, trikona)
+    "Taurus":    "Saturn",   # Saturn: 9th (Capricorn, trikona) + 10th (Aquarius, kendra)
+    "Libra":     "Saturn",   # Saturn: 4th (Capricorn, kendra) + 5th (Aquarius, trikona)
+    "Capricorn": "Venus",    # Venus: 5th (Taurus, trikona) + 10th (Libra, kendra)
+    "Aquarius":  "Venus",    # Venus: 4th (Taurus, kendra) + 9th (Libra, trikona)
+}
+
 PLANET_RULES: dict[str, list[str]] = {
     "Sun": ["Leo"],
     "Moon": ["Cancer"],
@@ -112,6 +154,33 @@ def _verdict(score: int) -> str:
     return "shubh" if score > 0 else "ashubh"
 
 
+def _lord_relationship(m_lord: str, a_lord: str) -> str:
+    """
+    Natural relationship between Maha and Antar lords.
+    Returns: mutual_friends | friends | mutual_enemies | enemies | neutral
+    Source: BPHS Ch.3, Phaladeepika Ch.20 sl.1-15
+    """
+    m_to_a = a_lord in NATURAL_FRIENDS.get(m_lord, set())
+    a_to_m = m_lord in NATURAL_FRIENDS.get(a_lord, set())
+    m_enemy_a = a_lord in NATURAL_ENEMIES.get(m_lord, set())
+    a_enemy_m = m_lord in NATURAL_ENEMIES.get(a_lord, set())
+
+    if m_to_a and a_to_m:
+        return "mutual_friends"
+    if m_enemy_a and a_enemy_m:
+        return "mutual_enemies"
+    if m_to_a or a_to_m:
+        return "friends"
+    if m_enemy_a or a_enemy_m:
+        return "enemies"
+    return "neutral"
+
+
+def _is_yogakaraka(planet: str, lagna_rashi: Optional[str]) -> bool:
+    """True if planet is Yogakaraka for the given Lagna (PD Ch.20 sl.45-53)."""
+    return bool(lagna_rashi and YOGAKARAKA_BY_LAGNA.get(lagna_rashi) == planet)
+
+
 class DashaImpactAnalyzer:
     def analyze(
         self,
@@ -151,6 +220,49 @@ class DashaImpactAnalyzer:
         elif a_lord in NATURAL_MALEFIC:
             score -= 2
             factors.append(DashaFactor("aggravating", -2, f"{a_lord} Antardasha — challenging sub-period"))
+
+        # ── Maha–Antar lord relationship (BPHS Ch.3, PD Ch.20) ──────────────
+        # Friendly Maha + Friendly Antar = cooperative, results amplified.
+        # Enemy Maha + Enemy Antar = conflict, results blocked or delayed.
+        if m_lord != a_lord:
+            rel = _lord_relationship(m_lord, a_lord)
+            if rel == "mutual_friends":
+                score += 3
+                factors.append(DashaFactor(
+                    "mitigating", 3,
+                    f"{m_lord} and {a_lord} are mutual friends — period themes deeply aligned; results amplified (PD Ch.20, BPHS Ch.3)",
+                ))
+            elif rel == "friends":
+                score += 2
+                factors.append(DashaFactor(
+                    "mitigating", 2,
+                    f"{m_lord} (Maha) and {a_lord} (Antar) are friendly — cooperative sub-period; dasha fruits delivered smoothly",
+                ))
+            elif rel == "mutual_enemies":
+                score -= 4
+                factors.append(DashaFactor(
+                    "aggravating", -4,
+                    f"{m_lord} and {a_lord} are mutual enemies — period themes in conflict; results obstructed, events arrive with strain (PD Ch.20)",
+                ))
+            elif rel == "enemies":
+                score -= 2
+                factors.append(DashaFactor(
+                    "aggravating", -2,
+                    f"{m_lord} (Maha) and {a_lord} (Antar) are inimical — friction in sub-period themes; results arrive partially",
+                ))
+
+        # ── Yogakaraka boost (PD Ch.20 sl.45-53, BPHS Ch.34) ────────────────
+        # A planet ruling both a Kendra and Trikona from Lagna gives Raja Yoga
+        # during its Dasha regardless of natural benefic/malefic nature.
+        for lord, label in ((m_lord, "Mahadasha"), (a_lord, "Antardasha")):
+            if _is_yogakaraka(lord, lagna_rashi):
+                score += 3
+                factors.append(DashaFactor(
+                    "mitigating", 3,
+                    f"{lord} is Yogakaraka for {lagna_rashi} Lagna "
+                    f"(rules both Kendra and Trikona) — {label} delivers Raja Yoga results; "
+                    "career, wealth and social position can rise markedly (PD Ch.20 sl.45-53)",
+                ))
 
         trikona = {1, 5, 9}
         kendra = {1, 4, 7, 10}

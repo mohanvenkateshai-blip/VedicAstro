@@ -404,17 +404,33 @@ class TransitImpactAnalyzer:
                 score += w
 
         if pred.vedha_active and pred.vedha_by:
-            w = -4 if pred.verdict == "shubh" or score > 0 else 0
-            if w:
+            from vedic_engine.rules.transit_rules import VEDHA_EXEMPT_PAIRS
+            pair = frozenset({pred.planet, pred.vedha_by})
+            if pair in VEDHA_EXEMPT_PAIRS:
                 factors.append(
                     Factor(
-                        role="aggravating",
-                        weight=w,
-                        summary=f"Gochara Vedha by {pred.vedha_by} — favourable results blocked",
-                        source="GPD Vedha",
+                        role="contextual",
+                        weight=0,
+                        summary=(
+                            f"Vedha by {pred.vedha_by} does not apply — "
+                            f"{pred.planet}/{pred.vedha_by} are classically exempt from "
+                            "mutual Vedha (PD Ch.26)"
+                        ),
+                        source="PD-Ch26",
                     )
                 )
-                score += w
+            else:
+                w = -4 if pred.verdict == "shubh" or score > 0 else 0
+                if w:
+                    factors.append(
+                        Factor(
+                            role="aggravating",
+                            weight=w,
+                            summary=f"Gochara Vedha by {pred.vedha_by} — favourable results blocked",
+                            source="GPD Vedha",
+                        )
+                    )
+                    score += w
 
         if pred.vipareetha_vedha_active and pred.vipareetha_vedha_by:
             w = 4
@@ -468,15 +484,41 @@ class TransitImpactAnalyzer:
             score -= 3
 
         if pred.retrograde and pred.planet in ("Mercury", "Venus", "Mars", "Jupiter", "Saturn"):
-            factors.append(
-                Factor(
-                    role="contextual",
-                    weight=-1,
-                    summary=f"{pred.planet} retrograde — results delayed or internalised",
-                    source="GPD",
+            if score < 0:
+                # Retrograde in a bad transit house ameliorates the negative.
+                # GPD Ch.10, PD Ch.26: "A retrograde planet in its bad transit house
+                # gives less evil than usual — the backward motion weakens the malefic
+                # tendency of the unfavourable house."
+                w = 3
+                factors.append(
+                    Factor(
+                        role="mitigating",
+                        weight=w,
+                        summary=(
+                            f"{pred.planet} retrograde in bad transit house — "
+                            "classical amelioration: severity reduced (GPD Ch.10, PD Ch.26)"
+                        ),
+                        source="GPD-Ch10",
+                    )
                 )
-            )
-            score -= 1
+                score += w
+            else:
+                # Retrograde in a good house: results come with delay or through
+                # revisitation of circumstances, but the benefit stands.
+                # The planet "insists" on the house themes; mild amplification.
+                w = 1
+                factors.append(
+                    Factor(
+                        role="mitigating",
+                        weight=w,
+                        summary=(
+                            f"{pred.planet} retrograde in good transit house — "
+                            "benefit persists with slight delay; retrograde deepens house themes (GPD Ch.10)"
+                        ),
+                        source="GPD-Ch10",
+                    )
+                )
+                score += w
 
         if ashtakavarga and getattr(ashtakavarga, "transit_sav", None):
             sav = ashtakavarga.transit_sav.get(pred.planet)

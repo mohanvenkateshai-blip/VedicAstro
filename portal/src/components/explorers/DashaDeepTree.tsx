@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Clock, ChevronDown, ChevronRight, Loader } from "lucide-react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
-import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow } from "@/lib/types";
+import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow, DashaPrediction } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { DashaSeriesChart } from "./DashaSeriesChart";
 
 // Re-export for consumers that previously imported from here
 export type { DashaDeepData, DashaNode, DashaLadderRow };
@@ -61,6 +62,90 @@ function VerdictBadge({
     >
       {cfg.label}{scoreStr}
     </span>
+  );
+}
+
+// ── Antardasha expanded panel ─────────────────────────────────────────────────
+// Shown when a level-2 (Antardasha) node is expanded.
+// Contains: time-series chart + life-domain bullets from dasha_intel.
+
+function AntardashaPanel({
+  node,
+  mahaLord,
+  chart,
+}: {
+  node: DashaNode;
+  mahaLord: string;
+  chart?: ChartData;
+}) {
+  const pred = node.prediction;
+  const domains = pred
+    ? (
+        [
+          { label: "Career",  items: pred.career,  warn: false },
+          { label: "Wealth",  items: pred.wealth,  warn: false },
+          { label: "Health",  items: pred.health,  warn: false },
+          { label: "Family",  items: pred.family,  warn: false },
+          { label: "Caution", items: pred.caution, warn: true  },
+        ] as const
+      ).filter((d) => d.items.length > 0)
+    : [];
+
+  const canShowChart =
+    !!chart?.meta?.birth_datetime && !!node.start && !!node.end;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.22 }}
+      className="mx-1 mb-2 mt-0.5 overflow-hidden rounded-xl border p-3.5 space-y-4"
+      style={{
+        borderColor: "rgba(124, 58, 237, 0.20)",
+        backgroundColor: "rgba(124, 58, 237, 0.04)",
+      }}
+    >
+      {/* ── Auspiciousness timeline (full period, not just midpoint) ── */}
+      {canShowChart && (
+        <DashaSeriesChart
+          chart={chart!}
+          mahaLord={mahaLord}
+          antarLord={node.lord}
+          startDate={node.start.slice(0, 10)}
+          endDate={(node.end ?? node.start).slice(0, 10)}
+          dashaScore={pred?.dasha_score ?? 0}
+        />
+      )}
+
+      {/* ── Life domain bullets ── */}
+      {domains.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-[9px] font-mono uppercase tracking-widest text-text-muted">
+            Life Domains
+          </p>
+          <div className="space-y-1.5">
+            {domains.map(({ label, items, warn }) => (
+              <div key={label} className="flex gap-2">
+                <span
+                  className="text-[9px] font-mono uppercase tracking-wide shrink-0 w-14 pt-px"
+                  style={{ color: warn ? "#ef4444" : DASHA.soft }}
+                >
+                  {label}
+                </span>
+                <div className="space-y-0.5">
+                  {items.map((item, i) => (
+                    <p key={i} className="text-[11px] text-text-main leading-tight">
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </motion.div>
   );
 }
 
@@ -383,6 +468,8 @@ function DashaLevel({
   onToggle,
   current,
   currentDepth,
+  mahaLord,
+  chart,
 }: {
   nodes: DashaNode[];
   level: number;
@@ -391,6 +478,8 @@ function DashaLevel({
   onToggle: (path: string) => void;
   current: string[];
   currentDepth: number;
+  mahaLord?: string;
+  chart?: ChartData;
 }) {
   if (!nodes || nodes.length === 0) return null;
 
@@ -444,6 +533,9 @@ function DashaLevel({
           const hasChildren = node.subPeriods && node.subPeriods.length > 0;
           const canExpand = hasChildren && level < MAX_DEPTH;
 
+          // At level 1, this node IS the Mahadasha — thread its lord down
+          const effectiveMahaLord = level === 1 ? node.lord : mahaLord;
+
           return (
             <div key={nodePath}>
               <DashaNodeCard
@@ -455,6 +547,15 @@ function DashaLevel({
                 canExpand={canExpand}
                 onToggle={onToggle}
               />
+              <AnimatePresence>
+                {isExpanded && level === 2 && (
+                  <AntardashaPanel
+                    node={node}
+                    mahaLord={effectiveMahaLord ?? ""}
+                    chart={chart}
+                  />
+                )}
+              </AnimatePresence>
               {isExpanded && hasChildren && (
                 <DashaLevel
                   nodes={node.subPeriods}
@@ -464,6 +565,8 @@ function DashaLevel({
                   onToggle={onToggle}
                   current={current}
                   currentDepth={currentDepth + 1}
+                  mahaLord={effectiveMahaLord}
+                  chart={chart}
                 />
               )}
             </div>
@@ -665,6 +768,7 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
                   onToggle={toggleNode}
                   current={current}
                   currentDepth={0}
+                  chart={chart}
                 />
               </div>
             );

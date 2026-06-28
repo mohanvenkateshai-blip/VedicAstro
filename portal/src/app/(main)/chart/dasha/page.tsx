@@ -1,10 +1,10 @@
 import { loadChartFromSearchParams } from "@/lib/load-chart";
-import { getDashaDeep } from "@/lib/cvce";
+import { getDashaDeep, getDashaPredictions } from "@/lib/cvce";
 import { Card } from "@/components/ui/Card";
 import { DashaDeepTree } from "@/components/explorers/DashaDeepTree";
 import { AllDashasPanel } from "@/components/explorers/AllDashasPanel";
 
-// Allow 60s for SSR dasha-deep (optimized engine ~3–8s warm).
+// Allow 60s: getDashaDeep + getDashaPredictions run in parallel (~5–8s warm).
 export const maxDuration = 60;
 
 type SP = Record<string, string | string[] | undefined>;
@@ -16,10 +16,21 @@ export default async function DashaPage({
 }) {
   const { chart, birth, error } = await loadChartFromSearchParams(await searchParams);
 
-  // Prefetch dasha tree server-side — single request, cached 24h per birth.
-  const dashaDeep = chart
-    ? await getDashaDeep(birth).catch(() => null)
-    : null;
+  const [dashaDeep, predictionsResp] = await Promise.all([
+    chart ? getDashaDeep(birth).catch(() => null) : Promise.resolve(null),
+    chart ? getDashaPredictions(birth).catch(() => null) : Promise.resolve(null),
+  ]);
+
+  // Merge transit-fused predictions into the tree nodes (level 2 only).
+  if (dashaDeep && predictionsResp?.predictions) {
+    const preds = predictionsResp.predictions;
+    for (const maha of dashaDeep.dashaTree) {
+      for (const antar of maha.subPeriods) {
+        const key = `${maha.lord}/${antar.lord}`;
+        antar.prediction = preds[key] ?? null;
+      }
+    }
+  }
 
   return (
     <div className="space-y-6">

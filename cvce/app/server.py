@@ -951,6 +951,149 @@ def dasha_deep(req: BirthRequest):
     return {"birth_datetime": req.birth_datetime, "jd": jd, **payload}
 
 
+@app.post("/dasha-predict")
+def dasha_predict(req: BirthRequest):
+    """
+    Transit-fused Dasha predictions for the current Mahadasha + next Mahadasha.
+
+    For each Antardasha period in scope we:
+      1. Take the midpoint date as a representative transit snapshot.
+      2. Run compute_gochar + TransitImpactAnalyzer at that date.
+      3. Merge with DashaImpactAnalyzer score.
+      4. Return combined verdict, score breakdown, key transits, and life-domain bullets.
+
+    Keyed by "MahaLord/AntarLord" — matches DashaNode lookup on the portal.
+    """
+    from app.chart import build_chart_geometry
+    from app.dasha_vimshottari import antardasha_table, mahadasha_tree
+    from app.dasha_transit_fusion import fuse_dasha_transit
+    from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
+    from datetime import date, timedelta
+
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+
+    geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
+    planets_data = geometry.get("planets") or []
+    moon = next((p for p in planets_data if p.get("planet") == "Moon"), None)
+    lagna_rashi   = (geometry.get("lagna") or {}).get("rashi")
+    janma_rashi   = moon.get("rashi")      if moon else None
+    janma_nakshatra = moon.get("nakshatra") if moon else None
+    natal_sign    = geometry.get("natalSign")
+
+    # Identify current and next Mahadasha lords
+    today = date.today()
+    maha_tree = mahadasha_tree(jd, place, max_level=1)
+    current_maha = next_maha = None
+    for m in maha_tree:
+        ms = date.fromisoformat(m["start"][:10])
+        me = date.fromisoformat(m["end"][:10])
+        if ms <= today <= me:
+            current_maha = m["lord"]
+        elif current_maha and next_maha is None:
+            next_maha = m["lord"]
+
+    scope = {x for x in (current_maha, next_maha) if x}
+
+    analyzer = DashaImpactAnalyzer()
+    antar_table = antardasha_table(jd, place)
+    predictions: dict = {}
+
+    for row in antar_table:
+        maha_lord = row["maha"]
+        if maha_lord not in scope:
+            continue
+        try:
+            start_d  = row["start"][:10]
+            dur_days = max(1, int(row.get("durationYears", 1) * 365.25))
+            end_d    = (date.fromisoformat(start_d) + timedelta(days=dur_days)).isoformat()
+            antar_lord = row["antara"]
+
+            ladder = [
+                {"lord": maha_lord,  "level": 1, "levelLabel": "Mahadasha",
+                 "start": start_d, "end": end_d},
+                {"lord": antar_lord, "level": 2, "levelLabel": "Antardasha",
+                 "start": start_d, "end": end_d},
+            ]
+            dasha_intel = analyzer.analyze(
+                ladder,
+                lagna_rashi=lagna_rashi,
+                janma_rashi=janma_rashi,
+                natal_sign=natal_sign,
+            )
+
+            pred = fuse_dasha_transit(
+                maha_lord=maha_lord,
+                antar_lord=antar_lord,
+                start_date=start_d,
+                end_date=end_d,
+                lat=req.birth_lat,
+                lon=req.birth_lon,
+                tz=req.birth_tz,
+                lagna_rashi=lagna_rashi,
+                janma_rashi=janma_rashi,
+                janma_nakshatra=janma_nakshatra,
+                natal_sign=natal_sign,
+                dasha_intel=dasha_intel,
+            )
+            if pred is not None:
+                predictions[f"{maha_lord}/{antar_lord}"] = pred
+        except Exception:
+            continue
+
+    return {"predictions": predictions}
+
+
+class DashaSeriesRequest(BirthRequest):
+    maha_lord: str
+    antar_lord: str
+    start_date: str          # ISO date — Antardasha start
+    end_date: str            # ISO date — Antardasha end
+    dasha_score: int = 0    # Pre-computed Dasha score for the pair
+    interval_days: int = 30  # Sampling interval (default monthly)
+
+
+@app.post("/dasha-series")
+def dasha_series(req: DashaSeriesRequest):
+    """
+    Monthly transit-score time series for a single Maha-Antar window.
+
+    Returns a list of data points suitable for a front-end area/line chart —
+    each point carries the combined (Dasha+Transit) score and the dominant
+    planetary driver. Also returns sign-change events for the slow planets
+    (Saturn, Jupiter, Rahu/Ketu, Mars) that explain the peaks and dips.
+    """
+    from app.chart import build_chart_geometry
+    from app.dasha_series import build_dasha_series
+
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+
+    geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
+    planets_data = geometry.get("planets") or []
+    moon = next((p for p in planets_data if p.get("planet") == "Moon"), None)
+    janma_rashi      = moon.get("rashi")      if moon else None
+    janma_nakshatra  = moon.get("nakshatra")  if moon else None
+    natal_sign       = geometry.get("natalSign")
+
+    return build_dasha_series(
+        maha_lord=req.maha_lord,
+        antar_lord=req.antar_lord,
+        start_date=req.start_date,
+        end_date=req.end_date,
+        dasha_score=req.dasha_score,
+        lat=req.birth_lat,
+        lon=req.birth_lon,
+        tz=req.birth_tz,
+        janma_rashi=janma_rashi,
+        janma_nakshatra=janma_nakshatra,
+        natal_sign=natal_sign,
+        interval_days=max(14, min(90, req.interval_days)),
+    )
+
+
 class ReportFactsRequest(BirthRequest):
     query_date: Optional[str] = None
     query_time: str = "12:00"

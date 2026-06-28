@@ -177,6 +177,18 @@ SADE_SATI_PHASES = {
 # =====================================================================
 # When a planet's good transit is cancelled by another planet in a specific house
 
+# =====================================================================
+# RULE 5b: Vedha Exceptions — PD Ch.26 (Phaladeepika, Mantreswara)
+# =====================================================================
+# "Sun and Saturn do not cause Vedha to each other.
+#  Moon and Mercury do not cause Vedha to each other."
+# These pairs are exempt from mutual Gochara Vedha cancellation.
+
+VEDHA_EXEMPT_PAIRS: frozenset[frozenset] = frozenset({
+    frozenset({"Sun",  "Saturn"}),
+    frozenset({"Moon", "Mercury"}),
+})
+
 GOCHARA_VEDHA = {
     "Sun": {  # When Sun is in good house, planet in vedha house cancels it
         "vedha": {3: 12, 6: 5, 10: 8, 11: 9},

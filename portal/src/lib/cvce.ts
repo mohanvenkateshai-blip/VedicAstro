@@ -11,6 +11,7 @@ import type {
   BirthInput,
   ChartData,
   DashaDeepData,
+  DashaPredictions,
   DayWindows,
   GraphEnhancements,
   MuhurtaResult,
@@ -112,6 +113,38 @@ export async function getDashaDeep(birth: BirthInput): Promise<DashaDeepData> {
   } catch (e) {
     if (e instanceof CvceError) throw e;
     throw new CvceError("Dasha engine unavailable");
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * Transit-fused predictions for the current + next Mahadasha Antardasha periods.
+ * Runs in parallel with getDashaDeep on the Dasha page.
+ * Keyed by "MahaLord/AntarLord" to match tree node lookup.
+ */
+export async function getDashaPredictions(birth: BirthInput): Promise<DashaPredictions> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30_000);
+  try {
+    const res = await fetch(`${CVCE_BASE_URL}/dasha-predict`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        birth_datetime: birth.birth_datetime,
+        birth_lat: birth.birth_lat,
+        birth_lon: birth.birth_lon,
+        birth_tz: birth.birth_tz,
+      }),
+      signal: controller.signal,
+      // Predictions are transit-dependent — cache 6h (transits shift daily).
+      next: { revalidate: 60 * 60 * 6 },
+    });
+    if (!res.ok) throw new CvceError(`Engine error for /dasha-predict`);
+    return (await res.json()) as DashaPredictions;
+  } catch (e) {
+    if (e instanceof CvceError) throw e;
+    throw new CvceError("Dasha predictions engine unavailable");
   } finally {
     clearTimeout(timer);
   }

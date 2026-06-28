@@ -265,6 +265,75 @@ export interface DashaLadderRow {
   durationYears: number;
 }
 
+/** One key transit shown inside a Dasha prediction panel. */
+export interface KeyTransit {
+  planet: string;
+  rashi: string;
+  house_from_moon: number | null;
+  verdict: string;
+  impact: string;
+}
+
+/**
+ * Transit-fused prediction for one Maha–Antar period.
+ * Produced by /dasha-predict; merged into DashaNode.prediction on the portal.
+ */
+export interface DashaPrediction {
+  combined_verdict: "shubh" | "ashubh";
+  combined_score: number;
+  dasha_score: number;
+  transit_score: number;
+  snapshot_date: string;
+  summary: string;
+  key_transits: KeyTransit[];
+  career: string[];
+  wealth: string[];
+  health: string[];
+  family: string[];
+  caution: string[];
+}
+
+export interface DashaPredictions {
+  predictions: Record<string, DashaPrediction>;
+}
+
+/** One data point in the Dasha time-series chart. */
+export interface DashaSeriesPoint {
+  date: string;
+  transit_score: number;
+  combined_score: number;
+  verdict: "shubh" | "ashubh";
+  key_planet: string | null;
+  key_note: string | null;
+}
+
+/** A slow-planet sign change that explains a peak or dip. */
+export interface DashaSeriesEvent {
+  date: string;
+  planet: string;
+  from_rashi: string;
+  to_rashi: string;
+  house_from_moon: number | null;
+  transit_score_at_event: number;
+  note: string;
+}
+
+/** Full series response from /dasha-series. */
+export interface DashaSeriesData {
+  maha_lord: string;
+  antar_lord: string;
+  dasha_score: number;
+  series: DashaSeriesPoint[];
+  events: DashaSeriesEvent[];
+  stats: {
+    shubh_months: number;
+    ashubh_months: number;
+    total_months: number;
+    peak: { date: string; score: number };
+    trough: { date: string; score: number };
+  };
+}
+
 export interface DashaNode {
   level: number;
   lord: string;
@@ -274,6 +343,7 @@ export interface DashaNode {
   subPeriods: DashaNode[];
   verdict?: "shubh" | "ashubh" | "mixed" | null;
   score?: number | null;
+  prediction?: DashaPrediction | null;
 }
 
 export interface DashaDeepData {
