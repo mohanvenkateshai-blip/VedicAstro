@@ -9,6 +9,13 @@ import { DashaSeriesChart } from "./DashaSeriesChart";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
+interface LadderRow {
+  levelLabel: string;
+  lord: string;
+  start?: string | null;
+  end?: string | null;
+}
+
 interface DashaItem {
   maha: string | null;
   antara: string | null;
@@ -19,6 +26,7 @@ interface DashaItem {
   balanceAtBirth?: { label: string };
   applicable?: boolean;
   reason?: string;
+  ladder?: LadderRow[];
 }
 
 interface YoginiPeriod {
@@ -140,43 +148,55 @@ function DashaCard({
 
         {data.maha ? (
           <div className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md"
-                style={{ backgroundColor: t.tagBg, color: t.color }}>
-                Maha
-              </span>
-              <span className="text-sm font-semibold" style={{ color: "var(--color-text-main)" }}>
-                {data.maha}
-              </span>
-            </div>
-
-            {data.antara && (
-              <div className="flex items-center gap-2.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md"
-                  style={{ backgroundColor: t.tagBg, color: t.color }}>
-                  Antar
-                </span>
-                <span className="text-sm font-medium" style={{ color: "var(--color-text-main)" }}>
-                  {data.antara}
-                </span>
+            {/* Running ladder — same style as DashaDeepTree's CurrentLadder */}
+            {data.ladder && data.ladder.length > 0 ? (
+              <div className="rounded-xl border p-3.5 space-y-2"
+                style={{ borderColor: t.border, backgroundColor: t.bg }}>
+                <p className="text-[10px] font-mono uppercase tracking-wider" style={{ color: t.color }}>
+                  Running now
+                </p>
+                {data.ladder.map((row) => (
+                  <div key={row.levelLabel} className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wide shrink-0 w-28"
+                      style={{ color: t.color, opacity: 0.7 }}>
+                      {row.levelLabel}
+                    </span>
+                    <span className="text-sm font-semibold" style={{ color: t.color }}>
+                      {row.lord}
+                    </span>
+                    {row.start && row.end && (
+                      <span className="text-[11px] font-mono tabular-nums text-text-muted">
+                        {row.start.slice(0, 10)} → {row.end.slice(0, 10)}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              /* Fallback: simple tags if no ladder */
+              <div className="space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md"
+                    style={{ backgroundColor: t.tagBg, color: t.color }}>Maha</span>
+                  <span className="text-sm font-semibold" style={{ color: "var(--color-text-main)" }}>
+                    {data.maha}
+                  </span>
+                </div>
+                {data.antara && (
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md"
+                      style={{ backgroundColor: t.tagBg, color: t.color }}>Antar</span>
+                    <span className="text-sm font-medium" style={{ color: "var(--color-text-main)" }}>
+                      {data.antara}
+                    </span>
+                  </div>
+                )}
               </div>
             )}
 
             {dashaKey === "vimshottari" && data.balanceAtBirth?.label && (
-              <p className="text-[11px] font-mono text-text-muted pt-1">
+              <p className="text-[11px] font-mono text-text-muted">
                 Birth balance: {data.balanceAtBirth.label}
-              </p>
-            )}
-
-            {data.mahaStart && data.mahaEnd && (
-              <p className="text-[11px] font-mono text-text-muted">
-                Maha {data.mahaStart.slice(0, 10)} → {data.mahaEnd.slice(0, 10)}
-              </p>
-            )}
-
-            {data.antaraStart && data.antaraEnd && (
-              <p className="text-[11px] font-mono text-text-muted">
-                Antar {data.antaraStart.slice(0, 10)} → {data.antaraEnd.slice(0, 10)}
               </p>
             )}
 

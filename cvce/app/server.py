@@ -1618,9 +1618,10 @@ def all_dashas(req: BirthRequest):
     try:
         from app.dasha_vimshottari import birth_balance, running_ladder
 
-        ladder = running_ladder(jd, place, depth=2)
-        maha_row = ladder[0] if ladder else None
-        antar_row = ladder[1] if len(ladder) > 1 else None
+        _VIML = {1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha", 4: "Sookshma", 5: "Prana"}
+        vl = running_ladder(jd, place, depth=3)
+        maha_row  = vl[0] if vl else None
+        antar_row = vl[1] if len(vl) > 1 else None
         result["vimshottari"] = {
             "maha": maha_row["lord"] if maha_row else None,
             "antara": antar_row["lord"] if antar_row else None,
@@ -1629,12 +1630,17 @@ def all_dashas(req: BirthRequest):
             "antaraStart": antar_row["start"] if antar_row else None,
             "antaraEnd": antar_row["end"] if antar_row else None,
             "balanceAtBirth": birth_balance(jd, place),
+            "ladder": [
+                {"levelLabel": _VIML.get(i + 1, f"Level {i+1}"), "lord": r["lord"],
+                 "start": r.get("start"), "end": r.get("end")}
+                for i, r in enumerate(vl)
+            ],
         }
     except Exception as e:
         print(f"[all_dashas] vimshottari failed: {type(e).__name__}: {e}", flush=True)
         result["vimshottari"] = None
 
-    # Yogini Dasha — iterate ALL rows to find the one containing today
+    # Yogini Dasha — build full running ladder (Maha → Antar → Pratyantar)
     try:
         from jhora.horoscope.dhasa.graha import yogini
         from jhora.panchanga.drik import Date as DrikDate
@@ -1646,36 +1652,53 @@ def all_dashas(req: BirthRequest):
             place,
         )
         today = _d.today()
-        cy = None
-        antar_start_str = antar_end_str = None
 
-        # Find the row whose date window contains today
+        _YL = {1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha"}
+        by_depth: dict = {}
+
         for row in (y or []):
             try:
-                st  = row[1]
-                dur = float(row[2])
+                lords = row[0]
+                st    = row[1]
+                dur   = float(row[2])
+                depth = len(lords) if isinstance(lords, (list, tuple)) else 0
+                if depth == 0 or depth in by_depth:
+                    continue
                 if isinstance(st, (list, tuple)) and len(st) >= 3:
                     s = _d(int(st[0]), int(st[1]), int(st[2]))
                     e = s + _td(days=int(dur * 365.25))
                     if s <= today <= e:
-                        cy = row
-                        antar_start_str = s.isoformat()
-                        antar_end_str   = e.isoformat()
-                        break
+                        by_depth[depth] = {
+                            "lord": lord_name(lords[depth - 1]),
+                            "start": s.isoformat(),
+                            "end": e.isoformat(),
+                        }
             except Exception:
                 continue
 
-        # Fallback: use first row for lords even if dates not found
-        if cy is None:
-            cy = y[0] if y else None
+        ladder_y = [
+            {"levelLabel": _YL.get(d, f"Level {d}"), **by_depth[d]}
+            for d in sorted(by_depth.keys())
+        ]
 
-        lords      = cy[0] if cy and isinstance(cy[0], (list, tuple)) else None
-        maha_name  = lord_name(lords[0]) if lords and len(lords) > 0 else None
-        antar_name = lord_name(lords[1]) if lords and len(lords) > 1 else None
+        d1 = by_depth.get(1, {})
+        d2 = by_depth.get(2, {})
+
+        # Fallback lords from first row if ladder empty
+        if not d1:
+            cy = y[0] if y else None
+            lords0 = cy[0] if cy and isinstance(cy[0], (list, tuple)) else None
+            d1 = {"lord": lord_name(lords0[0])} if lords0 else {}
+            d2 = {"lord": lord_name(lords0[1])} if lords0 and len(lords0) > 1 else {}
 
         result["yogini"] = {
-            "maha": maha_name, "antara": antar_name,
-            "antaraStart": antar_start_str, "antaraEnd": antar_end_str,
+            "maha": d1.get("lord"),
+            "antara": d2.get("lord"),
+            "mahaStart": d1.get("start"),
+            "mahaEnd": d1.get("end"),
+            "antaraStart": d2.get("start"),
+            "antaraEnd": d2.get("end"),
+            "ladder": ladder_y,
         }
     except Exception as e:
         print(f"[all_dashas] yogini failed: {type(e).__name__}: {e}", flush=True)
