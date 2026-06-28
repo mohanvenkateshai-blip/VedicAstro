@@ -336,11 +336,16 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
         </div>
       </div>
 
-      {/* Applicability note (Ashtottari only) */}
-      {data?.applicabilityNote && (
-        <div className="rounded-lg px-3 py-2 text-[11px] font-mono leading-relaxed"
-          style={{ backgroundColor: `${t.color}15`, color: t.color }}>
-          ⚠ {data.applicabilityNote}
+      {/* Not applicable — full stop, no tree */}
+      {data && !data.applicable && (
+        <div className="rounded-xl border p-4 space-y-1.5"
+          style={{ borderColor: "rgba(239,68,68,0.3)", backgroundColor: "rgba(239,68,68,0.06)" }}>
+          <p className="text-[11px] font-mono font-semibold" style={{ color: "#f87171" }}>
+            Not Applicable — BPHS (Parasara)
+          </p>
+          <p className="text-[11px] leading-relaxed text-text-muted">
+            {data.applicabilityNote}
+          </p>
         </div>
       )}
 
@@ -358,7 +363,7 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
         </div>
       )}
 
-      {data && (
+      {data && (data.applicable !== false) && (
         <>
           {/* Running Now ladder */}
           {data.currentLadder.length > 0 && (

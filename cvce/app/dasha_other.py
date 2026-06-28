@@ -255,19 +255,98 @@ def yogini_deep_payload(jd: float, place, dt) -> dict:
 
 # ── Ashtottari ────────────────────────────────────────────────────────────────
 
+def _ashtottari_paksha_daynight_check(jd: float, place) -> tuple[bool, str]:
+    """
+    BPHS Condition 2 for Ashtottari applicability:
+      - Daytime birth during Krishna Paksha (waning Moon), OR
+      - Nighttime birth during Shukla Paksha (waxing Moon)
+
+    Returns (passes: bool, note: str)
+    """
+    from jhora.panchanga import drik
+
+    # Moon elongation from Sun → Paksha
+    solar_long = drik.solar_longitude(jd)
+    lunar_long = drik.lunar_longitude(jd)
+    elongation = (lunar_long - solar_long) % 360
+    # 0–180° = Shukla Paksha (waxing); 180–360° = Krishna Paksha (waning)
+    shukla = elongation < 180.0
+    paksha_name = "Shukla Paksha (waxing)" if shukla else "Krishna Paksha (waning)"
+
+    # Day / night birth from sunrise and sunset at birth location
+    try:
+        sr = drik.sunrise(jd, place)   # [local_hour_float, str, jd]
+        ss = drik.sunset(jd, place)    # [local_hour_float, str, jd]
+        _, _, y, m, d, fh = _d.today().year, _d.today().month, *((jd,)*4)  # unused
+        # Extract the birth hour from jd
+        from jhora import utils as _u
+        _, _, _, birth_fh = _u.jd_to_gregorian(jd)
+        day_birth = sr[0] <= birth_fh <= ss[0]
+    except Exception:
+        # If sunrise/sunset calculation fails, skip this sub-condition
+        return True, ""
+
+    birth_type = "daytime" if day_birth else "nighttime"
+
+    # Passes when: (day AND Krishna) OR (night AND Shukla)
+    passes = (day_birth and not shukla) or (not day_birth and shukla)
+    note = (
+        f"{birth_type} birth during {paksha_name}"
+        + (" — satisfies BPHS Paksha condition." if passes
+           else " — does not satisfy BPHS Paksha condition (requires daytime×Krishna OR nighttime×Shukla).")
+    )
+    return passes, note
+
+
 def ashtottari_deep_payload(jd: float, place) -> dict:
     """
     Full /dasha-deep-ashtottari response.
-    Always computes the tree; flags applicability as informational note only.
-    Parasara prescribes Ashtottari when Rahu occupies kendra/trikona from the lagna lord
-    (excluding lagna itself). When not met, we show the tree with a note rather than blocking.
+
+    BPHS (Parasara Hora Shastra) specifies two conditions for Ashtottari applicability
+    — BOTH must be met:
+      1. Rahu in kendra (1,4,7,10) or trikona (5,9) from Lagna Lord, NOT in Lagna itself
+      2. Daytime birth during Krishna Paksha, OR nighttime birth during Shukla Paksha
+
+    If either condition fails → not applicable. Tree is NOT computed (no data to show).
     """
     from jhora import const
     from jhora.horoscope.chart import charts
     from jhora.horoscope.dhasa.graha import ashtottari
 
     pp = charts.rasi_chart(jd, place)
-    applicable = bool(ashtottari.applicability_check(pp))
+
+    # Condition 1: Rahu kendra/trikona from Lagna Lord (jhora implements this correctly)
+    cond1 = bool(ashtottari.applicability_check(pp))
+    cond1_note = (
+        "Rahu is in kendra or trikona from Lagna Lord (not in Lagna) ✓"
+        if cond1 else
+        "Rahu is NOT in kendra or trikona from Lagna Lord (or is in Lagna itself) ✗"
+    )
+
+    # Condition 2: Paksha × day/night birth
+    cond2, cond2_note = _ashtottari_paksha_daynight_check(jd, place)
+
+    applicable = cond1 and cond2
+
+    if not applicable:
+        failed = []
+        if not cond1:
+            failed.append(cond1_note)
+        if not cond2:
+            failed.append(cond2_note)
+        return {
+            "system":            "ashtottari",
+            "applicable":        False,
+            "applicabilityNote": (
+                "Ashtottari Dasha does not apply to this chart per BPHS (Parasara). "
+                "Both conditions must be satisfied: (1) Rahu in kendra/trikona from "
+                "Lagna Lord, not in Lagna; and (2) daytime birth during Krishna Paksha "
+                "or nighttime birth during Shukla Paksha. "
+                "Failed: " + " | ".join(failed)
+            ),
+            "currentLadder": [],
+            "dashaTree":     [],
+        }
 
     flat = ashtottari.get_ashtottari_dhasa_bhukthi(
         jd, place,
@@ -276,13 +355,9 @@ def ashtottari_deep_payload(jd: float, place) -> dict:
     tree, ladder = _build_tree_and_ladder(flat)
 
     return {
-        "system":        "ashtottari",
-        "applicable":    applicable,
-        "applicabilityNote": (
-            None if applicable else
-            "Parasara prescribes Ashtottari when Rahu is in kendra or trikona from "
-            "the lagna lord (excluding lagna). Shown here for reference."
-        ),
-        "currentLadder": ladder,
-        "dashaTree":     tree,
+        "system":            "ashtottari",
+        "applicable":        True,
+        "applicabilityNote": None,
+        "currentLadder":     ladder,
+        "dashaTree":         tree,
     }
