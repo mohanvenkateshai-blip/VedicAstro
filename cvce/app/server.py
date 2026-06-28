@@ -891,19 +891,54 @@ def chart_svg_endpoint(req: SvgRequest):
 
 @app.post("/dasha-deep")
 def dasha_deep(req: BirthRequest):
-    """Vimshottari to 5 levels: Maha → Antar → Pratyantar → Sookshma → Prana."""
+    """Vimshottari to 5 levels + shubh/ashubh verdict on Maha and Antar nodes."""
     from app.dasha_vimshottari import dasha_deep_payload
+    from app.chart import build_chart_geometry
+    from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
 
     set_ayanamsa(req.ayanamsa)
     dt = parse_dt(req.birth_datetime)
     jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
 
     payload = dasha_deep_payload(jd, place, max_level=5)
-    return {
-        "birth_datetime": req.birth_datetime,
-        "jd": jd,
-        **payload,
-    }
+
+    # Annotate levels 1 (Maha) and 2 (Antar) with shubh/ashubh verdict.
+    # Level 1 uses self-self combination (Vedic proxy for the whole Mahadasha period).
+    try:
+        geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa)
+        planets = geometry.get("planets") or []
+        moon = next((p for p in planets if p.get("planet") == "Moon"), None)
+        lagna_rashi = (geometry.get("lagna") or {}).get("rashi")
+        janma_rashi = moon.get("rashi") if moon else None
+        natal_sign = geometry.get("natalSign")
+        analyzer = DashaImpactAnalyzer()
+
+        def _assess(maha_lord, maha_start, maha_end, antar_lord, antar_start, antar_end):
+            ladder = [
+                {"lord": maha_lord, "level": 1, "levelLabel": "Mahadasha",
+                 "start": maha_start, "end": maha_end},
+                {"lord": antar_lord, "level": 2, "levelLabel": "Antardasha",
+                 "start": antar_start, "end": antar_end},
+            ]
+            try:
+                intel = analyzer.analyze(ladder, lagna_rashi=lagna_rashi,
+                                         janma_rashi=janma_rashi, natal_sign=natal_sign)
+                return (intel.get("final_verdict"), intel.get("score")) if intel else (None, None)
+            except Exception:
+                return None, None
+
+        for maha in payload.get("dashaTree", []):
+            ms, me = maha["start"], maha.get("end", maha["start"])
+            maha["verdict"], maha["score"] = _assess(maha["lord"], ms, me, maha["lord"], ms, me)
+            for antar in maha.get("subPeriods", []):
+                antar["verdict"], antar["score"] = _assess(
+                    maha["lord"], ms, me, antar["lord"],
+                    antar["start"], antar.get("end", antar["start"]),
+                )
+    except Exception:
+        pass
+
+    return {"birth_datetime": req.birth_datetime, "jd": jd, **payload}
 
 
 class ReportFactsRequest(BirthRequest):

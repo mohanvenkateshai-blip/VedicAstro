@@ -32,6 +32,41 @@ const DASHA = {
   soft: "#8b5cf6",
 } as const;
 
+const VERDICT_CFG = {
+  shubh:  { bg: "rgba(16,185,129,0.12)",  color: "#10b981", label: "Shubh"  },
+  ashubh: { bg: "rgba(239,68,68,0.12)",   color: "#ef4444", label: "Ashubh" },
+  mixed:  { bg: "rgba(245,158,11,0.12)",  color: "#f59e0b", label: "Mixed"  },
+} as const;
+
+// ── Verdict badge ────────────────────────────────────────────────────────────
+
+function VerdictBadge({
+  verdict,
+  score,
+  size = "sm",
+}: {
+  verdict?: string | null;
+  score?: number | null;
+  size?: "xs" | "sm";
+}) {
+  if (!verdict) return null;
+  const cfg = VERDICT_CFG[verdict as keyof typeof VERDICT_CFG] ?? {
+    bg: "rgba(139,92,246,0.10)", color: DASHA.soft, label: verdict,
+  };
+  const scoreStr = score != null ? ` ${score > 0 ? "+" : ""}${score}` : "";
+  return (
+    <span
+      className={clsx(
+        "shrink-0 font-mono rounded-md leading-none",
+        size === "xs" ? "text-[8px] px-1 py-0.5" : "text-[9px] px-1.5 py-0.5",
+      )}
+      style={{ backgroundColor: cfg.bg, color: cfg.color }}
+    >
+      {cfg.label}{scoreStr}
+    </span>
+  );
+}
+
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 function calcPercent(startISO: string, durationYears: number): number {
@@ -140,6 +175,8 @@ function MahadashaChip({
   isCurrent,
   isExpanded,
   level,
+  verdict,
+  score,
   onClick,
 }: {
   lord: string;
@@ -148,17 +185,18 @@ function MahadashaChip({
   isCurrent: boolean;
   isExpanded: boolean;
   level: number;
+  verdict?: string | null;
+  score?: number | null;
   onClick: () => void;
 }) {
+  const vcfg = verdict ? VERDICT_CFG[verdict as keyof typeof VERDICT_CFG] : null;
   return (
     <button
       onClick={onClick}
       className={clsx(
         "shrink-0 flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl border transition-colors duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7c3aed]/60",
-        isCurrent
-          ? "font-semibold"
-          : "hover:bg-[#7c3aed]/[0.06]",
+        isCurrent ? "font-semibold" : "hover:bg-[#7c3aed]/[0.06]",
       )}
       style={{
         backgroundColor: isCurrent
@@ -168,35 +206,34 @@ function MahadashaChip({
             : "transparent",
         borderColor: isCurrent
           ? "rgba(124, 58, 237, 0.45)"
-          : isExpanded
-            ? "rgba(124, 58, 237, 0.25)"
-            : "var(--color-hairline)",
+          : vcfg
+            ? `${vcfg.color}55`
+            : isExpanded
+              ? "rgba(124, 58, 237, 0.25)"
+              : "var(--color-hairline)",
       }}
       aria-current={isCurrent ? "true" : undefined}
       aria-expanded={isExpanded}
     >
       <span
-        className={clsx(
-          "text-xs font-mono tracking-wide",
-          isCurrent ? "font-semibold" : "font-medium",
-        )}
+        className={clsx("text-xs font-mono tracking-wide", isCurrent ? "font-semibold" : "font-medium")}
         style={{ color: isCurrent ? DASHA.main : "var(--color-text-main)" }}
       >
         {lord}
       </span>
-      <span
-        className="text-[10px]"
-        style={{
-          color: isCurrent ? DASHA.main : "var(--color-text-muted)",
-        }}
-      >
+      <span className="text-[10px]" style={{ color: isCurrent ? DASHA.main : "var(--color-text-muted)" }}>
         {year} · {fmtDuration(durationYears)}
       </span>
+      {verdict && (
+        <span
+          className="text-[8px] font-mono px-1.5 py-0.5 rounded-full mt-0.5 leading-none"
+          style={{ backgroundColor: vcfg?.bg, color: vcfg?.color }}
+        >
+          {vcfg?.label}{score != null ? ` ${score > 0 ? "+" : ""}${score}` : ""}
+        </span>
+      )}
       {isExpanded && (
-        <ChevronDown
-          className="w-3 h-3 mt-0.5"
-          style={{ color: DASHA.main }}
-        />
+        <ChevronDown className="w-3 h-3 mt-0.5" style={{ color: DASHA.main }} />
       )}
     </button>
   );
@@ -298,14 +335,12 @@ function DashaNodeCard({
             )}
           </div>
           <div className="flex items-center gap-2 shrink-0">
+            {level <= 2 && <VerdictBadge verdict={node.verdict} score={node.score} size="xs" />}
             <span className="text-[10px] text-text-muted font-mono tabular-nums">
               {pct}%
             </span>
             {canExpand && (
-              <span
-                className="text-[9px] font-mono"
-                style={{ color: DASHA.soft }}
-              >
+              <span className="text-[9px] font-mono" style={{ color: DASHA.soft }}>
                 {node.subPeriods.length}
               </span>
             )}
@@ -606,6 +641,8 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
                 isCurrent={isCurrent}
                 isExpanded={isExpanded}
                 level={node.level}
+                verdict={node.verdict}
+                score={node.score}
                 onClick={() => toggleNode(path)}
               />
             );

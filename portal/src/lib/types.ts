@@ -272,6 +272,8 @@ export interface DashaNode {
   end?: string;
   durationYears: number;
   subPeriods: DashaNode[];
+  verdict?: "shubh" | "ashubh" | "mixed" | null;
+  score?: number | null;
 }
 
 export interface DashaDeepData {
