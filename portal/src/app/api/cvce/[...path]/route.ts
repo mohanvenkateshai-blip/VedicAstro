@@ -13,6 +13,7 @@ const ALLOWED = new Set([
   "dasha-deep-ashtottari",
   "dasha-series",
   "dasha-predict",
+  "dasha-predict-yogini",
   "dashas",
   "gochar",
   "kp-system",

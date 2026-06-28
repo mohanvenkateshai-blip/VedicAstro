@@ -1065,6 +1065,90 @@ def dasha_predict(req: BirthRequest):
     return {"predictions": predictions}
 
 
+@app.post("/dasha-predict-yogini")
+def dasha_predict_yogini(req: BirthRequest):
+    """
+    Transit-fused predictions for current + next Yogini Mahadasha antardasha periods.
+    Uses the same DashaImpactAnalyzer + fuse_dasha_transit as Vimshottari,
+    applied to Yogini's planetary lords (same planets, different cycle).
+    Keyed by "MahaLord/AntarLord".
+    """
+    from app.chart import build_chart_geometry
+    from app.dasha_other import yogini_deep_payload, _build_tree_and_ladder, YOGINI_BY_PLANET, PLANET_NAMES
+    from app.dasha_transit_fusion import fuse_dasha_transit
+    from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
+    from jhora.horoscope.dhasa.graha import yogini
+    from jhora.panchanga.drik import Date as DrikDate
+    from datetime import date, timedelta
+
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+
+    geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
+    planets_data   = geometry.get("planets") or []
+    moon           = next((p for p in planets_data if p.get("planet") == "Moon"), None)
+    lagna_rashi    = (geometry.get("lagna") or {}).get("rashi")
+    janma_rashi    = moon.get("rashi")      if moon else None
+    janma_nakshatra = moon.get("nakshatra") if moon else None
+    natal_sign     = geometry.get("natalSign")
+
+    # Build Yogini tree to find current + next Mahadasha blocks
+    flat = yogini.get_dhasa_bhukthi(
+        DrikDate(dt.year, dt.month, dt.day), (dt.hour, dt.minute, dt.second), place,
+    )
+    tree, ladder = _build_tree_and_ladder(flat)
+
+    today = date.today()
+    current_maha = next_maha = None
+    for node in tree:
+        ms = date.fromisoformat(node["start"][:10])
+        me = date.fromisoformat(node["end"][:10])
+        if ms <= today <= me:
+            current_maha = node["lord"]
+        elif current_maha and next_maha is None:
+            next_maha = node["lord"]
+
+    scope = {x for x in (current_maha, next_maha) if x}
+
+    analyzer    = DashaImpactAnalyzer()
+    predictions: dict = {}
+
+    for node in tree:
+        maha_lord = node["lord"]
+        if maha_lord not in scope:
+            continue
+        for antar in node.get("subPeriods", []):
+            try:
+                antar_lord = antar["lord"]
+                start_d    = antar["start"][:10]
+                dur_days   = max(1, int(antar["durationYears"] * 365.25))
+                end_d      = (date.fromisoformat(start_d) + timedelta(days=dur_days)).isoformat()
+
+                ladder_ctx = [
+                    {"lord": maha_lord,  "level": 1, "levelLabel": "Mahadasha",  "start": start_d, "end": end_d},
+                    {"lord": antar_lord, "level": 2, "levelLabel": "Antardasha", "start": start_d, "end": end_d},
+                ]
+                dasha_intel = analyzer.analyze(
+                    ladder_ctx, lagna_rashi=lagna_rashi,
+                    janma_rashi=janma_rashi, natal_sign=natal_sign,
+                )
+                pred = fuse_dasha_transit(
+                    maha_lord=maha_lord, antar_lord=antar_lord,
+                    start_date=start_d, end_date=end_d,
+                    lat=req.birth_lat, lon=req.birth_lon, tz=req.birth_tz,
+                    lagna_rashi=lagna_rashi, janma_rashi=janma_rashi,
+                    janma_nakshatra=janma_nakshatra, natal_sign=natal_sign,
+                    dasha_intel=dasha_intel,
+                )
+                if pred is not None:
+                    predictions[f"{maha_lord}/{antar_lord}"] = pred
+            except Exception:
+                continue
+
+    return {"predictions": predictions}
+
+
 class DashaSeriesRequest(BirthRequest):
     maha_lord: str
     antar_lord: str

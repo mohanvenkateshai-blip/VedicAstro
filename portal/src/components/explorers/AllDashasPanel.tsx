@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Clock, Loader, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Clock, Loader, AlertCircle, ChevronDown } from "lucide-react";
+import type { DashaPrediction } from "@/lib/types";
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
@@ -147,15 +148,27 @@ function MahaChip({ lord, yoginiName, start, durationYears, isCurrent, isExpande
 
 // ── Antardasha row ────────────────────────────────────────────────────────
 
-function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, lagnaOn, mahaLord, onClick }: {
+const DOMAIN_LABELS: { key: keyof DashaPrediction; label: string; warn: boolean }[] = [
+  { key: "career",  label: "Career",  warn: false },
+  { key: "wealth",  label: "Wealth",  warn: false },
+  { key: "health",  label: "Health",  warn: false },
+  { key: "family",  label: "Family",  warn: false },
+  { key: "caution", label: "Caution", warn: true  },
+];
+
+function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, lagnaOn, mahaLord, prediction, onClick }: {
   node: TreeNode; isCurrent: boolean; isOpen: boolean;
   color: string; border: string; bg: string;
   chart?: ChartData; moonOn: boolean; lagnaOn: boolean;
   mahaLord: string;
+  prediction?: DashaPrediction | null;
   onClick: () => void;
 }) {
   const canChart = !!(chart?.meta?.birth_datetime && node.start && node.end);
   const displayName = node.yoginiName ? `${node.yoginiName} (${node.lord})` : node.lord;
+  const domains = prediction
+    ? DOMAIN_LABELS.filter((d) => (prediction[d.key] as string[]).length > 0)
+    : [];
 
   return (
     <div className="mb-1">
@@ -184,13 +197,13 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
               {node.start.slice(0,10)} → {node.end.slice(0,10)}
             </span>
             <span className="text-[10px] font-mono text-text-muted">{fmtDuration(node.durationYears)}</span>
-            {canChart && <ChevronDown className="w-3 h-3 text-text-muted" style={{ transform: isOpen ? "rotate(180deg)" : undefined }} />}
+            <ChevronDown className="w-3 h-3 text-text-muted" style={{ transform: isOpen ? "rotate(180deg)" : undefined }} />
           </div>
         </div>
       </button>
 
       <AnimatePresence>
-        {isOpen && canChart && (
+        {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -198,19 +211,46 @@ function AntarRow({ node, isCurrent, isOpen, color, border, bg, chart, moonOn, l
             transition={{ duration: 0.22 }}
             className="overflow-hidden"
           >
-            <div className="ml-4 mt-1 mb-2 rounded-xl border p-3.5"
+            <div className="ml-4 mt-1 mb-2 rounded-xl border p-3.5 space-y-4"
               style={{ borderColor: border, backgroundColor: bg }}>
-              <DashaSeriesChart
-                chart={chart!}
-                mahaLord={mahaLord}
-                antarLord={node.lord}
-                startDate={node.start}
-                endDate={node.end}
-                dashaScore={0}
-                moonOn={moonOn}
-                lagnaOn={lagnaOn}
-                title={`${mahaLord} / ${node.lord}`}
-              />
+
+              {/* Life-domain predictions */}
+              {domains.length > 0 && (
+                <div className="space-y-2">
+                  {domains.map(({ key, label, warn }) => (
+                    <div key={key}>
+                      <p className="text-[10px] font-mono uppercase tracking-wider mb-1"
+                        style={{ color: warn ? "#f87171" : color, opacity: 0.8 }}>
+                        {label}
+                      </p>
+                      <ul className="space-y-0.5">
+                        {(prediction![key] as string[]).map((item, i) => (
+                          <li key={i} className="text-[11px] leading-snug flex gap-1.5"
+                            style={{ color: warn ? "#fca5a5" : "var(--color-text-main)" }}>
+                            <span style={{ color, opacity: 0.6 }}>·</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Transit chart */}
+              {canChart && (
+                <DashaSeriesChart
+                  chart={chart!}
+                  mahaLord={mahaLord}
+                  antarLord={node.lord}
+                  startDate={node.start}
+                  endDate={node.end}
+                  dashaScore={0}
+                  moonOn={moonOn}
+                  lagnaOn={lagnaOn}
+                  title={`${mahaLord} / ${node.lord}`}
+                />
+              )}
             </div>
           </motion.div>
         )}
@@ -232,6 +272,7 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
   const [lagnaOn, setLagnaOn] = useState(false);
   const [expandedMaha, setExpandedMaha] = useState<number | null>(null);
   const [expandedAntar, setExpandedAntar] = useState<string | null>(null);
+  const [predictions, setPredictions] = useState<Record<string, DashaPrediction>>({});
 
   function toggleMoon(v: boolean)  { if (!v && !lagnaOn) return; setMoonOn(v); }
   function toggleLagna(v: boolean) { if (!v && !moonOn)  return; setLagnaOn(v); }
@@ -252,15 +293,26 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
       // Auto-expand the running Mahadasha
       if (json.currentLadder.length > 0) {
         const runningMaha = json.currentLadder[0]?.lord;
-        const idx = json.dashaTree.findIndex((n) => n.lord === runningMaha);
+        const runningStart = json.currentLadder[0]?.start;
+        const idx = json.dashaTree.findIndex((n) => n.lord === runningMaha && n.start === runningStart);
         if (idx !== -1) setExpandedMaha(idx);
+      }
+
+      // Fetch predictions for Yogini (same engine as Vimshottari, keyed by planet lords)
+      if (dashaKey === "yogini") {
+        postCvce<{ predictions: Record<string, DashaPrediction> }>("dasha-predict-yogini", {
+          birth_datetime: birth!.birth_datetime,
+          birth_lat: birth!.birth_lat,
+          birth_lon: birth!.birth_lon,
+          birth_tz:  birth!.birth_tz,
+        }).then((r) => setPredictions(r.predictions ?? {})).catch(() => {});
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load");
     } finally {
       setLoading(false);
     }
-  }, [birth?.birth_datetime, birth?.birth_lat, birth?.birth_lon, birth?.birth_tz, endpoint]);
+  }, [birth?.birth_datetime, birth?.birth_lat, birth?.birth_lon, birth?.birth_tz, endpoint, dashaKey]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -389,6 +441,7 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                         moonOn={moonOn}
                         lagnaOn={lagnaOn}
                         mahaLord={data.dashaTree[expandedMaha].lord}
+                        prediction={predictions[`${data.dashaTree[expandedMaha].lord}/${antar.lord}`] ?? null}
                         onClick={() => setExpandedAntar((prev) => (prev === key ? null : key))}
                       />
                     );
