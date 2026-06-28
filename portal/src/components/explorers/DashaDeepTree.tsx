@@ -335,7 +335,7 @@ function DashaNodeCard({
             )}
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            {level <= 2 && <VerdictBadge verdict={node.verdict} score={node.score} size="xs" />}
+            <VerdictBadge verdict={node.verdict} score={node.score} size="xs" />
             <span className="text-[10px] text-text-muted font-mono tabular-nums">
               {pct}%
             </span>

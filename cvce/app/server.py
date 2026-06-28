@@ -927,14 +927,24 @@ def dasha_deep(req: BirthRequest):
             except Exception:
                 return None, None
 
+        def _propagate(nodes, parent_verdict, parent_score):
+            """Recursively set verdict on all sub-nodes, inheriting from parent."""
+            for node in nodes:
+                node["verdict"] = parent_verdict
+                node["score"] = parent_score
+                _propagate(node.get("subPeriods", []), parent_verdict, parent_score)
+
         for maha in payload.get("dashaTree", []):
             ms, me = maha["start"], maha.get("end", maha["start"])
             maha["verdict"], maha["score"] = _assess(maha["lord"], ms, me, maha["lord"], ms, me)
             for antar in maha.get("subPeriods", []):
-                antar["verdict"], antar["score"] = _assess(
+                av, as_ = _assess(
                     maha["lord"], ms, me, antar["lord"],
                     antar["start"], antar.get("end", antar["start"]),
                 )
+                antar["verdict"], antar["score"] = av, as_
+                # Levels 3–5 inherit Antardasha verdict (analyzer doesn't go deeper)
+                _propagate(antar.get("subPeriods", []), av, as_)
     except Exception:
         pass
 
