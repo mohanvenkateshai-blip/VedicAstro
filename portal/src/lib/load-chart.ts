@@ -23,6 +23,11 @@ export async function loadChartFromSearchParams(
   const defaults = parseBirthDefaults(sp);
   const birth = defaultsToBirthInput(defaults);
 
+  // No birth details provided — show the empty form, no chart
+  if (!defaults.date || !defaults.time) {
+    return { defaults, birth, chart: null, error: null };
+  }
+
   if (
     Number.isNaN(birth.birth_lat) ||
     Number.isNaN(birth.birth_lon) ||
