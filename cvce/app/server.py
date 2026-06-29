@@ -427,6 +427,13 @@ except Exception:
     def grok_graph_available() -> bool:
         return False
 
+# New central KnowledgeEngine (P0 active work)
+try:
+    from knowledge_engine import get_knowledge_engine
+    _knowledge_engine = get_knowledge_engine()
+except Exception:
+    _knowledge_engine = None
+
     def gemini_graph_stats():
         return None
 
@@ -614,6 +621,8 @@ def predict_health():
     gemini_stats = gemini_graph_stats()
     glm_stats = glm_graph_stats()
     deepseek_stats = deepseek_graph_stats()
+    ke_health = _knowledge_engine.health() if _knowledge_engine else None
+
     return {"engine": "vedic-prediction-engine",
             "version": _predictor.version if _ENGINE_AVAILABLE else "0.0.0",
             "available": _ENGINE_AVAILABLE,
@@ -621,6 +630,7 @@ def predict_health():
                           "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None,
                           "rules_source": "graph" if graph_rules else "hardcoded",
                           "graph_as_rules_env": graph_rules_enabled()},
+            "knowledge_engine": ke_health,
             "graph_rag_grok": grok_stats,
             "graph_rag_gemini": gemini_stats,
             "graph_rag_glm": glm_stats,
