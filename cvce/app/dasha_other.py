@@ -10,7 +10,7 @@ PLANET_NAMES = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", 
 LEVEL_LABELS  = {1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha"}
 
 # Yogini dasha: each planet corresponds to a specific Yogini deity
-# Source: Parasara Hora Shastra — Yogini Dasha Adhyaya
+# Source: BPHS Yogini Dasha Adhyaya + Goel "Predict Effectively Through Yogini Dasha" (KN Rao series)
 YOGINI_BY_PLANET: dict[int, str] = {
     1: "Mangala",   # Moon  — 1 year
     0: "Pingala",   # Sun   — 2 years
@@ -21,6 +21,11 @@ YOGINI_BY_PLANET: dict[int, str] = {
     5: "Siddha",    # Venus — 7 years
     7: "Sankata",   # Rahu  — 8 years
 }
+
+# Yogini dasha years per planet (planet_id → dasha years)
+# Classical: Mangala=1, Pingala=2, Dhanya=3, Bhramari=4, Bhadrika=5, Ulka=6, Siddha=7, Sankata=8
+YOGINI_YEARS: dict[int, int] = {1: 1, 0: 2, 4: 3, 2: 4, 3: 5, 6: 6, 5: 7, 7: 8}
+YOGINI_TOTAL_YEARS = 36  # 1+2+3+4+5+6+7+8
 
 
 def _lord_name(pid: int) -> str:
@@ -235,20 +240,118 @@ def _enrich_yogini(tree: list, ladder: list) -> tuple[list, list]:
 
 
 def yogini_deep_payload(jd: float, place, dt) -> dict:
-    """Full /dasha-deep-yogini response with Yogini deity names."""
-    from jhora.horoscope.dhasa.graha import yogini
-    from jhora.panchanga.drik import Date as DrikDate
+    """
+    Full /dasha-deep-yogini response with proportionally correct antardasha periods.
 
-    flat = yogini.get_dhasa_bhukthi(
+    PyJHora's get_dhasa_bhukthi at ANTARA level divides each Mahadasha into 8 equal
+    sub-periods, which is wrong. The classical rule (Goel / BPHS) is proportional:
+        antardasha_duration = maha_years × antar_years × (year_duration / 36)
+    We get Maha-only rows from PyJHora (those dates ARE correct) and compute
+    antardasha periods ourselves using the correct formula.
+    """
+    from jhora.horoscope.dhasa.graha import yogini
+    from jhora.panchanga.drik import Date as DrikDate, dhasa_year_duration
+    from jhora import const
+
+    year_dur = dhasa_year_duration(jd=jd, place=place)  # sidereal days per year
+
+    flat_maha = yogini.get_dhasa_bhukthi(
         DrikDate(dt.year, dt.month, dt.day),
         (dt.hour, dt.minute, dt.second),
         place,
+        dhasa_level_index=const.MAHA_DHASA_DEPTH.MAHA_DHASA_ONLY,
+        round_duration=False,
     )
-    tree, ladder = _build_tree_and_ladder(flat)
-    tree, ladder = _enrich_yogini(tree, ladder)
+
+    today = _d.today()
+    blocks: list[dict] = []
+
+    for row in flat_maha:
+        lords = row[0]
+        st    = row[1]
+        dur   = float(row[2])
+        maha_pid   = lords[0] if isinstance(lords, (list, tuple)) else lords
+        maha_years = YOGINI_YEARS.get(maha_pid, 1)
+        maha_start = _to_date(st)
+        maha_end   = maha_start + _td(days=int(round(dur * year_dur)))
+
+        # Antardasha order: starts with the Maha lord itself, then continues in Yogini cycle order
+        antar_pids = yogini._antardhasa(maha_pid, antardhasa_option=1)
+
+        antars: list[dict] = []
+        cursor = maha_start
+        for antar_pid in antar_pids:
+            antar_years = YOGINI_YEARS.get(antar_pid, 1)
+            # Classical proportional formula: duration = maha_years × antar_years / 36 years
+            antar_days  = int(round(maha_years * antar_years * year_dur / YOGINI_TOTAL_YEARS))
+            antar_end   = cursor + _td(days=antar_days)
+            antars.append({
+                "level":         2,
+                "lord":          _lord_name(antar_pid),
+                "yoginiName":    YOGINI_BY_PLANET.get(antar_pid),
+                "start":         cursor.isoformat(),
+                "end":           antar_end.isoformat(),
+                "_start":        cursor,
+                "_end":          antar_end,
+                "durationYears": round(antar_days / year_dur, 4),
+                "subPeriods":    [],
+            })
+            cursor = antar_end
+
+        blocks.append({
+            "lord":          _lord_name(maha_pid),
+            "yoginiName":    YOGINI_BY_PLANET.get(maha_pid),
+            "start":         maha_start.isoformat(),
+            "end":           maha_end.isoformat(),
+            "_start":        maha_start,
+            "_end":          maha_end,
+            "durationYears": round(dur, 4),
+            "antars":        antars,
+        })
+
+    # Build running ladder
+    ladder: list[dict] = []
+    for b in blocks:
+        if b["_start"] <= today <= b["_end"]:
+            ladder.append({
+                "levelLabel": "Mahadasha",
+                "lord":       b["lord"],
+                "yoginiName": b["yoginiName"],
+                "start":      b["start"],
+                "end":        b["end"],
+            })
+            for a in b["antars"]:
+                if a["_start"] <= today <= a["_end"]:
+                    ladder.append({
+                        "levelLabel": "Antardasha",
+                        "lord":       a["lord"],
+                        "yoginiName": a["yoginiName"],
+                        "start":      a["start"],
+                        "end":        a["end"],
+                    })
+                    break
+            break
+
+    # Build tree (strip internal _start/_end helpers)
+    tree = [
+        {
+            "level":         1,
+            "lord":          b["lord"],
+            "yoginiName":    b["yoginiName"],
+            "start":         b["start"],
+            "end":           b["end"],
+            "durationYears": b["durationYears"],
+            "subPeriods": [
+                {k: v for k, v in a.items() if not k.startswith("_")}
+                for a in b["antars"]
+            ],
+        }
+        for b in blocks
+    ]
+
     return {
         "system":            "yogini",
-        "applicable":        True,   # Yogini has no conditional applicability — applies universally
+        "applicable":        True,
         "applicabilityNote": None,
         "currentLadder":     ladder,
         "dashaTree":         tree,
