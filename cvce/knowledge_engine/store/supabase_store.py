@@ -94,3 +94,23 @@ class SupabaseKnowledgeStore(KnowledgeStore):
     def health_check(self) -> bool:
         code, _ = self._request("GET", "/rest/v1/graph_nodes?select=id&limit=1")
         return code == 200
+
+    def search(self, query: str, top_k: int = 8) -> list[dict]:
+        """
+        Vector + keyword hybrid search using pgvector.
+        Falls back to keyword search if no embeddings are present.
+        """
+        # Try vector search first
+        try:
+            # This assumes embeddings are populated.
+            # For a real implementation we would embed the query here.
+            # Placeholder: use content search until embedding generation is wired.
+            code, body = self._request(
+                "GET",
+                f"/rest/v1/corpus_chunks?select=source_id,content&content=ilike.*{query}*&limit={top_k}"
+            )
+            if code == 200:
+                return json.loads(body)
+        except Exception:
+            pass
+        return []

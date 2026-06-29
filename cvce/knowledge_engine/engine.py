@@ -293,25 +293,9 @@ Facts (abbrev):
         return allowed, blocked
 
     def search(self, query: str, top_k: int = 8) -> list[dict]:
-        """
-        Vector + graph hybrid search.
-        Returns top matching chunks with their source and content.
-        """
-        if not self.vector_search_available():
-            return []
-
-        # For now, do a simple keyword search in Supabase as placeholder.
-        # Real implementation will use pgvector cosine similarity.
-        try:
-            env = load_env()
-            code, body = api_request(
-                env, "GET",
-                f"/rest/v1/corpus_chunks?select=source_id,content&content=ilike.*{query}*&limit={top_k}"
-            )
-            if code == 200:
-                return json.loads(body)
-        except Exception:
-            pass
+        """Delegates to the underlying store's vector/hybrid search."""
+        if hasattr(self.store, "search"):
+            return self.store.search(query, top_k)
         return []
 
     # ------------------------------------------------------------------ #

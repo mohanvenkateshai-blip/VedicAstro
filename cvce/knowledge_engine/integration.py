@@ -18,14 +18,21 @@ from .engine import KnowledgeEngine
 
 
 @lru_cache(maxsize=1)
-def get_knowledge_engine(use_supabase: bool = False) -> KnowledgeEngine:
+def get_knowledge_engine() -> KnowledgeEngine:
     """
     Singleton accessor for KnowledgeEngine.
 
-    Set use_supabase=True (or env var KE_USE_SUPABASE=1) to use the database-backed store.
+    Defaults to Supabase-backed store when running in production context
+    (detected via presence of Supabase credentials or KE_USE_SUPABASE=1).
+    Falls back to file-based store for local development.
     """
-    if use_supabase or os.environ.get("KE_USE_SUPABASE", "").lower() in ("1", "true"):
-        return KnowledgeEngine.with_supabase()
+    use_supabase = (
+        os.environ.get("KE_USE_SUPABASE", "").lower() in ("1", "true")
+        or bool(os.environ.get("SUPABASE_URL"))
+    )
+    if use_supabase:
+        version = os.environ.get("CORPUS_GRAPH_VERSION", "newbooks-v1")
+        return KnowledgeEngine.with_supabase(graph_version=version)
     return KnowledgeEngine()
 
 
