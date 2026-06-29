@@ -4,6 +4,11 @@ import { supabase } from "@/lib/supabase";
 export const CORPUS_BUCKET = "corpus-vault";
 export const DEFAULT_GRAPH_VERSION = "newbooks-v1";
 
+// Helper to get the authoritative version from the checked-in file (used by server loaders too)
+export function getDefaultGraphVersion(): string {
+  return DEFAULT_GRAPH_VERSION;
+}
+
 export type CorpusSource = {
   id: string;
   canonical_name: string;
@@ -172,4 +177,30 @@ export async function getBookTextNodes(
     properties: Record<string, unknown>;
     file_type: string | null;
   }>;
+}
+
+/**
+ * Fuzzy search for Jaimini-related nodes under the current graph version.
+ * Tries multiple patterns so we actually surface real extracted sutras.
+ */
+export async function getJaiminiNodes(graphVersion = DEFAULT_GRAPH_VERSION) {
+  const patterns = ["%jaimini%", "%upadesa%", "%sutra%"];
+  const all: any[] = [];
+  for (const p of patterns) {
+    const { data } = await supabase
+      .from("graph_nodes")
+      .select("id, label, source_location, properties, file_type, source_file")
+      .eq("graph_version", graphVersion)
+      .or(`source_file.ilike.${p},label.ilike.${p}`)
+      .order("source_location", { ascending: true })
+      .limit(150);
+    if (data) all.push(...data);
+  }
+  // Dedup by id
+  const seen = new Set<string>();
+  return all.filter((n) => {
+    if (seen.has(n.id)) return false;
+    seen.add(n.id);
+    return true;
+  });
 }

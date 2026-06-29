@@ -81,7 +81,7 @@ def _promoted_graph_version() -> str:
     v = os.environ.get("CORPUS_GRAPH_VERSION", "").strip()
     if v:
         return v
-    return load_graph_version().get("graph_version", "core-jyotisha-v1")
+    return load_graph_version().get("graph_version", "newbooks-v1")
 
 
 def _notify_knowledge_engine_after_promote(graph_path: Path) -> None:

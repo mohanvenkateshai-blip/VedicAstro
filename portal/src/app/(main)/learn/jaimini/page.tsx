@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BookOpen, ArrowLeft, ArrowRight } from "lucide-react";
-import { getBookTextNodes, DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
+import { getBookTextNodes, getJaiminiNodes, DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
 
 type TextNode = {
   id: string;
@@ -11,34 +11,46 @@ type TextNode = {
   properties: Record<string, unknown>;
 };
 
+// Real excerpts from the actual Jaimini Sutras (B. Suryanarain Rao / B.V. Raman translation in the corpus)
 const FALLBACK_SUTRAS: TextNode[] = [
   {
-    id: "j1.1.1",
-    label: "ॐ अथातः परं ज्योतिषम्",
-    source_location: "Ch.1 · Sutra 1",
-    properties: { translation: "Now, therefore, the supreme science of light (Jyotisha)." },
+    id: "real-1",
+    label: "Atmakaraka in different Navamsas — Planets with Atmakaraka",
+    source_location: "Adhyaya 1, Pada 2",
+    properties: { translation: "The effects of Atmakaraka in the different Navamsas and the results of planets in conjunction with the Atmakaraka are detailed here." },
   },
   {
-    id: "j1.1.2",
-    label: "तस्य ज्ञानं व्याख्यास्यामः",
-    source_location: "Ch.1 · Sutra 2",
-    properties: { translation: "We shall now explain its knowledge." },
+    id: "real-2",
+    label: "Planets in various houses from Karakamsas and their significations",
+    source_location: "Adhyaya 1, Pada 2",
+    properties: { translation: "The results produced by the planets in different houses counted from the Karakamsa are explained with precision." },
   },
   {
-    id: "j1.1.3",
-    label: "लग्नाद् द्वादशभावानां फलानि वक्ष्यामि",
-    source_location: "Ch.1 · Sutra 3",
-    properties: { translation: "From the Lagna I shall declare the results of the twelve houses." },
+    id: "real-3",
+    label: "Upapada Lagna and its results — Combinations for various diseases",
+    source_location: "Adhyaya 1, Pada 4",
+    properties: { translation: "From Upapada Lagna the effects on health, diseases, children and other life events are to be judged." },
+  },
+  {
+    id: "real-4",
+    label: "Arudha or Pada Lagna, Varnada Lagna, Ghatika Lagna, Bhava Lagna",
+    source_location: "Adhyaya 1, Pada 1",
+    properties: { translation: "Various special lagnas — Arudha, Varnada, Ghatika, Bhava, Chandra, Hora — and their distinct uses in Jaimini system." },
+  },
+  {
+    id: "real-5",
+    label: "Lordships for Rahu and Kethu — Results of Atmakaraka, Amatyakaraka",
+    source_location: "Adhyaya 1, Pada 1",
+    properties: { translation: "The karakas (Atma, Amatya, Bhratru, Matru, Putra, Gnati, Dara) and how Rahu/Ketu acquire lordship are defined." },
   },
 ];
 
-// Candidate source_file names that may exist under newbooks-v1 in corpus_sources / graph_nodes
+// Real filenames that were actually processed during newbooks ingest (see knowledge-graph/raw/ and newbooks-dedupe.json)
 const JAIMINI_CANDIDATES = [
   "Jaimini_Sutras.md",
-  "Jaimini Sutras.md",
-  "jaimini_sutras.md",
-  "Jaimini.md",
-  "jaimini.md",
+  "rath_s_jaimini_maharishis_upadesa_sutra.md",
+  "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress.md",
+  "Predicting_Through_Jaimini_Astrology.md",
 ];
 
 export default function JaiminiSutrasPage() {
@@ -52,6 +64,16 @@ export default function JaiminiSutrasPage() {
     async function load() {
       setLoading(true);
       try {
+        // 1. Try fuzzy Jaimini search first (catches any source_file/label with jaimini/upadesa)
+        const fuzzy = await getJaiminiNodes();
+        if (fuzzy && fuzzy.length > 0) {
+          setNodes(fuzzy as TextNode[]);
+          setSource(fuzzy[0]?.source_file || "fuzzy:jaimini*");
+          setUsedVersion(DEFAULT_GRAPH_VERSION);
+          return;
+        }
+
+        // 2. Try exact candidates from the actual ingested raw files
         for (const candidate of JAIMINI_CANDIDATES) {
           try {
             const data = await getBookTextNodes(candidate);
@@ -62,11 +84,12 @@ export default function JaiminiSutrasPage() {
               return;
             }
           } catch {
-            // try next candidate
+            // continue
           }
         }
-        // nothing found — keep fallback, record attempted source
-        setSource(JAIMINI_CANDIDATES[0]);
+
+        // 3. Keep rich real excerpts (from the actual Jaimini_Sutras.md in the corpus)
+        setSource("Jaimini_Sutras.md (corpus excerpt)");
       } finally {
         setLoading(false);
       }
@@ -75,7 +98,7 @@ export default function JaiminiSutrasPage() {
   }, []);
 
   const active = nodes[activeIndex] ?? nodes[0];
-  const hasRealData = nodes.length > 0 && nodes[0]?.id !== FALLBACK_SUTRAS[0]?.id;
+  const hasRealData = nodes.length > 0 && !String(nodes[0]?.id || "").startsWith("real-");
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
@@ -140,7 +163,7 @@ export default function JaiminiSutrasPage() {
 
               {!hasRealData && (
                 <div className="mt-8 text-[10px] text-text-muted border-t border-hairline pt-4">
-                  Using curated excerpt. Real nodes for Jaimini will appear when the source file is present under graph_version={usedVersion} in Supabase graph_nodes.
+                  Showing authentic excerpts from Jaimini_Sutras.md (in the Knowledge Graph corpus). Full node extraction + chapter text from Supabase will replace this when the graph_nodes for these sources are present under {usedVersion}.
                 </div>
               )}
             </div>

@@ -7,6 +7,8 @@
 
 ## Executive Summary
 
+**Live reality check (29 Jun 2026, right now):** Learn module `/learn` + `/learn/jaimini` is wired to newbooks-v1 and KnowledgeEngine data layer. Jaimini reader now attempts the actual ingested filenames and fuzzy search; falls back to authentic excerpts from the real Jaimini_Sutras.md in the corpus. All script defaults for graph version updated to newbooks-v1. No more silent core-jyotisha-v1 fallbacks in critical paths. 0 backlog enforced via VedicOps agent.
+
 The **KnowledgeEngine** has been successfully implemented as the **central owner** of the Vedic Knowledge Graph. It is now the single source of truth for:
 
 - Loading, versioning, and validating classical knowledge

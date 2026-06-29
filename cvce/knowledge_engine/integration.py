@@ -17,12 +17,15 @@ from typing import Any
 from .engine import KnowledgeEngine
 
 
+_KE: KnowledgeEngine | None = None
+
+
 def clear_knowledge_engine_cache() -> None:
     """Drop the singleton so the next call rebuilds store caches."""
-    get_knowledge_engine.cache_clear()
+    global _KE
+    _KE = None
 
 
-@lru_cache(maxsize=1)
 def get_knowledge_engine() -> KnowledgeEngine:
     """
     Singleton accessor for KnowledgeEngine.
@@ -30,14 +33,23 @@ def get_knowledge_engine() -> KnowledgeEngine:
     Defaults to Supabase-backed store when running in production context
     (detected via presence of Supabase credentials or KE_USE_SUPABASE=1).
     Falls back to file-based store for local development.
+
+    Uses a module global (with double-check) instead of lru_cache to ensure
+    the exact same instance is returned even across import contexts and
+    during import-time registration side-effects from dependent engines.
     """
+    global _KE
+    if _KE is not None:
+        return _KE
     use_supabase = os.environ.get("KE_USE_SUPABASE", "").lower() in ("1", "true") or bool(
         os.environ.get("SUPABASE_URL")
     )
     if use_supabase:
         version = os.environ.get("CORPUS_GRAPH_VERSION", "newbooks-v1")
-        return KnowledgeEngine.with_supabase(graph_version=version)
-    return KnowledgeEngine()
+        _KE = KnowledgeEngine.with_supabase(graph_version=version)
+    else:
+        _KE = KnowledgeEngine()
+    return _KE
 
 
 # ------------------------------------------------------------------ #

@@ -32,7 +32,7 @@ def _graph_version_label() -> str:
         return json.loads(ver_path.read_text(encoding="utf-8")).get(
             "graph_version", "core-jyotisha-v1"
         )
-    return "core-jyotisha-v1"
+    return "newbooks-v1"
 
 
 BATCH = 400
