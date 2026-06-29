@@ -47,6 +47,37 @@ function fmtMonth(iso: string): string {
   return d.toLocaleDateString("en-IN", { month: "short", year: "2-digit" });
 }
 
+// ── Reusable inline View-from toggle ─────────────────────────────────────────
+
+export function ViewFromToggle({
+  moonOn, lagnaOn, onToggleMoon, onToggleLagna,
+}: {
+  moonOn: boolean; lagnaOn: boolean;
+  onToggleMoon: (v: boolean) => void; onToggleLagna: (v: boolean) => void;
+}) {
+  return (
+    <div className="flex items-center gap-2 shrink-0">
+      <span className="text-[8px] font-mono uppercase tracking-widest text-text-muted">View from</span>
+      {([
+        { label: "Moon",      checked: moonOn,  color: MOON_C,  onChange: onToggleMoon },
+        { label: "Ascendant", checked: lagnaOn, color: LAGNA_C, onChange: onToggleLagna },
+      ] as const).map(({ label, checked, color, onChange }) => (
+        <label key={label} className="flex items-center gap-1 cursor-pointer select-none">
+          <input type="checkbox" className="sr-only" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+          <span className="relative inline-flex w-6 h-[12px] rounded-full transition-colors duration-200"
+            style={{ backgroundColor: checked ? color : "var(--color-hairline)" }}>
+            <span className="absolute top-[2px] w-[8px] h-[8px] rounded-full bg-white transition-transform duration-200"
+              style={{ transform: checked ? "translateX(12px)" : "translateX(2px)" }} />
+          </span>
+          <span className="text-[9px] font-mono transition-colors" style={{ color: checked ? color : "var(--color-text-muted)" }}>
+            {label}
+          </span>
+        </label>
+      ))}
+    </div>
+  );
+}
+
 function fmtEvent(iso: string): string {
   const d = new Date(iso);
   return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
@@ -324,6 +355,7 @@ export interface DashaSeriesChartProps {
   endDate: string;
   dashaScore: number;
   title?: string;
+  titleControls?: React.ReactNode;
   moonOn: boolean;
   lagnaOn: boolean;
 }
@@ -336,6 +368,7 @@ export function DashaSeriesChart({
   endDate,
   dashaScore,
   title,
+  titleControls,
   moonOn,
   lagnaOn,
 }: DashaSeriesChartProps) {
@@ -414,9 +447,12 @@ export function DashaSeriesChart({
 
   return (
     <div className="space-y-0">
-      <p className="text-[9px] font-mono uppercase tracking-widest text-text-muted mb-2">
-        {title ?? `Auspiciousness — ${mahaLord} Maha / ${antarLord} Antar`}
-      </p>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <p className="text-[9px] font-mono uppercase tracking-widest text-text-muted">
+          {title ?? `Auspiciousness — ${mahaLord} Maha / ${antarLord} Antar`}
+        </p>
+        {titleControls}
+      </div>
 
       {/* Legend when both reference lines are showing */}
       {bothOn && (

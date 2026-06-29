@@ -6,7 +6,7 @@ import type { DashaPrediction, FructificationResult, FructificationWindow } from
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
-import { DashaSeriesChart } from "./DashaSeriesChart";
+import { DashaSeriesChart, ViewFromToggle } from "./DashaSeriesChart";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -281,11 +281,12 @@ const DOMAIN_LABELS: { key: keyof DashaPrediction; label: string; warn: boolean 
 
 function AntarRow({
   node, isCurrent, isOpen, color, border, bg, chart, moonOn, lagnaOn,
-  mahaLord, mahaNode, prediction, system, onClick,
+  onToggleMoon, onToggleLagna, mahaLord, mahaNode, prediction, system, onClick,
 }: {
   node: TreeNode; isCurrent: boolean; isOpen: boolean;
   color: string; border: string; bg: string;
   chart?: ChartData; moonOn: boolean; lagnaOn: boolean;
+  onToggleMoon: (v: boolean) => void; onToggleLagna: (v: boolean) => void;
   mahaLord: string;
   mahaNode: TreeNode;
   prediction?: DashaPrediction | null;
@@ -414,6 +415,7 @@ function AntarRow({
                   moonOn={moonOn}
                   lagnaOn={lagnaOn}
                   title={`${mahaLord} / ${node.yoginiName ?? node.lord}`}
+                  titleControls={<ViewFromToggle moonOn={moonOn} lagnaOn={lagnaOn} onToggleMoon={onToggleMoon} onToggleLagna={onToggleLagna} />}
                 />
               )}
             </div>
@@ -614,16 +616,6 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                 {chart?.meta?.birth_datetime && (
                   <div className="rounded-xl border p-3.5 mb-3"
                     style={{ borderColor: t.border, backgroundColor: t.bg }}>
-                    <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
-                      <p className="text-[10px] font-mono uppercase tracking-wider" style={{ color: t.color }}>
-                        {data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} Mahadasha — Full Span Overview
-                      </p>
-                      <div className="flex items-center gap-3">
-                        <span className="text-[9px] font-mono uppercase tracking-wider text-text-muted">View from</span>
-                        <Toggle label="Moon"      checked={moonOn}  color="#60a5fa" onChange={toggleMoon} />
-                        <Toggle label="Ascendant" checked={lagnaOn} color="#f59e0b" onChange={toggleLagna} />
-                      </div>
-                    </div>
                     <DashaSeriesChart
                       chart={chart}
                       mahaLord={data.dashaTree[expandedMaha].lord}
@@ -633,7 +625,8 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                       dashaScore={0}
                       moonOn={moonOn}
                       lagnaOn={lagnaOn}
-                      title={`${data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} · ${fmtDuration(data.dashaTree[expandedMaha].durationYears)}`}
+                      title={`${data.dashaTree[expandedMaha].yoginiName ?? data.dashaTree[expandedMaha].lord} Mahadasha — Full Span Overview`}
+                      titleControls={<ViewFromToggle moonOn={moonOn} lagnaOn={lagnaOn} onToggleMoon={toggleMoon} onToggleLagna={toggleLagna} />}
                     />
                   </div>
                 )}
@@ -655,6 +648,8 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                         chart={chart}
                         moonOn={moonOn}
                         lagnaOn={lagnaOn}
+                        onToggleMoon={toggleMoon}
+                        onToggleLagna={toggleLagna}
                         mahaLord={data.dashaTree[expandedMaha].lord}
                         mahaNode={data.dashaTree[expandedMaha]}
                         system={dashaKey}

@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow, DashaPrediction, FructificationResult, FructificationWindow } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
-import { DashaSeriesChart } from "./DashaSeriesChart";
+import { DashaSeriesChart, ViewFromToggle } from "./DashaSeriesChart";
 
 // Re-export for consumers that previously imported from here
 export type { DashaDeepData, DashaNode, DashaLadderRow };
@@ -159,6 +159,8 @@ function AntardashaPanel({
   chart,
   moonOn,
   lagnaOn,
+  onToggleMoon,
+  onToggleLagna,
 }: {
   node: DashaNode;
   level: number;
@@ -169,6 +171,8 @@ function AntardashaPanel({
   chart?: ChartData;
   moonOn: boolean;
   lagnaOn: boolean;
+  onToggleMoon: (v: boolean) => void;
+  onToggleLagna: (v: boolean) => void;
 }) {
   const pred = node.prediction;
   const domains = pred
@@ -239,6 +243,7 @@ function AntardashaPanel({
                 ? `Auspiciousness — ${mahaLord} Maha / ${node.lord} Antar`
                 : `Auspiciousness — ${antarLord} Antar / ${node.lord} Pratyantar`
           }
+          titleControls={<ViewFromToggle moonOn={moonOn} lagnaOn={lagnaOn} onToggleMoon={onToggleMoon} onToggleLagna={onToggleLagna} />}
           moonOn={moonOn}
           lagnaOn={lagnaOn}
         />
@@ -612,6 +617,8 @@ function DashaLevel({
   chart,
   moonOn = true,
   lagnaOn = false,
+  onToggleMoon,
+  onToggleLagna,
 }: {
   nodes: DashaNode[];
   mahaStart?: string;
@@ -627,6 +634,8 @@ function DashaLevel({
   chart?: ChartData;
   moonOn?: boolean;
   lagnaOn?: boolean;
+  onToggleMoon?: (v: boolean) => void;
+  onToggleLagna?: (v: boolean) => void;
 }) {
   if (!nodes || nodes.length === 0) return null;
 
@@ -708,6 +717,8 @@ function DashaLevel({
                     chart={chart}
                     moonOn={moonOn}
                     lagnaOn={lagnaOn}
+                    onToggleMoon={onToggleMoon ?? (() => {})}
+                    onToggleLagna={onToggleLagna ?? (() => {})}
                   />
                 )}
               </AnimatePresence>
@@ -727,6 +738,8 @@ function DashaLevel({
                   chart={chart}
                   moonOn={moonOn}
                   lagnaOn={lagnaOn}
+                  onToggleMoon={onToggleMoon}
+                  onToggleLagna={onToggleLagna}
                 />
               )}
             </div>
@@ -889,44 +902,6 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
 
       {ladder.length > 0 ? <CurrentLadder ladder={ladder} /> : null}
 
-      {/* ── Moon / Lagna transit perspective toggles ────────────────────── */}
-      <div className="flex items-center gap-4 py-1">
-        <span className="text-[9px] font-mono uppercase tracking-widest text-text-muted" title="Total transit score of all 9 planets, evaluated from this reference point">View from</span>
-
-        {/* Moon toggle */}
-        <label className="flex items-center gap-1.5 cursor-pointer select-none">
-          <input type="checkbox" className="sr-only" checked={moonOn} onChange={(e) => toggleMoon(e.target.checked)} />
-          <span
-            className="relative inline-flex w-7 h-[14px] rounded-full transition-colors duration-200"
-            style={{ backgroundColor: moonOn ? "#60a5fa" : "var(--color-hairline)" }}
-          >
-            <span
-              className="absolute top-[2px] w-[10px] h-[10px] rounded-full bg-white transition-transform duration-200"
-              style={{ transform: moonOn ? "translateX(14px)" : "translateX(2px)" }}
-            />
-          </span>
-          <span className="text-[10px] font-mono transition-colors" style={{ color: moonOn ? "#60a5fa" : "var(--color-text-muted)" }}>
-            Moon
-          </span>
-        </label>
-
-        {/* Lagna toggle */}
-        <label className="flex items-center gap-1.5 cursor-pointer select-none">
-          <input type="checkbox" className="sr-only" checked={lagnaOn} onChange={(e) => toggleLagna(e.target.checked)} />
-          <span
-            className="relative inline-flex w-7 h-[14px] rounded-full transition-colors duration-200"
-            style={{ backgroundColor: lagnaOn ? "#f59e0b" : "var(--color-hairline)" }}
-          >
-            <span
-              className="absolute top-[2px] w-[10px] h-[10px] rounded-full bg-white transition-transform duration-200"
-              style={{ transform: lagnaOn ? "translateX(14px)" : "translateX(2px)" }}
-            />
-          </span>
-          <span className="text-[10px] font-mono transition-colors" style={{ color: lagnaOn ? "#f59e0b" : "var(--color-text-muted)" }}>
-            Ascendant
-          </span>
-        </label>
-      </div>
 
       {/* ── Mahadasha timeline ─────────────────────────────────────────── */}
       <div className="overflow-x-auto -mx-1 px-1 pb-1">
@@ -977,6 +952,8 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
                   chart={chart}
                   moonOn={moonOn}
                   lagnaOn={lagnaOn}
+                  onToggleMoon={toggleMoon}
+                  onToggleLagna={toggleLagna}
                 />
 
                 {/* Antardasha children */}
@@ -993,6 +970,8 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
                     chart={chart}
                     moonOn={moonOn}
                     lagnaOn={lagnaOn}
+                    onToggleMoon={toggleMoon}
+                    onToggleLagna={toggleLagna}
                   />
                 )}
               </div>
