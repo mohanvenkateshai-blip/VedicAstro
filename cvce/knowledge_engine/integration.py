@@ -11,7 +11,6 @@ All new code should import from here instead of directly from `graph_rag`.
 from __future__ import annotations
 
 import os
-from functools import lru_cache
 from typing import Any
 
 from .engine import KnowledgeEngine
@@ -50,6 +49,27 @@ def get_knowledge_engine() -> KnowledgeEngine:
     else:
         _KE = KnowledgeEngine()
     return _KE
+
+
+# Back-compat shims for code that expects lru_cache interface (e.g. performance_monitor)
+def _compat_cache_clear():
+    clear_knowledge_engine_cache()
+
+
+class _CompatCacheInfo:
+    hits = 0
+    misses = 0
+    maxsize = 1
+    currsize = 1 if _KE is not None else 0
+
+
+def _compat_cache_info():
+    _CompatCacheInfo.currsize = 1 if _KE is not None else 0
+    return _CompatCacheInfo()
+
+
+get_knowledge_engine.cache_clear = _compat_cache_clear
+get_knowledge_engine.cache_info = _compat_cache_info
 
 
 # ------------------------------------------------------------------ #

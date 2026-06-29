@@ -541,6 +541,12 @@ except Exception:
 try:
     from vedic_engine.prediction import kp_system as _kp_engine  # noqa: F401
     from vedic_engine.prediction import prashna as _prashna_engine  # noqa: F401
+    # Ensure the rest register for on_refresh cascade on startup
+    from vedic_engine.core import panchanga as _panchanga_engine  # noqa: F401
+    from vedic_engine.prediction import dasha as _dasha_engine  # noqa: F401
+    from vedic_engine.prediction import gochar as _gochar_engine  # noqa: F401
+    from vedic_engine.prediction import yoga as _yoga_engine  # noqa: F401
+    from vedic_engine.synthesis import engine as _synthesis_engine  # registers muhurta  # noqa: F401
 except Exception:
     pass
 
