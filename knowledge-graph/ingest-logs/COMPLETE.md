@@ -22,7 +22,7 @@ All 20 classical PDFs have ≥50 nodes each in `graph.json`.
   "promote": "done",
   "fly_deploy": "done",
   "supabase_sync": "done",
-  "git_commit": "pending"
+  "git_commit": "done"
 }
 ```
 
