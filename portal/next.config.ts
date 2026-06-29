@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://muhurtha.uvwx.me",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob:",
-              "font-src 'self'",
+              "font-src 'self' data:",
               "connect-src 'self' https://vedicastro-cvce.fly.dev",
               "frame-src https://muhurtha.uvwx.me",
               "frame-ancestors 'self'",
