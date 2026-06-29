@@ -149,6 +149,9 @@ These bugs have already been fixed. Don't re-introduce them.
 | middleware.ts deprecated | Next.js 16 breaking change | Renamed to `proxy.ts`, function named `proxy` |
 | Wrong Muhūrta page | Built simplified verdict page instead of iframe | `/muhurta/page.tsx` is ONLY `<iframe src="muhurtha.uvwx.me">` |
 | "Horoscope" route | User disliked name | Route is `/vedicastro`, nav label is "VedicAstro" |
+| Yogini antardasha equal-division | PyJHora `get_dhasa_bhukthi` at ANTARA level divides maha into 8 equal parts — completely wrong | `cvce/app/dasha_other.py` — bypass PyJHora antardasha; compute proportional from `maha_years × antar_years × year_dur / 36` |
+| Vimshottari labels in Yogini section | `AllDashasPanel` rendered `VimshottariCard` before Yogini tree | `portal/src/components/explorers/AllDashasPanel.tsx` — removed VimshottariCard entirely |
+| Bharani nakshatra nature wrong | `NAK_NATURE["Bharani"] = "Severe"` — should be Fierce (Ugra class) | `cvce/vedic_engine/core/panchanga.py` — corrected to "Fierce" per Wilhelm Ernst Ch.7 |
 
 ### Architecture Pitfalls
 
@@ -161,10 +164,15 @@ These bugs have already been fixed. Don't re-introduce them.
 
 ## 6. Knowledge Graph & Corpus Vault (2026-06-29)
 
+**Production graph: 26,722 nodes / 38,881 links / 1,773 hyperedges / 121 communities / 69 source files**
+
+New books added (session 2026-06-29): Rath JKRE (+968), Wilhelm Ernst Classical Muhurta (+536),
+Vedic Remedies by Rath (+504), Patel/Aiyar Ashtakavarga (+370), Crux of Vedic Astrology (+265),
+Jyotish Digest volumes (+273). Total: +3,455 nodes from baseline 23,267.
+
 **Core Jyothisha (20 classical PDFs):**
 - OCR/text → `raw/`: **20/20 complete**
-- Graph extraction: **20/20 complete** — all books in production `graph.json` (23,267 nodes)
-- Merged graph promoted to `graph.json` + `cvce/graph_rag/graph.json`; Fly deployed 2026-06-29
+- Graph extraction: **20/20 complete** — all books in production `graph.json`
 
 **Corpus vault (Supabase):**
 - Tables: `corpus_sources`, `graph_nodes`, `graph_links`, `graph_ingest_runs` (RLS deny-all for clients)
@@ -173,7 +181,8 @@ These bugs have already been fixed. Don't re-introduce them.
 - Portal admin: `/admin/knowledge` + `/api/admin/corpus/*` (service role, admin only)
 
 **Production CVCE:**
-- `graph.json` on Fly: **23,267 nodes** (promoted 2026-06-29 via `merge --promote` + `sync-graph.sh --deploy`)
+- `graph.json` on Fly: **26,722 nodes** (deployed 2026-06-29)
+- `CVCE_GRAPH_AS_RULES` defaults to `True` — graph feeds transit rules by default
 - GCS bucket = processing scratch only (`gcp-lockdown.sh`)
 
 **Git policy:**
@@ -194,16 +203,35 @@ These bugs have already been fixed. Don't re-introduce them.
 
 ---
 
-## 8. Next Phases (in priority order)
+## 8. Engines — Status & Last Knowledge-Graph Feed (2026-06-29)
 
-1. **Supabase vault re-sync** — push 23k-node graph when network to Supabase is stable
+| Engine | File | Purpose | Last KG Feed | Status |
+|--------|------|---------|-------------|--------|
+| Transit rules | `graph_rag/rules_provider.py` | 4-pass GPD+HoraSara+SC consensus for gochar | 2026-06-29 (26,722 nodes) | Live, `CVCE_GRAPH_AS_RULES=True` |
+| Muhurta rules | `graph_rag/muhurta_rules_provider.py` | Activity-level muhurta verdicts | 2026-06-29 (26,722 nodes) | Live |
+| GraphRAG enhancer | `graph_rag/enhancer.py` | Citation injection on predict responses | 2026-06-29 (26,722 nodes) | Live |
+| Natal yoga | `vedic_engine/prediction/yoga.py` | 19 new yogas (Vesi/Vasi, Viparita, Nabhasa…) | 2026-06-29 | Live |
+| Muhurta yoga | `vedic_engine/prediction/muhurta_yogas.py` | Full Vara×Tithi+Nakshatra combination tables | 2026-06-29 (Wilhelm Ernst) | Live |
+| Dasha (Vimshottari) | `app/dasha.py` | Standard Vimshottari MD/AD/PD | 2026-06-25 | Live |
+| Dasha (Yogini) | `app/dasha_other.py` | Yogini with proportional antardasha (classical) | 2026-06-29 | Live |
+| Dasha (Ashtottari) | `app/dasha_other.py` | Ashtottari 108-year system | 2026-06-25 | Live |
+| Fructification | `app/fructification.py` | Transit×Dasha×Yoga intersection + Vedha | 2026-06-29 (Nakshatra Vedha) | Live |
+| Nakshatra Vedha | `app/fructification.py` | Cancels transit results per GPD rule (16th nak) | 2026-06-29 | Live |
+| Panchanga | `vedic_engine/core/panchanga.py` | Tithi, Vara, Nakshatra, Yoga, Karana | 2026-06-29 | Live |
+| KP System | `app/kp_system.py` | Krishnamurti Paddhati sublord system | 2026-06-25 | Live |
+| Varshaphala | `app/varshaphala.py` | Annual return chart | 2026-06-25 | Live |
+| Prashna | `app/prashna.py` | Horary chart | 2026-06-25 | Live |
+
+## 9. Next Phases (in priority order)
+
+1. **Supabase vault re-sync** — push 26k-node graph when network to Supabase is stable
 2. **Vector embeddings** — `corpus_chunks` hybrid search (schema planned, not built)
 3. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI
 4. **Phase 13: LLM narration layer** — optional prose on `ReportFacts` (`CVCE_LLM_NARRATION=1`)
 
 ---
 
-## 9. Verify-It-Still-Works Checklist
+## 10. Verify-It-Still-Works Checklist
 
 Before touching any layer, verify the adjacent layer is still healthy:
 
