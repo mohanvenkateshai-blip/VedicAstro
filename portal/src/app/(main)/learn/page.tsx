@@ -105,7 +105,7 @@ export default function LearnPage() {
         <div className="flex items-end justify-between mb-6">
           <div>
             <h2 id="library-heading" className="font-display text-3xl tracking-[-0.01em]">Book Library</h2>
-            <p className="text-sm text-text-muted mt-1">Core canonical texts • 6 shown • more added continuously</p>
+            <p className="text-sm text-text-muted mt-1">Core canonical texts • 26,722 nodes • newbooks-v1 • powered by KnowledgeEngine</p>
           </div>
           <Link
             href="#"
@@ -146,7 +146,7 @@ export default function LearnPage() {
                     className="inline-flex items-center gap-1 text-accent hover:text-accent-strong transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-md px-2 py-0.5 -mr-2"
                     aria-label={`Open ${book.title}`}
                   >
-                    Open <ArrowRight className="w-3.5 h-3.5" />
+                    {book.id === "js" ? "Live from KG" : "Open"} <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 ) : (
                   <span className="text-xs text-text-muted">Coming soon</span>
