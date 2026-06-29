@@ -26,7 +26,6 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Status:** Core calculations stable; synthesis layer growing.
 * **Key Achievements:** ~25 endpoints. **Vimshottari fix** — `get_vimsottari_dhasa_bhukthi()[0]` is birth balance, not running lords; tree via `vimsottari_immediate_children`. **`POST /report/facts`** — unified natal + dasha ladder + `DashaImpactAnalyzer` + `TransitAnalyzer`. Golden tests passing.
 * **Missing/Stalled:**
-  - `graph-deepseek.json` (10,850 nodes) **not** deployed to Fly — production still on deterministic 4253-node graph.
   - Hiranya-level report prose (Phases 9–12) — facts API exists; narrative chapters not built.
   - Kaksha calendar, Chara/Kalachakra dashas.
 
@@ -41,11 +40,11 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ### C. Knowledge Graph (Rules & Citations Base)
 * **Location:** `knowledge-graph/` (Python tools, JSON database)
-* **Status:** **Production graph — 4253 nodes** on Fly. **DeepSeek extract — 10,850 nodes** in `graph-deepseek.json` (committed, not deployed).
-* **Build pipeline:** `scripts/sync-gyan-to-raw.sh` → `gyan-corpus-extract.py` → `graphify-out/graph.json` → `scripts/sync-graph.sh --deploy`. Alternate extractors: `deepseek-graph-extract.py`, `grok-batch-graph-extract.py`, `glm-batch-graph-extract.py`.
-* **GraphRAG:** Citation enrichment + transit/muhurta rules when `CVCE_GRAPH_AS_RULES=1` — **done on production**.
-* **Removed:** stale `cvce/data/graph.json` (448 nodes) — deleted in `c3e2777`.
-* **Version Control:** ✅ `main` at `b002f0d` (June 27 evening).
+* **Status:** **Production graph — 23,267 nodes / 35,438 links** on Fly + in git. Core Jyothisha (20 classical PDFs) ingest **complete**.
+* **Vault:** Supabase `corpus-vault` (private Storage + Postgres `graph_nodes`/`graph_links`). Admin explorer: `/admin/knowledge`.
+* **Build pipeline:** `scripts/ingest-core-jyotisha.py` → `merge --promote` → `scripts/sync-graph.sh --deploy` → `scripts/supabase-corpus-sync.py`
+* **GraphRAG:** Citation enrichment + transit/muhurta rules when `CVCE_GRAPH_AS_RULES=1` — **live on production**.
+* **Version Control:** `main` @ `bbe6f43`+ (graph.json committed, ~19MB)
 
 ---
 
@@ -123,7 +122,7 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] **10** Timing merge — combined dasha score + transit verdict → single window verdict with reasons.
 - [x] **11** Dasha forecast — next 8 antardasha periods, each with dated range + life-area bullets (profession/wealth/health/family/caution).
 - [ ] **12** (deferred) Optional LLM narration layer — gate with `CVCE_LLM_NARRATION=1`.
-- [ ] Deploy `graph-deepseek.json` to Fly after review (do not auto-replace 4253-node graph).
+- [ ] Vector embeddings on `corpus_chunks` for hybrid search (Supabase).
 - [ ] Kaksha transit calendar, Chara/Kalachakra dashas, desktop §7 enhancements.
 
 **Key new files (Phase 9–12):**
@@ -139,8 +138,8 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 
 1. **CVCE cold-start latency:** Scale-to-zero — first proxied request after idle can take **30–60s**; explorers now show timeout/error instead of infinite spinners.
 2. **Report load time:** `/chart/report` now calls ashtakavarga, shadbala, forecast (8 antardasha analysis), and GraphRAG enhancer — may take 15–20s on a warm CVCE. Report page has a 120s proxy timeout.
-3. **DeepSeek graph not on Fly:** `graph-deepseek.json` committed locally; production CVCE still uses 4253-node deterministic graph. Grok batch stalled (xAI out of credits).
-4. **Auth/DB:** Google OAuth + Neon + save/load/delete live. Varshaphala requires pro tier.
+3. **Ingest daemons stopped:** `com.vedicastro.ingest` launch agents unloaded (work complete). Reload only if new OCR/extract needed.
+4. **Auth/DB:** Google OAuth + Neon + save/load/delete live. Varshaphala requires pro tier. `ADMIN_EMAILS` for admin role.
 5. **LLM narration (Phase 12 deferred):** Report uses rule-based bullets only. Optional LLM prose layer pending (`CVCE_LLM_NARRATION=1` gate not wired).
 
 ### Golden reference chart (regression anchor)
