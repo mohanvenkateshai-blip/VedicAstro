@@ -510,3 +510,79 @@ def _nak_name(nak_1idx: int) -> str:
     ]
     idx = (nak_1idx - 1) % 27
     return NAMES[idx]
+
+
+# ── Nakshatra Vedha (Gochar Phaladeepika, Nakshathra Vedha chapter) ──────────
+#
+# Rule source: graph node gochar_phaladeepika_pulippani_nakshatra_vedha
+#   label: "Nakshatra Vedha: transit effects through stars neutralised by a
+#           planet occupying a specified Nakshatra counted from natal planet's
+#           star (16 positions)"
+#
+# When a planet transits through a nakshatra, the good result is CANCELLED if
+# another planet (other than the transiting one) currently occupies the
+# nakshatra that is 16 stars counted from the natal planet's birth star.
+# This is distinct from sign-level Gochara Vedha (GPD Ch.22).
+#
+# The count of 16 comes directly from the GPD chapter title / graph node
+# label. Exemptions: the Vedha-exempt pairs from Gochara Vedha
+# (Sun-Saturn, Moon-Mercury) are not stated for Nakshatra Vedha in the
+# text, so no exemptions are applied here.
+
+_NAKSHATRA_VEDHA_COUNT = 16  # GPD Nakshathra Vedha chapter
+
+
+def nakshatra_vedha_check(
+    transit_planet: str,
+    natal_nakshatra_1idx: int,
+    current_positions: dict[str, int],
+) -> dict:
+    """
+    Check whether Nakshatra Vedha cancels the transiting planet's good result.
+
+    Implements the rule from Gochar Phaladeepika (Pulippani), Nakshathra Vedha
+    chapter — graph node gochar_phaladeepika_pulippani_nakshatra_vedha.
+
+    Args:
+        transit_planet: Name of the planet currently transiting (e.g. 'Jupiter').
+        natal_nakshatra_1idx: Birth star of the native, 1-indexed (1=Ashwini…27=Revati).
+        current_positions: Mapping of planet_name → current nakshatra (1-indexed).
+                           Should include all transiting planets except the one
+                           being checked.
+
+    Returns:
+        dict with keys:
+          vedha_active (bool)     — True if the Nakshatra Vedha is triggered.
+          vedha_nak_1idx (int)    — The Vedha nakshatra position (1-indexed).
+          vedha_nak_name (str)    — Human-readable name of the Vedha star.
+          blocking_planet (str|None) — Planet occupying the Vedha star, if any.
+          source (str)            — Textual provenance citation.
+    """
+    if natal_nakshatra_1idx < 1:
+        return {
+            "vedha_active": False,
+            "vedha_nak_1idx": None,
+            "vedha_nak_name": None,
+            "blocking_planet": None,
+            "source": "gochar_phaladeepika_pulippani_nakshatra_vedha",
+        }
+
+    # Vedha nakshatra: 16th star counted from natal birth star (1-indexed, wrap at 27)
+    vedha_1idx = ((natal_nakshatra_1idx - 1 + _NAKSHATRA_VEDHA_COUNT - 1) % 27) + 1
+    vedha_name = _nak_name(vedha_1idx)
+
+    blocking_planet = None
+    for planet, nak_1idx in current_positions.items():
+        if planet == transit_planet:
+            continue  # skip self
+        if nak_1idx == vedha_1idx:
+            blocking_planet = planet
+            break
+
+    return {
+        "vedha_active": blocking_planet is not None,
+        "vedha_nak_1idx": vedha_1idx,
+        "vedha_nak_name": vedha_name,
+        "blocking_planet": blocking_planet,
+        "source": "GPD Nakshathra Vedha chapter | graph:gochar_phaladeepika_pulippani_nakshatra_vedha",
+    }
