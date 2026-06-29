@@ -3,9 +3,10 @@ Yoga Detection Module — Identifies classical planetary combinations (Yogas)
 
 Sources:
   - BPHS Ch.35-36 (Raja Yogas, Nabhasa Yogas)
-  - Phaladeepika Ch.6-7 (Yogas)
-  - Sarvartha Chintamani Ch.8 (Raja Yogas)
-  - Hora Sara Ch.7 (Chandra Yogas)
+  - Phaladeepika Ch.6-7 (Yogas) — Viswa Bharati / Sastri edition, 1937
+  - Sarvartha Chintamani Ch.8-9 (Raja Yogas, Sanyas Yoga)
+  - Hora Sara Ch.19-20 (Chandra Yogas, Surya Yogas, Lagna Yogas, Nabhasa Yogas, Raja Yogas)
+    by Prithuyasas (son of Varahamihira), transl. R. Santhanam, Ranjan Pub. 1982
 
 Each yoga has:
   - conditions: dict of planet→sign relationships
@@ -261,6 +262,192 @@ SC_YOGAS = [
         "condition": "Two planets in mutual exchange of signs (each in the other's sign)",
         "effect": "Exchange of karakatwas, mutual support, combined effects of both houses",
         "source": "SC-Ch8",
+    },
+]
+
+# =====================================================================
+# Surya Yogas (Solar yogas) — Hora Sara Ch.19 sl.9-12 / BPHS Ch.35
+# =====================================================================
+
+SURYA_YOGAS = [
+    {
+        "name": "Vesi Yoga",
+        "condition": "Planet (other than Moon) in 2nd from Sun",
+        "effect": "Slow walk, soft-spoken, hopeful, balanced wealth and outgo, dear to men",
+        "source": "HoraSara-Ch19-sl9",
+    },
+    {
+        "name": "Vasi Yoga",
+        "condition": "Planet (other than Moon) in 12th from Sun",
+        "effect": "If benefics: all comforts and wealth; if malefics: sinful, defective-limbed, sleepy, laborious",
+        "source": "HoraSara-Ch19-sl9",
+    },
+    {
+        "name": "Ubhayachari Yoga",
+        "condition": "Planets (other than Moon) in both 2nd and 12th from Sun",
+        "effect": "Talkative, wise, strong, leader, dear to king, enthusiastic, eloquent",
+        "source": "HoraSara-Ch19-sl9",
+    },
+]
+
+# =====================================================================
+# Lagna Yogas — Hora Sara Ch.19 sl.13-18
+# =====================================================================
+
+LAGNA_YOGAS = [
+    {
+        "name": "Sushubha Yoga",
+        "condition": "Planet (other than luminaries) in 2nd from Lagna",
+        "effect": "Wealthy, attached to women, principled, ever-active, head of monetary transactions",
+        "source": "HoraSara-Ch19-sl13",
+    },
+    {
+        "name": "Ashubha Yoga",
+        "condition": "Planet (other than luminaries) in 12th from Lagna",
+        "effect": "Strong body, caste leader, enthusiastic, speaker, helpful, charitable, dear to all",
+        "source": "HoraSara-Ch19-sl15",
+    },
+    {
+        "name": "Karthari Yoga",
+        "condition": "Malefics in both 2nd and 12th from Lagna (scissors cutting the Lagna)",
+        "effect": "Angry, grieved, hates parents, lacks enthusiasm, lives abroad, danger from poison/fire/weapons",
+        "source": "HoraSara-Ch19-sl16",
+    },
+    {
+        "name": "Lagnadhi Yoga",
+        "condition": "Benefics (Jupiter, Venus, Mercury) in 6th, 7th, 8th from Lagna, free from malefic aspect",
+        "effect": "Minister, army chief, king, many wives, humble, long life, virtuous, enemy-free",
+        "source": "HoraSara-Ch19-sl17",
+    },
+]
+
+# =====================================================================
+# Additional Phaladeepika Yogas (VB / Sastri edition, 1937)
+# Sources: Phaladeepika Ch.6 sl.14-31, sl.39-43, sl.57-69
+# =====================================================================
+
+PD_YOGAS = [
+    {
+        "name": "Mahabhagya Yoga",
+        "condition": "Day birth (male): Sun, Moon, Lagna all in odd signs; OR night birth (female): all in even signs",
+        "effect": "Immense pleasure, liberal, famous, ruler, 80-year life, spotless character",
+        "source": "PD-Ch6-sl14",
+    },
+    {
+        "name": "Sakata Yoga",
+        "condition": "Moon in 6th, 8th, or 12th from Jupiter; cancelled if Moon in Kendra from Lagna",
+        "effect": "Frequently loses fortune, may regain, ordinary, mental grief, insignificant",
+        "source": "PD-Ch6-sl17",
+    },
+    {
+        "name": "Vasumati Yoga",
+        "condition": "All natural benefics (Jupiter, Venus, Mercury) in Upachaya houses (3,6,10,11) from Lagna or Moon",
+        "effect": "Commands plenty of money, always at home in comfort",
+        "source": "PD-Ch6-sl19",
+    },
+    {
+        "name": "Amala Yoga",
+        "condition": "Benefic planet (Jupiter, Venus, or unafflicted Mercury) in 10th from Lagna or Moon",
+        "effect": "Rules the earth, wealthy, sons, famous, prosperous, prudent, untarnished career",
+        "source": "PD-Ch6-sl20",
+    },
+    {
+        "name": "Saraswati Yoga",
+        "condition": "Venus, Jupiter, Mercury in Kendra/Trikona/2nd house; Jupiter in exaltation/own/friendly sign",
+        "effect": "Highly intelligent, clever in drama/poetry/prose/accounts, famous, wealthy, respected by kings",
+        "source": "PD-Ch6-sl26",
+    },
+    {
+        "name": "Harsha Yoga",
+        "condition": "Lord of 6th house placed in the 6th house (dusthana lord in own dusthana)",
+        "effect": "Happiness, enjoyment, good fortune, strong constitution, overcomes enemies, friend of illustrious",
+        "source": "PD-Ch6-sl57",
+    },
+    {
+        "name": "Sarala Yoga",
+        "condition": "Lord of 8th house placed in the 8th house (dusthana lord in own dusthana)",
+        "effect": "Long-lived, resolute, fearless, prosperous, success, overcomes foes, celebrated, pure",
+        "source": "PD-Ch6-sl63",
+    },
+    {
+        "name": "Vimala Yoga",
+        "condition": "Lord of 12th house placed in the 12th house (dusthana lord in own dusthana)",
+        "effect": "Spends little, saves much, good to all, happy, independent, respectable profession",
+        "source": "PD-Ch6-sl65",
+    },
+    # Sankhya (numerical) Nabhasa yogas by sign count — PD-VB Ch.6 sl.39-41
+    {
+        "name": "Vallaki Yoga",
+        "condition": "All 7 planets spread across 7 distinct signs",
+        "effect": "Fond of dance/music, greatly wealthy, talented polymath, cultural refinement",
+        "source": "PD-Ch6-sl39",
+    },
+    {
+        "name": "Dama Yoga",
+        "condition": "All 7 planets spread across 6 distinct signs",
+        "effect": "Liberal, king, benefactor, philanthropic, highly reliable, wise",
+        "source": "PD-Ch6-sl39",
+    },
+    {
+        "name": "Pasa Yoga",
+        "condition": "All 7 planets spread across 5 distinct signs",
+        "effect": "Opulent, enjoyment, extensive networks, great skill in people-ecosystems",
+        "source": "PD-Ch6-sl40",
+    },
+    {
+        "name": "Kedara Yoga",
+        "condition": "All 7 planets spread across 4 distinct signs",
+        "effect": "Wealth, agricultural lands, helps relatives, dutiful, honored, close to earth",
+        "source": "PD-Ch6-sl40",
+    },
+    {
+        "name": "Sula Yoga",
+        "condition": "All 7 planets concentrated in 3 distinct signs",
+        "effect": "Cruel, angry, focused single-mindedly, indigent, alternately prosperous",
+        "source": "PD-Ch6-sl41",
+    },
+    {
+        "name": "Yuga Yoga",
+        "condition": "All 7 planets concentrated in 2 distinct signs",
+        "effect": "Heretical, without consistent wealth, dual-life choices, limited relatives",
+        "source": "PD-Ch6-sl41",
+    },
+    {
+        "name": "Gola Yoga",
+        "condition": "All 7 planets packed in 1 single sign",
+        "effect": "Without wealth, sinful, low associates, short-lived, highly insular",
+        "source": "PD-Ch6-sl41",
+    },
+]
+
+# =====================================================================
+# Additional Hora Sara Raja Yogas — Ch.20
+# =====================================================================
+
+HS_RAJA_YOGAS = [
+    {
+        "name": "Pushkala Yoga",
+        "condition": "Moon's dispositor (sign lord of Moon's rashi) conjoined with Lagna lord in a friendly Kendra, aspecting Lagna",
+        "effect": "Lords over earth; royal scion; exquisite speech; executive governance",
+        "source": "HoraSara-Ch20-sl12",
+    },
+    {
+        "name": "Sanyas Yoga",
+        "condition": "Four or more planets together in a Kendra house",
+        "effect": "Renunciation, ascetic life, spiritual orders",
+        "source": "SC-Ch8-sl1",
+    },
+    {
+        "name": "Mala Yoga",
+        "condition": "All natural benefics (Jupiter, Venus, Mercury) in Kendra houses from Lagna",
+        "effect": "Learned, wealthy, an unbroken stream of material comfort",
+        "source": "HoraSara-Ch19-sl43",
+    },
+    {
+        "name": "Sarpa Yoga",
+        "condition": "All natural malefics (Sun, Mars, Saturn) in Kendra houses from Lagna",
+        "effect": "Penniless, talkative, leaves paternal place, troubles others, short-lived",
+        "source": "HoraSara-Ch19-sl44",
     },
 ]
 
@@ -685,5 +872,338 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
                     planets_involved=list(graha_rashis.keys()),
                     source="BPHS-Ch12", benefic=True, confidence=0.8,
                 ))
+
+    # ---- Sankhya (Numerical) Nabhasa Yogas — PD-VB Ch.6 sl.39-41 ----
+    # Based on how many distinct signs the 7 classical planets occupy.
+    # These supersede (but do not exclude) Rajju/Musala/Nala which use sign-quality.
+    if len(graha_rashis) >= 7:
+        distinct_signs = len(set(graha_rashis.values()))
+        sankhya_map = {
+            7: ("Vallaki Yoga", "Fond of dance/music, greatly wealthy, cultural refinement, polymath", True, "PD-Ch6-sl39"),
+            6: ("Dama Yoga", "Liberal, king, benefactor, philanthropic, highly communally reliable", True, "PD-Ch6-sl39"),
+            5: ("Pasa Yoga", "Opulent, extensive networks, great skill in people-management", True, "PD-Ch6-sl40"),
+            4: ("Kedara Yoga", "Wealth, agricultural lands, helps relatives, dutiful, honored", True, "PD-Ch6-sl40"),
+            3: ("Sula Yoga", "Cruel, angry, focused single-mindedly, alternately prosperous", False, "PD-Ch6-sl41"),
+            2: ("Yuga Yoga", "Heretical, without consistent wealth, dual-life choices, limited relatives", False, "PD-Ch6-sl41"),
+            1: ("Gola Yoga", "Without wealth, sinful, low associates, short-lived, highly insular", False, "PD-Ch6-sl41"),
+        }
+        if distinct_signs in sankhya_map:
+            y_name, y_desc, y_benefic, y_src = sankhya_map[distinct_signs]
+            detected.append(DetectedYoga(
+                name=y_name, category="Nabhasa",
+                description=y_desc,
+                planets_involved=list(graha_rashis.keys()),
+                source=y_src, benefic=y_benefic, confidence=0.9,
+            ))
+
+    # ---- Mala Yoga and Sarpa Yoga — Hora Sara Ch.19 sl.43-45 ----
+    # Mala: all three natural benefics (Jup, Ven, Mer) in Kendra from Lagna
+    # Sarpa: all three natural malefics (Sun, Mars, Saturn) in Kendra from Lagna
+    NATURAL_BENEFICS_TRIAD = {"Jupiter", "Venus", "Mercury"}
+    NATURAL_MALEFICS_TRIAD = {"Sun", "Mars", "Saturn"}
+
+    benefics_in_kendra = [
+        p for p in NATURAL_BENEFICS_TRIAD
+        if p in planet_rashis and planet_house(p) in KENDRA
+    ]
+    if set(benefics_in_kendra) == NATURAL_BENEFICS_TRIAD:
+        detected.append(DetectedYoga(
+            name="Mala Yoga", category="Nabhasa",
+            description="All natural benefics in Kendras — learned, wealthy, unbroken material comfort",
+            planets_involved=list(NATURAL_BENEFICS_TRIAD),
+            source="HoraSara-Ch19-sl43", benefic=True, confidence=0.9,
+        ))
+
+    malefics_in_kendra = [
+        p for p in NATURAL_MALEFICS_TRIAD
+        if p in planet_rashis and planet_house(p) in KENDRA
+    ]
+    if set(malefics_in_kendra) == NATURAL_MALEFICS_TRIAD:
+        detected.append(DetectedYoga(
+            name="Sarpa Yoga", category="Nabhasa",
+            description="All natural malefics in Kendras — penniless, talkative, troubles others, short-lived",
+            planets_involved=list(NATURAL_MALEFICS_TRIAD),
+            source="HoraSara-Ch19-sl44", benefic=False, confidence=0.9,
+        ))
+
+    # ---- Surya Yogas — Hora Sara Ch.19 sl.9-12 ----
+    # Vesi: planet (not Moon) in 2nd from Sun
+    # Vasi: planet (not Moon) in 12th from Sun
+    # Ubhayachari: planets in both 2nd and 12th from Sun
+    if "Sun" in planet_rashis:
+        sun_rashi_idx = planet_rashis["Sun"]
+
+        def planet_house_from_sun(planet: str) -> int:
+            if planet not in planet_rashis:
+                return -1
+            return ((planet_rashis[planet] - sun_rashi_idx + 12) % 12) + 1
+
+        planets_in_2nd_from_sun = [
+            p for p in planet_rashis
+            if p not in ("Sun", "Moon") and planet_house_from_sun(p) == 2
+        ]
+        planets_in_12th_from_sun = [
+            p for p in planet_rashis
+            if p not in ("Sun", "Moon") and planet_house_from_sun(p) == 12
+        ]
+
+        if planets_in_2nd_from_sun and planets_in_12th_from_sun:
+            detected.append(DetectedYoga(
+                name="Ubhayachari Yoga", category="Surya",
+                description="Talkative, wise, strong, leader, dear to king, enthusiastic, eloquent",
+                planets_involved=planets_in_2nd_from_sun + planets_in_12th_from_sun,
+                source="HoraSara-Ch19-sl9", benefic=True, confidence=1.0,
+            ))
+        else:
+            if planets_in_2nd_from_sun:
+                detected.append(DetectedYoga(
+                    name="Vesi Yoga", category="Surya",
+                    description="Slow walk, soft-spoken, balanced income and outgo, dear to men",
+                    planets_involved=planets_in_2nd_from_sun,
+                    source="HoraSara-Ch19-sl9", benefic=True, confidence=1.0,
+                ))
+            if planets_in_12th_from_sun:
+                # Qualifier: benefic planets give good results, malefic give bad
+                has_benefic = any(p in BENEFICS for p in planets_in_12th_from_sun)
+                detected.append(DetectedYoga(
+                    name="Vasi Yoga", category="Surya",
+                    description=(
+                        "All comforts and wealth" if has_benefic
+                        else "Sinful, defective-limbed, sleepy, laborious"
+                    ),
+                    planets_involved=planets_in_12th_from_sun,
+                    source="HoraSara-Ch19-sl9", benefic=has_benefic, confidence=1.0,
+                ))
+
+    # ---- Lagna Yogas — Hora Sara Ch.19 sl.13-18 ----
+    # Sushubha: non-luminary planet in 2nd from Lagna
+    # Ashubha: non-luminary planet in 12th from Lagna
+    # Karthari: malefics in BOTH 2nd and 12th from Lagna
+    # Lagnadhi: benefics (Jup/Ven/Mer) in 6th, 7th, 8th from Lagna, free from malefic aspect
+    non_luminaries = [
+        p for p in planet_rashis if p not in ("Sun", "Moon")
+    ]
+
+    planets_in_2nd_lagna = [p for p in non_luminaries if planet_house(p) == 2]
+    planets_in_12th_lagna = [p for p in non_luminaries if planet_house(p) == 12]
+
+    # Karthari takes priority over Sushubha/Ashubha (malefic scissors)
+    malefics_in_2nd = [p for p in planets_in_2nd_lagna if p in MALEFICS]
+    malefics_in_12th = [p for p in planets_in_12th_lagna if p in MALEFICS]
+    if malefics_in_2nd and malefics_in_12th:
+        detected.append(DetectedYoga(
+            name="Karthari Yoga", category="Lagna",
+            description="Malefic scissors on Lagna: angry, hates parents, danger from poison/fire/weapons",
+            planets_involved=malefics_in_2nd + malefics_in_12th,
+            source="HoraSara-Ch19-sl16", benefic=False, confidence=0.9,
+        ))
+    else:
+        if planets_in_2nd_lagna:
+            detected.append(DetectedYoga(
+                name="Sushubha Yoga", category="Lagna",
+                description="Wealthy, principled, ever-active, head of monetary transactions",
+                planets_involved=planets_in_2nd_lagna,
+                source="HoraSara-Ch19-sl13", benefic=True, confidence=0.9,
+            ))
+        if planets_in_12th_lagna:
+            detected.append(DetectedYoga(
+                name="Ashubha Yoga", category="Lagna",
+                description="Strong body, enthusiastic, charitable, dear to all, famous",
+                planets_involved=planets_in_12th_lagna,
+                source="HoraSara-Ch19-sl15", benefic=True, confidence=0.9,
+            ))
+
+    # Lagnadhi Yoga: benefics in 6th, 7th, 8th from Lagna (Hora Sara Ch.19 sl.17-18)
+    # Rule: benefic participants free from Sun's conjunction (Hora Sara Ch.19 sl.6 notes for Adhi)
+    lagnadhi_houses = {6, 7, 8}
+    lagnadhi_planets: list[str] = []
+    lagnadhi_found_houses: set[int] = set()
+    for p in ("Jupiter", "Venus", "Mercury"):
+        if p not in planet_rashis:
+            continue
+        # Exclude if combust (conjunct Sun in same rashi)
+        if "Sun" in planet_rashis and planet_rashis[p] == planet_rashis["Sun"]:
+            continue
+        h = planet_house(p)
+        if h in lagnadhi_houses:
+            lagnadhi_found_houses.add(h)
+            lagnadhi_planets.append(p)
+    if lagnadhi_found_houses >= {6, 7, 8}:
+        detected.append(DetectedYoga(
+            name="Lagnadhi Yoga", category="Lagna",
+            description="Minister, army chief, king, many wives, humble, long life, virtuous, enemy-free",
+            planets_involved=lagnadhi_planets,
+            source="HoraSara-Ch19-sl17", benefic=True, confidence=0.9,
+        ))
+
+    # ---- Mahabhagya Yoga — Phaladeepika Ch.6 sl.14-15 ----
+    # Day birth male: Sun, Moon, Lagna all in odd signs (Aries=0, Gem=2, Leo=4, Lib=6, Sag=8, Aq=10)
+    # Night birth female: Sun, Moon, Lagna all in even signs (Tau=1, Can=3, Vir=5, Sco=7, Cap=9, Pis=11)
+    # ChartData only carries planet rashis; we can check Sun and Moon, and use lagna_sign_idx for Lagna.
+    if "Sun" in planet_rashis and "Moon" in planet_rashis:
+        sun_odd = (planet_rashis["Sun"] % 2 == 0)     # even index = odd sign (Aries=0 is odd)
+        moon_odd = (planet_rashis["Moon"] % 2 == 0)
+        lagna_odd = (lagna_sign_idx % 2 == 0)
+        if sun_odd and moon_odd and lagna_odd:
+            detected.append(DetectedYoga(
+                name="Mahabhagya Yoga (day/male)",
+                category="Raja",
+                description="Immense pleasure, liberal, famous, ruler, 80-year life, spotless character",
+                planets_involved=["Sun", "Moon"],
+                source="PD-Ch6-sl14", benefic=True, confidence=0.85,
+            ))
+        sun_even = not sun_odd
+        moon_even = not moon_odd
+        lagna_even = not lagna_odd
+        if sun_even and moon_even and lagna_even:
+            detected.append(DetectedYoga(
+                name="Mahabhagya Yoga (night/female)",
+                category="Raja",
+                description="Wealth, long-lived husband, sons, grandsons, lucky, well-behaved",
+                planets_involved=["Sun", "Moon"],
+                source="PD-Ch6-sl14", benefic=True, confidence=0.85,
+            ))
+
+    # ---- Sakata Yoga — Phaladeepika Ch.6 sl.17 ----
+    # Moon in 6th, 8th, or 12th from Jupiter.
+    # Cancelled if Moon is in Kendra from Lagna.
+    if "Jupiter" in planet_rashis and "Moon" in planet_rashis:
+        jup_rashi_idx = planet_rashis["Jupiter"]
+        moon_from_jup = ((planet_rashis["Moon"] - jup_rashi_idx + 12) % 12) + 1
+        if moon_from_jup in (6, 8, 12):
+            moon_in_kendra_from_lagna = planet_house("Moon") in KENDRA
+            if not moon_in_kendra_from_lagna:
+                detected.append(DetectedYoga(
+                    name="Sakata Yoga", category="Chandra",
+                    description="Frequently loses fortune then may regain; ordinary, mental grief, insignificant",
+                    planets_involved=["Moon", "Jupiter"],
+                    source="PD-Ch6-sl17", benefic=False, confidence=0.85,
+                ))
+            else:
+                detected.append(DetectedYoga(
+                    name="Sakata Yoga (cancelled)", category="Chandra",
+                    description="Sakata formed but cancelled — Moon in Kendra from Lagna",
+                    planets_involved=["Moon", "Jupiter"],
+                    source="PD-Ch6-sl17", benefic=True, confidence=0.8,
+                ))
+
+    # ---- Vasumati Yoga — Phaladeepika Ch.6 sl.19-20 ----
+    # All three natural benefics (Jupiter, Venus, Mercury) in Upachaya houses (3,6,10,11) from Lagna or Moon.
+    UPACHAYA = {3, 6, 10, 11}
+    vasumati_from_lagna = all(
+        p in planet_rashis and planet_house(p) in UPACHAYA
+        for p in ("Jupiter", "Venus", "Mercury")
+    )
+    vasumati_from_moon = (
+        moon_rashi_idx is not None and all(
+            p in planet_rashis and planet_house_from_moon(p) in UPACHAYA
+            for p in ("Jupiter", "Venus", "Mercury")
+        )
+    )
+    if vasumati_from_lagna or vasumati_from_moon:
+        basis = "Lagna" if vasumati_from_lagna else "Moon"
+        detected.append(DetectedYoga(
+            name="Vasumati Yoga", category="Dhana",
+            description=f"All benefics in Upachaya from {basis} — commands plenty of money, always at home in comfort",
+            planets_involved=["Jupiter", "Venus", "Mercury"],
+            source="PD-Ch6-sl19", benefic=True, confidence=0.9,
+        ))
+
+    # ---- Amala Yoga — Phaladeepika Ch.6 sl.19-20 ----
+    # Benefic planet (Jupiter, Venus, or Mercury) in 10th from Lagna or Moon, unafflicted.
+    amala_planets: list[str] = []
+    for p in ("Jupiter", "Venus", "Mercury"):
+        if p not in planet_rashis:
+            continue
+        if planet_house(p) == 10:
+            amala_planets.append(p)
+        elif moon_rashi_idx is not None and planet_house_from_moon(p) == 10:
+            if p not in amala_planets:
+                amala_planets.append(p)
+    if amala_planets:
+        detected.append(DetectedYoga(
+            name="Amala Yoga", category="Raja",
+            description="Rules the earth, wealthy, famous, prosperous, prudent, untarnished career",
+            planets_involved=amala_planets,
+            source="PD-Ch6-sl20", benefic=True, confidence=0.9,
+        ))
+
+    # ---- Saraswati Yoga — Phaladeepika Ch.6 sl.26-27 ----
+    # Venus, Jupiter, Mercury in Kendra/Trikona/2nd; Jupiter additionally in exaltation/own/friendly sign.
+    KENDRA_TRIKONA_2 = set(KENDRA) | set(KONA) | {2}
+    svj_in_position = all(
+        p in planet_rashis and planet_house(p) in KENDRA_TRIKONA_2
+        for p in ("Venus", "Jupiter", "Mercury")
+    )
+    if svj_in_position and "Jupiter" in planet_rashis:
+        jup_rashi = RASHIS[planet_rashis["Jupiter"]]
+        jup_dignified = (
+            jup_rashi in PLANET_OWNERSHIP.get("Jupiter", [])
+            or jup_rashi == EXALTATION.get("Jupiter")
+        )
+        if jup_dignified:
+            detected.append(DetectedYoga(
+                name="Saraswati Yoga", category="Raja",
+                description="Highly intelligent, clever in drama/poetry/prose, famous, wealthy, respected by kings",
+                planets_involved=["Venus", "Jupiter", "Mercury"],
+                source="PD-Ch6-sl26", benefic=True, confidence=0.9,
+            ))
+
+    # ---- Harsha / Sarala / Vimala Yogas — Phaladeepika Ch.6 sl.57, 63, 65 ----
+    # Distinct from Viparita Raja Yoga (which requires two dusthana lords).
+    # Each is a single dusthana lord sitting in its OWN dusthana house.
+    for house, yoga_name, description, src in [
+        (6, "Harsha Yoga",
+         "Happiness, enjoyment, good fortune, strong constitution, overcomes enemies",
+         "PD-Ch6-sl57"),
+        (8, "Sarala Yoga",
+         "Long-lived, resolute, fearless, prosperous, overcomes foes, celebrated, pure",
+         "PD-Ch6-sl63"),
+        (12, "Vimala Yoga",
+         "Spends little, saves much, good to all, happy, independent, respectable profession",
+         "PD-Ch6-sl65"),
+    ]:
+        lord = _get_house_lord(house, lagna_sign_idx)
+        if lord in planet_rashis and planet_house(lord) == house:
+            detected.append(DetectedYoga(
+                name=yoga_name, category="Raja",
+                description=description,
+                planets_involved=[lord],
+                source=src, benefic=True, confidence=1.0,
+            ))
+
+    # ---- Pushkala Yoga — Hora Sara Ch.20 sl.12-13 ----
+    # Moon's dispositor (sign lord of Moon's rashi) conjoined with Lagna lord in a friendly Kendra.
+    # "Friendly Kendra" = a Kendra house where the lord of that house is friendly to the Lagna lord.
+    # We use: Moon's dispositor and Lagna lord occupy the same house AND that house is a Kendra.
+    if moon_rashi_idx is not None:
+        moon_rashi_name = RASHIS[moon_rashi_idx]
+        moon_dispositor = _sign_lord(moon_rashi_name)
+        lagna_lord = _get_house_lord(1, lagna_sign_idx)
+        if (moon_dispositor and lagna_lord
+                and moon_dispositor in planet_rashis
+                and lagna_lord in planet_rashis
+                and moon_dispositor != lagna_lord):
+            if planet_rashis[moon_dispositor] == planet_rashis[lagna_lord]:
+                if planet_house(moon_dispositor) in KENDRA:
+                    detected.append(DetectedYoga(
+                        name="Pushkala Yoga", category="Raja",
+                        description="Lords over earth; royal scion; exquisite speech; executive governance",
+                        planets_involved=[moon_dispositor, lagna_lord],
+                        source="HoraSara-Ch20-sl12", benefic=True, confidence=0.9,
+                    ))
+
+    # ---- Sanyas Yoga — Sarvartha Chintamani Ch.8 sl.1-4 ----
+    # Four or more planets together in a Kendra house.
+    for kendra_h in KENDRA:
+        planets_in_k = [p for p in planet_rashis if planet_house(p) == kendra_h]
+        if len(planets_in_k) >= 4:
+            detected.append(DetectedYoga(
+                name="Sanyas Yoga", category="Spiritual",
+                description="Renunciation, ascetic orders, spiritual vocation",
+                planets_involved=planets_in_k,
+                source="SC-Ch8-sl1", benefic=True, confidence=0.85,
+            ))
+            break  # one instance suffices
 
     return detected
