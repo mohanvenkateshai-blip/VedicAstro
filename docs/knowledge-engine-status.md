@@ -106,17 +106,33 @@ Consumers (registered)
 
 ---
 
+## Learn Module (Portal)
+
+The classical library is live at `/learn`:
+
+- Premium book grid + motion UI per design guidelines
+- `/learn/jaimini` — real reader page with TOC, navigation, live KG attempt (multi-candidate loader)
+- Additional explorers: `/learn/rashis`, `/learn/nakshatras`
+- Jaimini card explicitly linked and labeled "Live from KG"
+- Stats banner: 26,722 nodes • newbooks-v1 • KnowledgeEngine powered
+- Data layer (`books.ts`, `corpus.ts`) wired to Supabase `graph_nodes` + `corpus_sources` using correct `newbooks-v1`
+
+Route cleanup performed (removed conflicting bare `app/learn/` tree).
+
 ## Next Natural Steps (if desired)
 
 - Populate embeddings and wire real vector retrieval behind `KnowledgeEngine.search()`
 - Build a small admin UI for manual invalidation + refresh triggers
 - Expand engine registration to more components (Dasha, Yoga, Panchanga, etc.)
 - Add background revival job (e.g. every 6–12 hours)
+- Load full chapter markdown + images into BookReader from corpus-vault / corpus_chunks for every text
 
 ---
 
 **Conclusion**
 
 The Knowledge Graph is no longer a loose collection of files and providers. It is now under the control of a proper central `KnowledgeEngine` that can cascade updates, block bad knowledge, and force the entire system to refresh when needed.
+
+Learn module is operational and consumes from the same source of truth.
 
 All requested work (including the global refresh trigger) has been completed.
