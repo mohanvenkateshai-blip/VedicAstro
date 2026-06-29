@@ -196,7 +196,7 @@ python3 -m http.server 5599 # http://localhost:5599
 | **Raw markdown (Core 20)** | ✅ 20/20 | `knowledge-graph/raw/` |
 | **Graph extraction (Core 20)** | ✅ 20/20 | All books ≥50 nodes in production `graph.json` |
 | **Production graph** | ✅ **23,267 nodes** | Promoted + deployed to Fly (`sync-graph.sh --deploy`) |
-| **Supabase vault** | 🟡 Partial | Earlier sync at 16,485 nodes; re-sync to 23k when network stable |
+| **Supabase vault** | ✅ **23,267 nodes** | Synced 2026-06-29 |
 | **GCS** | ✅ Locked down | Processing scratch only — lifecycle + no public IAM (`scripts/gcp-lockdown.sh`) |
 | **Admin explorer** | ✅ `/admin/knowledge` | Service-role APIs + admin RBAC; mini neighborhood graph viz |
 
@@ -221,4 +221,4 @@ curl -s https://vedicastro-cvce.fly.dev/predict/health | python3 -c "import json
 3. `./scripts/sync-graph.sh --deploy` — bakes graph into Fly image
 4. `python3 scripts/supabase-corpus-sync.py --skip-gcp --graph-only --incremental` — vault mirror
 
-Note: `graph.json` (23k) is **not in git** (IP policy); git HEAD still has the old 4,253-node artifact. Runtime truth is Fly `/predict/health`.
+Note: `graph.json` (23k) **is in git** (`knowledge-graph/graphify-out/` + `cvce/graph_rag/`). Raw markdown stays out. Runtime truth: Fly `/predict/health`.

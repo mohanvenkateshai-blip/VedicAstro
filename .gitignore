@@ -29,9 +29,8 @@ dist/
 # Misplaced graphify scratch output
 knowledge-graph/raw/graphify-out/
 
-# Corpus IP — vault is Supabase, not git
+# Corpus IP — raw markdown stays out of git; graph is committed (canonical artifact)
 knowledge-graph/raw/*.md
-knowledge-graph/graphify-out/graph-core-jyotisha.json
 knowledge-graph/gcp-ocr-staging/
 
 # Supabase CLI local state

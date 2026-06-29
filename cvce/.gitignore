@@ -5,7 +5,7 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 hip_main.dat
-graph_rag/graph.json
+# Runtime graph copies — graph.json is tracked (sync from knowledge-graph/graphify-out/)
 graph_rag/graph-grok.json
 graph_rag/graph-gemini.json
 graph_rag/graph-glm.json
