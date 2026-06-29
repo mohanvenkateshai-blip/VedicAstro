@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 29, 2026 (Core 20 graph complete — 23k nodes promoted + Fly deploy)*
+*Last Updated: June 29, 2026 (26,722-node graph with Core 20 + 12 newbooks texts; deterministic layer complete and deployed)*
 
 ---
 
@@ -40,11 +40,12 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ### C. Knowledge Graph (Rules & Citations Base)
 * **Location:** `knowledge-graph/` (Python tools, JSON database)
-* **Status:** **Production graph — 23,267 nodes / 35,438 links** on Fly + in git. Core Jyothisha (20 classical PDFs) ingest **complete**.
+* **Status:** **Production graph — 26,722 nodes / 38,881 links** (`newbooks-v1`) on Fly + in git. Core Jyothisha (20 classical PDFs) + 12 additional texts from `newbooks/` ingest **complete** (deterministic layer).
 * **Vault:** Supabase `corpus-vault` (private Storage + Postgres `graph_nodes`/`graph_links`). Admin explorer: `/admin/knowledge`.
-* **Build pipeline:** `scripts/ingest-core-jyotisha.py` → `merge --promote` → `scripts/sync-graph.sh --deploy` → `scripts/supabase-corpus-sync.py`
+* **Build pipeline:** `scripts/ingest-core-jyotisha.py` (or `ingest-newbooks-md.py`) → `merge --promote` → `scripts/sync-graph.sh --deploy` → `scripts/supabase-corpus-sync.py`
 * **GraphRAG:** Citation enrichment + transit/muhurta rules when `CVCE_GRAPH_AS_RULES=1` — **live on production**.
-* **Version Control:** `main` @ `bbe6f43`+ (graph.json committed, ~19MB)
+* **Version Control:** `main` (graph.json committed). Canonical counts in `knowledge-graph/graph-version.json`.
+* **Note:** `STATUS.md` retains historical phase details. Current authoritative state is in `CONTEXT.md` + `graph-version.json` + `knowledge-graph/ingest-logs/COMPLETE.md`.
 
 ---
 
@@ -186,38 +187,44 @@ python3 -m http.server 5599 # http://localhost:5599
 
 ---
 
-## 7. Core Jyotisha Ingest + Corpus Vault (June 28)
+## 7. Core Jyotisha + Newbooks Ingest + Corpus Vault (June 28–29)
 
-**Goal:** Ingest 20 classical texts → `knowledge-graph/raw/*.md` → `graph-core-jyotisha.json` → **Supabase private vault** (not public git/GCS).
+**Current production (authoritative):** 26,722 nodes / 38,881 links (`newbooks-v1`).
+
+**Goal (historical):** Ingest 20 classical Core Jyothisha texts → `knowledge-graph/raw/*.md` → graph → Supabase private vault (not public git/GCS).  
+**Extended (June 29):** 12 additional texts from `Panchang/Gyan/newbooks/` were also ingested.
 
 | Lane | Status | Notes |
 |:---|:---|:---|
 | **Raw markdown (Core 20)** | ✅ 20/20 | `knowledge-graph/raw/` |
-| **Graph extraction (Core 20)** | ✅ 20/20 | All books ≥50 nodes in production `graph.json` |
-| **Production graph** | ✅ **23,267 nodes** | Promoted + deployed to Fly (`sync-graph.sh --deploy`) |
-| **Supabase vault** | ✅ **23,267 nodes** | Synced 2026-06-29 |
-| **GCS** | ✅ Locked down | Processing scratch only — lifecycle + no public IAM (`scripts/gcp-lockdown.sh`) |
-| **Admin explorer** | ✅ `/admin/knowledge` | Service-role APIs + admin RBAC; mini neighborhood graph viz |
+| **Additional newbooks texts** | ✅ 12 ingested, 2 duplicates skipped | See `knowledge-graph/ingest-logs/NEWBOOKS-INGEST.md` and `newbooks-dedupe.json` |
+| **Graph extraction** | ✅ Complete (deterministic) | All 32 texts represented; production `graph.json` at 26,722 nodes |
+| **Production graph** | ✅ **26,722 nodes / 38,881 links** | `newbooks-v1`, promoted + deployed to Fly |
+| **Supabase vault** | ✅ 26,722 nodes | Synced under `newbooks-v1` |
+| **GCS** | ✅ Locked down | Processing scratch only |
+| **Admin explorer** | ✅ `/admin/knowledge` | Service-role APIs + admin RBAC |
 
-**Sync pipeline (final step after GCP pull):**
-```bash
-scripts/gcp-sync-results.sh          # GCS → local raw/ + cache, then Supabase sync
-python3 scripts/supabase-corpus-sync.py --skip-gcp --incremental   # local-only re-sync
-npm run db:corpus-schema             # apply portal/supabase-corpus-schema.sql (Supabase CLI)
-```
+**Decision on semantic layer (June 29):**  
+The Gemini batch job for the 12 newbooks remained in `JOB_STATE_RUNNING` for many hours. The deterministic extraction (`gyan-corpus-extract.py`) already delivered substantial coverage for every book.  
+**We treat the deterministic layer as sufficient for this ingest cycle.** The semantic pass is additive and optional. If the job eventually succeeds, it can be merged later with the standard promote pipeline. No blocking work remains on the current 26k graph.
 
-**GCP:** Project `united-skyline-500618-t0`, bucket `gs://united-skyline-500618-t0-vedicastro-corpus`.
+**Promote / sync pipeline (when graph grows again):**
+1. `python3 scripts/ingest-core-jyotisha.py --promote merge` (or `ingest-newbooks-md.py` for new material)  
+2. `./scripts/sync-graph.sh`  
+3. `./scripts/sync-graph.sh --deploy`  
+4. `CORPUS_GRAPH_VERSION=newbooks-v1 python3 scripts/supabase-corpus-sync.py --skip-gcp --graph-only --incremental`
 
-**Verify production graph (authoritative):**
+**Verify (authoritative):**
 ```bash
 curl -s https://vedicastro-cvce.fly.dev/predict/health | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['graph_rag']['stats'])"
-# → nodes: 23267, links: 35438 (as of 2026-06-29)
+# Current: nodes 26722, links 38881
 ```
 
-**Promote pipeline (when graph grows again):**
-1. `python3 scripts/ingest-core-jyotisha.py --promote merge` — writes `graph-core-jyotisha.json`, replaces `graph.json`
-2. `./scripts/sync-graph.sh` — copies → `cvce/graph_rag/graph.json`
-3. `./scripts/sync-graph.sh --deploy` — bakes graph into Fly image
-4. `python3 scripts/supabase-corpus-sync.py --skip-gcp --graph-only --incremental` — vault mirror
+**Note on this document:**  
+`STATUS.md` preserves the historical phase record (Phases 0–12 etc.). The live, canonical state for the knowledge graph is in:
+- `knowledge-graph/graph-version.json`
+- `CONTEXT.md` §6
+- `knowledge-graph/ingest-logs/COMPLETE.md`
+- `knowledge-graph/ingest-logs/NEWBOOKS-INGEST.md`
 
-Note: `graph.json` (23k) **is in git** (`knowledge-graph/graphify-out/` + `cvce/graph_rag/`). Raw markdown stays out. Runtime truth: Fly `/predict/health`.
+Raw markdown stays out of git (private in Supabase `corpus-vault`). `graph.json` is committed. Runtime truth is always Fly `/predict/health`.

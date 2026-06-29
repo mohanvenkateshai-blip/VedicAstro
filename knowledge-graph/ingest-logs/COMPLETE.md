@@ -29,4 +29,4 @@ All 20 classical PDFs have ≥50 nodes each in `graph.json`.
 
 ## Notes
 - DeepSeek API returned **402 Insufficient Balance** for the missing-10 pass; completed via **Gemini batch** deterministic extract + cache merge.
-- Graph **is** in git: `knowledge-graph/graphify-out/graph.json` + `cvce/graph_rag/graph.json` (23,267 nodes). Raw markdown stays out.
+- Graph **is** in git: `knowledge-graph/graphify-out/graph.json` + `cvce/graph_rag/graph.json` (26,722 nodes, `newbooks-v1`). Raw markdown stays out. Deterministic layer deployed; Gemini semantic batch (optional additive layer) was still running at end of session.

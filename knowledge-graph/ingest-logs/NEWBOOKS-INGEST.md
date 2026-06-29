@@ -28,8 +28,17 @@ See `newbooks-dedupe.json`.
 
 ## Graph impact
 - **Before:** 23,267 nodes / 35,438 links
-- **After (deterministic):** 26,722 nodes / 38,881 links (+3,455 nodes)
-- **Gemini semantic batch:** submitted 2026-06-29 (`batch/last-job.json`); merge when `JOB_STATE_SUCCEEDED`
+- **After (deterministic):** 26,722 nodes / 38,881 links (+3,455 nodes) — deployed to production
+- **Gemini semantic batch:** submitted 2026-06-29. Job remained `JOB_STATE_RUNNING` for many hours.  
+  **Decision:** Deterministic layer is sufficient and already live. Semantic layer is additive/optional. Resume/merge later only if desired:
+  ```bash
+  source portal/.env.local
+  python3 scripts/gemini-batch-graph-extract.py wait --timeout 14400
+  python3 scripts/gemini-batch-graph-extract.py merge
+  python3 scripts/ingest-core-jyotisha.py --promote merge
+  ./scripts/sync-graph.sh --deploy
+  CORPUS_GRAPH_VERSION=newbooks-v1 python3 scripts/supabase-corpus-sync.py --skip-gcp --graph-only --incremental
+  ```
 
 ## Pipeline
 ```bash
