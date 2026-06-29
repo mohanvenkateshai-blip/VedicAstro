@@ -1,3 +1,6 @@
+# DEPRECATED - Use pyproject.toml + uv instead
+# This file is kept only for reference during migration.
+
 pyswisseph>=2.10.03
 PyJHora>=4.8.7
 jyotishganit>=0.1.0

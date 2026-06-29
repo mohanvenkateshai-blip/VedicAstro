@@ -1,3 +1,4 @@
+# DEPRECATED - Use pyproject.toml + uv instead
 # Production runtime deps (lean). Excludes jyotishganit/skyfield, which are only
 # used by the dev-time /cross-validate cross-check (golden suite uses the full
 # requirements.txt). PyJHora bundles the Swiss Ephemeris data files.
