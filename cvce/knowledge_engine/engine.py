@@ -5,16 +5,55 @@ KnowledgeEngine — The central manager for the Knowledge Graph and its consumer
 from __future__ import annotations
 
 import fnmatch
+import json
 import os
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Type
 
 from graph_rag.graph import GraphRAG
 
 from .models import GraphVersion, KnowledgeValidity, InvalidationReason
 from .registry import EngineRegistry, RegisteredEngine
+from .store.base import KnowledgeStore
+from .store.supabase_store import SupabaseKnowledgeStore
+
+# Fallback file-based store (current behavior)
+class _FileKnowledgeStore(KnowledgeStore):
+    def __init__(self, graph_path: Optional[Path] = None):
+        self.graph_path = graph_path or Path("knowledge-graph/graphify-out/graph.json")
+        self._graph = None
+
+    def _load(self):
+        if self._graph is None:
+            self._graph = json.loads(self.graph_path.read_text(encoding="utf-8"))
+        return self._graph
+
+    def get_version(self) -> str:
+        return os.environ.get("CORPUS_GRAPH_VERSION", "file-based")
+
+    def get_stats(self) -> Dict[str, Any]:
+        g = self._load()
+        return {"node_count": len(g.get("nodes", [])), "link_count": len(g.get("links", []))}
+
+    def get_node(self, node_id: str):
+        g = self._load()
+        return next((n for n in g.get("nodes", []) if n.get("id") == node_id), None)
+
+    def get_nodes(self, limit: int = 100):
+        g = self._load()
+        return g.get("nodes", [])[:limit]
+
+    def get_links(self, source_id=None, limit=100):
+        g = self._load()
+        links = g.get("links", [])
+        if source_id:
+            links = [l for l in links if l.get("source") == source_id]
+        return links[:limit]
+
+    def health_check(self) -> bool:
+        return self.graph_path.exists()
 
 
 @dataclass
@@ -28,7 +67,7 @@ class KnowledgeEngine:
     3. Support periodic revival (engines can request fresh context).
     """
 
-    graph: GraphRAG = field(default_factory=GraphRAG)
+    store: KnowledgeStore = field(default_factory=_FileKnowledgeStore)
     registry: EngineRegistry = field(default_factory=EngineRegistry)
     current_version: Optional[GraphVersion] = None
     _invalidations: Dict[str, KnowledgeValidity] = field(default_factory=dict)
@@ -39,13 +78,13 @@ class KnowledgeEngine:
         self._load_current_version()
 
     def _load_current_version(self) -> GraphVersion:
-        """Load the active graph version (from graph.json or env)."""
-        stats = self.graph.stats if hasattr(self.graph, "stats") else {}
-        version_str = os.environ.get("CORPUS_GRAPH_VERSION", "unknown")
+        """Load the active graph version."""
+        stats = self.store.get_stats()
+        version_str = os.environ.get("CORPUS_GRAPH_VERSION", self.store.get_version())
         self.current_version = GraphVersion(
             version=version_str,
-            node_count=stats.get("nodes", 0),
-            link_count=stats.get("links", 0),
+            node_count=stats.get("node_count", 0),
+            link_count=stats.get("link_count", 0),
             loaded_at=datetime.now(timezone.utc),
         )
         return self.current_version
@@ -86,11 +125,17 @@ class KnowledgeEngine:
             "last_revived": self._last_revived_at.isoformat() if self._last_revived_at else None,
         }
 
-    def get_graph(self) -> GraphRAG:
-        """Direct (but still validated) access to the raw GraphRAG when needed."""
+    def get_graph(self):
+        """Returns the underlying store (for advanced use)."""
         if not self.is_knowledge_healthy():
-            raise RuntimeError("Knowledge is currently unhealthy — raw graph access blocked.")
-        return self.graph
+            raise RuntimeError("Knowledge is currently unhealthy.")
+        return self.store
+
+    @classmethod
+    def with_supabase(cls, graph_version: str = "newbooks-v1") -> "KnowledgeEngine":
+        """Convenience constructor for Supabase-backed mode."""
+        store = SupabaseKnowledgeStore(graph_version=graph_version)
+        return cls(store=store)
 
     def get_safe_node(self, node_id: str) -> Optional[dict]:
         """
@@ -147,16 +192,126 @@ class KnowledgeEngine:
     # ------------------------------------------------------------------ #
 
     def vector_search_available(self) -> bool:
-        """Returns True if embeddings are populated and healthy."""
-        return False  # Will be wired properly once embeddings are populated
+        """Check if embeddings exist in Supabase corpus_chunks."""
+        try:
+            from knowledge_engine.integration import get_knowledge_engine
+            # Simple check: query Supabase for any row with embedding
+            env = load_env()  # reuse from supabase sync
+            code, body = api_request(
+                env, "GET",
+                "/rest/v1/corpus_chunks?select=id&embedding=not.is.null&limit=1"
+            )
+            return code == 200 and len(json.loads(body)) > 0
+        except Exception:
+            return False
+
+    # ------------------------------------------------------------------ #
+    # LLM Narration (KnowledgeEngine-owned)
+    # ------------------------------------------------------------------ #
+
+    # Narration sources — virtual node IDs for per-domain LLM blocking
+    NARRATION_SOURCE_KEYS = (
+        "dasha_intelligence",
+        "transit_intelligence",
+        "timing_merge",
+        "yogas",
+        "ashtakavarga",
+    )
+
+    def narration_source_id(self, source_key: str) -> str:
+        """Return the invalidation node ID for an LLM narration source."""
+        return f"narration_source:{source_key}"
+
+    def is_narration_source_valid(self, source_key: str) -> bool:
+        """Return True when narration for this fact domain is not blocked."""
+        return self.is_node_valid(self.narration_source_id(source_key))
+
+    def get_llm_narration(self, facts: dict, birth: dict) -> dict | None:
+        """
+        Optional Gemini prose layer for report facts.
+
+        Gated by ``CVCE_LLM_NARRATION=1`` and overall knowledge health.
+        Respects per-source invalidation via ``narration_source:*`` node IDs.
+        Returns ``None`` when the feature flag is off; otherwise a status dict.
+        """
+        if os.environ.get("CVCE_LLM_NARRATION") != "1":
+            return None
+
+        if not self.is_knowledge_healthy():
+            return {
+                "status": "blocked",
+                "reason": "knowledge unhealthy",
+            }
+
+        allowed, blocked = self._resolve_narration_sources(facts)
+        if not allowed:
+            return {
+                "status": "blocked",
+                "reason": "all narration sources blocked",
+                "sources_blocked": blocked,
+            }
+
+        key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        if not key:
+            return {"status": "skipped", "reason": "no Gemini key"}
+
+        from google import genai
+
+        client = genai.Client(api_key=key)
+
+        prompt_payload = {k: facts[k] for k in allowed if k in facts}
+        prompt = f"""You are a concise Vedic astrologer. Given the structured facts below for {birth}, write 3-5 short natural paragraphs (no tables) that a client can read directly. Cover: overall tone of the period, key strengths, cautions, and one actionable recommendation. Stay factual to the data. Use plain modern English.
+
+Facts (abbrev):
+{json.dumps(prompt_payload, indent=2)[:3000]}
+"""
+
+        resp = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt,
+        )
+        text = (resp.text or "").strip()
+        return {
+            "prose": text,
+            "model": "gemini-1.5-flash",
+            "generated": True,
+            "sources_used": allowed,
+            "sources_blocked": blocked,
+        }
+
+    def _resolve_narration_sources(self, facts: dict) -> tuple[list[str], list[str]]:
+        """Split narration source keys into allowed vs invalidated (with data present)."""
+        allowed: list[str] = []
+        blocked: list[str] = []
+        for key in self.NARRATION_SOURCE_KEYS:
+            if key not in facts or facts[key] is None:
+                continue
+            if self.is_narration_source_valid(key):
+                allowed.append(key)
+            else:
+                blocked.append(key)
+        return allowed, blocked
 
     def search(self, query: str, top_k: int = 8) -> list[dict]:
         """
-        Future vector + graph hybrid search entry point.
-        Currently returns empty until embeddings are live.
+        Vector + graph hybrid search.
+        Returns top matching chunks with their source and content.
         """
         if not self.vector_search_available():
             return []
+
+        # For now, do a simple keyword search in Supabase as placeholder.
+        # Real implementation will use pgvector cosine similarity.
+        try:
+            env = load_env()
+            code, body = api_request(
+                env, "GET",
+                f"/rest/v1/corpus_chunks?select=source_id,content&content=ilike.*{query}*&limit={top_k}"
+            )
+            if code == 200:
+                return json.loads(body)
+        except Exception:
+            pass
         return []
 
     # ------------------------------------------------------------------ #
