@@ -115,7 +115,7 @@ class VedicPredictor:
         if result.panchanga:
             graph_hits = None
             try:
-                from graph_rag.muhurta_rules_provider import active_muhurta_rules
+                from knowledge_engine.integration import get_safe_muhurta_rules as active_muhurta_rules
                 rules = active_muhurta_rules()
                 if rules and result.panchanga:
                     p = result.panchanga

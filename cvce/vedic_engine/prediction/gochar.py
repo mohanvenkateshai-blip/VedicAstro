@@ -20,7 +20,7 @@ from ..rules.transit_rules import (
 )
 
 try:
-    from graph_rag.rules_provider import active_transit_rules
+    from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
 except ImportError:
     def active_transit_rules():
         return None

@@ -47,6 +47,7 @@ from graph_extract_common import (  # noqa: E402
     cache_path,
     corpus_paths,
     env_key,
+    load_graph_version,
     merge_caches_into,
     merge_graph,
     parse_fragment,
@@ -72,6 +73,24 @@ def _save_state(state: dict) -> None:
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     state["updated_at"] = datetime.now(timezone.utc).isoformat()
     STATE_FILE.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+
+
+def _promoted_graph_version() -> str:
+    v = os.environ.get("CORPUS_GRAPH_VERSION", "").strip()
+    if v:
+        return v
+    return load_graph_version().get("graph_version", "core-jyotisha-v1")
+
+
+def _notify_knowledge_engine_after_promote(graph_path: Path) -> None:
+    cvce = ROOT / "cvce"
+    if str(cvce) not in sys.path:
+        sys.path.insert(0, str(cvce))
+    from knowledge_engine.engine import KnowledgeEngine
+
+    version = _promoted_graph_version()
+    KnowledgeEngine().on_new_literature_ingested(graph_path, version)
+    print(f"✓ KnowledgeEngine cascade ({version}) → {graph_path}")
 
 
 def _md_name_for_pdf(pdf: Path) -> str:
@@ -393,6 +412,7 @@ def cmd_merge(args: argparse.Namespace) -> int:
             print(f"backup: {promoted}")
         GRAPH_OUT.replace(GRAPH_BASE)
         print(f"✓ promoted → {GRAPH_BASE}")
+        _notify_knowledge_engine_after_promote(GRAPH_BASE)
 
     return 0
 

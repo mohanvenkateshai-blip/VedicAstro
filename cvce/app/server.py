@@ -467,7 +467,7 @@ def index():
     graph_rag = None
     if _GRAPH_AVAILABLE and _enhancer is not None:
         try:
-            from graph_rag.rules_provider import active_transit_rules
+            from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
             graph_rag = {
                 "available": True,
                 "stats": _enhancer.graph.stats,
@@ -615,27 +615,32 @@ def predict(req: PredictionRequest):
 
 @app.get("/predict/health")
 def predict_health():
-    from graph_rag.rules_provider import graph_rules_enabled, active_transit_rules
+    from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules, is_knowledge_healthy as graph_rules_enabled
     graph_rules = active_transit_rules()
     grok_stats = grok_graph_stats()
     gemini_stats = gemini_graph_stats()
     glm_stats = glm_graph_stats()
     deepseek_stats = deepseek_graph_stats()
-    ke_health = _knowledge_engine.health() if _knowledge_engine else None
+    ke = _knowledge_engine
+    ke_health = ke.health() if ke else None
 
-    return {"engine": "vedic-prediction-engine",
-            "version": _predictor.version if _ENGINE_AVAILABLE else "0.0.0",
-            "available": _ENGINE_AVAILABLE,
-            "graph_rag": {"available": _GRAPH_AVAILABLE,
-                          "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None,
-                          "rules_source": "graph" if graph_rules else "hardcoded",
-                          "graph_as_rules_env": graph_rules_enabled()},
-            "knowledge_engine": ke_health,
-            "graph_rag_grok": grok_stats,
-            "graph_rag_gemini": gemini_stats,
-            "graph_rag_glm": glm_stats,
-            "graph_rag_deepseek": deepseek_stats,
-            "rules_engine": {"available": _RULES_AVAILABLE}}
+    return {
+        "engine": "vedic-prediction-engine",
+        "version": _predictor.version if _ENGINE_AVAILABLE else "0.0.0",
+        "available": _ENGINE_AVAILABLE,
+        "knowledge_engine": ke_health,
+        "graph_rag": {
+            "available": _GRAPH_AVAILABLE,
+            "rules_source": "graph" if graph_rules else "hardcoded",
+            "graph_as_rules_env": graph_rules_enabled(),
+            "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None,
+        },
+        "graph_rag_grok": grok_stats,
+        "graph_rag_gemini": gemini_stats,
+        "graph_rag_glm": glm_stats,
+        "graph_rag_deepseek": deepseek_stats,
+        "rules_engine": {"available": _RULES_AVAILABLE},
+    }
 
 
 @app.get("/predict/health/grok")

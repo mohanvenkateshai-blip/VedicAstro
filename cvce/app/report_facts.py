@@ -16,7 +16,7 @@ from app.dasha_vimshottari import (
     running_ladder,
 )
 from app.ephem import jd_place, parse_dt, set_ayanamsa
-from graph_rag.enhancer import PredictionEnhancer
+from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
 from vedic_engine.prediction.ashtakavarga import compute_ashtakavarga, BINDU_RESULTS, SAV_BANDS
 from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
 from vedic_engine.synthesis.engine import VedicPredictor

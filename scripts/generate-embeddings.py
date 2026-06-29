@@ -106,6 +106,18 @@ def main() -> int:
             print(f"  failed for {ch['id']}: {code}")
 
     print(f"✓ Embedded/updated {updated} chunks")
+
+    # Notify KnowledgeEngine that embeddings were updated for this version
+    try:
+        import sys
+        sys.path.insert(0, str(ROOT / "cvce"))
+        from knowledge_engine import get_knowledge_engine
+        ke = get_knowledge_engine()
+        if ke.current_version:
+            print(f"KnowledgeEngine notified of embedding update for version {ke.current_version.version}")
+    except Exception as e:
+        print(f"KnowledgeEngine notification skipped: {e}")
+
     return 0
 
 
