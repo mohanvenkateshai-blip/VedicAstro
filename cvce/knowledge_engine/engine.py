@@ -178,6 +178,11 @@ class KnowledgeEngine:
         if not self.is_knowledge_healthy():
             raise RuntimeError(f"Knowledge unhealthy — {category} rules blocked.")
 
+        # Delegate to store if it supports rule methods (Supabase store will in future)
+        if hasattr(self.store, "get_safe_rules"):
+            return self.store.get_safe_rules(category)
+
+        # Fallback to current providers (temporary until store implements rules)
         if category == "transit":
             from graph_rag.rules_provider import active_transit_rules
             return active_transit_rules()
@@ -193,17 +198,34 @@ class KnowledgeEngine:
 
     def vector_search_available(self) -> bool:
         """Check if embeddings exist in Supabase corpus_chunks."""
-        try:
-            from knowledge_engine.integration import get_knowledge_engine
-            # Simple check: query Supabase for any row with embedding
-            env = load_env()  # reuse from supabase sync
-            code, body = api_request(
-                env, "GET",
-                "/rest/v1/corpus_chunks?select=id&embedding=not.is.null&limit=1"
-            )
-            return code == 200 and len(json.loads(body)) > 0
-        except Exception:
-            return False
+        if hasattr(self.store, "has_embeddings"):
+            try:
+                return self.store.has_embeddings()
+            except Exception:
+                return False
+        return False
+
+    def on_embeddings_updated(self, chunk_count: int = 0) -> dict:
+        """
+        Called after corpus chunk embeddings are populated or refreshed.
+
+        Clears store caches and notifies registered engines so they can use
+        vector retrieval on the next refresh cycle.
+        """
+        if hasattr(self.store, "mark_embeddings_updated"):
+            self.store.mark_embeddings_updated()
+
+        self._load_current_version()
+        version = self.current_version.version if self.current_version else "unknown"
+        self.registry.notify_refresh(new_version=version)
+        self._last_revived_at = datetime.now(timezone.utc)
+
+        return {
+            "status": "embeddings_updated",
+            "chunks_embedded": chunk_count,
+            "vector_search_available": self.vector_search_available(),
+            "version": version,
+        }
 
     # ------------------------------------------------------------------ #
     # LLM Narration (KnowledgeEngine-owned)

@@ -27,6 +27,46 @@ except ImportError:
 
 PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
 
+_rules_version: str | None = None
+_gochar_registered = False
+
+
+def _clear_transit_rules_cache() -> None:
+    """Drop cached graph transit rules so the next gochar run reloads from graph."""
+    try:
+        from graph_rag.rules_provider import GraphTransitRules
+        GraphTransitRules._instance = None
+    except ImportError:
+        pass
+    try:
+        from graph_rag.graph import GraphRAG
+        GraphRAG()._loaded = False
+    except ImportError:
+        pass
+
+
+def _on_gochar_refresh(new_version: str) -> None:
+    global _rules_version
+    _rules_version = new_version
+    _clear_transit_rules_cache()
+
+
+def _register_gochar_engine() -> None:
+    global _gochar_registered
+    if _gochar_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+        get_knowledge_engine().register_engine("gochar", on_refresh=_on_gochar_refresh)
+        _gochar_registered = True
+    except Exception:
+        pass
+
+
+def _ensure_gochar_registered() -> None:
+    if not _gochar_registered:
+        _register_gochar_engine()
+
 
 @dataclass
 class TransitPrediction:
@@ -85,6 +125,7 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
         janma_nakshatra: native's birth star (e.g., 'Purva Phalguni')
         natal_sign: dict of planet → rashi_idx (0=Aries)
     """
+    _ensure_gochar_registered()
     # Compute panchanga first (for planet positions)
     panch = compute_panchanga(date_str, time_str, lat, lon, tz)
 

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vedic Knowledge Graph — Full View</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { margin:0; background:#0f172a; color:#e2e8f0; font-family: system-ui, sans-serif; }
+    #container { display:flex; height:100vh; }
+    #graph { flex:1; background:#0f172a; }
+    #sidebar { width:320px; background:#1e2937; padding:20px; overflow-y:auto; border-left:1px solid #334155; }
+    .tooltip {
+      position:absolute; background:#1e2937; color:#f1f5f9; padding:10px 14px;
+      border-radius:6px; font-size:13px; pointer-events:none; opacity:0;
+      border:1px solid #475569; max-width:300px; z-index:1000;
+    }
+    h2 { margin:0 0 16px; font-size:20px; }
+    .stat { background:#334155; padding:10px 14px; border-radius:6px; margin-bottom:8px; font-size:14px; }
+    button { background:#475569; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; margin:4px 4px 0 0; }
+  </style>
+</head>
+<body>
+<div id="container">
+  <canvas id="graph"></canvas>
+  <div id="sidebar">
+    <h2>Vedic Knowledge Graph</h2>
+    <div id="stats"></div>
+    <div style="margin:16px 0;">
+      <button onclick="resetView()">Reset View</button>
+    </div>
+    <div style="font-size:12px; color:#64748b; line-height:1.5;">
+      • Drag to pan<br>
+      • Scroll to zoom<br>
+      • Click node to highlight
+    </div>
+  </div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const canvas = document.getElementById("graph");
+const ctx = canvas.getContext("2d");
+const tooltip = d3.select("#tooltip");
+
+let width = window.innerWidth - 360;
+let height = window.innerHeight;
+canvas.width = width;
+canvas.height = height;
+
+let nodes = [];
+let links = [];
+let transform = d3.zoomIdentity;
+let simulation;
+
+async function loadGraph() {
+  const paths = [
+    "knowledge-graph/graphify-out/graph.json",
+    "./knowledge-graph/graphify-out/graph.json",
+    "../knowledge-graph/graphify-out/graph.json"
+  ];
+
+  for (const path of paths) {
+    try {
+      const res = await fetch(path);
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById("stats").innerHTML = `
+          <div class="stat">Nodes: <strong>${data.nodes.length}</strong></div>
+          <div class="stat">Links: <strong>${data.links.length}</strong></div>
+          <div class="stat">Version: <strong>newbooks-v1</strong></div>
+        `;
+        console.log("%c[OK] Loaded graph from: " + path, "color:#22c55e");
+        return data;
+      }
+    } catch (e) {
+      console.warn("Failed to load from:", path);
+    }
+  }
+
+  alert("Could not load graph.json. Make sure you run the server from the VedicAstro root folder.");
+  throw new Error("Graph not found");
+}
+
+function draw() {
+  ctx.save();
+  ctx.clearRect(0, 0, width, height);
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.k, transform.k);
+
+  // Draw links
+  ctx.strokeStyle = "#475569";
+  ctx.lineWidth = 0.8 / transform.k;
+  ctx.beginPath();
+  links.forEach(l => {
+    ctx.moveTo(l.source.x, l.source.y);
+    ctx.lineTo(l.target.x, l.target.y);
+  });
+  ctx.stroke();
+
+  // Draw nodes
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+  nodes.forEach(n => {
+    ctx.fillStyle = color(n.community);
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 3 / transform.k, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.restore();
+}
+
+function ticked() {
+  draw();
+}
+
+async function main() {
+  const data = await loadGraph();
+
+  // === FIX: Remove broken links that reference missing nodes ===
+  const nodeIds = new Set(data.nodes.map(n => n.id));
+  const validLinks = data.links.filter(l => 
+    nodeIds.has(l.source) && nodeIds.has(l.target)
+  );
+
+  console.log(`Total nodes: ${data.nodes.length}`);
+  console.log(`Original links: ${data.links.length} → Valid links: ${validLinks.length}`);
+
+  nodes = data.nodes;
+  links = validLinks.map(d => ({...d}));
+
+  simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(20).strength(0.4))
+    .force("charge", d3.forceManyBody().strength(-15))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(4))
+    .alphaDecay(0.015)
+    .velocityDecay(0.3)
+    .on("tick", ticked);
+
+  // Zoom & Pan
+  const zoom = d3.zoom()
+    .scaleExtent([0.05, 8])
+    .on("zoom", (event) => {
+      transform = event.transform;
+      draw();
+    });
+
+  d3.select(canvas).call(zoom);
+
+  // Auto zoom to fit after layout stabilizes
+  setTimeout(() => {
+    const bounds = { x: -width/2, y: -height/2, width, height };
+    const scale = Math.min(width / bounds.width, height / bounds.height) * 0.85;
+    const tx = width / 2 - scale * (bounds.x + bounds.width / 2);
+    const ty = height / 2 - scale * (bounds.y + bounds.height / 2);
+
+    d3.select(canvas).transition().duration(1200).call(
+      zoom.transform,
+      d3.zoomIdentity.translate(tx, ty).scale(scale)
+    );
+  }, 2200);
+
+  // Click to highlight
+  d3.select(canvas).on("click", (event) => {
+    const [x, y] = d3.pointer(event, canvas);
+    const inv = transform.invert([x, y]);
+    const found = simulation.find(inv[0], inv[1], 15 / transform.k);
+    if (found) highlight(found);
+  });
+}
+
+function highlight(d) {
+  const ctx2 = ctx;
+  ctx2.save();
+  ctx2.clearRect(0, 0, width, height);
+  ctx2.translate(transform.x, transform.y);
+  ctx2.scale(transform.k, transform.k);
+
+  ctx2.strokeStyle = "#475569";
+  ctx2.lineWidth = 0.8 / transform.k;
+  ctx2.beginPath();
+  links.forEach(l => {
+    if (l.source.id === d.id || l.target.id === d.id) {
+      ctx2.strokeStyle = "#f59e0b";
+    } else {
+      ctx2.strokeStyle = "#475569";
+    }
+    ctx2.moveTo(l.source.x, l.source.y);
+    ctx2.lineTo(l.target.x, l.target.y);
+    ctx2.stroke();
+  });
+
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+  nodes.forEach(n => {
+    ctx2.fillStyle = (n.id === d.id) ? "#f59e0b" : color(n.community);
+    ctx2.beginPath();
+    ctx2.arc(n.x, n.y, (n.id === d.id ? 6 : 3) / transform.k, 0, Math.PI * 2);
+    ctx2.fill();
+  });
+
+  ctx2.restore();
+}
+
+function resetView() {
+  d3.select("#graph").transition().duration(800).call(
+    d3.zoom().transform,
+    d3.zoomIdentity
+  );
+}
+
+function toggleLabels() {
+  // Labels not implemented in canvas version for performance
+  alert("Labels are disabled in this high-performance canvas version.");
+}
+
+main();
+</script>
+</body>
+</html>

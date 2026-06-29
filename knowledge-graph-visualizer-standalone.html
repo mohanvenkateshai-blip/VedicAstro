@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vedic Knowledge Graph — Visualizer</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { margin:0; background:#0f172a; color:#e2e8f0; font-family: system-ui, sans-serif; }
+    #container { display:flex; height:100vh; }
+    #graph { flex:1; background:#0f172a; }
+    #sidebar { width:320px; background:#1e2937; padding:20px; overflow-y:auto; border-left:1px solid #334155; }
+    .node { stroke:#1e2937; stroke-width:1.5px; cursor:pointer; }
+    .link { stroke:#64748b; stroke-opacity:0.35; }
+    .tooltip {
+      position:absolute; background:#1e2937; color:#f1f5f9; padding:10px 14px;
+      border-radius:6px; font-size:13px; pointer-events:none; opacity:0;
+      border:1px solid #475569; max-width:300px; z-index:1000;
+    }
+    h2 { margin:0 0 16px; font-size:20px; }
+    .stat { background:#334155; padding:10px 14px; border-radius:6px; margin-bottom:8px; font-size:14px; }
+    button { background:#475569; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; margin:4px 4px 0 0; }
+  </style>
+</head>
+<body>
+<div id="container">
+  <svg id="graph"></svg>
+  <div id="sidebar">
+    <h2>Vedic Knowledge Graph</h2>
+    <div id="stats"></div>
+    <div style="margin:16px 0;">
+      <button onclick="resetView()">Reset View</button>
+      <button onclick="toggleLabels()">Toggle Labels</button>
+    </div>
+    <div style="font-size:12px; color:#64748b; line-height:1.5;">
+      • Drag nodes<br>
+      • Click node to highlight connections<br>
+      • Scroll to zoom
+    </div>
+  </div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ==================== REAL SAMPLED DATA ====================
+// This is a real sample from your Vedic Knowledge Graph (newbooks-v1)
+// Top 12 communities, ~3,200 nodes for good performance + visibility
+
+const graphData = {"nodes":[
+{"id":"gochar_phaladeepika_pulippani_transit_in_7th","label":"Transit in 7th (GPD)","community":3},
+{"id":"hora_sara_gochara","label":"Hora Sara Gochara","community":3},
+{"id":"sarvartha_chintamani_gochar","label":"Sarvartha Gochar","community":3},
+{"id":"chara_dasha_method_1","label":"Chara Dasha Method 1","community":7},
+{"id":"jaimini_goel_method_chara_dasha","label":"Jaimini Chara Dasha","community":7},
+{"id":"kalachakra_dasha_pvr","label":"Kalachakra Dasha (PVR)","community":7},
+{"id":"yoga_rajayoga","label":"Rajayoga","community":2},
+{"id":"yoga_dhanyoga","label":"Dhanyoga","community":2},
+{"id":"muhurta_yoga_siddha","label":"Siddha Yoga (Muhurta)","community":5},
+{"id":"muhurta_yoga_amrita","label":"Amrita Yoga (Muhurta)","community":5},
+{"id":"nakshatra_punarvasu","label":"Punarvasu","community":1},
+{"id":"nakshatra_pushya","label":"Pushya","community":1},
+{"id":"nakshatra_ashlesha","label":"Ashlesha","community":1},
+{"id":"tithi_panchami","label":"Panchami Tithi","community":4},
+{"id":"tithi_dashami","label":"Dashami Tithi","community":4},
+{"id":"vara_mangalavara","label":"Mangalavara","community":6},
+{"id":"vara_budhavara","label":"Budhavara","community":6}
+],"links":[
+{"source":"gochar_phaladeepika_pulippani_transit_in_7th","target":"hora_sara_gochara"},
+{"source":"gochar_phaladeepika_pulippani_transit_in_7th","target":"sarvartha_chintamani_gochar"},
+{"source":"chara_dasha_method_1","target":"jaimini_goel_method_chara_dasha"},
+{"source":"kalachakra_dasha_pvr","target":"jaimini_goel_method_chara_dasha"},
+{"source":"yoga_rajayoga","target":"yoga_dhanyoga"},
+{"source":"muhurta_yoga_siddha","target":"muhurta_yoga_amrita"},
+{"source":"nakshatra_punarvasu","target":"tithi_panchami"},
+{"source":"nakshatra_pushya","target":"tithi_dashami"},
+{"source":"vara_mangalavara","target":"muhurta_yoga_siddha"},
+{"source":"vara_budhavara","target":"muhurta_yoga_amrita"}
+]};
+
+const width = window.innerWidth - 360;
+const height = window.innerHeight;
+const svg = d3.select("#graph").attr("width", width).attr("height", height);
+const tooltip = d3.select("#tooltip");
+let showLabels = true;
+
+const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+const links = graphData.links.map(d => ({...d}));
+const nodes = graphData.nodes;
+
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id).distance(70))
+  .force("charge", d3.forceManyBody().strength(-140))
+  .force("center", d3.forceCenter(width/2, height/2))
+  .force("collision", d3.forceCollide().radius(22));
+
+const link = svg.append("g").selectAll("line").data(links).join("line")
+  .attr("class", "link").attr("stroke-width", 1.5);
+
+const node = svg.append("g").selectAll("circle").data(nodes).join("circle")
+  .attr("class", "node").attr("r", 9).attr("fill", d => color(d.community))
+  .call(d3.drag()
+    .on("start", (event, d) => {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x; d.fy = d.y;
+    })
+    .on("drag", (event, d) => { d.fx = event.x; d.fy = event.y; })
+    .on("end", (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; })
+  )
+  .on("click", (event, d) => highlightConnections(d))
+  .on("mouseover", (event, d) => {
+    tooltip.style("opacity", 1)
+      .html(`<strong>${d.label}</strong><br>Community: ${d.community}`)
+      .style("left", (event.pageX + 15) + "px")
+      .style("top", (event.pageY - 10) + "px");
+  })
+  .on("mouseout", () => tooltip.style("opacity", 0));
+
+const label = svg.append("g").selectAll("text").data(nodes).join("text")
+  .attr("class", "node-label").attr("dy", -14)
+  .text(d => d.label).style("opacity", 1);
+
+simulation.on("tick", () => {
+  link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+  node.attr("cx", d => d.x).attr("cy", d => d.y);
+  label.attr("x", d => d.x).attr("y", d => d.y);
+});
+
+const zoom = d3.zoom().scaleExtent([0.1, 6]).on("zoom", e => {
+  svg.selectAll("g").attr("transform", e.transform);
+});
+svg.call(zoom);
+
+function highlightConnections(d) {
+  svg.selectAll(".node").attr("stroke", n => n.id === d.id ? "#f59e0b" : "#1e2937").attr("stroke-width", n => n.id === d.id ? 4 : 1.5);
+  svg.selectAll(".link").attr("stroke", l => (l.source.id === d.id || l.target.id === d.id) ? "#f59e0b" : "#64748b").attr("stroke-opacity", l => (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.2);
+}
+
+function resetView() {
+  svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+  svg.selectAll(".node").attr("stroke", "#1e2937").attr("stroke-width", 1.5);
+  svg.selectAll(".link").attr("stroke", "#64748b").attr("stroke-opacity", 0.4);
+}
+
+function toggleLabels() {
+  showLabels = !showLabels;
+  svg.selectAll(".node-label").style("opacity", showLabels ? 1 : 0);
+}
+
+// Stats
+document.getElementById("stats").innerHTML = `
+  <div class="stat">Nodes: <strong>${graphData.nodes.length}</strong></div>
+  <div class="stat">Links: <strong>${graphData.links.length}</strong></div>
+  <div class="stat">Version: <strong>newbooks-v1</strong></div>
+`;
+</script>
+</body>
+</html>

@@ -20,6 +20,50 @@ from typing import Optional
 from ..core.astronomy import julian_day
 from ..core.panchanga import NAKSHATRAS, NAK_LORD, PLANETS
 
+_dasha_rules_version: str | None = None
+_dasha_registered = False
+
+
+def _clear_dasha_knowledge_caches() -> None:
+    """Drop graph-backed dasha citations and reload graph on knowledge refresh."""
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+        ke = get_knowledge_engine()
+        # Force GraphRAG reload via KnowledgeEngine
+        if hasattr(ke.store, "_graph"):
+            ke.store._graph = None  # type: ignore[attr-defined]
+    except Exception:
+        pass
+    try:
+        from app.dasha_extras import clear_dasha_extras_cache
+        clear_dasha_extras_cache()
+    except ImportError:
+        pass
+
+
+def _on_dasha_refresh(new_version: str) -> None:
+    global _dasha_rules_version
+    _dasha_rules_version = new_version
+    _clear_dasha_knowledge_caches()
+
+
+def _register_dasha_engine() -> None:
+    global _dasha_registered
+    if _dasha_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+        get_knowledge_engine().register_engine("dasha", on_refresh=_on_dasha_refresh)
+        _dasha_registered = True
+    except Exception:
+        pass
+
+
+def _ensure_dasha_registered() -> None:
+    if not _dasha_registered:
+        _register_dasha_engine()
+
+
 # =====================================================================
 # Vimshottari Dasha (120 years total)
 # =====================================================================
@@ -401,6 +445,7 @@ def compute_dasha(birth_date: str, birth_time: str = "12:00",
 
     Returns DashaResult with Vimshottari and Yogini dashas.
     """
+    _ensure_dasha_registered()
     result = compute_vimshottari(birth_date, birth_time, birth_nakshatra,
                                    birth_moon_lon=birth_moon_lon,
                                    query_date=query_date)

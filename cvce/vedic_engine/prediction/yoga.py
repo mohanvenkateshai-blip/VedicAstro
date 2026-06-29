@@ -20,6 +20,43 @@ from typing import Optional
 
 from ..core.panchanga import RASHIS, NAKSHATRAS
 
+_yoga_rules_version: str | None = None
+_yoga_registered = False
+
+
+def _clear_yoga_knowledge_caches() -> None:
+    """Drop graph-backed yoga citations so the next detect_yogas reloads from graph."""
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+        ke = get_knowledge_engine()
+        if hasattr(ke.store, "_graph"):
+            ke.store._graph = None  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
+
+def _on_yoga_refresh(new_version: str) -> None:
+    global _yoga_rules_version
+    _yoga_rules_version = new_version
+    _clear_yoga_knowledge_caches()
+
+
+def _register_yoga_engine() -> None:
+    global _yoga_registered
+    if _yoga_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+        get_knowledge_engine().register_engine("yoga", on_refresh=_on_yoga_refresh)
+        _yoga_registered = True
+    except Exception:
+        pass
+
+
+def _ensure_yoga_registered() -> None:
+    if not _yoga_registered:
+        _register_yoga_engine()
+
 
 @dataclass
 class DetectedYoga:
@@ -546,6 +583,7 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int,
     Returns:
         list of DetectedYoga
     """
+    _ensure_yoga_registered()
     detected = []
 
     if moon_rashi_idx is None and "Moon" in natal_sign:

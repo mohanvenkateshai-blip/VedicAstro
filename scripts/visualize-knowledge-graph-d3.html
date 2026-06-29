@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Knowledge Graph — D3.js Visualizer</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; }
+    #container { display: flex; height: 100vh; }
+    #graph { flex: 1; background: #0f172a; }
+    #sidebar { width: 320px; background: #1e2937; padding: 16px; overflow-y: auto; border-left: 1px solid #334155; }
+    .node { stroke: #1e2937; stroke-width: 1.5px; cursor: pointer; }
+    .link { stroke: #64748b; stroke-opacity: 0.6; }
+    .node-label { font-size: 10px; fill: #cbd5e1; pointer-events: none; }
+    .tooltip {
+      position: absolute; background: #1e2937; color: #f1f5f9; padding: 8px 12px;
+      border-radius: 6px; font-size: 12px; pointer-events: none; opacity: 0;
+      border: 1px solid #475569; max-width: 280px;
+    }
+    h2 { margin: 0 0 12px; font-size: 18px; }
+    .stat { background: #334155; padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .legend-color { width: 14px; height: 14px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+<div id="container">
+  <svg id="graph"></svg>
+
+  <div id="sidebar">
+    <h2>Knowledge Graph</h2>
+    <div id="stats"></div>
+
+    <div style="margin-top: 20px;">
+      <strong>Controls</strong><br>
+      <button onclick="resetZoom()">Reset Zoom</button>
+      <button onclick="toggleLabels()">Toggle Labels</button>
+    </div>
+
+    <div class="legend" id="legend"></div>
+
+    <div style="margin-top: 24px; font-size: 12px; color: #64748b;">
+      Click a node to highlight its connections.<br>
+      Drag nodes to reposition.<br>
+      Scroll to zoom.
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// Configuration
+const width = window.innerWidth - 340;
+const height = window.innerHeight;
+const svg = d3.select("#graph")
+  .attr("width", width)
+  .attr("height", height);
+
+const tooltip = d3.select("#tooltip");
+let showLabels = true;
+
+// Load graph data (expects same structure as graph.json)
+async function loadGraph() {
+  // This version expects you to serve the folder or use a local server.
+  // Best way: Run `python3 -m http.server 8000` from the VedicAstro root,
+  // then open http://localhost:8000/scripts/visualize-knowledge-graph-d3.html
+
+  const possiblePaths = [
+    "../knowledge-graph/graphify-out/graph.json",
+    "../../knowledge-graph/graphify-out/graph.json",
+    "knowledge-graph/graphify-out/graph.json",
+    "/knowledge-graph/graphify-out/graph.json"
+  ];
+
+  let data = null;
+  for (const path of possiblePaths) {
+    try {
+      const res = await fetch(path);
+      if (res.ok) {
+        data = await res.json();
+        console.log("Loaded graph from:", path);
+        break;
+      }
+    } catch (e) {}
+  }
+
+  if (!data) {
+    // Show clear error instead of demo data
+    document.getElementById("stats").innerHTML = `
+      <div class="stat" style="background:#7f1d1d;color:white;">
+        <strong>ERROR:</strong> Could not load <code>graph.json</code>.<br><br>
+        Please run this from the VedicAstro folder:<br>
+        <code>python3 -m http.server 8000</code><br><br>
+        Then open:<br>
+        <code>http://localhost:8000/scripts/visualize-knowledge-graph-d3.html</code>
+      </div>
+    `;
+    throw new Error("Graph file not found");
+  } else {
+    renderStats(data);
+  }
+
+  return data;
+}
+
+function renderStats(data) {
+  const statsEl = document.getElementById("stats");
+  statsEl.innerHTML = `
+    <div class="stat">Nodes: <strong>${data.nodes.length}</strong></div>
+    <div class="stat">Links: <strong>${data.links.length}</strong></div>
+    <div class="stat">Hyperedges: <strong>${data.hyperedges?.length || 0}</strong></div>
+  `;
+}
+
+function renderLegend(communities) {
+  const legend = document.getElementById("legend");
+  legend.innerHTML = "";
+
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+  Object.keys(communities).slice(0, 12).forEach(cid => {
+    const div = document.createElement("div");
+    div.className = "legend-item";
+    div.innerHTML = `
+      <div class="legend-color" style="background: ${colorScale(cid)}"></div>
+      <span>Community ${cid}</span>
+    `;
+    legend.appendChild(div);
+  });
+}
+
+async function main() {
+  const data = await loadGraph();
+
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+  // Prepare links with proper references
+  const links = data.links.map(d => ({...d}));
+  const nodes = data.nodes.map(d => ({...d}));
+
+  // Build force simulation
+  const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(60))
+    .force("charge", d3.forceManyBody().strength(-120))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(18));
+
+  // Draw links
+  const link = svg.append("g")
+    .attr("class", "links")
+    .selectAll("line")
+    .data(links)
+    .join("line")
+    .attr("class", "link")
+    .attr("stroke-width", 1.2);
+
+  // Draw nodes
+  const node = svg.append("g")
+    .attr("class", "nodes")
+    .selectAll("circle")
+    .data(nodes)
+    .join("circle")
+    .attr("class", "node")
+    .attr("r", 7)
+    .attr("fill", d => color(d.community))
+    .call(drag(simulation));
+
+  // Node labels
+  const label = svg.append("g")
+    .attr("class", "labels")
+    .selectAll("text")
+    .data(nodes)
+    .join("text")
+    .attr("class", "node-label")
+    .attr("dy", -12)
+    .text(d => d.label?.slice(0, 25) || d.id);
+
+  // Tooltip + click interaction
+  node
+    .on("mouseover", (event, d) => {
+      tooltip.style("opacity", 1)
+        .html(`<strong>${d.label || d.id}</strong><br>Community: ${d.community}`)
+        .style("left", (event.pageX + 12) + "px")
+        .style("top", (event.pageY - 10) + "px");
+    })
+    .on("mouseout", () => tooltip.style("opacity", 0))
+    .on("click", (event, d) => highlightConnections(d));
+
+  // Simulation tick
+  simulation.on("tick", () => {
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+
+    node
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y);
+
+    label
+      .attr("x", d => d.x)
+      .attr("y", d => d.y);
+  });
+
+  // Zoom behavior
+  const zoom = d3.zoom()
+    .scaleExtent([0.1, 8])
+    .on("zoom", (event) => {
+      svg.selectAll("g").attr("transform", event.transform);
+    });
+
+  svg.call(zoom);
+
+  // Legend
+  const communities = {};
+  nodes.forEach(n => { communities[n.community] = true; });
+  renderLegend(communities);
+
+  // Store references for controls
+  window._graphSimulation = simulation;
+  window._graphLabel = label;
+}
+
+function drag(simulation) {
+  return d3.drag()
+    .on("start", (event, d) => {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    })
+    .on("drag", (event, d) => {
+      d.fx = event.x;
+      d.fy = event.y;
+    })
+    .on("end", (event, d) => {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    });
+}
+
+function highlightConnections(selectedNode) {
+  const svg = d3.select("#graph");
+
+  svg.selectAll(".node")
+    .attr("stroke", d => (d.id === selectedNode.id) ? "#f59e0b" : "#1e2937")
+    .attr("stroke-width", d => (d.id === selectedNode.id) ? 4 : 1.5);
+
+  svg.selectAll(".link")
+    .attr("stroke", d => 
+      (d.source.id === selectedNode.id || d.target.id === selectedNode.id) 
+        ? "#f59e0b" : "#64748b"
+    )
+    .attr("stroke-opacity", d =>
+      (d.source.id === selectedNode.id || d.target.id === selectedNode.id) ? 1 : 0.25
+    );
+}
+
+function resetZoom() {
+  const svg = d3.select("#graph");
+  svg.transition().duration(750).call(
+    d3.zoom().transform,
+    d3.zoomIdentity
+  );
+  svg.selectAll(".node").attr("stroke", "#1e2937").attr("stroke-width", 1.5);
+  svg.selectAll(".link").attr("stroke", "#64748b").attr("stroke-opacity", 0.6);
+}
+
+function toggleLabels() {
+  const labels = d3.selectAll(".node-label");
+  window._labelVisible = !window._labelVisible;
+  labels.style("opacity", window._labelVisible ? 1 : 0);
+}
+
+// Boot
+main();
+</script>
+</body>
+</html>

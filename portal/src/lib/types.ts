@@ -247,6 +247,61 @@ export interface MuhurtaCitation {
   detail?: string;
 }
 
+export interface DashaGraphCitation {
+  id: string;
+  label: string;
+  description?: string;
+  source_file?: string;
+  source_location?: string;
+}
+
+export interface SignDashaPeriod {
+  maha?: string | null;
+  antara?: string | null;
+  start?: string;
+  end?: string;
+  years?: number;
+  isCurrent?: boolean;
+}
+
+export interface SignDashaBlock {
+  status?: string;
+  method?: string;
+  maha?: string | null;
+  antara?: string | null;
+  mahaStart?: string | null;
+  mahaEnd?: string | null;
+  periods?: SignDashaPeriod[];
+  graph_citations?: DashaGraphCitation[];
+  ladder?: { levelLabel: string; lord?: string | null; start?: string | null; end?: string | null }[];
+}
+
+export interface KakshaTransit {
+  planet: string;
+  sign: string;
+  degreeInSign: number;
+  kakshaIndex: number;
+  kakshaLord: string;
+  binduActive: boolean;
+  savBindus: number;
+  verdict: string;
+}
+
+export interface KakshaBlock {
+  status?: string;
+  refinement?: string;
+  summary?: string;
+  transits?: KakshaTransit[];
+  lagnaSign?: string | null;
+  lagnaKakshas?: { index: number; lord: string; rangeDeg: string; binduActive: boolean }[];
+}
+
+export interface AlternateDashas {
+  chara?: SignDashaBlock | null;
+  kalachakra?: SignDashaBlock | null;
+  kaksha?: KakshaBlock | null;
+}
+
 export interface DayWindows {
   rahu_kalam: { start: number; end: number };
   yamaganda: { start: number; end: number };
@@ -471,6 +526,15 @@ export interface ShubhDay {
   top_drivers: string[];
 }
 
+export interface KnowledgeEngineHealth {
+  version?: string | null;
+  healthy?: boolean;
+  invalidated_count?: number;
+  invalidated_nodes?: string[];
+  registered_engines?: string[];
+  last_revived?: string | null;
+}
+
 export interface ReportFacts {
   schemaVersion: string;
   meta: {
@@ -512,13 +576,19 @@ export interface ReportFacts {
   ashtakavarga?: AshtakavargaFacts | null;
   shadbala?: Record<string, Record<string, number | null>> | null;
   panchanga?: Record<string, unknown> | null;
+  alternate_dashas?: AlternateDashas | null;
+  graph_enhancements?: GraphEnhancements | null;
   narration?: {
     prose?: string;
     model?: string;
     generated?: boolean;
     status?: string;
     reason?: string;
+    sources_used?: string[];
+    sources_blocked?: string[];
   } | null;
+  narration_error?: string | null;
+  knowledge_engine?: KnowledgeEngineHealth | null;
 }
 
 export const RASHIS = [

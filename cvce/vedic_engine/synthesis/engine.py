@@ -29,6 +29,44 @@ from ..prediction.yoga import detect_yogas, DetectedYoga
 from ..prediction.ashtakavarga import compute_ashtakavarga, compute_transit_ashtakavarga, AshtakavargaResult
 from ..prediction.muhurta_yogas import evaluate_muhurta_yogas, muhurta_yogas_to_dict, MuhurtaYogaResult
 
+_muhurta_rules_version: str | None = None
+_muhurta_registered = False
+
+
+def _clear_muhurta_rules_cache() -> None:
+    """Drop cached graph muhurta rules so the next predict() reloads yoga hits."""
+    try:
+        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+        GraphMuhurtaRules._instance = None
+    except ImportError:
+        pass
+    try:
+        from graph_rag.graph import GraphRAG
+        GraphRAG()._loaded = False
+    except ImportError:
+        pass
+
+
+def _on_muhurta_refresh(new_version: str) -> None:
+    global _muhurta_rules_version
+    _muhurta_rules_version = new_version
+    _clear_muhurta_rules_cache()
+
+
+def _register_muhurta_engine() -> None:
+    global _muhurta_registered
+    if _muhurta_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+        get_knowledge_engine().register_engine("muhurta", on_refresh=_on_muhurta_refresh)
+        _muhurta_registered = True
+    except Exception:
+        pass
+
+
+_register_muhurta_engine()
+
 
 @dataclass
 class VedicPrediction:

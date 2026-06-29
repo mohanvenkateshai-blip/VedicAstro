@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import os
 from datetime import date, datetime, timedelta
 from typing import Optional
 
@@ -16,10 +15,64 @@ from app.dasha_vimshottari import (
     running_ladder,
 )
 from app.ephem import jd_place, parse_dt, set_ayanamsa
-from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
+from knowledge_engine.integration import get_knowledge_engine, get_llm_narration, get_prediction_enhancer as PredictionEnhancer
 from vedic_engine.prediction.ashtakavarga import compute_ashtakavarga, BINDU_RESULTS, SAV_BANDS
 from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
 from vedic_engine.synthesis.engine import VedicPredictor
+
+_report_rules_version: str | None = None
+_predictor: VedicPredictor | None = None
+_report_registered = False
+
+
+def _clear_report_knowledge_caches() -> None:
+    """Invalidate graph-backed rule caches used when assembling report facts."""
+    try:
+        from graph_rag.rules_provider import GraphTransitRules
+        GraphTransitRules._instance = None
+    except ImportError:
+        pass
+    try:
+        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+        GraphMuhurtaRules._instance = None
+    except ImportError:
+        pass
+    try:
+        from graph_rag.graph import GraphRAG
+        GraphRAG()._loaded = False
+    except ImportError:
+        pass
+
+
+def _on_report_refresh(new_version: str) -> None:
+    global _report_rules_version, _predictor
+    _report_rules_version = new_version
+    _predictor = None
+    _clear_report_knowledge_caches()
+
+
+def _get_predictor() -> VedicPredictor:
+    global _predictor
+    if _predictor is None:
+        _predictor = VedicPredictor()
+    return _predictor
+
+
+def _register_report_engine() -> None:
+    global _report_registered
+    if _report_registered:
+        return
+    try:
+        get_knowledge_engine().register_engine("report", on_refresh=_on_report_refresh)
+        _report_registered = True
+    except Exception:
+        pass
+
+
+def _ensure_report_registered() -> None:
+    if not _report_registered:
+        _register_report_engine()
+
 
 _RASHIS = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -217,6 +270,7 @@ def build_report_facts(
     query_time: str = "12:00",
     include_dasha_tree: bool = False,
 ) -> dict:
+    _ensure_report_registered()
     set_ayanamsa(ayanamsa)
     settings = get_settings()
     dt = parse_dt(birth_datetime)
@@ -251,8 +305,7 @@ def build_report_facts(
         ),
     }
 
-    predictor = VedicPredictor()
-    pred = predictor.predict(
+    pred = _get_predictor().predict(
         date=query_date,
         time=query_time,
         lat=birth_lat,
@@ -279,6 +332,28 @@ def build_report_facts(
 
     transit_intel = (enhancements or {}).get("transit_intelligence")
     transit_verdict = transit_intel.get("overall_verdict") if transit_intel else None
+
+    # --- Alternate dasha systems (Chara, Kalachakra, Kaksha) ---
+    alternate_dashas = None
+    try:
+        from jhora.panchanga.drik import Date as DrikDate
+        from app.dasha_extras import (
+            chara_dasha_payload,
+            kalachakra_dasha_payload,
+            kaksha_payload,
+        )
+
+        dob = DrikDate(dt.year, dt.month, dt.day)
+        tob = (dt.hour, dt.minute, dt.second)
+        q_dt = parse_dt(f"{query_date}T{query_time}:00")
+        query_jd, _ = jd_place(q_dt, birth_lat, birth_lon, birth_tz)
+        alternate_dashas = {
+            "chara": chara_dasha_payload(jd, place, dob, tob, query_jd=query_jd),
+            "kalachakra": kalachakra_dasha_payload(jd, place, dob, tob, query_jd=query_jd),
+            "kaksha": kaksha_payload(jd, place, query_jd=query_jd),
+        }
+    except Exception:
+        alternate_dashas = None
 
     lagna_rashi = lagna.get("rashi")
 
@@ -392,7 +467,7 @@ def build_report_facts(
         }
     ]
 
-    return {
+    facts = {
         "schemaVersion": "1.1",
         "meta": {
             "name": name,
@@ -427,8 +502,17 @@ def build_report_facts(
             "antardashaTable": antar_table,
             "dashaTree": dasha_block.get("dashaTree"),
         },
+        "alternate_dashas": alternate_dashas,
         "dasha_intelligence": dasha_intel,
         "transit_intelligence": transit_intel,
+        "graph_enhancements": {
+            "transit_citations": (enhancements or {}).get("transit_citations") or [],
+            "yoga_citations": (enhancements or {}).get("yoga_citations") or [],
+            "natal_insights": (enhancements or {}).get("natal_insights") or [],
+            "god_node_insights": (enhancements or {}).get("god_node_insights") or [],
+            "text_conflicts": (enhancements or {}).get("text_conflicts") or [],
+            "graph_stats": (enhancements or {}).get("graph_stats"),
+        },
         "next_shubh_days": next_shubh_days,
         "timing_merge": timing_merge,
         "forecast": forecast,
@@ -442,37 +526,25 @@ def build_report_facts(
         "prediction_summary": pred.summary if hasattr(pred, "summary") else None,
     }
 
-    # Optional LLM narration layer (P0 active)
-    if os.environ.get("CVCE_LLM_NARRATION"):
-        try:
-            facts = _maybe_narrate_with_llm(facts, birth)
-        except Exception as e:
-            facts["narration_error"] = str(e)[:200]
-    return facts
+    birth = {
+        "name": name,
+        "birth_datetime": birth_datetime,
+        "birth_lat": birth_lat,
+        "birth_lon": birth_lon,
+        "birth_tz": birth_tz,
+    }
 
+    try:
+        narration = get_llm_narration(facts, birth)
+        if narration is not None:
+            facts["narration"] = narration
+    except Exception as e:
+        facts["narration_error"] = str(e)[:200]
 
-def _maybe_narrate_with_llm(facts: dict, birth: dict) -> dict:
-    """If CVCE_LLM_NARRATION=1, append concise natural-language prose using Gemini."""
-    from google import genai
-    import os
+    try:
+        ke = get_knowledge_engine()
+        facts["knowledge_engine"] = ke.health()
+    except Exception:
+        facts["knowledge_engine"] = None
 
-    key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-    if not key:
-        facts["narration"] = {"status": "skipped", "reason": "no Gemini key"}
-        return facts
-
-    client = genai.Client(api_key=key)
-
-    prompt = f"""You are a concise Vedic astrologer. Given the structured facts below for {birth}, write 3-5 short natural paragraphs (no tables) that a client can read directly. Cover: overall tone of the period, key strengths, cautions, and one actionable recommendation. Stay factual to the data. Use plain modern English.
-
-Facts (abbrev):
-{json.dumps({k: v for k, v in facts.items() if k in ("dasha_intelligence", "transit_intelligence", "timing_merge", "yogas", "ashtakavarga")}, indent=2)[:3000]}
-"""
-
-    resp = client.models.generate_content(
-        model="gemini-1.5-flash",
-        contents=prompt,
-    )
-    text = (resp.text or "").strip()
-    facts["narration"] = {"prose": text, "model": "gemini-1.5-flash", "generated": True}
     return facts

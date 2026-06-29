@@ -77,9 +77,13 @@ def is_knowledge_healthy() -> bool:
 def get_prediction_enhancer():
     """Returns a PredictionEnhancer that is aware of the KnowledgeEngine."""
     ke = get_knowledge_engine()
-    # We still use the existing enhancer but could wrap it in the future
+    # Create enhancer using the validated graph from KnowledgeEngine
     from graph_rag.enhancer import PredictionEnhancer
-    return PredictionEnhancer()
+    enhancer = PredictionEnhancer()
+    # Ensure enhancer uses the same graph instance as KE when possible
+    if hasattr(ke.store, "_graph") and ke.store._graph is not None:
+        enhancer.graph = ke.store._graph  # type: ignore[attr-defined]
+    return enhancer
 
 
 def get_llm_narration(facts: dict, birth: dict) -> dict | None:

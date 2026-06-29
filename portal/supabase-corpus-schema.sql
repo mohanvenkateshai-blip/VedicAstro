@@ -95,3 +95,30 @@ CREATE INDEX IF NOT EXISTS idx_corpus_chunks_source ON corpus_chunks (source_id)
 CREATE INDEX IF NOT EXISTS idx_corpus_chunks_embedding ON corpus_chunks USING hnsw (embedding vector_cosine_ops);
 
 ALTER TABLE corpus_chunks ENABLE ROW LEVEL SECURITY;
+
+-- ── Vector similarity search (called via PostgREST RPC) ─────────────────
+CREATE OR REPLACE FUNCTION match_corpus_chunks(
+  query_embedding vector(768),
+  match_count int DEFAULT 8
+)
+RETURNS TABLE (
+  id uuid,
+  source_id text,
+  chunk_index int,
+  content text,
+  similarity float
+)
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT
+    c.id,
+    c.source_id,
+    c.chunk_index,
+    c.content,
+    1 - (c.embedding <=> query_embedding) AS similarity
+  FROM corpus_chunks c
+  WHERE c.embedding IS NOT NULL
+  ORDER BY c.embedding <=> query_embedding
+  LIMIT match_count;
+$$;

@@ -1,0 +1,146 @@
+[
+  {
+    "orphan_id": "gochar_phaladeepika_pulippani_jupiter_in_3_worst",
+    "orphan_label": "Jupiter in 3rd from Moon = WORST Jupiter transit: ominous sorrow, fear, sibling ill-health, displacement, debt, loss of job/business",
+    "community": 75,
+    "top_candidates": [
+      {
+        "id": "gochar_phaladeepika_pulippani_venus_in_7_worst",
+        "label": "Venus in 7th from Moon = WORST Venus transit (Tamil): bad health to wife, enmity, loss of status, sexual diseases, heavy loans, Maraka danger",
+        "score": 7
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_mercury_in_2_worst",
+        "label": "Mercury in 2nd from Moon = WORST (Tamil palm-leaf): infection, sickness, quarrels, fear of death if maraka; BUT Brihat Samhita says income/inflow",
+        "score": 6
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_mars_in_7_worst",
+        "label": "Mars in 7th from Moon = WORST Mars transit (Tamil): quarrel, conflict, imprisonment, danger to life in maraka, drinking habit",
+        "score": 5
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_jupiter_benefic_houses",
+        "label": "Jupiter benefic transit houses from Moon = 2, 5, 7, 9, 11 (best in 11th)",
+        "score": 5
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_jupiter_malefic_houses",
+        "label": "Jupiter malefic transit houses from Moon = 1, 3, 4, 6, 8, 10, 12 (worst in 3rd)",
+        "score": 5
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_kantaka_sani_7",
+        "label": "Kantaka Sani: Saturn in 7th from Moon - worse than 4th; danger to wife, demotion, loss of status/respect",
+        "score": 5
+      },
+      {
+        "id": "gyan_brihat_samhita_rule_must_be_different_from_the_vikramarka_of_the_6th",
+        "label": "must be different from the Vikramarka of the 6th century",
+        "score": 5
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_sun_malefic_houses",
+        "label": "Sun malefic transit houses from Moon = 1, 2, 4, 5, 7, 8, 9, 12 (worst in 5th per Tamil texts)",
+        "score": 4
+      }
+    ],
+    "llm_suggestions": []
+  },
+  {
+    "orphan_id": "bphs_yoga_sankha",
+    "orphan_label": "Sankha Yoga",
+    "community": 73,
+    "top_candidates": [
+      {
+        "id": "gyan_hora_sara_yoga_en_all_the_planets_occupy_the_9th_the_11th_the_1",
+        "label": "en all the planets occupy the 9th, the 11th, the 151 \u0935\u093e\u0924\u0947 the\n4th houses, Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "gyan_hora_sara_yoga_e_effects_of_sankha",
+        "label": "e effects of Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "gyan_brihat_parasara_hora_sastra_vol_1_yoga_sankha",
+        "label": "Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "gyan_deva_keralam_3_yoga_andra_kala_nadi_253_contain_both_a_benefic_and_a",
+        "label": "andra Kala Nadi 253\n\ncontain both a benefic and a malefic.) The native\nof Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "phaladeepika_vb_digest_sankha_yoga",
+        "label": "Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "phaladeepika_english_translation_sankha_yoga",
+        "label": "Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "hora_sara_sankha",
+        "label": "Sankha Yoga",
+        "score": 2
+      },
+      {
+        "id": "brihat_parasara_hora_sastra_vol_1_sankha_yoga",
+        "label": "Sankha Yoga",
+        "score": 2
+      }
+    ],
+    "llm_suggestions": []
+  },
+  {
+    "orphan_id": "bphs_yoga_bheri",
+    "orphan_label": "Bheri Yoga",
+    "community": 69,
+    "top_candidates": [
+      {
+        "id": "gyan_jyotish_yoga_handbook_101_yoga_osperity_power_bheri",
+        "label": "osperity & Power\n\nBheri Yoga",
+        "score": 2
+      },
+      {
+        "id": "jyotish_yoga_handbook_101_bheri_yoga",
+        "label": "Bheri Yoga",
+        "score": 2
+      },
+      {
+        "id": "brihat_parasara_hora_sastra_vol_1_bheri_yoga",
+        "label": "Bheri Yoga",
+        "score": 2
+      },
+      {
+        "id": "activity_mapping_factor_ravi_yoga",
+        "label": "Scoring Factor: Ravi Yoga active (+6)",
+        "score": 1
+      },
+      {
+        "id": "activity_mapping_factor_siddhi_yoga",
+        "label": "Scoring Factor: Siddhi Yoga / Amrit / Sarvartha (+8)",
+        "score": 1
+      },
+      {
+        "id": "gochar_phaladeepika_pulippani_eff_raja_yoga",
+        "label": "Life-area effect: instant Raja Yoga / aristocratic status & elevation",
+        "score": 1
+      },
+      {
+        "id": "activity_mapping_act_exercise_yoga",
+        "label": "Beginning Exercise or Yoga Practice",
+        "score": 1
+      },
+      {
+        "id": "bphs_yoga_gajakeshari",
+        "label": "Gajakeshari Yoga",
+        "score": 1
+      }
+    ],
+    "llm_suggestions": []
+  }
+]
