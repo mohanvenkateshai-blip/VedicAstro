@@ -1,5 +1,9 @@
 # VedicAstro — Living Status Document
 
+**🚨 HANDOFF SNAPSHOT (2026-06-29)** — User is switching AI tool + model.  
+Tree was cleaned and committed. See `docs/handoff/AI_TAKEOVER_PACK.md` first.  
+Current graph: newbooks-v1 (26,722 nodes). Learn module live. KE is authoritative.
+
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
 *Last Updated: June 29, 2026 (26,722-node graph with Core 20 + 12 newbooks texts; deterministic layer complete and deployed)*

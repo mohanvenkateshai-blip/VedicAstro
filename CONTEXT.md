@@ -1,5 +1,13 @@
 # VedicAstro — AI Context Constitution
 
+**🚨 HANDOFF SNAPSHOT — 2026-06-29 (user switching AI tool/model)**  
+Working tree is clean. KnowledgeEngine is the central owner. Graph = newbooks-v1 (26,722 nodes).  
+**Start here, then read in order:**
+1. `docs/handoff/AI_TAKEOVER_PACK.md` (this handoff)
+2. `STATUS.md`
+3. `docs/knowledge-engine-status.md`
+4. This file (CONTEXT.md) for guardrails.
+
 **Read this file before writing any code or making any architectural decision.**
 It is the single source of truth for system topology, immutable constraints, and hard-won lessons.
 
@@ -203,7 +211,12 @@ Jyotish Digest volumes (+273). Total: +3,455 nodes from baseline 23,267.
 
 ---
 
-## 8. Engines — Status & Last Knowledge-Graph Feed (AUTO-UPDATED)
+## 8. Engines — Status & Last Knowledge-Graph Feed
+
+<!-- BEGIN AUTO ENGINES -->
+| Engine | File (representative) | Purpose | Last KG Feed | Status |
+|--------|-----------------------|---------|--------------|--------|
+<!-- END AUTO ENGINES --> (AUTO-UPDATED)
 
 <!-- BEGIN AUTO ENGINES -->
 
