@@ -47,6 +47,19 @@ This document is the **Single Source of Truth** for the current status, live hea
 * **Version Control:** `main` (graph.json committed). Canonical counts in `knowledge-graph/graph-version.json`.
 * **Note:** `STATUS.md` retains historical phase details. Current authoritative state is in `CONTEXT.md` + `graph-version.json` + `knowledge-graph/ingest-logs/COMPLETE.md`.
 
+### D. Learn Module (Classical Library)
+* **Location:** `portal/src/app/(main)/learn` + components + lib/books.ts + lib/corpus.ts
+* **Status:** 🟢 LIVE on main (deploying)
+* **Key Achievements:**
+  - Premium book library grid at `/learn` (Framer Motion, strict adherence to Web_Design_UI_UX_Guidelines)
+  - `/learn/jaimini` — reader with sticky nav, sūtra list, live attempt from Knowledge Graph (newbooks-v1)
+  - `/learn/rashis` and `/learn/nakshatras` explorers
+  - Data layer fully compatible with KnowledgeEngine/Supabase (graph_nodes + corpus_sources)
+  - Route hygiene: removed conflicting bare `app/learn/`
+  - Graph version fixed in client libs (was causing fallback to stubs)
+* **Wired to KE:** Yes — uses same `newbooks-v1`, `getBookTextNodes`, resilient candidate loading.
+* **Next:** Full chapter markdown + images from corpus-vault, dynamic book list from `listBooks()`, more texts (BPHS etc.).
+
 ---
 
 ## 3. Active Roadmap (Phased Sequence)
