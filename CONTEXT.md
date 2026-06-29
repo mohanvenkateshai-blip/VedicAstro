@@ -33,10 +33,11 @@ It is the single source of truth for system topology, immutable constraints, and
               └─────────────────┘
 
               ┌──────────────────────────────────────┐
-              │  Knowledge Graph (offline artifact)   │
+              │  Knowledge Graph + Corpus Vault       │
               │  knowledge-graph/graphify-out/        │
-              │  graph.json — 4253 nodes (prod); deepseek 10,850 (not deployed) │
-              │  → wired into /predict when CVCE_GRAPH_AS_RULES=1             │
+              │  graph-core-jyotisha.json (merged)    │
+              │  → Supabase Postgres + corpus-vault   │
+              │  → CVCE /predict when CVCE_GRAPH_AS_RULES=1 │
               └──────────────────────────────────────┘
 ```
 
@@ -47,7 +48,7 @@ It is the single source of truth for system topology, immutable constraints, and
 | CVCE (engine) | `cvce/` | Python 3.12 / FastAPI | Fly.io (`vedicastro-cvce`, region `lhr`) |
 | Portal | `portal/` | Next.js 16.2.x / React 19 | Vercel (project `vedicastro`) |
 | Muhūrta Standalone | `Panchang/panchanga_muhurtha/` | In-browser Babel React | Fly.io separate app + Panchang Vercel |
-| Knowledge Graph | `knowledge-graph/` | Offline build artifact | N/A — consumed by CVCE `/predict` |
+| Knowledge Graph | `knowledge-graph/` | Offline build + Supabase vault | CVCE Fly deploy via `sync-graph.sh` |
 
 ---
 
@@ -98,14 +99,16 @@ It is the single source of truth for system topology, immutable constraints, and
 - Route structure: `/` = landing, `/vedicastro` = chart page, `/muhurta` = iframe only
 - The chart viewer is `components/chart/ChartViewer.tsx` (client component) + `KundaliChart.tsx` (SVG)
 - `lib/cvce.ts` is server-only and calls `getChart()`, `getMuhurta()`, `getHealth()`
-- `lib/auth.ts` is currently a scaffold (returns null session) — do not wire it until Postgres phase
+- `lib/auth.ts` — NextAuth v5 + Neon Postgres; roles `free|pro|premium|admin`; `ADMIN_EMAILS` env for owner admin
 
 ### When working on Knowledge Graph
-- Source files live in `knowledge-graph/raw/`
-- Output in `knowledge-graph/graphify-out/` — do not edit `graph.json` manually
-- Python interpreter: `$(cat knowledge-graph/graphify-out/.graphify_python)`
-- Extraction chunks: `.graphify_chunk_01.json` (cats 1-12, Activity_Mapping), `.graphify_chunk_02.json` (Gochar_Phaladeepika), `.graphify_chunk_03.json` (cats 13-23 + appendices, Activity_Mapping) — chunk_03 may still be in progress
-- To extend: add files to `raw/`, then run `/graphify raw --update`, then `./scripts/sync-graph.sh`
+- Source files live in `knowledge-graph/raw/` (**not committed** — vault is Supabase `corpus-vault`)
+- Merged output: `graph-core-jyotisha.json` (**not committed** — synced to Supabase)
+- Production deploy copy: `graph.json` → `cvce/data/graph.json` via `./scripts/sync-graph.sh`
+- Core Jyothisha ingest: `python3 scripts/ingest-core-jyotisha.py` (convert → extract → merge --promote)
+- Supabase sync: `python3 scripts/supabase-corpus-sync.py` (after `gcp-sync-results.sh`)
+- Admin explorer: `/admin/knowledge` (service-role APIs, admin RBAC)
+- Python interpreter: Panchang venv or `$(cat knowledge-graph/graphify-out/.graphify_python)`
 - graph.json structure: keys are `nodes`, `links` (NOT `edges`), `hyperedges`
 
 ---
@@ -156,29 +159,28 @@ These bugs have already been fixed. Don't re-introduce them.
 
 ---
 
-## 6. Knowledge Graph State
+## 6. Knowledge Graph & Corpus Vault (2026-06-29)
 
-**Current graph** (as of 2026-06-27): 4253 nodes, 5092 links, 39 communities (stable deployed baseline). DeepSeek variant: 10,850 nodes (`graph-deepseek.json`, not yet deployed). Gemini variant: 7640 nodes (`graph-gemini.json`, potential bad merges — do not deploy without validation).
+**Core Jyothisha (20 classical PDFs):**
+- OCR/text → `raw/`: **20/20 complete**
+- Graph extraction: **20/20 complete** — all books in production `graph.json` (23,267 nodes)
+- Merged graph promoted to `graph.json` + `cvce/graph_rag/graph.json`; Fly deployed 2026-06-29
 
-**Sources ingested (all 4 sources complete):**
-- `Activity_Mapping.md` — all 91 activities, 20 categories (chunks 01 + 03)
-- `Gochar_Phaladeepika_Pulippani.md` — full transit text (chunk 02)
-- `Brihat_Parasara_Hora_Sastra_Vol_1.md` — natal yogas, planet characteristics (chunk 04)
-- `Phaladeepika_Mantreswara.md` — Pancha Mahapurusha yogas, Neecha Bhanga types, Yogakaraka-by-ascendant, Ashtakavarga (chunk 05)
+**Corpus vault (Supabase):**
+- Tables: `corpus_sources`, `graph_nodes`, `graph_links`, `graph_ingest_runs` (RLS deny-all for clients)
+- Storage: private bucket `corpus-vault` (markdown + graph snapshots)
+- Sync: `scripts/supabase-corpus-sync.py`; wired as final step of `gcp-sync-results.sh`
+- Portal admin: `/admin/knowledge` + `/api/admin/corpus/*` (service role, admin only)
 
-**Key new communities (added 2026-06-25):**
-- Com 3 — Natal Yogas & Ashtakavarga (43 nodes): yogas, Neecha Bhanga, Kendradhipati Dosha
-- Com 4 — Planetary Natures & Dignities (38 nodes): all 9 planets with full BPHS attributes
-- Com 7 — Named Special Yogas (16 nodes): Amala, Lakshmi, Khadaga, Chamara, etc.
+**Production CVCE:**
+- `graph.json` on Fly: **23,267 nodes** (promoted 2026-06-29 via `merge --promote` + `sync-graph.sh --deploy`)
+- GCS bucket = processing scratch only (`gcp-lockdown.sh`)
 
-**Cross-text conflict encoded:** Mantreswara's Viparita Raja Yoga (Harsha/Sarala/Vimala) contradicts Parasara — `phaladeepika_yoga_viparita_raja --contradicts--> bphs_principle_trik_weakness`. Flag this ambiguity in the prediction engine.
+**Git policy (IP):**
+- Do **not** commit `knowledge-graph/raw/*.md` or `graph-core-jyotisha.json`
+- Code + schema + scripts **are** on `main` (commits `7f2f2eb`, `31cd064`, …)
 
-**Sources NOT YET ingested:**
-- BPHS Vol 2 (optional, lower priority)
-- Muhurta Chintamani (referenced as stub, rules not ingested)
-
-**Key finding — Rohiṇī is the empirical keystone nakshatra:**
-Highest betweenness (0.100) + most edges (15) in the graph. Bridges Business & Finance, Wedding & Panchāṅga, Muhūrta Scoring, and Saṁskāras. Prescribed across both Wedding (Vivāha) and Construction — qualitatively different domains — because it is a Dhruva/Sthira (fixed) nakshatra ruled by the Moon (exalted in Taurus). The graph *quantifies* what texts assert qualitatively. Document more such gems in `knowledge-graph/graphify-out/FINDINGS.md`.
+**Later:** vector embeddings on `corpus_chunks` for hybrid search (not started).
 
 ---
 
@@ -194,11 +196,10 @@ Highest betweenness (0.100) + most edges (15) in the graph. Bridges Business & F
 
 ## 8. Next Phases (in priority order)
 
-1. **Phases 0–12** ✅ — All report phases complete. `/chart/report` now shows: natal table, timing merge window, dasha intelligence, transit intelligence, Vimshottari ladder, dasha forecast (8 upcoming periods), active yogas, Ashtakavarga SAV bar chart, Shadbala table.
-2. **Review + deploy `graph-deepseek.json`** — do not auto-replace production 4253-node graph without baseline check. Grok batch (292 requests) stalled — xAI account out of credits.
-3. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI.
-4. **Phase 13: LLM narration layer** — Optional prose synthesis on top of `ReportFacts` JSON (never as fact source; must be gated by `CVCE_LLM_NARRATION=1`).
-5. Optional: Python `/chart.svg` on CVCE for static PDF/OG/email.
+1. **Supabase vault re-sync** — push 23k-node graph when network to Supabase is stable
+2. **Vector embeddings** — `corpus_chunks` hybrid search (schema planned, not built)
+3. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI
+4. **Phase 13: LLM narration layer** — optional prose on `ReportFacts` (`CVCE_LLM_NARRATION=1`)
 
 ---
 

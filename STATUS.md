@@ -2,7 +2,7 @@
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 28, 2026 (Corpus vault → Supabase + admin graph explorer)*
+*Last Updated: June 29, 2026 (Core 20 graph complete — 23k nodes promoted + Fly deploy)*
 
 ---
 
@@ -193,9 +193,10 @@ python3 -m http.server 5599 # http://localhost:5599
 
 | Lane | Status | Notes |
 |:---|:---|:---|
-| **Raw markdown** | ✅ 49 files | `knowledge-graph/raw/` (~16 MB) |
-| **Graph (local)** | ✅ 16,485 nodes / 27,330 links | `graph-core-jyotisha.json` |
-| **Supabase vault** | ✅ Synced | Postgres `graph_nodes`/`graph_links` + Storage bucket `corpus-vault` (private, RLS deny-all) |
+| **Raw markdown (Core 20)** | ✅ 20/20 | `knowledge-graph/raw/` |
+| **Graph extraction (Core 20)** | ✅ 20/20 | All books ≥50 nodes in production `graph.json` |
+| **Production graph** | ✅ **23,267 nodes** | Promoted + deployed to Fly (`sync-graph.sh --deploy`) |
+| **Supabase vault** | 🟡 Partial | Earlier sync at 16,485 nodes; re-sync to 23k when network stable |
 | **GCS** | ✅ Locked down | Processing scratch only — lifecycle + no public IAM (`scripts/gcp-lockdown.sh`) |
 | **Admin explorer** | ✅ `/admin/knowledge` | Service-role APIs + admin RBAC; mini neighborhood graph viz |
 

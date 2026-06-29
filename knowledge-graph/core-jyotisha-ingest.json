@@ -31,7 +31,14 @@
       "bytes": 339390
     }
   },
-  "extracted": {},
+  "extracted": {
+    "Jataka_Parijata.md": {
+      "at": "2026-06-29T00:01:33.810143+00:00",
+      "providers": [
+        "gemini"
+      ]
+    }
+  },
   "manifest_count": 35,
-  "updated_at": "2026-06-28T16:14:25.685787+00:00"
+  "updated_at": "2026-06-29T00:01:33.810519+00:00"
 }
