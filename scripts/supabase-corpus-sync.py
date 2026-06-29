@@ -324,6 +324,8 @@ def sync_chunks(env: dict[str, str]) -> int:
 
     total = 0
     for md in sorted(raw_dir.glob("*.md")):
+        if len(md.read_bytes()) < 500:
+            continue
         text = md.read_text(encoding="utf-8", errors="replace")
         # simple chunking: ~800 char windows, prefer paragraph breaks
         paras = _re.split(r"\n\s*\n", text)
@@ -342,7 +344,7 @@ def sync_chunks(env: dict[str, str]) -> int:
         for i, ch in enumerate(chunks):
             rows.append(
                 {
-                    "source_id": md.name,
+                    "source_id": md.stem,
                     "chunk_index": i,
                     "content": ch[:4000],  # safety
                     "embedding": None,
@@ -353,7 +355,7 @@ def sync_chunks(env: dict[str, str]) -> int:
 
         if rows:
             # delete old for this source then insert (simple)
-            api_request(env, "DELETE", f"/rest/v1/corpus_chunks?source_id=eq.{md.name}")
+            api_request(env, "DELETE", f"/rest/v1/corpus_chunks?source_id=eq.{md.stem}")
             for r in rows:
                 api_request(env, "POST", "/rest/v1/corpus_chunks", json.dumps(r).encode())
 
