@@ -1,5 +1,9 @@
 # KnowledgeEngine — Final Status Report
 
+**🚨 HANDOFF — 2026-06-29** (user switching AI tool/model)  
+Working tree clean. Full takeover pack generated at `docs/handoff/AI_TAKEOVER_PACK.md`.  
+Start there + CONTEXT.md + STATUS.md.
+
 **Date:** 2026-06-29  
 **Version:** `newbooks-v1` (26,722 nodes / 38,881 links)
 
