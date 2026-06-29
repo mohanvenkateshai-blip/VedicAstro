@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Clock, Loader, AlertCircle, ChevronDown, Zap } from "lucide-react";
 import type { DashaPrediction, FructificationResult, FructificationWindow } from "@/lib/types";
 import { motion, AnimatePresence } from "motion/react";
@@ -732,25 +732,6 @@ function VimshottariCard({ data }: { data: VimshottariSummary }) {
 // ── Main component ──────────────────────────────────────────────────────────
 
 export function AllDashasPanel({ chart }: { chart?: ChartData }) {
-  const [vims, setVims]       = useState<VimshottariSummary | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const birth = chart?.meta;
-
-  useEffect(() => {
-    if (!birth?.birth_datetime) return;
-    setLoading(true);
-    let cancelled = false;
-    postCvce<{ dashas?: { vimshottari?: VimshottariSummary } } & { vimshottari?: VimshottariSummary }>(
-      "dashas",
-      { birth_datetime: birth.birth_datetime, birth_lat: birth.birth_lat, birth_lon: birth.birth_lon, birth_tz: birth.birth_tz },
-    )
-      .then((json) => { if (!cancelled) setVims(json.dashas?.vimshottari ?? (json as { vimshottari?: VimshottariSummary }).vimshottari ?? null); })
-      .catch(() => {})
-      .finally(() => { if (!cancelled) setLoading(false); });
-    return () => { cancelled = true; };
-  }, [birth?.birth_datetime, birth?.birth_lat, birth?.birth_lon, birth?.birth_tz]);
-
   if (!chart) {
     return (
       <div className="flex flex-col items-center justify-center gap-2 py-16 text-text-muted">
@@ -762,13 +743,6 @@ export function AllDashasPanel({ chart }: { chart?: ChartData }) {
 
   return (
     <div className="space-y-5">
-      {/* Vimshottari summary */}
-      {loading ? (
-        <div className="rounded-2xl border border-hairline p-5 animate-pulse h-24" />
-      ) : vims ? (
-        <VimshottariCard data={vims} />
-      ) : null}
-
       {/* Yogini full tree */}
       <OtherDashaTree dashaKey="yogini" chart={chart} />
 
