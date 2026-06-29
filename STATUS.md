@@ -207,6 +207,18 @@ python3 scripts/supabase-corpus-sync.py --skip-gcp --incremental   # local-only 
 npm run db:corpus-schema             # apply portal/supabase-corpus-schema.sql (Supabase CLI)
 ```
 
-**GCP:** Project `united-skyline-500618-t0`, bucket `gs://united-skyline-500618-t0-vedicastro-corpus`. Production `graph.json` on Fly unchanged until manual `--promote`.
+**GCP:** Project `united-skyline-500618-t0`, bucket `gs://united-skyline-500618-t0-vedicastro-corpus`.
 
-**Later:** `corpus_chunks` + vector embeddings for hybrid search (schema stub in master bundle — not started).
+**Verify production graph (authoritative):**
+```bash
+curl -s https://vedicastro-cvce.fly.dev/predict/health | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['graph_rag']['stats'])"
+# → nodes: 23267, links: 35438 (as of 2026-06-29)
+```
+
+**Promote pipeline (when graph grows again):**
+1. `python3 scripts/ingest-core-jyotisha.py --promote merge` — writes `graph-core-jyotisha.json`, replaces `graph.json`
+2. `./scripts/sync-graph.sh` — copies → `cvce/graph_rag/graph.json`
+3. `./scripts/sync-graph.sh --deploy` — bakes graph into Fly image
+4. `python3 scripts/supabase-corpus-sync.py --skip-gcp --graph-only --incremental` — vault mirror
+
+Note: `graph.json` (23k) is **not in git** (IP policy); git HEAD still has the old 4,253-node artifact. Runtime truth is Fly `/predict/health`.

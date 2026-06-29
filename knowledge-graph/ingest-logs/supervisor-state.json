@@ -1,13 +1,26 @@
 {
   "started_at": "2026-06-28T16:39:08.174640+00:00",
   "phases": {
-    "deepseek_text": "running",
-    "marker_ocr": "pending",
-    "deepseek_ocr": "pending",
-    "gemini_batch": "pending",
-    "merge": "pending"
+    "deepseek_text": "done",
+    "marker_ocr": "done",
+    "deepseek_ocr": "done",
+    "gemini_batch": "done",
+    "merge": "done"
   },
-  "pids": {},
-  "logs": {},
-  "updated_at": "2026-06-28T16:41:12.225008+00:00"
+  "pids": {
+    "gemini_batch": 21836
+  },
+  "logs": {
+    "gemini_batch": "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/supervisor-gemini_batch-20260628-222040.log"
+  },
+  "updated_at": "2026-06-29T00:06:43.787321+00:00",
+  "merge_stats": {
+    "base_nodes": 6437,
+    "merged_nodes": 23267,
+    "links": 35438,
+    "vs_baseline": 19014,
+    "promoted_at": "2026-06-29T00:05:00+00:00",
+    "fly_verified_nodes": 23267
+  },
+  "finished_at": "2026-06-28T22:46:11.697779+00:00"
 }
