@@ -75,3 +75,23 @@ ALTER TABLE graph_links ENABLE ROW LEVEL SECURITY;
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('corpus-vault', 'corpus-vault', false)
 ON CONFLICT (id) DO UPDATE SET public = false;
+
+-- ── Corpus chunks for vector / hybrid search (pgvector) ────────────────────
+-- Requires: CREATE EXTENSION IF NOT EXISTS vector; (run in Supabase SQL if not present)
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE IF NOT EXISTS corpus_chunks (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  source_id     TEXT NOT NULL REFERENCES corpus_sources(canonical_name) ON DELETE CASCADE,
+  chunk_index   INT NOT NULL,
+  content       TEXT NOT NULL,
+  embedding     vector(768),   -- Google text-embedding-004 dim (adjust if using OpenAI 1536)
+  metadata      JSONB NOT NULL DEFAULT '{}'::jsonb,
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (source_id, chunk_index)
+);
+
+CREATE INDEX IF NOT EXISTS idx_corpus_chunks_source ON corpus_chunks (source_id);
+CREATE INDEX IF NOT EXISTS idx_corpus_chunks_embedding ON corpus_chunks USING hnsw (embedding vector_cosine_ops);
+
+ALTER TABLE corpus_chunks ENABLE ROW LEVEL SECURITY;

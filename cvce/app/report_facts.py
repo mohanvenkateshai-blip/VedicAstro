@@ -439,3 +439,38 @@ def build_report_facts(
         "shadbala": shadbala_data,
         "prediction_summary": pred.summary if hasattr(pred, "summary") else None,
     }
+
+    # Optional LLM narration layer (P0 active)
+    if os.environ.get("CVCE_LLM_NARRATION"):
+        try:
+            facts = _maybe_narrate_with_llm(facts, birth)
+        except Exception as e:
+            facts["narration_error"] = str(e)[:200]
+    return facts
+
+
+def _maybe_narrate_with_llm(facts: dict, birth: dict) -> dict:
+    """If CVCE_LLM_NARRATION=1, append concise natural-language prose using Gemini."""
+    from google import genai
+    import os
+
+    key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if not key:
+        facts["narration"] = {"status": "skipped", "reason": "no Gemini key"}
+        return facts
+
+    client = genai.Client(api_key=key)
+
+    prompt = f"""You are a concise Vedic astrologer. Given the structured facts below for {birth}, write 3-5 short natural paragraphs (no tables) that a client can read directly. Cover: overall tone of the period, key strengths, cautions, and one actionable recommendation. Stay factual to the data. Use plain modern English.
+
+Facts (abbrev):
+{json.dumps({k: v for k, v in facts.items() if k in ("dasha_intelligence", "transit_intelligence", "timing_merge", "yogas", "ashtakavarga")}, indent=2)[:3000]}
+"""
+
+    resp = client.models.generate_content(
+        model="gemini-1.5-flash",
+        contents=prompt,
+    )
+    text = (resp.text or "").strip()
+    facts["narration"] = {"prose": text, "model": "gemini-1.5-flash", "generated": True}
+    return facts

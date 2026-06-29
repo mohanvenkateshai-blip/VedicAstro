@@ -296,6 +296,51 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
     return len(node_rows), len(link_rows)
 
 
+def sync_chunks(env: dict[str, str]) -> int:
+    """Chunk raw markdown for vector/hybrid search. Embeddings left null for now (fill via generator)."""
+    from pathlib import Path as _P
+    import re as _re
+
+    raw_dir = KG / "raw"
+    if not raw_dir.is_dir():
+        return 0
+
+    total = 0
+    for md in sorted(raw_dir.glob("*.md")):
+        text = md.read_text(encoding="utf-8", errors="replace")
+        # simple chunking: ~800 char windows, prefer paragraph breaks
+        paras = _re.split(r"\n\s*\n", text)
+        chunks: list[str] = []
+        buf = ""
+        for p in paras:
+            if len(buf) + len(p) > 800 and buf:
+                chunks.append(buf.strip())
+                buf = p
+            else:
+                buf = (buf + "\n\n" + p).strip()
+        if buf:
+            chunks.append(buf)
+
+        rows = []
+        for i, ch in enumerate(chunks):
+            rows.append({
+                "source_id": md.name,
+                "chunk_index": i,
+                "content": ch[:4000],  # safety
+                "embedding": None,
+                "metadata": {"len": len(ch)},
+            })
+            total += 1
+
+        if rows:
+            # delete old for this source then insert (simple)
+            api_request(env, "DELETE", f"/rest/v1/corpus_chunks?source_id=eq.{md.name}")
+            for r in rows:
+                api_request(env, "POST", "/rest/v1/corpus_chunks", json.dumps(r).encode())
+
+    return total
+
+
 def check_schema(env: dict[str, str]) -> bool:
     code, body = api_request(env, "GET", "/rest/v1/corpus_sources?select=canonical_name&limit=1")
     if code == 200:
@@ -334,6 +379,10 @@ def main() -> int:
         print("=== Markdown → Storage + corpus_sources ===")
         n = sync_markdown(env)
         print(f"✓ {n} markdown files")
+
+        print("=== Markdown chunks (vector-ready) ===")
+        c = sync_chunks(env)
+        print(f"✓ {c} chunks (embeddings null until generator run)")
 
     if not args.md_only:
         print("=== Graph → graph_nodes / graph_links ===")

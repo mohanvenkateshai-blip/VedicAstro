@@ -627,6 +627,15 @@ export function HoroscopeReport({
 
       {/* Shadbala */}
       {report.shadbala ? <ShadbalaCard shadbala={report.shadbala} /> : null}
+
+      {/* Optional LLM narration (CVCE_LLM_NARRATION=1) */}
+      {report.narration?.prose ? (
+        <Card className="p-5 space-y-2 border border-indigo-500/30">
+          <SectionHeading>LLM Narrative Summary</SectionHeading>
+          <p className="text-sm leading-relaxed text-text-main whitespace-pre-wrap">{report.narration.prose}</p>
+          {report.narration.model && <div className="text-[10px] text-text-muted">Generated with {report.narration.model}</div>}
+        </Card>
+      ) : null}
     </div>
   );
 }

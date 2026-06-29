@@ -222,12 +222,15 @@ Jyotish Digest volumes (+273). Total: +3,455 nodes from baseline 23,267.
 | Varshaphala | `app/varshaphala.py` | Annual return chart | 2026-06-25 | Live |
 | Prashna | `app/prashna.py` | Horary chart | 2026-06-25 | Live |
 
-## 9. Next Phases (in priority order)
+## 9. Next Phases (in priority order) — Active (no longer deferred)
 
 1. **Supabase vault re-sync** — push 26k-node graph when network to Supabase is stable
-2. **Vector embeddings** — `corpus_chunks` hybrid search (schema planned, not built)
-3. **Kaksha calendar, Chara/Kalachakra dashas** — engine + UI
-4. **Phase 13: LLM narration layer** — optional prose on `ReportFacts` (`CVCE_LLM_NARRATION=1`)
+2. **Vector embeddings on `corpus_chunks`** — hybrid search (P0, schema + sync + retrieval)
+3. **Kaksha calendar + Chara/Kalachakra dashas** — full engine + UI (P1)
+4. **LLM narration layer** — optional prose on `ReportFacts` (`CVCE_LLM_NARRATION=1`) (P0)
+5. **Deeper Hiranya-quality report UI polish** — complete remaining integration and depth in HoroscopeReport.tsx
+
+All items promoted to active work with immediate effect. See STATUS.md §3 and §4 for tracking.
 
 ---
 

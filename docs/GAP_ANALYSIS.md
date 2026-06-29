@@ -234,11 +234,13 @@ Prioritized from archived audits — these affect **correctness**, not just UI:
 | D2 | Jaimini Chara Karakas not implemented | `audit_dasha_vargas.md` |
 | Y2 | Kemadruma cancellation checks incomplete | `audit_yogas.md` |
 
-### P2 — Medium / deferred
+### P2 — Medium (active items promoted)
 
 - Wilhelm VTN muhurta yogas subset missing
 - Pushkar Navamsha flagging, Bhrigu point, Mandi/Gulika enhancements
 - D108, Tithi Pravesha, Dasha Pravesh charts
+
+**Note (2026-06-29):** Previously deferred items (Vector embeddings, LLM narration, Kaksha+Chara/Kalachakra, deeper report polish) have been promoted to active P0/P1 per user directive. See STATUS.md and CONTEXT.md §9. Work started immediately.
 
 ---
 
@@ -257,6 +259,8 @@ Ordered by impact × dependency alignment with roadmap:
 | **P2** | Jaimini Chara Karakas (D2) | 5+ | — |
 | **P3** | Prop-driven Muhurta fork | deferred | Frozen constraint |
 | **P3** | Desktop-suite enhancements (30-cell worksheets, etc.) | out of scope | — |
+
+**Update 2026-06-29:** Vector embeddings on corpus_chunks, LLM narration (CVCE_LLM_NARRATION), Kaksha+Chara/Kalachakra dashas, and deeper Hiranya report UI polish promoted from deferred/later to active P0/P1. Implementation started in parallel.
 
 ---
 

@@ -122,9 +122,10 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] **9** Shadbala chapter — Sthana/Dik/Cheshta/Kaala/Naisargika/Total-Rupa table for 7 planets.
 - [x] **10** Timing merge — combined dasha score + transit verdict → single window verdict with reasons.
 - [x] **11** Dasha forecast — next 8 antardasha periods, each with dated range + life-area bullets (profession/wealth/health/family/caution).
-- [ ] **12** (deferred) Optional LLM narration layer — gate with `CVCE_LLM_NARRATION=1`.
-- [ ] Vector embeddings on `corpus_chunks` for hybrid search (Supabase).
-- [ ] Kaksha transit calendar, Chara/Kalachakra dashas, desktop §7 enhancements.
+- [ ] **12** LLM narration layer — gate with `CVCE_LLM_NARRATION=1` (P0, active — in progress).
+- [ ] Vector embeddings on `corpus_chunks` for hybrid search (Supabase) (P0, active — in progress).
+- [ ] Kaksha transit calendar + Chara/Kalachakra dashas — engine + UI (P1, active — in progress).
+- Deeper Hiranya-quality polish on HoroscopeReport (fill remaining chapters, tighter integration) (P0, active — in progress).
 
 **Key new files (Phase 9–12):**
 | Path | Change |
@@ -141,7 +142,7 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 2. **Report load time:** `/chart/report` now calls ashtakavarga, shadbala, forecast (8 antardasha analysis), and GraphRAG enhancer — may take 15–20s on a warm CVCE. Report page has a 120s proxy timeout.
 3. **Ingest daemons stopped:** `com.vedicastro.ingest` launch agents unloaded (work complete). Reload only if new OCR/extract needed.
 4. **Auth/DB:** Google OAuth + Neon + save/load/delete live. Varshaphala requires pro tier. `ADMIN_EMAILS` for admin role.
-5. **LLM narration (Phase 12 deferred):** Report uses rule-based bullets only. Optional LLM prose layer pending (`CVCE_LLM_NARRATION=1` gate not wired).
+5. **LLM narration:** Report uses rule-based bullets primarily. `CVCE_LLM_NARRATION=1` gate now active work item (P0) to add optional prose layer on ReportFacts.
 
 ### Golden reference chart (regression anchor)
 **Mohan** — `1975-04-22T19:15:00`, Mysore (`12.2958°N`, `76.6394°E`, `tz=5.5`). Lagna Libra/Swati p4, Moon Leo/Purva Phalguni p4. Hiranya PDF confirms Venus balance **4Y7M6D**, Jupiter Maha from ~Nov 2020, current antar **Jupiter–Mercury** (June 2026).

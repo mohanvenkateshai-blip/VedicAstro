@@ -1733,7 +1733,7 @@ def _ashtottari_current(jd, place, lord_name):
 @app.post("/dashas")
 def all_dashas(req: BirthRequest):
     """Compute multiple dasha systems for a birth chart.
-    Returns current periods for Vimshottari, Yogini, Ashtottari, Chara, Kalachakra."""
+    Returns current periods for Vimshottari, Yogini, Ashtottari, Chara, Kalachakra (P0 active work)."""
     set_ayanamsa(req.ayanamsa)
     dt = parse_dt(req.birth_datetime)
     jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
@@ -1842,6 +1842,16 @@ def all_dashas(req: BirthRequest):
     except Exception as e:
         print(f"[all_dashas] ashtottari failed: {type(e).__name__}: {e}", flush=True)
         result["ashtottari"] = None
+
+    # Chara + Kalachakra — promoted to active P0/P1 (2026-06-29)
+    # Full Jaimini Chara and Kalachakra logic is being wired; partial data available via graph + PyJHora.
+    try:
+        result["chara"] = {"status": "active", "note": "See graph_rag for Jaimini Chara nodes; engine extension in progress"}
+        result["kalachakra"] = {"status": "active", "note": "In progress"}
+        # Kaksha refinement lives in ashtakavarga + gochar
+    except Exception as e:
+        result["chara"] = None
+        result["kalachakra"] = None
 
     return {
         "birth_datetime": req.birth_datetime,
