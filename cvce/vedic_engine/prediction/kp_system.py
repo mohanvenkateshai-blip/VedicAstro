@@ -16,17 +16,14 @@ def _clear_kp_knowledge_caches() -> None:
     """Drop KP graph caches so cusp significations reload from the latest corpus."""
     _signification_cache.clear()
     try:
-        from graph_rag.graph import GraphRAG
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
-        GraphRAG()._loaded = False
-    except ImportError:
+        clear_knowledge_engine_cache()
+    except Exception:
         pass
     try:
-        from knowledge_engine.integration import get_knowledge_engine
-
-        ke = get_knowledge_engine()
-        if hasattr(ke.store, "_graph"):
-            ke.store._graph = None  # type: ignore[attr-defined]
+        from graph_rag.graph import GraphRAG
+        GraphRAG()._loaded = False
     except Exception:
         pass
 

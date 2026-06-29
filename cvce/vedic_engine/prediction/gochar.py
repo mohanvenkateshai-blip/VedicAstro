@@ -43,19 +43,25 @@ _gochar_registered = False
 
 
 def _clear_transit_rules_cache() -> None:
-    """Drop cached graph transit rules so the next gochar run reloads from graph."""
+    """Drop cached graph transit rules so the next gochar run reloads from graph.
+    Now routes through KnowledgeEngine gateway (no direct GraphRAG bypass).
+    """
     try:
-        from graph_rag.rules_provider import GraphTransitRules
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
-        GraphTransitRules._instance = None
-    except ImportError:
-        pass
-    try:
-        from graph_rag.graph import GraphRAG
-
-        GraphRAG()._loaded = False
-    except ImportError:
-        pass
+        clear_knowledge_engine_cache()
+    except Exception:
+        # Fallback to old direct if KE not importable in this context
+        try:
+            from graph_rag.rules_provider import GraphTransitRules
+            GraphTransitRules._instance = None
+        except Exception:
+            pass
+        try:
+            from graph_rag.graph import GraphRAG
+            GraphRAG()._loaded = False
+        except Exception:
+            pass
 
 
 def _on_gochar_refresh(new_version: str) -> None:

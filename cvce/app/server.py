@@ -504,28 +504,35 @@ except Exception:
     _ENGINE_AVAILABLE = False
     _predictor = None
 
-# GraphRAG enhancement layer (optional — present if knowledge-graph exists)
+# Knowledge layer — prefer KnowledgeEngine safe access. GraphRAG kept only for
+# specialized stats providers (deepseek/gemini etc) that are not yet under KE.
 try:
-    from graph_rag import PredictionEnhancer
-    from graph_rag.graph_deepseek import deepseek_graph_stats
-    from graph_rag.graph_gemini import gemini_graph_stats
-    from graph_rag.graph_glm import glm_graph_stats
-    from graph_rag.graph_grok import grok_graph_available, grok_graph_stats
-    from graph_rag.rules_provider import graph_rules_enabled
+    from knowledge_engine.integration import get_safe_graph, get_prediction_enhancer, is_knowledge_healthy
 
-    _enhancer = PredictionEnhancer()
+    _enhancer = get_prediction_enhancer()
     _GRAPH_AVAILABLE = True
 except Exception:
     _GRAPH_AVAILABLE = False
     _enhancer = None
 
-    def graph_rules_enabled() -> bool:
-        return False
+# Legacy named imports for the specific LLM graph stat helpers (these are narrow providers)
+try:
+    from graph_rag.graph_deepseek import deepseek_graph_stats
+    from graph_rag.graph_gemini import gemini_graph_stats
+    from graph_rag.graph_glm import glm_graph_stats
+    from graph_rag.graph_grok import grok_graph_available, grok_graph_stats
+except Exception:
+    def deepseek_graph_stats(): return None
+    def gemini_graph_stats(): return None
+    def glm_graph_stats(): return None
+    def grok_graph_stats(): return None
+    def grok_graph_available() -> bool: return False
 
-    def grok_graph_stats():
-        return None
-
-    def grok_graph_available() -> bool:
+def graph_rules_enabled() -> bool:
+    try:
+        from knowledge_engine.integration import is_knowledge_healthy
+        return is_knowledge_healthy()
+    except Exception:
         return False
 
 

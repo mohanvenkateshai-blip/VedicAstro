@@ -39,19 +39,24 @@ _muhurta_registered = False
 
 
 def _clear_muhurta_rules_cache() -> None:
-    """Drop cached graph muhurta rules so the next predict() reloads yoga hits."""
+    """Drop cached graph muhurta rules so the next predict() reloads yoga hits.
+    Routes cache invalidation through KnowledgeEngine to avoid direct GraphRAG.
+    """
     try:
-        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
-        GraphMuhurtaRules._instance = None
-    except ImportError:
-        pass
-    try:
-        from graph_rag.graph import GraphRAG
-
-        GraphRAG()._loaded = False
-    except ImportError:
-        pass
+        clear_knowledge_engine_cache()
+    except Exception:
+        try:
+            from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+            GraphMuhurtaRules._instance = None
+        except Exception:
+            pass
+        try:
+            from graph_rag.graph import GraphRAG
+            GraphRAG()._loaded = False
+        except Exception:
+            pass
 
 
 def _on_muhurta_refresh(new_version: str) -> None:

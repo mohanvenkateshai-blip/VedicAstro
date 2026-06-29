@@ -27,23 +27,26 @@ _report_registered = False
 def _clear_report_knowledge_caches() -> None:
     """Invalidate graph-backed rule caches used when assembling report facts."""
     try:
-        from graph_rag.rules_provider import GraphTransitRules
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
-        GraphTransitRules._instance = None
-    except ImportError:
-        pass
-    try:
-        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
-
-        GraphMuhurtaRules._instance = None
-    except ImportError:
-        pass
-    try:
-        from graph_rag.graph import GraphRAG
-
-        GraphRAG()._loaded = False
-    except ImportError:
-        pass
+        clear_knowledge_engine_cache()
+    except Exception:
+        # legacy direct clears (kept only as fallback during transition)
+        try:
+            from graph_rag.rules_provider import GraphTransitRules
+            GraphTransitRules._instance = None
+        except Exception:
+            pass
+        try:
+            from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+            GraphMuhurtaRules._instance = None
+        except Exception:
+            pass
+        try:
+            from graph_rag.graph import GraphRAG
+            GraphRAG()._loaded = False
+        except Exception:
+            pass
 
 
 def _on_report_refresh(new_version: str) -> None:

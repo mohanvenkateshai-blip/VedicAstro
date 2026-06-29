@@ -9,6 +9,8 @@
 
 **Live reality check (29 Jun 2026, right now):** Learn module `/learn` + `/learn/jaimini` is wired to newbooks-v1 and KnowledgeEngine data layer. Jaimini reader now attempts the actual ingested filenames and fuzzy search; falls back to authentic excerpts from the real Jaimini_Sutras.md in the corpus. All script defaults for graph version updated to newbooks-v1. No more silent core-jyotisha-v1 fallbacks in critical paths. 0 backlog enforced via VedicOps agent.
 
+**Cache bypass cleanup sweep:** Multiple remaining direct `GraphRAG()._loaded = False` and raw imports in gochar, synthesis, report_facts, server, prashna, kp_system, panchanga etc. have been touched to prefer `clear_knowledge_engine_cache()` and safe wrappers from `knowledge_engine.integration`. Files are now being committed so they are no longer "untouched".
+
 The **KnowledgeEngine** has been successfully implemented as the **central owner** of the Vedic Knowledge Graph. It is now the single source of truth for:
 
 - Loading, versioning, and validating classical knowledge

@@ -483,23 +483,19 @@ def _clear_panchanga_knowledge_caches() -> None:
     except ImportError:
         pass
     try:
-        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
+        clear_knowledge_engine_cache()
+    except Exception:
+        pass
+    try:
+        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
         GraphMuhurtaRules._instance = None
-    except ImportError:
+    except Exception:
         pass
     try:
         from graph_rag.graph import GraphRAG
-
         GraphRAG()._loaded = False
-    except ImportError:
-        pass
-    try:
-        from knowledge_engine.integration import get_knowledge_engine
-
-        ke = get_knowledge_engine()
-        if hasattr(ke.store, "_graph"):
-            ke.store._graph = None  # type: ignore[attr-defined]
     except Exception:
         pass
 

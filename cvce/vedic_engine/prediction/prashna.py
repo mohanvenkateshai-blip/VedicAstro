@@ -18,23 +18,20 @@ def _clear_prashna_knowledge_caches() -> None:
     _horary_insight_cache.clear()
     _enhancer = None
     try:
-        from graph_rag.graph import GraphRAG
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
+        clear_knowledge_engine_cache()
+    except Exception:
+        pass
+    # legacy direct (only if the central clear is unavailable)
+    try:
+        from graph_rag.graph import GraphRAG
         GraphRAG()._loaded = False
-    except ImportError:
+    except Exception:
         pass
     try:
         from graph_rag.rules_provider import GraphTransitRules
-
         GraphTransitRules._instance = None
-    except ImportError:
-        pass
-    try:
-        from knowledge_engine.integration import get_knowledge_engine
-
-        ke = get_knowledge_engine()
-        if hasattr(ke.store, "_graph"):
-            ke.store._graph = None  # type: ignore[attr-defined]
     except Exception:
         pass
 
