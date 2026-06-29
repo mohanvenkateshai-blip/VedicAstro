@@ -79,7 +79,7 @@ NITYA_YOGAS = [
 
 # Nakshatra natures (Brihat Samhita / Phaladeepika Ch.26)
 NAK_NATURE = {
-    "Ashwini": "Light", "Bharani": "Severe", "Krittika": "Mixed",
+    "Ashwini": "Light", "Bharani": "Fierce", "Krittika": "Mixed",
     "Rohini": "Fixed", "Mrigashira": "Soft", "Ardra": "Sharp",
     "Punarvasu": "Movable", "Pushya": "Light", "Ashlesha": "Sharp",
     "Magha": "Fierce", "Purva Phalguni": "Fierce", "Uttara Phalguni": "Fixed",
