@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Optional
+from typing import Any
 
 EMBED_MODEL = "text-embedding-004"
 EMBED_DIM = 768

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from .engine import KnowledgeEngine
 
@@ -26,9 +26,8 @@ def get_knowledge_engine() -> KnowledgeEngine:
     (detected via presence of Supabase credentials or KE_USE_SUPABASE=1).
     Falls back to file-based store for local development.
     """
-    use_supabase = (
-        os.environ.get("KE_USE_SUPABASE", "").lower() in ("1", "true")
-        or bool(os.environ.get("SUPABASE_URL"))
+    use_supabase = os.environ.get("KE_USE_SUPABASE", "").lower() in ("1", "true") or bool(
+        os.environ.get("SUPABASE_URL")
     )
     if use_supabase:
         version = os.environ.get("CORPUS_GRAPH_VERSION", "newbooks-v1")
@@ -39,6 +38,7 @@ def get_knowledge_engine() -> KnowledgeEngine:
 # ------------------------------------------------------------------ #
 # Safe Access Wrappers (Preferred API)
 # ------------------------------------------------------------------ #
+
 
 def get_safe_graph():
     """Returns the validated GraphRAG instance or raises if unhealthy."""
@@ -58,7 +58,7 @@ def get_safe_muhurta_rules():
     return ke.get_safe_rules("muhurta")
 
 
-def get_safe_knowledge(engine_name: str = "unknown") -> Dict[str, Any]:
+def get_safe_knowledge(engine_name: str = "unknown") -> dict[str, Any]:
     """Returns a safe snapshot of current knowledge state."""
     ke = get_knowledge_engine()
     return ke.get_safe_knowledge(engine_name)
@@ -74,11 +74,13 @@ def is_knowledge_healthy() -> bool:
 # Prediction Enhancement (via KnowledgeEngine)
 # ------------------------------------------------------------------ #
 
+
 def get_prediction_enhancer():
     """Returns a PredictionEnhancer that is aware of the KnowledgeEngine."""
     ke = get_knowledge_engine()
     # Create enhancer using the validated graph from KnowledgeEngine
     from graph_rag.enhancer import PredictionEnhancer
+
     enhancer = PredictionEnhancer()
     # Ensure enhancer uses the same graph instance as KE when possible
     if hasattr(ke.store, "_graph") and ke.store._graph is not None:

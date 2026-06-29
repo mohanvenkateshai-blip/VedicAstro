@@ -64,9 +64,7 @@ def get_node_text(node: Dict[str, Any]) -> str:
 
 
 def find_similar_nodes(
-    orphan: Dict[str, Any],
-    graph: Dict[str, Any],
-    top_k: int = 10
+    orphan: Dict[str, Any], graph: Dict[str, Any], top_k: int = 10
 ) -> List[Tuple[Dict[str, Any], float]]:
     """
     Find the most similar nodes using simple text overlap + community bonus.
@@ -99,7 +97,7 @@ def find_similar_nodes(
 def ask_llm_for_parents(
     orphan: Dict[str, Any],
     candidates: List[Tuple[Dict[str, Any], float]],
-    model: str = "gemini-2.0-flash"
+    model: str = "gemini-2.0-flash",
 ) -> List[Dict[str, Any]]:
     """
     Use Gemini to pick the best parents from candidates.
@@ -115,14 +113,13 @@ def ask_llm_for_parents(
 
     orphan_desc = get_node_text(orphan)
     candidate_text = "\n".join(
-        f"- {c[0]['id']} | {get_node_text(c[0])[:120]} (score={c[1]})"
-        for c in candidates
+        f"- {c[0]['id']} | {get_node_text(c[0])[:120]} (score={c[1]})" for c in candidates
     )
 
     prompt = f"""You are an expert in Vedic astrology knowledge graphs.
 
 Orphan node:
-ID: {orphan['id']}
+ID: {orphan["id"]}
 Description: {orphan_desc}
 
 Top candidate nodes (with similarity scores):
@@ -153,13 +150,17 @@ Return ONLY valid JSON in this exact format:
         result = json.loads(text)
         return result.get("suggestions", [])
     except Exception as e:
-        print(f"LLM call failed for {orphan['id']}: {e} — falling back to similarity candidates only.")
+        print(
+            f"LLM call failed for {orphan['id']}: {e} — falling back to similarity candidates only."
+        )
         return []
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--limit", type=int, default=0, help="Process only first N orphans (0 = all)")
+    parser.add_argument(
+        "--limit", type=int, default=0, help="Process only first N orphans (0 = all)"
+    )
     parser.add_argument("--output", default="knowledge-graph/orphan-proposals.json")
     args = parser.parse_args()
 
@@ -171,12 +172,12 @@ def main():
     print(f"Found {len(orphans)} orphan nodes.")
 
     if args.limit > 0:
-        orphans = orphans[:args.limit]
+        orphans = orphans[: args.limit]
 
     proposals = []
 
     for i, orphan in enumerate(orphans):
-        print(f"[{i+1}/{len(orphans)}] Processing: {orphan['id']}")
+        print(f"[{i + 1}/{len(orphans)}] Processing: {orphan['id']}")
 
         candidates = find_similar_nodes(orphan, graph, top_k=8)
         suggestions = ask_llm_for_parents(orphan, candidates)
@@ -188,8 +189,7 @@ def main():
             "orphan_label": orphan.get("label"),
             "community": orphan.get("community"),
             "top_candidates": [
-                {"id": c[0]["id"], "label": c[0].get("label"), "score": c[1]}
-                for c in candidates
+                {"id": c[0]["id"], "label": c[0].get("label"), "score": c[1]} for c in candidates
             ],
         }
 
@@ -202,7 +202,7 @@ def main():
                     "parent_id": c[0]["id"],
                     "suggested_relation": "related_to",
                     "confidence": round(min(c[1] / 10, 0.9), 2),
-                    "reason": "High textual + community similarity (LLM unavailable)"
+                    "reason": "High textual + community similarity (LLM unavailable)",
                 }
                 for c in candidates[:3]
             ]

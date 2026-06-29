@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 from urllib.parse import quote
 
 from .base import KnowledgeStore
@@ -42,7 +42,7 @@ class SupabaseKnowledgeStore(KnowledgeStore):
         self._env = self._load_env()
         self._embeddings_present: bool | None = None
 
-    def _load_env(self) -> Dict[str, str]:
+    def _load_env(self) -> dict[str, str]:
         load_env, _ = _sync_helpers()
         return load_env()
 
@@ -57,10 +57,10 @@ class SupabaseKnowledgeStore(KnowledgeStore):
     def get_version(self) -> str:
         return self.graph_version
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         code, body = self._request(
             "GET",
-            f"/rest/v1/graph_nodes?select=count&graph_version=eq.{self.graph_version}&limit=1"
+            f"/rest/v1/graph_nodes?select=count&graph_version=eq.{self.graph_version}&limit=1",
         )
         node_count = 0
         if code == 200:
@@ -76,10 +76,10 @@ class SupabaseKnowledgeStore(KnowledgeStore):
             "source": "supabase",
         }
 
-    def get_node(self, node_id: str) -> Optional[Dict[str, Any]]:
+    def get_node(self, node_id: str) -> dict[str, Any] | None:
         code, body = self._request(
             "GET",
-            f"/rest/v1/graph_nodes?id=eq.{node_id}&graph_version=eq.{self.graph_version}&limit=1"
+            f"/rest/v1/graph_nodes?id=eq.{node_id}&graph_version=eq.{self.graph_version}&limit=1",
         )
         if code == 200:
             data = json.loads(body)
@@ -87,16 +87,15 @@ class SupabaseKnowledgeStore(KnowledgeStore):
                 return data[0]
         return None
 
-    def get_nodes(self, limit: int = 100) -> List[Dict[str, Any]]:
+    def get_nodes(self, limit: int = 100) -> list[dict[str, Any]]:
         code, body = self._request(
-            "GET",
-            f"/rest/v1/graph_nodes?graph_version=eq.{self.graph_version}&limit={limit}"
+            "GET", f"/rest/v1/graph_nodes?graph_version=eq.{self.graph_version}&limit={limit}"
         )
         if code == 200:
             return json.loads(body)
         return []
 
-    def get_links(self, source_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+    def get_links(self, source_id: str | None = None, limit: int = 100) -> list[dict[str, Any]]:
         query = f"/rest/v1/graph_links?graph_version=eq.{self.graph_version}&limit={limit}"
         if source_id:
             query += f"&source_id=eq.{source_id}"

@@ -12,7 +12,7 @@ All access to nodes, links, and metadata must go through this interface.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 class KnowledgeStore(ABC):
@@ -24,22 +24,22 @@ class KnowledgeStore(ABC):
         ...
 
     @abstractmethod
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Return basic stats (node_count, link_count, etc.)."""
         ...
 
     @abstractmethod
-    def get_node(self, node_id: str) -> Optional[Dict[str, Any]]:
+    def get_node(self, node_id: str) -> dict[str, Any] | None:
         """Fetch a single node by ID. Returns None if not found or invalid."""
         ...
 
     @abstractmethod
-    def get_nodes(self, limit: int = 100) -> List[Dict[str, Any]]:
+    def get_nodes(self, limit: int = 100) -> list[dict[str, Any]]:
         """Fetch a batch of nodes."""
         ...
 
     @abstractmethod
-    def get_links(self, source_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+    def get_links(self, source_id: str | None = None, limit: int = 100) -> list[dict[str, Any]]:
         """Fetch links, optionally filtered by source."""
         ...
 

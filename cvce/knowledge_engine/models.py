@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Optional
 
 
 class InvalidationReason(str, Enum):
@@ -27,6 +26,6 @@ class GraphVersion:
 class KnowledgeValidity:
     node_id: str
     is_valid: bool
-    reason: Optional[InvalidationReason] = None
+    reason: InvalidationReason | None = None
     details: str = ""
-    invalidated_at: Optional[datetime] = None
+    invalidated_at: datetime | None = None

@@ -7,21 +7,20 @@ from __future__ import annotations
 import fnmatch
 import json
 import os
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Type
 
-from graph_rag.graph import GraphRAG
-
-from .models import GraphVersion, KnowledgeValidity, InvalidationReason
+from .models import GraphVersion, InvalidationReason, KnowledgeValidity
 from .registry import EngineRegistry, RegisteredEngine
 from .store.base import KnowledgeStore
 from .store.supabase_store import SupabaseKnowledgeStore
 
+
 # Fallback file-based store (current behavior)
 class _FileKnowledgeStore(KnowledgeStore):
-    def __init__(self, graph_path: Optional[Path] = None):
+    def __init__(self, graph_path: Path | None = None):
         self.graph_path = graph_path or Path("knowledge-graph/graphify-out/graph.json")
         self._graph = None
 
@@ -33,7 +32,7 @@ class _FileKnowledgeStore(KnowledgeStore):
     def get_version(self) -> str:
         return os.environ.get("CORPUS_GRAPH_VERSION", "file-based")
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         g = self._load()
         return {"node_count": len(g.get("nodes", [])), "link_count": len(g.get("links", []))}
 
@@ -69,9 +68,9 @@ class KnowledgeEngine:
 
     store: KnowledgeStore = field(default_factory=_FileKnowledgeStore)
     registry: EngineRegistry = field(default_factory=EngineRegistry)
-    current_version: Optional[GraphVersion] = None
-    _invalidations: Dict[str, KnowledgeValidity] = field(default_factory=dict)
-    _last_revived_at: Optional[datetime] = None
+    current_version: GraphVersion | None = None
+    _invalidations: dict[str, KnowledgeValidity] = field(default_factory=dict)
+    _last_revived_at: datetime | None = None
     _revive_interval_seconds: int = 3600
 
     def __post_init__(self):
@@ -85,7 +84,7 @@ class KnowledgeEngine:
             version=version_str,
             node_count=stats.get("node_count", 0),
             link_count=stats.get("link_count", 0),
-            loaded_at=datetime.now(timezone.utc),
+            loaded_at=datetime.now(UTC),
         )
         return self.current_version
 
@@ -96,8 +95,8 @@ class KnowledgeEngine:
     def register_engine(
         self,
         name: str,
-        on_refresh: Optional[Callable[[str], None]] = None,
-        on_invalidation: Optional[Callable[[List[str], InvalidationReason, str], None]] = None,
+        on_refresh: Callable[[str], None] | None = None,
+        on_invalidation: Callable[[list[str], InvalidationReason, str], None] | None = None,
     ) -> RegisteredEngine:
         """Register an engine that depends on knowledge (e.g. 'gochar', 'report', 'muhurta')."""
         return self.registry.register(
@@ -132,12 +131,12 @@ class KnowledgeEngine:
         return self.store
 
     @classmethod
-    def with_supabase(cls, graph_version: str = "newbooks-v1") -> "KnowledgeEngine":
+    def with_supabase(cls, graph_version: str = "newbooks-v1") -> KnowledgeEngine:
         """Convenience constructor for Supabase-backed mode."""
         store = SupabaseKnowledgeStore(graph_version=graph_version)
         return cls(store=store)
 
-    def get_safe_node(self, node_id: str) -> Optional[dict]:
+    def get_safe_node(self, node_id: str) -> dict | None:
         """
         Return a graph node only when it is currently valid.
 
@@ -147,11 +146,11 @@ class KnowledgeEngine:
             return None
         return self.graph.node(node_id)
 
-    def filter_valid_nodes(self, nodes: List[dict]) -> List[dict]:
+    def filter_valid_nodes(self, nodes: list[dict]) -> list[dict]:
         """Return only nodes whose ``id`` is not invalidated."""
         return [node for node in nodes if self.is_node_valid(node.get("id", ""))]
 
-    def query_nodes(self, pattern: Optional[str] = None, limit: Optional[int] = None) -> List[dict]:
+    def query_nodes(self, pattern: str | None = None, limit: int | None = None) -> list[dict]:
         """
         Safe graph query that omits invalidated nodes.
 
@@ -164,8 +163,7 @@ class KnowledgeEngine:
         candidates = self.graph.nodes
         if pattern:
             candidates = [
-                node for node in candidates
-                if fnmatch.fnmatch(node.get("id", ""), pattern)
+                node for node in candidates if fnmatch.fnmatch(node.get("id", ""), pattern)
             ]
 
         valid = self.filter_valid_nodes(candidates)
@@ -185,9 +183,11 @@ class KnowledgeEngine:
         # Fallback to current providers (temporary until store implements rules)
         if category == "transit":
             from graph_rag.rules_provider import active_transit_rules
+
             return active_transit_rules()
         elif category == "muhurta":
             from graph_rag.muhurta_rules_provider import active_muhurta_rules
+
             return active_muhurta_rules()
         else:
             raise ValueError(f"Unknown rule category: {category}")
@@ -218,7 +218,7 @@ class KnowledgeEngine:
         self._load_current_version()
         version = self.current_version.version if self.current_version else "unknown"
         self.registry.notify_refresh(new_version=version)
-        self._last_revived_at = datetime.now(timezone.utc)
+        self._last_revived_at = datetime.now(UTC)
 
         return {
             "status": "embeddings_updated",
@@ -326,11 +326,11 @@ Facts (abbrev):
 
     def invalidate(
         self,
-        node_ids: Optional[List[str]] = None,
-        pattern: Optional[str] = None,
+        node_ids: list[str] | None = None,
+        pattern: str | None = None,
         reason: InvalidationReason = InvalidationReason.MANUAL,
         details: str = "",
-    ) -> List[str]:
+    ) -> list[str]:
         """
         Block specific knowledge from being consumed by any engine.
 
@@ -342,7 +342,7 @@ Facts (abbrev):
         if not targets:
             return []
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         for node_id in targets:
             self._invalidations[node_id] = KnowledgeValidity(
                 node_id=node_id,
@@ -357,9 +357,9 @@ Facts (abbrev):
 
     def revalidate(
         self,
-        node_ids: Optional[List[str]] = None,
-        pattern: Optional[str] = None,
-    ) -> List[str]:
+        node_ids: list[str] | None = None,
+        pattern: str | None = None,
+    ) -> list[str]:
         """
         Remove invalidations for the given IDs or glob pattern.
 
@@ -389,7 +389,7 @@ Facts (abbrev):
         """Return True when the node is not in the invalidation set."""
         return node_id not in self._invalidations
 
-    def invalidated_node_ids(self) -> List[str]:
+    def invalidated_node_ids(self) -> list[str]:
         """Return all currently invalidated node IDs."""
         return list(self._invalidations.keys())
 
@@ -401,10 +401,10 @@ Facts (abbrev):
 
     def _resolve_invalidation_targets(
         self,
-        node_ids: Optional[List[str]] = None,
-        pattern: Optional[str] = None,
+        node_ids: list[str] | None = None,
+        pattern: str | None = None,
         known_only: bool = False,
-    ) -> List[str]:
+    ) -> list[str]:
         """Resolve explicit IDs and/or glob patterns into a deduplicated ID list."""
         targets: set[str] = set()
 
@@ -421,7 +421,7 @@ Facts (abbrev):
 
         return sorted(targets)
 
-    def _clear_stale_invalidations(self) -> List[str]:
+    def _clear_stale_invalidations(self) -> list[str]:
         """
         Drop invalidations for nodes that no longer exist in the loaded graph.
 
@@ -458,13 +458,13 @@ Facts (abbrev):
             version=new_version,
             node_count=stats.get("nodes", 0),
             link_count=stats.get("links", 0),
-            loaded_at=datetime.now(timezone.utc),
+            loaded_at=datetime.now(UTC),
             source=str(new_graph_path),
         )
 
         self._invalidations.clear()
         self.registry.notify_refresh(new_version=new_version)
-        self._last_revived_at = datetime.now(timezone.utc)
+        self._last_revived_at = datetime.now(UTC)
 
     # ------------------------------------------------------------------ #
     # Periodic Revival (Revival Protocol)
@@ -485,7 +485,7 @@ Facts (abbrev):
         to the cooldown window (unless ``force=True``).
         """
         if not force and self._last_revived_at:
-            age = (datetime.now(timezone.utc) - self._last_revived_at).total_seconds()
+            age = (datetime.now(UTC) - self._last_revived_at).total_seconds()
             if age < self._revive_interval_seconds:
                 return False
 
@@ -495,7 +495,7 @@ Facts (abbrev):
         new_version = self.current_version.version if self.current_version else "unknown"
         self.registry.notify_refresh(new_version=new_version)
 
-        self._last_revived_at = datetime.now(timezone.utc)
+        self._last_revived_at = datetime.now(UTC)
         return True
 
     def trigger_global_refresh(self, reason: str = "manual") -> dict:
@@ -514,7 +514,7 @@ Facts (abbrev):
         new_version = self.current_version.version if self.current_version else "unknown"
         self.registry.notify_refresh(new_version=new_version)
 
-        self._last_revived_at = datetime.now(timezone.utc)
+        self._last_revived_at = datetime.now(UTC)
 
         return {
             "status": "triggered",

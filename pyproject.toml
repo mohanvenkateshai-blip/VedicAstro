@@ -1,0 +1,35 @@
+[project]
+name = "vedicastro"
+version = "0.1.0"
+description = "Vedic Astrology platform with Knowledge Graph"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # Core dependencies will be added here
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.4.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+]
+ignore = ["E501"]  # line too long (handled by formatter)
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.isort]
+known-first-party = ["cvce", "vedic_engine", "knowledge_engine"]
