@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.vedicastro.ingest</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/ganesha/Projects/04-UX-Practice/VedicAstro/scripts/ingest-pipeline-daemon.sh</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/opt/homebrew/share/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/launchd.err.log</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/ganesha/Projects/04-UX-Practice/VedicAstro</string>
+</dict>
+</plist>
