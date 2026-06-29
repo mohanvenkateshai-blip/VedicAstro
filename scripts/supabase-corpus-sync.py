@@ -20,7 +20,18 @@ GRAPH_OUT = KG / "graphify-out"
 MANIFEST = KG / "corpus-manifest.json"
 ENV_LOCAL = ROOT / "portal" / ".env.local"
 BUCKET = "corpus-vault"
-GRAPH_VERSION = os.environ.get("CORPUS_GRAPH_VERSION", "core-jyotisha-v1")
+GRAPH_VERSION = os.environ.get("CORPUS_GRAPH_VERSION", "")
+
+
+def _graph_version_label() -> str:
+    if GRAPH_VERSION:
+        return GRAPH_VERSION
+    ver_path = KG / "graph-version.json"
+    if ver_path.is_file():
+        return json.loads(ver_path.read_text(encoding="utf-8")).get(
+            "graph_version", "core-jyotisha-v1"
+        )
+    return "core-jyotisha-v1"
 BATCH = 400
 
 
@@ -197,7 +208,7 @@ def sync_markdown(env: dict[str, str]) -> int:
 
 
 def pick_graph() -> Path:
-    for name in ("graph-core-jyotisha.json", "graph-deepseek.json", "graph.json"):
+    for name in ("graph.json", "graph-core-jyotisha.json", "graph-deepseek.json"):
         p = GRAPH_OUT / name
         if p.is_file():
             return p
@@ -205,6 +216,7 @@ def pick_graph() -> Path:
 
 
 def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
+    graph_version = _graph_version_label()
     graph_path = pick_graph()
     graph = json.loads(graph_path.read_text(encoding="utf-8"))
     nodes = graph.get("nodes", [])
@@ -212,10 +224,10 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
 
     # Snapshot to storage
     snap = json.dumps(graph, indent=2).encode()
-    upload_storage(env, f"graphs/{GRAPH_VERSION}.json", snap, "application/json")
+    upload_storage(env, f"graphs/{graph_version}.json", snap, "application/json")
 
     if full_replace:
-        delete_graph_version(env, GRAPH_VERSION)
+        delete_graph_version(env, graph_version)
 
     node_rows = []
     for n in nodes:
@@ -226,7 +238,7 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
         node_rows.append(
             {
                 "id": nid,
-                "graph_version": GRAPH_VERSION,
+                "graph_version": graph_version,
                 "label": n.get("label"),
                 "file_type": n.get("file_type"),
                 "source_file": n.get("source_file"),
@@ -245,7 +257,7 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
         props = {k: v for k, v in e.items() if k not in ("source", "target", "relation")}
         link_rows.append(
             {
-                "graph_version": GRAPH_VERSION,
+                "graph_version": graph_version,
                 "source_id": src,
                 "target_id": tgt,
                 "relation": e.get("relation"),
@@ -271,11 +283,11 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
         "graph_ingest_runs",
         [
             {
-                "graph_version": GRAPH_VERSION,
+                "graph_version": graph_version,
                 "provider": graph_path.name,
                 "node_count": len(node_rows),
                 "link_count": len(link_rows),
-                "storage_path": f"graphs/{GRAPH_VERSION}.json",
+                "storage_path": f"graphs/{graph_version}.json",
                 "completed_at": datetime.now(timezone.utc).isoformat(),
             }
         ],

@@ -193,5 +193,310 @@
     "mtime": 1782533156.479425,
     "ast_hash": "9804d0f18cb23c5879ac3f026343de09",
     "semantic_hash": ""
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/utpata_mrityu_kana_siddhi_handbook.md": {
+    "mtime": 1782533156.4135683,
+    "ast_hash": "65f6ff404c25e03cd6e153c1db1b191b",
+    "semantic_hash": "65f6ff404c25e03cd6e153c1db1b191b"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/muhurta_yogas.md": {
+    "mtime": 1782533156.418221,
+    "ast_hash": "88325cc1f06af784f1488cc7fd80ec85",
+    "semantic_hash": "88325cc1f06af784f1488cc7fd80ec85"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jataka_Chandrika.md": {
+    "mtime": 1782685420.675592,
+    "ast_hash": "44b2edd5835a69e5b51d6fc90a2d6824",
+    "semantic_hash": "44b2edd5835a69e5b51d6fc90a2d6824"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jataka_Tatva_Mahadeva.md": {
+    "mtime": 1782685059.508914,
+    "ast_hash": "8e73dede87d838468ddbe263a1c925ed",
+    "semantic_hash": "8e73dede87d838468ddbe263a1c925ed"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Vedic_Astrology_Panchang_Handbook.md": {
+    "mtime": 1782533156.4216623,
+    "ast_hash": "a01424a97fc0ce23fe994e0ce3f01fdb",
+    "semantic_hash": "a01424a97fc0ce23fe994e0ce3f01fdb"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/gemini-code-1780093366483.md": {
+    "mtime": 1782533156.4256587,
+    "ast_hash": "52ee3bb1e8dabfe5c01eb5ce51b80ed5",
+    "semantic_hash": "52ee3bb1e8dabfe5c01eb5ce51b80ed5"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Tithi Astrology Master Reference Guide.md": {
+    "mtime": 1782533156.4292848,
+    "ast_hash": "d00133f7f23e35ca0eb862f52c86bbe5",
+    "semantic_hash": "d00133f7f23e35ca0eb862f52c86bbe5"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Vedic_Astrology_Tithi_Guide.md": {
+    "mtime": 1782533156.4325924,
+    "ast_hash": "b98d5be8a1e3b7c225d451a23a717484",
+    "semantic_hash": "b98d5be8a1e3b7c225d451a23a717484"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Gochar_Phaladeepika_Pulippani.md": {
+    "mtime": 1782322298.1711996,
+    "ast_hash": "893c69207bc842b255a6c1edac14e89c",
+    "semantic_hash": "893c69207bc842b255a6c1edac14e89c"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/vedic_yoga_logic_engine.md": {
+    "mtime": 1782533156.4363887,
+    "ast_hash": "ac83d767dfde067f3b1bf42933e6ed3b",
+    "semantic_hash": "ac83d767dfde067f3b1bf42933e6ed3b"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/SBC_Vedha_and_Panchang_Reference_Guide.md": {
+    "mtime": 1782533156.4396446,
+    "ast_hash": "ebcd3ec401e3c113210ef8c8b3052d15",
+    "semantic_hash": "ebcd3ec401e3c113210ef8c8b3052d15"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Predicting_Through_Jaimini_Astrology.md": {
+    "mtime": 1782533156.4907556,
+    "ast_hash": "d2a276c7ab7aaa473dae8790365a2397",
+    "semantic_hash": "d2a276c7ab7aaa473dae8790365a2397"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/FireShot Capture 034 - Vara Tithi Nakshatra Yogas - Celestial Alignments for Auspicious Be_ - [blog.cosmicinsights.net].md": {
+    "mtime": 1782533156.4438212,
+    "ast_hash": "7d95960498e7d3bf09d65b58513618ce",
+    "semantic_hash": "7d95960498e7d3bf09d65b58513618ce"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Panchang_analysis_medhraj.md": {
+    "mtime": 1782533156.4469628,
+    "ast_hash": "634f09c55f05e079d3b208ae7338d76a",
+    "semantic_hash": "634f09c55f05e079d3b208ae7338d76a"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Brihat_Parasara_Hora_Sastra_Vol_2.md": {
+    "mtime": 1782663263.1100006,
+    "ast_hash": "a6d5809c2f53cd2115d3d3aa2c05661f",
+    "semantic_hash": "a6d5809c2f53cd2115d3d3aa2c05661f"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/To build an automated yoga and Muhurta computing engine.md": {
+    "mtime": 1782533156.4510024,
+    "ast_hash": "f1a4ee3acda2473e2415c4820542340e",
+    "semantic_hash": "f1a4ee3acda2473e2415c4820542340e"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Bhrigu_Samhita_TMRao.md": {
+    "mtime": 1782663263.5181832,
+    "ast_hash": "7ee1c6c05da6519fd65216bac50286f7",
+    "semantic_hash": "7ee1c6c05da6519fd65216bac50286f7"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Ashtakavarga_System_Comprehensive_Handbook.md": {
+    "mtime": 1782533156.4542708,
+    "ast_hash": "411d597947f94b6a18799babe15cb7a7",
+    "semantic_hash": "411d597947f94b6a18799babe15cb7a7"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Predict_Effectively_Through_Yogini_Dasha.md": {
+    "mtime": 1782533156.494675,
+    "ast_hash": "90cf1464fb497daab2ea4654a5093543",
+    "semantic_hash": "90cf1464fb497daab2ea4654a5093543"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Brihat_Parasara_Hora_Sastra_Vol_1.md": {
+    "mtime": 1782363780.65898,
+    "ast_hash": "1f9cf8e088fabb6833cd6329bdcc4140",
+    "semantic_hash": "1f9cf8e088fabb6833cd6329bdcc4140"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Phaladeepika_Mantreswara.md": {
+    "mtime": 1782363780.6617944,
+    "ast_hash": "b23aa5acec11827370216f58f108e39b",
+    "semantic_hash": "b23aa5acec11827370216f58f108e39b"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Hora_Sara.md": {
+    "mtime": 1782533156.5116878,
+    "ast_hash": "f5cc41a14791983e262dc3397d7027a2",
+    "semantic_hash": "f5cc41a14791983e262dc3397d7027a2"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Activity_Mapping.md": {
+    "mtime": 1782322298.1654663,
+    "ast_hash": "f82698a89d015c406ded24da8fc8a136",
+    "semantic_hash": "f82698a89d015c406ded24da8fc8a136"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Sarvartha_Chintamani.md": {
+    "mtime": 1782533156.515578,
+    "ast_hash": "50c75d4cdfb76c140a398117bf4c20d6",
+    "semantic_hash": "50c75d4cdfb76c140a398117bf4c20d6"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Do_Ghati_Muhurta_Comprehensive_Handbook.md": {
+    "mtime": 1782533156.4576538,
+    "ast_hash": "da31e1ee91a1c57b866cc001264d6e6a",
+    "semantic_hash": "da31e1ee91a1c57b866cc001264d6e6a"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Brihat_Jataka.md": {
+    "mtime": 1782663265.512656,
+    "ast_hash": "93c889a3270d7bc01e6b219779915e65",
+    "semantic_hash": "93c889a3270d7bc01e6b219779915e65"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Uttara_Kalamrita.md": {
+    "mtime": 1782663264.250969,
+    "ast_hash": "ddd80451bf3df7522636ccebc78d129d",
+    "semantic_hash": "ddd80451bf3df7522636ccebc78d129d"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Phaladeepika_English_Translation.md": {
+    "mtime": 1782533156.5207167,
+    "ast_hash": "b825cfd385fe025606d32e4d492a719d",
+    "semantic_hash": "b825cfd385fe025606d32e4d492a719d"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Ravi_Yoga_Vedic_Astrology_Guide.md": {
+    "mtime": 1782533156.4614503,
+    "ast_hash": "99b1bd4c0a838014e32e4bf763d09ca1",
+    "semantic_hash": "99b1bd4c0a838014e32e4bf763d09ca1"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Tithi\u2013Va\u0304ra Yoga Handbook.md": {
+    "mtime": 1782533156.4643776,
+    "ast_hash": "885666a065209cf765c83c7a102e386c",
+    "semantic_hash": "885666a065209cf765c83c7a102e386c"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jyotish_Yoga_Handbook_101.md": {
+    "mtime": 1782533156.4685886,
+    "ast_hash": "bcee4dd03fbd637f06404fc6ff75b3a7",
+    "semantic_hash": "bcee4dd03fbd637f06404fc6ff75b3a7"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Bhavartha_Ratnakara.md": {
+    "mtime": 1782685408.5698872,
+    "ast_hash": "dd341869d944c5c05e972a871ae52d31",
+    "semantic_hash": "dd341869d944c5c05e972a871ae52d31"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Prasna_Marga_Part_2.md": {
+    "mtime": 1782663265.025885,
+    "ast_hash": "b8fb9ea2969035900569ae293da75fd3",
+    "semantic_hash": "b8fb9ea2969035900569ae293da75fd3"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jaimini_Sutras.md": {
+    "mtime": 1782533156.5263426,
+    "ast_hash": "3766254d8b656fbf06829493a0cc3e60",
+    "semantic_hash": "3766254d8b656fbf06829493a0cc3e60"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/vedic_astrology_unified_handbook.md": {
+    "mtime": 1782533156.472107,
+    "ast_hash": "7fba4aa8ca7c6d9d8a2132f309ff64dd",
+    "semantic_hash": "7fba4aa8ca7c6d9d8a2132f309ff64dd"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Do_Ghati_Muhurta_Reference_Mysuru_Athlone.md": {
+    "mtime": 1782533156.4760485,
+    "ast_hash": "ecd1b5ee46344027b94ceb8747b9f8ea",
+    "semantic_hash": "ecd1b5ee46344027b94ceb8747b9f8ea"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Tara_Balam_Muhurta_Handbook.md": {
+    "mtime": 1782533156.479425,
+    "ast_hash": "9804d0f18cb23c5879ac3f026343de09",
+    "semantic_hash": "9804d0f18cb23c5879ac3f026343de09"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Vedanga_Jyotisa_Lagadha.md": {
+    "mtime": 1782685422.6621814,
+    "ast_hash": "7738f48d585575cdc39457541292e992",
+    "semantic_hash": "7738f48d585575cdc39457541292e992"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Laghu_Parashari.md": {
+    "mtime": 1782663264.520849,
+    "ast_hash": "b923cb8743ebc8908f9b76eb7e4c3a8a",
+    "semantic_hash": "b923cb8743ebc8908f9b76eb7e4c3a8a"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Graha_Laghava.md": {
+    "mtime": 1782686292.5303109,
+    "ast_hash": "2a602090a58d6a600e7dd22209903990",
+    "semantic_hash": "2a602090a58d6a600e7dd22209903990"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Jataka_Parijata.md": {
+    "mtime": 1782686604.7220817,
+    "ast_hash": "92a0fbcb968c5f3e3dbbadd5d4db9f0e",
+    "semantic_hash": "92a0fbcb968c5f3e3dbbadd5d4db9f0e"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Prasna_Marga_Part_1.md": {
+    "mtime": 1782686712.4473207,
+    "ast_hash": "89bd892b28b17ecb8010d09dd637442a",
+    "semantic_hash": "89bd892b28b17ecb8010d09dd637442a"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Saravali.md": {
+    "mtime": 1782685823.1626883,
+    "ast_hash": "82900b8eaf29b2bba308971af409912b",
+    "semantic_hash": "82900b8eaf29b2bba308971af409912b"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Deva_Keralam_2.md": {
+    "mtime": 1782686142.6377413,
+    "ast_hash": "29e63921ffead080d6123cefe0ec54c2",
+    "semantic_hash": "29e63921ffead080d6123cefe0ec54c2"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Deva_Keralam_3.md": {
+    "mtime": 1782685915.9374707,
+    "ast_hash": "6ff78afc94b5c3ce812df186a645e859",
+    "semantic_hash": "6ff78afc94b5c3ce812df186a645e859"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Hora_Shastra_Varahamihira.md": {
+    "mtime": 1782686236.7496111,
+    "ast_hash": "f896c1c144cce872f94dc554eb7df067",
+    "semantic_hash": "f896c1c144cce872f94dc554eb7df067"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Phaladeepika_Mantreswara_1961.md": {
+    "mtime": 1782686704.8182507,
+    "ast_hash": "d364fc51e5ae48961d894361ee194d95",
+    "semantic_hash": "d364fc51e5ae48961d894361ee194d95"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Brihat_Samhita.md": {
+    "mtime": 1782686400.529815,
+    "ast_hash": "196f274deb89a0b0a3ca2d7d280340aa",
+    "semantic_hash": "196f274deb89a0b0a3ca2d7d280340aa"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Deva_Keralam_1.md": {
+    "mtime": 1782686060.9933484,
+    "ast_hash": "8a2c42f49d4ec0899f0bae0083dfe8a4",
+    "semantic_hash": "8a2c42f49d4ec0899f0bae0083dfe8a4"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress.md": {
+    "mtime": 1782251592.2366233,
+    "ast_hash": "e7ebd9958a554be83af3b91d134ac8fe",
+    "semantic_hash": "e7ebd9958a554be83af3b91d134ac8fe"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/rath_s_jaimini_maharishis_upadesa_sutra.md": {
+    "mtime": 1782253198.7871983,
+    "ast_hash": "2a15a843fa8d56a2cee2f5cb10f5b632",
+    "semantic_hash": "2a15a843fa8d56a2cee2f5cb10f5b632"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Introduction_to_Vedic_Astrology_Sanjay_Rath.md": {
+    "mtime": 1782251011.0621848,
+    "ast_hash": "0a99070f47cecc5d87acd0f8b2eac80d",
+    "semantic_hash": "0a99070f47cecc5d87acd0f8b2eac80d"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Vedic_remedies_by_srath_pdf_free.md": {
+    "mtime": 1782251497.5273376,
+    "ast_hash": "f5ef49785ddf76a0598144e9eff211f6",
+    "semantic_hash": "f5ef49785ddf76a0598144e9eff211f6"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/boney_marc_intricate_patterns_of_destiny_how_to_make_accurat.md": {
+    "mtime": 1782251586.03395,
+    "ast_hash": "e31ae024bda7c572c410d670089dc380",
+    "semantic_hash": "e31ae024bda7c572c410d670089dc380"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/the_jyotish_digest_2005_volume_1_no_01_january_1.md": {
+    "mtime": 1782253290.2328832,
+    "ast_hash": "3a5abc6575ebc866dc1374530e5fc98b",
+    "semantic_hash": "3a5abc6575ebc866dc1374530e5fc98b"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Bhava_and_Graha_Balas_BVRaman_1996.md": {
+    "mtime": 1782250904.8561738,
+    "ast_hash": "c6284f0e22e5234bbe2c156f71fb925f",
+    "semantic_hash": "c6284f0e22e5234bbe2c156f71fb925f"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/the_jyotish_digest_2009_volume_5_no_04_october_15.md": {
+    "mtime": 1782253396.7853348,
+    "ast_hash": "4e7a661bcf3cf46f87efe9680e58b3ea",
+    "semantic_hash": "4e7a661bcf3cf46f87efe9680e58b3ea"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/wilhelm_ernst_classical_muhurta_jyotish.md": {
+    "mtime": 1782253597.6602602,
+    "ast_hash": "c29674b212a0be137db133fae3c9a7f4",
+    "semantic_hash": "c29674b212a0be137db133fae3c9a7f4"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/the_jyotish_digest_2007_volume_3_no_04_november_1.md": {
+    "mtime": 1782253351.5210323,
+    "ast_hash": "38a06161b8b0ae8c1ae3bcfb98cec9f2",
+    "semantic_hash": "38a06161b8b0ae8c1ae3bcfb98cec9f2"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/Crux_of_Vedic_Astrology_Timing_of_Events1.md": {
+    "mtime": 1782250904.961935,
+    "ast_hash": "b6ac52e32bc951be8a2b4d56481b0cf1",
+    "semantic_hash": "b6ac52e32bc951be8a2b4d56481b0cf1"
+  },
+  "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/raw/patel_cs_aiyar_cas_ashtakavarga.md": {
+    "mtime": 1782252927.3106806,
+    "ast_hash": "1bcdcccdbd96062e656820156e685e6c",
+    "semantic_hash": "1bcdcccdbd96062e656820156e685e6c"
   }
 }

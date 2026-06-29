@@ -29,11 +29,10 @@ def production_node_floor() -> int:
         return int(ver["production_nodes"])
     if GRAPH_BASE.is_file():
         return len(json.loads(GRAPH_BASE.read_text(encoding="utf-8")).get("nodes", []))
-    return 23267
+    return 26722
 
 
 # Merge guard: never shrink below current production graph (see graph-version.json).
-BASELINE_NODES = production_node_floor()
 
 GRAPHIFY_SITE = Path(os.environ.get("GRAPHIFY_SITE", ""))
 if not GRAPHIFY_SITE.is_dir():

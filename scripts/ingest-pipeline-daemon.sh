@@ -13,6 +13,11 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_DIR/pipeline-dae
 
 log "pipeline daemon started PATH=$PATH"
 
+if [[ -f "$ROOT/knowledge-graph/ingest-logs/COMPLETE.md" ]]; then
+  log "ingest COMPLETE — daemon idle (not starting workers)"
+  while true; do sleep 3600; done
+fi
+
 # Supervisor (phase orchestration)
 if ! pgrep -f "ingest-supervisor.py" >/dev/null 2>&1; then
   nohup "$PY" "$ROOT/scripts/ingest-supervisor.py" >>"$LOG_DIR/supervisor.log" 2>&1 </dev/null &

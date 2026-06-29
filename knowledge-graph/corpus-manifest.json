@@ -10,6 +10,16 @@
       "sha256": "3cfdc42151d2d5e0",
       "path": "raw/Ashtakavarga_System_Comprehensive_Handbook.md"
     },
+    "Bhava_and_Graha_Balas_BVRaman_1996.md": {
+      "bytes": 128972,
+      "sha256": "7089e88c701f0079",
+      "path": "raw/Bhava_and_Graha_Balas_BVRaman_1996.md"
+    },
+    "Bhavartha_Ratnakara.md": {
+      "bytes": 188054,
+      "sha256": "2eb3be5119fd84c3",
+      "path": "raw/Bhavartha_Ratnakara.md"
+    },
     "Bhrigu_Samhita_TMRao.md": {
       "bytes": 411558,
       "sha256": "57defd9554b6860d",
@@ -29,6 +39,31 @@
       "bytes": 768096,
       "sha256": "1570742b533d6fca",
       "path": "raw/Brihat_Parasara_Hora_Sastra_Vol_2.md"
+    },
+    "Brihat_Samhita.md": {
+      "bytes": 825718,
+      "sha256": "e2c35f31f3381aec",
+      "path": "raw/Brihat_Samhita.md"
+    },
+    "Crux_of_Vedic_Astrology_Timing_of_Events1.md": {
+      "bytes": 342857,
+      "sha256": "d40d249cbdab6995",
+      "path": "raw/Crux_of_Vedic_Astrology_Timing_of_Events1.md"
+    },
+    "Deva_Keralam_1.md": {
+      "bytes": 731320,
+      "sha256": "3321a39fe3f9e12e",
+      "path": "raw/Deva_Keralam_1.md"
+    },
+    "Deva_Keralam_2.md": {
+      "bytes": 904334,
+      "sha256": "2b0108e9fe764c57",
+      "path": "raw/Deva_Keralam_2.md"
+    },
+    "Deva_Keralam_3.md": {
+      "bytes": 1066895,
+      "sha256": "291ef4ae269ba119",
+      "path": "raw/Deva_Keralam_3.md"
     },
     "Do_Ghati_Muhurta_Comprehensive_Handbook.md": {
       "bytes": 26937,
@@ -50,15 +85,45 @@
       "sha256": "34965133b3de94f7",
       "path": "raw/Gochar_Phaladeepika_Pulippani.md"
     },
+    "Graha_Laghava.md": {
+      "bytes": 456426,
+      "sha256": "9b554b9321a37b37",
+      "path": "raw/Graha_Laghava.md"
+    },
     "Hora_Sara.md": {
       "bytes": 777217,
       "sha256": "8b15e8f8dd1d6e1e",
       "path": "raw/Hora_Sara.md"
     },
+    "Hora_Shastra_Varahamihira.md": {
+      "bytes": 285710,
+      "sha256": "364f2ec8d41dd121",
+      "path": "raw/Hora_Shastra_Varahamihira.md"
+    },
+    "Introduction_to_Vedic_Astrology_Sanjay_Rath.md": {
+      "bytes": 474144,
+      "sha256": "c13ad96a4a8b7ff7",
+      "path": "raw/Introduction_to_Vedic_Astrology_Sanjay_Rath.md"
+    },
     "Jaimini_Sutras.md": {
       "bytes": 295325,
       "sha256": "68bc8aa8a09a5762",
       "path": "raw/Jaimini_Sutras.md"
+    },
+    "Jataka_Chandrika.md": {
+      "bytes": 154799,
+      "sha256": "551e691f6be45dac",
+      "path": "raw/Jataka_Chandrika.md"
+    },
+    "Jataka_Parijata.md": {
+      "bytes": 91414,
+      "sha256": "6a2dfedb217b581b",
+      "path": "raw/Jataka_Parijata.md"
+    },
+    "Jataka_Tatva_Mahadeva.md": {
+      "bytes": 493110,
+      "sha256": "55f89623ec147e12",
+      "path": "raw/Jataka_Tatva_Mahadeva.md"
     },
     "Jyotish_Yoga_Handbook_101.md": {
       "bytes": 14760,
@@ -85,6 +150,16 @@
       "sha256": "e9b48af42e5c1be7",
       "path": "raw/Phaladeepika_Mantreswara.md"
     },
+    "Phaladeepika_Mantreswara_1961.md": {
+      "bytes": 716319,
+      "sha256": "d5acceade05f2c62",
+      "path": "raw/Phaladeepika_Mantreswara_1961.md"
+    },
+    "Prasna_Marga_Part_1.md": {
+      "bytes": 717879,
+      "sha256": "5eb3de5f1f7a40c1",
+      "path": "raw/Prasna_Marga_Part_1.md"
+    },
     "Prasna_Marga_Part_2.md": {
       "bytes": 559937,
       "sha256": "8d5f5195c2e9d3bc",
@@ -109,6 +184,11 @@
       "bytes": 10639,
       "sha256": "594a9e57eeb04ab4",
       "path": "raw/SBC_Vedha_and_Panchang_Reference_Guide.md"
+    },
+    "Saravali.md": {
+      "bytes": 577191,
+      "sha256": "070926b99eb347bd",
+      "path": "raw/Saravali.md"
     },
     "Sarvartha_Chintamani.md": {
       "bytes": 1063958,
@@ -140,6 +220,11 @@
       "sha256": "a03cada468a470ed",
       "path": "raw/Uttara_Kalamrita.md"
     },
+    "Vedanga_Jyotisa_Lagadha.md": {
+      "bytes": 151022,
+      "sha256": "409163077b5f1e20",
+      "path": "raw/Vedanga_Jyotisa_Lagadha.md"
+    },
     "Vedic_Astrology_Panchang_Handbook.md": {
       "bytes": 6394,
       "sha256": "bc08697afbe75775",
@@ -150,15 +235,55 @@
       "sha256": "66f58b1b612f0c41",
       "path": "raw/Vedic_Astrology_Tithi_Guide.md"
     },
+    "Vedic_remedies_by_srath_pdf_free.md": {
+      "bytes": 750213,
+      "sha256": "b85eaa66a96a4613",
+      "path": "raw/Vedic_remedies_by_srath_pdf_free.md"
+    },
+    "boney_marc_intricate_patterns_of_destiny_how_to_make_accurat.md": {
+      "bytes": 151945,
+      "sha256": "78b5e3a983428258",
+      "path": "raw/boney_marc_intricate_patterns_of_destiny_how_to_make_accurat.md"
+    },
     "gemini-code-1780093366483.md": {
       "bytes": 3732,
       "sha256": "96c1fa0f7b3b2d1d",
       "path": "raw/gemini-code-1780093366483.md"
     },
+    "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress.md": {
+      "bytes": 8224,
+      "sha256": "dc7f438203249285",
+      "path": "raw/jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress.md"
+    },
     "muhurta_yogas.md": {
       "bytes": 22874,
       "sha256": "f9d78c0b7b18e06d",
       "path": "raw/muhurta_yogas.md"
+    },
+    "patel_cs_aiyar_cas_ashtakavarga.md": {
+      "bytes": 737037,
+      "sha256": "25c63a7257898ccc",
+      "path": "raw/patel_cs_aiyar_cas_ashtakavarga.md"
+    },
+    "rath_s_jaimini_maharishis_upadesa_sutra.md": {
+      "bytes": 616477,
+      "sha256": "e4bc9a9ecc68c3ff",
+      "path": "raw/rath_s_jaimini_maharishis_upadesa_sutra.md"
+    },
+    "the_jyotish_digest_2005_volume_1_no_01_january_1.md": {
+      "bytes": 352003,
+      "sha256": "cf48f20a23f78cc7",
+      "path": "raw/the_jyotish_digest_2005_volume_1_no_01_january_1.md"
+    },
+    "the_jyotish_digest_2007_volume_3_no_04_november_1.md": {
+      "bytes": 243190,
+      "sha256": "f1d109148644543a",
+      "path": "raw/the_jyotish_digest_2007_volume_3_no_04_november_1.md"
+    },
+    "the_jyotish_digest_2009_volume_5_no_04_october_15.md": {
+      "bytes": 157773,
+      "sha256": "76d345afd535c9f4",
+      "path": "raw/the_jyotish_digest_2009_volume_5_no_04_october_15.md"
     },
     "utpata_mrityu_kana_siddhi_handbook.md": {
       "bytes": 4776,
@@ -174,7 +299,12 @@
       "bytes": 15828,
       "sha256": "8cee1f8f580b2011",
       "path": "raw/vedic_yoga_logic_engine.md"
+    },
+    "wilhelm_ernst_classical_muhurta_jyotish.md": {
+      "bytes": 701180,
+      "sha256": "ab282e3b80183fa9",
+      "path": "raw/wilhelm_ernst_classical_muhurta_jyotish.md"
     }
   },
-  "count": 35
+  "count": 61
 }

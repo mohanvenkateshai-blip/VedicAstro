@@ -4,9 +4,10 @@ Finished at: 2026-06-29T00:10:00+00:00 (updated after 10-book Gemini pass)
 
 ## Summary
 - **Markdown sources (Core 20)**: 20 / 20
-- **Graph nodes (all 20 Core books)**: **23,267** nodes / **35,438** links (production `graph.json`)
-- **Supabase vault**: synced **23,267 nodes** / 35,438 links (2026-06-29)
-- **CVCE Fly**: deployed with 23,267-node graph
+- **Newbooks MD (2026-06-29)**: 12 ingested, 2 duplicates skipped — see `NEWBOOKS-INGEST.md`
+- **Graph nodes (production)**: **26,722** nodes / **38,881** links (`graph_version`: `newbooks-v1`)
+- **Supabase vault**: synced **26,722** nodes / 38,881 links (`newbooks-v1`)
+- **CVCE Fly**: deployed with 26,722-node graph (2026-06-29)
 
 ## Core 20 graph coverage (post-merge)
 All 20 classical PDFs have ≥50 nodes each in `graph.json`.

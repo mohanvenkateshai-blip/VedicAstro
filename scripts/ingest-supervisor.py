@@ -40,10 +40,11 @@ VENV_PY = Path(
 sys.path.insert(0, str(ROOT / "scripts"))
 from core_jyotisha_titles import TEXT_BOOKS_MD, md_name_for_pdf  # noqa: E402
 from graph_extract_common import (  # noqa: E402
-    BASELINE_NODES,
     GRAPH_BASE,
+    load_graph_version,
     merge_caches_into,
     merge_graph,
+    production_node_floor,
     update_manifest,
 )
 
@@ -290,6 +291,16 @@ def env_key_ok(name: str) -> bool:
     return False
 
 
+def _production_merge_stats() -> dict:
+    ver = load_graph_version()
+    return {
+        "production_nodes": ver.get("production_nodes", production_node_floor()),
+        "production_links": ver.get("production_links"),
+        "graph_version": ver.get("graph_version"),
+        "source": "knowledge-graph/graph-version.json",
+    }
+
+
 def _run_merge(state: dict) -> bool:
     if not GRAPH_BASE.is_file():
         _log("merge failed — graph.json missing")
@@ -310,11 +321,13 @@ def _run_merge(state: dict) -> bool:
     new_nodes = len(merged.get("nodes", []))
     GRAPH_OUT.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     update_manifest()
+    floor = production_node_floor()
     state["merge_stats"] = {
-        "base_nodes": base_nodes,
+        "prior_nodes": base_nodes,
         "merged_nodes": new_nodes,
         "links": len(merged.get("links", [])),
-        "vs_production_floor": new_nodes - BASELINE_NODES,
+        "production_floor_nodes": floor,
+        "delta_vs_production_floor": new_nodes - floor,
     }
     _log(f"merge done: {base_nodes} → {new_nodes} nodes → {GRAPH_OUT.name}")
     return True
@@ -331,7 +344,7 @@ Finished at: {_now()}
 ## Summary
 - **Markdown sources in raw/**: {len(mds)} / {len(_all_core_mds())}
 - **Scans still pending**: {len(pending)}
-- **Graph nodes**: {stats.get('base_nodes', '?')} → **{stats.get('merged_nodes', '?')}** (+{stats.get('vs_production_floor', '?')} vs production floor {BASELINE_NODES})
+- **Graph nodes**: {stats.get('prior_nodes', '?')} → **{stats.get('merged_nodes', '?')}** (+{stats.get('delta_vs_production_floor', '?')} vs production floor {stats.get('production_floor_nodes', production_node_floor())})
 - **Output graph**: `{GRAPH_OUT.relative_to(ROOT)}`
 
 ## Phases
@@ -429,8 +442,13 @@ def _tick(state: dict) -> bool:
         if _run_merge(state):
             phases["merge"] = "done"
             state["finished_at"] = _now()
+            state["merge_stats"] = _production_merge_stats()
             _write_complete(state)
             return True
+
+    if phases.get("merge") == "done" and COMPLETE_PATH.is_file():
+        state["merge_stats"] = _production_merge_stats()
+        return True
 
     return False
 
@@ -457,6 +475,11 @@ def main() -> int:
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     state = _load_state()
+    if COMPLETE_PATH.is_file() and state.get("phases", {}).get("merge") == "done":
+        state["merge_stats"] = _production_merge_stats()
+        _save_state(state)
+        _log("ingest already complete — exiting")
+        return 0
     # If text deepseek already finished, advance state so Gemini can run in parallel
     if state["phases"].get("deepseek_text") == "running" and not _deepseek_running():
         state["phases"]["deepseek_text"] = "done"

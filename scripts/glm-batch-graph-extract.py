@@ -33,7 +33,7 @@ BATCH_DIR = KG / "graphify-out" / "batch-glm"
 JOB_META = BATCH_DIR / "last-job.json"
 FILE_CHAR_CAP = 20_000
 sys.path.insert(0, str(ROOT / "scripts"))
-from graph_extract_common import BASELINE_NODES  # noqa: E402
+from graph_extract_common import production_node_floor  # noqa: E402
 
 GRAPHIFY_SITE = Path(
     "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv/lib/python3.14/site-packages"
@@ -405,7 +405,8 @@ def cmd_merge(args: argparse.Namespace) -> int:
 
     GRAPH_GLM.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_GLM}")
-    print(f"vs production floor ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
+    floor = production_node_floor()
+    print(f"vs production floor ({floor}): {'PASS' if new_nodes > floor else 'same'}")
 
     if args.deploy:
         subprocess.run(

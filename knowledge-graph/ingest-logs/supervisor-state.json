@@ -7,18 +7,16 @@
     "gemini_batch": "done",
     "merge": "done"
   },
-  "pids": {
-    "gemini_batch": 21836
-  },
+  "pids": {},
   "logs": {
     "gemini_batch": "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/supervisor-gemini_batch-20260628-222040.log"
   },
-  "updated_at": "2026-06-29T06:41:32.819588+00:00",
+  "updated_at": "2026-06-29T12:00:00.000000+00:00",
   "merge_stats": {
-    "base_nodes": 6437,
-    "merged_nodes": 16485,
-    "links": 27330,
-    "vs_baseline": 12232
+    "production_nodes": 23267,
+    "production_links": 35438,
+    "graph_version": "core-jyotisha-v1",
+    "source": "knowledge-graph/graph-version.json"
   },
   "finished_at": "2026-06-28T22:46:11.697779+00:00"
 }

@@ -1,0 +1,66 @@
+{
+  "updated_at": "2026-06-29T07:01:11.419243+00:00",
+  "source_dir": "/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks",
+  "ingested": [
+    {
+      "file": "Bhava_and_Graha_Balas_BVRaman_1996.md",
+      "bytes": 128972
+    },
+    {
+      "file": "Crux_of_Vedic_Astrology_Timing_of_Events1.md",
+      "bytes": 342857
+    },
+    {
+      "file": "Introduction_to_Vedic_Astrology_Sanjay_Rath.md",
+      "bytes": 474144
+    },
+    {
+      "file": "Vedic_remedies_by_srath_pdf_free.md",
+      "bytes": 750213
+    },
+    {
+      "file": "boney_marc_intricate_patterns_of_destiny_how_to_make_accurat.md",
+      "bytes": 151945
+    },
+    {
+      "file": "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress.md",
+      "bytes": 8224
+    },
+    {
+      "file": "patel_cs_aiyar_cas_ashtakavarga.md",
+      "bytes": 737037
+    },
+    {
+      "file": "rath_s_jaimini_maharishis_upadesa_sutra.md",
+      "bytes": 616477
+    },
+    {
+      "file": "the_jyotish_digest_2005_volume_1_no_01_january_1.md",
+      "bytes": 352003
+    },
+    {
+      "file": "the_jyotish_digest_2007_volume_3_no_04_november_1.md",
+      "bytes": 243190
+    },
+    {
+      "file": "the_jyotish_digest_2009_volume_5_no_04_october_15.md",
+      "bytes": 157773
+    },
+    {
+      "file": "wilhelm_ernst_classical_muhurta_jyotish.md",
+      "bytes": 701180
+    }
+  ],
+  "skipped_duplicates": [
+    {
+      "file": "maharishi_parasaras_brihad_parasara_hora_sastra_vol_i.md",
+      "existing": "Brihat_Parasara_Hora_Sastra_Vol_1.md",
+      "reason": "same work as corpus/Brihat_Parasara_Hora_Sastra_Vol_1.md"
+    },
+    {
+      "file": "maharishi_parasaras_brihad_parasara_hora_sastra_vol_ii.md",
+      "existing": "Brihat_Parasara_Hora_Sastra_Vol_2.md",
+      "reason": "same work as corpus/Brihat_Parasara_Hora_Sastra_Vol_2.md"
+    }
+  ]
+}

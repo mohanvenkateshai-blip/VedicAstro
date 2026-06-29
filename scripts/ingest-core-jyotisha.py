@@ -40,7 +40,6 @@ GRAPH_OUT = ROOT / "knowledge-graph" / "graphify-out" / "graph-core-jyotisha.jso
 sys.path.insert(0, str(ROOT / "scripts"))
 from core_jyotisha_titles import OCR_PRIORITY, TEXT_BOOKS_MD, TITLE_MAP, md_name_for_pdf  # noqa: E402
 from graph_extract_common import (  # noqa: E402
-    BASELINE_NODES,
     GRAPH_BASE,
     KG,
     RAW,
@@ -51,6 +50,7 @@ from graph_extract_common import (  # noqa: E402
     merge_caches_into,
     merge_graph,
     parse_fragment,
+    production_node_floor,
     slugify_title,
     update_manifest,
 )
@@ -342,7 +342,7 @@ def cmd_extract(args: argparse.Namespace) -> int:
 
 def cmd_merge(args: argparse.Namespace) -> int:
     if not GRAPH_BASE.is_file():
-        print(f"error: baseline missing: {GRAPH_BASE}", file=sys.stderr)
+        print(f"error: production graph missing: {GRAPH_BASE}", file=sys.stderr)
         return 1
 
     base = json.loads(GRAPH_BASE.read_text(encoding="utf-8"))
@@ -383,7 +383,8 @@ def cmd_merge(args: argparse.Namespace) -> int:
 
     GRAPH_OUT.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_OUT}")
-    print(f"vs production floor ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
+    floor = production_node_floor()
+    print(f"vs production floor ({floor}): {'PASS' if new_nodes > floor else 'same'}")
 
     if args.promote:
         promoted = GRAPH_BASE.with_suffix(".json.bak-pre-core-jyotisha")

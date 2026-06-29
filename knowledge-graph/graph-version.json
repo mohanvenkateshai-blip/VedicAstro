@@ -1,7 +1,10 @@
 {
-  "graph_version": "core-jyotisha-v1",
-  "production_nodes": 23267,
-  "production_links": 35438,
+  "graph_version": "newbooks-v1",
+  "production_nodes": 26722,
+  "production_links": 38881,
   "core_jyotisha_books": 20,
-  "updated_at": "2026-06-29"
+  "newbooks_md_ingested": 12,
+  "newbooks_md_skipped_duplicates": 2,
+  "updated_at": "2026-06-29",
+  "authority": "Read this file first for canonical production node/link counts."
 }

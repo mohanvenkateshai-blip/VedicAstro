@@ -6,7 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 
 _GRAPH = Path(__file__).resolve().parent / "graph.json"
-_FALLBACK_NODES = 23267
+_FALLBACK_NODES = 26722
 
 
 @lru_cache(maxsize=1)

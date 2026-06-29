@@ -32,7 +32,7 @@ CACHE_DIR = KG / "graphify-out" / "cache" / "deepseek"
 RUN_META = KG / "graphify-out" / "batch-deepseek" / "last-run.json"
 FILE_CHAR_CAP = 20_000
 sys.path.insert(0, str(ROOT / "scripts"))
-from graph_extract_common import BASELINE_NODES, production_node_floor  # noqa: E402
+from graph_extract_common import production_node_floor  # noqa: E402
 BASE_URL = "https://api.deepseek.com"
 
 GRAPHIFY_SITE = Path(os.environ.get("GRAPHIFY_SITE", ""))
@@ -318,7 +318,8 @@ def cmd_merge(args: argparse.Namespace) -> int:
 
     GRAPH_OUT.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_OUT}")
-    print(f"vs production floor ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
+    floor = production_node_floor()
+    print(f"vs production floor ({floor}): {'PASS' if new_nodes > floor else 'same'}")
 
     if args.deploy:
         subprocess.run(
