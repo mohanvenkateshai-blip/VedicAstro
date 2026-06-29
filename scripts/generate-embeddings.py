@@ -86,7 +86,7 @@ def patch_embedding(env: dict[str, str], chunk_id: str, vec: list[float]) -> boo
         if code >= 500 and attempt < MAX_RETRIES - 1:
             time.sleep(2**attempt)
             continue
-        logger.error("patch failed for %s: HTTP %s %s", chunk_id, code, body[:120]!r)
+        logger.error("patch failed for %s: HTTP %s %s", chunk_id, code, repr(body[:120]))
         return False
     return False
 

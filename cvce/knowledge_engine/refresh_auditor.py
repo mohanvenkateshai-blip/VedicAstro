@@ -9,9 +9,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable
+from typing import Any
 
 from .engine import KnowledgeEngine
 
@@ -246,7 +247,9 @@ class KnowledgeRefreshAuditor:
 
     def capture_post_refresh(self) -> dict[str, dict[str, Any]]:
         """Capture post-refresh outputs for the same engine set."""
-        self._post_refresh = {name: self._capture_engine(name) for name in self._registered_targets()}
+        self._post_refresh = {
+            name: self._capture_engine(name) for name in self._registered_targets()
+        }
         return self._post_refresh
 
     def compare_and_score(self) -> dict[str, Any]:

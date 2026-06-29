@@ -52,22 +52,31 @@ class PerformanceMonitor:
         start = time.perf_counter()
         try:
             # Simple timeout wrapper using futures for loop/infinite detection
-            from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
+            from concurrent.futures import ThreadPoolExecutor
+            from concurrent.futures import TimeoutError as FutureTimeout
 
             with ThreadPoolExecutor(max_workers=1) as executor:
                 future = executor.submit(func, *args, **kwargs)
                 try:
                     result = future.result(timeout=self.config.loop_detection_timeout_s)
                 except FutureTimeout:
-                    self._alert(f"timeout_detected_{name}", {"timeout_s": self.config.loop_detection_timeout_s})
-                    raise TimeoutError(f"Operation {name} exceeded {self.config.loop_detection_timeout_s}s — possible infinite loop")
+                    self._alert(
+                        f"timeout_detected_{name}",
+                        {"timeout_s": self.config.loop_detection_timeout_s},
+                    )
+                    raise TimeoutError(
+                        f"Operation {name} exceeded {self.config.loop_detection_timeout_s}s — possible infinite loop"
+                    )
         except Exception:
             # Fallback without timeout if ThreadPool fails (e.g. non-picklable)
             result = func(*args, **kwargs)
         duration_ms = (time.perf_counter() - start) * 1000
         self._record_metric(name, duration_ms)
         if duration_ms > self.config.max_latency_ms:
-            self._alert(f"slow_response_{name}", {"duration_ms": duration_ms, "threshold": self.config.max_latency_ms})
+            self._alert(
+                f"slow_response_{name}",
+                {"duration_ms": duration_ms, "threshold": self.config.max_latency_ms},
+            )
         return result
 
     def _record_metric(self, name: str, duration_ms: float) -> None:
@@ -79,7 +88,12 @@ class PerformanceMonitor:
             self._metrics[name] = self._metrics[name][-100:]
 
     def _alert(self, alert_type: str, details: dict[str, Any]) -> None:
-        payload = {"type": alert_type, "timestamp": time.time(), "details": details, "config": self.config.__dict__}
+        payload = {
+            "type": alert_type,
+            "timestamp": time.time(),
+            "details": details,
+            "config": self.config.__dict__,
+        }
         logger.warning("PERF_ALERT: %s | %s", alert_type, details)
         if self.config.alert_on_breach:
             for cb in self._alert_callbacks:
@@ -111,10 +125,18 @@ class PerformanceMonitor:
             misses = cache_info.misses
             total = hits + misses
             hit_rate = hits / total if total > 0 else 0.0
-            stats = {"hits": hits, "misses": misses, "hit_rate": hit_rate, "currsize": cache_info.currsize}
+            stats = {
+                "hits": hits,
+                "misses": misses,
+                "hit_rate": hit_rate,
+                "currsize": cache_info.currsize,
+            }
             self._cache_stats = stats
             if hit_rate < self.config.min_cache_hit_rate and total > 10:
-                self._alert("low_cache_hit_rate", {"hit_rate": hit_rate, "threshold": self.config.min_cache_hit_rate})
+                self._alert(
+                    "low_cache_hit_rate",
+                    {"hit_rate": hit_rate, "threshold": self.config.min_cache_hit_rate},
+                )
             return stats
         except Exception as exc:
             logger.debug("Cache stats unavailable: %s", exc)

@@ -401,7 +401,6 @@ def _ashtottari_paksha_daynight_check(jd: float, place) -> tuple[bool, str]:
     try:
         sr = drik.sunrise(jd, place)  # [local_hour_float, str, jd]
         ss = drik.sunset(jd, place)  # [local_hour_float, str, jd]
-        _, _, y, m, d, fh = _d.today().year, _d.today().month, *((jd,) * 4)  # unused
         # Extract the birth hour from jd
         from jhora import utils as _u
 

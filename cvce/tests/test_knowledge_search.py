@@ -142,8 +142,6 @@ def test_search_knowledge_integration_wrapper(monkeypatch):
 
     monkeypatch.setattr(store, "_request", fake_request)
 
-    from knowledge_engine.integration import get_knowledge_engine
-
     clear_knowledge_engine_cache()
     ke = KnowledgeEngine(store=store)
     monkeypatch.setattr(

@@ -78,6 +78,7 @@ class KnowledgeEngine:
 
     def __post_init__(self):
         self._load_current_version()
+        self._attach_graph_compat()
 
     def _load_current_version(self) -> GraphVersion:
         """Load the active graph version."""
@@ -90,6 +91,53 @@ class KnowledgeEngine:
             loaded_at=datetime.now(UTC),
         )
         return self.current_version
+
+    def _attach_graph_compat(self):
+        """Provide self.graph for legacy accessors (query_nodes, get_safe_node, on_new...).
+        Prefers the real GraphRAG singleton (so cache clears in on_refresh also affect it);
+        falls back to a thin store-backed shim.
+        """
+        if getattr(self, "graph", None) is not None:
+            return
+        try:
+            from graph_rag.graph import GraphRAG
+
+            self.graph = GraphRAG()
+            return
+        except Exception as exc:
+            logger.debug("GraphRAG compat attach failed, using store shim: %s", exc)
+
+        # Fallback shim backed by the store (supports .nodes, .node(), .stats, _load)
+        class _StoreGraphShim:
+            def __init__(self, store):
+                self._store = store
+                self.nodes = []
+                self.links = []
+                self._nodes_by_id = {}
+                self._loaded = False
+                try:
+                    self.stats = store.get_stats() or {}
+                except Exception:
+                    self.stats = {}
+
+            def _load(self):
+                if self._loaded:
+                    return
+                try:
+                    self.nodes = self._store.get_nodes(limit=100000) or []
+                    self.links = self._store.get_links(limit=100000) or []
+                    self._nodes_by_id = {
+                        n.get("id"): n for n in self.nodes if isinstance(n, dict) and n.get("id")
+                    }
+                except Exception:
+                    pass
+                self._loaded = True
+
+            def node(self, node_id: str):
+                self._load()
+                return self._nodes_by_id.get(node_id)
+
+        self.graph = _StoreGraphShim(self.store)
 
     # ------------------------------------------------------------------ #
     # Public API for engines
@@ -119,9 +167,18 @@ class KnowledgeEngine:
         if not self.is_knowledge_healthy():
             raise RuntimeError(f"Knowledge is currently unhealthy. Engine '{engine_name}' blocked.")
 
+        g = getattr(self, "graph", None)
+        stats = getattr(g, "stats", None) or {}
+        if not stats and g is not None:
+            try:
+                nc = len(getattr(g, "nodes", []) or [])
+                lc = len(getattr(g, "links", []) or [])
+                stats = {"node_count": nc, "link_count": lc, "nodes": nc, "links": lc}
+            except Exception:
+                stats = {}
         return {
             "version": self.current_version.version if self.current_version else "unknown",
-            "stats": getattr(self.graph, "stats", {}),
+            "stats": stats,
             "invalidated_nodes": self.invalidated_node_ids(),
             "invalidation_count": len(self._invalidations),
             "last_revived": self._last_revived_at.isoformat() if self._last_revived_at else None,
