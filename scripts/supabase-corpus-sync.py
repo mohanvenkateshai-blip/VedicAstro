@@ -30,7 +30,7 @@ def _graph_version_label() -> str:
     ver_path = KG / "graph-version.json"
     if ver_path.is_file():
         return json.loads(ver_path.read_text(encoding="utf-8")).get(
-            "graph_version", "core-jyotisha-v1"
+            "graph_version", "newbooks-v1"
         )
     return "newbooks-v1"
 
