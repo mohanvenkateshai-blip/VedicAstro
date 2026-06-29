@@ -512,6 +512,13 @@ export interface ReportFacts {
   ashtakavarga?: AshtakavargaFacts | null;
   shadbala?: Record<string, Record<string, number | null>> | null;
   panchanga?: Record<string, unknown> | null;
+  narration?: {
+    prose?: string;
+    model?: string;
+    generated?: boolean;
+    status?: string;
+    reason?: string;
+  } | null;
 }
 
 export const RASHIS = [
