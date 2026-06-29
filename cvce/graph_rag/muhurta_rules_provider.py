@@ -5,7 +5,6 @@ GraphRAG muhurta rules provider — load vara/tithi yoga rules from graph.json.
 from __future__ import annotations
 
 import os
-from typing import Optional
 
 from .graph import GraphRAG
 
@@ -16,7 +15,7 @@ def graph_muhurta_enabled() -> bool:
 
 
 class GraphMuhurtaRules:
-    _instance: Optional["GraphMuhurtaRules"] = None
+    _instance: GraphMuhurtaRules | None = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -29,15 +28,18 @@ class GraphMuhurtaRules:
             return
         self.graph = GraphRAG()
         self._yoga_nodes = [
-            n for n in self.graph.nodes
+            n
+            for n in self.graph.nodes
             if n.get("is_muhurta_yoga") or "muhurta_yoga" in n.get("id", "")
         ]
         self._combo_nodes = [
-            n for n in self.graph.nodes
+            n
+            for n in self.graph.nodes
             if n.get("vara_lord") and (n.get("tithi_group") or n.get("tithi_num"))
         ]
         self._sav_bands = [
-            n for n in self.graph.nodes
+            n
+            for n in self.graph.nodes
             if n.get("domain") == "ashtakavarga" or "sav_band" in n.get("id", "")
         ]
         self._built = True
@@ -50,19 +52,23 @@ class GraphMuhurtaRules:
             tg = n.get("tithi_group")
             tn = n.get("tithi_num")
             if tg and tg == tithi_group:
-                hits.append({
-                    "name": n.get("label", "").split(":")[0].strip(),
-                    "nature": n.get("verdict", n.get("nature", "mixed")),
-                    "source": n.get("source_file", "graph.json"),
-                    "detail": n.get("label", ""),
-                })
+                hits.append(
+                    {
+                        "name": n.get("label", "").split(":")[0].strip(),
+                        "nature": n.get("verdict", n.get("nature", "mixed")),
+                        "source": n.get("source_file", "graph.json"),
+                        "detail": n.get("label", ""),
+                    }
+                )
             elif tn and int(tn) == tithi_tip:
-                hits.append({
-                    "name": n.get("label", "").split(":")[0].strip(),
-                    "nature": n.get("verdict", n.get("nature", "mixed")),
-                    "source": n.get("source_file", "graph.json"),
-                    "detail": n.get("label", ""),
-                })
+                hits.append(
+                    {
+                        "name": n.get("label", "").split(":")[0].strip(),
+                        "nature": n.get("verdict", n.get("nature", "mixed")),
+                        "source": n.get("source_file", "graph.json"),
+                        "detail": n.get("label", ""),
+                    }
+                )
         return hits
 
     def sav_band_for_bindus(self, bindus: int) -> dict | None:

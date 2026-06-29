@@ -164,7 +164,7 @@ These bugs have already been fixed. Don't re-introduce them.
 
 ## 6. Knowledge Graph & Corpus Vault (2026-06-29)
 
-**Production graph: 26,722 nodes / 38,881 links / 1,773 hyperedges / 121 communities / 69 source files**
+**Production graph: AUTO (see KnowledgeEngine stats below)**
 
 New books added (session 2026-06-29): Rath JKRE (+968), Wilhelm Ernst Classical Muhurta (+536),
 Vedic Remedies by Rath (+504), Patel/Aiyar Ashtakavarga (+370), Crux of Vedic Astrology (+265),
@@ -203,7 +203,9 @@ Jyotish Digest volumes (+273). Total: +3,455 nodes from baseline 23,267.
 
 ---
 
-## 8. Engines — Status & Last Knowledge-Graph Feed (2026-06-29)
+## 8. Engines — Status & Last Knowledge-Graph Feed (AUTO-UPDATED)
+
+<!-- BEGIN AUTO ENGINES -->
 
 | Engine | File | Purpose | Last KG Feed | Status |
 |--------|------|---------|-------------|--------|

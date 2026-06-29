@@ -10,8 +10,14 @@ Philosophy:
 - Every enrichment adds a `graph_citation` field with source text & confidence.
 """
 
-from .graph import GraphRAG
 from .enhancer import PredictionEnhancer
-from .rules_provider import GraphTransitRules, graph_rules_enabled, active_transit_rules
+from .graph import GraphRAG
+from .rules_provider import GraphTransitRules, active_transit_rules, graph_rules_enabled
 
-__all__ = ["GraphRAG", "PredictionEnhancer", "GraphTransitRules", "graph_rules_enabled", "active_transit_rules"]
+__all__ = [
+    "GraphRAG",
+    "PredictionEnhancer",
+    "GraphTransitRules",
+    "graph_rules_enabled",
+    "active_transit_rules",
+]

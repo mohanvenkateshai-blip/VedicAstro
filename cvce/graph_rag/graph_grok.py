@@ -10,18 +10,15 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from typing import Optional
 
 from graph_rag.production_floor import experimental_vs_production
 
 _DIR = Path(__file__).resolve().parent
 _DEFAULT_PATH = _DIR / "graph-grok.json"
-_FALLBACK_PATH = (
-    _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-grok.json"
-)
+_FALLBACK_PATH = _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-grok.json"
 
 
-def _resolve_path() -> Optional[Path]:
+def _resolve_path() -> Path | None:
     env = os.environ.get("CVCE_GRAPH_GROK_PATH", "").strip()
     if env:
         p = Path(env)
@@ -37,7 +34,7 @@ def grok_graph_available() -> bool:
     return _resolve_path() is not None
 
 
-def grok_graph_stats() -> Optional[dict]:
+def grok_graph_stats() -> dict | None:
     path = _resolve_path()
     if path is None:
         return None

@@ -37,3 +37,10 @@ knowledge-graph/graphify-out/graph.json.bak*
 
 # Supabase CLI local state
 supabase/.temp/
+
+# uv
+uv.lock
+.python-version
+
+# Commit Agent local artifacts
+scripts/commit_log.json

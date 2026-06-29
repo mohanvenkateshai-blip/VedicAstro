@@ -14,20 +14,21 @@ import json
 import os
 import re
 from collections import defaultdict
-from typing import Optional
 
 _GRAPH_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graph.json")
 if not os.path.exists(_GRAPH_PATH):
     _GRAPH_PATH = os.path.join(
         os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-        "knowledge-graph", "graphify-out", "graph.json",
+        "knowledge-graph",
+        "graphify-out",
+        "graph.json",
     )
 
 
 class GraphRAG:
     """In-memory Vedic knowledge graph. Singleton — load once, query many."""
 
-    _instance: Optional["GraphRAG"] = None
+    _instance: GraphRAG | None = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -73,9 +74,7 @@ class GraphRAG:
 
     def node(self, node_id: str):
         """Return node dict by ID or label, or None."""
-        return self._nodes_by_id.get(
-            node_id
-        ) or self._nodes_by_id.get(
+        return self._nodes_by_id.get(node_id) or self._nodes_by_id.get(
             self._label_index.get(node_id, "")
         )
 
@@ -139,13 +138,9 @@ class GraphRAG:
             if nid in self._nodes_by_id
         ]
 
-    def links_by_relation(self, relation: str, node_id: Optional[str] = None) -> list[dict]:
+    def links_by_relation(self, relation: str, node_id: str | None = None) -> list[dict]:
         """All links of a specific relation type, optionally filtered by source node."""
-        candidates = (
-            self._links_from.get(node_id, [])
-            if node_id
-            else self.links
-        )
+        candidates = self._links_from.get(node_id, []) if node_id else self.links
         return [l for l in candidates if l.get("relation") == relation]
 
     # ── Domain-specific APIs ─────────────────────────────────────────────
@@ -165,30 +160,47 @@ class GraphRAG:
                     continue
                 tgt_label = tgt_node.get("label", "")
                 if rel == "gives_result":
-                    results.append({
-                        "effect": tgt_label,
-                        "source": tgt_node.get("source_file", ""),
-                        "confidence": link.get("confidence_score", 1.0),
-                        "relation": "gives_result",
-                    })
-                elif any(k in rel for k in ("transit_in_house", "transit_best", "transit_worst", "is_auspicious", "is_inauspicious", "produces_during", "can_give")):
-                    results.append({
-                        "effect": tgt_label,
-                        "source": tgt_node.get("source_file", ""),
-                        "confidence": link.get("confidence_score", 1.0),
-                        "relation": rel,
-                    })
+                    results.append(
+                        {
+                            "effect": tgt_label,
+                            "source": tgt_node.get("source_file", ""),
+                            "confidence": link.get("confidence_score", 1.0),
+                            "relation": "gives_result",
+                        }
+                    )
+                elif any(
+                    k in rel
+                    for k in (
+                        "transit_in_house",
+                        "transit_best",
+                        "transit_worst",
+                        "is_auspicious",
+                        "is_inauspicious",
+                        "produces_during",
+                        "can_give",
+                    )
+                ):
+                    results.append(
+                        {
+                            "effect": tgt_label,
+                            "source": tgt_node.get("source_file", ""),
+                            "confidence": link.get("confidence_score", 1.0),
+                            "relation": rel,
+                        }
+                    )
             # Also follow links FROM the planet's benefic/malefic house nodes
             for link in self._links_to.get(pid, []):
                 src_node = self._nodes_by_id.get(link.get("source", ""))
                 if not src_node or link.get("relation") != "gives_result":
                     continue
-                results.append({
-                    "effect": src_node.get("label", ""),
-                    "source": src_node.get("source_file", ""),
-                    "confidence": link.get("confidence_score", 1.0),
-                    "relation": f"gives_result (via {pid.rsplit('_', 1)[-1]})",
-                })
+                results.append(
+                    {
+                        "effect": src_node.get("label", ""),
+                        "source": src_node.get("source_file", ""),
+                        "confidence": link.get("confidence_score", 1.0),
+                        "relation": f"gives_result (via {pid.rsplit('_', 1)[-1]})",
+                    }
+                )
         return results
 
     def _planet_node_ids(self, planet: str) -> list[str]:
@@ -241,15 +253,19 @@ class GraphRAG:
                 continue
             rel = link.get("relation", "")
             if rel == "favored_by":
-                result["favored_by"].append({
-                    "node": src.get("label", ""),
-                    "source": src.get("source_file", ""),
-                })
+                result["favored_by"].append(
+                    {
+                        "node": src.get("label", ""),
+                        "source": src.get("source_file", ""),
+                    }
+                )
             elif rel == "contraindicated_by":
-                result["contraindicated"].append({
-                    "node": src.get("label", ""),
-                    "source": src.get("source_file", ""),
-                })
+                result["contraindicated"].append(
+                    {
+                        "node": src.get("label", ""),
+                        "source": src.get("source_file", ""),
+                    }
+                )
         return result if (result["favored_by"] or result["contraindicated"]) else None
 
     def _find_activity_node(self, activity: str) -> str | None:
@@ -300,11 +316,13 @@ class GraphRAG:
                     for nid in he.get("nodes", [])
                     if nid in self._nodes_by_id and nid != yoga_id
                 ]
-                info["hyperedge_groups"].append({
-                    "label": he.get("label", ""),
-                    "members": he_nodes,
-                    "confidence": he.get("confidence", "EXTRACTED"),
-                })
+                info["hyperedge_groups"].append(
+                    {
+                        "label": he.get("label", ""),
+                        "members": he_nodes,
+                        "confidence": he.get("confidence", "EXTRACTED"),
+                    }
+                )
         return info
 
     def _find_yoga_node(self, yoga_name: str) -> str | None:
@@ -348,8 +366,12 @@ class GraphRAG:
         """Return all 'contradicts' links (text conflicts to note)."""
         return [
             {
-                "source": self._nodes_by_id.get(l.get("source", ""), {}).get("label", l.get("source")),
-                "target": self._nodes_by_id.get(l.get("target", ""), {}).get("label", l.get("target")),
+                "source": self._nodes_by_id.get(l.get("source", ""), {}).get(
+                    "label", l.get("source")
+                ),
+                "target": self._nodes_by_id.get(l.get("target", ""), {}).get(
+                    "label", l.get("target")
+                ),
                 "source_file": l.get("source_file", ""),
             }
             for l in self.links
@@ -360,11 +382,7 @@ class GraphRAG:
 
     @property
     def stats(self) -> dict:
-        sources = {
-            n.get("source_file", "")
-            for n in self.nodes
-            if n.get("source_file")
-        }
+        sources = {n.get("source_file", "") for n in self.nodes if n.get("source_file")}
         return {
             "nodes": len(self.nodes),
             "links": len(self.links),

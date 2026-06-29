@@ -16,6 +16,7 @@ Usage:
 Requires: pip install google-genai (in Panchang .venv or active env)
 Env: GEMINI_API_KEY or GOOGLE_API_KEY
 """
+
 from __future__ import annotations
 
 import argparse
@@ -24,7 +25,7 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,7 +77,7 @@ def _corpus_paths() -> list[Path]:
 
 
 def _units_for_file(path: Path) -> list:
-    from graphify.file_slice import FileSlice, expand_oversized_files
+    from graphify.file_slice import expand_oversized_files
 
     return expand_oversized_files([path], FILE_CHAR_CAP)
 
@@ -145,8 +146,7 @@ def merge_graph(base: dict, fragment: dict) -> dict:
         existing_ids.add(n["id"])
 
     existing_links = {
-        (l.get("source"), l.get("target"), l.get("relation"))
-        for l in g.get("links", [])
+        (l.get("source"), l.get("target"), l.get("relation")) for l in g.get("links", [])
     }
     edges = fragment.get("edges") or fragment.get("links") or []
     for e in edges:
@@ -188,7 +188,7 @@ def cmd_submit(args: argparse.Namespace) -> int:
         return 1
 
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
     jsonl_path = BATCH_DIR / f"requests-{ts}.jsonl"
     with jsonl_path.open("w", encoding="utf-8") as f:
         for req in requests:
@@ -219,7 +219,7 @@ def cmd_submit(args: argparse.Namespace) -> int:
         "deep": args.deep,
         "requests": len(requests),
         "jsonl": str(jsonl_path),
-        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "submitted_at": datetime.now(UTC).isoformat(),
         "state": getattr(job.state, "name", str(job.state)),
     }
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -248,7 +248,7 @@ def cmd_status(args: argparse.Namespace) -> int:
     if job.error:
         print(f"error: {job.error}")
     meta["state"] = state
-    meta["last_checked"] = datetime.now(timezone.utc).isoformat()
+    meta["last_checked"] = datetime.now(UTC).isoformat()
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return 0
 
@@ -438,10 +438,15 @@ def main() -> int:
 
     p_merge = sub.add_parser("merge", help="Download results and merge additively")
     p_merge.add_argument("--job")
-    p_merge.add_argument("--output", help="Output graph path (default: graph.json; use graph-gemini.json for gemini line)")
+    p_merge.add_argument(
+        "--output",
+        help="Output graph path (default: graph.json; use graph-gemini.json for gemini line)",
+    )
     p_merge.add_argument("--dry-run", action="store_true")
     p_merge.add_argument("--deploy", action="store_true", help="Run sync-graph.sh --deploy")
-    p_merge.add_argument("--deploy-gemini", action="store_true", help="Run sync-graph.sh --gemini --deploy")
+    p_merge.add_argument(
+        "--deploy-gemini", action="store_true", help="Run sync-graph.sh --gemini --deploy"
+    )
 
     p_run = sub.add_parser("run", help="prepare → submit → wait → merge")
     p_run.add_argument("--deploy", action="store_true")

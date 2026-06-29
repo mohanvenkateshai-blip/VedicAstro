@@ -15,9 +15,9 @@ from __future__ import annotations
 
 import re
 from dataclasses import asdict
-from typing import Optional
 
 from vedic_engine.synthesis.transit_analyzer import TransitImpactAnalyzer
+
 from .graph import GraphRAG
 
 
@@ -85,9 +85,7 @@ class PredictionEnhancer:
 
         # Legacy citation blocks (secondary; UI prefers transit_intelligence)
         if hasattr(r, "gochar") and r.gochar and r.gochar.planet_predictions:
-            enhancement["transit_citations"] = self._transit_citations(
-                r.gochar.planet_predictions
-            )
+            enhancement["transit_citations"] = self._transit_citations(r.gochar.planet_predictions)
 
         # 2. Yoga classical descriptions
         if hasattr(r, "yogas") and r.yogas:
@@ -239,21 +237,25 @@ class PredictionEnhancer:
                 self.graph.search(f"{janma_nakshatra} nakshatra", top_n=6)
             )
             if matches:
-                insights.append({
-                    "type": "birth_nakshatra",
-                    "value": janma_nakshatra,
-                    "graph_matches": matches,
-                })
+                insights.append(
+                    {
+                        "type": "birth_nakshatra",
+                        "value": janma_nakshatra,
+                        "graph_matches": matches,
+                    }
+                )
         if janma_rashi:
             matches = self._readable_matches(
                 self.graph.search(f"{janma_rashi} rashi moon", top_n=4)
             )
             if matches:
-                insights.append({
-                    "type": "birth_rashi",
-                    "value": janma_rashi,
-                    "graph_matches": matches,
-                })
+                insights.append(
+                    {
+                        "type": "birth_rashi",
+                        "value": janma_rashi,
+                        "graph_matches": matches,
+                    }
+                )
         return insights or None
 
     @staticmethod
@@ -293,9 +295,16 @@ class PredictionEnhancer:
             if is_relevant or any(
                 r in label
                 for r in [
-                    "rasi", "nakshatra", "yoga", "lagna",
-                    "tithi", "karana", "vedha", "sade sati",
-                    "ashtakavarga", "neecha bhanga",
+                    "rasi",
+                    "nakshatra",
+                    "yoga",
+                    "lagna",
+                    "tithi",
+                    "karana",
+                    "vedha",
+                    "sade sati",
+                    "ashtakavarga",
+                    "neecha bhanga",
                 ]
             ):
                 neighbours = self.graph.neighbours(gn["id"], depth=1)
@@ -304,12 +313,14 @@ class PredictionEnhancer:
                     for n in neighbours["nodes"][:12]
                     if n.get("id") != gn["id"] and self._readable_label(n.get("label", ""))
                 ]
-                relevant.append({
-                    "god_node": raw_label,
-                    "degree": gn["degree"],
-                    "community": gn["community"],
-                    "connected_concepts": concepts[:8],
-                })
+                relevant.append(
+                    {
+                        "god_node": raw_label,
+                        "degree": gn["degree"],
+                        "community": gn["community"],
+                        "connected_concepts": concepts[:8],
+                    }
+                )
         return relevant[:8]
 
     @staticmethod
@@ -328,24 +339,24 @@ class PredictionEnhancer:
         insights = []
         nak_name = getattr(panchanga, "nakshatra", "")
         if nak_name:
-            search = self._readable_matches(
-                self.graph.search(f"{nak_name} nakshatra", top_n=6)
-            )
+            search = self._readable_matches(self.graph.search(f"{nak_name} nakshatra", top_n=6))
             if search:
-                insights.append({
-                    "type": "nakshatra",
-                    "value": nak_name,
-                    "graph_matches": search,
-                })
+                insights.append(
+                    {
+                        "type": "nakshatra",
+                        "value": nak_name,
+                        "graph_matches": search,
+                    }
+                )
         tithi = getattr(panchanga, "tithi_name", "")
         if tithi:
-            search = self._readable_matches(
-                self.graph.search(f"{tithi} tithi", top_n=4)
-            )
+            search = self._readable_matches(self.graph.search(f"{tithi} tithi", top_n=4))
             if search:
-                insights.append({
-                    "type": "tithi",
-                    "value": tithi,
-                    "graph_matches": search,
-                })
+                insights.append(
+                    {
+                        "type": "tithi",
+                        "value": tithi,
+                        "graph_matches": search,
+                    }
+                )
         return insights or None

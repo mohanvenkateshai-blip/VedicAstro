@@ -8,37 +8,36 @@ dignity, and natural karakatwa. Output is structured prose drivers, not corpus d
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from typing import Any, Optional
 
 from ..core.panchanga import RASHIS
-from ..rules.transit_rules import EXALT_SIGN, DEBIL_SIGN, OWN_SIGN
+from ..rules.transit_rules import DEBIL_SIGN, EXALT_SIGN, OWN_SIGN
 
 # ── Natural planetary friendships/enmities (BPHS Ch.3, Phaladeepika Ch.2) ─────
 # Used to judge how Maha and Antar lords cooperate or conflict.
 # Source: BPHS Ch.3 "Naisargika Maitri" table; PD Ch.20 sl.1-15.
 
 NATURAL_FRIENDS: dict[str, set] = {
-    "Sun":     {"Moon", "Mars", "Jupiter"},
-    "Moon":    {"Sun", "Mercury"},
-    "Mars":    {"Sun", "Moon", "Jupiter"},
+    "Sun": {"Moon", "Mars", "Jupiter"},
+    "Moon": {"Sun", "Mercury"},
+    "Mars": {"Sun", "Moon", "Jupiter"},
     "Mercury": {"Sun", "Venus"},
     "Jupiter": {"Sun", "Moon", "Mars"},
-    "Venus":   {"Mercury", "Saturn"},
-    "Saturn":  {"Mercury", "Venus"},
-    "Rahu":    {"Saturn", "Venus"},    # BPHS convention for nodes
-    "Ketu":    {"Mars", "Jupiter"},
+    "Venus": {"Mercury", "Saturn"},
+    "Saturn": {"Mercury", "Venus"},
+    "Rahu": {"Saturn", "Venus"},  # BPHS convention for nodes
+    "Ketu": {"Mars", "Jupiter"},
 }
 
 NATURAL_ENEMIES: dict[str, set] = {
-    "Sun":     {"Venus", "Saturn"},
-    "Moon":    {"Rahu", "Ketu"},
-    "Mars":    {"Mercury"},
+    "Sun": {"Venus", "Saturn"},
+    "Moon": {"Rahu", "Ketu"},
+    "Mars": {"Mercury"},
     "Mercury": {"Moon"},
     "Jupiter": {"Mercury", "Venus"},
-    "Venus":   {"Sun", "Moon"},
-    "Saturn":  {"Sun", "Moon", "Mars"},
-    "Rahu":    {"Sun", "Moon"},
-    "Ketu":    {"Sun", "Moon"},
+    "Venus": {"Sun", "Moon"},
+    "Saturn": {"Sun", "Moon", "Mars"},
+    "Rahu": {"Sun", "Moon"},
+    "Ketu": {"Sun", "Moon"},
 }
 
 # ── Yogakaraka by Lagna (Phaladeepika Ch.20 sl.45-53, BPHS Ch.34) ────────────
@@ -47,12 +46,12 @@ NATURAL_ENEMIES: dict[str, set] = {
 # Lagna lord also rules the 1st (both Kendra+Trikona) but is treated separately.
 
 YOGAKARAKA_BY_LAGNA: dict[str, str] = {
-    "Cancer":    "Mars",     # Mars: 5th (Scorpio, trikona) + 10th (Aries, kendra)
-    "Leo":       "Mars",     # Mars: 4th (Scorpio, kendra) + 9th (Aries, trikona)
-    "Taurus":    "Saturn",   # Saturn: 9th (Capricorn, trikona) + 10th (Aquarius, kendra)
-    "Libra":     "Saturn",   # Saturn: 4th (Capricorn, kendra) + 5th (Aquarius, trikona)
-    "Capricorn": "Venus",    # Venus: 5th (Taurus, trikona) + 10th (Libra, kendra)
-    "Aquarius":  "Venus",    # Venus: 4th (Taurus, kendra) + 9th (Libra, trikona)
+    "Cancer": "Mars",  # Mars: 5th (Scorpio, trikona) + 10th (Aries, kendra)
+    "Leo": "Mars",  # Mars: 4th (Scorpio, kendra) + 9th (Aries, trikona)
+    "Taurus": "Saturn",  # Saturn: 9th (Capricorn, trikona) + 10th (Aquarius, kendra)
+    "Libra": "Saturn",  # Saturn: 4th (Capricorn, kendra) + 5th (Aquarius, trikona)
+    "Capricorn": "Venus",  # Venus: 5th (Taurus, trikona) + 10th (Libra, kendra)
+    "Aquarius": "Venus",  # Venus: 4th (Taurus, kendra) + 9th (Libra, trikona)
 }
 
 PLANET_RULES: dict[str, list[str]] = {
@@ -94,13 +93,13 @@ class DashaFactor:
 class DashaIntelligence:
     maha_lord: str
     antar_lord: str
-    pratyantar_lord: Optional[str]
+    pratyantar_lord: str | None
     maha_start: str
     maha_end: str
     antar_start: str
     antar_end: str
-    lagna: Optional[str]
-    janma_rashi: Optional[str]
+    lagna: str | None
+    janma_rashi: str | None
     final_verdict: str
     score: int
     primary_driver: str
@@ -132,7 +131,7 @@ def _houses_ruled(planet: str, lagna_rashi: str) -> list[int]:
     return houses
 
 
-def _house_from_lagna(planet_rashi: str, lagna_rashi: str) -> Optional[int]:
+def _house_from_lagna(planet_rashi: str, lagna_rashi: str) -> int | None:
     if planet_rashi not in RASHIS or lagna_rashi not in RASHIS:
         return None
     lagna_idx = RASHIS.index(lagna_rashi)
@@ -176,7 +175,7 @@ def _lord_relationship(m_lord: str, a_lord: str) -> str:
     return "neutral"
 
 
-def _is_yogakaraka(planet: str, lagna_rashi: Optional[str]) -> bool:
+def _is_yogakaraka(planet: str, lagna_rashi: str | None) -> bool:
     """True if planet is Yogakaraka for the given Lagna (PD Ch.20 sl.45-53)."""
     return bool(lagna_rashi and YOGAKARAKA_BY_LAGNA.get(lagna_rashi) == planet)
 
@@ -185,11 +184,11 @@ class DashaImpactAnalyzer:
     def analyze(
         self,
         ladder: list[dict],
-        lagna_rashi: Optional[str] = None,
-        janma_rashi: Optional[str] = None,
-        natal_sign: Optional[dict[str, int]] = None,
-        transit_verdict: Optional[str] = None,
-    ) -> Optional[dict]:
+        lagna_rashi: str | None = None,
+        janma_rashi: str | None = None,
+        natal_sign: dict[str, int] | None = None,
+        transit_verdict: str | None = None,
+    ) -> dict | None:
         if not ladder or len(ladder) < 2:
             return None
 
@@ -209,17 +208,29 @@ class DashaImpactAnalyzer:
 
         if m_lord in NATURAL_BENEFIC:
             score += 2
-            factors.append(DashaFactor("mitigating", 2, f"{m_lord} Mahadasha — natural benefic period theme"))
+            factors.append(
+                DashaFactor("mitigating", 2, f"{m_lord} Mahadasha — natural benefic period theme")
+            )
         elif m_lord in NATURAL_MALEFIC:
             score -= 1
-            factors.append(DashaFactor("contextual", -1, f"{m_lord} Mahadasha — malefic tone; results depend on house lordship"))
+            factors.append(
+                DashaFactor(
+                    "contextual",
+                    -1,
+                    f"{m_lord} Mahadasha — malefic tone; results depend on house lordship",
+                )
+            )
 
         if a_lord in NATURAL_BENEFIC:
             score += 2
-            factors.append(DashaFactor("mitigating", 2, f"{a_lord} Antardasha activates benefic sub-theme"))
+            factors.append(
+                DashaFactor("mitigating", 2, f"{a_lord} Antardasha activates benefic sub-theme")
+            )
         elif a_lord in NATURAL_MALEFIC:
             score -= 2
-            factors.append(DashaFactor("aggravating", -2, f"{a_lord} Antardasha — challenging sub-period"))
+            factors.append(
+                DashaFactor("aggravating", -2, f"{a_lord} Antardasha — challenging sub-period")
+            )
 
         # ── Maha–Antar lord relationship (BPHS Ch.3, PD Ch.20) ──────────────
         # Friendly Maha + Friendly Antar = cooperative, results amplified.
@@ -228,28 +239,40 @@ class DashaImpactAnalyzer:
             rel = _lord_relationship(m_lord, a_lord)
             if rel == "mutual_friends":
                 score += 3
-                factors.append(DashaFactor(
-                    "mitigating", 3,
-                    f"{m_lord} and {a_lord} are mutual friends — period themes deeply aligned; results amplified (PD Ch.20, BPHS Ch.3)",
-                ))
+                factors.append(
+                    DashaFactor(
+                        "mitigating",
+                        3,
+                        f"{m_lord} and {a_lord} are mutual friends — period themes deeply aligned; results amplified (PD Ch.20, BPHS Ch.3)",
+                    )
+                )
             elif rel == "friends":
                 score += 2
-                factors.append(DashaFactor(
-                    "mitigating", 2,
-                    f"{m_lord} (Maha) and {a_lord} (Antar) are friendly — cooperative sub-period; dasha fruits delivered smoothly",
-                ))
+                factors.append(
+                    DashaFactor(
+                        "mitigating",
+                        2,
+                        f"{m_lord} (Maha) and {a_lord} (Antar) are friendly — cooperative sub-period; dasha fruits delivered smoothly",
+                    )
+                )
             elif rel == "mutual_enemies":
                 score -= 4
-                factors.append(DashaFactor(
-                    "aggravating", -4,
-                    f"{m_lord} and {a_lord} are mutual enemies — period themes in conflict; results obstructed, events arrive with strain (PD Ch.20)",
-                ))
+                factors.append(
+                    DashaFactor(
+                        "aggravating",
+                        -4,
+                        f"{m_lord} and {a_lord} are mutual enemies — period themes in conflict; results obstructed, events arrive with strain (PD Ch.20)",
+                    )
+                )
             elif rel == "enemies":
                 score -= 2
-                factors.append(DashaFactor(
-                    "aggravating", -2,
-                    f"{m_lord} (Maha) and {a_lord} (Antar) are inimical — friction in sub-period themes; results arrive partially",
-                ))
+                factors.append(
+                    DashaFactor(
+                        "aggravating",
+                        -2,
+                        f"{m_lord} (Maha) and {a_lord} (Antar) are inimical — friction in sub-period themes; results arrive partially",
+                    )
+                )
 
         # ── Yogakaraka boost (PD Ch.20 sl.45-53, BPHS Ch.34) ────────────────
         # A planet ruling both a Kendra and Trikona from Lagna gives Raja Yoga
@@ -257,12 +280,15 @@ class DashaImpactAnalyzer:
         for lord, label in ((m_lord, "Mahadasha"), (a_lord, "Antardasha")):
             if _is_yogakaraka(lord, lagna_rashi):
                 score += 3
-                factors.append(DashaFactor(
-                    "mitigating", 3,
-                    f"{lord} is Yogakaraka for {lagna_rashi} Lagna "
-                    f"(rules both Kendra and Trikona) — {label} delivers Raja Yoga results; "
-                    "career, wealth and social position can rise markedly (PD Ch.20 sl.45-53)",
-                ))
+                factors.append(
+                    DashaFactor(
+                        "mitigating",
+                        3,
+                        f"{lord} is Yogakaraka for {lagna_rashi} Lagna "
+                        f"(rules both Kendra and Trikona) — {label} delivers Raja Yoga results; "
+                        "career, wealth and social position can rise markedly (PD Ch.20 sl.45-53)",
+                    )
+                )
 
         trikona = {1, 5, 9}
         kendra = {1, 4, 7, 10}
@@ -271,21 +297,39 @@ class DashaImpactAnalyzer:
         for h in m_houses:
             if h in trikona:
                 score += 2
-                factors.append(DashaFactor("mitigating", 2, f"Maha lord rules {h}th (trikona) — dharma/support"))
+                factors.append(
+                    DashaFactor(
+                        "mitigating", 2, f"Maha lord rules {h}th (trikona) — dharma/support"
+                    )
+                )
             elif h in kendra:
                 score += 1
-                factors.append(DashaFactor("mitigating", 1, f"Maha lord rules {h}th (kendra) — action and results"))
+                factors.append(
+                    DashaFactor(
+                        "mitigating", 1, f"Maha lord rules {h}th (kendra) — action and results"
+                    )
+                )
             elif h in dusthana:
                 score -= 2
-                factors.append(DashaFactor("aggravating", -2, f"Maha lord rules {h}th (dusthana) — obstacles and strain"))
+                factors.append(
+                    DashaFactor(
+                        "aggravating",
+                        -2,
+                        f"Maha lord rules {h}th (dusthana) — obstacles and strain",
+                    )
+                )
 
         for h in a_houses:
             if h in {2, 11}:
                 score += 1
-                factors.append(DashaFactor("mitigating", 1, f"Antar lord rules {h}th — finances/gains channel"))
+                factors.append(
+                    DashaFactor("mitigating", 1, f"Antar lord rules {h}th — finances/gains channel")
+                )
             elif h in dusthana:
                 score -= 1
-                factors.append(DashaFactor("aggravating", -1, f"Antar lord rules {h}th — stress in sub-period"))
+                factors.append(
+                    DashaFactor("aggravating", -1, f"Antar lord rules {h}th — stress in sub-period")
+                )
 
         natal_rashi_by_planet: dict[str, str] = {}
         if natal_sign:
@@ -301,24 +345,44 @@ class DashaImpactAnalyzer:
             h = _house_from_lagna(nr, lagna_rashi)
             if dig == "exalted":
                 score += 2
-                factors.append(DashaFactor("mitigating", 2, f"{label} lord {lord} exalted in natal chart ({h}th)"))
+                factors.append(
+                    DashaFactor(
+                        "mitigating", 2, f"{label} lord {lord} exalted in natal chart ({h}th)"
+                    )
+                )
             elif dig == "own":
                 score += 1
-                factors.append(DashaFactor("mitigating", 1, f"{label} lord {lord} in own sign natally ({h}th)"))
+                factors.append(
+                    DashaFactor("mitigating", 1, f"{label} lord {lord} in own sign natally ({h}th)")
+                )
             elif dig == "debilitated":
                 score -= 2
-                factors.append(DashaFactor("aggravating", -2, f"{label} lord {lord} debilitated natally — weak delivery"))
+                factors.append(
+                    DashaFactor(
+                        "aggravating",
+                        -2,
+                        f"{label} lord {lord} debilitated natally — weak delivery",
+                    )
+                )
 
         if m_lord == a_lord:
             score += 1
-            factors.append(DashaFactor("contextual", 1, "Maha and Antar same planet — theme intensified"))
+            factors.append(
+                DashaFactor("contextual", 1, "Maha and Antar same planet — theme intensified")
+            )
 
         if transit_verdict == "ashubh":
             score -= 2
-            factors.append(DashaFactor("aggravating", -2, "Current transits unfavourable — delays dasha fruits"))
+            factors.append(
+                DashaFactor(
+                    "aggravating", -2, "Current transits unfavourable — delays dasha fruits"
+                )
+            )
         elif transit_verdict == "shubh":
             score += 1
-            factors.append(DashaFactor("mitigating", 1, "Current transits supportive — dasha results easier"))
+            factors.append(
+                DashaFactor("mitigating", 1, "Current transits supportive — dasha results easier")
+            )
 
         verdict = _verdict(score)
         primary = factors[0].summary if factors else f"{m_lord}–{a_lord} period"
@@ -326,7 +390,11 @@ class DashaImpactAnalyzer:
         mitigating = [f.summary for f in factors if f.role == "mitigating"]
 
         profession, wealth, health, family, caution = self._life_bullets(
-            m_lord, a_lord, m_houses, a_houses, verdict,
+            m_lord,
+            a_lord,
+            m_houses,
+            a_houses,
+            verdict,
         )
 
         root = (
@@ -384,7 +452,9 @@ class DashaImpactAnalyzer:
                 f"Career and service themes strong — {a_lord} antar highlights workplace outcomes."
             )
         if 2 in m_houses or 11 in a_houses or 2 in a_houses or 11 in a_houses:
-            wealth.append("Financial flow and savings are activated; watch discipline in expenditure.")
+            wealth.append(
+                "Financial flow and savings are activated; watch discipline in expenditure."
+            )
         if 6 in m_houses or 8 in m_houses or 12 in a_houses:
             health.append("Health routines need attention; dusthana lordship in maha/antar.")
         if 4 in m_houses or 5 in m_houses or 7 in a_houses:

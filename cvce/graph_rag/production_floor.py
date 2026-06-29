@@ -1,4 +1,5 @@
 """Production graph size floor — read from baked graph.json (Fly) or pinned fallback."""
+
 from __future__ import annotations
 
 import json

@@ -1,72 +1,74 @@
 #!/usr/bin/env python3
 """Extract prediction rules from Phaladeepika and Sarvartha Chintamani texts."""
-import re
+
 import os
 
-BASE = '/Users/ganesha/Projects/04-UX-Practice/Panchang/panchanga_muhurtha/extracted_texts'
+BASE = "/Users/ganesha/Projects/04-UX-Practice/Panchang/panchanga_muhurtha/extracted_texts"
 
 # Read both texts
-phaladeepika_path = os.path.join(BASE, 'Mantreswara_s__Phaladeeplka_.txt')
-chintamani_path = os.path.join(BASE, 'ebharati-pdf-1621242374Sarvartha-Chintamani-JN-Bhasin_compressed.txt')
+phaladeepika_path = os.path.join(BASE, "Mantreswara_s__Phaladeeplka_.txt")
+chintamani_path = os.path.join(
+    BASE, "ebharati-pdf-1621242374Sarvartha-Chintamani-JN-Bhasin_compressed.txt"
+)
 
-with open(phaladeepika_path, 'r', encoding='utf-8') as f:
+with open(phaladeepika_path, encoding="utf-8") as f:
     pd_text = f.read()
 
-with open(chintamani_path, 'r', encoding='utf-8') as f:
+with open(chintamani_path, encoding="utf-8") as f:
     sc_text = f.read()
 
-OUTPUT = '/Users/ganesha/Projects/04-UX-Practice/Panchang/panchanga_muhurtha/rules_phaladeepika_chintamani.md'
+OUTPUT = "/Users/ganesha/Projects/04-UX-Practice/Panchang/panchanga_muhurtha/rules_phaladeepika_chintamani.md"
 
 # Map chapter boundaries in Phaladeepika
 pd_chapter_markers = [
-    (1, 'Chapter 1', 'Information and characteristic features of the Signs'),
-    (2, 'Chapter 2', 'Characteristic features of the planets'),
-    (3, 'Chapter 3', 'Divisions of a sign'),
-    (4, 'Chapter 4', 'The strength of planets'),
-    (5, 'Chapter 5', 'Source of livelihood'),
-    (6, 'Chapter 6', 'Yogas'),
-    (7, 'Chapter 7', 'Raja yogas'),
-    (8, 'Chapter 8', 'Effect of the Sun and other planets In the twelve houses'),
-    (9, 'Chapter 9', 'Effect of different Ascendants'),
-    (10, 'Chapter 10', 'Matters relating to the 7th house'),
-    (11, 'Chapter 11', 'Female Horoscopy'),
-    (12, 'Chapter 12', 'Birth of children'),
-    (13, 'Chapter 13', 'Determination of longevity'),
-    (14, 'Chapter 14', 'Diseases, death'),
-    (15, 'Chapter 15', 'Assessment of houses'),
-    (16, 'Chapter 16', 'General effects of the twelve houses'),
-    (17, 'Chapter 17', 'Exit from the world'),
-    (18, 'Chapter 18', 'Effects of conjunction of two planets'),
-    (19, 'Chapter 19', 'Dasas (major periods)'),
-    (20, 'Chapter 20', 'Effects of the Dasas of the lords of houses'),
-    (21, 'Chapter 21', 'Nature of Antar Dasas and Pratyantar Dasas'),
-    (22, 'Chapter 22', 'Kalachakra Dasa'),
-    (23, 'Chapter 23', 'Ashtakavarga'),
-    (24, 'Chapter 24', 'Effects of Ashtakavarga according to Horosara'),
-    (25, 'Chapter 25', 'Gulika and other Upagrahas'),
-    (26, 'Chapter 26', 'Effects of transits'),
-    (27, 'Chapter 27', 'Yogas leading to asceticism'),
-    (28, 'Chapter 28', 'Conclusion'),
+    (1, "Chapter 1", "Information and characteristic features of the Signs"),
+    (2, "Chapter 2", "Characteristic features of the planets"),
+    (3, "Chapter 3", "Divisions of a sign"),
+    (4, "Chapter 4", "The strength of planets"),
+    (5, "Chapter 5", "Source of livelihood"),
+    (6, "Chapter 6", "Yogas"),
+    (7, "Chapter 7", "Raja yogas"),
+    (8, "Chapter 8", "Effect of the Sun and other planets In the twelve houses"),
+    (9, "Chapter 9", "Effect of different Ascendants"),
+    (10, "Chapter 10", "Matters relating to the 7th house"),
+    (11, "Chapter 11", "Female Horoscopy"),
+    (12, "Chapter 12", "Birth of children"),
+    (13, "Chapter 13", "Determination of longevity"),
+    (14, "Chapter 14", "Diseases, death"),
+    (15, "Chapter 15", "Assessment of houses"),
+    (16, "Chapter 16", "General effects of the twelve houses"),
+    (17, "Chapter 17", "Exit from the world"),
+    (18, "Chapter 18", "Effects of conjunction of two planets"),
+    (19, "Chapter 19", "Dasas (major periods)"),
+    (20, "Chapter 20", "Effects of the Dasas of the lords of houses"),
+    (21, "Chapter 21", "Nature of Antar Dasas and Pratyantar Dasas"),
+    (22, "Chapter 22", "Kalachakra Dasa"),
+    (23, "Chapter 23", "Ashtakavarga"),
+    (24, "Chapter 24", "Effects of Ashtakavarga according to Horosara"),
+    (25, "Chapter 25", "Gulika and other Upagrahas"),
+    (26, "Chapter 26", "Effects of transits"),
+    (27, "Chapter 27", "Yogas leading to asceticism"),
+    (28, "Chapter 28", "Conclusion"),
 ]
 
 # Map chapter boundaries in Sarvartha Chintamani
 sc_chapter_markers = [
-    (1, 'CHAPTER·I', 'Rashi vichar'),
-    (2, 'Results of 2nd house', '2nd house'),
-    (3, 'Results of 3rd & 4th', '3rd 4th houses'),
-    (4, 'Considerations of 5th & 6th', '5th 6th houses'),
-    (5, 'Considerations of 7th', '7th house'),
-    (6, 'Considerations of 8th & 9th', '8th 9th houses'),
-    (7, 'Results of 10th. 11th & 12th', '10th 11th 12th houses'),
-    (8, 'Raj yogas', 'Raja yogas'),
-    (9, 'Span of life', 'Longevity'),
-    (10, 'Cancellations of yogas', 'Cancellations'),
-    (11, 'Medium longevity', 'Medium longevity'),
-    (12, 'Ruling Periods of Sun & Moon', 'Dasha Sun Moon'),
-    (13, 'Ruling Periods of Mars & Mercury', 'Dasha Mars Mercury'),
-    (14, 'Ruling Periods of Jupiter. Venus & Saturn', 'Dasha Jupiter Venus Saturn'),
-    (15, 'Ruling Periods of Rahu. Ketu', 'Dasha Rahu Ketu'),
-    (16, 'Miscellaneou s', 'Miscellaneous'),
+    (1, "CHAPTER·I", "Rashi vichar"),
+    (2, "Results of 2nd house", "2nd house"),
+    (3, "Results of 3rd & 4th", "3rd 4th houses"),
+    (4, "Considerations of 5th & 6th", "5th 6th houses"),
+    (5, "Considerations of 7th", "7th house"),
+    (6, "Considerations of 8th & 9th", "8th 9th houses"),
+    (7, "Results of 10th. 11th & 12th", "10th 11th 12th houses"),
+    (8, "Raj yogas", "Raja yogas"),
+    (9, "Span of life", "Longevity"),
+    (10, "Cancellations of yogas", "Cancellations"),
+    (11, "Medium longevity", "Medium longevity"),
+    (12, "Ruling Periods of Sun & Moon", "Dasha Sun Moon"),
+    (13, "Ruling Periods of Mars & Mercury", "Dasha Mars Mercury"),
+    (14, "Ruling Periods of Jupiter. Venus & Saturn", "Dasha Jupiter Venus Saturn"),
+    (15, "Ruling Periods of Rahu. Ketu", "Dasha Rahu Ketu"),
+    (16, "Miscellaneou s", "Miscellaneous"),
 ]
 
 rules = []
@@ -1249,7 +1251,7 @@ rules.append("""
 # ============================================================
 # Write the catalog
 # ============================================================
-with open(OUTPUT, 'w', encoding='utf-8') as f:
+with open(OUTPUT, "w", encoding="utf-8") as f:
     header = """# PREDICTION RULES CATALOG
 ## Phaladeepika & Sarvartha Chintamani — Decision Engine Rules
 

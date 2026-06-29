@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-import json
 from datetime import date, datetime, timedelta
-from typing import Optional
 
 from app.chart import build_chart_geometry
 from app.config import get_settings
@@ -15,8 +13,9 @@ from app.dasha_vimshottari import (
     running_ladder,
 )
 from app.ephem import jd_place, parse_dt, set_ayanamsa
-from knowledge_engine.integration import get_knowledge_engine, get_llm_narration, get_prediction_enhancer as PredictionEnhancer
-from vedic_engine.prediction.ashtakavarga import compute_ashtakavarga, BINDU_RESULTS, SAV_BANDS
+from knowledge_engine.integration import get_knowledge_engine, get_llm_narration
+from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
+from vedic_engine.prediction.ashtakavarga import SAV_BANDS, compute_ashtakavarga
 from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
 from vedic_engine.synthesis.engine import VedicPredictor
 
@@ -29,16 +28,19 @@ def _clear_report_knowledge_caches() -> None:
     """Invalidate graph-backed rule caches used when assembling report facts."""
     try:
         from graph_rag.rules_provider import GraphTransitRules
+
         GraphTransitRules._instance = None
     except ImportError:
         pass
     try:
         from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+
         GraphMuhurtaRules._instance = None
     except ImportError:
         pass
     try:
         from graph_rag.graph import GraphRAG
+
         GraphRAG()._loaded = False
     except ImportError:
         pass
@@ -69,20 +71,33 @@ def _register_report_engine() -> None:
         pass
 
 
+_register_report_engine()
+
+
 def _ensure_report_registered() -> None:
     if not _report_registered:
         _register_report_engine()
 
 
 _RASHIS = [
-    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
 ]
 
 _AKV_PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
 
 
-def _rashi_idx(name: str) -> Optional[int]:
+def _rashi_idx(name: str) -> int | None:
     try:
         return _RASHIS.index(name)
     except ValueError:
@@ -115,7 +130,10 @@ def _compute_timing_merge(dasha_intel: dict | None, transit_intel: dict | None) 
     elif combined >= 2:
         window, label = "shubh", "Moderately favourable window — good for steady progress"
     elif combined <= -5:
-        window, label = "ashubh", "Challenging window — avoid major decisions, focus on consolidation"
+        window, label = (
+            "ashubh",
+            "Challenging window — avoid major decisions, focus on consolidation",
+        )
     elif combined <= -2:
         window, label = "ashubh", "Unfavourable window — delays and friction expected"
     else:
@@ -187,12 +205,14 @@ def _next_shubh_days(
                 dasha_score=dasha_score,
             )
             if intel and intel.overall_verdict == "shubh":
-                results.append({
-                    "date": date_str,
-                    "summary": intel.day_summary,
-                    "score": intel.overall_score,
-                    "top_drivers": intel.top_drivers[:2],
-                })
+                results.append(
+                    {
+                        "date": date_str,
+                        "summary": intel.day_summary,
+                        "score": intel.overall_score,
+                        "top_drivers": intel.top_drivers[:2],
+                    }
+                )
                 if len(results) >= limit:
                     break
         except Exception:
@@ -227,8 +247,20 @@ def _compute_forecast(
             break
 
         mini_ladder = [
-            {"lord": row["maha"], "start": str(start_d), "end": str(end_d), "level": 1, "levelLabel": "Mahadasha"},
-            {"lord": row["antara"], "start": str(start_d), "end": str(end_d), "level": 2, "levelLabel": "Antardasha"},
+            {
+                "lord": row["maha"],
+                "start": str(start_d),
+                "end": str(end_d),
+                "level": 1,
+                "levelLabel": "Mahadasha",
+            },
+            {
+                "lord": row["antara"],
+                "start": str(start_d),
+                "end": str(end_d),
+                "level": 2,
+                "levelLabel": "Antardasha",
+            },
         ]
 
         intel = analyzer.analyze(
@@ -239,22 +271,24 @@ def _compute_forecast(
         )
         if intel:
             is_current = start_d <= today <= end_d
-            forecast.append({
-                "maha": row["maha"],
-                "antar": row["antara"],
-                "start": str(start_d),
-                "end": str(end_d),
-                "durationYears": round(row.get("durationYears", 0), 2),
-                "isCurrent": is_current,
-                "verdict": intel["final_verdict"],
-                "score": intel["score"],
-                "summary": intel["summary"],
-                "profession": intel["profession"][:2],
-                "wealth": intel["wealth"][:2],
-                "health": intel["health"][:1],
-                "family": intel["family"][:1],
-                "caution": intel["caution"][:1],
-            })
+            forecast.append(
+                {
+                    "maha": row["maha"],
+                    "antar": row["antara"],
+                    "start": str(start_d),
+                    "end": str(end_d),
+                    "durationYears": round(row.get("durationYears", 0), 2),
+                    "isCurrent": is_current,
+                    "verdict": intel["final_verdict"],
+                    "score": intel["score"],
+                    "summary": intel["summary"],
+                    "profession": intel["profession"][:2],
+                    "wealth": intel["wealth"][:2],
+                    "health": intel["health"][:1],
+                    "family": intel["family"][:1],
+                    "caution": intel["caution"][:1],
+                }
+            )
 
     return forecast
 
@@ -280,7 +314,10 @@ def build_report_facts(
         query_date = datetime.now().strftime("%Y-%m-%d")
 
     geometry = build_chart_geometry(
-        jd, place, ayanamsa=ayanamsa, vargas=settings.VARGAS[:2] if settings.VARGAS else [1, 9],
+        jd,
+        place,
+        ayanamsa=ayanamsa,
+        vargas=settings.VARGAS[:2] if settings.VARGAS else [1, 9],
     )
 
     lagna = geometry.get("lagna") or {}
@@ -299,9 +336,7 @@ def build_report_facts(
         "currentLadder": ladder,
         "antardashaTable": antar_table,
         "dashaTree": (
-            dasha_deep_payload(jd, place, max_level=5)["dashaTree"]
-            if include_dasha_tree
-            else []
+            dasha_deep_payload(jd, place, max_level=5)["dashaTree"] if include_dasha_tree else []
         ),
     }
 
@@ -337,10 +372,11 @@ def build_report_facts(
     alternate_dashas = None
     try:
         from jhora.panchanga.drik import Date as DrikDate
+
         from app.dasha_extras import (
             chara_dasha_payload,
-            kalachakra_dasha_payload,
             kaksha_payload,
+            kalachakra_dasha_payload,
         )
 
         dob = DrikDate(dt.year, dt.month, dt.day)
@@ -370,6 +406,7 @@ def build_report_facts(
     yogas_raw = None
     try:
         from app.server import _panchanga, _yogas
+
         panchanga = _panchanga(jd, place)
         yogas_raw = _yogas(jd, place)
     except Exception:
@@ -379,6 +416,7 @@ def build_report_facts(
     shadbala_data = None
     try:
         from app.server import _shadbala
+
         shadbala_data = _shadbala(jd, place)
     except Exception:
         pass
@@ -403,11 +441,13 @@ def build_report_facts(
         sav_annotated = []
         for sign_idx, bindus in enumerate(akv.sav):
             band = _get_band_label(bindus)
-            sav_annotated.append({
-                "sign": _RASHIS[sign_idx],
-                "bindus": bindus,
-                "band": band,
-            })
+            sav_annotated.append(
+                {
+                    "sign": _RASHIS[sign_idx],
+                    "bindus": bindus,
+                    "band": band,
+                }
+            )
 
         ashtakavarga_data = {
             "bav": akv.bav,
@@ -440,8 +480,12 @@ def build_report_facts(
             d_score = dasha_intel.get("score", 0) if dasha_intel else 0
             next_shubh_days = _next_shubh_days(
                 query_date,
-                birth_lat, birth_lon, birth_tz,
-                janma_rashi, janma_nakshatra, natal_sign,
+                birth_lat,
+                birth_lon,
+                birth_tz,
+                janma_rashi,
+                janma_nakshatra,
+                natal_sign,
                 dasha_maha=d_maha,
                 dasha_antar=d_antar,
                 dasha_score=d_score,
@@ -461,9 +505,18 @@ def build_report_facts(
             "retrograde": p.get("retrograde", False),
         }
         for p in planets
-        if p.get("planet") in {
-            "Sun", "Moon", "Mars", "Mercury", "Jupiter",
-            "Venus", "Saturn", "Rahu", "Ketu", "Lagna",
+        if p.get("planet")
+        in {
+            "Sun",
+            "Moon",
+            "Mars",
+            "Mercury",
+            "Jupiter",
+            "Venus",
+            "Saturn",
+            "Rahu",
+            "Ketu",
+            "Lagna",
         }
     ]
 

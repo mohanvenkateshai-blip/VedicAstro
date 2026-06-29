@@ -2,24 +2,26 @@
 Yogini and Ashtottari dasha tree builders.
 Both libraries return flat rows: [(lords_tuple, (Y,M,D,H), duration_years), ...]
 """
+
 from __future__ import annotations
 
-from datetime import date as _d, timedelta as _td
+from datetime import date as _d
+from datetime import timedelta as _td
 
 PLANET_NAMES = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
-LEVEL_LABELS  = {1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha"}
+LEVEL_LABELS = {1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha"}
 
 # Yogini dasha: each planet corresponds to a specific Yogini deity
 # Source: BPHS Yogini Dasha Adhyaya + Goel "Predict Effectively Through Yogini Dasha" (KN Rao series)
 YOGINI_BY_PLANET: dict[int, str] = {
-    1: "Mangala",   # Moon  — 1 year
-    0: "Pingala",   # Sun   — 2 years
-    4: "Dhanya",    # Jupiter — 3 years
+    1: "Mangala",  # Moon  — 1 year
+    0: "Pingala",  # Sun   — 2 years
+    4: "Dhanya",  # Jupiter — 3 years
     2: "Bhramari",  # Mars  — 4 years
     3: "Bhadrika",  # Mercury — 5 years
-    6: "Ulka",      # Saturn — 6 years
-    5: "Siddha",    # Venus — 7 years
-    7: "Sankata",   # Rahu  — 8 years
+    6: "Ulka",  # Saturn — 6 years
+    5: "Siddha",  # Venus — 7 years
+    7: "Sankata",  # Rahu  — 8 years
 }
 
 # Yogini dasha years per planet (planet_id → dasha years)
@@ -67,11 +69,11 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
     parsed: list[tuple[_d, tuple, str, str, float]] = []
     # (start_date, lords, start_str, end_str, dur_years)
 
-    for row in (flat_rows or []):
+    for row in flat_rows or []:
         try:
             lords = row[0]
-            st    = row[1]
-            dur   = float(row[2])
+            st = row[1]
+            dur = float(row[2])
             depth = len(lords) if isinstance(lords, (list, tuple)) else 0
             if depth < 1:
                 continue
@@ -104,12 +106,12 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
                     blocks.append(current_block)
                 current_mid = mid
                 current_block = {
-                    "mid":   mid,
-                    "lord":  _lord_name(mid),
+                    "mid": mid,
+                    "lord": _lord_name(mid),
                     "start": start_str,
-                    "end":   end_str,      # will be updated
+                    "end": end_str,  # will be updated
                     "_start": s,
-                    "_end":   _d.fromisoformat(end_str),
+                    "_end": _d.fromisoformat(end_str),
                     "antars": [],
                 }
 
@@ -117,16 +119,18 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
             antar_end = _d.fromisoformat(end_str)
             if current_block and antar_end > current_block["_end"]:
                 current_block["_end"] = antar_end
-                current_block["end"]  = end_str
+                current_block["end"] = end_str
 
             if current_block is not None:
-                current_block["antars"].append({
-                    "lord":  _lord_name(aid),
-                    "start": start_str,
-                    "end":   end_str,
-                    "durationYears": round(dur, 4),
-                    "_start": s,
-                })
+                current_block["antars"].append(
+                    {
+                        "lord": _lord_name(aid),
+                        "start": start_str,
+                        "end": end_str,
+                        "durationYears": round(dur, 4),
+                        "_start": s,
+                    }
+                )
 
         elif depth == 1:
             mid = lords[0]
@@ -135,12 +139,12 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
                     blocks.append(current_block)
                 current_mid = mid
                 current_block = {
-                    "mid":   mid,
-                    "lord":  _lord_name(mid),
+                    "mid": mid,
+                    "lord": _lord_name(mid),
                     "start": start_str,
-                    "end":   end_str,
+                    "end": end_str,
                     "_start": s,
-                    "_end":   _d.fromisoformat(end_str),
+                    "_end": _d.fromisoformat(end_str),
                     "antars": [],
                 }
 
@@ -169,35 +173,39 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
 
     ladder: list[dict] = []
     if running_maha_block:
-        ladder.append({
-            "levelLabel": "Mahadasha",
-            "lord":  running_maha_block["lord"],
-            "start": running_maha_block["start"],
-            "end":   running_maha_block["end"],
-        })
+        ladder.append(
+            {
+                "levelLabel": "Mahadasha",
+                "lord": running_maha_block["lord"],
+                "start": running_maha_block["start"],
+                "end": running_maha_block["end"],
+            }
+        )
     if running_antar:
-        ladder.append({
-            "levelLabel": "Antardasha",
-            "lord":  running_antar["lord"],
-            "start": running_antar["start"],
-            "end":   running_antar["end"],
-        })
+        ladder.append(
+            {
+                "levelLabel": "Antardasha",
+                "lord": running_antar["lord"],
+                "start": running_antar["start"],
+                "end": running_antar["end"],
+            }
+        )
 
     # ── Step 4: build tree ────────────────────────────────────────────────────
 
     tree = [
         {
             "level": 1,
-            "lord":  b["lord"],
+            "lord": b["lord"],
             "start": b["start"],
-            "end":   b["end"],
+            "end": b["end"],
             "durationYears": b["durationYears"],
             "subPeriods": [
                 {
                     "level": 2,
-                    "lord":  a["lord"],
+                    "lord": a["lord"],
                     "start": a["start"],
-                    "end":   a["end"],
+                    "end": a["end"],
                     "durationYears": a["durationYears"],
                     "subPeriods": [],
                 }
@@ -212,8 +220,10 @@ def _build_tree_and_ladder(flat_rows: list) -> tuple[list, list]:
 
 # ── Yogini ────────────────────────────────────────────────────────────────────
 
+
 def _enrich_yogini(tree: list, ladder: list) -> tuple[list, list]:
     """Add yoginiName to every node so the UI can display deity names."""
+
     def add(node: dict) -> dict:
         # Resolve planet id from lord name to add yoginiName
         pid = next((i for i, n in enumerate(PLANET_NAMES) if n == node.get("lord")), None)
@@ -249,9 +259,10 @@ def yogini_deep_payload(jd: float, place, dt) -> dict:
     We get Maha-only rows from PyJHora (those dates ARE correct) and compute
     antardasha periods ourselves using the correct formula.
     """
-    from jhora.horoscope.dhasa.graha import yogini
-    from jhora.panchanga.drik import Date as DrikDate, dhasa_year_duration
     from jhora import const
+    from jhora.horoscope.dhasa.graha import yogini
+    from jhora.panchanga.drik import Date as DrikDate
+    from jhora.panchanga.drik import dhasa_year_duration
 
     year_dur = dhasa_year_duration(jd=jd, place=place)  # sidereal days per year
 
@@ -268,12 +279,12 @@ def yogini_deep_payload(jd: float, place, dt) -> dict:
 
     for row in flat_maha:
         lords = row[0]
-        st    = row[1]
-        dur   = float(row[2])
-        maha_pid   = lords[0] if isinstance(lords, (list, tuple)) else lords
+        st = row[1]
+        dur = float(row[2])
+        maha_pid = lords[0] if isinstance(lords, (list, tuple)) else lords
         maha_years = YOGINI_YEARS.get(maha_pid, 1)
         maha_start = _to_date(st)
-        maha_end   = maha_start + _td(days=int(round(dur * year_dur)))
+        maha_end = maha_start + _td(days=int(round(dur * year_dur)))
 
         # Antardasha order: starts with the Maha lord itself, then continues in Yogini cycle order
         antar_pids = yogini._antardhasa(maha_pid, antardhasa_option=1)
@@ -283,82 +294,90 @@ def yogini_deep_payload(jd: float, place, dt) -> dict:
         for antar_pid in antar_pids:
             antar_years = YOGINI_YEARS.get(antar_pid, 1)
             # Classical proportional formula: duration = maha_years × antar_years / 36 years
-            antar_days  = int(round(maha_years * antar_years * year_dur / YOGINI_TOTAL_YEARS))
-            antar_end   = cursor + _td(days=antar_days)
-            antars.append({
-                "level":         2,
-                "lord":          _lord_name(antar_pid),
-                "yoginiName":    YOGINI_BY_PLANET.get(antar_pid),
-                "start":         cursor.isoformat(),
-                "end":           antar_end.isoformat(),
-                "_start":        cursor,
-                "_end":          antar_end,
-                "durationYears": round(antar_days / year_dur, 4),
-                "subPeriods":    [],
-            })
+            antar_days = int(round(maha_years * antar_years * year_dur / YOGINI_TOTAL_YEARS))
+            antar_end = cursor + _td(days=antar_days)
+            antars.append(
+                {
+                    "level": 2,
+                    "lord": _lord_name(antar_pid),
+                    "yoginiName": YOGINI_BY_PLANET.get(antar_pid),
+                    "start": cursor.isoformat(),
+                    "end": antar_end.isoformat(),
+                    "_start": cursor,
+                    "_end": antar_end,
+                    "durationYears": round(antar_days / year_dur, 4),
+                    "subPeriods": [],
+                }
+            )
             cursor = antar_end
 
-        blocks.append({
-            "lord":          _lord_name(maha_pid),
-            "yoginiName":    YOGINI_BY_PLANET.get(maha_pid),
-            "start":         maha_start.isoformat(),
-            "end":           maha_end.isoformat(),
-            "_start":        maha_start,
-            "_end":          maha_end,
-            "durationYears": round(dur, 4),
-            "antars":        antars,
-        })
+        blocks.append(
+            {
+                "lord": _lord_name(maha_pid),
+                "yoginiName": YOGINI_BY_PLANET.get(maha_pid),
+                "start": maha_start.isoformat(),
+                "end": maha_end.isoformat(),
+                "_start": maha_start,
+                "_end": maha_end,
+                "durationYears": round(dur, 4),
+                "antars": antars,
+            }
+        )
 
     # Build running ladder
     ladder: list[dict] = []
     for b in blocks:
         if b["_start"] <= today <= b["_end"]:
-            ladder.append({
-                "levelLabel": "Mahadasha",
-                "lord":       b["lord"],
-                "yoginiName": b["yoginiName"],
-                "start":      b["start"],
-                "end":        b["end"],
-            })
+            ladder.append(
+                {
+                    "levelLabel": "Mahadasha",
+                    "lord": b["lord"],
+                    "yoginiName": b["yoginiName"],
+                    "start": b["start"],
+                    "end": b["end"],
+                }
+            )
             for a in b["antars"]:
                 if a["_start"] <= today <= a["_end"]:
-                    ladder.append({
-                        "levelLabel": "Antardasha",
-                        "lord":       a["lord"],
-                        "yoginiName": a["yoginiName"],
-                        "start":      a["start"],
-                        "end":        a["end"],
-                    })
+                    ladder.append(
+                        {
+                            "levelLabel": "Antardasha",
+                            "lord": a["lord"],
+                            "yoginiName": a["yoginiName"],
+                            "start": a["start"],
+                            "end": a["end"],
+                        }
+                    )
                     break
             break
 
     # Build tree (strip internal _start/_end helpers)
     tree = [
         {
-            "level":         1,
-            "lord":          b["lord"],
-            "yoginiName":    b["yoginiName"],
-            "start":         b["start"],
-            "end":           b["end"],
+            "level": 1,
+            "lord": b["lord"],
+            "yoginiName": b["yoginiName"],
+            "start": b["start"],
+            "end": b["end"],
             "durationYears": b["durationYears"],
             "subPeriods": [
-                {k: v for k, v in a.items() if not k.startswith("_")}
-                for a in b["antars"]
+                {k: v for k, v in a.items() if not k.startswith("_")} for a in b["antars"]
             ],
         }
         for b in blocks
     ]
 
     return {
-        "system":            "yogini",
-        "applicable":        True,
+        "system": "yogini",
+        "applicable": True,
         "applicabilityNote": None,
-        "currentLadder":     ladder,
-        "dashaTree":         tree,
+        "currentLadder": ladder,
+        "dashaTree": tree,
     }
 
 
 # ── Ashtottari ────────────────────────────────────────────────────────────────
+
 
 def _ashtottari_paksha_daynight_check(jd: float, place) -> tuple[bool, str]:
     """
@@ -380,11 +399,12 @@ def _ashtottari_paksha_daynight_check(jd: float, place) -> tuple[bool, str]:
 
     # Day / night birth from sunrise and sunset at birth location
     try:
-        sr = drik.sunrise(jd, place)   # [local_hour_float, str, jd]
-        ss = drik.sunset(jd, place)    # [local_hour_float, str, jd]
-        _, _, y, m, d, fh = _d.today().year, _d.today().month, *((jd,)*4)  # unused
+        sr = drik.sunrise(jd, place)  # [local_hour_float, str, jd]
+        ss = drik.sunset(jd, place)  # [local_hour_float, str, jd]
+        _, _, y, m, d, fh = _d.today().year, _d.today().month, *((jd,) * 4)  # unused
         # Extract the birth hour from jd
         from jhora import utils as _u
+
         _, _, _, birth_fh = _u.jd_to_gregorian(jd)
         day_birth = sr[0] <= birth_fh <= ss[0]
     except Exception:
@@ -395,10 +415,10 @@ def _ashtottari_paksha_daynight_check(jd: float, place) -> tuple[bool, str]:
 
     # Passes when: (day AND Krishna) OR (night AND Shukla)
     passes = (day_birth and not shukla) or (not day_birth and shukla)
-    note = (
-        f"{birth_type} birth during {paksha_name}"
-        + (" — satisfies BPHS Paksha condition." if passes
-           else " — does not satisfy BPHS Paksha condition (requires daytime×Krishna OR nighttime×Shukla).")
+    note = f"{birth_type} birth during {paksha_name}" + (
+        " — satisfies BPHS Paksha condition."
+        if passes
+        else " — does not satisfy BPHS Paksha condition (requires daytime×Krishna OR nighttime×Shukla)."
     )
     return passes, note
 
@@ -424,8 +444,8 @@ def ashtottari_deep_payload(jd: float, place) -> dict:
     cond1 = bool(ashtottari.applicability_check(pp))
     cond1_note = (
         "Rahu is in kendra or trikona from Lagna Lord (not in Lagna) ✓"
-        if cond1 else
-        "Rahu is NOT in kendra or trikona from Lagna Lord (or is in Lagna itself) ✗"
+        if cond1
+        else "Rahu is NOT in kendra or trikona from Lagna Lord (or is in Lagna itself) ✗"
     )
 
     # Condition 2: Paksha × day/night birth
@@ -440,8 +460,8 @@ def ashtottari_deep_payload(jd: float, place) -> dict:
         if not cond2:
             failed.append(cond2_note)
         return {
-            "system":            "ashtottari",
-            "applicable":        False,
+            "system": "ashtottari",
+            "applicable": False,
             "applicabilityNote": (
                 "Ashtottari Dasha does not apply to this chart per BPHS (Parasara). "
                 "Both conditions must be satisfied: (1) Rahu in kendra/trikona from "
@@ -450,19 +470,20 @@ def ashtottari_deep_payload(jd: float, place) -> dict:
                 "Failed: " + " | ".join(failed)
             ),
             "currentLadder": [],
-            "dashaTree":     [],
+            "dashaTree": [],
         }
 
     flat = ashtottari.get_ashtottari_dhasa_bhukthi(
-        jd, place,
+        jd,
+        place,
         dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
     )
     tree, ladder = _build_tree_and_ladder(flat)
 
     return {
-        "system":            "ashtottari",
-        "applicable":        True,
+        "system": "ashtottari",
+        "applicable": True,
         "applicabilityNote": None,
-        "currentLadder":     ladder,
-        "dashaTree":         tree,
+        "currentLadder": ladder,
+        "dashaTree": tree,
     }

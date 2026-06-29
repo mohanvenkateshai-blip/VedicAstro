@@ -9,6 +9,7 @@ Usage:
 Requires: pip install marker-pdf (in Panchang .venv)
 Env: TORCH_DEVICE=mps (default on Apple Silicon)
 """
+
 from __future__ import annotations
 
 import argparse
@@ -20,9 +21,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = Path(
-    "/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha"
-)
+SOURCE = Path("/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha")
 RAW = ROOT / "knowledge-graph" / "raw"
 LOG_DIR = ROOT / "knowledge-graph" / "ingest-logs"
 MARKER_WORK = ROOT / "knowledge-graph" / "marker-work"

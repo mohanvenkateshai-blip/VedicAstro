@@ -17,11 +17,8 @@ is transiting through (from SAV) or the specific planet's BAV.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
 
-from ..core.astronomy import julian_day, all_positions
-from ..core.panchanga import RASHIS, NAKSHATRAS, rashi_index, PLANETS
-
+from ..core.panchanga import PLANETS, RASHIS, rashi_index
 
 # =====================================================================
 # BAV Tables — Benefic Placements (BPHS standard)
@@ -105,15 +102,27 @@ BAV_TABLE = {
 
 # Bindu interpretation (Gochar Phaladeepika Ch.27)
 BINDU_RESULTS = {
-    0: ("Extremely inauspicious", "ashubh", "Danger, severe loss, major health issues, avoid all important work"),
-    1: ("Highly inauspicious", "ashubh", "Significant obstacles, financial drain, conflicts, stress"),
+    0: (
+        "Extremely inauspicious",
+        "ashubh",
+        "Danger, severe loss, major health issues, avoid all important work",
+    ),
+    1: (
+        "Highly inauspicious",
+        "ashubh",
+        "Significant obstacles, financial drain, conflicts, stress",
+    ),
     2: ("Inauspicious", "ashubh", "Delays, minor losses, reduced success, tension"),
     3: ("Below average", "ashubh", "Struggles, some obstacles, mixed results with effort"),
     4: ("Average", "neutral", "Moderate results, normal progress, steady but unremarkable"),
     5: ("Above average", "shubh", "Good progress, some gains, supportive environment"),
     6: ("Favourable", "shubh", "Clear progress, gains, success in ventures, good health"),
     7: ("Highly favourable", "shubh", "Strong gains, happiness, success, prosperity"),
-    8: ("Exceptionally auspicious", "shubh", "Maximum support, great success, wealth, honour, all-round prosperity"),
+    8: (
+        "Exceptionally auspicious",
+        "shubh",
+        "Maximum support, great success, wealth, honour, all-round prosperity",
+    ),
 }
 
 # SAV band interpretation (GPD Ch.27)
@@ -151,8 +160,15 @@ def _ekadhipatya_shodhana(bav: dict, sav: list) -> list:
     Only applied if SAV > 0 in both signs. Skip if BAV of lord is equal in both."""
     result = sav[:]
     pairs = [(3, 4), (7, 0), (9, 10), (11, 8), (1, 6), (2, 5)]  # 0-indexed
-    lords = {"Moon": [3, 4], "Sun": [4], "Mars": [0, 7], "Venus": [1, 6],
-             "Mercury": [2, 5], "Jupiter": [8, 11], "Saturn": [9, 10]}
+    lords = {
+        "Moon": [3, 4],
+        "Sun": [4],
+        "Mars": [0, 7],
+        "Venus": [1, 6],
+        "Mercury": [2, 5],
+        "Jupiter": [8, 11],
+        "Saturn": [9, 10],
+    }
     for s1, s2 in pairs:
         if result[s1] > 0 and result[s2] > 0:
             if result[s1] != result[s2]:
@@ -164,6 +180,7 @@ def _ekadhipatya_shodhana(bav: dict, sav: list) -> list:
 @dataclass
 class AshtakavargaResult:
     """Complete Ashtakavarga computation."""
+
     bav: dict  # {planet: [12 bindus per sign]}
     sav: list  # [12 total bindus]
     planet_totals: dict  # {planet: total bindus}
@@ -223,9 +240,14 @@ def compute_ashtakavarga(natal_sign: dict, lagna_sign_idx: int) -> AshtakavargaR
     )
 
 
-def compute_transit_ashtakavarga(akv: AshtakavargaResult, date_str: str = None,
-                                  time_str: str = "12:00", lat: float = 12.30,
-                                  lon: float = 76.65, tz: float = 5.5) -> AshtakavargaResult:
+def compute_transit_ashtakavarga(
+    akv: AshtakavargaResult,
+    date_str: str = None,
+    time_str: str = "12:00",
+    lat: float = 12.30,
+    lon: float = 76.65,
+    tz: float = 5.5,
+) -> AshtakavargaResult:
     """Compute transit bindus for the current date using existing Ashtakavarga.
 
     For each transiting planet, look up how many SAV bindus are in the sign
@@ -233,6 +255,7 @@ def compute_transit_ashtakavarga(akv: AshtakavargaResult, date_str: str = None,
     """
     # Get current planet positions
     from ..core.panchanga import compute_panchanga
+
     panch = compute_panchanga(date_str, time_str, lat, lon, tz)
 
     transit_sav = {}
@@ -257,8 +280,12 @@ def compute_transit_ashtakavarga(akv: AshtakavargaResult, date_str: str = None,
     akv.transit_sav = transit_sav
 
     # Build summary
-    lines = [f"Ashtakavarga SAV total: {akv.total_sav} (invariant: 337) {'✓' if akv.total_sav == 337 else '⚠'}"]
-    lines.append(f"Moon transiting {RASHIS[moon_sign_idx]} with {moon_bindus} bindus — {_get_band(moon_bindus)[3]}")
+    lines = [
+        f"Ashtakavarga SAV total: {akv.total_sav} (invariant: 337) {'✓' if akv.total_sav == 337 else '⚠'}"
+    ]
+    lines.append(
+        f"Moon transiting {RASHIS[moon_sign_idx]} with {moon_bindus} bindus — {_get_band(moon_bindus)[3]}"
+    )
     lines.append("")
 
     for sign_idx in range(12):

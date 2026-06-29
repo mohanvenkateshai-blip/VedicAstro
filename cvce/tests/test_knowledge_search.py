@@ -50,6 +50,50 @@ def test_ke_search_muhurta_with_embeddings(supabase_store_with_embeddings):
     )
 
 
+def test_search_hybrid_merges_vector_and_keyword(monkeypatch):
+    from knowledge_engine.store.supabase_store import SupabaseKnowledgeStore
+
+    store = SupabaseKnowledgeStore.__new__(SupabaseKnowledgeStore)
+    store.graph_version = "test-v1"
+    store._env = {"SUPABASE_URL": "http://test", "SUPABASE_SERVICE_ROLE_KEY": "key"}
+    store._embeddings_present = True
+
+    vector_hit = [
+        {
+            "id": "vec-1",
+            "source_id": "muhurta.md",
+            "chunk_index": 0,
+            "content": "vector muhurta passage",
+            "similarity": 0.95,
+        }
+    ]
+    keyword_hit = [
+        {
+            "id": "kw-1",
+            "source_id": "notes.md",
+            "chunk_index": 1,
+            "content": "keyword-only muhurta note",
+        }
+    ]
+
+    def fake_request(method, path, body=None):
+        if method == "POST" and "/rpc/match_corpus_chunks" in path:
+            return 200, json.dumps(vector_hit).encode()
+        if method == "GET" and "content=ilike" in path:
+            return 200, json.dumps(keyword_hit).encode()
+        if method == "GET" and "embedding=not.is.null" in path:
+            return 200, json.dumps([{"id": "x"}]).encode()
+        return 404, b"[]"
+
+    monkeypatch.setattr(store, "_embed_query", lambda q: [0.1] * 768)
+    monkeypatch.setattr(store, "_request", fake_request)
+
+    results = store.search("muhurta", top_k=8)
+    assert len(results) == 2
+    assert results[0]["similarity"] == 0.95
+    assert results[1].get("similarity") == 0.0
+
+
 def test_search_falls_back_to_keyword_without_embeddings(monkeypatch):
     from knowledge_engine.store.supabase_store import SupabaseKnowledgeStore
 
@@ -72,6 +116,44 @@ def test_search_falls_back_to_keyword_without_embeddings(monkeypatch):
     results = store.search("muhurta")
     assert len(results) == 1
     assert "muhurta" in results[0]["content"]
+
+
+def test_search_knowledge_integration_wrapper(monkeypatch):
+    from knowledge_engine.integration import clear_knowledge_engine_cache, search_knowledge
+
+    clear_knowledge_engine_cache()
+
+    from knowledge_engine.engine import KnowledgeEngine
+    from knowledge_engine.store.supabase_store import SupabaseKnowledgeStore
+
+    store = SupabaseKnowledgeStore.__new__(SupabaseKnowledgeStore)
+    store.graph_version = "test-v1"
+    store._env = {"SUPABASE_URL": "http://test", "SUPABASE_SERVICE_ROLE_KEY": "key"}
+    store._embeddings_present = False
+
+    keyword_hit = [{"source_id": "notes.md", "content": "muhurta basics", "chunk_index": 0}]
+
+    def fake_request(method, path, body=None):
+        if method == "GET" and "embedding=not.is.null" in path:
+            return 200, b"[]"
+        if method == "GET" and "content=ilike" in path:
+            return 200, json.dumps(keyword_hit).encode()
+        return 404, b"[]"
+
+    monkeypatch.setattr(store, "_request", fake_request)
+
+    from knowledge_engine.integration import get_knowledge_engine
+
+    clear_knowledge_engine_cache()
+    ke = KnowledgeEngine(store=store)
+    monkeypatch.setattr(
+        "knowledge_engine.integration.get_knowledge_engine",
+        lambda: ke,
+    )
+
+    results = search_knowledge("muhurta")
+    assert len(results) == 1
+    clear_knowledge_engine_cache()
 
 
 def test_on_embeddings_updated_clears_cache(supabase_store_with_embeddings):

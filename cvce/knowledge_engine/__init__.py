@@ -12,14 +12,18 @@ This is the single source of truth for "what classical knowledge is currently sa
 """
 
 from .engine import KnowledgeEngine
-from .integration import get_knowledge_engine
+from .integration import get_knowledge_engine, search_knowledge
 from .models import GraphVersion, KnowledgeValidity
+from .refresh_auditor import KnowledgeRefreshAuditor, RefreshImpact
 from .registry import EngineRegistry
 
 __all__ = [
     "KnowledgeEngine",
+    "KnowledgeRefreshAuditor",
     "GraphVersion",
     "KnowledgeValidity",
+    "RefreshImpact",
     "EngineRegistry",
     "get_knowledge_engine",
+    "search_knowledge",
 ]

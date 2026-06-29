@@ -8,6 +8,7 @@ already represented unless --force).
 Run after: ./scripts/sync-gyan-to-raw.sh
 Then:      ./scripts/sync-graph.sh [--deploy]
 """
+
 from __future__ import annotations
 
 import argparse
@@ -35,20 +36,39 @@ THRESHOLD = re.compile(
 
 # Wilhelm Vara/Tithi auspicious combos (muhurta_yogas.md prose)
 SIDDHA_VARA_TITHI = [
-    ("Venus", "Nanda"), ("Mercury", "Bhadra"), ("Mars", "Jaya"),
-    ("Saturn", "Rikta"), ("Jupiter", "Purna"),
+    ("Venus", "Nanda"),
+    ("Mercury", "Bhadra"),
+    ("Mars", "Jaya"),
+    ("Saturn", "Rikta"),
+    ("Jupiter", "Purna"),
 ]
 AMRITA_VARA_TITHI = [
-    ("Sun", "Nanda"), ("Moon", "Bhadra"), ("Mars", "Nanda"), ("Mercury", "Jaya"),
-    ("Jupiter", "Rikta"), ("Venus", "Bhadra"), ("Saturn", "Purna"),
+    ("Sun", "Nanda"),
+    ("Moon", "Bhadra"),
+    ("Mars", "Nanda"),
+    ("Mercury", "Jaya"),
+    ("Jupiter", "Rikta"),
+    ("Venus", "Bhadra"),
+    ("Saturn", "Purna"),
 ]
 DAGDHA_VARA_TITHI = [
-    ("Sun", 12), ("Moon", 11), ("Mars", 5), ("Mercury", 2), ("Mercury", 3),
-    ("Jupiter", 6), ("Venus", 8), ("Saturn", 9),
+    ("Sun", 12),
+    ("Moon", 11),
+    ("Mars", 5),
+    ("Mercury", 2),
+    ("Mercury", 3),
+    ("Jupiter", 6),
+    ("Venus", 8),
+    ("Saturn", 9),
 ]
 VISHAKHA_TITHI = [
-    ("Sun", 4), ("Moon", 6), ("Mars", 7), ("Mercury", 2), ("Jupiter", 8),
-    ("Venus", 9), ("Saturn", 7),
+    ("Sun", 4),
+    ("Moon", 6),
+    ("Mars", 7),
+    ("Mercury", 2),
+    ("Jupiter", 8),
+    ("Venus", 9),
+    ("Saturn", 7),
 ]
 
 VARA_INDEX = {"Sun": 0, "Moon": 1, "Mars": 2, "Mercury": 3, "Jupiter": 4, "Venus": 5, "Saturn": 6}
@@ -117,9 +137,7 @@ def extract_generic(path: Path, source_file: str, comm: int) -> tuple[list, list
         sid = f"gyan_{prefix}_sec_{slug(title)}"
         if any(n["id"] == sid for n in nodes):
             continue
-        nodes.append(
-            node(sid, title, source_file, comm, source_location=f"h{len(level)}")
-        )
+        nodes.append(node(sid, title, source_file, comm, source_location=f"h{len(level)}"))
         links.append(link(root_id, sid, "contains_section", source_file))
 
     # Named yogas in prose
@@ -131,8 +149,14 @@ def extract_generic(path: Path, source_file: str, comm: int) -> tuple[list, list
         if any(n["id"] == yid for n in nodes):
             continue
         desc = m.group(3).strip()[:500] if m.group(3) else yoga_name
-        nature = "auspicious" if re.search(r"auspici|benefic|good|siddha|amrita|subha", desc, re.I) else (
-            "inauspicious" if re.search(r"inauspici|malefic|bad|dagdha|visha|krakacha|mrityu", desc, re.I) else "mixed"
+        nature = (
+            "auspicious"
+            if re.search(r"auspici|benefic|good|siddha|amrita|subha", desc, re.I)
+            else (
+                "inauspicious"
+                if re.search(r"inauspici|malefic|bad|dagdha|visha|krakacha|mrityu", desc, re.I)
+                else "mixed"
+            )
         )
         nodes.append(
             node(yid, f"{yoga_name} Yoga", source_file, comm, nature=nature, definition=desc)
@@ -146,7 +170,9 @@ def extract_generic(path: Path, source_file: str, comm: int) -> tuple[list, list
             tid = f"gyan_{prefix}_sav_band_{lo}_{hi}"
             if not any(n["id"] == tid for n in nodes):
                 nodes.append(
-                    node(tid, f"SAV band {lo}–{hi}", source_file, comm, min_bindus=lo, max_bindus=hi)
+                    node(
+                        tid, f"SAV band {lo}–{hi}", source_file, comm, min_bindus=lo, max_bindus=hi
+                    )
                 )
                 links.append(link(root_id, tid, "defines_sav_band", source_file))
 
@@ -253,15 +279,27 @@ def extract_ashtakavarga(path: Path, source_file: str, comm: int) -> tuple[list,
         links.append(link(f"gyan_{prefix}_corpus", bid, "defines_sav_band", source_file))
 
     totals = {
-        "Sun": 48, "Moon": 49, "Mars": 39, "Mercury": 54,
-        "Jupiter": 56, "Venus": 52, "Saturn": 39,
+        "Sun": 48,
+        "Moon": 49,
+        "Mars": 39,
+        "Mercury": 54,
+        "Jupiter": 56,
+        "Venus": 52,
+        "Saturn": 39,
     }
     for planet, total in totals.items():
         pid = f"gyan_ashtakavarga_bav_total_{planet.lower()}"
         if any(n["id"] == pid for n in nodes):
             continue
         nodes.append(
-            node(pid, f"{planet} BAV total {total} bindus", source_file, comm, planet=planet, bav_total=total)
+            node(
+                pid,
+                f"{planet} BAV total {total} bindus",
+                source_file,
+                comm,
+                planet=planet,
+                bav_total=total,
+            )
         )
         links.append(link(f"gyan_{prefix}_corpus", pid, "documents", source_file))
 

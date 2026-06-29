@@ -8,16 +8,18 @@ def _reset_graph_rules_env(monkeypatch):
     monkeypatch.delenv("CVCE_GRAPH_AS_RULES", raising=False)
     try:
         from knowledge_engine.integration import get_knowledge_engine
+
         ke = get_knowledge_engine()
         if hasattr(ke.store, "_graph"):
             ke.store._graph = None  # type: ignore[attr-defined]
     except Exception:
         from graph_rag.rules_provider import GraphTransitRules
+
         GraphTransitRules._instance = None
 
 
 def test_graph_rules_disabled_by_default():
-    from knowledge_engine.integration import is_knowledge_healthy, get_safe_transit_rules
+    from knowledge_engine.integration import get_safe_transit_rules, is_knowledge_healthy
 
     # When KE is healthy, rules should be available (or None if not configured)
     assert is_knowledge_healthy() is True or get_safe_transit_rules() is None
@@ -46,8 +48,8 @@ def test_graph_house_quality_sun_worst(monkeypatch):
 
 def test_predict_health_rules_source(monkeypatch):
     monkeypatch.setenv("CVCE_GRAPH_AS_RULES", "1")
-    from fastapi.testclient import TestClient
     from app.server import app
+    from fastapi.testclient import TestClient
 
     client = TestClient(app)
     health = client.get("/predict/health")
@@ -60,8 +62,8 @@ def test_predict_health_rules_source(monkeypatch):
 
 def test_predict_health_production_node_count(monkeypatch):
     monkeypatch.setenv("CVCE_GRAPH_AS_RULES", "1")
-    from fastapi.testclient import TestClient
     from app.server import app
+    from fastapi.testclient import TestClient
     from graph_rag.production_floor import production_node_floor
 
     client = TestClient(app)
@@ -73,8 +75,8 @@ def test_predict_health_production_node_count(monkeypatch):
 
 
 def test_predict_health_grok_endpoint():
-    from fastapi.testclient import TestClient
     from app.server import app
+    from fastapi.testclient import TestClient
 
     client = TestClient(app)
     resp = client.get("/predict/health/grok")

@@ -13,6 +13,7 @@ Usage:
   python3 scripts/ingest-supervisor.py          # foreground (for nohup)
   python3 scripts/ingest-supervisor.py --status
 """
+
 from __future__ import annotations
 
 import argparse
@@ -21,7 +22,7 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,12 +31,16 @@ RAW = KG / "raw"
 LOG_DIR = KG / "ingest-logs"
 STATE_PATH = LOG_DIR / "supervisor-state.json"
 COMPLETE_PATH = LOG_DIR / "COMPLETE.md"
-VENV_PY = Path(
-    os.environ.get(
-        "PANCHANG_VENV",
-        "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv",
+VENV_PY = (
+    Path(
+        os.environ.get(
+            "PANCHANG_VENV",
+            "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv",
+        )
     )
-) / "bin" / "python"
+    / "bin"
+    / "python"
+)
 
 sys.path.insert(0, str(ROOT / "scripts"))
 from core_jyotisha_titles import TEXT_BOOKS_MD, md_name_for_pdf  # noqa: E402
@@ -50,9 +55,7 @@ from graph_extract_common import (  # noqa: E402
 
 GRAPH_OUT = KG / "graphify-out" / "graph-core-jyotisha.json"
 
-SOURCE = Path(
-    "/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha"
-)
+SOURCE = Path("/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha")
 POLL_SEC = 60
 
 
@@ -61,7 +64,7 @@ def _py() -> str:
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def _load_state() -> dict:
@@ -115,7 +118,7 @@ def _pid_alive(pid: int) -> bool:
 
 
 def _run_bg(name: str, cmd: list[str], env: dict | None = None) -> tuple[int, Path]:
-    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
     log_path = LOG_DIR / f"supervisor-{name}-{ts}.log"
     full_env = {**os.environ, "PYTHONUNBUFFERED": "1"}
     if env:
@@ -173,6 +176,7 @@ def _gcp_vm_status() -> str:
     gcloud = "/opt/homebrew/bin/gcloud"
     if not Path(gcloud).is_file():
         import shutil
+
         gcloud = shutil.which("gcloud") or "gcloud"
     r = subprocess.run(
         [
@@ -344,11 +348,11 @@ Finished at: {_now()}
 ## Summary
 - **Markdown sources in raw/**: {len(mds)} / {len(_all_core_mds())}
 - **Scans still pending**: {len(pending)}
-- **Graph nodes**: {stats.get('prior_nodes', '?')} → **{stats.get('merged_nodes', '?')}** (+{stats.get('delta_vs_production_floor', '?')} vs production floor {stats.get('production_floor_nodes', production_node_floor())})
+- **Graph nodes**: {stats.get("prior_nodes", "?")} → **{stats.get("merged_nodes", "?")}** (+{stats.get("delta_vs_production_floor", "?")} vs production floor {stats.get("production_floor_nodes", production_node_floor())})
 - **Output graph**: `{GRAPH_OUT.relative_to(ROOT)}`
 
 ## Phases
-{json.dumps(state.get('phases', {}), indent=2)}
+{json.dumps(state.get("phases", {}), indent=2)}
 
 ## Logs
 - Supervisor: `knowledge-graph/ingest-logs/supervisor.log`
@@ -388,7 +392,11 @@ def _tick(state: dict) -> bool:
         elif phases["marker_ocr"] == "pending":
             _run_marker(state)
             phases["marker_ocr"] = "running"
-        elif _gcp_ocr_preferred() and not _pgrep("gcp-ocr-watch.sh") and not _pgrep("gcp-sync-watch.sh"):
+        elif (
+            _gcp_ocr_preferred()
+            and not _pgrep("gcp-ocr-watch.sh")
+            and not _pgrep("gcp-sync-watch.sh")
+        ):
             _log("gcp-ocr-watch not running — restarting")
             _run_gcp_watch(state)
         elif not _gcp_ocr_preferred() and not _marker_running():

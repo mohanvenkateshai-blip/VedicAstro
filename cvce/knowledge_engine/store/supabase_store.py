@@ -8,12 +8,15 @@ It uses the service role key but through a controlled interface.
 from __future__ import annotations
 
 import json
+import logging
 import sys
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
 from .base import KnowledgeStore
+
+logger = logging.getLogger(__name__)
 
 
 def _sync_helpers():
@@ -133,6 +136,11 @@ class SupabaseKnowledgeStore(KnowledgeStore):
             return None
         return embed_text(client, query)
 
+    def _chunk_key(self, row: dict) -> str:
+        if row.get("id"):
+            return str(row["id"])
+        return f"{row.get('source_id')}#{row.get('chunk_index')}"
+
     def _vector_search(self, embedding: list[float], top_k: int) -> list[dict]:
         payload = {"query_embedding": embedding, "match_count": top_k}
         code, body = self._request(
@@ -143,40 +151,92 @@ class SupabaseKnowledgeStore(KnowledgeStore):
         if code == 200:
             try:
                 return json.loads(body)
-            except Exception:
+            except json.JSONDecodeError as exc:
+                logger.warning("vector search: invalid JSON response: %s", exc)
                 return []
+        logger.warning(
+            "vector search RPC failed (HTTP %s): %s",
+            code,
+            body[:200].decode(errors="replace"),
+        )
         return []
 
     def _keyword_search(self, query: str, top_k: int) -> list[dict]:
         safe = quote(query.replace("*", ""), safe="")
         code, body = self._request(
             "GET",
-            f"/rest/v1/corpus_chunks?select=source_id,content,chunk_index"
+            f"/rest/v1/corpus_chunks?select=id,source_id,content,chunk_index"
             f"&content=ilike.*{safe}*&limit={top_k}",
         )
         if code == 200:
             try:
                 return json.loads(body)
-            except Exception:
+            except json.JSONDecodeError as exc:
+                logger.warning("keyword search: invalid JSON response: %s", exc)
                 return []
+        logger.warning(
+            "keyword search failed (HTTP %s): %s",
+            code,
+            body[:200].decode(errors="replace"),
+        )
         return []
+
+    def _merge_hybrid_results(
+        self,
+        vector_results: list[dict],
+        keyword_results: list[dict],
+        top_k: int,
+    ) -> list[dict]:
+        def _rrf(rank: int, k: int = 60) -> float:
+            return 1.0 / (k + rank)
+
+        seen: set[str] = set()
+        scored: list[tuple[float, dict]] = []
+
+        for rank, row in enumerate(vector_results, 1):
+            key = self._chunk_key(row)
+            if key in seen:
+                continue
+            seen.add(key)
+            base = float(row.get("similarity", 0.8) or 0.8)
+            scored.append((base + _rrf(rank), row))
+
+        for rank, row in enumerate(keyword_results, 1):
+            key = self._chunk_key(row)
+            if key in seen:
+                continue
+            seen.add(key)
+            enriched = dict(row)
+            enriched.setdefault("similarity", 0.0)
+            scored.append((_rrf(rank) * 0.6, enriched))
+
+        scored.sort(key=lambda x: x[0], reverse=True)
+        return [row for _, row in scored[:top_k]]
 
     def search(self, query: str, top_k: int = 8) -> list[dict]:
         """
-        Vector search when embeddings exist; keyword ilike fallback otherwise.
+        Hybrid retrieval: cosine similarity via pgvector when embeddings exist,
+        merged with keyword ilike matches for recall.
         """
         query = (query or "").strip()
         if not query:
             return []
 
+        vector_results: list[dict] = []
+        k = max(top_k, 8) * 2
         if self.has_embeddings():
             vec = self._embed_query(query)
             if vec:
-                results = self._vector_search(vec, top_k)
-                if results:
-                    return results
+                vector_results = self._vector_search(vec, k)
+            else:
+                logger.info("query embedding unavailable — keyword-only for %r", query[:80])
 
-        return self._keyword_search(query, top_k)
+        keyword_results = self._keyword_search(query, k)
+        if not vector_results and not keyword_results:
+            logger.debug("no corpus matches for query %r", query[:80])
+            return []
+
+        return self._merge_hybrid_results(vector_results, keyword_results, top_k)
 
     def mark_embeddings_updated(self) -> None:
         """Clear cached embedding availability (call after embedding generation)."""

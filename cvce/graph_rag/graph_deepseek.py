@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from typing import Optional
 
 from graph_rag.production_floor import experimental_vs_production
 
@@ -14,7 +13,7 @@ _DEFAULT = _DIR / "graph-deepseek.json"
 _FALLBACK = _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-deepseek.json"
 
 
-def deepseek_graph_stats() -> Optional[dict]:
+def deepseek_graph_stats() -> dict | None:
     path = None
     env = os.environ.get("CVCE_GRAPH_DEEPSEEK_PATH", "").strip()
     if env and Path(env).is_file():

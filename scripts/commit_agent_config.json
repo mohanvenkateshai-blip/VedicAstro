@@ -1,0 +1,7 @@
+{
+  "cooldown_hours": 5,
+  "max_files_for_auto": 20,
+  "enable_tests": true,
+  "log_retention_days": 30,
+  "description": "Configuration for VedicAstro Commit Agent. Edit to tune behavior."
+}

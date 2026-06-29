@@ -20,6 +20,7 @@ Fixes applied (each detected before writing, so re-running is a no-op):
 
 Run:  ./.venv/bin/python patch_pyjhora.py
 """
+
 from __future__ import annotations
 
 import os
@@ -29,6 +30,7 @@ import sys
 
 def _pkg_dir():
     import jhora
+
     return os.path.dirname(jhora.__file__)
 
 
@@ -37,7 +39,7 @@ def patch_swe_keyword(text: str) -> tuple[str, int]:
     non-comment lines so they pass the flag positionally."""
     changes = 0
     out_lines = []
-    pat = re.compile(r'(swe\.(?:fixstar_ut|utc_to_jd)\([^\n]*?),\s*flag\s*=\s*')
+    pat = re.compile(r"(swe\.(?:fixstar_ut|utc_to_jd)\([^\n]*?),\s*flag\s*=\s*")
     for line in text.splitlines(keepends=True):
         stripped = line.lstrip()
         if stripped.startswith("#"):
@@ -57,7 +59,7 @@ def patch_planetary_positions(text: str) -> tuple[str, int]:
     if not m:
         return text, 0
     start = m.start()
-    nxt = re.search(r"\ndef ", text[start + 1:])
+    nxt = re.search(r"\ndef ", text[start + 1 :])
     end = start + 1 + nxt.start() if nxt else len(text)
     body = text[start:end]
     new_body, n = re.subn(r"planet_list\.index\(planet\)", "planet_list[planet]", body)
@@ -67,7 +69,7 @@ def patch_planetary_positions(text: str) -> tuple[str, int]:
 
 
 def apply(path: str, fn) -> int:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         text = f.read()
     new_text, n = fn(text)
     if n and new_text != text:
@@ -97,9 +99,10 @@ def main() -> int:
 
     # Smoke-test the patched engine end to end.
     try:
-        from jhora import utils, const
+        from jhora import const, utils
         from jhora.panchanga import drik
-        from jhora.panchanga.drik import Date, Place
+        from jhora.panchanga.drik import Place
+
         const._INCLUDE_URANUS_TO_PLUTO = False
         drik.set_ayanamsa_mode("LAHIRI")
         jd = utils.julian_day_number((2026, 6, 20), (12, 0, 0))

@@ -15,14 +15,15 @@ Yogini Dasha is a completely independent system from Vimshottari:
 
 Nothing here touches DashaImpactAnalyzer, fuse_dasha_transit, or any Vimshottari logic.
 """
+
 from __future__ import annotations
 
 # ── 1. Yogini data from Goel / BPHS ──────────────────────────────────────────
 
 YOGINI_DATA: dict[str, dict] = {
     "Mangala": {
-        "lord":     "Moon",
-        "nature":   "benefic",
+        "lord": "Moon",
+        "nature": "benefic",
         "duration": 1,
         "career": [
             "New beginnings and fresh ventures — Moon-ruled initiatives in public-facing roles.",
@@ -45,8 +46,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Pingala": {
-        "lord":     "Sun",
-        "nature":   "mixed",
+        "lord": "Sun",
+        "nature": "mixed",
         "duration": 2,
         "career": [
             "Authority, career advancement, government recognition — 10th-house significations activate.",
@@ -68,8 +69,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Dhanya": {
-        "lord":     "Jupiter",
-        "nature":   "benefic",
+        "lord": "Jupiter",
+        "nature": "benefic",
         "duration": 3,
         "career": [
             "Dharmic rise — advisory, educational, judicial or spiritual career gains.",
@@ -92,8 +93,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Bhramari": {
-        "lord":     "Mars",
-        "nature":   "malefic",
+        "lord": "Mars",
+        "nature": "malefic",
         "duration": 4,
         "career": [
             "Property, real estate, land, engineering, military or political power when Mars is strong.",
@@ -116,8 +117,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Bhadrika": {
-        "lord":     "Mercury",
-        "nature":   "benefic",
+        "lord": "Mercury",
+        "nature": "benefic",
         "duration": 5,
         "career": [
             "Business, trade, communication, media, writing, intellectual roles — Mercury's domains thrive.",
@@ -140,8 +141,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Ulka": {
-        "lord":     "Saturn",
-        "nature":   "malefic",
+        "lord": "Saturn",
+        "nature": "malefic",
         "duration": 6,
         "career": [
             "Service, discipline, structural roles — slow but enduring career consolidation.",
@@ -166,8 +167,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Siddha": {
-        "lord":     "Venus",
-        "nature":   "benefic",
+        "lord": "Venus",
+        "nature": "benefic",
         "duration": 7,
         "career": [
             "Political power, arts, creative leadership, diplomatic roles — Venus on 10th/11th is potent.",
@@ -190,8 +191,8 @@ YOGINI_DATA: dict[str, dict] = {
         ],
     },
     "Sankata": {
-        "lord":     "Rahu",
-        "nature":   "malefic",
+        "lord": "Rahu",
+        "nature": "malefic",
         "duration": 8,
         "career": [
             "Unexpected rise through unconventional, foreign, or shadow-network connections.",
@@ -222,43 +223,78 @@ YOGINI_DATA: dict[str, dict] = {
 # Two-tuple of (maha_nature, antar_nature) → plain-language result modifier
 COMBO_QUALIFIER: dict[tuple[str, str], str] = {
     ("benefic", "benefic"): "strongly positive — both lords support fulfilment of Maha's promise",
-    ("benefic", "mixed"):   "generally positive with authority-related fluctuations",
-    ("benefic", "malefic"): "mixed — gains possible but delayed or partially obstructed by Antar lord's pressures",
-    ("mixed",   "benefic"): "favourable overall, eased by Antar's benefic nature",
-    ("mixed",   "mixed"):   "unpredictable — results depend heavily on natal planetary strength",
-    ("mixed",   "malefic"): "difficult sub-window; authority or health pressures dominate",
+    ("benefic", "mixed"): "generally positive with authority-related fluctuations",
+    (
+        "benefic",
+        "malefic",
+    ): "mixed — gains possible but delayed or partially obstructed by Antar lord's pressures",
+    ("mixed", "benefic"): "favourable overall, eased by Antar's benefic nature",
+    ("mixed", "mixed"): "unpredictable — results depend heavily on natal planetary strength",
+    ("mixed", "malefic"): "difficult sub-window; authority or health pressures dominate",
     ("malefic", "benefic"): "relief and mitigation within an otherwise challenging Mahadasha",
-    ("malefic", "mixed"):   "difficult overall with fluctuating respite",
-    ("malefic", "malefic"): "most demanding sub-period; intensified hardship — requires maximum endurance",
+    ("malefic", "mixed"): "difficult overall with fluctuating respite",
+    (
+        "malefic",
+        "malefic",
+    ): "most demanding sub-period; intensified hardship — requires maximum endurance",
 }
 
 # ── 3. House significations (standard Parasara/BPHS) ─────────────────────────
 
 HOUSE_SIG: dict[int, str] = {
-    1:  "self, vitality, personality, physical health",
-    2:  "wealth, speech, family, accumulated assets",
-    3:  "courage, communication, siblings, short journeys, arts",
-    4:  "home, mother, comforts, vehicles, property",
-    5:  "children, intelligence, creativity, romance, speculation",
-    6:  "enemies, disease, debt, service, legal disputes",
-    7:  "marriage, partnerships, contracts, public dealings",
-    8:  "longevity, transformations, hidden wealth, sudden events",
-    9:  "luck, father, dharma, higher education, foreign travel",
+    1: "self, vitality, personality, physical health",
+    2: "wealth, speech, family, accumulated assets",
+    3: "courage, communication, siblings, short journeys, arts",
+    4: "home, mother, comforts, vehicles, property",
+    5: "children, intelligence, creativity, romance, speculation",
+    6: "enemies, disease, debt, service, legal disputes",
+    7: "marriage, partnerships, contracts, public dealings",
+    8: "longevity, transformations, hidden wealth, sudden events",
+    9: "luck, father, dharma, higher education, foreign travel",
     10: "career, reputation, status, authority, government",
     11: "gains, income, aspirations, social networks, elder siblings",
     12: "losses, foreign lands, expenditure, liberation, hidden sorrows",
 }
 
 # Beneficial houses (Kendra + Trikona + Upachaya)
-GOOD_HOUSES   = {1, 2, 3, 4, 5, 9, 10, 11}
-NEUTRAL       = {7}
-ADVERSE_HOUSES= {6, 8, 12}
+GOOD_HOUSES = {1, 2, 3, 4, 5, 9, 10, 11}
+NEUTRAL = {7}
+ADVERSE_HOUSES = {6, 8, 12}
 
 # Planet dignity tables (0=Aries…11=Pisces)
-_EXALT = {"Sun": 0, "Moon": 1, "Mars": 9, "Mercury": 5, "Jupiter": 3, "Venus": 11, "Saturn": 6, "Rahu": 1, "Ketu": 7}
-_OWN   = {"Sun": [4], "Moon": [3], "Mars": [0, 7], "Mercury": [2, 5],
-          "Jupiter": [8, 11], "Venus": [1, 6], "Saturn": [9, 10], "Rahu": [], "Ketu": []}
-_DEBIL = {"Sun": 6, "Moon": 9, "Mars": 3, "Mercury": 11, "Jupiter": 9, "Venus": 5, "Saturn": 0, "Rahu": 7, "Ketu": 1}
+_EXALT = {
+    "Sun": 0,
+    "Moon": 1,
+    "Mars": 9,
+    "Mercury": 5,
+    "Jupiter": 3,
+    "Venus": 11,
+    "Saturn": 6,
+    "Rahu": 1,
+    "Ketu": 7,
+}
+_OWN = {
+    "Sun": [4],
+    "Moon": [3],
+    "Mars": [0, 7],
+    "Mercury": [2, 5],
+    "Jupiter": [8, 11],
+    "Venus": [1, 6],
+    "Saturn": [9, 10],
+    "Rahu": [],
+    "Ketu": [],
+}
+_DEBIL = {
+    "Sun": 6,
+    "Moon": 9,
+    "Mars": 3,
+    "Mercury": 11,
+    "Jupiter": 9,
+    "Venus": 5,
+    "Saturn": 0,
+    "Rahu": 7,
+    "Ketu": 1,
+}
 
 
 def _dignity(planet: str, sign_idx: int) -> str:
@@ -278,11 +314,12 @@ def _house(planet_sign: int, lagna_sign: int) -> int:
 
 # ── 4. Public API ─────────────────────────────────────────────────────────────
 
+
 def predict_yogini_antardasha(
     maha_yogini: str,
     antar_yogini: str,
-    lagna_sign_idx: int,          # birth Lagna sign (0=Aries … 11=Pisces)
-    natal_sign: dict[str, int],   # {planet_name: sign_index} from chart geometry
+    lagna_sign_idx: int,  # birth Lagna sign (0=Aries … 11=Pisces)
+    natal_sign: dict[str, int],  # {planet_name: sign_index} from chart geometry
 ) -> dict[str, list[str]]:
     """
     Generate Yogini-specific life-domain predictions for a Maha/Antar combination.
@@ -297,39 +334,49 @@ def predict_yogini_antardasha(
     Returns { career, wealth, health, family, caution } — same structure as the portal's
     DashaPrediction type — filled purely from Yogini's own classical framework.
     """
-    maha_data  = YOGINI_DATA.get(maha_yogini)
+    maha_data = YOGINI_DATA.get(maha_yogini)
     antar_data = YOGINI_DATA.get(antar_yogini)
     if not maha_data or not antar_data:
         return {}
 
-    maha_nature   = maha_data["nature"]
-    antar_nature  = antar_data["nature"]
-    maha_lord     = maha_data["lord"]
-    antar_lord    = antar_data["lord"]
+    maha_nature = maha_data["nature"]
+    antar_nature = antar_data["nature"]
+    maha_lord = maha_data["lord"]
+    antar_lord = antar_data["lord"]
 
-    combo_qual    = COMBO_QUALIFIER.get((maha_nature, antar_nature), "results depend on natal chart strength")
+    combo_qual = COMBO_QUALIFIER.get(
+        (maha_nature, antar_nature), "results depend on natal chart strength"
+    )
 
     # Reference point 1: Maha lord natal placement
-    maha_sign_idx  = natal_sign.get(maha_lord)
+    maha_sign_idx = natal_sign.get(maha_lord)
     antar_sign_idx = natal_sign.get(antar_lord)
 
-    maha_house   = _house(maha_sign_idx, lagna_sign_idx)   if maha_sign_idx  is not None else None
-    antar_house  = _house(antar_sign_idx, lagna_sign_idx)  if antar_sign_idx is not None else None
-    maha_dignity = _dignity(maha_lord,  maha_sign_idx)     if maha_sign_idx  is not None else "unknown placement"
-    antar_dignity= _dignity(antar_lord, antar_sign_idx)    if antar_sign_idx is not None else "unknown placement"
+    maha_house = _house(maha_sign_idx, lagna_sign_idx) if maha_sign_idx is not None else None
+    antar_house = _house(antar_sign_idx, lagna_sign_idx) if antar_sign_idx is not None else None
+    maha_dignity = (
+        _dignity(maha_lord, maha_sign_idx) if maha_sign_idx is not None else "unknown placement"
+    )
+    antar_dignity = (
+        _dignity(antar_lord, antar_sign_idx) if antar_sign_idx is not None else "unknown placement"
+    )
 
     # Strength qualifier based on house + dignity
     def _strength_note(lord: str, house: int | None, dignity: str) -> str:
         if house is None:
             return f"{lord}: placement unavailable."
-        sig  = HOUSE_SIG.get(house, "")
-        zone = "strong placement" if house in GOOD_HOUSES else ("adverse placement" if house in ADVERSE_HOUSES else "neutral placement")
+        sig = HOUSE_SIG.get(house, "")
+        zone = (
+            "strong placement"
+            if house in GOOD_HOUSES
+            else ("adverse placement" if house in ADVERSE_HOUSES else "neutral placement")
+        )
         return (
             f"{lord} is {dignity}, in house {house} ({sig}) — {zone}. "
             f"{'Results in this domain are enhanced.' if house in GOOD_HOUSES else 'Results may be tested or delayed.' if house in ADVERSE_HOUSES else 'Moderate results expected.'}"
         )
 
-    maha_note  = _strength_note(maha_lord,  maha_house,  maha_dignity)
+    maha_note = _strength_note(maha_lord, maha_house, maha_dignity)
     antar_note = _strength_note(antar_lord, antar_house, antar_dignity)
 
     # Build domain predictions from Maha Yogini's classical effects
@@ -342,9 +389,7 @@ def predict_yogini_antardasha(
     }
 
     # Prepend combination context to career and caution
-    combo_intro = (
-        f"{antar_yogini} Antardasha ({antar_lord}-ruled, {antar_nature}) within {maha_yogini} Mahadasha: {combo_qual}."
-    )
+    combo_intro = f"{antar_yogini} Antardasha ({antar_lord}-ruled, {antar_nature}) within {maha_yogini} Mahadasha: {combo_qual}."
     result["career"] = [combo_intro] + result["career"]
 
     # Add natal placement notes to caution (Goel Ch.3 reference point 1)
@@ -357,8 +402,6 @@ def predict_yogini_antardasha(
     if antar_nature in ("malefic", "mixed") and antar_yogini != maha_yogini:
         antar_caution = antar_data.get("caution", [])
         if antar_caution:
-            result["caution"].append(
-                f"Antar Yogini ({antar_yogini}) caution: {antar_caution[0]}"
-            )
+            result["caution"].append(f"Antar Yogini ({antar_yogini}) caution: {antar_caution[0]}")
 
     return result

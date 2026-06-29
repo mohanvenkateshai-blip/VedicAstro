@@ -9,8 +9,17 @@ email previews.
 from __future__ import annotations
 
 RASHI_SHORT = ["Ar", "Ta", "Ge", "Ca", "Le", "Vi", "Li", "Sc", "Sg", "Cp", "Aq", "Pi"]
-PLANET_SHORT = {"Sun": "Su", "Moon": "Mo", "Mars": "Ma", "Mercury": "Me",
-                "Jupiter": "Ju", "Venus": "Ve", "Saturn": "Sa", "Rahu": "Ra", "Ketu": "Ke"}
+PLANET_SHORT = {
+    "Sun": "Su",
+    "Moon": "Mo",
+    "Mars": "Ma",
+    "Mercury": "Me",
+    "Jupiter": "Ju",
+    "Venus": "Ve",
+    "Saturn": "Sa",
+    "Rahu": "Ra",
+    "Ketu": "Ke",
+}
 
 # South Indian chart layout: fixed rashi positions, counter-clockwise
 # Row 0: Pi(11) Ar(0) Ta(1) Ge(2)
@@ -21,10 +30,18 @@ PLANET_SHORT = {"Sun": "Su", "Moon": "Mo", "Mars": "Ma", "Mercury": "Me",
 SOUTH_ORDER = [11, 0, 1, 2, 10, None, None, 3, 9, None, None, 4, 7, 6, 5]
 # Positions in a 4x4 grid (row, col)
 SOUTH_GRID = {
-    11: (0, 0), 0: (0, 1), 1: (0, 2), 2: (0, 3),
-    10: (1, 0), 3: (1, 3),
-    9: (2, 0), 4: (2, 3),
-    8: (3, 0), 7: (3, 1), 6: (3, 2), 5: (3, 3),
+    11: (0, 0),
+    0: (0, 1),
+    1: (0, 2),
+    2: (0, 3),
+    10: (1, 0),
+    3: (1, 3),
+    9: (2, 0),
+    4: (2, 3),
+    8: (3, 0),
+    7: (3, 1),
+    6: (3, 2),
+    5: (3, 3),
 }
 
 
@@ -69,23 +86,28 @@ def chart_svg(chart_data: dict, size: int = 400) -> str:
     if 0 <= lagna_sign < 12:
         signs[lagna_sign].insert(0, "Asc")
 
-    def rx(x): return round(x, 1)
-    def ry(y): return round(y, 1)
+    def rx(x):
+        return round(x, 1)
+
+    def ry(y):
+        return round(y, 1)
 
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {rx(size)} {rx(size)}" width="{rx(size)}" height="{rx(size)}">',
         f'<rect width="{rx(size)}" height="{rx(size)}" fill="{bg}" rx="12"/>',
         # Title
-        f'<text x="{rx(size/2)}" y="{rx(pad + font_body)}" text-anchor="middle" fill="{fg}" font-size="{rx(font_body)}" font-family="sans-serif" font-weight="600">',
-        f'{_esc(chart_data.get("meta", {}).get("name", ""))}',
-        f'</text>',
-        f'<text x="{rx(size/2)}" y="{rx(pad + font_body + font_small + 4)}" text-anchor="middle" fill="{dim}" font-size="{rx(font_small)}" font-family="monospace">',
-        f'D1 · {chart_data.get("ayanamsa", "")}',
-        f'</text>',
+        f'<text x="{rx(size / 2)}" y="{rx(pad + font_body)}" text-anchor="middle" fill="{fg}" font-size="{rx(font_body)}" font-family="sans-serif" font-weight="600">',
+        f"{_esc(chart_data.get('meta', {}).get('name', ''))}",
+        "</text>",
+        f'<text x="{rx(size / 2)}" y="{rx(pad + font_body + font_small + 4)}" text-anchor="middle" fill="{dim}" font-size="{rx(font_small)}" font-family="monospace">',
+        f"D1 · {chart_data.get('ayanamsa', '')}",
+        "</text>",
     ]
 
     # Outer border
-    parts.append(f'<rect x="0" y="0" width="{rx(size)}" height="{rx(size)}" fill="none" stroke="{hairline}" stroke-width="{stroke}" rx="12"/>')
+    parts.append(
+        f'<rect x="0" y="0" width="{rx(size)}" height="{rx(size)}" fill="none" stroke="{hairline}" stroke-width="{stroke}" rx="12"/>'
+    )
 
     # Draw cells
     for si, (row, col) in SOUTH_GRID.items():
@@ -129,12 +151,12 @@ def chart_svg(chart_data: dict, size: int = 400) -> str:
 
     # Footer
     parts.append(
-        f'<text x="{rx(size/2)}" y="{rx(size - pad)}" text-anchor="middle" fill="{dim}" '
+        f'<text x="{rx(size / 2)}" y="{rx(size - pad)}" text-anchor="middle" fill="{dim}" '
         f'font-size="{rx(font_small * 0.8)}" font-family="monospace">'
-        f'VedicAstro · Swiss Ephemeris · Lahiri ayanamsa</text>'
+        f"VedicAstro · Swiss Ephemeris · Lahiri ayanamsa</text>"
     )
 
-    parts.append('</svg>')
+    parts.append("</svg>")
     return "\n".join(parts)
 
 

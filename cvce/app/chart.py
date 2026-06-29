@@ -10,13 +10,13 @@ form the full canonical payload that the portal's Muhurta sub-module consumes.
 This module is the contract surface — its output shape must stay in lockstep
 with `docs/chart_data.schema.json`.
 """
+
 from __future__ import annotations
 
 from jhora import utils
-from jhora.horoscope.chart import charts, ashtakavarga
+from jhora.horoscope.chart import ashtakavarga, charts
 
-from .ephem import (PLANET_NAMES, RASHIS, ascendant, positions, set_ayanamsa,
-                    split_longitude)
+from .ephem import PLANET_NAMES, ascendant, positions, set_ayanamsa
 
 # Map PyJHora planet ids / the ascendant symbol to our canonical names.
 _PID_TO_NAME = {i: n for i, n in enumerate(PLANET_NAMES)}
@@ -24,9 +24,18 @@ _LAGNA = "Lagna"
 
 # Human labels for the divisional charts we expose.
 VARGA_NAMES = {
-    1: "Rasi", 2: "Hora", 3: "Drekkana", 4: "Chaturthamsa", 7: "Saptamsa",
-    9: "Navamsa", 10: "Dasamsa", 12: "Dwadasamsa", 16: "Shodasamsa",
-    24: "Chaturvimsamsa", 30: "Trimsamsa", 60: "Shashtiamsa",
+    1: "Rasi",
+    2: "Hora",
+    3: "Drekkana",
+    4: "Chaturthamsa",
+    7: "Saptamsa",
+    9: "Navamsa",
+    10: "Dasamsa",
+    12: "Dwadasamsa",
+    16: "Shodasamsa",
+    24: "Chaturvimsamsa",
+    30: "Trimsamsa",
+    60: "Shashtiamsa",
 }
 
 
@@ -87,8 +96,7 @@ def build_chart_geometry(jd: float, place, ayanamsa: str, vargas: list[int]) -> 
         if dcf == 1:
             d1_pp = pp
         if dcf in vargas:
-            varga_charts[f"D{dcf}"] = {"name": VARGA_NAMES.get(dcf, f"D{dcf}"),
-                                       "signs": sign_map}
+            varga_charts[f"D{dcf}"] = {"name": VARGA_NAMES.get(dcf, f"D{dcf}"), "signs": sign_map}
 
     akv = _ashtakavarga(d1_pp) if d1_pp is not None else None
 
@@ -97,9 +105,12 @@ def build_chart_geometry(jd: float, place, ayanamsa: str, vargas: list[int]) -> 
         "jd": jd,
         "ascendant": asc,
         "lagna": {
-            "rashi": asc["rashi"], "signIndex": asc["signIndex"],
-            "nakshatra": asc["nakshatra"], "pada": asc["pada"],
-            "degInSign": asc["degInSign"], "degLabel": asc["degLabel"],
+            "rashi": asc["rashi"],
+            "signIndex": asc["signIndex"],
+            "nakshatra": asc["nakshatra"],
+            "pada": asc["pada"],
+            "degInSign": asc["degInSign"],
+            "degLabel": asc["degLabel"],
         },
         "planets": bodies,
         "natalSign": natal_sign,
@@ -113,15 +124,15 @@ def build_chart_geometry(jd: float, place, ayanamsa: str, vargas: list[int]) -> 
 # Each rashi has 2 Pushkar degrees — table from BPHS / Sarvartha Chintamani
 _PUSHKAR_DEGREES = {
     0: [21, 27],  # Aries
-    1: [3, 15],   # Taurus
-    2: [9, 21],   # Gemini
+    1: [3, 15],  # Taurus
+    2: [9, 21],  # Gemini
     3: [13, 27],  # Cancer
     4: [15, 23],  # Leo
     5: [17, 23],  # Virgo
     6: [19, 27],  # Libra
     7: [14, 24],  # Scorpio
     8: [11, 23],  # Sagittarius
-    9: [5, 19],   # Capricorn
+    9: [5, 19],  # Capricorn
     10: [9, 24],  # Aquarius
     11: [11, 25],  # Pisces
 }

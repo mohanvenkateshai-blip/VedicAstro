@@ -11,6 +11,7 @@ Usage:
 
 Env: DEEPSEEK_API_KEY — https://platform.deepseek.com
 """
+
 from __future__ import annotations
 
 import argparse
@@ -21,7 +22,7 @@ import subprocess
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +34,7 @@ RUN_META = KG / "graphify-out" / "batch-deepseek" / "last-run.json"
 FILE_CHAR_CAP = 20_000
 sys.path.insert(0, str(ROOT / "scripts"))
 from graph_extract_common import production_node_floor  # noqa: E402
+
 BASE_URL = "https://api.deepseek.com"
 
 GRAPHIFY_SITE = Path(os.environ.get("GRAPHIFY_SITE", ""))
@@ -271,7 +273,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         "skipped": skipped,
         "failed": failed,
         "elapsed_s": round(elapsed, 1),
-        "finished_at": datetime.now(timezone.utc).isoformat(),
+        "finished_at": datetime.now(UTC).isoformat(),
     }
     RUN_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     print(f"done: {ok} ok, {skipped} cached, {failed} failed ({elapsed:.0f}s)")
@@ -332,7 +334,9 @@ def cmd_merge(args: argparse.Namespace) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="DeepSeek V4 graph extraction")
-    ap.add_argument("--model", default="deepseek-v4-flash", help="deepseek-v4-flash or deepseek-v4-pro")
+    ap.add_argument(
+        "--model", default="deepseek-v4-flash", help="deepseek-v4-flash or deepseek-v4-pro"
+    )
     ap.add_argument("--deep", action="store_true", default=True)
     ap.add_argument("--no-deep", action="store_false", dest="deep")
     sub = ap.add_subparsers(dest="cmd", required=True)

@@ -10,15 +10,15 @@ Usage:
     # Transit: what happens when Jupiter is in 5th from natal Moon?
     engine.transit("Jupiter", 5)
     # → {"verdict": "bad", "type": "worst", "source": "GPD-Ch10-Table12"}
-    
+
     # Yoga: does this chart have Hamsa Yoga?
     engine.yoga_condition("Hamsa Yoga")
     # → {"planet": "Jupiter", "condition": "Jupiter in own/exaltation in Kendra"}
-    
+
     # Dasha: what comes after Rahu Mahadasha?
     engine.dasha_sequence("Rahu")
     # → {"next": "Jupiter", "current": 18, "next": 16}
-    
+
     # Panchanga: what is the nature of Pushya nakshatra?
     engine.nakshatra("Pushya")
     # → {"nature": "Light", "lord": "Saturn", ...}
@@ -28,16 +28,16 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Optional
 
-
-_RULES_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "rules.json")
+_RULES_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "rules.json"
+)
 
 
 class RuleEngine:
     """Single source of truth for all Vedic rules. Singleton — load once."""
 
-    _instance: Optional["RuleEngine"] = None
+    _instance: RuleEngine | None = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -106,8 +106,12 @@ class RuleEngine:
         # Tithi index
         self._tithi_group_names: dict = {}
         if "tithi_group_names" in c["panchanga"]:
-            self._tithi_group_names = {int(k): v for k, v in c["panchanga"]["tithi_group_names"].items()}
-        self._tithi_groups_raw = c["panchanga"]["tithi_groups"]  # {group_name: [lord, element, desc, verdict]}
+            self._tithi_group_names = {
+                int(k): v for k, v in c["panchanga"]["tithi_group_names"].items()
+            }
+        self._tithi_groups_raw = c["panchanga"][
+            "tithi_groups"
+        ]  # {group_name: [lord, element, desc, verdict]}
         self._dagdha = {int(k): v for k, v in c["panchanga"]["dagdha_by_tithi"].items()}
 
         # Dignity
@@ -123,7 +127,7 @@ class RuleEngine:
 
     def transit(self, planet: str, house_from_moon: int) -> dict:
         """Get transit verdict for a planet in a specific house from natal Moon.
-        
+
         Returns {verdict: "good"|"bad"|"worst"|"neutral", type, source}
         """
         data = self._transit_houses.get(planet.lower(), {})
@@ -141,12 +145,19 @@ class RuleEngine:
         vedha_map = self._vedha.get(planet.lower(), {})
         cancels = vedha_map.get(str(house))
         if cancels is not None:
-            return {"vedha": True, "cancels_house": int(cancels), "effect": "Transit result cancelled"}
+            return {
+                "vedha": True,
+                "cancels_house": int(cancels),
+                "effect": "Transit result cancelled",
+            }
         return {"vedha": False}
 
     def moorthi(self, house_from_moon: int) -> dict:
         """Moorthy Nirnaya — quality of transiting Moon from natal Moon."""
-        return self._moorthi.get(house_from_moon, {"name": "Unknown", "verdict": "neutral", "description": "Not classified"})
+        return self._moorthi.get(
+            house_from_moon,
+            {"name": "Unknown", "verdict": "neutral", "description": "Not classified"},
+        )
 
     def tara(self, janma_nak: str, transit_nak: str) -> dict:
         """Tara Balam — count from Janma Nakshatra to transit Moon's nakshatra."""
@@ -156,13 +167,21 @@ class RuleEngine:
         if jidx < 0 or tidx < 0:
             return {"error": "Unknown nakshatra"}
         count = ((tidx - jidx) % 27) + 1
-        return self._tara.get(count, {"count": count, "name": "Unknown", "verdict": "neutral", "description": "Not classified"})
+        return self._tara.get(
+            count,
+            {
+                "count": count,
+                "name": "Unknown",
+                "verdict": "neutral",
+                "description": "Not classified",
+            },
+        )
 
     def latta(self, planet: str) -> dict:
         """Latta — does this transiting planet kick the Janma nakshatra?"""
         return self._latta.get(planet.lower(), {})
 
-    def yoga(self, name: str) -> Optional[dict]:
+    def yoga(self, name: str) -> dict | None:
         """Get yoga definition by name. Returns {name, planet, condition, effect, benefic}."""
         return self._yoga_index.get(name.lower())
 
@@ -220,13 +239,14 @@ class RuleEngine:
             return {"error": f"Unknown dasha planet: {planet}"}
         next_idx = (idx + 1) % len(order)
         return {
-            "index": idx, "planet": order[idx],
+            "index": idx,
+            "planet": order[idx],
             "next_planet": order[next_idx],
             "duration_years": periods.get(order[idx], 0),
             "next_duration_years": periods.get(order[next_idx], 0),
         }
 
-    def nakshatra(self, name: str) -> Optional[dict]:
+    def nakshatra(self, name: str) -> dict | None:
         """Get nakshatra details (nature, lord, etc.)."""
         return self._nak_index.get(name.lower())
 
@@ -256,6 +276,7 @@ class RuleEngine:
         if db.get("sign") == sign:
             return {"status": "debilitated", "source": "BPHS"}
         from vedic_engine.rules.transit_rules import OWN_SIGN
+
         if sign in OWN_SIGN.get(p, []):
             return {"status": "own_sign", "source": "BPHS"}
         if p in self._benefics:
@@ -268,11 +289,11 @@ class RuleEngine:
 
     def predict_synthesis(self, positions: dict, query: dict) -> dict:
         """Run a complete rule-based synthesis for a query.
-        
+
         Args:
             positions: {planet: {rashi, longitude, nakshatra, ...}}
             query: {date, time, janma_rashi, janma_nakshatra, natal_sign, ...}
-        
+
         Returns a structured prediction with rule citations.
         """
         result = {"verdict": "neutral", "score": 0, "factors": [], "warnings": []}
@@ -283,13 +304,21 @@ class RuleEngine:
         natal_sign = query.get("natal_sign", {})
 
         if janma_rashi:
-            jr_idx = self.rules["constants"]["rashis"].index(janma_rashi) if janma_rashi in self.rules["constants"]["rashis"] else -1
+            jr_idx = (
+                self.rules["constants"]["rashis"].index(janma_rashi)
+                if janma_rashi in self.rules["constants"]["rashis"]
+                else -1
+            )
             if jr_idx >= 0:
                 for p, data in positions.items():
                     if p in ("Rahu", "Ketu"):
                         continue
                     p_rashi = data.get("rashi", "")
-                    p_idx = self.rules["constants"]["rashis"].index(p_rashi) if p_rashi in self.rules["constants"]["rashis"] else -1
+                    p_idx = (
+                        self.rules["constants"]["rashis"].index(p_rashi)
+                        if p_rashi in self.rules["constants"]["rashis"]
+                        else -1
+                    )
                     if p_idx < 0:
                         continue
                     house = ((p_idx - jr_idx) % 12) + 1
@@ -299,19 +328,33 @@ class RuleEngine:
                         result["factors"].append(f"{p} in {house}th from Moon → favourable transit")
                     elif verdict["verdict"] == "ashubh":
                         result["score"] -= 3
-                        result["factors"].append(f"{p} in {house}th from Moon → unfavourable transit")
+                        result["factors"].append(
+                            f"{p} in {house}th from Moon → unfavourable transit"
+                        )
                         if verdict.get("type") == "worst":
-                            result["warnings"].append(f"{p} in {house}th from Moon is the worst transit position")
+                            result["warnings"].append(
+                                f"{p} in {house}th from Moon is the worst transit position"
+                            )
 
         # 2. Moorthy
         if janma_rashi and "Moon" in positions:
             moon_rashi = positions["Moon"].get("rashi", "")
-            m_idx = self.rules["constants"]["rashis"].index(moon_rashi) if moon_rashi in self.rules["constants"]["rashis"] else -1
-            j_idx = self.rules["constants"]["rashis"].index(janma_rashi) if janma_rashi in self.rules["constants"]["rashis"] else -1
+            m_idx = (
+                self.rules["constants"]["rashis"].index(moon_rashi)
+                if moon_rashi in self.rules["constants"]["rashis"]
+                else -1
+            )
+            j_idx = (
+                self.rules["constants"]["rashis"].index(janma_rashi)
+                if janma_rashi in self.rules["constants"]["rashis"]
+                else -1
+            )
             if m_idx >= 0 and j_idx >= 0:
                 m_house = ((m_idx - j_idx) % 12) + 1
                 mo = self.moorthi(m_house)
-                result["factors"].append(f"Moon in {m_house}th from Janma Rashi → {mo['name']} ({mo['verdict']})")
+                result["factors"].append(
+                    f"Moon in {m_house}th from Janma Rashi → {mo['name']} ({mo['verdict']})"
+                )
                 if mo["verdict"] == "ashubh":
                     result["score"] -= 2
 
@@ -319,7 +362,9 @@ class RuleEngine:
         if janma_nak and "Moon" in positions:
             moon_nak = positions["Moon"].get("nakshatra", "")
             t = self.tara(janma_nak, moon_nak)
-            result["factors"].append(f"Tara Balam: {janma_nak} → {moon_nak} = {t.get('name', '?')} ({t.get('verdict', '?')})")
+            result["factors"].append(
+                f"Tara Balam: {janma_nak} → {moon_nak} = {t.get('name', '?')} ({t.get('verdict', '?')})"
+            )
             if t.get("verdict") == "ashubh":
                 result["score"] -= 3
 
@@ -327,7 +372,9 @@ class RuleEngine:
         if natal_sign:
             yogas = self.find_yogas(natal_sign, natal_sign.get("Lagna", 0))
             for y in yogas[:10]:
-                result["factors"].append(f"Yoga: {y['name']} {'(benefic)' if y.get('benefic') else '(challenging)'}")
+                result["factors"].append(
+                    f"Yoga: {y['name']} {'(benefic)' if y.get('benefic') else '(challenging)'}"
+                )
                 if y.get("benefic"):
                     result["score"] += 4
                 else:
@@ -339,7 +386,9 @@ class RuleEngine:
             maha = dasha_info.get("mahadasha", "")
             if maha:
                 ds = self.dasha_sequence(maha)
-                result["factors"].append(f"Running {maha} Mahadasha ({ds.get('duration_years', '?')} years)")
+                result["factors"].append(
+                    f"Running {maha} Mahadasha ({ds.get('duration_years', '?')} years)"
+                )
 
         # Final verdict
         if result["score"] >= 12:

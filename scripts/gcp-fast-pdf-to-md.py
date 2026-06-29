@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Fast PDF→markdown: pymupdf text layer, else Tesseract eng."""
+
 from __future__ import annotations
 
 import argparse
-import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
@@ -16,9 +16,7 @@ Image.MAX_IMAGE_PIXELS = None  # large scan pages
 
 
 def _page_tesseract(pdf: Path, page_num: int, dpi: int) -> str:
-    images = convert_from_path(
-        str(pdf), first_page=page_num + 1, last_page=page_num + 1, dpi=dpi
-    )
+    images = convert_from_path(str(pdf), first_page=page_num + 1, last_page=page_num + 1, dpi=dpi)
     if not images:
         return ""
     img = images[0].convert("L")

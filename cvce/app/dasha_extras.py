@@ -8,18 +8,36 @@ from app.ephem import PLANET_NAMES, RASHIS
 
 # Kaksha lords in order (BPHS / Ashtakavarga Handbook §6).
 KAKSHA_LORDS = [
-    "Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon", "Lagna",
+    "Saturn",
+    "Jupiter",
+    "Mars",
+    "Sun",
+    "Venus",
+    "Mercury",
+    "Moon",
+    "Lagna",
 ]
 _KAKSHA_CONTRIB_IDX = {
-    "Sun": 0, "Moon": 1, "Mars": 2, "Mercury": 3,
-    "Jupiter": 4, "Venus": 5, "Saturn": 6, "Lagna": 7,
+    "Sun": 0,
+    "Moon": 1,
+    "Mars": 2,
+    "Mercury": 3,
+    "Jupiter": 4,
+    "Venus": 5,
+    "Saturn": 6,
+    "Lagna": 7,
 }
 _KAKSHA_SPAN = 30.0 / 8.0  # 3°45′ per kaksha
 
 _CHARA_KARAKA_PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
 _CHARA_KARAKA_ROLES = [
-    "Atmakaraka", "Amatyakaraka", "Bhratrikaraka", "Matrikaraka",
-    "Putrakaraka", "Gnatikaraka", "Darakaraka",
+    "Atmakaraka",
+    "Amatyakaraka",
+    "Bhratrikaraka",
+    "Matrikaraka",
+    "Putrakaraka",
+    "Gnatikaraka",
+    "Darakaraka",
 ]
 
 _GRAPH_CHARA_IDS = [
@@ -107,6 +125,7 @@ def _house_from_lagna(sign_name: str | None, lagna_sign: str | None) -> int | No
 def _knowledge_version() -> str | None:
     try:
         from knowledge_engine.integration import get_knowledge_engine
+
         ke = get_knowledge_engine()
         return ke.current_version.version if ke.current_version else None
     except Exception:
@@ -118,21 +137,20 @@ def _chara_karakas(jd, place) -> list[dict]:
     from app.ephem import positions
 
     ranked = sorted(
-        (
-            p for p in positions(jd, place)
-            if p.get("planet") in _CHARA_KARAKA_PLANETS
-        ),
+        (p for p in positions(jd, place) if p.get("planet") in _CHARA_KARAKA_PLANETS),
         key=lambda p: float(p.get("degInSign", 0)),
         reverse=True,
     )
     out: list[dict] = []
     for i, p in enumerate(ranked[:7]):
-        out.append({
-            "role": _CHARA_KARAKA_ROLES[i],
-            "planet": p["planet"],
-            "sign": p.get("sign"),
-            "degInSign": round(float(p.get("degInSign", 0)), 2),
-        })
+        out.append(
+            {
+                "role": _CHARA_KARAKA_ROLES[i],
+                "planet": p["planet"],
+                "sign": p.get("sign"),
+                "degInSign": round(float(p.get("degInSign", 0)), 2),
+            }
+        )
     return out
 
 
@@ -196,14 +214,16 @@ def _upcoming_sign_periods(rows, today: date, limit: int = 6) -> list[dict]:
             end_d = start_d + timedelta(days=int(dur * 365.25))
             if end_d < today:
                 continue
-            out.append({
-                "maha": _sign_name(maha),
-                "antara": _sign_name(antara),
-                "start": start,
-                "end": end_d.isoformat(),
-                "years": round(dur, 2),
-                "isCurrent": start_d <= today <= end_d,
-            })
+            out.append(
+                {
+                    "maha": _sign_name(maha),
+                    "antara": _sign_name(antara),
+                    "start": start,
+                    "end": end_d.isoformat(),
+                    "years": round(dur, 2),
+                    "isCurrent": start_d <= today <= end_d,
+                }
+            )
             if len(out) >= limit:
                 break
         except Exception:
@@ -229,13 +249,15 @@ def _graph_dasha_citations(node_ids: list[str]) -> list[dict]:
             desc = (node.get("description") or node.get("label") or "").strip()
             if not desc:
                 continue
-            citations.append({
-                "id": nid,
-                "label": node.get("label", nid),
-                "description": desc[:420],
-                "source_file": node.get("source_file"),
-                "source_location": node.get("source_location"),
-            })
+            citations.append(
+                {
+                    "id": nid,
+                    "label": node.get("label", nid),
+                    "description": desc[:420],
+                    "source_file": node.get("source_file"),
+                    "source_location": node.get("source_location"),
+                }
+            )
     except Exception:
         try:
             from knowledge_engine.integration import get_safe_graph
@@ -248,13 +270,15 @@ def _graph_dasha_citations(node_ids: list[str]) -> list[dict]:
                 desc = (node.get("description") or node.get("label") or "").strip()
                 if not desc:
                     continue
-                citations.append({
-                    "id": nid,
-                    "label": node.get("label", nid),
-                    "description": desc[:420],
-                    "source_file": node.get("source_file"),
-                    "source_location": node.get("source_location"),
-                })
+                citations.append(
+                    {
+                        "id": nid,
+                        "label": node.get("label", nid),
+                        "description": desc[:420],
+                        "source_file": node.get("source_file"),
+                        "source_location": node.get("source_location"),
+                    }
+                )
         except Exception:
             pass
 
@@ -279,15 +303,17 @@ def _enrich_sign_dasha(payload: dict, *, lagna_sign: str | None, today: date) ->
 def chara_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
     """Jaimini Chara dasha — Method 1 (K.N. Rao) via PyJHora."""
     from jhora import const
-    from jhora.horoscope.dhasa.raasi import chara
     from jhora.horoscope.chart import charts
+    from jhora.horoscope.dhasa.raasi import chara
 
     today = date.today()
     q_jd = query_jd or jd
     current = _running_sign_dasha(chara, q_jd, place, method_kw={"chara_method": 1})
     try:
         rows = chara.get_dhasa_antardhasa(
-            dob, tob, place,
+            dob,
+            tob,
+            place,
             chara_method=1,
             dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
         )
@@ -316,10 +342,18 @@ def chara_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
     if current:
         payload.update(current)
         payload["ladder"] = [
-            {"levelLabel": "Mahadasha (sign)", "lord": current.get("maha"),
-             "start": current.get("mahaStart"), "end": current.get("mahaEnd")},
-            {"levelLabel": "Antardasha (sign)", "lord": current.get("antara"),
-             "start": current.get("antaraStart"), "end": current.get("antaraEnd")},
+            {
+                "levelLabel": "Mahadasha (sign)",
+                "lord": current.get("maha"),
+                "start": current.get("mahaStart"),
+                "end": current.get("mahaEnd"),
+            },
+            {
+                "levelLabel": "Antardasha (sign)",
+                "lord": current.get("antara"),
+                "start": current.get("antaraStart"),
+                "end": current.get("antaraEnd"),
+            },
         ]
     return _enrich_sign_dasha(payload, lagna_sign=lagna_sign, today=today)
 
@@ -327,15 +361,17 @@ def chara_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
 def kalachakra_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
     """Kalachakra dasha via PyJHora (PVR / Moon nakshatra pada wheel)."""
     from jhora import const
-    from jhora.horoscope.dhasa.raasi import kalachakra
     from jhora.horoscope.chart import charts
+    from jhora.horoscope.dhasa.raasi import kalachakra
 
     today = date.today()
     q_jd = query_jd or jd
     current = _running_sign_dasha(kalachakra, q_jd, place, method_kw={"dhasa_method": 1})
     try:
         rows = kalachakra.get_dhasa_bhukthi(
-            dob, tob, place,
+            dob,
+            tob,
+            place,
             dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
             dhasa_method=1,
         )
@@ -363,10 +399,18 @@ def kalachakra_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
     if current:
         payload.update(current)
         payload["ladder"] = [
-            {"levelLabel": "Mahadasha (sign)", "lord": current.get("maha"),
-             "start": current.get("mahaStart"), "end": current.get("mahaEnd")},
-            {"levelLabel": "Antardasha (sign)", "lord": current.get("antara"),
-             "start": current.get("antaraStart"), "end": current.get("antaraEnd")},
+            {
+                "levelLabel": "Mahadasha (sign)",
+                "lord": current.get("maha"),
+                "start": current.get("mahaStart"),
+                "end": current.get("mahaEnd"),
+            },
+            {
+                "levelLabel": "Antardasha (sign)",
+                "lord": current.get("antara"),
+                "start": current.get("antaraStart"),
+                "end": current.get("antaraEnd"),
+            },
         ]
     return _enrich_sign_dasha(payload, lagna_sign=lagna_sign, today=today)
 
@@ -428,8 +472,9 @@ def _planet_kaksha_row(
 
 def kaksha_payload(jd, place, query_jd=None) -> dict:
     """Kaksha refinement — natal prastara vs query-time (default today) positions."""
-    from jhora.horoscope.chart import charts, ashtakavarga
     from jhora import utils
+    from jhora.horoscope.chart import ashtakavarga, charts
+
     from app.ephem import positions
 
     transit_jd = query_jd if query_jd is not None else utils.gregorian_to_jd(date.today())
@@ -447,9 +492,16 @@ def kaksha_payload(jd, place, query_jd=None) -> dict:
             continue
         lon = float(pos.get("longitude", 0))
         sign_idx = int(pos.get("signIndex", int(lon // 30) % 12))
-        transits.append(_planet_kaksha_row(
-            planet, lon, sign_idx, prastara, samudhaya, context="transit",
-        ))
+        transits.append(
+            _planet_kaksha_row(
+                planet,
+                lon,
+                sign_idx,
+                prastara,
+                samudhaya,
+                context="transit",
+            )
+        )
 
     natal_positions = positions(jd, place)
     natal_by_name = {p["planet"]: p for p in natal_positions}
@@ -460,9 +512,16 @@ def kaksha_payload(jd, place, query_jd=None) -> dict:
             continue
         lon = float(pos.get("longitude", 0))
         sign_idx = int(pos.get("signIndex", int(lon // 30) % 12))
-        natal.append(_planet_kaksha_row(
-            planet, lon, sign_idx, prastara, samudhaya, context="natal",
-        ))
+        natal.append(
+            _planet_kaksha_row(
+                planet,
+                lon,
+                sign_idx,
+                prastara,
+                samudhaya,
+                context="natal",
+            )
+        )
 
     # Lagna sign kaksha map (reference for natal lagna)
     lagna_lon = None
@@ -478,12 +537,14 @@ def kaksha_payload(jd, place, query_jd=None) -> dict:
         for i, lord in enumerate(KAKSHA_LORDS):
             lo = i * _KAKSHA_SPAN
             hi = (i + 1) * _KAKSHA_SPAN
-            lagna_kakshas.append({
-                "index": i + 1,
-                "lord": lord,
-                "rangeDeg": f"{lo:.2f}–{hi:.2f}°",
-                "binduActive": _kaksha_lord_has_bindu(prastara, sign_idx, lord),
-            })
+            lagna_kakshas.append(
+                {
+                    "index": i + 1,
+                    "lord": lord,
+                    "rangeDeg": f"{lo:.2f}–{hi:.2f}°",
+                    "binduActive": _kaksha_lord_has_bindu(prastara, sign_idx, lord),
+                }
+            )
 
     favorable = [t["planet"] for t in transits if t["binduActive"]]
     challenging = [t["planet"] for t in transits if not t["binduActive"]]

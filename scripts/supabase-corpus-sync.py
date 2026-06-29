@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Sync knowledge-graph raw/*.md + graph JSON → Supabase corpus vault (Storage + Postgres)."""
+
 from __future__ import annotations
 
 import argparse
@@ -7,10 +8,10 @@ import hashlib
 import json
 import os
 import re
-import sys
 import subprocess
+import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +33,8 @@ def _graph_version_label() -> str:
             "graph_version", "core-jyotisha-v1"
         )
     return "core-jyotisha-v1"
+
+
 BATCH = 400
 
 
@@ -53,8 +56,15 @@ def load_env() -> dict[str, str]:
     return out
 
 
-def api_request(env: dict[str, str], method: str, path: str, body: bytes | None = None, headers: dict | None = None, *, timeout: int = 300) -> tuple[int, bytes]:
-    import urllib.parse
+def api_request(
+    env: dict[str, str],
+    method: str,
+    path: str,
+    body: bytes | None = None,
+    headers: dict | None = None,
+    *,
+    timeout: int = 300,
+) -> tuple[int, bytes]:
 
     url = env["SUPABASE_URL"].rstrip("/") + path
     h = {
@@ -86,12 +96,12 @@ def api_request(env: dict[str, str], method: str, path: str, body: bytes | None 
             except ValueError:
                 return 0, raw
             if code >= 500 and attempt < 5:
-                time.sleep(2 ** attempt)
+                time.sleep(2**attempt)
                 continue
             return code, b"\n".join(body_lines)
         last_err = proc.stderr.decode(errors="replace")[:500]
         if attempt < 5:
-            time.sleep(2 ** attempt)
+            time.sleep(2**attempt)
     raise RuntimeError(f"curl failed after retries: {last_err}")
 
 
@@ -132,7 +142,9 @@ def upload_storage(env: dict[str, str], path: str, data: bytes, content_type: st
         raise RuntimeError(f"storage upload {path}: HTTP {code} {body[:300]!r}")
 
 
-def upsert_rows(env: dict[str, str], table: str, rows: list[dict], *, on_conflict: str | None = None) -> None:
+def upsert_rows(
+    env: dict[str, str], table: str, rows: list[dict], *, on_conflict: str | None = None
+) -> None:
     if not rows:
         return
     path = f"/rest/v1/{table}"
@@ -177,7 +189,9 @@ def storage_key_for_md(md: Path) -> str:
 def sync_markdown(env: dict[str, str]) -> int:
     if not RAW.is_dir():
         return 0
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.is_file() else {"sources": {}}
+    manifest = (
+        json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.is_file() else {"sources": {}}
+    )
     sources_meta = manifest.get("sources", {})
     rows = []
     n = 0
@@ -197,7 +211,7 @@ def sync_markdown(env: dict[str, str]) -> int:
                 "bytes": len(data),
                 "book_family": meta.get("book_family"),
                 "ingest_method": meta.get("method", "ingest"),
-                "updated_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(UTC).isoformat(),
             }
         )
         n += 1
@@ -234,7 +248,11 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
         nid = n.get("id")
         if not nid:
             continue
-        props = {k: v for k, v in n.items() if k not in ("id", "label", "file_type", "source_file", "source_location", "community")}
+        props = {
+            k: v
+            for k, v in n.items()
+            if k not in ("id", "label", "file_type", "source_file", "source_location", "community")
+        }
         node_rows.append(
             {
                 "id": nid,
@@ -245,7 +263,7 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
                 "source_location": n.get("source_location"),
                 "community": n.get("community"),
                 "properties": props,
-                "updated_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(UTC).isoformat(),
             }
         )
 
@@ -288,7 +306,7 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
                 "node_count": len(node_rows),
                 "link_count": len(link_rows),
                 "storage_path": f"graphs/{graph_version}.json",
-                "completed_at": datetime.now(timezone.utc).isoformat(),
+                "completed_at": datetime.now(UTC).isoformat(),
             }
         ],
     )
@@ -298,7 +316,6 @@ def sync_graph(env: dict[str, str], *, full_replace: bool) -> tuple[int, int]:
 
 def sync_chunks(env: dict[str, str]) -> int:
     """Chunk raw markdown for vector/hybrid search. Embeddings left null for now (fill via generator)."""
-    from pathlib import Path as _P
     import re as _re
 
     raw_dir = KG / "raw"
@@ -323,13 +340,15 @@ def sync_chunks(env: dict[str, str]) -> int:
 
         rows = []
         for i, ch in enumerate(chunks):
-            rows.append({
-                "source_id": md.name,
-                "chunk_index": i,
-                "content": ch[:4000],  # safety
-                "embedding": None,
-                "metadata": {"len": len(ch)},
-            })
+            rows.append(
+                {
+                    "source_id": md.name,
+                    "chunk_index": i,
+                    "content": ch[:4000],  # safety
+                    "embedding": None,
+                    "metadata": {"len": len(ch)},
+                }
+            )
             total += 1
 
         if rows:
@@ -345,7 +364,9 @@ def check_schema(env: dict[str, str]) -> bool:
     code, body = api_request(env, "GET", "/rest/v1/corpus_sources?select=canonical_name&limit=1")
     if code == 200:
         return True
-    print("error: corpus_sources table missing — run portal/supabase-corpus-schema.sql in Supabase SQL Editor")
+    print(
+        "error: corpus_sources table missing — run portal/supabase-corpus-schema.sql in Supabase SQL Editor"
+    )
     print(body[:300].decode(errors="replace"))
     return False
 
@@ -361,7 +382,10 @@ def main() -> int:
 
     env = load_env()
     if not env.get("SUPABASE_URL") or not env.get("SUPABASE_SERVICE_ROLE_KEY"):
-        print("error: set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in portal/.env.local", file=sys.stderr)
+        print(
+            "error: set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in portal/.env.local",
+            file=sys.stderr,
+        )
         return 1
 
     if not args.skip_gcp and not args.graph_only:

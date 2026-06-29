@@ -10,15 +10,16 @@ Sources:
   - Parasara Hora (foundational definitions)
 """
 
+import math
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
-import math
 
 from ..core.astronomy import (
-    julian_day, sun_moon, norm360, lahiri_ayanamsha,
-    all_positions, is_retrograde, planet_sidereal_lon,
-    rahu_true_tropical
+    all_positions,
+    is_retrograde,
+    julian_day,
+    norm360,
+    sun_moon,
 )
 
 # =====================================================================
@@ -26,24 +27,68 @@ from ..core.astronomy import (
 # =====================================================================
 
 NAKSHATRAS = [
-    "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra",
-    "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni",
-    "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha",
-    "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishtha",
-    "Shatabhisha", "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"
+    "Ashwini",
+    "Bharani",
+    "Krittika",
+    "Rohini",
+    "Mrigashira",
+    "Ardra",
+    "Punarvasu",
+    "Pushya",
+    "Ashlesha",
+    "Magha",
+    "Purva Phalguni",
+    "Uttara Phalguni",
+    "Hasta",
+    "Chitra",
+    "Swati",
+    "Vishakha",
+    "Anuradha",
+    "Jyeshtha",
+    "Mula",
+    "Purva Ashadha",
+    "Uttara Ashadha",
+    "Shravana",
+    "Dhanishtha",
+    "Shatabhisha",
+    "Purva Bhadrapada",
+    "Uttara Bhadrapada",
+    "Revati",
 ]
 
 RASHIS = [
-    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
 ]
 
 WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 TITHI_NAMES = [
-    "Pratipada", "Dwitiya", "Tritiya", "Chaturthi", "Panchami",
-    "Shashti", "Saptami", "Ashtami", "Navami", "Dashami",
-    "Ekadashi", "Dwadashi", "Trayodashi", "Chaturdashi", "Purnima"
+    "Pratipada",
+    "Dwitiya",
+    "Tritiya",
+    "Chaturthi",
+    "Panchami",
+    "Shashti",
+    "Saptami",
+    "Ashtami",
+    "Navami",
+    "Dashami",
+    "Ekadashi",
+    "Dwadashi",
+    "Trayodashi",
+    "Chaturdashi",
+    "Purnima",
 ]
 
 # 27 Nitya Yogas
@@ -79,15 +124,33 @@ NITYA_YOGAS = [
 
 # Nakshatra natures (Brihat Samhita / Phaladeepika Ch.26)
 NAK_NATURE = {
-    "Ashwini": "Light", "Bharani": "Fierce", "Krittika": "Mixed",
-    "Rohini": "Fixed", "Mrigashira": "Soft", "Ardra": "Sharp",
-    "Punarvasu": "Movable", "Pushya": "Light", "Ashlesha": "Sharp",
-    "Magha": "Fierce", "Purva Phalguni": "Fierce", "Uttara Phalguni": "Fixed",
-    "Hasta": "Light", "Chitra": "Soft", "Swati": "Movable",
-    "Vishakha": "Mixed", "Anuradha": "Soft", "Jyeshtha": "Sharp",
-    "Mula": "Sharp", "Purva Ashadha": "Fierce", "Uttara Ashadha": "Fixed",
-    "Shravana": "Movable", "Dhanishtha": "Movable", "Shatabhisha": "Movable",
-    "Purva Bhadrapada": "Fierce", "Uttara Bhadrapada": "Fixed", "Revati": "Soft",
+    "Ashwini": "Light",
+    "Bharani": "Fierce",
+    "Krittika": "Mixed",
+    "Rohini": "Fixed",
+    "Mrigashira": "Soft",
+    "Ardra": "Sharp",
+    "Punarvasu": "Movable",
+    "Pushya": "Light",
+    "Ashlesha": "Sharp",
+    "Magha": "Fierce",
+    "Purva Phalguni": "Fierce",
+    "Uttara Phalguni": "Fixed",
+    "Hasta": "Light",
+    "Chitra": "Soft",
+    "Swati": "Movable",
+    "Vishakha": "Mixed",
+    "Anuradha": "Soft",
+    "Jyeshtha": "Sharp",
+    "Mula": "Sharp",
+    "Purva Ashadha": "Fierce",
+    "Uttara Ashadha": "Fixed",
+    "Shravana": "Movable",
+    "Dhanishtha": "Movable",
+    "Shatabhisha": "Movable",
+    "Purva Bhadrapada": "Fierce",
+    "Uttara Bhadrapada": "Fixed",
+    "Revati": "Soft",
 }
 
 # Karana sequence (60 half-tithis per lunar month)
@@ -125,31 +188,62 @@ VARA_LORD = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
 
 # Nakshatra lords
 NAK_LORD = [
-    "Ketu", "Venus", "Sun", "Moon", "Mars", "Rahu",
-    "Jupiter", "Saturn", "Mercury", "Ketu", "Venus", "Sun",
-    "Moon", "Mars", "Rahu", "Jupiter", "Saturn", "Mercury",
-    "Ketu", "Venus", "Sun", "Moon", "Mars", "Rahu",
-    "Jupiter", "Saturn", "Mercury"
+    "Ketu",
+    "Venus",
+    "Sun",
+    "Moon",
+    "Mars",
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Mercury",
+    "Ketu",
+    "Venus",
+    "Sun",
+    "Moon",
+    "Mars",
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Mercury",
+    "Ketu",
+    "Venus",
+    "Sun",
+    "Moon",
+    "Mars",
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Mercury",
 ]
 
 PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
 
 # Dagdha Rashis by Tithi
 DAGDHA_BY_TITHI = {
-    1: ["Libra", "Capricorn"], 2: ["Sagittarius", "Pisces"],
-    3: ["Leo", "Capricorn"], 4: ["Taurus", "Aquarius"],
-    5: ["Gemini", "Virgo"], 6: ["Aries", "Leo"],
-    7: ["Cancer", "Sagittarius"], 8: ["Gemini", "Virgo"],
-    9: ["Leo", "Scorpio"], 10: ["Leo", "Scorpio"],
-    11: ["Sagittarius", "Pisces"], 12: ["Libra", "Capricorn"],
-    13: ["Taurus", "Leo"], 14: ["Gemini", "Virgo", "Sagittarius", "Pisces"],
-    15: [], 30: [],
+    1: ["Libra", "Capricorn"],
+    2: ["Sagittarius", "Pisces"],
+    3: ["Leo", "Capricorn"],
+    4: ["Taurus", "Aquarius"],
+    5: ["Gemini", "Virgo"],
+    6: ["Aries", "Leo"],
+    7: ["Cancer", "Sagittarius"],
+    8: ["Gemini", "Virgo"],
+    9: ["Leo", "Scorpio"],
+    10: ["Leo", "Scorpio"],
+    11: ["Sagittarius", "Pisces"],
+    12: ["Libra", "Capricorn"],
+    13: ["Taurus", "Leo"],
+    14: ["Gemini", "Virgo", "Sagittarius", "Pisces"],
+    15: [],
+    30: [],
 }
 
 
 # =====================================================================
 # Helper functions
 # =====================================================================
+
 
 def nak_index(lon: float) -> int:
     """Return nakshatra index (0-26) from sidereal longitude."""
@@ -187,7 +281,7 @@ def hms(hours: float) -> str:
 
 def panch_instant(y: int, m: int, d: int, tz: float, hour_local: float, kind: str) -> float:
     """Return the continuous value of a panchanga limb at a given local hour.
-       kind: 'tithi' | 'nak' | 'yoga' | 'karana'"""
+    kind: 'tithi' | 'nak' | 'yoga' | 'karana'"""
     jd = julian_day(y, m, d) + (hour_local - tz) / 24
     sm = sun_moon(jd)
     sun, moon = sm["sun"], sm["moon"]
@@ -208,10 +302,11 @@ def panch_index(y: int, m: int, d: int, tz: float, hour_local: float, kind: str)
     return int(panch_instant(y, m, d, tz, hour_local, kind))
 
 
-def find_boundary(y: int, m: int, d: int, tz: float, kind: str,
-                   start_idx: int, lo: float, hi: float) -> Optional[float]:
+def find_boundary(
+    y: int, m: int, d: int, tz: float, kind: str, start_idx: int, lo: float, hi: float
+) -> float | None:
     """Find the local hour where the floored panchanga index first increases past start_idx.
-       Uses coarse scan + bisection."""
+    Uses coarse scan + bisection."""
     step = 0.25
     a = lo
     ia = int(panch_instant(y, m, d, tz, a, kind))
@@ -295,13 +390,22 @@ def sun_times(y: int, m: int, d: int, lat: float, lon: float, tz: float) -> dict
     n = math.ceil(jd - 2451545.0 + 0.0008)
     Js = n - lon / 360.0
     M = norm360(357.5291 + 0.98560028 * Js)
-    C = 1.9148 * math.sin(math.radians(M)) + 0.02 * math.sin(math.radians(2 * M)) + 0.0003 * math.sin(
-        math.radians(3 * M))
+    C = (
+        1.9148 * math.sin(math.radians(M))
+        + 0.02 * math.sin(math.radians(2 * M))
+        + 0.0003 * math.sin(math.radians(3 * M))
+    )
     lam = norm360(M + C + 180 + 102.9372)
-    Jt = 2451545.0 + Js + 0.0053 * math.sin(math.radians(M)) - 0.0069 * math.sin(math.radians(2 * lam))
+    Jt = (
+        2451545.0
+        + Js
+        + 0.0053 * math.sin(math.radians(M))
+        - 0.0069 * math.sin(math.radians(2 * lam))
+    )
     dec = math.asin(math.sin(math.radians(lam)) * math.sin(math.radians(23.44)))
     cH = (math.sin(math.radians(-0.833)) - math.sin(math.radians(lat)) * math.sin(dec)) / (
-            math.cos(math.radians(lat)) * math.cos(dec))
+        math.cos(math.radians(lat)) * math.cos(dec)
+    )
     cH = max(-1, min(1, cH))
     H = math.degrees(math.acos(cH))
 
@@ -316,9 +420,11 @@ def sun_times(y: int, m: int, d: int, lat: float, lon: float, tz: float) -> dict
 # Main Panchanga Computation
 # =====================================================================
 
+
 @dataclass
 class PanchangaResult:
     """Complete Panchanga for one date/time/location."""
+
     date: str
     time: str
     lat: float
@@ -364,8 +470,77 @@ class PanchangaResult:
     segments: dict = field(default_factory=dict)
 
 
-def compute_panchanga(date_str: str = None, time_str: str = "12:00",
-                       lat: float = 12.30, lon: float = 76.65, tz: float = 5.5) -> PanchangaResult:
+_panchanga_rules_version: str | None = None
+_panchanga_registered = False
+
+
+def _clear_panchanga_knowledge_caches() -> None:
+    """Drop graph-backed panchanga rule caches so the next run reloads from graph."""
+    try:
+        from rules_engine.engine import RuleEngine
+
+        RuleEngine._instance = None
+    except ImportError:
+        pass
+    try:
+        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+
+        GraphMuhurtaRules._instance = None
+    except ImportError:
+        pass
+    try:
+        from graph_rag.graph import GraphRAG
+
+        GraphRAG()._loaded = False
+    except ImportError:
+        pass
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+
+        ke = get_knowledge_engine()
+        if hasattr(ke.store, "_graph"):
+            ke.store._graph = None  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
+
+def _on_panchanga_refresh(new_version: str) -> None:
+    global _panchanga_rules_version
+    _panchanga_rules_version = new_version
+    _clear_panchanga_knowledge_caches()
+
+
+def _register_panchanga_engine() -> None:
+    global _panchanga_registered
+    if _panchanga_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+
+        get_knowledge_engine().register_engine("panchanga", on_refresh=_on_panchanga_refresh)
+        _panchanga_registered = True
+    except Exception:
+        pass
+
+
+_register_panchanga_engine()
+
+
+def _ensure_panchanga_registered() -> None:
+    if not _panchanga_registered:
+        _register_panchanga_engine()
+
+
+_register_panchanga_engine()
+
+
+def compute_panchanga(
+    date_str: str = None,
+    time_str: str = "12:00",
+    lat: float = 12.30,
+    lon: float = 76.65,
+    tz: float = 5.5,
+) -> PanchangaResult:
     """Compute the complete Panchanga for a given date, time, and location.
 
     Args:
@@ -374,6 +549,7 @@ def compute_panchanga(date_str: str = None, time_str: str = "12:00",
         lat, lon: geographic coordinates
         tz: UTC offset in hours
     """
+    _ensure_panchanga_registered()
     if date_str is None:
         now = datetime.now()
         date_str = f"{now.year}-{now.month:02d}-{now.day:02d}"
@@ -439,16 +615,18 @@ def compute_panchanga(date_str: str = None, time_str: str = "12:00",
         deg_in_sign = lon % 30
         dd = int(deg_in_sign)
         mm_val = int((deg_in_sign - dd) * 60)
-        transit.append({
-            "planet": planet,
-            "rashi": RASHIS[rashi_index(lon)],
-            "nak": NAKSHATRAS[nak_index(lon)],
-            "pada": pada_of(lon),
-            "deg": deg_in_sign,
-            "deg_label": f"{dd}°{mm_val:02d}′",
-            "retro": is_retrograde(planet, query_jd),
-            "lon": lon,
-        })
+        transit.append(
+            {
+                "planet": planet,
+                "rashi": RASHIS[rashi_index(lon)],
+                "nak": NAKSHATRAS[nak_index(lon)],
+                "pada": pada_of(lon),
+                "deg": deg_in_sign,
+                "deg_label": f"{dd}°{mm_val:02d}′",
+                "retro": is_retrograde(planet, query_jd),
+                "lon": lon,
+            }
+        )
 
     # Verdicts
     tithi_v = "shubh" if grp_qual == "good" else ("ashubh" if grp_qual == "bad" else "neutral")
@@ -457,18 +635,34 @@ def compute_panchanga(date_str: str = None, time_str: str = "12:00",
     karana_v = "ashubh" if karana_name in KARANA_MALEFIC else "shubh"
 
     return PanchangaResult(
-        date=date_str, time=time_str, lat=lat, lon=lon, tz=tz,
-        weekday=weekday, sunrise=sunrise, sunset=sunset,
-        tithi_name=tithi_name(tip, tithi_num), tithi_num=tithi_num,
-        tithi_paksha=paksha, tithi_group=group, tithi_lord=tithi_lord, tithi_verdict=tithi_v,
+        date=date_str,
+        time=time_str,
+        lat=lat,
+        lon=lon,
+        tz=tz,
+        weekday=weekday,
+        sunrise=sunrise,
+        sunset=sunset,
+        tithi_name=tithi_name(tip, tithi_num),
+        tithi_num=tithi_num,
+        tithi_paksha=paksha,
+        tithi_group=group,
+        tithi_lord=tithi_lord,
+        tithi_verdict=tithi_v,
         tithi_end_hr=tithi_end,
-        nakshatra=nak_name, nakshatra_nature=nak_nature,
-        nakshatra_lord=nak_lord, nakshatra_verdict=nak_v,
+        nakshatra=nak_name,
+        nakshatra_nature=nak_nature,
+        nakshatra_lord=nak_lord,
+        nakshatra_verdict=nak_v,
         nakshatra_end_hr=nak_end,
-        yoga_name=yoga_name, yoga_nature=yoga_nature,
-        yoga_lord=yoga_lord, yoga_deity=yoga_deity, yoga_verdict=yoga_v,
+        yoga_name=yoga_name,
+        yoga_nature=yoga_nature,
+        yoga_lord=yoga_lord,
+        yoga_deity=yoga_deity,
+        yoga_verdict=yoga_v,
         yoga_end_hr=yoga_end,
-        karana_name=karana_name, karana_verdict=karana_v,
+        karana_name=karana_name,
+        karana_verdict=karana_v,
         karana_end_hr=karana_end,
         transit=transit,
         segments={"tithi": seg_t, "nak": seg_n, "yoga": seg_y, "karana": seg_k},

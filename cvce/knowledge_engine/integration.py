@@ -17,6 +17,11 @@ from typing import Any
 from .engine import KnowledgeEngine
 
 
+def clear_knowledge_engine_cache() -> None:
+    """Drop the singleton so the next call rebuilds store caches."""
+    get_knowledge_engine.cache_clear()
+
+
 @lru_cache(maxsize=1)
 def get_knowledge_engine() -> KnowledgeEngine:
     """
@@ -68,6 +73,24 @@ def is_knowledge_healthy() -> bool:
     """Quick health check for the entire knowledge layer."""
     ke = get_knowledge_engine()
     return ke.is_knowledge_healthy()
+
+
+def search_knowledge(query: str, top_k: int = 8) -> list[dict[str, Any]]:
+    """
+    Semantic + keyword hybrid retrieval over corpus chunks.
+
+    Preferred API for any component that needs classical-text passage lookup.
+    """
+    ke = get_knowledge_engine()
+    return ke.search(query, top_k=top_k)
+
+
+def notify_embeddings_updated(chunk_count: int = 0) -> dict[str, Any]:
+    """Clear embedding caches and notify registered engines."""
+    ke = get_knowledge_engine()
+    result = ke.on_embeddings_updated(chunk_count=chunk_count)
+    clear_knowledge_engine_cache()
+    return result
 
 
 # ------------------------------------------------------------------ #

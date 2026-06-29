@@ -13,10 +13,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
+import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,10 +26,15 @@ sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "cvce"))
 
 from supabase_corpus_sync import api_request, load_env  # noqa: E402
+
 from knowledge_engine.embeddings import embed_text, get_genai_client  # noqa: E402
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+logger = logging.getLogger(__name__)
 
 FETCH_PAGE = 500
 MAX_RETRIES = 3
+EMBED_DELAY_SEC = 0.05
 
 
 def fetch_chunks_without_embeddings(env: dict[str, str], limit: int = 0) -> list[dict]:
@@ -65,7 +72,7 @@ def fetch_chunks_without_embeddings(env: dict[str, str], limit: int = 0) -> list
 
 
 def patch_embedding(env: dict[str, str], chunk_id: str, vec: list[float]) -> bool:
-    payload = {"embedding": vec, "updated_at": datetime.now(timezone.utc).isoformat()}
+    payload = {"embedding": vec, "updated_at": datetime.now(UTC).isoformat()}
     for attempt in range(MAX_RETRIES):
         code, body = api_request(
             env,
@@ -77,11 +84,71 @@ def patch_embedding(env: dict[str, str], chunk_id: str, vec: list[float]) -> boo
         if code in (200, 204):
             return True
         if code >= 500 and attempt < MAX_RETRIES - 1:
-            time.sleep(2 ** attempt)
+            time.sleep(2**attempt)
             continue
-        print(f"  failed for {chunk_id}: HTTP {code} {body[:120]!r}", file=sys.stderr)
+        logger.error("patch failed for %s: HTTP %s %s", chunk_id, code, body[:120]!r)
         return False
     return False
+
+
+def embed_with_retry(client, text: str, retries: int = MAX_RETRIES) -> list[float] | None:
+    for attempt in range(retries):
+        vec = embed_text(client, text)
+        if vec is not None:
+            return vec
+        if attempt < retries - 1:
+            time.sleep(2**attempt)
+    return None
+
+
+def notify_knowledge_engine(chunk_count: int) -> dict | None:
+    """Notify local KnowledgeEngine and optionally a running CVCE server."""
+    result: dict | None = None
+
+    try:
+        from knowledge_engine.integration import notify_embeddings_updated
+
+        result = notify_embeddings_updated(chunk_count=chunk_count)
+        logger.info(
+            "KnowledgeEngine notified: vector_search=%s version=%s",
+            result.get("vector_search_available"),
+            result.get("version"),
+        )
+    except Exception as exc:
+        logger.warning("KnowledgeEngine local notification skipped: %s", exc)
+
+    base = (os.environ.get("CVCE_BASE_URL") or os.environ.get("CVCE_URL") or "").strip()
+    if base:
+        url = base.rstrip("/") + "/knowledge/embeddings-updated"
+        try:
+            proc = subprocess.run(
+                [
+                    "curl",
+                    "-sS",
+                    "-X",
+                    "POST",
+                    f"{url}?chunk_count={chunk_count}",
+                    "-w",
+                    "\n%{http_code}",
+                ],
+                capture_output=True,
+                timeout=30,
+            )
+            if proc.returncode == 0 and b"\n" in proc.stdout:
+                *body_lines, code_line = proc.stdout.rsplit(b"\n", 1)
+                code = int(code_line.decode().strip())
+                if code < 400:
+                    logger.info("CVCE server notified at %s (HTTP %s)", url, code)
+                else:
+                    logger.warning(
+                        "CVCE notify failed HTTP %s: %s",
+                        code,
+                        b"\n".join(body_lines)[:200].decode(errors="replace"),
+                    )
+        except Exception as exc:
+            logger.warning("CVCE server notification skipped: %s", exc)
+
+    return result
 
 
 def main() -> int:
@@ -92,67 +159,71 @@ def main() -> int:
 
     env = load_env()
     if not env.get("SUPABASE_URL") or not env.get("SUPABASE_SERVICE_ROLE_KEY"):
-        print("error: missing Supabase env (SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY)", file=sys.stderr)
+        logger.error("missing Supabase env (SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY)")
         return 1
 
     client = get_genai_client()
     if not client:
-        print("error: set GEMINI_API_KEY or GOOGLE_API_KEY for real embeddings", file=sys.stderr)
+        logger.error("set GEMINI_API_KEY or GOOGLE_API_KEY for real embeddings")
         return 1
-    print("Using Gemini text-embedding-004")
+    logger.info("Using Gemini text-embedding-004")
 
     try:
         chunks = fetch_chunks_without_embeddings(env, limit=args.limit)
     except RuntimeError as exc:
-        print(f"error: {exc}", file=sys.stderr)
+        logger.error("%s", exc)
         return 1
 
     if not chunks:
-        print("No chunks without embeddings — nothing to do.")
+        logger.info("No chunks without embeddings — nothing to do.")
         return 0
 
-    print(f"Embedding {len(chunks)} chunks...")
+    logger.info("Embedding %d chunks...", len(chunks))
 
     updated = 0
     skipped = 0
+    failed = 0
     for ch in chunks:
         content = ch.get("content", "")
         if not content:
             skipped += 1
             continue
 
-        vec = embed_text(client, content)
+        vec = embed_with_retry(client, content)
         if vec is None:
-            print(f"  embed failed for {ch['source_id']}#{ch['chunk_index']}", file=sys.stderr)
-            skipped += 1
+            logger.warning(
+                "embed failed for %s#%s",
+                ch.get("source_id"),
+                ch.get("chunk_index"),
+            )
+            failed += 1
             continue
 
         if args.dry_run:
-            print(f"  would update {ch['source_id']}#{ch['chunk_index']}")
+            logger.info("would update %s#%s", ch.get("source_id"), ch.get("chunk_index"))
             continue
 
         if patch_embedding(env, ch["id"], vec):
             updated += 1
             if updated % 20 == 0:
-                print(f"  updated {updated}")
+                logger.info("updated %d chunks", updated)
+        else:
+            failed += 1
 
-    print(f"✓ Embedded/updated {updated} chunks ({skipped} skipped)")
+        if EMBED_DELAY_SEC:
+            time.sleep(EMBED_DELAY_SEC)
+
+    logger.info(
+        "Done: embedded/updated %d chunks (%d skipped, %d failed)",
+        updated,
+        skipped,
+        failed,
+    )
 
     if updated and not args.dry_run:
-        try:
-            from knowledge_engine import get_knowledge_engine
+        notify_knowledge_engine(updated)
 
-            ke = get_knowledge_engine()
-            result = ke.on_embeddings_updated(chunk_count=updated)
-            print(
-                "KnowledgeEngine notified:",
-                f"vector_search={result.get('vector_search_available')},",
-                f"version={result.get('version')}",
-            )
-        except Exception as exc:
-            print(f"KnowledgeEngine notification skipped: {exc}", file=sys.stderr)
-
-    return 0
+    return 0 if failed == 0 else 1
 
 
 if __name__ == "__main__":

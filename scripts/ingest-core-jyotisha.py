@@ -18,6 +18,7 @@ Usage:
 
 Source: /Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha
 """
+
 from __future__ import annotations
 
 import argparse
@@ -27,32 +28,33 @@ import subprocess
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = Path(
-    "/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha"
-)
+SOURCE = Path("/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks/CoreJyothisha")
 STATE_FILE = ROOT / "knowledge-graph" / "core-jyotisha-ingest.json"
 GRAPH_OUT = ROOT / "knowledge-graph" / "graphify-out" / "graph-core-jyotisha.json"
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from core_jyotisha_titles import OCR_PRIORITY, TEXT_BOOKS_MD, TITLE_MAP, md_name_for_pdf  # noqa: E402
+from core_jyotisha_titles import (  # noqa: E402
+    OCR_PRIORITY,
+    TEXT_BOOKS_MD,
+    TITLE_MAP,
+    md_name_for_pdf,
+)
 from graph_extract_common import (  # noqa: E402
     GRAPH_BASE,
     KG,
     RAW,
     build_extraction_jobs,
     cache_path,
-    corpus_paths,
     env_key,
     load_graph_version,
     merge_caches_into,
     merge_graph,
     parse_fragment,
     production_node_floor,
-    slugify_title,
     update_manifest,
 )
 
@@ -71,7 +73,7 @@ def _load_state() -> dict:
 
 def _save_state(state: dict) -> None:
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    state["updated_at"] = datetime.now(timezone.utc).isoformat()
+    state["updated_at"] = datetime.now(UTC).isoformat()
     STATE_FILE.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
 
 
@@ -252,7 +254,13 @@ def _run_deepseek(jobs: list[dict], *, model: str, concurrency: int, force: bool
             else:
                 failed += 1
 
-    return {"provider": "deepseek", "status": "done", "ok": ok, "skipped": skipped, "failed": failed}
+    return {
+        "provider": "deepseek",
+        "status": "done",
+        "ok": ok,
+        "skipped": skipped,
+        "failed": failed,
+    }
 
 
 def _run_provider_subprocess(provider: str, only_md: list[str], pilot: bool) -> dict:
@@ -303,7 +311,9 @@ def cmd_extract(args: argparse.Namespace) -> int:
         return 1
 
     providers = [p.strip() for p in args.providers.split(",") if p.strip()]
-    providers = sorted(providers, key=lambda p: PROVIDER_ORDER.index(p) if p in PROVIDER_ORDER else 99)
+    providers = sorted(
+        providers, key=lambda p: PROVIDER_ORDER.index(p) if p in PROVIDER_ORDER else 99
+    )
 
     print(f"extract: {len(only_md)} files → {len(jobs)} chunks")
     print(f"providers (priority): {', '.join(providers)}")
@@ -321,13 +331,15 @@ def cmd_extract(args: argparse.Namespace) -> int:
             futs = {}
             for p in providers:
                 if p == "deepseek":
-                    futs[pool.submit(
-                        _run_deepseek,
-                        jobs,
-                        model=args.deepseek_model,
-                        concurrency=args.concurrency,
-                        force=args.force,
-                    )] = p
+                    futs[
+                        pool.submit(
+                            _run_deepseek,
+                            jobs,
+                            model=args.deepseek_model,
+                            concurrency=args.concurrency,
+                            force=args.force,
+                        )
+                    ] = p
                 else:
                     futs[pool.submit(_run_provider_subprocess, p, only_md, args.pilot)] = p
             for fut in as_completed(futs):
@@ -349,7 +361,7 @@ def cmd_extract(args: argparse.Namespace) -> int:
 
     for md in only_md:
         state.setdefault("extracted", {})[md] = {
-            "at": datetime.now(timezone.utc).isoformat(),
+            "at": datetime.now(UTC).isoformat(),
             "providers": providers,
         }
     _save_state(state)
@@ -421,14 +433,18 @@ def cmd_go(args: argparse.Namespace) -> int:
     """Launch parallel lanes: DeepSeek extraction + Marker OCR queue."""
     LOG_DIR = KG / "ingest-logs"
     LOG_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
 
-    venv_py = Path(
-        os.environ.get(
-            "PANCHANG_VENV",
-            "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv",
+    venv_py = (
+        Path(
+            os.environ.get(
+                "PANCHANG_VENV",
+                "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv",
+            )
         )
-    ) / "bin" / "python"
+        / "bin"
+        / "python"
+    )
     py = str(venv_py) if venv_py.is_file() else sys.executable
 
     only_md = ",".join(TEXT_BOOKS_MD)
@@ -482,10 +498,8 @@ def cmd_go(args: argparse.Namespace) -> int:
     )
 
     meta = {
-        "started_at": datetime.now(timezone.utc).isoformat(),
-        "lanes": [
-            {"name": n, "pid": p.pid, "log": str(log)} for n, p, log in procs
-        ],
+        "started_at": datetime.now(UTC).isoformat(),
+        "lanes": [{"name": n, "pid": p.pid, "log": str(log)} for n, p, log in procs],
         "text_books": TEXT_BOOKS_MD,
         "ocr_priority": OCR_PRIORITY,
     }

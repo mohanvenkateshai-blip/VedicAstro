@@ -11,7 +11,6 @@ Key Sources:
   - BPHS = Brihat Parasara Hora Sastra
 """
 
-from typing import Optional
 
 # =====================================================================
 # RULE 1: Good/Bad Houses from Janma Rasi (Gochar Phaladeepika, Table 12)
@@ -23,63 +22,63 @@ TRANSIT_HOUSES = {
         "bad": [1, 2, 4, 8, 9, 12],
         "worst": [5],
         "source": "GPD-Ch10-Table12",
-        "neutral": []  # houses 7
+        "neutral": [],  # houses 7
     },
     "Moon": {
         "good": [1, 3, 6, 7, 10, 11],
         "bad": [2, 4, 5, 12],
         "worst": [8],
         "source": "GPD-Ch10-Table12",
-        "neutral": [9]  # house 9
+        "neutral": [9],  # house 9
     },
     "Mars": {
         "good": [3, 6, 11],
         "bad": [1, 2, 5, 7, 8, 9, 10, 12],
         "worst": [7],
         "source": "GPD-Ch10-Table12",
-        "neutral": [4]
+        "neutral": [4],
     },
     "Mercury": {
         "good": [6, 8, 10, 11],
         "bad": [1, 2, 3, 4, 5, 7, 9, 12],
         "worst": [1],
         "source": "GPD-Ch10-Table12",
-        "neutral": []
+        "neutral": [],
     },
     "Jupiter": {
         "good": [2, 5, 7, 9, 11],
         "bad": [1, 3, 4, 6, 8, 10, 12],
         "worst": [3],
         "source": "GPD-Ch10-Table12",
-        "neutral": []
+        "neutral": [],
     },
     "Venus": {
         "good": [1, 2, 3, 4, 5, 8, 9, 11, 12],
         "bad": [7, 10],
         "worst": [6],
         "source": "GPD-Ch10-Table12",
-        "neutral": []
+        "neutral": [],
     },
     "Saturn": {
         "good": [3, 6, 9, 11],
         "bad": [2, 4, 5, 7, 8, 12],
         "worst": [1],
         "source": "GPD-Ch10-Table12",
-        "neutral": [10]
+        "neutral": [10],
     },
     "Rahu": {
         "good": [3, 6, 11],
         "bad": [1, 2, 4, 7, 8, 10, 12],
         "worst": [9],
         "source": "GPD-Ch10-Table12",
-        "neutral": [5]
+        "neutral": [5],
     },
     "Ketu": {
         "good": [3, 6, 11],
         "bad": [1, 2, 4, 7, 8, 10, 12],
         "worst": [9],
         "source": "GPD-Ch10-Table12",
-        "neutral": [5]
+        "neutral": [5],
     },
 }
 
@@ -91,21 +90,33 @@ TRANSIT_HOUSES = {
 #  in favourable transit."
 
 EXALT_SIGN = {
-    "Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn",
-    "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces",
-    "Saturn": "Libra"
+    "Sun": "Aries",
+    "Moon": "Taurus",
+    "Mars": "Capricorn",
+    "Mercury": "Virgo",
+    "Jupiter": "Cancer",
+    "Venus": "Pisces",
+    "Saturn": "Libra",
 }
 
 DEBIL_SIGN = {
-    "Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer",
-    "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo",
-    "Saturn": "Aries"
+    "Sun": "Libra",
+    "Moon": "Scorpio",
+    "Mars": "Cancer",
+    "Mercury": "Pisces",
+    "Jupiter": "Capricorn",
+    "Venus": "Virgo",
+    "Saturn": "Aries",
 }
 
 OWN_SIGN = {
-    "Sun": ["Leo"], "Moon": ["Cancer"], "Mars": ["Aries", "Scorpio"],
-    "Mercury": ["Gemini", "Virgo"], "Jupiter": ["Sagittarius", "Pisces"],
-    "Venus": ["Taurus", "Libra"], "Saturn": ["Capricorn", "Aquarius"],
+    "Sun": ["Leo"],
+    "Moon": ["Cancer"],
+    "Mars": ["Aries", "Scorpio"],
+    "Mercury": ["Gemini", "Virgo"],
+    "Jupiter": ["Sagittarius", "Pisces"],
+    "Venus": ["Taurus", "Libra"],
+    "Saturn": ["Capricorn", "Aquarius"],
 }
 
 # =====================================================================
@@ -158,17 +169,17 @@ SADE_SATI_PHASES = {
     "rise": {  # Saturn entering 12th from Janma Rasi
         "name": "Rising Phase (1st 2.5 years)",
         "effect": "Mental stress, financial pressure, health concerns begin",
-        "severity": "moderate"
+        "severity": "moderate",
     },
     "peak": {  # Saturn in 1st (Janma Rasi) — middle 2.5 years
         "name": "Peak Phase (middle 2.5 years)",
         "effect": "Maximum difficulty — job loss, family strife, health crisis, financial drain",
-        "severity": "severe"
+        "severity": "severe",
     },
     "setting": {  # Saturn entering 2nd from Janma Rasi
         "name": "Setting Phase (last 2.5 years)",
         "effect": "Recovery period — gradual relief, lessons learned, rebuilding",
-        "severity": "moderate"
+        "severity": "moderate",
     },
 }
 
@@ -184,21 +195,26 @@ SADE_SATI_PHASES = {
 #  Moon and Mercury do not cause Vedha to each other."
 # These pairs are exempt from mutual Gochara Vedha cancellation.
 
-VEDHA_EXEMPT_PAIRS: frozenset[frozenset] = frozenset({
-    frozenset({"Sun",  "Saturn"}),
-    frozenset({"Moon", "Mercury"}),
-})
+VEDHA_EXEMPT_PAIRS: frozenset[frozenset] = frozenset(
+    {
+        frozenset({"Sun", "Saturn"}),
+        frozenset({"Moon", "Mercury"}),
+    }
+)
 
 GOCHARA_VEDHA = {
     "Sun": {  # When Sun is in good house, planet in vedha house cancels it
         "vedha": {3: 12, 6: 5, 10: 8, 11: 9},
-        "source": "GPD-Ch22"
+        "source": "GPD-Ch22",
     },
     "Moon": {"vedha": {1: 5, 3: 9, 6: 12, 7: 2, 10: 4, 11: 8}, "source": "GPD-Ch22"},
     "Mars": {"vedha": {3: 12, 6: 5, 11: 9}, "source": "GPD-Ch22"},
     "Mercury": {"vedha": {6: 2, 8: 4, 10: 1, 11: 9}, "source": "GPD-Ch22"},
     "Jupiter": {"vedha": {2: 12, 5: 4, 7: 3, 9: 10, 11: 8}, "source": "GPD-Ch22"},
-    "Venus": {"vedha": {1: 8, 2: 7, 3: 1, 4: 10, 5: 9, 8: 5, 9: 11, 11: 3, 12: 6}, "source": "GPD-Ch22"},
+    "Venus": {
+        "vedha": {1: 8, 2: 7, 3: 1, 4: 10, 5: 9, 8: 5, 9: 11, 11: 3, 12: 6},
+        "source": "GPD-Ch22",
+    },
     "Saturn": {"vedha": {3: 12, 6: 9, 9: 5, 11: 11}, "source": "GPD-Ch22"},
 }
 
@@ -219,62 +235,65 @@ VIPAREETHA_VEDHA = {
 # Planet's transit count from birth star gives Tara classification
 
 TARA_RESULTS = {
-    1: ("Janma Tara", "Personal transformation, new beginnings, health focus",
-        "ashubh", "Paryaya 1 — strong effect", 1),
-    2: ("Sampat Tara", "Wealth, prosperity, gains, material comfort",
-        "shubh", "Paryaya 1", 1),
-    3: ("Vipat Tara", "Danger, accidents, losses, obstacles",
-        "ashubh", "Paryaya 1", 1),
-    4: ("Kshema Tara", "Security, well-being, recovery, protection",
-        "shubh", "Paryaya 1", 1),
-    5: ("Pratyak Tara", "Opposition, delays, hindrances, competition",
-        "ashubh", "Paryaya 1", 1),
-    6: ("Sadhana Tara", "Achievement, accomplishment, goal fulfillment",
-        "shubh", "Paryaya 1", 1),
-    7: ("Naidhana Tara", "Death-like suffering, endings, major transitions",
-        "ashubh", "Paryaya 1", 1),
-    8: ("Mitra Tara", "Friendship, support, alliances, help from others",
-        "shubh", "Paryaya 1", 1),
-    9: ("Parama Maitra Tara", "Highest friendship, ultimate support, divine grace",
-        "shubh", "Paryaya 1", 1),
+    1: (
+        "Janma Tara",
+        "Personal transformation, new beginnings, health focus",
+        "ashubh",
+        "Paryaya 1 — strong effect",
+        1,
+    ),
+    2: ("Sampat Tara", "Wealth, prosperity, gains, material comfort", "shubh", "Paryaya 1", 1),
+    3: ("Vipat Tara", "Danger, accidents, losses, obstacles", "ashubh", "Paryaya 1", 1),
+    4: ("Kshema Tara", "Security, well-being, recovery, protection", "shubh", "Paryaya 1", 1),
+    5: ("Pratyak Tara", "Opposition, delays, hindrances, competition", "ashubh", "Paryaya 1", 1),
+    6: ("Sadhana Tara", "Achievement, accomplishment, goal fulfillment", "shubh", "Paryaya 1", 1),
+    7: (
+        "Naidhana Tara",
+        "Death-like suffering, endings, major transitions",
+        "ashubh",
+        "Paryaya 1",
+        1,
+    ),
+    8: ("Mitra Tara", "Friendship, support, alliances, help from others", "shubh", "Paryaya 1", 1),
+    9: (
+        "Parama Maitra Tara",
+        "Highest friendship, ultimate support, divine grace",
+        "shubh",
+        "Paryaya 1",
+        1,
+    ),
     # Paryaya 2 (10-18) — reduced effect
-    10: ("Janma Tara (Paryaya 2)", "Reduced personal changes",
-         "neutral", "Paryaya 2 — softened", 2),
-    11: ("Sampat Tara (Paryaya 2)", "Moderate gains",
-         "shubh", "Paryaya 2", 2),
-    12: ("Vipat Tara (Paryaya 2)", "Reduced danger",
-         "neutral", "Paryaya 2 — softened", 2),
-    13: ("Kshema Tara (Paryaya 2)", "Moderate security",
-         "shubh", "Paryaya 2", 2),
-    14: ("Pratyak Tara (Paryaya 2)", "Minor delays",
-         "neutral", "Paryaya 2 — softened", 2),
-    15: ("Sadhana Tara (Paryaya 2)", "Moderate achievement",
-         "shubh", "Paryaya 2", 2),
-    16: ("Naidhana Tara (Paryaya 2)", "Significant but reduced suffering",
-         "ashubh", "Paryaya 2", 2),
-    17: ("Mitra Tara (Paryaya 2)", "Moderate support",
-         "shubh", "Paryaya 2", 2),
-    18: ("Parama Maitra Tara (Paryaya 2)", "High friendship",
-         "shubh", "Paryaya 2", 2),
+    10: (
+        "Janma Tara (Paryaya 2)",
+        "Reduced personal changes",
+        "neutral",
+        "Paryaya 2 — softened",
+        2,
+    ),
+    11: ("Sampat Tara (Paryaya 2)", "Moderate gains", "shubh", "Paryaya 2", 2),
+    12: ("Vipat Tara (Paryaya 2)", "Reduced danger", "neutral", "Paryaya 2 — softened", 2),
+    13: ("Kshema Tara (Paryaya 2)", "Moderate security", "shubh", "Paryaya 2", 2),
+    14: ("Pratyak Tara (Paryaya 2)", "Minor delays", "neutral", "Paryaya 2 — softened", 2),
+    15: ("Sadhana Tara (Paryaya 2)", "Moderate achievement", "shubh", "Paryaya 2", 2),
+    16: (
+        "Naidhana Tara (Paryaya 2)",
+        "Significant but reduced suffering",
+        "ashubh",
+        "Paryaya 2",
+        2,
+    ),
+    17: ("Mitra Tara (Paryaya 2)", "Moderate support", "shubh", "Paryaya 2", 2),
+    18: ("Parama Maitra Tara (Paryaya 2)", "High friendship", "shubh", "Paryaya 2", 2),
     # Paryaya 3 (19-27) — mild effect
-    19: ("Janma Tara (Paryaya 3)", "Mild personal changes",
-         "neutral", "Paryaya 3 — mild", 3),
-    20: ("Sampat Tara (Paryaya 3)", "Mild prosperity",
-         "shubh", "Paryaya 3", 3),
-    21: ("Vipat Tara (Paryaya 3)", "Minor obstacles",
-         "neutral", "Paryaya 3 — mild", 3),
-    22: ("Kshema Tara (Paryaya 3)", "Mild security",
-         "shubh", "Paryaya 3", 3),
-    23: ("Pratyak Tara (Paryaya 3)", "Minor opposition",
-         "neutral", "Paryaya 3 — mild", 3),
-    24: ("Sadhana Tara (Paryaya 3)", "Mild achievement",
-         "shubh", "Paryaya 3", 3),
-    25: ("Naidhana Tara (Paryaya 3)", "Minor endings",
-         "neutral", "Paryaya 3 — mild", 3),
-    26: ("Mitra Tara (Paryaya 3)", "Mild support",
-         "shubh", "Paryaya 3", 3),
-    27: ("Parama Maitra Tara (Paryaya 3)", "Highest friendship",
-         "shubh", "Paryaya 3", 3),
+    19: ("Janma Tara (Paryaya 3)", "Mild personal changes", "neutral", "Paryaya 3 — mild", 3),
+    20: ("Sampat Tara (Paryaya 3)", "Mild prosperity", "shubh", "Paryaya 3", 3),
+    21: ("Vipat Tara (Paryaya 3)", "Minor obstacles", "neutral", "Paryaya 3 — mild", 3),
+    22: ("Kshema Tara (Paryaya 3)", "Mild security", "shubh", "Paryaya 3", 3),
+    23: ("Pratyak Tara (Paryaya 3)", "Minor opposition", "neutral", "Paryaya 3 — mild", 3),
+    24: ("Sadhana Tara (Paryaya 3)", "Mild achievement", "shubh", "Paryaya 3", 3),
+    25: ("Naidhana Tara (Paryaya 3)", "Minor endings", "neutral", "Paryaya 3 — mild", 3),
+    26: ("Mitra Tara (Paryaya 3)", "Mild support", "shubh", "Paryaya 3", 3),
+    27: ("Parama Maitra Tara (Paryaya 3)", "Highest friendship", "shubh", "Paryaya 3", 3),
 }
 
 
@@ -314,16 +333,41 @@ def tara_of(count: int) -> dict:
     # Generic for high counts
     paryaya = 1 if count <= 9 else (2 if count <= 18 else 3)
     rem = count % 9 if count % 9 != 0 else 9
-    names = {1: "Janma", 2: "Sampat", 3: "Vipat", 4: "Kshema", 5: "Pratyak",
-             6: "Sadhana", 7: "Naidhana", 8: "Mitra", 9: "Parama Maitra"}
-    verdicts = {1: "ashubh", 2: "shubh", 3: "ashubh", 4: "shubh", 5: "ashubh",
-                6: "shubh", 7: "ashubh", 8: "shubh", 9: "shubh"}
+    names = {
+        1: "Janma",
+        2: "Sampat",
+        3: "Vipat",
+        4: "Kshema",
+        5: "Pratyak",
+        6: "Sadhana",
+        7: "Naidhana",
+        8: "Mitra",
+        9: "Parama Maitra",
+    }
+    verdicts = {
+        1: "ashubh",
+        2: "shubh",
+        3: "ashubh",
+        4: "shubh",
+        5: "ashubh",
+        6: "shubh",
+        7: "ashubh",
+        8: "shubh",
+        9: "shubh",
+    }
     # Special exceptions (Gochar Phaladeepika)
     exceptions = []
-    if count == 22: exceptions.append("22nd Nakshatra (Vainasika) — destructive exception; avoid major durable events.")
-    if count == 27: exceptions.append("27th from Janma — Parama Maitra but restricted for marriage/travel/shaving; avoid 2nd half.")
-    if rem == 1 and paryaya == 1: exceptions.append("Janma Tara — negative effect lifts after midday.")
-    
+    if count == 22:
+        exceptions.append(
+            "22nd Nakshatra (Vainasika) — destructive exception; avoid major durable events."
+        )
+    if count == 27:
+        exceptions.append(
+            "27th from Janma — Parama Maitra but restricted for marriage/travel/shaving; avoid 2nd half."
+        )
+    if rem == 1 and paryaya == 1:
+        exceptions.append("Janma Tara — negative effect lifts after midday.")
+
     return {
         "name": f"{names[rem]} Tara",
         "description": "",
@@ -339,10 +383,7 @@ def tara_of(count: int) -> dict:
 # RULE 8: Combustion Orbs (Classical, per GPD + PD)
 # =====================================================================
 
-COMBUST_ORB = {
-    "Moon": 12, "Mars": 17, "Mercury": 14,
-    "Jupiter": 11, "Venus": 10, "Saturn": 15
-}
+COMBUST_ORB = {"Moon": 12, "Mars": 17, "Mercury": 14, "Jupiter": 11, "Venus": 10, "Saturn": 15}
 
 # =====================================================================
 # RULE 9: Paryaya (Cycles) — GPD Ch.26
@@ -351,12 +392,21 @@ COMBUST_ORB = {
 # Different paryaya (cycle number) gives different effects based on age
 
 SATURN_PARYAYA = {
-    1: {"age_range": "0-30 years", "effect": "Foundation building; transit results mild",
-        "source": "GPD-Ch26"},
-    2: {"age_range": "30-60 years", "effect": "Peak impact; strongest transit effects",
-        "source": "GPD-Ch26"},
-    3: {"age_range": "60-90+ years", "effect": "Culmination; spiritual emphasis, reduced material impact",
-        "source": "GPD-Ch26"},
+    1: {
+        "age_range": "0-30 years",
+        "effect": "Foundation building; transit results mild",
+        "source": "GPD-Ch26",
+    },
+    2: {
+        "age_range": "30-60 years",
+        "effect": "Peak impact; strongest transit effects",
+        "source": "GPD-Ch26",
+    },
+    3: {
+        "age_range": "60-90+ years",
+        "effect": "Culmination; spiritual emphasis, reduced material impact",
+        "source": "GPD-Ch26",
+    },
 }
 
 JUPITER_PARYAYA = {
@@ -372,6 +422,7 @@ JUPITER_PARYAYA = {
 # =====================================================================
 # RULE 10: Dasha-Transit Reconciliation (GPD Ch.8)
 # =====================================================================
+
 
 def reconcile_dasha_transit(dasha_good: bool, transit_good: bool) -> str:
     """Combine Dasha and Transit results per Gochar Phaladeepika Ch.8 formula."""

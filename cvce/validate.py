@@ -16,6 +16,7 @@ genuine disagreement worth investigating.
 Run:  ./.venv/bin/python validate.py
 Exit code is non-zero if any reference date shows a flagged residual.
 """
+
 from __future__ import annotations
 
 import sys
@@ -24,21 +25,33 @@ from datetime import datetime
 RESIDUAL_THRESHOLD_DEG = 0.1  # ~6 arc-min: beyond ayanamsa noise
 
 PLANET_NAMES = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
-RASHIS = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra",
-          "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+RASHIS = [
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
+]
 
 # (label, ISO local datetime, lat, lon, tz_offset)
 REFERENCE_CASES = [
-    ("Mohan natal (Mysore)",      "1975-04-22T19:15:00", 12.3,    76.633,  5.5),
-    ("Mullingar today noon",      "2026-06-20T12:00:00", 53.5236, -7.3437, 1.0),
-    ("J2000 epoch (Greenwich)",   "2000-01-01T12:00:00", 51.4769,  0.0,    0.0),
-    ("Republic Day (New Delhi)",  "1950-01-26T10:15:00", 28.6139, 77.2090, 5.5),
-    ("Total eclipse (Chennai)",   "1980-02-16T15:30:00", 13.0827, 80.2707, 5.5),
-    ("Y2K+ (New York)",           "2010-07-11T18:00:00", 40.7128, -74.006, -5.0),
-    ("Solstice (Reykjavik)",      "2021-06-21T03:32:00", 64.1466, -21.942, 0.0),
-    ("Deep south (Sydney)",       "1995-11-09T06:45:00", -33.868, 151.209, 11.0),
-    ("Pre-1900 (Paris)",          "1889-03-31T00:00:00", 48.8566,  2.3522, 0.0),
-    ("Future (Tokyo)",            "2035-12-25T09:00:00", 35.6762, 139.650, 9.0),
+    ("Mohan natal (Mysore)", "1975-04-22T19:15:00", 12.3, 76.633, 5.5),
+    ("Mullingar today noon", "2026-06-20T12:00:00", 53.5236, -7.3437, 1.0),
+    ("J2000 epoch (Greenwich)", "2000-01-01T12:00:00", 51.4769, 0.0, 0.0),
+    ("Republic Day (New Delhi)", "1950-01-26T10:15:00", 28.6139, 77.2090, 5.5),
+    ("Total eclipse (Chennai)", "1980-02-16T15:30:00", 13.0827, 80.2707, 5.5),
+    ("Y2K+ (New York)", "2010-07-11T18:00:00", 40.7128, -74.006, -5.0),
+    ("Solstice (Reykjavik)", "2021-06-21T03:32:00", 64.1466, -21.942, 0.0),
+    ("Deep south (Sydney)", "1995-11-09T06:45:00", -33.868, 151.209, 11.0),
+    ("Pre-1900 (Paris)", "1889-03-31T00:00:00", 48.8566, 2.3522, 0.0),
+    ("Future (Tokyo)", "2035-12-25T09:00:00", 35.6762, 139.650, 9.0),
 ]
 
 
@@ -48,13 +61,13 @@ def _parse(s):
 
 def pyjhora_positions(dt, lat, lon, tz):
     """Absolute sidereal longitude per planet via PyJHora (Lahiri)."""
-    from jhora import utils, const
+    from jhora import const, utils
     from jhora.panchanga import drik
     from jhora.panchanga.drik import Place
+
     const._INCLUDE_URANUS_TO_PLUTO = False
     drik.set_ayanamsa_mode("LAHIRI")
-    jd = utils.julian_day_number((dt.year, dt.month, dt.day),
-                                 (dt.hour, dt.minute, dt.second))
+    jd = utils.julian_day_number((dt.year, dt.month, dt.day), (dt.hour, dt.minute, dt.second))
     place = Place("loc", lat, lon, tz)
     out = {}
     for pid, deg, sign in drik.planetary_positions(jd, place):
@@ -66,6 +79,7 @@ def pyjhora_positions(dt, lat, lon, tz):
 def jyotishganit_positions(dt, lat, lon, tz):
     """Absolute sidereal longitude per planet via jyotishganit (True Chitra)."""
     import jyotishganit.main as jgm
+
     chart = jgm.calculate_birth_chart(dt, lat, lon, tz)
     cj = jgm.get_birth_chart_json(chart)
     out = {}
@@ -101,12 +115,10 @@ def run_case(label, iso, lat, lon, tz):
         jg = jyotishganit_positions(dt, lat, lon, tz)
     except Exception as e:
         # An ephemeris-range limit is a coverage gap, not a disagreement -- skip.
-        print(f"  ~ SKIP (jyotishganit cannot compute this date): "
-              f"{type(e).__name__}: {e}")
+        print(f"  ~ SKIP (jyotishganit cannot compute this date): {type(e).__name__}: {e}")
         return "skip"
 
-    main_deltas = [signed_delta(pj[n], jg[n]) for n in PLANET_NAMES[:7]
-                   if n in pj and n in jg]
+    main_deltas = [signed_delta(pj[n], jg[n]) for n in PLANET_NAMES[:7] if n in pj and n in jg]
     offset = median(main_deltas)
 
     print(f"  {'Planet':<9}{'PyJHora':>12}{'jyotishganit':>14}{'Δ (deg)':>11}{'residual':>11}")
@@ -118,13 +130,12 @@ def run_case(label, iso, lat, lon, tz):
             continue
         d = signed_delta(a, b)
         node = name in ("Rahu", "Ketu")
-        resid = "(node)" if node else f"{abs(d - offset)*3600:8.1f}\""
+        resid = "(node)" if node else f'{abs(d - offset) * 3600:8.1f}"'
         flag = ""
         if not node and abs(d - offset) > RESIDUAL_THRESHOLD_DEG:
             flag, ok = "  <-- FLAG", False
         print(f"  {name:<9}{a:12.5f}{b:14.5f}{d:11.5f}{resid:>11}{flag}")
-    print(f"  systematic ayanamsa offset (median of 7): {offset:+.5f} deg "
-          f"({offset*3600:+.1f}\")")
+    print(f'  systematic ayanamsa offset (median of 7): {offset:+.5f} deg ({offset * 3600:+.1f}")')
     return "pass" if ok else "fail"
 
 
@@ -132,8 +143,10 @@ def main():
     print("=" * 72)
     print("MuhurtaCosmos cross-engine position validation")
     print("PyJHora (Lahiri) vs jyotishganit (True Chitra)")
-    print(f"residual flag threshold: {RESIDUAL_THRESHOLD_DEG} deg "
-          f"({RESIDUAL_THRESHOLD_DEG*3600:.0f} arc-sec)")
+    print(
+        f"residual flag threshold: {RESIDUAL_THRESHOLD_DEG} deg "
+        f"({RESIDUAL_THRESHOLD_DEG * 3600:.0f} arc-sec)"
+    )
     print("=" * 72)
     passed = failed = skipped = 0
     for case in REFERENCE_CASES:
@@ -143,11 +156,12 @@ def main():
         failed += status == "fail"
         skipped += status == "skip"
     print("\n" + "=" * 72)
-    print(f"{passed} passed, {failed} failed, {skipped} skipped "
-          f"of {len(REFERENCE_CASES)} reference dates.")
+    print(
+        f"{passed} passed, {failed} failed, {skipped} skipped "
+        f"of {len(REFERENCE_CASES)} reference dates."
+    )
     if failed == 0:
-        print("RESULT: PASS -- all comparable residuals within threshold "
-              "after ayanamsa offset.")
+        print("RESULT: PASS -- all comparable residuals within threshold after ayanamsa offset.")
         return 0
     print("RESULT: FAIL -- one or more residuals exceeded threshold (see FLAG rows).")
     return 1

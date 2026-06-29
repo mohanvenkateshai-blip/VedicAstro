@@ -9,15 +9,15 @@ dasha context, latta, combustion. Returns structured impact assessment
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from ..core.panchanga import RASHIS
 from ..prediction.gochar import GocharResult, TransitPrediction
 from ..rules.transit_rules import (
-    TRANSIT_HOUSES,
-    EXALT_SIGN,
     DEBIL_SIGN,
+    EXALT_SIGN,
     OWN_SIGN,
+    TRANSIT_HOUSES,
     reconcile_dasha_transit,
 )
 
@@ -58,7 +58,7 @@ class PlanetTransitAnalysis:
     planet: str
     rashi: str
     nakshatra: str
-    house_from_janma: Optional[int]
+    house_from_janma: int | None
     retrograde: bool
     final_verdict: str  # shubh | mixed | ashubh
     score: int
@@ -76,13 +76,13 @@ class PlanetTransitAnalysis:
 @dataclass
 class TransitIntelligence:
     date: str
-    janma_rashi: Optional[str]
+    janma_rashi: str | None
     overall_verdict: str
     overall_score: int
     day_summary: str
-    dasha_context: Optional[str]
-    moorthy_note: Optional[str]
-    tara_note: Optional[str]
+    dasha_context: str | None
+    moorthy_note: str | None
+    tara_note: str | None
     planets: list[dict] = field(default_factory=list)
     top_drivers: list[str] = field(default_factory=list)
 
@@ -117,7 +117,7 @@ def _house_quality_hardcoded(planet: str, house: int) -> tuple[str, str, int]:
     return "neutral", "neutral", 0
 
 
-def _natal_dignity(planet: str, natal_sign: dict | None) -> Optional[str]:
+def _natal_dignity(planet: str, natal_sign: dict | None) -> str | None:
     if not natal_sign or planet not in natal_sign:
         return None
     rashi = RASHIS[natal_sign[planet]]
@@ -134,7 +134,7 @@ def _special_for_planet(
     planet: str,
     house: int | None,
     gochar: GocharResult,
-) -> Optional[tuple[str, str, int]]:
+) -> tuple[str, str, int] | None:
     """Return (label, effect_text, score_delta) for named special transits."""
     if planet == "Saturn" and house is not None:
         if gochar.sade_sati and house in (12, 1, 2):
@@ -269,14 +269,10 @@ class TransitImpactAnalyzer:
             f"{shubh_n} favourable, {ashubh_n} unfavourable planetary transits today",
         ]
         if top_neg:
-            day_parts.append(
-                f"Primary caution: {top_neg[0].planet} — {top_neg[0].primary_driver}"
-            )
+            day_parts.append(f"Primary caution: {top_neg[0].planet} — {top_neg[0].primary_driver}")
         if dasha_maha and top_neg:
             transit_good = top_neg[0].final_verdict == "shubh"
-            day_parts.append(
-                reconcile_dasha_transit(dasha_good, transit_good)
-            )
+            day_parts.append(reconcile_dasha_transit(dasha_good, transit_good))
 
         moorthy_note = None
         if gochar.moorthy:
@@ -290,9 +286,7 @@ class TransitImpactAnalyzer:
         tara_note = None
         if gochar.tara_balam:
             t = gochar.tara_balam
-            tara_note = (
-                f"Tara Balam: {t.get('name', '?')} ({t.get('verdict', '?')})"
-            )
+            tara_note = f"Tara Balam: {t.get('name', '?')} ({t.get('verdict', '?')})"
             day_parts.append(tara_note)
 
         return TransitIntelligence(
@@ -326,9 +320,9 @@ class TransitImpactAnalyzer:
             quality, base_verdict, base_score = _house_quality_hardcoded(pred.planet, house)
             factors.append(
                 Factor(
-                    role="contextual" if base_verdict == "neutral" else (
-                        "aggravating" if base_verdict == "ashubh" else "mitigating"
-                    ),
+                    role="contextual"
+                    if base_verdict == "neutral"
+                    else ("aggravating" if base_verdict == "ashubh" else "mitigating"),
                     weight=base_score,
                     summary=(
                         f"{pred.planet} in {_ordinal(house)} from natal Moon — "
@@ -405,6 +399,7 @@ class TransitImpactAnalyzer:
 
         if pred.vedha_active and pred.vedha_by:
             from vedic_engine.rules.transit_rules import VEDHA_EXEMPT_PAIRS
+
             pair = frozenset({pred.planet, pred.vedha_by})
             if pair in VEDHA_EXEMPT_PAIRS:
                 factors.append(

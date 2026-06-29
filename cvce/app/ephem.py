@@ -10,11 +10,12 @@ from the *local* clock time of the place; the drik layer subtracts
 `place.timezone/24` internally to reach UT. We pass wall-clock time straight in
 and hand PyJHora the tz offset on the Place struct — never pre-converting to UT.
 """
+
 from __future__ import annotations
 
 from datetime import datetime
 
-from jhora import utils, const
+from jhora import const, utils
 from jhora.panchanga import drik
 from jhora.panchanga.drik import Place
 
@@ -23,26 +24,72 @@ from jhora.panchanga.drik import Place
 const._INCLUDE_URANUS_TO_PLUTO = False
 
 PLANET_NAMES = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
-RASHIS = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra",
-          "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
-NAKSHATRAS = ["Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra",
-              "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni",
-              "Uttara Phalguni", "Hasta", "Chitra", "Swati", "Vishakha",
-              "Anuradha", "Jyeshtha", "Mula", "Purva Ashadha", "Uttara Ashadha",
-              "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
-              "Uttara Bhadrapada", "Revati"]
+RASHIS = [
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
+]
+NAKSHATRAS = [
+    "Ashwini",
+    "Bharani",
+    "Krittika",
+    "Rohini",
+    "Mrigashira",
+    "Ardra",
+    "Punarvasu",
+    "Pushya",
+    "Ashlesha",
+    "Magha",
+    "Purva Phalguni",
+    "Uttara Phalguni",
+    "Hasta",
+    "Chitra",
+    "Swati",
+    "Vishakha",
+    "Anuradha",
+    "Jyeshtha",
+    "Mula",
+    "Purva Ashadha",
+    "Uttara Ashadha",
+    "Shravana",
+    "Dhanishta",
+    "Shatabhisha",
+    "Purva Bhadrapada",
+    "Uttara Bhadrapada",
+    "Revati",
+]
 WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 # Classical dignities (sidereal, whole-sign) by sign index 0=Aries..11=Pisces.
-EXALT_SIGN = {"Sun": 0, "Moon": 1, "Mars": 9, "Mercury": 5, "Jupiter": 3,
-              "Venus": 11, "Saturn": 6}
-DEBIL_SIGN = {"Sun": 6, "Moon": 7, "Mars": 3, "Mercury": 11, "Jupiter": 9,
-              "Venus": 5, "Saturn": 0}
-OWN_SIGNS = {"Sun": [4], "Moon": [3], "Mars": [0, 7], "Mercury": [2, 5],
-             "Jupiter": [8, 11], "Venus": [1, 6], "Saturn": [9, 10]}
+EXALT_SIGN = {"Sun": 0, "Moon": 1, "Mars": 9, "Mercury": 5, "Jupiter": 3, "Venus": 11, "Saturn": 6}
+DEBIL_SIGN = {"Sun": 6, "Moon": 7, "Mars": 3, "Mercury": 11, "Jupiter": 9, "Venus": 5, "Saturn": 0}
+OWN_SIGNS = {
+    "Sun": [4],
+    "Moon": [3],
+    "Mars": [0, 7],
+    "Mercury": [2, 5],
+    "Jupiter": [8, 11],
+    "Venus": [1, 6],
+    "Saturn": [9, 10],
+}
 # Combustion orbs in degrees from the Sun (classical, direct-motion values).
-COMBUST_ORB = {"Moon": 12.0, "Mars": 17.0, "Mercury": 14.0, "Jupiter": 11.0,
-               "Venus": 10.0, "Saturn": 15.0}
+COMBUST_ORB = {
+    "Moon": 12.0,
+    "Mars": 17.0,
+    "Mercury": 14.0,
+    "Jupiter": 11.0,
+    "Venus": 10.0,
+    "Saturn": 15.0,
+}
 
 
 def parse_dt(s: str) -> datetime:
@@ -53,8 +100,9 @@ def parse_dt(s: str) -> datetime:
 
 def jd_place(dt: datetime, lat: float, lon: float, tz: float):
     """Build a PyJHora (jd, place) pair from a *local* datetime + tz offset (hours)."""
-    jd = utils.julian_day_number((dt.year, dt.month, dt.day),
-                                 (dt.hour, dt.minute, dt.second + dt.microsecond / 1e6))
+    jd = utils.julian_day_number(
+        (dt.year, dt.month, dt.day), (dt.hour, dt.minute, dt.second + dt.microsecond / 1e6)
+    )
     return jd, Place("loc", lat, lon, tz)
 
 
@@ -134,8 +182,7 @@ def positions(jd: float, place: Place) -> list[dict]:
             continue
         name = PLANET_NAMES[pid]
         lon = sign * 30 + deg_in_sign
-        bodies[name] = {"planet": name, **split_longitude(lon),
-                        "retro": retro.get(name, False)}
+        bodies[name] = {"planet": name, **split_longitude(lon), "retro": retro.get(name, False)}
     sun_lon = bodies.get("Sun", {}).get("longitude")
     out = []
     for name in PLANET_NAMES:

@@ -8,8 +8,6 @@ Ayanamsha: Lahiri (Chitrapaksha)
 """
 
 import math
-from datetime import datetime
-from typing import Optional
 
 RAD = math.pi / 180
 DEG = 180 / math.pi
@@ -26,9 +24,7 @@ def julian_day(y: int, m: int, d: int) -> float:
         m += 12
     a = y // 100
     b = 2 - a + a // 4
-    return (math.floor(365.25 * (y + 4716))
-            + math.floor(30.6001 * (m + 1))
-            + d + b - 1524.5)
+    return math.floor(365.25 * (y + 4716)) + math.floor(30.6001 * (m + 1)) + d + b - 1524.5
 
 
 def julian_day_ut(y: int, m: int, d: int, hour_ut: float) -> float:
@@ -46,19 +42,22 @@ def lahiri_ayanamsha(jd: float) -> float:
 # Sun and Moon — high-precision series (ported from MuhurtaCosmos.jsx)
 # =====================================================================
 
+
 def sun_moon(jd: float) -> dict:
     """Return sidereal longitudes of Sun and Moon at the given JD (UT).
-       Moon uses expanded ELP-style series (~40 terms, ~0.02-0.05 deg accuracy).
-       Sun uses VSOP87-style low-precision series (~0.01 deg accuracy)."""
+    Moon uses expanded ELP-style series (~40 terms, ~0.02-0.05 deg accuracy).
+    Sun uses VSOP87-style low-precision series (~0.01 deg accuracy)."""
     T = (jd - 2451545) / 36525
     r = RAD
 
     # Sun — mean longitude + equation of centre
     L0 = norm360(280.46646 + 36000.76983 * T + 0.0003032 * T * T)
     M = r * norm360(357.52911 + 35999.05029 * T - 0.0001537 * T * T)
-    C = ((1.914602 - 0.004817 * T - 0.000014 * T * T) * math.sin(M)
-         + (0.019993 - 0.000101 * T) * math.sin(2 * M)
-         + 0.000289 * math.sin(3 * M))
+    C = (
+        (1.914602 - 0.004817 * T - 0.000014 * T * T) * math.sin(M)
+        + (0.019993 - 0.000101 * T) * math.sin(2 * M)
+        + 0.000289 * math.sin(3 * M)
+    )
     sun_trop = norm360(L0 + C)
 
     # Moon — expanded ELP periodic terms
@@ -68,53 +67,52 @@ def sun_moon(jd: float) -> dict:
     Mp = norm360(134.9633964 + 477198.8675055 * T + 0.0087414 * T * T)
     F = norm360(93.272095 + 483202.0175233 * T - 0.0036539 * T * T)
 
-    lon = (Lp
-           + 6.288774 * math.sin(r * Mp)
-           + 1.274027 * math.sin(r * (2 * D - Mp))
-           + 0.658314 * math.sin(r * 2 * D)
-           + 0.213618 * math.sin(r * 2 * Mp)
-           - 0.185116 * math.sin(r * Ms)
-           - 0.114332 * math.sin(r * 2 * F)
-           + 0.058793 * math.sin(r * (2 * D - 2 * Mp))
-           + 0.057066 * math.sin(r * (2 * D - Ms - Mp))
-           + 0.053322 * math.sin(r * (2 * D + Mp))
-           + 0.045758 * math.sin(r * (2 * D - Ms))
-           - 0.040923 * math.sin(r * (Ms - Mp))
-           - 0.034720 * math.sin(r * D)
-           - 0.030383 * math.sin(r * (Ms + Mp))
-           + 0.015327 * math.sin(r * (2 * D - 2 * F))
-           - 0.012528 * math.sin(r * (Mp + 2 * F))
-           + 0.010980 * math.sin(r * (Mp - 2 * F))
-           + 0.010675 * math.sin(r * (4 * D - Mp))
-           + 0.010034 * math.sin(r * 3 * Mp)
-           + 0.008548 * math.sin(r * (4 * D - 2 * Mp))
-           - 0.007888 * math.sin(r * (2 * D + Ms - Mp))
-           - 0.006766 * math.sin(r * (2 * D + Ms))
-           - 0.005163 * math.sin(r * (D - Mp))
-           + 0.004987 * math.sin(r * (D + Ms))
-           + 0.004036 * math.sin(r * (2 * D - Ms + Mp))
-           + 0.003994 * math.sin(r * (2 * D + 2 * Mp))
-           + 0.003861 * math.sin(r * 4 * D)
-           + 0.003665 * math.sin(r * (2 * D - 3 * Mp))
-           - 0.002689 * math.sin(r * (Ms - 2 * Mp))
-           - 0.002602 * math.sin(r * (2 * D - Mp + 2 * F))
-           + 0.002390 * math.sin(r * (2 * D - Ms - 2 * Mp))
-           - 0.002348 * math.sin(r * (D + Mp))
-           + 0.002236 * math.sin(r * (2 * D - 2 * Ms))
-           - 0.002120 * math.sin(r * (Ms + 2 * Mp))
-           - 0.002069 * math.sin(r * 2 * Ms)
-           + 0.002048 * math.sin(r * (2 * D - 2 * Ms - Mp))
-           - 0.001773 * math.sin(r * (2 * D + Mp - 2 * F))
-           - 0.001595 * math.sin(r * (2 * D + 2 * F))
-           + 0.001215 * math.sin(r * (4 * D - Ms - Mp))
-           - 0.001110 * math.sin(r * (2 * Mp + 2 * F)))
+    lon = (
+        Lp
+        + 6.288774 * math.sin(r * Mp)
+        + 1.274027 * math.sin(r * (2 * D - Mp))
+        + 0.658314 * math.sin(r * 2 * D)
+        + 0.213618 * math.sin(r * 2 * Mp)
+        - 0.185116 * math.sin(r * Ms)
+        - 0.114332 * math.sin(r * 2 * F)
+        + 0.058793 * math.sin(r * (2 * D - 2 * Mp))
+        + 0.057066 * math.sin(r * (2 * D - Ms - Mp))
+        + 0.053322 * math.sin(r * (2 * D + Mp))
+        + 0.045758 * math.sin(r * (2 * D - Ms))
+        - 0.040923 * math.sin(r * (Ms - Mp))
+        - 0.034720 * math.sin(r * D)
+        - 0.030383 * math.sin(r * (Ms + Mp))
+        + 0.015327 * math.sin(r * (2 * D - 2 * F))
+        - 0.012528 * math.sin(r * (Mp + 2 * F))
+        + 0.010980 * math.sin(r * (Mp - 2 * F))
+        + 0.010675 * math.sin(r * (4 * D - Mp))
+        + 0.010034 * math.sin(r * 3 * Mp)
+        + 0.008548 * math.sin(r * (4 * D - 2 * Mp))
+        - 0.007888 * math.sin(r * (2 * D + Ms - Mp))
+        - 0.006766 * math.sin(r * (2 * D + Ms))
+        - 0.005163 * math.sin(r * (D - Mp))
+        + 0.004987 * math.sin(r * (D + Ms))
+        + 0.004036 * math.sin(r * (2 * D - Ms + Mp))
+        + 0.003994 * math.sin(r * (2 * D + 2 * Mp))
+        + 0.003861 * math.sin(r * 4 * D)
+        + 0.003665 * math.sin(r * (2 * D - 3 * Mp))
+        - 0.002689 * math.sin(r * (Ms - 2 * Mp))
+        - 0.002602 * math.sin(r * (2 * D - Mp + 2 * F))
+        + 0.002390 * math.sin(r * (2 * D - Ms - 2 * Mp))
+        - 0.002348 * math.sin(r * (D + Mp))
+        + 0.002236 * math.sin(r * (2 * D - 2 * Ms))
+        - 0.002120 * math.sin(r * (Ms + 2 * Mp))
+        - 0.002069 * math.sin(r * 2 * Ms)
+        + 0.002048 * math.sin(r * (2 * D - 2 * Ms - Mp))
+        - 0.001773 * math.sin(r * (2 * D + Mp - 2 * F))
+        - 0.001595 * math.sin(r * (2 * D + 2 * F))
+        + 0.001215 * math.sin(r * (4 * D - Ms - Mp))
+        - 0.001110 * math.sin(r * (2 * Mp + 2 * F))
+    )
     moon_trop = norm360(lon)
 
     ayan = lahiri_ayanamsha(jd)
-    return {
-        "sun": norm360(sun_trop - ayan),
-        "moon": norm360(moon_trop - ayan)
-    }
+    return {"sun": norm360(sun_trop - ayan), "moon": norm360(moon_trop - ayan)}
 
 
 # =====================================================================
@@ -123,29 +121,44 @@ def sun_moon(jd: float) -> dict:
 
 PLANET_ELEMENTS = {
     "Mercury": {
-        "N": [48.3313, 3.24587e-5], "i": [7.0047, 5.00e-8],
-        "w": [29.1241, 1.01444e-5], "a": 0.387098,
-        "e": [0.205635, 5.59e-10], "M": [168.6562, 4.0923344368]
+        "N": [48.3313, 3.24587e-5],
+        "i": [7.0047, 5.00e-8],
+        "w": [29.1241, 1.01444e-5],
+        "a": 0.387098,
+        "e": [0.205635, 5.59e-10],
+        "M": [168.6562, 4.0923344368],
     },
     "Venus": {
-        "N": [76.6799, 2.46590e-5], "i": [3.3946, 2.75e-8],
-        "w": [54.8910, 1.38374e-5], "a": 0.723330,
-        "e": [0.006773, -1.302e-9], "M": [48.0052, 1.6021302244]
+        "N": [76.6799, 2.46590e-5],
+        "i": [3.3946, 2.75e-8],
+        "w": [54.8910, 1.38374e-5],
+        "a": 0.723330,
+        "e": [0.006773, -1.302e-9],
+        "M": [48.0052, 1.6021302244],
     },
     "Mars": {
-        "N": [49.5574, 2.11081e-5], "i": [1.8497, -1.78e-8],
-        "w": [286.5016, 2.92961e-5], "a": 1.523688,
-        "e": [0.093405, 2.516e-9], "M": [18.6021, 0.5240207766]
+        "N": [49.5574, 2.11081e-5],
+        "i": [1.8497, -1.78e-8],
+        "w": [286.5016, 2.92961e-5],
+        "a": 1.523688,
+        "e": [0.093405, 2.516e-9],
+        "M": [18.6021, 0.5240207766],
     },
     "Jupiter": {
-        "N": [100.4542, 2.76854e-5], "i": [1.3030, -1.557e-7],
-        "w": [273.8777, 1.64505e-5], "a": 5.20256,
-        "e": [0.048498, 4.469e-9], "M": [19.8950, 0.0830853001]
+        "N": [100.4542, 2.76854e-5],
+        "i": [1.3030, -1.557e-7],
+        "w": [273.8777, 1.64505e-5],
+        "a": 5.20256,
+        "e": [0.048498, 4.469e-9],
+        "M": [19.8950, 0.0830853001],
     },
     "Saturn": {
-        "N": [113.6634, 2.38980e-5], "i": [2.4886, -1.081e-7],
-        "w": [339.3939, 2.97661e-5], "a": 9.55475,
-        "e": [0.055546, -9.499e-9], "M": [316.9670, 0.0334442282]
+        "N": [113.6634, 2.38980e-5],
+        "i": [2.4886, -1.081e-7],
+        "w": [339.3939, 2.97661e-5],
+        "a": 9.55475,
+        "e": [0.055546, -9.499e-9],
+        "M": [316.9670, 0.0334442282],
     },
 }
 
@@ -186,29 +199,37 @@ def planet_tropical_lon(planet: str, jd_ut: float) -> float:
     rr = math.sqrt(xv * xv + yv * yv)
 
     # Heliocentric → geocentric
-    xh = rr * (math.cos(N_val * r) * math.cos((v + w) * r)
-               - math.sin(N_val * r) * math.sin((v + w) * r) * math.cos(inc * r))
-    yh = rr * (math.sin(N_val * r) * math.cos((v + w) * r)
-               + math.cos(N_val * r) * math.sin((v + w) * r) * math.cos(inc * r))
+    xh = rr * (
+        math.cos(N_val * r) * math.cos((v + w) * r)
+        - math.sin(N_val * r) * math.sin((v + w) * r) * math.cos(inc * r)
+    )
+    yh = rr * (
+        math.sin(N_val * r) * math.cos((v + w) * r)
+        + math.cos(N_val * r) * math.sin((v + w) * r) * math.cos(inc * r)
+    )
     lonp = norm360(math.atan2(yh + ys, xh + xs) * DEG)
 
     # Jupiter & Saturn perturbations
     Mj = norm360(19.8950 + 0.0830853001 * d)
     Msat = norm360(316.9670 + 0.0334442282 * d)
     if planet == "Jupiter":
-        lonp += (-0.332 * math.sin((2 * Mj - 5 * Msat - 67.6) * r)
-                 - 0.056 * math.sin((2 * Mj - 2 * Msat + 21) * r)
-                 + 0.042 * math.sin((3 * Mj - 5 * Msat + 21) * r)
-                 - 0.036 * math.sin((Mj - 2 * Msat) * r)
-                 + 0.022 * math.cos((Mj - Msat) * r)
-                 + 0.023 * math.sin((2 * Mj - 3 * Msat + 52) * r)
-                 - 0.016 * math.sin((Mj - 5 * Msat - 69) * r))
+        lonp += (
+            -0.332 * math.sin((2 * Mj - 5 * Msat - 67.6) * r)
+            - 0.056 * math.sin((2 * Mj - 2 * Msat + 21) * r)
+            + 0.042 * math.sin((3 * Mj - 5 * Msat + 21) * r)
+            - 0.036 * math.sin((Mj - 2 * Msat) * r)
+            + 0.022 * math.cos((Mj - Msat) * r)
+            + 0.023 * math.sin((2 * Mj - 3 * Msat + 52) * r)
+            - 0.016 * math.sin((Mj - 5 * Msat - 69) * r)
+        )
     if planet == "Saturn":
-        lonp += (0.812 * math.sin((2 * Mj - 5 * Msat - 67.6) * r)
-                 - 0.229 * math.cos((2 * Mj - 4 * Msat - 2) * r)
-                 + 0.119 * math.sin((Mj - 2 * Msat - 3) * r)
-                 + 0.046 * math.sin((2 * Mj - 6 * Msat - 69) * r)
-                 + 0.014 * math.sin((Mj - 3 * Msat + 32) * r))
+        lonp += (
+            0.812 * math.sin((2 * Mj - 5 * Msat - 67.6) * r)
+            - 0.229 * math.cos((2 * Mj - 4 * Msat - 2) * r)
+            + 0.119 * math.sin((Mj - 2 * Msat - 3) * r)
+            + 0.046 * math.sin((2 * Mj - 6 * Msat - 69) * r)
+            + 0.014 * math.sin((Mj - 3 * Msat + 32) * r)
+        )
     return norm360(lonp)
 
 
@@ -233,11 +254,11 @@ def rahu_true_tropical(jd: float) -> float:
     F = norm360(93.272095 + 483202.0175233 * T)
 
     correction = (
-            -1.4989 * math.sin(2 * (D - F) * r)
-            - 0.1527 * math.sin(Ms * r)
-            - 0.1216 * math.sin(2 * D * r)
-            + 0.1159 * math.sin(2 * F * r)
-            - 0.0791 * math.sin(2 * (Mp - F) * r)
+        -1.4989 * math.sin(2 * (D - F) * r)
+        - 0.1527 * math.sin(Ms * r)
+        - 0.1216 * math.sin(2 * D * r)
+        + 0.1159 * math.sin(2 * F * r)
+        - 0.0791 * math.sin(2 * (Mp - F) * r)
     )
     return norm360(mean_node + correction)
 
@@ -250,8 +271,9 @@ def ascendant(jd: float, lat: float, lon: float, ayan: float) -> float:
     eps = (23.4392911 - 0.0130042 * T) * RAD
     ramc = lst * RAD
     lat_r = lat * RAD
-    asc = math.atan2(math.cos(ramc),
-                     -(math.sin(ramc) * math.cos(eps) + math.tan(lat_r) * math.sin(eps)))
+    asc = math.atan2(
+        math.cos(ramc), -(math.sin(ramc) * math.cos(eps) + math.tan(lat_r) * math.sin(eps))
+    )
     return norm360(asc * DEG - ayan)
 
 

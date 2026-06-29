@@ -10,15 +10,15 @@ A second, independent oracle (jyotishganit via `/cross-validate`) guards the
 sidereal longitudes: after removing the systematic ayanamsa offset, no planet
 may diverge by more than 0.1 deg.
 """
+
 from __future__ import annotations
 
 import json
 import os
 
 import pytest
-from fastapi.testclient import TestClient
-
 from app.server import app
+from fastapi.testclient import TestClient
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))  # VedicAstro/
@@ -47,6 +47,7 @@ def _chart(birth):
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
 def test_chart_matches_schema(ref, schema):
     import jsonschema
+
     data = _chart(ref["birth"])
     jsonschema.validate(instance=data, schema=schema)
 
@@ -104,10 +105,16 @@ def test_current_mahadasha(ref):
 def test_cross_validate_longitudes(ref):
     """Independent oracle: jyotishganit. Skips gracefully if unavailable."""
     b = ref["birth"]
-    resp = client.post("/cross-validate", json={
-        "datetime": b["birth_datetime"], "lat": b["birth_lat"],
-        "lon": b["birth_lon"], "tz_offset": b["birth_tz"], "ayanamsa": b["ayanamsa"],
-    })
+    resp = client.post(
+        "/cross-validate",
+        json={
+            "datetime": b["birth_datetime"],
+            "lat": b["birth_lat"],
+            "lon": b["birth_lon"],
+            "tz_offset": b["birth_tz"],
+            "ayanamsa": b["ayanamsa"],
+        },
+    )
     assert resp.status_code == 200, resp.text
     body = resp.json()
     if body.get("jyotishganitError"):

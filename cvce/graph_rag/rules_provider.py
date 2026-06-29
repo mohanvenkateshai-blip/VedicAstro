@@ -39,22 +39,22 @@ from __future__ import annotations
 
 import os
 import re
-from typing import Optional
+
+from vedic_engine.rules.transit_rules import TRANSIT_HOUSES
 
 from .graph import GraphRAG
-from vedic_engine.rules.transit_rules import TRANSIT_HOUSES
 
 # ── Relation type sets ────────────────────────────────────────────────────────
 
 # Explicit planet→house transit quality relations (GPD nodes only in graph.json)
-_GOOD    = frozenset({"transit_in_house_gives_good", "transit_best_in"})
-_BAD     = frozenset({"transit_in_house_gives_bad"})
-_WORST   = frozenset({"transit_worst_in"})
-_MIXED   = frozenset({"transit_in_house_gives_mixed"})
-_AUSP    = frozenset({"is_auspicious_in"})
-_INAUSP  = frozenset({"is_inauspicious_in"})
+_GOOD = frozenset({"transit_in_house_gives_good", "transit_best_in"})
+_BAD = frozenset({"transit_in_house_gives_bad"})
+_WORST = frozenset({"transit_worst_in"})
+_MIXED = frozenset({"transit_in_house_gives_mixed"})
+_AUSP = frozenset({"is_auspicious_in"})
+_INAUSP = frozenset({"is_inauspicious_in"})
 
-_HOUSE_RE     = re.compile(r"house_(\d+)$")
+_HOUSE_RE = re.compile(r"house_(\d+)$")
 _HOUSE_NUM_RE = re.compile(r"\b(\d+)\b")
 
 
@@ -80,26 +80,26 @@ def graph_rules_enabled() -> bool:
 # (No structured links exist in graph.json; agreement inferred from
 #  referenced chapter content and `conceptually_related_to` edges.)
 _HS_GOOD: dict[str, list[int]] = {
-    "Sun":     [3, 6, 10, 11],
-    "Moon":    [1, 3, 6, 7, 10, 11],
-    "Mars":    [3, 6, 11],
+    "Sun": [3, 6, 10, 11],
+    "Moon": [1, 3, 6, 7, 10, 11],
+    "Mars": [3, 6, 11],
     "Mercury": [4, 6, 8, 10, 11],
     "Jupiter": [2, 5, 7, 9, 11],
-    "Venus":   [1, 2, 3, 4, 5, 8, 9, 11, 12],
-    "Saturn":  [3, 6, 11],
-    "Rahu":    [3, 6, 10, 11],
-    "Ketu":    [3, 6, 10, 11],
+    "Venus": [1, 2, 3, 4, 5, 8, 9, 11, 12],
+    "Saturn": [3, 6, 11],
+    "Rahu": [3, 6, 10, 11],
+    "Ketu": [3, 6, 10, 11],
 }
 _HS_BAD: dict[str, list[int]] = {
-    "Sun":     [1, 2, 4, 5, 7, 8, 9, 12],
-    "Moon":    [2, 4, 5, 8, 9, 12],
-    "Mars":    [1, 2, 4, 5, 7, 8, 9, 10, 12],
+    "Sun": [1, 2, 4, 5, 7, 8, 9, 12],
+    "Moon": [2, 4, 5, 8, 9, 12],
+    "Mars": [1, 2, 4, 5, 7, 8, 9, 10, 12],
     "Mercury": [1, 2, 3, 5, 7, 9, 12],
     "Jupiter": [1, 3, 4, 6, 8, 10, 12],
-    "Venus":   [6, 7, 10],
-    "Saturn":  [1, 2, 4, 5, 7, 8, 9, 10, 12],
-    "Rahu":    [1, 2, 4, 5, 7, 8, 9, 12],
-    "Ketu":    [1, 2, 4, 5, 7, 8, 9, 12],
+    "Venus": [6, 7, 10],
+    "Saturn": [1, 2, 4, 5, 7, 8, 9, 10, 12],
+    "Rahu": [1, 2, 4, 5, 7, 8, 9, 12],
+    "Ketu": [1, 2, 4, 5, 7, 8, 9, 12],
 }
 
 # ── Sarvartha Chintamani conflict note ───────────────────────────────────────
@@ -118,6 +118,7 @@ _SC_CONFLICT_NOTE = (
 
 # ── Label parser for GPD aggregate house-list nodes ──────────────────────────
 
+
 def _parse_houses_from_label(label: str) -> list[int]:
     """Extract house numbers from a label like 'benefic houses = 3, 6, 10, 11'."""
     if "=" not in label:
@@ -131,6 +132,7 @@ def _parse_houses_from_label(label: str) -> list[int]:
 
 # ── Main class ────────────────────────────────────────────────────────────────
 
+
 class GraphTransitRules:
     """Build TRANSIT_HOUSES-shaped tables from graph gochar planet→house links.
 
@@ -143,7 +145,7 @@ class GraphTransitRules:
     - Computes a confidence score per house classification.
     """
 
-    _instance: Optional["GraphTransitRules"] = None
+    _instance: GraphTransitRules | None = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -155,7 +157,7 @@ class GraphTransitRules:
         if getattr(self, "_built", False):
             return
         self.graph = GraphRAG()
-        self.graph._load()   # ensure loaded
+        self.graph._load()  # ensure loaded
         self._tables: dict[str, dict] = {}
         self._build_tables()
         self._built = True
@@ -168,9 +170,15 @@ class GraphTransitRules:
             return None
         tail = node_id.rsplit("_", 1)[-1]
         _names = {
-            "sun": "Sun", "moon": "Moon", "mars": "Mars", "mercury": "Mercury",
-            "jupiter": "Jupiter", "venus": "Venus", "saturn": "Saturn",
-            "rahu": "Rahu", "ketu": "Ketu",
+            "sun": "Sun",
+            "moon": "Moon",
+            "mars": "Mars",
+            "mercury": "Mercury",
+            "jupiter": "Jupiter",
+            "venus": "Venus",
+            "saturn": "Saturn",
+            "rahu": "Rahu",
+            "ketu": "Ketu",
         }
         return _names.get(tail.lower())
 
@@ -181,15 +189,25 @@ class GraphTransitRules:
     def _planet_from_house_node(self, node_id: str) -> tuple[str | None, str | None]:
         """'..._sun_benefic_houses' → ('Sun', 'good')"""
         _planets = {
-            "sun": "Sun", "moon": "Moon", "mars": "Mars", "mercury": "Mercury",
-            "jupiter": "Jupiter", "venus": "Venus", "saturn": "Saturn",
-            "rahu": "Rahu", "ketu": "Ketu",
+            "sun": "Sun",
+            "moon": "Moon",
+            "mars": "Mars",
+            "mercury": "Mercury",
+            "jupiter": "Jupiter",
+            "venus": "Venus",
+            "saturn": "Saturn",
+            "rahu": "Rahu",
+            "ketu": "Ketu",
         }
         if node_id.endswith("_benefic_houses"):
-            stem = node_id.replace("gochar_phaladeepika_pulippani_", "").replace("_benefic_houses", "")
+            stem = node_id.replace("gochar_phaladeepika_pulippani_", "").replace(
+                "_benefic_houses", ""
+            )
             return _planets.get(stem), "good"
         if node_id.endswith("_malefic_houses"):
-            stem = node_id.replace("gochar_phaladeepika_pulippani_", "").replace("_malefic_houses", "")
+            stem = node_id.replace("gochar_phaladeepika_pulippani_", "").replace(
+                "_malefic_houses", ""
+            )
             return _planets.get(stem), "bad"
         return None, None
 
@@ -217,7 +235,7 @@ class GraphTransitRules:
             src = link.get("source", "")
             tgt = link.get("target", "")
             planet = self._planet_key(src)
-            house  = self._house_num(tgt)
+            house = self._house_num(tgt)
             if not planet or house is None:
                 continue
             tbl = self._tables[planet]
@@ -272,10 +290,10 @@ class GraphTransitRules:
         for planet in planets:
             tbl = self._tables[planet]
             hs_good = set(_HS_GOOD.get(planet, []))
-            hs_bad  = set(_HS_BAD.get(planet, []))
+            hs_bad = set(_HS_BAD.get(planet, []))
 
             agreed_good = tbl["good"] & hs_good
-            agreed_bad  = (tbl["bad"] | tbl["worst"]) & hs_bad
+            agreed_bad = (tbl["bad"] | tbl["worst"]) & hs_bad
 
             for h in agreed_good | agreed_bad:
                 tbl["_confidence"][h] = min(1.0, tbl["_confidence"].get(h, 0.65) + 0.2)
@@ -312,16 +330,22 @@ class GraphTransitRules:
 
     def transit_houses(self, planet: str) -> dict:
         """Same shape as transit_rules.TRANSIT_HOUSES[planet]."""
-        return self._tables.get(planet, {
-            "good": [], "bad": [], "worst": [], "neutral": [],
-            "source": "graph.json",
-            "conflict_note": None,
-        })
+        return self._tables.get(
+            planet,
+            {
+                "good": [],
+                "bad": [],
+                "worst": [],
+                "neutral": [],
+                "source": "graph.json",
+                "conflict_note": None,
+            },
+        )
 
     def house_quality(self, planet: str, house: int) -> tuple[str, str, int]:
         """Return (house_quality, verdict, score). Graph first; hardcoded fallback."""
         rules = self.transit_houses(planet)
-        hard  = TRANSIT_HOUSES.get(planet, {})
+        hard = TRANSIT_HOUSES.get(planet, {})
 
         def classify(r: dict) -> tuple[str, str, int] | None:
             if house in r.get("worst", []):
@@ -347,7 +371,9 @@ class GraphTransitRules:
         if quality == "good":
             return [f"In {house}th from Janma Rasi — favourable ({sources}, confidence {conf:.0%})"]
         if quality == "bad":
-            return [f"In {house}th from Janma Rasi — unfavourable ({sources}, confidence {conf:.0%})"]
+            return [
+                f"In {house}th from Janma Rasi — unfavourable ({sources}, confidence {conf:.0%})"
+            ]
         if quality == "worst":
             return [f"In {house}th from Janma Rasi — worst position; caution advised ({sources})"]
         return [f"In {house}th from Janma Rasi — neutral house for {planet}"]

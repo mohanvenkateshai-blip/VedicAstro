@@ -5,25 +5,36 @@ Uses transit_rules.py for the rule tables and panchanga.py for planetary positio
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
 
-from ..core.astronomy import julian_day, all_positions, is_retrograde, planet_sidereal_lon
 from ..core.panchanga import (
-    RASHIS, NAKSHATRAS, NAK_NATURE, NAK_LORD, PLANETS,
-    rashi_index, nak_index as _nak_idx, compute_panchanga, PanchangaResult, sun_times
+    NAKSHATRAS,
+    PLANETS,
+    RASHIS,
+    compute_panchanga,
+    rashi_index,
 )
+from ..core.panchanga import nak_index as _nak_idx
 from ..rules.transit_rules import (
-    TRANSIT_HOUSES, LATTA_RULES, MOORTHI_RESULTS, SADE_SATI_PHASES,
-    GOCHARA_VEDHA, VIPAREETHA_VEDHA, TARA_RESULTS, tara_of,
-    COMBUST_ORB, SATURN_PARYAYA, JUPITER_PARYAYA, EXALT_SIGN, DEBIL_SIGN, OWN_SIGN,
-    reconcile_dasha_transit
+    COMBUST_ORB,
+    DEBIL_SIGN,
+    EXALT_SIGN,
+    GOCHARA_VEDHA,
+    LATTA_RULES,
+    MOORTHI_RESULTS,
+    OWN_SIGN,
+    SADE_SATI_PHASES,
+    TRANSIT_HOUSES,
+    VIPAREETHA_VEDHA,
+    tara_of,
 )
 
 try:
     from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
 except ImportError:
+
     def active_transit_rules():
         return None
+
 
 PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
 
@@ -35,11 +46,13 @@ def _clear_transit_rules_cache() -> None:
     """Drop cached graph transit rules so the next gochar run reloads from graph."""
     try:
         from graph_rag.rules_provider import GraphTransitRules
+
         GraphTransitRules._instance = None
     except ImportError:
         pass
     try:
         from graph_rag.graph import GraphRAG
+
         GraphRAG()._loaded = False
     except ImportError:
         pass
@@ -57,10 +70,14 @@ def _register_gochar_engine() -> None:
         return
     try:
         from knowledge_engine.integration import get_knowledge_engine
+
         get_knowledge_engine().register_engine("gochar", on_refresh=_on_gochar_refresh)
         _gochar_registered = True
     except Exception:
         pass
+
+
+_register_gochar_engine()
 
 
 def _ensure_gochar_registered() -> None:
@@ -71,8 +88,9 @@ def _ensure_gochar_registered() -> None:
 @dataclass
 class TransitPrediction:
     """Single planet's transit prediction."""
+
     planet: str
-    house_from_janma: Optional[int]  # None if no natal chart
+    house_from_janma: int | None  # None if no natal chart
     rashi: str
     nakshatra: str
     retrograde: bool
@@ -80,41 +98,48 @@ class TransitPrediction:
     house_quality: str  # good, bad, worst, neutral
     effects: list = field(default_factory=list)  # list of effect strings
     vedha_active: bool = False
-    vedha_by: Optional[str] = None
+    vedha_by: str | None = None
     vipareetha_vedha_active: bool = False
-    vipareetha_vedha_by: Optional[str] = None
-    combustion: Optional[dict] = None  # {orb, within_orb}
-    latta: Optional[dict] = None  # {kicked_nak, hits_janma, effect, mitigated}
-    natal_override: Optional[str] = None  # exaltation/debilitation override
+    vipareetha_vedha_by: str | None = None
+    combustion: dict | None = None  # {orb, within_orb}
+    latta: dict | None = None  # {kicked_nak, hits_janma, effect, mitigated}
+    natal_override: str | None = None  # exaltation/debilitation override
     score: int = 0  # -10 to +10
     # Lagna-based parallel scoring (same house-quality tables, different reference)
-    house_from_lagna: Optional[int] = None
+    house_from_lagna: int | None = None
     lagna_score: int = 0
 
 
 @dataclass
 class GocharResult:
     """Complete gochar (transit) prediction for a given date and natal chart."""
+
     date: str
-    janma_rashi: Optional[str]
-    janma_nakshatra: Optional[str]
+    janma_rashi: str | None
+    janma_nakshatra: str | None
     planet_predictions: list = field(default_factory=list)  # list of TransitPrediction
-    moorthy: Optional[dict] = None
-    sade_sati: Optional[dict] = None
-    ashtama_shani: Optional[dict] = None
-    kantaka_shani: Optional[dict] = None
-    tara_balam: Optional[dict] = None
+    moorthy: dict | None = None
+    sade_sati: dict | None = None
+    ashtama_shani: dict | None = None
+    kantaka_shani: dict | None = None
+    tara_balam: dict | None = None
     overall_verdict: str = "neutral"
     overall_score: int = 0
-    lagna_overall_score: int = 0   # parallel score computed from Lagna reference
+    lagna_overall_score: int = 0  # parallel score computed from Lagna reference
     synthesis: str = ""
 
 
-def compute_gochar(date_str: str = None, time_str: str = "12:00",
-                    lat: float = 12.30, lon: float = 76.65, tz: float = 5.5,
-                    janma_rashi: str = None, janma_nakshatra: str = None,
-                    natal_sign: dict = None,
-                    lagna_rashi: str = None) -> GocharResult:
+def compute_gochar(
+    date_str: str = None,
+    time_str: str = "12:00",
+    lat: float = 12.30,
+    lon: float = 76.65,
+    tz: float = 5.5,
+    janma_rashi: str = None,
+    janma_nakshatra: str = None,
+    natal_sign: dict = None,
+    lagna_rashi: str = None,
+) -> GocharResult:
     """Compute transit (gochar) predictions for a given date and optional natal chart.
 
     Args:
@@ -130,7 +155,11 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
     panch = compute_panchanga(date_str, time_str, lat, lon, tz)
 
     j_rashi_idx = RASHIS.index(janma_rashi) if janma_rashi and janma_rashi in RASHIS else None
-    j_nak_idx = NAKSHATRAS.index(janma_nakshatra) if janma_nakshatra and janma_nakshatra in NAKSHATRAS else None
+    j_nak_idx = (
+        NAKSHATRAS.index(janma_nakshatra)
+        if janma_nakshatra and janma_nakshatra in NAKSHATRAS
+        else None
+    )
     l_rashi_idx = RASHIS.index(lagna_rashi) if lagna_rashi and lagna_rashi in RASHIS else None
 
     results = GocharResult(
@@ -163,7 +192,9 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             # Determine house quality — graph rules when CVCE_GRAPH_AS_RULES=1
             graph_rules = active_transit_rules()
             if graph_rules is not None:
-                pred.house_quality, pred.verdict, pred.score = graph_rules.house_quality(planet, house)
+                pred.house_quality, pred.verdict, pred.score = graph_rules.house_quality(
+                    planet, house
+                )
                 rules = graph_rules.transit_houses(planet)
             else:
                 rules = TRANSIT_HOUSES.get(planet, {})
@@ -189,11 +220,15 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
                 natal_rashi = RASHIS[natal_sign[planet]]
                 if natal_rashi in OWN_SIGN.get(planet, []) or natal_rashi == EXALT_SIGN.get(planet):
                     if pred.verdict == "ashubh":
-                        pred.natal_override = "Exalted/own sign in natal chart mitigates bad transit"
+                        pred.natal_override = (
+                            "Exalted/own sign in natal chart mitigates bad transit"
+                        )
                         pred.verdict = "neutral"
                         pred.score = max(pred.score, -2)
                 elif natal_rashi == DEBIL_SIGN.get(planet):
-                    pred.natal_override = "Debilitated in natal chart; no good even in favourable transit"
+                    pred.natal_override = (
+                        "Debilitated in natal chart; no good even in favourable transit"
+                    )
                     if pred.verdict == "shubh":
                         pred.verdict = "neutral"
                         pred.score = min(pred.score, 2)
@@ -236,8 +271,7 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             if planet != "Sun" and sun_row and row["rashi"] == sun_row["rashi"]:
                 diff = abs(row["deg"] - sun_row["deg"])
                 orb = COMBUST_ORB.get(planet, 12)
-                pred.combustion = {"diff_deg": round(diff, 1), "orb": orb,
-                                    "is_combust": diff < orb}
+                pred.combustion = {"diff_deg": round(diff, 1), "orb": orb, "is_combust": diff < orb}
 
             # Latta check (star affliction)
             if j_nak_idx is not None and planet in LATTA_RULES:
@@ -245,8 +279,14 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
                 planet_nak_idx = _nak_idx(row["lon"])
                 kicked = ((planet_nak_idx + direction * (dist - 1)) % 27 + 27) % 27
                 kicked_nak = NAKSHATRAS[kicked]
-                hits_janma = (kicked_nak == janma_nakshatra)
-                mitigated = row["retro"] and planet in ("Mars", "Jupiter", "Saturn", "Venus", "Mercury")
+                hits_janma = kicked_nak == janma_nakshatra
+                mitigated = row["retro"] and planet in (
+                    "Mars",
+                    "Jupiter",
+                    "Saturn",
+                    "Venus",
+                    "Mercury",
+                )
                 pred.latta = {
                     "kicked_nak": kicked_nak,
                     "hits_janma": hits_janma,
@@ -266,7 +306,9 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             elif pred.house_quality == "bad":
                 pred.effects.append(f"In {house}th from Janma Rasi — unfavourable position")
             elif pred.house_quality == "worst":
-                pred.effects.append(f"In {house}th from Janma Rasi — WORST position, caution advised")
+                pred.effects.append(
+                    f"In {house}th from Janma Rasi — WORST position, caution advised"
+                )
 
             if pred.vedha_active:
                 pred.effects.append(f"Gochara Vedha by {pred.vedha_by} — effects cancelled")
@@ -274,7 +316,7 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
                 pred.effects.append(pred.natal_override)
             if pred.latta and pred.latta["hits_janma"]:
                 if pred.latta["mitigated"]:
-                    pred.effects.append(f"Latta on Janma star mitigated by retrogression")
+                    pred.effects.append("Latta on Janma star mitigated by retrogression")
                 else:
                     pred.effects.append(f"Latta affliction: {pred.latta['effect']}")
             if pred.combustion and pred.combustion["is_combust"]:
@@ -310,7 +352,12 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
             moorthy_house = ((moon_rashi - j_rashi_idx + 12) % 12) + 1
             if moorthy_house in MOORTHI_RESULTS:
                 name, verdict, desc = MOORTHI_RESULTS[moorthy_house]
-                results.moorthy = {"house": moorthy_house, "name": name, "verdict": verdict, "description": desc}
+                results.moorthy = {
+                    "house": moorthy_house,
+                    "name": name,
+                    "verdict": verdict,
+                    "description": desc,
+                }
 
     # Sade Sati check (Saturn in 12, 1, or 2 from Janma Rasi)
     if j_rashi_idx is not None:
@@ -380,20 +427,24 @@ def compute_gochar(date_str: str = None, time_str: str = "12:00",
 
     # Lagna-based overall score — pure planet house scores from Lagna (no Moon modifiers)
     if l_rashi_idx is not None:
-        results.lagna_overall_score = sum(
-            p.lagna_score for p in results.planet_predictions
-        )
+        results.lagna_overall_score = sum(p.lagna_score for p in results.planet_predictions)
 
     # Synthesis
     good = [p for p in results.planet_predictions if p.verdict == "shubh"]
     bad = [p for p in results.planet_predictions if p.verdict == "ashubh"]
     parts = []
     if good:
-        parts.append(f"{len(good)} planets in favourable transit ({', '.join(p.planet for p in good)})")
+        parts.append(
+            f"{len(good)} planets in favourable transit ({', '.join(p.planet for p in good)})"
+        )
     if bad:
-        parts.append(f"{len(bad)} planets in unfavourable transit ({', '.join(p.planet for p in bad)})")
+        parts.append(
+            f"{len(bad)} planets in unfavourable transit ({', '.join(p.planet for p in bad)})"
+        )
     if results.sade_sati:
-        parts.append(f"Sade Sati: {results.sade_sati['phase']} phase — {results.sade_sati['effect']}")
+        parts.append(
+            f"Sade Sati: {results.sade_sati['phase']} phase — {results.sade_sati['effect']}"
+        )
     if results.tara_balam:
         tara_line = (
             f"Tara Balam: {results.tara_balam['name']} "

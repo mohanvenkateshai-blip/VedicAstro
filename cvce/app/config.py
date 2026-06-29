@@ -6,6 +6,7 @@ production is read from the environment here — no hardcoded origins, ports,
 or secrets in the application code. A `.env` file (see `.env.example`) is
 loaded if present, but real environment variables always win.
 """
+
 from __future__ import annotations
 
 import os
@@ -22,7 +23,7 @@ def _load_dotenv() -> None:
     if not os.path.isfile(path):
         return
     try:
-        with open(path, "r", encoding="utf-8") as fh:
+        with open(path, encoding="utf-8") as fh:
             for line in fh:
                 line = line.strip()
                 if not line or line.startswith("#") or "=" not in line:
@@ -61,9 +62,7 @@ class Settings:
 
     # Divisional charts (Shodashvarga) to compute in the canonical /chart payload.
     # Comma-separated D-numbers; defaults cover the most-used shodashvarga set.
-    VARGAS: list[int] = [
-        int(x) for x in _csv("CVCE_VARGAS", "1,2,3,4,7,9,10,12,16,24,30,60")
-    ]
+    VARGAS: list[int] = [int(x) for x in _csv("CVCE_VARGAS", "1,2,3,4,7,9,10,12,16,24,30,60")]
 
     # Rate limiting (per client IP)
     RATE_LIMIT_REQUESTS: int = int(os.environ.get("CVCE_RATE_LIMIT_REQUESTS", "60"))
@@ -71,7 +70,10 @@ class Settings:
 
     # GraphRAG: use graph.json for /predict transit house rules (default off → hardcoded fallback)
     GRAPH_AS_RULES: bool = os.environ.get("CVCE_GRAPH_AS_RULES", "").strip().lower() in (
-        "1", "true", "yes", "on"
+        "1",
+        "true",
+        "yes",
+        "on",
     )
 
 

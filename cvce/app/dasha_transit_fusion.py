@@ -11,15 +11,21 @@ For each Maha–Antar period we:
 
 from __future__ import annotations
 
-from datetime import date, timedelta
-from typing import Optional
-
+from datetime import date
 
 _HOUSE_DOMAIN: dict[int, str] = {
-    1: "career", 2: "wealth", 3: "career",
-    4: "family", 5: "wealth", 6: "career",
-    7: "family", 8: "health", 9: "wealth",
-    10: "career", 11: "wealth", 12: "health",
+    1: "career",
+    2: "wealth",
+    3: "career",
+    4: "family",
+    5: "wealth",
+    6: "career",
+    7: "family",
+    8: "health",
+    9: "wealth",
+    10: "career",
+    11: "wealth",
+    12: "health",
 }
 
 
@@ -31,12 +37,12 @@ def fuse_dasha_transit(
     lat: float,
     lon: float,
     tz: float,
-    lagna_rashi: Optional[str],
-    janma_rashi: Optional[str],
-    janma_nakshatra: Optional[str],
-    natal_sign: Optional[dict],
-    dasha_intel: Optional[dict],
-) -> Optional[dict]:
+    lagna_rashi: str | None,
+    janma_rashi: str | None,
+    janma_nakshatra: str | None,
+    natal_sign: dict | None,
+    dasha_intel: dict | None,
+) -> dict | None:
     """
     Return a combined Dasha+Transit prediction dict, or None on any error.
     """
@@ -45,14 +51,16 @@ def fuse_dasha_transit(
 
     try:
         start = date.fromisoformat(start_date[:10])
-        end   = date.fromisoformat(end_date[:10])
-        mid   = start + (end - start) // 2
+        end = date.fromisoformat(end_date[:10])
+        mid = start + (end - start) // 2
         dasha_score = int((dasha_intel or {}).get("score", 0))
 
         # ── Transit snapshot ──────────────────────────────────────────────────
         gochar = compute_gochar(
             date_str=mid.isoformat(),
-            lat=lat, lon=lon, tz=tz,
+            lat=lat,
+            lon=lon,
+            tz=tz,
             janma_rashi=janma_rashi,
             janma_nakshatra=janma_nakshatra,
             natal_sign=natal_sign,
@@ -67,8 +75,8 @@ def fuse_dasha_transit(
         if ti is None:
             return None
 
-        transit_score   = ti.overall_score
-        combined_score  = dasha_score + transit_score
+        transit_score = ti.overall_score
+        combined_score = dasha_score + transit_score
         combined_verdict = "shubh" if combined_score > 0 else "ashubh"
 
         # ── Key transits (top 4 by absolute impact) ──────────────────────────
@@ -76,27 +84,27 @@ def fuse_dasha_transit(
         sorted_planets = sorted(planets, key=lambda p: abs(p.get("score", 0)), reverse=True)
         key_transits = [
             {
-                "planet":        p.get("planet", ""),
-                "rashi":         p.get("rashi", ""),
+                "planet": p.get("planet", ""),
+                "rashi": p.get("rashi", ""),
                 "house_from_moon": p.get("house_from_janma"),
-                "verdict":       p.get("final_verdict", ""),
-                "impact":        p.get("primary_driver", ""),
+                "verdict": p.get("final_verdict", ""),
+                "impact": p.get("primary_driver", ""),
             }
             for p in sorted_planets[:4]
         ]
 
         # ── Domain predictions — seed from Dasha intelligence ─────────────────
         d = dasha_intel or {}
-        career  = list(d.get("profession", []))[:1]
-        wealth  = list(d.get("wealth",     []))[:1]
-        health  = list(d.get("health",     []))[:1]
-        family  = list(d.get("family",     []))[:1]
-        caution = list(d.get("caution",    []))[:1]
+        career = list(d.get("profession", []))[:1]
+        wealth = list(d.get("wealth", []))[:1]
+        health = list(d.get("health", []))[:1]
+        family = list(d.get("family", []))[:1]
+        caution = list(d.get("caution", []))[:1]
 
         # Augment with transit planet insights bucketed by transiting house
         for p in sorted_planets:
-            house   = p.get("house_from_janma") or 0
-            domain  = _HOUSE_DOMAIN.get(house)
+            house = p.get("house_from_janma") or 0
+            domain = _HOUSE_DOMAIN.get(house)
             if not domain:
                 continue
             is_good = p.get("final_verdict") == "shubh"
@@ -118,7 +126,7 @@ def fuse_dasha_transit(
                 caution.append(snippet)
 
         # ── Summary ───────────────────────────────────────────────────────────
-        quality    = "favourable" if combined_verdict == "shubh" else "challenging"
+        quality = "favourable" if combined_verdict == "shubh" else "challenging"
         dasha_note = (d.get("summary") or "")[:80].rstrip(".")
         transit_note = (ti.day_summary or "")[:100].rstrip(".")
         summary = (
@@ -130,17 +138,17 @@ def fuse_dasha_transit(
 
         return {
             "combined_verdict": combined_verdict,
-            "combined_score":   combined_score,
-            "dasha_score":      dasha_score,
-            "transit_score":    transit_score,
-            "snapshot_date":    mid.isoformat(),
-            "summary":          summary,
-            "key_transits":     key_transits,
-            "career":           career,
-            "wealth":           wealth,
-            "health":           health,
-            "family":           family,
-            "caution":          caution,
+            "combined_score": combined_score,
+            "dasha_score": dasha_score,
+            "transit_score": transit_score,
+            "snapshot_date": mid.isoformat(),
+            "summary": summary,
+            "key_transits": key_transits,
+            "career": career,
+            "wealth": wealth,
+            "health": health,
+            "family": family,
+            "caution": caution,
         }
 
     except Exception:

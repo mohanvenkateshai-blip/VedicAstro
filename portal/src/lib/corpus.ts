@@ -2,7 +2,7 @@ import "server-only";
 import { supabase } from "@/lib/supabase";
 
 export const CORPUS_BUCKET = "corpus-vault";
-export const DEFAULT_GRAPH_VERSION = "core-jyotisha-v1";
+export const DEFAULT_GRAPH_VERSION = "newbooks-v1";
 
 export type CorpusSource = {
   id: string;
@@ -151,4 +151,25 @@ export async function listCommunities(graphVersion = DEFAULT_GRAPH_VERSION) {
   return [...counts.entries()]
     .map(([community, count]) => ({ community, count }))
     .sort((a, b) => b.count - a.count);
+}
+
+export async function getBookTextNodes(
+  sourceFile: string,
+  graphVersion = DEFAULT_GRAPH_VERSION,
+) {
+  const { data, error } = await supabase
+    .from("graph_nodes")
+    .select("id, label, source_location, properties, file_type")
+    .eq("graph_version", graphVersion)
+    .eq("source_file", sourceFile)
+    .order("source_location", { ascending: true })
+    .limit(200);
+  if (error) throw error;
+  return (data ?? []) as Array<{
+    id: string;
+    label: string | null;
+    source_location: string | null;
+    properties: Record<string, unknown>;
+    file_type: string | null;
+  }>;
 }

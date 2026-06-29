@@ -20,38 +20,54 @@ Vedha (Phaladeepika Ch.26 / GPD Ch.22): if another planet occupies the
 
 Nothing here is invented. Every rule traces to the source texts.
 """
+
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional
 
-from vedic_engine.rules.transit_rules import TRANSIT_HOUSES, GOCHARA_VEDHA, VEDHA_EXEMPT_PAIRS
-from vedic_engine.core.astronomy import julian_day, all_positions, ascendant, lahiri_ayanamsha
+from vedic_engine.core.astronomy import all_positions, ascendant, julian_day, lahiri_ayanamsha
+from vedic_engine.rules.transit_rules import GOCHARA_VEDHA, TRANSIT_HOUSES, VEDHA_EXEMPT_PAIRS
 
 # ── Constants ────────────────────────────────────────────────────────────────
 
 RASHIS_12 = [
-    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
 ]
 
 YOGINI_ORDER = [
-    "Mangala", "Pingala", "Dhanya", "Bhramari",
-    "Bhadrika", "Ulka", "Siddha", "Sankata",
+    "Mangala",
+    "Pingala",
+    "Dhanya",
+    "Bhramari",
+    "Bhadrika",
+    "Ulka",
+    "Siddha",
+    "Sankata",
 ]
 
 # Nakshatra (1-indexed, 1=Ashwini) → the sign (0=Aries) where it starts.
 # Uses the sign containing the nakshatra's FIRST pada.
 NAK_PRIMARY_SIGN: dict[int, int] = {
-    1: 0,   # Ashwini   0°
-    2: 0,   # Bharani   13°20'
-    3: 1,   # Krittika  26°40' (mostly Taurus: 10° in Tau, 3°20' in Aries)
-    4: 1,   # Rohini    40°
-    5: 1,   # Mrigashira 53°20' (starts in Taurus)
-    6: 2,   # Ardra     66°40'
-    7: 2,   # Punarvasu 80° (starts in Gemini)
-    8: 3,   # Pushya    93°20'
-    9: 3,   # Ashlesha  106°40'
+    1: 0,  # Ashwini   0°
+    2: 0,  # Bharani   13°20'
+    3: 1,  # Krittika  26°40' (mostly Taurus: 10° in Tau, 3°20' in Aries)
+    4: 1,  # Rohini    40°
+    5: 1,  # Mrigashira 53°20' (starts in Taurus)
+    6: 2,  # Ardra     66°40'
+    7: 2,  # Punarvasu 80° (starts in Gemini)
+    8: 3,  # Pushya    93°20'
+    9: 3,  # Ashlesha  106°40'
     10: 4,  # Magha     120°
     11: 4,  # Purva Phalguni 133°20'
     12: 5,  # Uttara Phalguni 146°40' (mostly Virgo)
@@ -66,31 +82,32 @@ NAK_PRIMARY_SIGN: dict[int, int] = {
     21: 8,  # Uttara Ashadha 266°40' (starts in Sagittarius)
     22: 9,  # Shravana  280°
     23: 9,  # Dhanishtha 293°20' (starts in Capricorn)
-    24: 10, # Shatabhisha 306°40'
-    25: 10, # Purva Bhadrapada 320° (starts in Aquarius)
-    26: 11, # Uttara Bhadrapada 333°20'
-    27: 11, # Revati    346°40'
+    24: 10,  # Shatabhisha 306°40'
+    25: 10,  # Purva Bhadrapada 320° (starts in Aquarius)
+    26: 11,  # Uttara Bhadrapada 333°20'
+    27: 11,  # Revati    346°40'
 }
 
 # Domain effects for key Saturn benefic houses (GPD / Phaladeepika Ch.26)
 _SAT_HOUSE_DOMAINS: dict[int, list[str]] = {
-    3:  ["communication", "courage", "siblings"],
-    6:  ["overcoming obstacles", "health recovery", "defeating competition"],
-    9:  ["long-distance travel", "luck", "spiritual pursuits"],
+    3: ["communication", "courage", "siblings"],
+    6: ["overcoming obstacles", "health recovery", "defeating competition"],
+    9: ["long-distance travel", "luck", "spiritual pursuits"],
     11: ["gains", "income", "fulfilment of desires"],
 }
 
 # Domain effects for key Jupiter benefic houses
 _JUP_HOUSE_DOMAINS: dict[int, list[str]] = {
-    2:  ["wealth", "family", "speech"],
-    5:  ["intellect", "children", "investments", "creativity"],
-    7:  ["partnerships", "marriage", "business"],
-    9:  ["fortune", "higher education", "dharma"],
+    2: ["wealth", "family", "speech"],
+    5: ["intellect", "children", "investments", "creativity"],
+    7: ["partnerships", "marriage", "business"],
+    9: ["fortune", "higher education", "dharma"],
     11: ["gains", "income", "fulfilment"],
 }
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
+
 
 def _sign(lon: float) -> int:
     """Sidereal longitude → 0-indexed sign (0=Aries)."""
@@ -126,6 +143,7 @@ def _house_domains(planet: str, house: int) -> list[str]:
 
 
 # ── Yogini Progressed Lagna ──────────────────────────────────────────────────
+
 
 def _yogini_24slot_sequence(birth_nak_1idx: int) -> list[int]:
     """
@@ -186,6 +204,7 @@ def compute_progressed_lagna(
 
 # ── Monthly sweep ────────────────────────────────────────────────────────────
 
+
 def _sweep_months(
     start: date,
     end: date,
@@ -219,24 +238,30 @@ def _sweep_months(
                 if p not in {"Saturn", "Jupiter"}
             }
 
-            sat_good = _benefic("Saturn", sat_house) and not _vedha_blocked("Saturn", sat_house, other_houses)
-            jup_good = _benefic("Jupiter", jup_house) and not _vedha_blocked("Jupiter", jup_house, other_houses)
+            sat_good = _benefic("Saturn", sat_house) and not _vedha_blocked(
+                "Saturn", sat_house, other_houses
+            )
+            jup_good = _benefic("Jupiter", jup_house) and not _vedha_blocked(
+                "Jupiter", jup_house, other_houses
+            )
 
             sav_bindus = sav[sat_s] if sav else None
 
-            results.append({
-                "date": cur.isoformat(),
-                "ref_label": ref_label,
-                "ref_sign": ref_sign,
-                "saturn_house": sat_house,
-                "saturn_sign": sat_s,
-                "saturn_good": sat_good,
-                "jupiter_house": jup_house,
-                "jupiter_sign": jup_s,
-                "jupiter_good": jup_good,
-                "double_transit": sat_good and jup_good,
-                "sav_bindus": sav_bindus,
-            })
+            results.append(
+                {
+                    "date": cur.isoformat(),
+                    "ref_label": ref_label,
+                    "ref_sign": ref_sign,
+                    "saturn_house": sat_house,
+                    "saturn_sign": sat_s,
+                    "saturn_good": sat_good,
+                    "jupiter_house": jup_house,
+                    "jupiter_sign": jup_s,
+                    "jupiter_good": jup_good,
+                    "double_transit": sat_good and jup_good,
+                    "sav_bindus": sav_bindus,
+                }
+            )
 
         # advance month
         if cur.month == 12:
@@ -307,7 +332,9 @@ def _build_window(months: list[dict]) -> dict:
         strength = "moderate"
 
     all_effects = sat_effects + jup_effects
-    domains = list({d for d in all_effects if d in ("wealth", "career", "health", "family", "gains", "income")})
+    domains = list(
+        {d for d in all_effects if d in ("wealth", "career", "health", "family", "gains", "income")}
+    )
 
     narrative = (
         f"Saturn in {sat_h}th ({', '.join(sat_effects)}) · "
@@ -315,6 +342,7 @@ def _build_window(months: list[dict]) -> dict:
     )
     if rounded_sav is not None:
         from vedic_engine.prediction.ashtakavarga import BINDU_RESULTS
+
         bindu_label = BINDU_RESULTS.get(min(rounded_sav, 8), ("", "", ""))[0]
         narrative += f" — SAV {rounded_sav} bindus ({bindu_label})"
 
@@ -360,6 +388,7 @@ def _merge_overlapping(windows: list[dict]) -> list[dict]:
 
 # ── Main API ─────────────────────────────────────────────────────────────────
 
+
 def fructify(
     birth_datetime: str,
     birth_lat: float,
@@ -387,6 +416,7 @@ def fructify(
       - Goel (2002/2006) — Progressed Lagna for Yogini
     """
     from datetime import datetime
+
     from vedic_engine.core.panchanga import NAK_LORD
     from vedic_engine.prediction.ashtakavarga import compute_ashtakavarga
 
@@ -395,13 +425,13 @@ def fructify(
     birth_date_obj = birth_dt.date()
     birth_hour = birth_dt.hour + birth_dt.minute / 60.0 + birth_dt.second / 3600.0
 
-    jd = julian_day(birth_dt.year, birth_dt.month, birth_dt.day,
-                    birth_hour - birth_tz)
+    jd = julian_day(birth_dt.year, birth_dt.month, birth_dt.day, birth_hour - birth_tz)
 
     # Natal positions
     natal_pos = all_positions(jd)
     natal_sign: dict[str, int] = {
-        p: _sign(l) for p, l in natal_pos.items()
+        p: _sign(l)
+        for p, l in natal_pos.items()
         if p in {"Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"}
     }
 
@@ -423,8 +453,8 @@ def fructify(
 
     # Date objects
     antar_start_date = date.fromisoformat(antar_start)
-    antar_end_date   = date.fromisoformat(antar_end)
-    maha_start_date  = date.fromisoformat(maha_start)
+    antar_end_date = date.fromisoformat(antar_end)
+    maha_start_date = date.fromisoformat(maha_start)
 
     # Reference signs: Janma Rashi + Natal Lagna for all systems
     ref_signs: list[tuple[str, int]] = [
@@ -460,10 +490,13 @@ def fructify(
 
     # Sweep + group
     month_rows = _sweep_months(
-        antar_start_date, antar_end_date,
+        antar_start_date,
+        antar_end_date,
         ref_signs=ref_signs,
         sav=sav,
-        lat=birth_lat, lon=birth_lon, tz=birth_tz,
+        lat=birth_lat,
+        lon=birth_lon,
+        tz=birth_tz,
     )
     all_windows: list[dict] = []
     for ref_label, ref_sign in ref_signs:
@@ -474,10 +507,7 @@ def fructify(
     windows.sort(key=lambda w: w["start"])
 
     # Reference point summary for UI
-    ref_details = [
-        {"label": label, "sign": RASHIS_12[sign_idx]}
-        for label, sign_idx in ref_signs
-    ]
+    ref_details = [{"label": label, "sign": RASHIS_12[sign_idx]} for label, sign_idx in ref_signs]
 
     return {
         "system": system,
@@ -501,12 +531,33 @@ def fructify(
 
 def _nak_name(nak_1idx: int) -> str:
     NAMES = [
-        "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra",
-        "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni",
-        "Uttara Phalguni", "Hasta", "Chitra", "Swati", "Vishakha",
-        "Anuradha", "Jyeshtha", "Mula", "Purva Ashadha", "Uttara Ashadha",
-        "Shravana", "Dhanishtha", "Shatabhisha", "Purva Bhadrapada",
-        "Uttara Bhadrapada", "Revati",
+        "Ashwini",
+        "Bharani",
+        "Krittika",
+        "Rohini",
+        "Mrigashira",
+        "Ardra",
+        "Punarvasu",
+        "Pushya",
+        "Ashlesha",
+        "Magha",
+        "Purva Phalguni",
+        "Uttara Phalguni",
+        "Hasta",
+        "Chitra",
+        "Swati",
+        "Vishakha",
+        "Anuradha",
+        "Jyeshtha",
+        "Mula",
+        "Purva Ashadha",
+        "Uttara Ashadha",
+        "Shravana",
+        "Dhanishtha",
+        "Shatabhisha",
+        "Purva Bhadrapada",
+        "Uttara Bhadrapada",
+        "Revati",
     ]
     idx = (nak_1idx - 1) % 27
     return NAMES[idx]

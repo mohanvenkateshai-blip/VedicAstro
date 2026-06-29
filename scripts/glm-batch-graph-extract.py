@@ -14,6 +14,7 @@ Usage:
 Requires: pip install zai-sdk (in Panchang .venv)
 Env: ZAI_API_KEY (or ZHIPU_API_KEY) — from https://z.ai or https://open.bigmodel.cn
 """
+
 from __future__ import annotations
 
 import argparse
@@ -22,7 +23,7 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -222,8 +223,10 @@ def cmd_pilot(args: argparse.Namespace) -> int:
     content = resp.choices[0].message.content or ""
     frag = _parse_fragment(content)
     print(f"  response chars: {len(content)}")
-    print(f"  parsed: {len(frag.get('nodes', []))} nodes, "
-          f"{len(frag.get('edges', []) or frag.get('links', []))} edges")
+    print(
+        f"  parsed: {len(frag.get('nodes', []))} nodes, "
+        f"{len(frag.get('edges', []) or frag.get('links', []))} edges"
+    )
     if frag.get("nodes"):
         print(f"  sample node: {frag['nodes'][0].get('id', '?')}")
     print("✓ pilot OK — run: glm-batch-graph-extract.py submit")
@@ -237,7 +240,7 @@ def cmd_submit(args: argparse.Namespace) -> int:
         return 1
 
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
     jsonl_path = BATCH_DIR / f"requests-{ts}.jsonl"
     with jsonl_path.open("w", encoding="utf-8") as f:
         for row in rows:
@@ -268,7 +271,7 @@ def cmd_submit(args: argparse.Namespace) -> int:
         "requests": len(rows),
         "jsonl": str(jsonl_path),
         "input_file_id": file_id,
-        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "submitted_at": datetime.now(UTC).isoformat(),
         "status": getattr(batch, "status", "submitted"),
     }
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -303,7 +306,7 @@ def cmd_status(args: argparse.Namespace) -> int:
     print(f"batch: {batch_id}")
     print(f"state: {json.dumps(counts, default=str)}")
     meta["status"] = status
-    meta["last_checked"] = datetime.now(timezone.utc).isoformat()
+    meta["last_checked"] = datetime.now(UTC).isoformat()
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return 0
 
@@ -320,7 +323,7 @@ def cmd_wait(args: argparse.Namespace) -> int:
         status = batch.status
         print(f"[{time.strftime('%H:%M:%S')}] {status}")
         meta["status"] = status
-        meta["last_checked"] = datetime.now(timezone.utc).isoformat()
+        meta["last_checked"] = datetime.now(UTC).isoformat()
         JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         if status in terminal:
             return 0 if status == "completed" else 1

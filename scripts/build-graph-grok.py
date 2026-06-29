@@ -8,6 +8,7 @@ Usage:
   python3 scripts/build-graph-grok.py              # build from cache
   python3 scripts/build-graph-grok.py --deploy     # build + sync-graph.sh --grok --deploy
 """
+
 from __future__ import annotations
 
 import argparse
@@ -37,8 +38,7 @@ def merge_graph(base: dict, fragment: dict) -> dict:
         existing_ids.add(n["id"])
 
     existing_links = {
-        (l.get("source"), l.get("target"), l.get("relation"))
-        for l in g.get("links", [])
+        (l.get("source"), l.get("target"), l.get("relation")) for l in g.get("links", [])
     }
     edges = fragment.get("edges") or fragment.get("links") or []
     for e in edges:

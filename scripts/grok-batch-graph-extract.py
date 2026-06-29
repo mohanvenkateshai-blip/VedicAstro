@@ -14,6 +14,7 @@ Usage:
 Requires: pip install xai-sdk
 Env: XAI_API_KEY
 """
+
 from __future__ import annotations
 
 import argparse
@@ -22,7 +23,7 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -94,7 +95,7 @@ def _corpus_paths() -> list[Path]:
 
 
 def _units_for_file(path: Path) -> list:
-    from graphify.file_slice import FileSlice, expand_oversized_files
+    from graphify.file_slice import expand_oversized_files
 
     return expand_oversized_files([path], FILE_CHAR_CAP)
 
@@ -130,8 +131,7 @@ def merge_graph(base: dict, fragment: dict) -> dict:
         existing_ids.add(n["id"])
 
     existing_links = {
-        (l.get("source"), l.get("target"), l.get("relation"))
-        for l in g.get("links", [])
+        (l.get("source"), l.get("target"), l.get("relation")) for l in g.get("links", [])
     }
     edges = fragment.get("edges") or fragment.get("links") or []
     for e in edges:
@@ -187,7 +187,7 @@ def cmd_submit(args: argparse.Namespace) -> int:
         return 1
 
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
     jsonl_path = BATCH_DIR / f"requests-{ts}.jsonl"
     with jsonl_path.open("w", encoding="utf-8") as f:
         for row in rows:
@@ -223,7 +223,7 @@ def cmd_submit(args: argparse.Namespace) -> int:
         "requests": len(rows),
         "jsonl": str(jsonl_path),
         "input_file_id": file_id,
-        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "submitted_at": datetime.now(UTC).isoformat(),
         "state": str(getattr(batch, "state", "submitted")),
     }
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -313,7 +313,7 @@ def _submit_via_rest(
         "requests": len(rows),
         "jsonl": str(jsonl_path),
         "input_file_id": file_id,
-        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "submitted_at": datetime.now(UTC).isoformat(),
         "transport": "rest",
     }
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -351,7 +351,7 @@ def cmd_status(args: argparse.Namespace) -> int:
     print(f"batch: {batch_id}")
     print(f"state: {counts}")
     meta["state"] = counts
-    meta["last_checked"] = datetime.now(timezone.utc).isoformat()
+    meta["last_checked"] = datetime.now(UTC).isoformat()
     JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return 0
 
@@ -371,7 +371,7 @@ def cmd_wait(args: argparse.Namespace) -> int:
             f"pending={counts['num_pending']} ok={counts['num_success']} err={counts['num_error']}"
         )
         meta["state"] = counts
-        meta["last_checked"] = datetime.now(timezone.utc).isoformat()
+        meta["last_checked"] = datetime.now(UTC).isoformat()
         JOB_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         if total > 0 and counts["num_pending"] == 0:
             return 0
@@ -455,10 +455,7 @@ def cmd_merge(args: argparse.Namespace) -> int:
     GRAPH_GROK.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_GROK}")
     floor = production_node_floor()
-    print(
-        f"vs production floor ({floor}): "
-        f"{'PASS' if new_nodes > floor else 'same as base'}"
-    )
+    print(f"vs production floor ({floor}): {'PASS' if new_nodes > floor else 'same as base'}")
 
     if args.deploy:
         sync = ROOT / "scripts" / "sync-graph.sh"

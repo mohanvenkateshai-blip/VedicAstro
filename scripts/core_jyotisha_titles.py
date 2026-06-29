@@ -1,4 +1,5 @@
 """Shared title mapping for CoreJyothisha PDF → raw/*.md names."""
+
 from __future__ import annotations
 
 from pathlib import Path

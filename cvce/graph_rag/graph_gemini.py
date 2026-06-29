@@ -7,18 +7,15 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from typing import Optional
 
 from graph_rag.production_floor import experimental_vs_production
 
 _DIR = Path(__file__).resolve().parent
 _DEFAULT_PATH = _DIR / "graph-gemini.json"
-_FALLBACK_PATH = (
-    _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-gemini.json"
-)
+_FALLBACK_PATH = _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-gemini.json"
 
 
-def _resolve_path() -> Optional[Path]:
+def _resolve_path() -> Path | None:
     env = os.environ.get("CVCE_GRAPH_GEMINI_PATH", "").strip()
     if env:
         p = Path(env)
@@ -30,7 +27,7 @@ def _resolve_path() -> Optional[Path]:
     return None
 
 
-def gemini_graph_stats() -> Optional[dict]:
+def gemini_graph_stats() -> dict | None:
     path = _resolve_path()
     if path is None:
         return None

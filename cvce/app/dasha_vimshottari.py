@@ -8,14 +8,21 @@ NOT the running dasha. Use get_running_dhasa_for_given_date for "now".
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from jhora import const, utils
 from jhora.horoscope.dhasa.graha import vimsottari
 
 PLANET_NAMES = [
-    "Sun", "Moon", "Mars", "Mercury", "Jupiter",
-    "Venus", "Saturn", "Rahu", "Ketu",
+    "Sun",
+    "Moon",
+    "Mars",
+    "Mercury",
+    "Jupiter",
+    "Venus",
+    "Saturn",
+    "Rahu",
+    "Ketu",
 ]
 
 LEVEL_LABELS = {
@@ -53,9 +60,11 @@ def _duration_years(start_t, end_t) -> float:
 def query_jd_now() -> float:
     import swisseph as swe
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     return swe.julday(
-        now.year, now.month, now.day,
+        now.year,
+        now.month,
+        now.day,
         now.hour + now.minute / 60 + now.second / 3600,
     )
 
@@ -85,38 +94,47 @@ def running_ladder(
         query_jd = query_jd_now()
     depth = max(1, min(5, depth))
     run = vimsottari.get_running_dhasa_for_given_date(
-        query_jd, jd, place, dhasa_level_index=depth,
+        query_jd,
+        jd,
+        place,
+        dhasa_level_index=depth,
     )
     rows = []
     for i, row in enumerate(run or []):
         lords, start_t, end_t = row[0], row[1], row[2]
         level = len(lords) if isinstance(lords, tuple) else 1
-        rows.append({
-            "level": level,
-            "levelLabel": LEVEL_LABELS.get(level, f"Level {level}"),
-            "lords": lords_names(lords if isinstance(lords, tuple) else (lords,)),
-            "lord": lord_name(lords[-1] if isinstance(lords, tuple) else lords),
-            "start": _fmt_date(start_t),
-            "end": _fmt_date(end_t),
-            "durationYears": round(_duration_years(start_t, end_t), 4),
-        })
+        rows.append(
+            {
+                "level": level,
+                "levelLabel": LEVEL_LABELS.get(level, f"Level {level}"),
+                "lords": lords_names(lords if isinstance(lords, tuple) else (lords,)),
+                "lord": lord_name(lords[-1] if isinstance(lords, tuple) else lords),
+                "start": _fmt_date(start_t),
+                "end": _fmt_date(end_t),
+                "durationYears": round(_duration_years(start_t, end_t), 4),
+            }
+        )
     return rows
 
 
 def antardasha_table(jd: float, place) -> list[dict]:
     """All Maha–Antar rows (81), like a professional report table."""
     _, periods = vimsottari.get_vimsottari_dhasa_bhukthi(
-        jd, place, dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
+        jd,
+        place,
+        dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
     )
     rows = []
     for p in periods:
         lords, start, years = p[0], p[1], p[2]
-        rows.append({
-            "maha": lord_name(lords[0]),
-            "antara": lord_name(lords[1]),
-            "start": _fmt_date(start),
-            "durationYears": round(float(years), 4),
-        })
+        rows.append(
+            {
+                "maha": lord_name(lords[0]),
+                "antara": lord_name(lords[1]),
+                "start": _fmt_date(start),
+                "durationYears": round(float(years), 4),
+            }
+        )
     return rows
 
 
@@ -164,16 +182,21 @@ def _subtree_from_flat(
     for key in sorted(groups.keys(), key=lambda k: groups[k][0]):
         start_t, dur, lords = groups[key]
         end_t = _period_end(start_t, float(dur))
-        nodes.append({
-            "level": child_level,
-            "lord": lord_name(lords[-1]),
-            "start": _fmt_date(start_t),
-            "end": _fmt_date(end_t),
-            "durationYears": round(float(dur), 4),
-            "subPeriods": _subtree_from_flat(
-                flat_periods, lords, child_level + 1, max_level,
-            ),
-        })
+        nodes.append(
+            {
+                "level": child_level,
+                "lord": lord_name(lords[-1]),
+                "start": _fmt_date(start_t),
+                "end": _fmt_date(end_t),
+                "durationYears": round(float(dur), 4),
+                "subPeriods": _subtree_from_flat(
+                    flat_periods,
+                    lords,
+                    child_level + 1,
+                    max_level,
+                ),
+            }
+        )
     return nodes
 
 
@@ -184,18 +207,20 @@ def mahadasha_tree(
     deep_antar_path: tuple | None = None,
 ) -> list[dict]:
     """
-    Nine Mahadashas with Antardashas; levels 3–5 nested only under the running antar.
+      Nine Mahadashas with Antardashas; levels 3–5 nested only under the running antar.
 
-    Uses one bulk PyJHora call for antars (81 rows, ~0.2s) instead of 9×
-    vimsottari_immediate_children (~20s). Deep levels use one more bulk fetch
-  filtered to the running maha–antar path.
+      Uses one bulk PyJHora call for antars (81 rows, ~0.2s) instead of 9×
+      vimsottari_immediate_children (~20s). Deep levels use one more bulk fetch
+    filtered to the running maha–antar path.
     """
     max_level = max(1, min(5, max_level))
     maha_map = vimsottari.vimsottari_mahadasa(jd, place)
     items = list(maha_map.items())
 
     _, antar_periods = vimsottari.get_vimsottari_dhasa_bhukthi(
-        jd, place, dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
+        jd,
+        place,
+        dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
     )
     antars_by_maha: dict[int, list] = {}
     for p in antar_periods:
@@ -204,13 +229,12 @@ def mahadasha_tree(
     deep_flat: list = []
     if max_level > 2 and deep_antar_path and len(deep_antar_path) >= 2:
         _, deep_flat = vimsottari.get_vimsottari_dhasa_bhukthi(
-            jd, place, dhasa_level_index=_DEPTH_FOR_LEVEL[max_level],
+            jd,
+            place,
+            dhasa_level_index=_DEPTH_FOR_LEVEL[max_level],
         )
         m_id, a_id = deep_antar_path[0], deep_antar_path[1]
-        deep_flat = [
-            p for p in deep_flat
-            if len(p[0]) >= 2 and p[0][0] == m_id and p[0][1] == a_id
-        ]
+        deep_flat = [p for p in deep_flat if len(p[0]) >= 2 and p[0][0] == m_id and p[0][1] == a_id]
 
     tree = []
     for idx, (m_lord, m_start_jd) in enumerate(items):
@@ -233,27 +257,29 @@ def mahadasha_tree(
                 and deep_antar_path[1] == a_lord
                 and max_level > 2
             )
-            antar_nodes.append({
-                "level": 2,
-                "lord": lord_name(a_lord),
-                "start": _fmt_date(start_t),
-                "end": _fmt_date(end_t),
-                "durationYears": round(float(years), 4),
-                "subPeriods": (
-                    _subtree_from_flat(deep_flat, lords[:2], 3, max_level)
-                    if deep
-                    else []
-                ),
-            })
+            antar_nodes.append(
+                {
+                    "level": 2,
+                    "lord": lord_name(a_lord),
+                    "start": _fmt_date(start_t),
+                    "end": _fmt_date(end_t),
+                    "durationYears": round(float(years), 4),
+                    "subPeriods": (
+                        _subtree_from_flat(deep_flat, lords[:2], 3, max_level) if deep else []
+                    ),
+                }
+            )
 
-        tree.append({
-            "level": 1,
-            "lord": lord_name(m_lord),
-            "start": _fmt_date(m_start_t),
-            "end": _fmt_date(m_end_t),
-            "durationYears": round(_duration_years(m_start_t, m_end_t), 4),
-            "subPeriods": antar_nodes,
-        })
+        tree.append(
+            {
+                "level": 1,
+                "lord": lord_name(m_lord),
+                "start": _fmt_date(m_start_t),
+                "end": _fmt_date(m_end_t),
+                "durationYears": round(_duration_years(m_start_t, m_end_t), 4),
+                "subPeriods": antar_nodes,
+            }
+        )
 
     return tree
 
@@ -266,7 +292,10 @@ def dasha_deep_payload(jd: float, place, max_level: int = 5) -> dict:
     deep_path = None
     if len(ladder) >= 2:
         run = vimsottari.get_running_dhasa_for_given_date(
-            query_jd_now(), jd, place, dhasa_level_index=2,
+            query_jd_now(),
+            jd,
+            place,
+            dhasa_level_index=2,
         )
         if run and len(run) >= 2:
             deep_path = run[1][0]
@@ -282,6 +311,9 @@ def dasha_deep_payload(jd: float, place, max_level: int = 5) -> dict:
         "currentLadder": ladder,
         "antardashaTable": antardasha_table(jd, place),
         "dashaTree": mahadasha_tree(
-            jd, place, max_level=tree_max, deep_antar_path=deep_path,
+            jd,
+            place,
+            max_level=tree_max,
+            deep_antar_path=deep_path,
         ),
     }

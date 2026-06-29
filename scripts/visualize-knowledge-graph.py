@@ -43,6 +43,7 @@ def build_viz(graph: dict, max_nodes: int = 500, community_limit: int = 0):
 
     # Node positions (simple circular layout by community)
     import math
+
     positions = {}
     for cid, ids in communities.items():
         angle_step = 2 * math.pi / max(len(ids), 1)
@@ -67,14 +68,16 @@ def build_viz(graph: dict, max_nodes: int = 500, community_limit: int = 0):
             edge_y += [y0, y1, None]
 
     edge_trace = go.Scatter(
-        x=edge_x, y=edge_y,
+        x=edge_x,
+        y=edge_y,
         line=dict(width=0.5, color="#888"),
         hoverinfo="none",
         mode="lines",
     )
 
     node_trace = go.Scatter(
-        x=x, y=y,
+        x=x,
+        y=y,
         mode="markers",
         hoverinfo="text",
         text=labels,

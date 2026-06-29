@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import fnmatch
 import json
+import logging
 import os
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -16,6 +17,8 @@ from .models import GraphVersion, InvalidationReason, KnowledgeValidity
 from .registry import EngineRegistry, RegisteredEngine
 from .store.base import KnowledgeStore
 from .store.supabase_store import SupabaseKnowledgeStore
+
+logger = logging.getLogger(__name__)
 
 
 # Fallback file-based store (current behavior)
@@ -315,10 +318,32 @@ Facts (abbrev):
         return allowed, blocked
 
     def search(self, query: str, top_k: int = 8) -> list[dict]:
-        """Delegates to the underlying store's vector/hybrid search."""
-        if hasattr(self.store, "search"):
-            return self.store.search(query, top_k)
-        return []
+        """
+        Semantic + keyword hybrid search over corpus chunks (Supabase pgvector).
+
+        Returns ranked chunk dicts with ``source_id``, ``content``, ``chunk_index``,
+        and ``similarity`` when vector search contributed.
+        """
+        query = (query or "").strip()
+        if not query:
+            return []
+
+        if not hasattr(self.store, "search"):
+            logger.debug("store has no search() — returning empty for %r", query[:80])
+            return []
+
+        try:
+            results = self.store.search(query, top_k)
+            logger.info(
+                "knowledge search %r → %d hits (vector_available=%s)",
+                query[:80],
+                len(results),
+                self.vector_search_available(),
+            )
+            return results
+        except Exception:
+            logger.exception("knowledge search failed for %r", query[:80])
+            return []
 
     # ------------------------------------------------------------------ #
     # Validity & Blocking (Invalidation Protocol)

@@ -9,6 +9,7 @@ Usage:
   python3 scripts/ingest-newbooks-md.py              # copy + manifest only
   python3 scripts/ingest-newbooks-md.py --extract    # copy + gyan extract + gemini batch
 """
+
 from __future__ import annotations
 
 import argparse
@@ -18,14 +19,12 @@ import os
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from difflib import SequenceMatcher
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-NEWBOOKS = Path(
-    "/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks"
-)
+NEWBOOKS = Path("/Users/ganesha/Projects/04-UX-Practice/Panchang/Gyan/newbooks")
 RAW = ROOT / "knowledge-graph" / "raw"
 LOG_DIR = ROOT / "knowledge-graph" / "ingest-logs"
 DEDUPE_LOG = LOG_DIR / "newbooks-dedupe.json"
@@ -41,7 +40,7 @@ CONTENT_DUP_THRESHOLD = 0.92
 
 
 def _now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def _content_dup(candidate: Path, existing: Path) -> bool:
@@ -123,7 +122,9 @@ def main() -> int:
     print(f"dedupe log → {DEDUPE_LOG}")
 
     if not args.extract:
-        print(f"copied/verified {len(to_extract)} files ({len(report['skipped_duplicates'])} duplicates skipped)")
+        print(
+            f"copied/verified {len(to_extract)} files ({len(report['skipped_duplicates'])} duplicates skipped)"
+        )
         return 0
 
     if not to_extract:

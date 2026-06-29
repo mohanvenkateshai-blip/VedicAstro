@@ -1,4 +1,5 @@
 """Shared helpers for multi-provider graph extraction pipelines."""
+
 from __future__ import annotations
 
 import hashlib
