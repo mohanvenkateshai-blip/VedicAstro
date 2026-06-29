@@ -2086,6 +2086,23 @@ def search_places(q: str = ""):
     return {"results": results}
 
 
+@app.post("/knowledge/refresh")
+def knowledge_refresh(reason: str = "manual"):
+    """
+    **Global Knowledge Refresh Trigger**
+
+    Forces every registered engine to immediately recalculate its logic,
+    predictions, and interpretations using the latest knowledge graph.
+
+    This is the explicit "refresh all" command for the system.
+    """
+    if _knowledge_engine is None:
+        raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
+
+    result = _knowledge_engine.trigger_global_refresh(reason=reason)
+    return result
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host=settings.HOST, port=settings.PORT)

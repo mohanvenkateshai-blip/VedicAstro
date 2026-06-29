@@ -337,6 +337,32 @@ class KnowledgeEngine:
         self._last_revived_at = datetime.now(timezone.utc)
         return True
 
+    def trigger_global_refresh(self, reason: str = "manual") -> dict:
+        """
+        **Force refresh command** — tells every registered engine to
+        immediately recalculate all logic, analysis, predictions, and
+        interpretations using the current knowledge graph.
+
+        This is the explicit "refresh all" trigger that can be called
+        after new literature is added or when knowledge needs to be
+        forcefully propagated across the entire system.
+        """
+        self._load_current_version()
+        self._clear_stale_invalidations()
+
+        new_version = self.current_version.version if self.current_version else "unknown"
+        self.registry.notify_refresh(new_version=new_version)
+
+        self._last_revived_at = datetime.now(timezone.utc)
+
+        return {
+            "status": "triggered",
+            "version": new_version,
+            "reason": reason,
+            "engines_notified": self.registry.registered_names(),
+            "timestamp": self._last_revived_at.isoformat(),
+        }
+
     # ------------------------------------------------------------------ #
     # Observability
     # ------------------------------------------------------------------ #
