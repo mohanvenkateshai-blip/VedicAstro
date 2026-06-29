@@ -122,10 +122,10 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 - [x] **9** Shadbala chapter — Sthana/Dik/Cheshta/Kaala/Naisargika/Total-Rupa table for 7 planets.
 - [x] **10** Timing merge — combined dasha score + transit verdict → single window verdict with reasons.
 - [x] **11** Dasha forecast — next 8 antardasha periods, each with dated range + life-area bullets (profession/wealth/health/family/caution).
-- [ ] **12** LLM narration layer — gate with `CVCE_LLM_NARRATION=1` (P0, active — in progress).
-- [ ] Vector embeddings on `corpus_chunks` for hybrid search (Supabase) (P0, active — in progress).
-- [ ] Kaksha transit calendar + Chara/Kalachakra dashas — engine + UI (P1, active — in progress).
-- Deeper Hiranya-quality polish on HoroscopeReport (fill remaining chapters, tighter integration) (P0, active — in progress).
+- [x] **12** LLM narration layer — gate `CVCE_LLM_NARRATION=1` wired in report_facts + UI render (P0, initial code landed).
+- [x] Vector embeddings — corpus_chunks table + chunk sync + generate-embeddings.py (P0, initial code landed; embeddings fill on demand).
+- [x] Kaksha + Chara/Kalachakra dashas — active in /dashas + kaksha refinement notes (P1, initial integration landed).
+- Deeper Hiranya-quality polish on HoroscopeReport — narration block + facts integration (P0, in progress).
 
 **Key new files (Phase 9–12):**
 | Path | Change |

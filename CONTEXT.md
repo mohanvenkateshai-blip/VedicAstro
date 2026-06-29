@@ -225,10 +225,10 @@ Jyotish Digest volumes (+273). Total: +3,455 nodes from baseline 23,267.
 ## 9. Next Phases (in priority order) — Active (no longer deferred)
 
 1. **Supabase vault re-sync** — push 26k-node graph when network to Supabase is stable
-2. **Vector embeddings on `corpus_chunks`** — hybrid search (P0, schema + sync + retrieval)
-3. **Kaksha calendar + Chara/Kalachakra dashas** — full engine + UI (P1)
-4. **LLM narration layer** — optional prose on `ReportFacts` (`CVCE_LLM_NARRATION=1`) (P0)
-5. **Deeper Hiranya-quality report UI polish** — complete remaining integration and depth in HoroscopeReport.tsx
+2. **Vector embeddings on `corpus_chunks`** — hybrid search (P0, schema + sync + generate-embeddings.py landed)
+3. **Kaksha calendar + Chara/Kalachakra dashas** — full engine + UI (P1, /dashas integration + Kaksha refinement landed)
+4. **LLM narration layer** — optional prose on `ReportFacts` (`CVCE_LLM_NARRATION=1`) (P0, wired + UI render landed)
+5. **Deeper Hiranya-quality report UI polish** — complete remaining integration (narration + facts polish in progress)
 
 All items promoted to active work with immediate effect. See STATUS.md §3 and §4 for tracking.
 
