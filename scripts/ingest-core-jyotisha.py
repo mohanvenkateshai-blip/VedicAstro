@@ -383,7 +383,7 @@ def cmd_merge(args: argparse.Namespace) -> int:
 
     GRAPH_OUT.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_OUT}")
-    print(f"vs baseline ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
+    print(f"vs production floor ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
 
     if args.promote:
         promoted = GRAPH_BASE.with_suffix(".json.bak-pre-core-jyotisha")

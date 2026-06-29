@@ -13,12 +13,33 @@ KG = ROOT / "knowledge-graph"
 RAW = KG / "raw"
 MANIFEST = KG / "corpus-manifest.json"
 GRAPH_BASE = KG / "graphify-out" / "graph.json"
+GRAPH_VERSION_PATH = KG / "graph-version.json"
 FILE_CHAR_CAP = 20_000
-BASELINE_NODES = 4253
 
-GRAPHIFY_SITE = Path(
-    "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv/lib/python3.14/site-packages"
-)
+
+def load_graph_version() -> dict:
+    if GRAPH_VERSION_PATH.is_file():
+        return json.loads(GRAPH_VERSION_PATH.read_text(encoding="utf-8"))
+    return {}
+
+
+def production_node_floor() -> int:
+    ver = load_graph_version()
+    if ver.get("production_nodes"):
+        return int(ver["production_nodes"])
+    if GRAPH_BASE.is_file():
+        return len(json.loads(GRAPH_BASE.read_text(encoding="utf-8")).get("nodes", []))
+    return 23267
+
+
+# Merge guard: never shrink below current production graph (see graph-version.json).
+BASELINE_NODES = production_node_floor()
+
+GRAPHIFY_SITE = Path(os.environ.get("GRAPHIFY_SITE", ""))
+if not GRAPHIFY_SITE.is_dir():
+    GRAPHIFY_SITE = Path(
+        "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv/lib/python3.14/site-packages"
+    )
 if GRAPHIFY_SITE.is_dir() and str(GRAPHIFY_SITE) not in sys.path:
     sys.path.insert(0, str(GRAPHIFY_SITE))
 

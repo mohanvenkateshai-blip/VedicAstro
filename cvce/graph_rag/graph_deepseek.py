@@ -7,10 +7,11 @@ import os
 from pathlib import Path
 from typing import Optional
 
+from graph_rag.production_floor import experimental_vs_production
+
 _DIR = Path(__file__).resolve().parent
 _DEFAULT = _DIR / "graph-deepseek.json"
 _FALLBACK = _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-deepseek.json"
-_BASELINE = 4253
 
 
 def deepseek_graph_stats() -> Optional[dict]:
@@ -33,7 +34,5 @@ def deepseek_graph_stats() -> Optional[dict]:
         "nodes": nodes,
         "links": len(data.get("links", [])),
         "hyperedges": len(data.get("hyperedges", [])),
-        "baseline_nodes": _BASELINE,
-        "beats_baseline": nodes > _BASELINE,
-        "delta_nodes": nodes - _BASELINE,
+        **experimental_vs_production(nodes),
     }

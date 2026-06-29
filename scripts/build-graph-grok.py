@@ -21,7 +21,8 @@ KG = ROOT / "knowledge-graph"
 GRAPH_BASE = KG / "graphify-out" / "graph.json"
 GRAPH_GROK = KG / "graphify-out" / "graph-grok.json"
 SEMANTIC_CACHE = KG / "graphify-out" / "cache" / "semantic"
-BASELINE_NODES = 4253
+sys.path.insert(0, str(ROOT / "scripts"))
+from graph_extract_common import BASELINE_NODES  # noqa: E402
 
 
 def merge_graph(base: dict, fragment: dict) -> dict:
@@ -110,10 +111,10 @@ def main() -> int:
         print("error: grok graph smaller than base — aborting", file=sys.stderr)
         return 1
 
-    beats_baseline = new_nodes > BASELINE_NODES
+    beats_production = new_nodes > BASELINE_NODES
     print(
-        f"vs baseline ({BASELINE_NODES}): "
-        f"{'PASS — grok adds nodes' if beats_baseline else 'same count — semantic layer added links only or duplicates skipped'}"
+        f"vs production floor ({BASELINE_NODES}): "
+        f"{'PASS — grok adds nodes' if beats_production else 'same count — semantic layer added links only or duplicates skipped'}"
     )
 
     if args.dry_run:

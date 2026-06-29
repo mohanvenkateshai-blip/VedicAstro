@@ -32,6 +32,8 @@ knowledge-graph/raw/graphify-out/
 # Corpus IP — raw markdown stays out of git; graph is committed (canonical artifact)
 knowledge-graph/raw/*.md
 knowledge-graph/gcp-ocr-staging/
+knowledge-graph/graphify-out/*.bak*
+knowledge-graph/graphify-out/graph.json.bak*
 
 # Supabase CLI local state
 supabase/.temp/

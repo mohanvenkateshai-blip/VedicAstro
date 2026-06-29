@@ -163,7 +163,67 @@ def _marker_running() -> bool:
         _pgrep("marker-ocr-queue.sh")
         or _pgrep("marker-ocr.py")
         or _pgrep("marker_single")
+        or _pgrep("gcp-ocr-watch.sh")
+        or _pgrep("gcp-sync-watch.sh")
     )
+
+
+def _gcp_vm_status() -> str:
+    gcloud = "/opt/homebrew/bin/gcloud"
+    if not Path(gcloud).is_file():
+        import shutil
+        gcloud = shutil.which("gcloud") or "gcloud"
+    r = subprocess.run(
+        [
+            gcloud,
+            "compute",
+            "instances",
+            "list",
+            "--filter",
+            "name~'^vedicastro-ocr'",
+            "--format",
+            "value(status)",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode != 0:
+        return "MISSING"
+    statuses = [s.strip() for s in (r.stdout or "").splitlines() if s.strip()]
+    if not statuses:
+        return "MISSING"
+    if any(s == "RUNNING" for s in statuses):
+        return "RUNNING"
+    return statuses[0]
+
+
+def _gcp_ocr_preferred() -> bool:
+    st = _gcp_vm_status()
+    return st in ("RUNNING", "STAGING", "PROVISIONING", "REPAIRING")
+
+
+def _run_gcp_watch(state: dict) -> None:
+    if _pgrep("gcp-ocr-watch.sh") or _pgrep("gcp-sync-watch.sh"):
+        return
+    pid, log = _run_bg("gcp_sync_watch", ["bash", str(ROOT / "scripts" / "gcp-ocr-watch.sh")])
+    state["pids"]["gcp_sync_watch"] = pid
+    state["logs"]["gcp_sync_watch"] = str(log)
+
+
+def _gcp_extract_complete() -> bool:
+    return (LOG_DIR / "gcp-extract-complete.marker").is_file()
+
+
+def _gcp_extract_complete_via_graph() -> bool:
+    p = KG / "graphify-out" / "graph-deepseek.json"
+    if not p.is_file():
+        return False
+    try:
+        g = json.loads(p.read_text(encoding="utf-8"))
+        # Text-only pass landed ~11.4k nodes; scans add more
+        return len(g.get("nodes", [])) > 11_400
+    except (json.JSONDecodeError, OSError):
+        return False
 
 
 def _run_deepseek(only_md: list[str], label: str, state: dict) -> None:
@@ -189,6 +249,10 @@ def _run_marker(state: dict) -> None:
         return
     if not _pending_scan_mds():
         state["phases"]["marker_ocr"] = "done"
+        return
+    if _gcp_ocr_preferred():
+        _log("using GCP OCR VM — starting gcp-ocr-watch (skipping local Marker)")
+        _run_gcp_watch(state)
         return
     pid, log = _run_bg(
         "marker_ocr",
@@ -250,7 +314,7 @@ def _run_merge(state: dict) -> bool:
         "base_nodes": base_nodes,
         "merged_nodes": new_nodes,
         "links": len(merged.get("links", [])),
-        "vs_baseline": new_nodes - BASELINE_NODES,
+        "vs_production_floor": new_nodes - BASELINE_NODES,
     }
     _log(f"merge done: {base_nodes} → {new_nodes} nodes → {GRAPH_OUT.name}")
     return True
@@ -267,7 +331,7 @@ Finished at: {_now()}
 ## Summary
 - **Markdown sources in raw/**: {len(mds)} / {len(_all_core_mds())}
 - **Scans still pending**: {len(pending)}
-- **Graph nodes**: {stats.get('base_nodes', '?')} → **{stats.get('merged_nodes', '?')}** (+{stats.get('vs_baseline', '?')} vs baseline {BASELINE_NODES})
+- **Graph nodes**: {stats.get('base_nodes', '?')} → **{stats.get('merged_nodes', '?')}** (+{stats.get('vs_production_floor', '?')} vs production floor {BASELINE_NODES})
 - **Output graph**: `{GRAPH_OUT.relative_to(ROOT)}`
 
 ## Phases
@@ -300,21 +364,36 @@ def _tick(state: dict) -> bool:
             phases["deepseek_text"] = "done"
             _log("deepseek_text finished")
 
-    # Phase 2: Marker OCR (parallel with phase 1)
+    # Phase 2: Marker OCR (parallel with phase 1) or GCP watch
     if phases["marker_ocr"] in ("pending", "running"):
         if not _pending_scan_mds():
             phases["marker_ocr"] = "done"
             _log("marker_ocr done — all scans converted")
+        elif (ROOT / "knowledge-graph" / "ingest-logs" / "gcp-ocr-complete.marker").is_file():
+            phases["marker_ocr"] = "done"
+            _log("marker_ocr done — gcp-ocr-complete")
         elif phases["marker_ocr"] == "pending":
             _run_marker(state)
             phases["marker_ocr"] = "running"
-        elif not _marker_running():
+        elif _gcp_ocr_preferred() and not _pgrep("gcp-ocr-watch.sh") and not _pgrep("gcp-sync-watch.sh"):
+            _log("gcp-ocr-watch not running — restarting")
+            _run_gcp_watch(state)
+        elif not _gcp_ocr_preferred() and not _marker_running():
             _log("marker_ocr crashed — restarting")
             _run_marker(state)
 
-    # Phase 3: DeepSeek on OCR'd books (after text pass done, run when OCR mds exist)
+    # Phase 3: DeepSeek on OCR'd books — GCP VM extracts; Mac only syncs
     ocr_mds = _ocr_mds_ready()
-    if phases["deepseek_text"] == "done" and ocr_mds:
+    if _gcp_ocr_preferred():
+        if phases["deepseek_ocr"] == "pending":
+            phases["deepseek_ocr"] = "running"
+            _log("deepseek_ocr on GCP — local sync via gcp-sync-watch")
+        elif _gcp_extract_complete() or _gcp_extract_complete_via_graph():
+            phases["deepseek_ocr"] = "done"
+            _log("deepseek_ocr done — synced from GCS")
+        elif phases["marker_ocr"] == "done" and not ocr_mds:
+            phases["deepseek_ocr"] = "skipped"
+    elif phases["deepseek_text"] == "done" and ocr_mds:
         if phases["deepseek_ocr"] == "pending":
             # Wait until marker done OR run incrementally on ready files
             ready = ocr_mds if phases["marker_ocr"] == "done" else ocr_mds
@@ -332,10 +411,8 @@ def _tick(state: dict) -> bool:
     elif phases["deepseek_text"] == "done" and not ocr_mds and phases["marker_ocr"] == "done":
         phases["deepseek_ocr"] = "skipped"
 
-    # Phase 4: Gemini batch (after all deepseek done)
-    ds_done = phases["deepseek_text"] == "done" and phases["deepseek_ocr"] in ("done", "skipped")
-    ocr_done = phases["marker_ocr"] == "done"
-    if ds_done and ocr_done and phases["gemini_batch"] == "pending":
+    # Phase 4: Gemini batch — parallel with Marker OCR once text DeepSeek is done
+    if phases["deepseek_text"] == "done" and phases["gemini_batch"] == "pending":
         _run_gemini(state)
         if phases["gemini_batch"] != "skipped":
             phases["gemini_batch"] = "running"
@@ -344,7 +421,9 @@ def _tick(state: dict) -> bool:
             phases["gemini_batch"] = "done"
             _log("gemini_batch finished")
 
-    # Phase 5: Merge
+    # Phase 5: Merge (after OCR + all DeepSeek + Gemini)
+    ds_done = phases["deepseek_text"] == "done" and phases["deepseek_ocr"] in ("done", "skipped")
+    ocr_done = phases["marker_ocr"] == "done"
     gem_done = phases["gemini_batch"] in ("done", "skipped")
     if ds_done and ocr_done and gem_done and phases["merge"] == "pending":
         if _run_merge(state):
@@ -378,6 +457,9 @@ def main() -> int:
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     state = _load_state()
+    # If text deepseek already finished, advance state so Gemini can run in parallel
+    if state["phases"].get("deepseek_text") == "running" and not _deepseek_running():
+        state["phases"]["deepseek_text"] = "done"
     _log("supervisor started")
 
     # Bootstrap: honour already-running lanes from a prior `go` launch

@@ -7,10 +7,11 @@ import os
 from pathlib import Path
 from typing import Optional
 
+from graph_rag.production_floor import experimental_vs_production
+
 _DIR = Path(__file__).resolve().parent
 _DEFAULT_PATH = _DIR / "graph-glm.json"
 _FALLBACK_PATH = _DIR.parent.parent / "knowledge-graph" / "graphify-out" / "graph-glm.json"
-_BASELINE_NODES = 4253
 
 
 def _resolve_path() -> Optional[Path]:
@@ -40,7 +41,5 @@ def glm_graph_stats() -> Optional[dict]:
         "nodes": nodes,
         "links": len(data.get("links", [])),
         "hyperedges": len(data.get("hyperedges", [])),
-        "baseline_nodes": _BASELINE_NODES,
-        "beats_baseline": nodes > _BASELINE_NODES,
-        "delta_nodes": nodes - _BASELINE_NODES,
+        **experimental_vs_production(nodes),
     }

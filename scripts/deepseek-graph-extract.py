@@ -31,12 +31,15 @@ GRAPH_OUT = KG / "graphify-out" / "graph-deepseek.json"
 CACHE_DIR = KG / "graphify-out" / "cache" / "deepseek"
 RUN_META = KG / "graphify-out" / "batch-deepseek" / "last-run.json"
 FILE_CHAR_CAP = 20_000
-BASELINE_NODES = 4253
+sys.path.insert(0, str(ROOT / "scripts"))
+from graph_extract_common import BASELINE_NODES, production_node_floor  # noqa: E402
 BASE_URL = "https://api.deepseek.com"
 
-GRAPHIFY_SITE = Path(
-    "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv/lib/python3.14/site-packages"
-)
+GRAPHIFY_SITE = Path(os.environ.get("GRAPHIFY_SITE", ""))
+if not GRAPHIFY_SITE.is_dir():
+    GRAPHIFY_SITE = Path(
+        "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv/lib/python3.14/site-packages"
+    )
 if GRAPHIFY_SITE.is_dir() and str(GRAPHIFY_SITE) not in sys.path:
     sys.path.insert(0, str(GRAPHIFY_SITE))
 
@@ -315,7 +318,7 @@ def cmd_merge(args: argparse.Namespace) -> int:
 
     GRAPH_OUT.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_OUT}")
-    print(f"vs baseline ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
+    print(f"vs production floor ({BASELINE_NODES}): {'PASS' if new_nodes > BASELINE_NODES else 'same'}")
 
     if args.deploy:
         subprocess.run(

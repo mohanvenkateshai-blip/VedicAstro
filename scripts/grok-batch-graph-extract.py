@@ -32,7 +32,8 @@ GRAPH_GROK = KG / "graphify-out" / "graph-grok.json"
 BATCH_DIR = KG / "graphify-out" / "batch-grok"
 JOB_META = BATCH_DIR / "last-job.json"
 FILE_CHAR_CAP = 20_000
-BASELINE_NODES = 4253
+sys.path.insert(0, str(ROOT / "scripts"))
+from graph_extract_common import BASELINE_NODES  # noqa: E402
 
 GRAPHIFY_SITE = Path(
     "/Users/ganesha/Projects/04-UX-Practice/Panchang/.venv/lib/python3.14/site-packages"
@@ -454,7 +455,7 @@ def cmd_merge(args: argparse.Namespace) -> int:
     GRAPH_GROK.write_text(json.dumps(merged, indent=2), encoding="utf-8")
     print(f"✓ wrote {GRAPH_GROK}")
     print(
-        f"vs baseline ({BASELINE_NODES}): "
+        f"vs production floor ({BASELINE_NODES}): "
         f"{'PASS' if new_nodes > BASELINE_NODES else 'same as base'}"
     )
 

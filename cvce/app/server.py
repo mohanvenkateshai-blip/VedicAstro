@@ -643,7 +643,7 @@ def predict_health_grok():
         "graph_rag": stats,
         "compare": {
             "production_endpoint": "/predict/health",
-            "promote_when": "beats_baseline is true and quality spot-check passes",
+            "promote_when": "beats_production is true and quality spot-check passes",
         },
     }
 

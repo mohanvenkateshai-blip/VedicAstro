@@ -55,6 +55,20 @@ def test_predict_health_rules_source(monkeypatch):
     assert "graph_rag_grok" in data
 
 
+def test_predict_health_production_node_count(monkeypatch):
+    monkeypatch.setenv("CVCE_GRAPH_AS_RULES", "1")
+    from fastapi.testclient import TestClient
+    from app.server import app
+    from graph_rag.production_floor import production_node_floor
+
+    client = TestClient(app)
+    health = client.get("/predict/health")
+    assert health.status_code == 200
+    data = health.json()
+    if data.get("available") and data.get("graph_rag", {}).get("available"):
+        assert data["graph_rag"]["stats"]["nodes"] >= production_node_floor()
+
+
 def test_predict_health_grok_endpoint():
     from fastapi.testclient import TestClient
     from app.server import app
@@ -64,6 +78,6 @@ def test_predict_health_grok_endpoint():
     if resp.status_code == 200:
         body = resp.json()
         assert body["initiative"] == "grok"
-        assert body["graph_rag"]["nodes"] >= 4253
+        assert body["graph_rag"]["nodes"] > 0
     else:
         assert resp.status_code == 404

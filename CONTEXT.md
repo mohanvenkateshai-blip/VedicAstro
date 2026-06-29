@@ -103,7 +103,7 @@ It is the single source of truth for system topology, immutable constraints, and
 
 ### When working on Knowledge Graph
 - Source files live in `knowledge-graph/raw/` (**not committed** — vault is Supabase `corpus-vault`)
-- Production graph: `knowledge-graph/graphify-out/graph.json` (**committed**, 23,267 nodes) → `cvce/graph_rag/graph.json` via `sync-graph.sh`
+- Production graph: `knowledge-graph/graphify-out/graph.json` (**committed**, see `graph-version.json` for canonical counts)
 - Production deploy copy: `graph.json` → `cvce/data/graph.json` via `./scripts/sync-graph.sh`
 - Core Jyothisha ingest: `python3 scripts/ingest-core-jyotisha.py` (convert → extract → merge --promote)
 - Supabase sync: `python3 scripts/supabase-corpus-sync.py` (after `gcp-sync-results.sh`)
@@ -177,7 +177,7 @@ These bugs have already been fixed. Don't re-introduce them.
 - GCS bucket = processing scratch only (`gcp-lockdown.sh`)
 
 **Git policy:**
-- **Commit** `graph.json` (graphify-out + cvce/graph_rag) — canonical 23k-node artifact
+- **Commit** `graph.json` + `knowledge-graph/graph-version.json` (canonical node/link counts)
 - Do **not** commit `knowledge-graph/raw/*.md` (IP in Supabase Storage)
 
 **Later:** vector embeddings on `corpus_chunks` for hybrid search (not started).

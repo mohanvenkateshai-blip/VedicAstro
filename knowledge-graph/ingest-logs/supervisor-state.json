@@ -13,14 +13,12 @@
   "logs": {
     "gemini_batch": "/Users/ganesha/Projects/04-UX-Practice/VedicAstro/knowledge-graph/ingest-logs/supervisor-gemini_batch-20260628-222040.log"
   },
-  "updated_at": "2026-06-29T00:06:43.787321+00:00",
+  "updated_at": "2026-06-29T06:41:32.819588+00:00",
   "merge_stats": {
     "base_nodes": 6437,
-    "merged_nodes": 23267,
-    "links": 35438,
-    "vs_baseline": 19014,
-    "promoted_at": "2026-06-29T00:05:00+00:00",
-    "fly_verified_nodes": 23267
+    "merged_nodes": 16485,
+    "links": 27330,
+    "vs_baseline": 12232
   },
   "finished_at": "2026-06-28T22:46:11.697779+00:00"
 }
