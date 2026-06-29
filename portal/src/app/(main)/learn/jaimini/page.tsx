@@ -88,7 +88,7 @@ export default function JaiminiSutrasPage() {
           <h1 className="mt-2 font-serif text-4xl tracking-tight">Jaimini Sutras</h1>
           <p className="mt-1 text-sm text-text-muted">Adhyāya 1 — Opening aphorisms • Loaded via Knowledge Graph data layer</p>
         </div>
-        <a href="/learn/nakshatras" className="text-sm text-text-muted hover:text-text-main transition-colors">
+        <a href="/learn" className="text-sm text-text-muted hover:text-text-main transition-colors">
           ← Back to Learn
         </a>
       </div>
