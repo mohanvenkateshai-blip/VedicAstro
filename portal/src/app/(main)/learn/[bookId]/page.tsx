@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
-import { loadBook, getChapterContent } from "@/lib/books";
+import { loadBook } from "@/lib/books";
 import { supabase } from "@/lib/supabase";
 import { BookReaderClient } from "@/components/BookReaderClient";
 
@@ -16,16 +16,6 @@ async function BookReader({ bookId }: BookReaderProps) {
   } catch (e) {
     notFound();
   }
-
-  // For the client component fallback when no full markdown
-  let chapterContent = null;
-  if (book.chapters.length > 0) {
-    try {
-      chapterContent = await getChapterContent(bookId, book.chapters[0].id);
-    } catch {}
-  }
-
-  const nodesToShow = chapterContent?.nodes ?? [];
 
   // Always attempt to load the full original markdown from the corpus-vault if we have a storagePath.
   // This ensures useful learning content even when graph_nodes extraction produced 0 rows for the source.
@@ -42,6 +32,46 @@ async function BookReader({ bookId }: BookReaderProps) {
       // fall back to nodes or message
     }
   }
+
+  // Build per-chapter node content map so that clicking a chapter in the left nav
+  // actually shows the nodes that belong to that specific chapter (the user's expectation).
+  const chapterNodesMap: Record<string, any[]> = {};
+  book.chapters.forEach((ch) => {
+    chapterNodesMap[ch.id] = book.nodes.filter((n: any) => ch.nodeIds.includes(n.id));
+  });
+
+  // Default "all nodes" view (used when no specific chapter is selected or no full text)
+  const allNodesView = book.nodes.length > 0 ? (
+    <div className="space-y-8">
+      {book.nodes.map((node: any, i: number) => (
+        <div key={node.id || i} className="border-l-2 border-accent/40 pl-4">
+          {node.source_location && (
+            <div className="text-[10px] uppercase tracking-[3px] text-text-muted mb-1">{node.source_location}</div>
+          )}
+          <div className="font-serif text-2xl leading-tight tracking-[-0.4px] text-text-main">
+            {node.label || "(no label)"}
+          </div>
+          {node.properties && Object.keys(node.properties).length > 0 && (
+            <div className="mt-3 text-sm text-text-muted">
+              {Object.entries(node.properties).slice(0, 5).map(([k, v]: [string, any]) => (
+                <div key={k} className="mb-1">
+                  <span className="font-mono text-xs text-accent">{k}:</span> {typeof v === "string" ? v : JSON.stringify(v)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div>
+      <div className="font-serif text-2xl mb-4">No detailed nodes extracted yet.</div>
+      <p className="text-text-muted">
+        The Knowledge Graph has {book.metadata.nodeCount} nodes for this text in total.
+        Content here is exactly what was extracted during ingest.
+      </p>
+    </div>
+  );
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
@@ -62,44 +92,12 @@ async function BookReader({ bookId }: BookReaderProps) {
       <BookReaderClient
         chapters={book.chapters}
         fullMarkdown={fullMarkdown}
-        nodesContent={
-          nodesToShow.length > 0 ? (
-            <div className="space-y-8">
-              {nodesToShow.map((node: any, i: number) => (
-                <div key={node.id || i} className="border-l-2 border-accent/40 pl-4">
-                  {node.source_location && (
-                    <div className="text-[10px] uppercase tracking-[3px] text-text-muted mb-1">{node.source_location}</div>
-                  )}
-                  <div className="font-serif text-2xl leading-tight tracking-[-0.4px] text-text-main">
-                    {node.label || "(no label)"}
-                  </div>
-                  {node.properties && Object.keys(node.properties).length > 0 && (
-                    <div className="mt-3 text-sm text-text-muted">
-                      {Object.entries(node.properties).slice(0, 5).map(([k, v]: [string, any]) => (
-                        <div key={k} className="mb-1">
-                          <span className="font-mono text-xs text-accent">{k}:</span> {typeof v === "string" ? v : JSON.stringify(v)}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div>
-              <div className="font-serif text-2xl mb-4">No detailed nodes extracted for this section yet.</div>
-              <p className="text-text-muted">
-                The Knowledge Graph has {book.metadata.nodeCount} nodes for this text in total.
-                Content here is exactly what was extracted during ingest (headings, concepts, references).
-                Full original prose lives in the source file synced to the corpus vault.
-              </p>
-            </div>
-          )
-        }
+        defaultNodesContent={allNodesView}
+        chapterNodes={chapterNodesMap}
       />
 
       <div className="mt-4 text-[10px] text-text-muted max-w-3xl">
-        Left navigation is derived from the Knowledge Graph chapter groupings. Clicking a chapter scrolls to the first matching text in the content.
+        Left navigation lists chapters grouped from the Knowledge Graph. Click a chapter to view its extracted nodes on the right.
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ export type Chapter = {
 export type BookContent = {
   metadata: BookMetadata;
   chapters: Chapter[];
-  // Raw content can be fetched on demand via getChapterContent
+  nodes: GraphNodeRow[]; // all nodes for this book (used for per-chapter rendering)
 };
 
 export type ChapterContent = {
@@ -177,13 +177,12 @@ export async function loadBook(
     nodeCount: nodes.length,
   };
 
-  return { metadata, chapters };
+  return { metadata, chapters, nodes };
 }
 
 /**
  * Load full content + nodes for a specific chapter.
- * In production this would fetch markdown from corpus-vault bucket via signed URL
- * or from corpus_chunks table. Here we return the graph nodes as the structured content.
+ * Uses the nodes already loaded in loadBook (robust source_file matching) and filters by chapter.
  */
 export async function getChapterContent(
   bookId: string,
@@ -194,13 +193,7 @@ export async function getChapterContent(
   const chapter = book.chapters.find((c) => c.id === chapterId);
   if (!chapter) throw new Error(`Chapter not found: ${chapterId}`);
 
-  const nodes = await searchGraphNodes({
-    graphVersion,
-    sourceFile: book.metadata.canonicalName,
-    limit: 200,
-  });
-
-  const chapterNodes = nodes.filter((n) => chapter.nodeIds.includes(n.id));
+  const chapterNodes = book.nodes.filter((n) => chapter.nodeIds.includes(n.id));
 
   return {
     chapterId,
