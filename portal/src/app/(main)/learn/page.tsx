@@ -46,7 +46,10 @@ export default async function LearnPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {books.map((book) => {
-              const slug = book.id || book.canonicalName?.toLowerCase().replace(/\s+/g, "-");
+              const slug =
+                book.id ||
+                book.canonicalName?.replace(/\s+/g, "_") ||
+                book.canonicalName?.toLowerCase().replace(/\s+/g, "-");
               const isJaimini = /jaimini/i.test(book.canonicalName || "");
               return (
                 <article

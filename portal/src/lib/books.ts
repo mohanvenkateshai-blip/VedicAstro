@@ -159,7 +159,7 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
         }
       }
 
-      const structured = loadStructuredBook(fileKey || "") || loadStructuredBook(canonical || "");
+      const structured = resolveStructuredBookSync(fileKey, canonical);
       const chapterCount = structured?.chapters?.length || structured?.total_chapters || 0;
 
       return {
@@ -233,22 +233,6 @@ export async function loadBook(
       break;
     }
   }
-
-  // Group into chapters by source_location prefix or label patterns
-  const chapterMap = new Map<string, { title: string; nodes: GraphNodeRow[]; order: number }>();
-
-  nodes.forEach((node, idx) => {
-    const loc = node.source_location ?? "frontmatter";
-    const chapterKey = loc.split(":")[0] || "main";
-    if (!chapterMap.has(chapterKey)) {
-      chapterMap.set(chapterKey, {
-        title: chapterKey.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-        nodes: [],
-        order: chapterMap.size,
-      });
-    }
-    chapterMap.get(chapterKey)!.nodes.push(node);
-  });
 
   // === AUTHORITATIVE STRUCTURED CHAPTERS (from build_structured_library.py) ===
   // Always prefer structured JSON when present — never fall back to graph node source_location buckets
@@ -329,34 +313,71 @@ export async function loadBook(
  * Falls back to null if not present.
  */
 export function loadStructuredBook(bookId: string): StructuredBook | null {
+  return resolveStructuredBookSync(bookId);
+}
+
+/**
+ * Try every alias (URL slug, canonical name, md stem) until a structured book with chapters is found.
+ * This is the single entry point — loadBook and the Learn reader must both use it.
+ */
+export function resolveStructuredBookSync(...hints: (string | null | undefined)[]): StructuredBook | null {
+  const ids = structuredLookupIds(...hints);
+  if (!ids.length) return null;
+
   try {
     const structuredDir = getStructuredDir();
-    const candidates = [
-      path.join(structuredDir, `${bookId}.json`),
-      path.join(structuredDir, `${bookId.replace(/\s+/g, "_")}.json`),
-    ];
-    for (const p of candidates) {
-      if (fs.existsSync(p)) {
-        const raw = fs.readFileSync(p, "utf8");
-        return JSON.parse(raw) as StructuredBook;
-      }
-    }
-    // fuzzy scan
-    if (fs.existsSync(structuredDir)) {
-      const files = fs.readdirSync(structuredDir).filter(f => f.endsWith(".json"));
-      for (const f of files) {
-        const full = path.join(structuredDir, f);
-        const data = JSON.parse(fs.readFileSync(full, "utf8")) as StructuredBook;
-        if (
-          data.book_id === bookId ||
-          data.canonical_name?.toLowerCase().includes(bookId.toLowerCase()) ||
-          data.source_file?.includes(bookId)
-        ) {
-          return data;
+    if (!fs.existsSync(structuredDir)) return null;
+
+    // Exact filename matches first (fast path)
+    for (const id of ids) {
+      for (const stem of [id, id.replace(/\s+/g, "_")]) {
+        const p = path.join(structuredDir, `${stem}.json`);
+        if (fs.existsSync(p)) {
+          const data = JSON.parse(fs.readFileSync(p, "utf8")) as StructuredBook;
+          if (data?.chapters?.length) return data;
         }
       }
     }
+
+    // Fuzzy scan: book_id, canonical_name, source_file stem
+    const norm = (s: string) => (s || "").toLowerCase().replace(/[-_\s]+/g, "");
+    const idNorms = new Set(ids.map(norm).filter(Boolean));
+
+    for (const f of fs.readdirSync(structuredDir).filter((fn) => fn.endsWith(".json"))) {
+      const full = path.join(structuredDir, f);
+      const data = JSON.parse(fs.readFileSync(full, "utf8")) as StructuredBook;
+      if (!data?.chapters?.length) continue;
+      const keys = [
+        data.book_id,
+        data.canonical_name,
+        data.source_file?.replace(/\.md$/i, ""),
+        f.replace(/\.json$/i, ""),
+      ];
+      if (keys.some((k) => k && idNorms.has(norm(k)))) return data;
+      if (keys.some((k) => k && ids.some((id) => k.toLowerCase().includes(id.toLowerCase())))) return data;
+    }
   } catch {}
+  return null;
+}
+
+/** Remote fallback when bundled/monorepo JSON is unavailable (e.g. portal-only deploy before prebuild). */
+export async function resolveStructuredBook(...hints: (string | null | undefined)[]): Promise<StructuredBook | null> {
+  const local = resolveStructuredBookSync(...hints);
+  if (local) return local;
+
+  const ids = structuredLookupIds(...hints);
+  const base = process.env.CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
+  for (const id of ids) {
+    try {
+      const res = await fetch(`${base}/knowledge/structured/${encodeURIComponent(id)}`, {
+        cache: "force-cache",
+        next: { revalidate: 3600 },
+      });
+      if (!res.ok) continue;
+      const data = (await res.json()) as StructuredBook;
+      if (data?.chapters?.length) return data;
+    } catch {}
+  }
   return null;
 }
 
@@ -529,7 +550,8 @@ export async function getChapterContent(
 
   // Best effort: real chapter body via structured ranges + original Gyan source
   let chapterMarkdown = `# ${chapter.title}\n\n`;
-  const structured = loadStructuredBook(bookId) || loadStructuredBook(book.metadata.canonicalName) || loadStructuredBook((book.metadata as any).id || "");
+  const fileKey = book.metadata.storagePath?.split("/").pop()?.replace(/\.md$/, "") ?? null;
+  const structured = resolveStructuredBookSync(bookId, book.metadata.canonicalName, fileKey, book.metadata.id);
   const full = await loadRawMarkdownForSource(book.metadata.storagePath);
   if (structured && full) {
     // Locate the chapter (or section treated as chapter target) in the structured tree
