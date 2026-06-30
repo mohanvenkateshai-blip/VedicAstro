@@ -52,27 +52,50 @@ export type ChapterContent = {
 export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<BookMetadata[]> {
   const sources = await listCorpusSources();
 
-  // Enrich with node counts per source_file
-  const { data: nodeCounts } = await supabase
-    .from("graph_nodes")
-    .select("source_file", { count: "exact", head: false })
-    .eq("graph_version", graphVersion);
+  // Compute accurate node counts per source using the same key as searchGraphNodes/loadBook.
+  // We query per source (head:true count) so we are not limited by default row caps and always match the filter used elsewhere.
+  const results = await Promise.all(
+    sources.map(async (src) => {
+      const canonical = src.canonical_name;
+      const fileKey = src.storage_path?.split("/").pop()?.replace(/\.md$/, "") ?? null;
 
-  const countMap = new Map<string, number>();
-  for (const row of nodeCounts ?? []) {
-    const sf = (row as any).source_file as string | null;
-    if (sf) countMap.set(sf, (countMap.get(sf) ?? 0) + 1);
-  }
+      // Primary: use canonical_name as source_file (consistent with loadBook + searchGraphNodes)
+      let { count } = await supabase
+        .from("graph_nodes")
+        .select("*", { count: "exact", head: true })
+        .eq("graph_version", graphVersion)
+        .eq("source_file", canonical);
 
-  return sources.map((src) => ({
-    id: src.storage_path?.split("/").pop()?.replace(/\.md$/, "") ?? src.canonical_name,
-    canonicalName: src.canonical_name,
-    bookFamily: src.book_family,
-    storagePath: src.storage_path,
-    sha256: src.sha256,
-    bytes: src.bytes,
-    nodeCount: countMap.get(src.canonical_name) ?? 0,
-  }));
+      // Fallbacks for possible ingest variations (underscores, filename without ext, etc.)
+      if (!count || count === 0) {
+        const candidates = [fileKey, canonical?.replace(/\s+/g, "_"), canonical?.replace(/ /g, "_")].filter(Boolean) as string[];
+        for (const key of candidates) {
+          if (key === canonical) continue;
+          const { count: c2 } = await supabase
+            .from("graph_nodes")
+            .select("*", { count: "exact", head: true })
+            .eq("graph_version", graphVersion)
+            .eq("source_file", key);
+          if (c2 && c2 > 0) {
+            count = c2;
+            break;
+          }
+        }
+      }
+
+      return {
+        id: fileKey ?? canonical,
+        canonicalName: canonical,
+        bookFamily: src.book_family,
+        storagePath: src.storage_path,
+        sha256: src.sha256,
+        bytes: src.bytes,
+        nodeCount: count || 0,
+      };
+    })
+  );
+
+  return results;
 }
 
 /**
