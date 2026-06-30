@@ -35,7 +35,7 @@ export function SiteHeader({ signedIn = false, role }: { signedIn?: boolean; rol
             Muhūrta
           </Link>
           <Link
-            href="/learn/nakshatras"
+            href="/learn"
             aria-current={pathname?.startsWith("/learn") ? "page" : undefined}
             className="hidden sm:inline px-3 py-2 text-sm text-text-muted hover:text-text-main transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg"
           >
