@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
 import { loadBook, getChapterContent } from "@/lib/books";
 import { supabase } from "@/lib/supabase";
+import { BookReaderClient } from "@/components/BookReaderClient";
 
 interface BookReaderProps {
   bookId: string;
@@ -16,7 +17,7 @@ async function BookReader({ bookId }: BookReaderProps) {
     notFound();
   }
 
-  // Load content for the first chapter by default (or we can make it interactive client-side later)
+  // For the client component fallback when no full markdown
   let chapterContent = null;
   if (book.chapters.length > 0) {
     try {
@@ -26,9 +27,10 @@ async function BookReader({ bookId }: BookReaderProps) {
 
   const nodesToShow = chapterContent?.nodes ?? [];
 
-  // If no structured nodes, load the full original markdown from the corpus-vault for useful content.
+  // Always attempt to load the full original markdown from the corpus-vault if we have a storagePath.
+  // This ensures useful learning content even when graph_nodes extraction produced 0 rows for the source.
   let fullMarkdown: string | null = null;
-  if (nodesToShow.length === 0 && book.metadata.storagePath) {
+  if (book.metadata.storagePath) {
     try {
       const { data: blob } = await supabase.storage
         .from('corpus-vault')
@@ -37,7 +39,7 @@ async function BookReader({ bookId }: BookReaderProps) {
         fullMarkdown = await blob.text();
       }
     } catch {
-      // will fall back to the "no nodes" message
+      // fall back to nodes or message
     }
   }
 
@@ -57,71 +59,47 @@ async function BookReader({ bookId }: BookReaderProps) {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-5 gap-6">
-        {/* Chapters sidebar (from graph node grouping) */}
-        <div className="lg:col-span-2">
-          <div className="sticky top-6 rounded-2xl border border-hairline bg-surface p-4">
-            <div className="text-xs uppercase tracking-widest text-text-muted mb-3">Chapters (from graph)</div>
-            <div className="space-y-1 text-sm max-h-[60vh] overflow-auto">
-              {book.chapters.length > 0 ? (
-                book.chapters.map((ch, idx) => (
-                  <div key={ch.id} className="px-3 py-2 rounded-lg border border-hairline/60">
-                    <div className="font-medium">{ch.title}</div>
-                    <div className="text-[10px] text-text-muted">{ch.nodeIds.length} nodes • {ch.sourceLocation}</div>
+      <BookReaderClient
+        chapters={book.chapters}
+        fullMarkdown={fullMarkdown}
+        nodesContent={
+          nodesToShow.length > 0 ? (
+            <div className="space-y-8">
+              {nodesToShow.map((node: any, i: number) => (
+                <div key={node.id || i} className="border-l-2 border-accent/40 pl-4">
+                  {node.source_location && (
+                    <div className="text-[10px] uppercase tracking-[3px] text-text-muted mb-1">{node.source_location}</div>
+                  )}
+                  <div className="font-serif text-2xl leading-tight tracking-[-0.4px] text-text-main">
+                    {node.label || "(no label)"}
                   </div>
-                ))
-              ) : (
-                <div className="text-text-muted text-sm">No chapter grouping found. All content in main section.</div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Main content area: show nodes from first chapter (or all if none) */}
-        <div className="lg:col-span-3">
-          <div className="rounded-3xl border border-hairline bg-surface p-8 min-h-[420px]">
-            {fullMarkdown ? (
-              <div className="prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light">
-                {fullMarkdown}
-              </div>
-            ) : nodesToShow.length > 0 ? (
-              <div className="space-y-8">
-                {nodesToShow.map((node: any, i: number) => (
-                  <div key={node.id || i} className="border-l-2 border-accent/40 pl-4">
-                    {node.source_location && (
-                      <div className="text-[10px] uppercase tracking-[3px] text-text-muted mb-1">{node.source_location}</div>
-                    )}
-                    <div className="font-serif text-2xl leading-tight tracking-[-0.4px] text-text-main">
-                      {node.label || "(no label)"}
+                  {node.properties && Object.keys(node.properties).length > 0 && (
+                    <div className="mt-3 text-sm text-text-muted">
+                      {Object.entries(node.properties).slice(0, 5).map(([k, v]: [string, any]) => (
+                        <div key={k} className="mb-1">
+                          <span className="font-mono text-xs text-accent">{k}:</span> {typeof v === "string" ? v : JSON.stringify(v)}
+                        </div>
+                      ))}
                     </div>
-                    {node.properties && Object.keys(node.properties).length > 0 && (
-                      <div className="mt-3 text-sm text-text-muted">
-                        {Object.entries(node.properties).slice(0, 5).map(([k, v]: [string, any]) => (
-                          <div key={k} className="mb-1">
-                            <span className="font-mono text-xs text-accent">{k}:</span> {typeof v === "string" ? v : JSON.stringify(v)}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div>
-                <div className="font-serif text-2xl mb-4">No detailed nodes extracted for this section yet.</div>
-                <p className="text-text-muted">
-                  The Knowledge Graph has {book.metadata.nodeCount} nodes for this text in total.
-                  Content here is exactly what was extracted during ingest (headings, concepts, references).
-                  Full original prose lives in the source file synced to the corpus vault.
-                </p>
-              </div>
-            )}
-          </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <div className="font-serif text-2xl mb-4">No detailed nodes extracted for this section yet.</div>
+              <p className="text-text-muted">
+                The Knowledge Graph has {book.metadata.nodeCount} nodes for this text in total.
+                Content here is exactly what was extracted during ingest (headings, concepts, references).
+                Full original prose lives in the source file synced to the corpus vault.
+              </p>
+            </div>
+          )
+        }
+      />
 
-          <div className="mt-4 text-[10px] text-text-muted">
-            Content is served from the Knowledge Graph when structured nodes exist. When extraction is minimal, the full original source markdown from the corpus vault is shown instead.
-          </div>
-        </div>
+      <div className="mt-4 text-[10px] text-text-muted max-w-3xl">
+        Left navigation is derived from the Knowledge Graph chapter groupings. Clicking a chapter scrolls to the first matching text in the content.
       </div>
     </div>
   );
