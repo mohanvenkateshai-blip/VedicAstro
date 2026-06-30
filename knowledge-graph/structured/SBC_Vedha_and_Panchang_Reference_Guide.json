@@ -1,0 +1,92 @@
+{
+  "book_id": "SBC_Vedha_and_Panchang_Reference_Guide",
+  "canonical_name": "SBC Vedha and Panchang Reference Guide",
+  "source_file": "SBC_Vedha_and_Panchang_Reference_Guide.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Frontal Vedha (Sammukha): A vector line shooting directly horizontal or vertical straight across the interior",
+      "level": 1,
+      "start_line": 149,
+      "end_line": 151,
+      "sections": [],
+      "content_preview": "1. Frontal Vedha (Sammukha): A vector line shooting directly horizontal or vertical straight across the interior axis of the grid.  2. Left Diagonal Vedha (Savya): A diagonal vector projecting forward along a 45-degree trajectory to the left side.  3. Right Diagonal Vedha (Apasav"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Left Diagonal Vedha (Savya): A diagonal vector projecting forward along a 45-degree trajectory to the left side.",
+      "level": 1,
+      "start_line": 152,
+      "end_line": 153,
+      "sections": [],
+      "content_preview": "2. Left Diagonal Vedha (Savya): A diagonal vector projecting forward along a 45-degree trajectory to the left side.  3. Right Diagonal Vedha (Apasavya): A diagonal vector projecting backward along a 45-degree trajectory to the right side.  | 5. Planetary Rules and Motion Override"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Right Diagonal Vedha (Apasavya): A diagonal vector projecting backward along a 45-degree trajectory to the",
+      "level": 1,
+      "start_line": 154,
+      "end_line": 443,
+      "sections": [],
+      "content_preview": "3. Right Diagonal Vedha (Apasavya): A diagonal vector projecting backward along a 45-degree trajectory to the right side.  | 5. Planetary Rules and Motion Override Dynamics  Not all celestial bodies interact with the three directional vectors in an identical manner. The direction"
+    },
+    {
+      "id": "ch-27",
+      "number": "27",
+      "title": "Ashwini Purva Phalguni Rohini Jyeshtha",
+      "level": 1,
+      "start_line": 444,
+      "end_line": 444,
+      "sections": [],
+      "content_preview": "27. Ashwini Purva Phalguni Rohini Jyeshtha 28. Bharani Magha Krittika Anuradha  The Law of the Four Corners: Notice the specific behavior of the corner coordinates: Ardra (4), Hasta (11), Purva Ashadha (18), and Uttara Bhadrapada (25). Because they mark the absolute structural co"
+    },
+    {
+      "id": "ch-28",
+      "number": "28",
+      "title": "Bharani Magha Krittika Anuradha",
+      "level": 1,
+      "start_line": 445,
+      "end_line": 457,
+      "sections": [],
+      "content_preview": "28. Bharani Magha Krittika Anuradha  The Law of the Four Corners: Notice the specific behavior of the corner coordinates: Ardra (4), Hasta (11), Purva Ashadha (18), and Uttara Bhadrapada (25). Because they mark the absolute structural corner boundaries of the square grid, their d"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Frontal Vedha (Sammukha): A vector line shooting directly horizontal or vertical straight across the interior",
+      "chapter": "Frontal Vedha (Sammukha): A vector line shooting directly horizontal or vertical straight across the interior",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Left Diagonal Vedha (Savya): A diagonal vector projecting forward along a 45-degree trajectory to the left side.",
+      "chapter": "Left Diagonal Vedha (Savya): A diagonal vector projecting forward along a 45-degree trajectory to the left side.",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Right Diagonal Vedha (Apasavya): A diagonal vector projecting backward along a 45-degree trajectory to the",
+      "chapter": "Right Diagonal Vedha (Apasavya): A diagonal vector projecting backward along a 45-degree trajectory to the",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-27",
+      "title": "Ashwini Purva Phalguni Rohini Jyeshtha",
+      "chapter": "Ashwini Purva Phalguni Rohini Jyeshtha",
+      "chapter_id": "ch-27"
+    },
+    {
+      "id": "ch-28",
+      "title": "Bharani Magha Krittika Anuradha",
+      "chapter": "Bharani Magha Krittika Anuradha",
+      "chapter_id": "ch-28"
+    }
+  ],
+  "total_chapters": 5,
+  "total_sections": 0
+}

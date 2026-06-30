@@ -1,0 +1,108 @@
+{
+  "book_id": "Bhrigu_Samhita_TMRao",
+  "canonical_name": "Bhrigu Samhita TMRao",
+  "source_file": "Bhrigu_Samhita_TMRao.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "0",
+      "level": 1,
+      "start_line": 70,
+      "end_line": 72,
+      "sections": [],
+      "content_preview": "Chapter -10 Capricorn 210 Chapter -11 Aquarius 23 1 Chapter -12"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "1",
+      "level": 1,
+      "start_line": 73,
+      "end_line": 76,
+      "sections": [],
+      "content_preview": "Chapter -11 Aquarius 23 1 Chapter -12 Pisces 253 Basic Terminology and Case Studies 275"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "2",
+      "level": 1,
+      "start_line": 77,
+      "end_line": 47516,
+      "sections": [],
+      "content_preview": "Chapter -12 Pisces 253 Basic Terminology and Case Studies 275 Some Basics (Terminology) of the Planets 277 A Few Case Studies 282 Conclusion 309"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "The Sun",
+      "level": 1,
+      "start_line": 47517,
+      "end_line": 52075,
+      "sections": [],
+      "content_preview": "1. The Sun is in his own house with Jupiter. His stature"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Bhrigu Samhita Paddhati",
+      "level": 1,
+      "start_line": 52076,
+      "end_line": 52087,
+      "sections": [],
+      "content_preview": "1. Bhrigu Samhita Paddhati - by Bhagawandas Mittal 2. Brhat Samhita - by M. Ramakrishna Bhatt 3. Bhrigu Samhita"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "How to Judge a Horoscope,",
+      "level": 1,
+      "start_line": 52088,
+      "end_line": 52095,
+      "sections": [],
+      "content_preview": "5. How to Judge a Horoscope, Vol. I - by Dr B.V Raman 6. Hindu Predictive Astrology - by Dr B.V. Raman "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "0",
+      "chapter": "0",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "1",
+      "chapter": "1",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "2",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "The Sun",
+      "chapter": "The Sun",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "Bhrigu Samhita Paddhati",
+      "chapter": "Bhrigu Samhita Paddhati",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-5",
+      "title": "How to Judge a Horoscope,",
+      "chapter": "How to Judge a Horoscope,",
+      "chapter_id": "ch-5"
+    }
+  ],
+  "total_chapters": 6,
+  "total_sections": 0
+}

@@ -1,0 +1,92 @@
+{
+  "book_id": "Vedic_Astrology_Panchang_Handbook",
+  "canonical_name": "Vedic Astrology Panchang Handbook",
+  "source_file": "Vedic_Astrology_Panchang_Handbook.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "The 27 Nakshatras and Their Ruling Lords",
+      "level": 1,
+      "start_line": 6,
+      "end_line": 60,
+      "sections": [],
+      "content_preview": "1. The 27 Nakshatras and Their Ruling Lords  In Vedic astrology, the zodiac is divided into 27 lunar mansions or constellations known as Nakshatras. Each Nakshatra spans 13 degrees and 20 minutes of the zodiac and is governed by a specific ruling planet (Graha) and a presiding  d"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Tithis, Their Nature, and Dagdha Rashi",
+      "level": 1,
+      "start_line": 61,
+      "end_line": 100,
+      "sections": [],
+      "content_preview": "2. Tithis, Their Nature, and Dagdha Rashi  A Tithi is a lunar day. Tithis are categorized into five groups based on their nature: Nanda (joy), Bhadra (auspicious), Jaya (victory), Rikta (empty), and Purna (full). 'Dagdha Rashi' translates to 'burnt sign' and refers to zodiac sign"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Auspicious (Shubh) and Inauspicious (Ashubh) Yogas",
+      "level": 1,
+      "start_line": 101,
+      "end_line": 139,
+      "sections": [],
+      "content_preview": "3. Auspicious (Shubh) and Inauspicious (Ashubh) Yogas  Yogas are specific combinations of Weekdays (Vara), Lunar Days (Tithis), or Nakshatras that produce highly auspicious or inauspicious periods for Muhurat (timing).  Auspicious Yogas:  Yoga Name Weekday Nakshatra Effects"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Sarvartha Siddhi Yoga",
+      "level": 1,
+      "start_line": 140,
+      "end_line": 161,
+      "sections": [],
+      "content_preview": "4. Sarvartha Siddhi Yoga  Translates to ‘accomplishment of all goals'. Formed when a specific Nakshatra coincides with a specific day of the week. This Muhurat brings success to new ventures.  Weekday Nakshatras forming Yoga Sunday Hasta, Pushya, Moola, Ashwini, U. Phalguni, U. A"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Do Ghati Muhurat (Time Cycles)",
+      "level": 1,
+      "start_line": 162,
+      "end_line": 202,
+      "sections": [],
+      "content_preview": "5. Do Ghati Muhurat (Time Cycles)  A Ghati is approx. 24 minutes. 'Do Ghati' means two Ghatis, making a 48-minute block. The day consists of 30 Do Ghati Muhurats. Each is linked to a specific Nakshatra/Deity.  Seq Muhurat/Deity Nakshatra Nature Offset Ex: 6:00AM Sunrise 1 | Rudra"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "The 27 Nakshatras and Their Ruling Lords",
+      "chapter": "The 27 Nakshatras and Their Ruling Lords",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Tithis, Their Nature, and Dagdha Rashi",
+      "chapter": "Tithis, Their Nature, and Dagdha Rashi",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Auspicious (Shubh) and Inauspicious (Ashubh) Yogas",
+      "chapter": "Auspicious (Shubh) and Inauspicious (Ashubh) Yogas",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Sarvartha Siddhi Yoga",
+      "chapter": "Sarvartha Siddhi Yoga",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Do Ghati Muhurat (Time Cycles)",
+      "chapter": "Do Ghati Muhurat (Time Cycles)",
+      "chapter_id": "ch-5"
+    }
+  ],
+  "total_chapters": 5,
+  "total_sections": 0
+}

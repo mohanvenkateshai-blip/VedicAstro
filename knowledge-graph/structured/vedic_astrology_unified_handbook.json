@@ -1,0 +1,420 @@
+{
+  "book_id": "vedic_astrology_unified_handbook",
+  "canonical_name": "vedic astrology unified handbook",
+  "source_file": "vedic_astrology_unified_handbook.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Computational Primitives",
+      "level": 1,
+      "start_line": 11,
+      "end_line": 11,
+      "sections": [],
+      "content_preview": " 1. Computational Primitives  2. Planetary State Modifiers  3. Structural Graha Yogas  4. Almanac & Panchanga Yogas  5. Transit & Gochara Verification  6. Unified Software Architecture    "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Planetary State Modifiers",
+      "level": 1,
+      "start_line": 12,
+      "end_line": 12,
+      "sections": [],
+      "content_preview": " 2. Planetary State Modifiers  3. Structural Graha Yogas  4. Almanac & Panchanga Yogas  5. Transit & Gochara Verification  6. Unified Software Architecture     "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Structural Graha Yogas",
+      "level": 1,
+      "start_line": 13,
+      "end_line": 13,
+      "sections": [],
+      "content_preview": " 3. Structural Graha Yogas  4. Almanac & Panchanga Yogas  5. Transit & Gochara Verification  6. Unified Software Architecture       "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Almanac & Panchanga Yogas",
+      "level": 1,
+      "start_line": 14,
+      "end_line": 14,
+      "sections": [],
+      "content_preview": " 4. Almanac & Panchanga Yogas  5. Transit & Gochara Verification  6. Unified Software Architecture         "
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Transit & Gochara Verification",
+      "level": 1,
+      "start_line": 15,
+      "end_line": 15,
+      "sections": [],
+      "content_preview": " 5. Transit & Gochara Verification  6. Unified Software Architecture           "
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Unified Software Architecture",
+      "level": 1,
+      "start_line": 16,
+      "end_line": 24,
+      "sections": [],
+      "content_preview": " 6. Unified Software Architecture             "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Computational Primitives & Geometric Data Models",
+      "level": 1,
+      "start_line": 25,
+      "end_line": 77,
+      "sections": [
+        {
+          "id": "ch-1-sec-primitive_id_standardizations",
+          "title": "Primitive ID Standardizations",
+          "level": 2,
+          "start_line": 28,
+          "end_line": 35,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-1-sec-exaltation_debilitation_and_moolatrikona_coordinates_map",
+          "title": "Exaltation, Debilitation, and Moolatrikona Coordinates Map",
+          "level": 2,
+          "start_line": 36,
+          "end_line": 59,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-1-sec-positional_aspect_graha_drishti_evaluation_vector",
+          "title": "Positional Aspect (Graha Drishti) Evaluation Vector",
+          "level": 2,
+          "start_line": 60,
+          "end_line": 76,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 1. Computational Primitives & Geometric Data Models  To construct a deterministic software computation engine for Vedic horoscopy (Jataka) and time-selection (Muhurta), you must first standardize coordinate maps. Astronomical inputs must convert seamlessly into bounded cyclical "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "The Planetary State Modifier Engine",
+      "level": 1,
+      "start_line": 78,
+      "end_line": 130,
+      "sections": [
+        {
+          "id": "ch-2-sec-solar_combustion_astayana_orbs_matrix",
+          "title": "Solar Combustion (Astayana) Orbs Matrix",
+          "level": 2,
+          "start_line": 81,
+          "end_line": 101,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-2-sec-planetary_war_graha_yuddha_logic_solver",
+          "title": "Planetary War (Graha Yuddha) Logic Solver",
+          "level": 2,
+          "start_line": 102,
+          "end_line": 104,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-2-sec-debilitation_cancellation_neechabhanga_algorithmic_matrix",
+          "title": "Debilitation Cancellation (Neechabhanga) Algorithmic Matrix",
+          "level": 2,
+          "start_line": 105,
+          "end_line": 129,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 2. The Planetary State Modifier Engine  A planetary placement cannot be validated solely by its presence in a sign or house. The state engine must compute physical and astronomical overrides that can neutralize, mutate, or cancel a yoga's functionality.   2.1 Solar Combustion (A"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Structural Graha Yogas (Classical Horoscopy Library)",
+      "level": 1,
+      "start_line": 131,
+      "end_line": 221,
+      "sections": [
+        {
+          "id": "ch-3-sec-pancha_mahapurusha_yogas",
+          "title": "Pancha Mahapurusha Yogas",
+          "level": 2,
+          "start_line": 134,
+          "end_line": 184,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-nabhasa_yogas_spatial_layout_frameworks",
+          "title": "Nabhasa Yogas (Spatial Layout Frameworks)",
+          "level": 2,
+          "start_line": 185,
+          "end_line": 200,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-combined_planetary_construct_yogas",
+          "title": "Combined Planetary Construct Yogas",
+          "level": 2,
+          "start_line": 201,
+          "end_line": 220,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 3. Structural Graha Yogas (Classical Horoscopy Library)  This chapter contains the algorithmic rules for structural planetary combinations from Brihat Parashara Hora Shastra, Saravali, and Jataka Tattva. These rules are used to identify latent capabilities in a natal chart or sp"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Almanac & Panchanga Yogas (Time-Selection Windows)",
+      "level": 1,
+      "start_line": 222,
+      "end_line": 318,
+      "sections": [
+        {
+          "id": "ch-4-sec-the_nitya_yoga_calculation_engine",
+          "title": "The Nitya Yoga Calculation Engine",
+          "level": 2,
+          "start_line": 225,
+          "end_line": 252,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-4-sec-weekday-nakshatra_intersections_anandadi_mishraka_yogas",
+          "title": "Weekday-Nakshatra Intersections (Anandadi & Mishraka Yogas)",
+          "level": 2,
+          "start_line": 253,
+          "end_line": 317,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 4. Almanac & Panchanga Yogas (Time-Selection Windows)  Unlike Graha Yogas, which evaluate planetary geometry relative to an ascendant, Almanac Yogas calculate time-varying values derived from solar-lunar longitudes and time coordinates. These calculations are critical for filter"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Transit (Gochara) Logic & Dynamic Filters",
+      "level": 1,
+      "start_line": 319,
+      "end_line": 340,
+      "sections": [
+        {
+          "id": "ch-5-sec-planetary_transit_vedha_obstruction_matrix",
+          "title": "Planetary Transit Vedha (Obstruction) Matrix",
+          "level": 2,
+          "start_line": 322,
+          "end_line": 329,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-5-sec-ashtakavarga_dynamic_threshold_filter",
+          "title": "Ashtakavarga Dynamic Threshold Filter",
+          "level": 2,
+          "start_line": 330,
+          "end_line": 339,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 5. Transit (Gochara) Logic & Dynamic Filters  For a Muhurta application, a static natal configuration represents latent potential. Transits act as time-varying wave functions that trigger or suppress these states. The dynamic processing module maps transiting positions against t"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Unified Software Architecture & Pipeline Execution",
+      "level": 1,
+      "start_line": 341,
+      "end_line": 405,
+      "sections": [
+        {
+          "id": "ch-6-sec-comprehensive_engine_ingestion_json_schema",
+          "title": "Comprehensive Engine Ingestion JSON Schema",
+          "level": 2,
+          "start_line": 344,
+          "end_line": 368,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-6-sec-the_complete_verification_pipeline",
+          "title": "The Complete Verification Pipeline",
+          "level": 2,
+          "start_line": 369,
+          "end_line": 404,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 6. Unified Software Architecture & Pipeline Execution  To run these calculations without performance bottlenecks, your software should implement a two-tier verification firewall. The system first filters out non-viable time windows using fast almanac calculations before running "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Computational Primitives",
+      "chapter": "Computational Primitives",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Planetary State Modifiers",
+      "chapter": "Planetary State Modifiers",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Structural Graha Yogas",
+      "chapter": "Structural Graha Yogas",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Almanac & Panchanga Yogas",
+      "chapter": "Almanac & Panchanga Yogas",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Transit & Gochara Verification",
+      "chapter": "Transit & Gochara Verification",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Unified Software Architecture",
+      "chapter": "Unified Software Architecture",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-1-sec-primitive_id_standardizations",
+      "title": "Primitive ID Standardizations",
+      "chapter": "Computational Primitives & Geometric Data Models",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1-sec-exaltation_debilitation_and_moolatrikona_coordinates_map",
+      "title": "Exaltation, Debilitation, and Moolatrikona Coordinates Map",
+      "chapter": "Computational Primitives & Geometric Data Models",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1-sec-positional_aspect_graha_drishti_evaluation_vector",
+      "title": "Positional Aspect (Graha Drishti) Evaluation Vector",
+      "chapter": "Computational Primitives & Geometric Data Models",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "Computational Primitives & Geometric Data Models",
+      "chapter": "Computational Primitives & Geometric Data Models",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2-sec-solar_combustion_astayana_orbs_matrix",
+      "title": "Solar Combustion (Astayana) Orbs Matrix",
+      "chapter": "The Planetary State Modifier Engine",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2-sec-planetary_war_graha_yuddha_logic_solver",
+      "title": "Planetary War (Graha Yuddha) Logic Solver",
+      "chapter": "The Planetary State Modifier Engine",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2-sec-debilitation_cancellation_neechabhanga_algorithmic_matrix",
+      "title": "Debilitation Cancellation (Neechabhanga) Algorithmic Matrix",
+      "chapter": "The Planetary State Modifier Engine",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2",
+      "title": "The Planetary State Modifier Engine",
+      "chapter": "The Planetary State Modifier Engine",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3-sec-pancha_mahapurusha_yogas",
+      "title": "Pancha Mahapurusha Yogas",
+      "chapter": "Structural Graha Yogas (Classical Horoscopy Library)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-nabhasa_yogas_spatial_layout_frameworks",
+      "title": "Nabhasa Yogas (Spatial Layout Frameworks)",
+      "chapter": "Structural Graha Yogas (Classical Horoscopy Library)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-combined_planetary_construct_yogas",
+      "title": "Combined Planetary Construct Yogas",
+      "chapter": "Structural Graha Yogas (Classical Horoscopy Library)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3",
+      "title": "Structural Graha Yogas (Classical Horoscopy Library)",
+      "chapter": "Structural Graha Yogas (Classical Horoscopy Library)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4-sec-the_nitya_yoga_calculation_engine",
+      "title": "The Nitya Yoga Calculation Engine",
+      "chapter": "Almanac & Panchanga Yogas (Time-Selection Windows)",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-4-sec-weekday-nakshatra_intersections_anandadi_mishraka_yogas",
+      "title": "Weekday-Nakshatra Intersections (Anandadi & Mishraka Yogas)",
+      "chapter": "Almanac & Panchanga Yogas (Time-Selection Windows)",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-4",
+      "title": "Almanac & Panchanga Yogas (Time-Selection Windows)",
+      "chapter": "Almanac & Panchanga Yogas (Time-Selection Windows)",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5-sec-planetary_transit_vedha_obstruction_matrix",
+      "title": "Planetary Transit Vedha (Obstruction) Matrix",
+      "chapter": "Transit (Gochara) Logic & Dynamic Filters",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-5-sec-ashtakavarga_dynamic_threshold_filter",
+      "title": "Ashtakavarga Dynamic Threshold Filter",
+      "chapter": "Transit (Gochara) Logic & Dynamic Filters",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-5",
+      "title": "Transit (Gochara) Logic & Dynamic Filters",
+      "chapter": "Transit (Gochara) Logic & Dynamic Filters",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6-sec-comprehensive_engine_ingestion_json_schema",
+      "title": "Comprehensive Engine Ingestion JSON Schema",
+      "chapter": "Unified Software Architecture & Pipeline Execution",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-6-sec-the_complete_verification_pipeline",
+      "title": "The Complete Verification Pipeline",
+      "chapter": "Unified Software Architecture & Pipeline Execution",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-6",
+      "title": "Unified Software Architecture & Pipeline Execution",
+      "chapter": "Unified Software Architecture & Pipeline Execution",
+      "chapter_id": "ch-6"
+    }
+  ],
+  "total_chapters": 12,
+  "total_sections": 15
+}

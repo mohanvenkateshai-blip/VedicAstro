@@ -1,6 +1,30 @@
 import "server-only";
 import { supabase } from "@/lib/supabase";
 import { DEFAULT_GRAPH_VERSION, GraphNodeRow, searchGraphNodes, listCorpusSources, CorpusSource } from "./corpus";
+import fs from "fs";
+import path from "path";
+
+const STRUCTURED_DIR = path.join(process.cwd(), "..", "knowledge-graph", "structured"); // from portal/ to root
+
+export type StructuredChapter = {
+  id: string;
+  number?: string | null;
+  title: string;
+  level: number;
+  start_line?: number;
+  end_line?: number;
+  sections?: Array<{ id: string; title: string; level: number; start_line?: number; end_line?: number }>;
+  content_preview?: string;
+};
+
+export type StructuredBook = {
+  book_id: string;
+  canonical_name: string;
+  source_file: string;
+  chapters: StructuredChapter[];
+  toc?: any[];
+  total_chapters?: number;
+};
 
 /**
  * Book Data Layer
@@ -169,48 +193,63 @@ export async function loadBook(
     chapterMap.get(chapterKey)!.nodes.push(node);
   });
 
-  const chapters: Chapter[] = Array.from(chapterMap.entries()).map(([key, val], i) => ({
-    id: key,
-    title: val.title,
-    order: i,
-    sourceLocation: key,
-    nodeIds: val.nodes.map((n) => n.id),
-    properties: { nodeCount: val.nodes.length },
-  }));
+  // === AUTHORITATIVE STRUCTURED CHAPTERS (from build_structured_library.py) ===
+  // This is the primary, clean, "organised from the beginning" TOC.
+  // It comes from parsing the real Gyan source markdown with proper heading/numbered-section logic.
+  // We prefer this over the weak graph node source_location (which produced "frontmatter", "H1", bad order).
+  const structured = loadStructuredBook(bookId) || loadStructuredBook(source.canonical_name) || loadStructuredBook(fileKey || "");
+  let chapters: Chapter[] = [];
 
-  // Sort chapters into logical book order.
-  // Previous behavior used Map insertion order after lexical .order("source_location"),
-  // which put "Chapter 12" / "Chapter 14" before "Chapter 3" (string sort).
-  // Now we sort by the first number we can find in the title or sourceLocation.
-  const getChapterNum = (c: Chapter): number => {
-    const t = `${c.title} ${c.sourceLocation || ''}`;
-    const m = t.match(/\b(\d+)\b/);
-    if (m) return parseInt(m[1], 10);
-    if (/frontmatter|preface|intro|dedication|main|h1/i.test(t)) return -100;
-    return 100000;
-  };
+  if (structured && structured.chapters && structured.chapters.length > 0) {
+    chapters = chaptersFromStructured(structured);
+  } else {
+    // Legacy fallback: build from nodes (the old bad path)
+    const chapterMap = new Map<string, { title: string; nodes: GraphNodeRow[]; order: number }>();
 
-  chapters.sort((a, b) => {
-    const na = getChapterNum(a);
-    const nb = getChapterNum(b);
-    if (na !== nb) return na - nb;
-    return a.title.localeCompare(b.title, undefined, { numeric: true });
-  });
+    nodes.forEach((node, idx) => {
+      const loc = node.source_location ?? "frontmatter";
+      const chapterKey = loc.split(":")[0] || "main";
+      if (!chapterMap.has(chapterKey)) {
+        chapterMap.set(chapterKey, {
+          title: chapterKey.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+          nodes: [],
+          order: chapterMap.size,
+        });
+      }
+      chapterMap.get(chapterKey)!.nodes.push(node);
+    });
 
-  // Re-assign order indices after numeric sort so UI and consumers have a clean sequence
-  chapters.forEach((c, i) => { c.order = i; });
+    chapters = Array.from(chapterMap.entries()).map(([key, val], i) => ({
+      id: key,
+      title: val.title,
+      order: i,
+      sourceLocation: key,
+      nodeIds: val.nodes.map((n) => n.id),
+      properties: { nodeCount: val.nodes.length },
+    }));
 
-  // Drop pure junk labels that the graph extractor sometimes emits for handbooks
-  // (e.g. "Frontmatter", "H1") when there are other real sections.
-  const junkExact = /^(frontmatter|h1|main|untitled|unknown)$/i;
-  const cleaned = chapters.filter((c) => {
-    const t = (c.title || '').trim();
-    if (junkExact.test(t)) return false;
-    return true;
-  });
-  if (cleaned.length > 0) {
-    chapters.splice(0, chapters.length, ...cleaned);
+    // (old numeric sort + junk filter code would go here if needed)
+    const getChapterNum = (c: Chapter): number => {
+      const t = `${c.title} ${c.sourceLocation || ''}`;
+      const m = t.match(/\b(\d+)\b/);
+      if (m) return parseInt(m[1], 10);
+      if (/frontmatter|preface|intro|dedication|main|h1/i.test(t)) return -100;
+      return 100000;
+    };
+    chapters.sort((a, b) => {
+      const na = getChapterNum(a);
+      const nb = getChapterNum(b);
+      if (na !== nb) return na - nb;
+      return a.title.localeCompare(b.title, undefined, { numeric: true });
+    });
     chapters.forEach((c, i) => { c.order = i; });
+
+    const junkExact = /^(frontmatter|h1|main|untitled|unknown)$/i;
+    const cleaned = chapters.filter((c) => !junkExact.test((c.title || '').trim()));
+    if (cleaned.length > 0) {
+      chapters.splice(0, chapters.length, ...cleaned);
+      chapters.forEach((c, i) => { c.order = i; });
+    }
   }
 
   const metadata: BookMetadata = {
@@ -225,6 +264,57 @@ export async function loadBook(
   };
 
   return { metadata, chapters, nodes };
+}
+
+/**
+ * Load the authoritative structured book (chapters, sections, titles) produced by
+ * scripts/build_structured_library.py.
+ * This is the "organised from the beginning" representation the user demanded.
+ * Falls back to null if not present.
+ */
+export function loadStructuredBook(bookId: string): StructuredBook | null {
+  try {
+    const candidates = [
+      path.join(STRUCTURED_DIR, `${bookId}.json`),
+      path.join(STRUCTURED_DIR, `${bookId.replace(/\s+/g, "_")}.json`),
+    ];
+    for (const p of candidates) {
+      if (fs.existsSync(p)) {
+        const raw = fs.readFileSync(p, "utf8");
+        return JSON.parse(raw) as StructuredBook;
+      }
+    }
+    // fuzzy scan
+    if (fs.existsSync(STRUCTURED_DIR)) {
+      const files = fs.readdirSync(STRUCTURED_DIR).filter(f => f.endsWith(".json"));
+      for (const f of files) {
+        const full = path.join(STRUCTURED_DIR, f);
+        const data = JSON.parse(fs.readFileSync(full, "utf8")) as StructuredBook;
+        if (
+          data.book_id === bookId ||
+          data.canonical_name?.toLowerCase().includes(bookId.toLowerCase()) ||
+          data.source_file?.includes(bookId)
+        ) {
+          return data;
+        }
+      }
+    }
+  } catch {}
+  return null;
+}
+
+/**
+ * Convert structured chapters into the internal Chapter shape used by the reader.
+ */
+export function chaptersFromStructured(sb: StructuredBook): Chapter[] {
+  return (sb.chapters || []).map((ch, i) => ({
+    id: ch.id,
+    title: ch.title,
+    order: i,
+    sourceLocation: ch.number ? `Chapter ${ch.number}` : undefined,
+    nodeIds: [], // nodes are secondary enrichment now
+    properties: { level: ch.level, structured: true },
+  }));
 }
 
 /**

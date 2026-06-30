@@ -1,0 +1,89 @@
+{
+  "book_id": "Jataka_Parijata",
+  "canonical_name": "Jataka Parijata",
+  "source_file": "Jataka_Parijata.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-cereeheestee_a1",
+      "number": null,
+      "title": "cereeheestee a1",
+      "level": 1,
+      "start_line": 849,
+      "end_line": 2598,
+      "sections": [
+        {
+          "id": "ch-cereeheestee_a1-sec-cereeheestee_a1",
+          "title": "cereeheestee a1",
+          "level": 2,
+          "start_line": 849,
+          "end_line": 1388,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-cereeheestee_a1-sec-eee",
+          "title": "eee",
+          "level": 2,
+          "start_line": 1389,
+          "end_line": 2597,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "5.9890 cereeheestee a1  Rocket wat Rraxaade wget: cerawetaverata a ot ME Ret the sth ae the Tach hte fm tes Lagan Be mest?  BIRD Gading Sty Zen he let wil beemaeetion ## Page 101"
+    },
+    {
+      "id": "ch-0",
+      "number": "0",
+      "title": "SRTEETATETA",
+      "level": 1,
+      "start_line": 2599,
+      "end_line": 4798,
+      "sections": [],
+      "content_preview": "0 SRTEETATETA: ‘Adnyara x1Vv. F home cae meRe tH sengreendtatntied deat ee ‘oie greene wey ae eens : pede sen sn wR "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Sieret nee come Gee HOt",
+      "level": 1,
+      "start_line": 4799,
+      "end_line": 5920,
+      "sections": [],
+      "content_preview": "2. Sieret nee come Gee HOt  ie ameter wrest ## Page 431  Reasengarat severe atta geettentrt | wereenqane tara"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-cereeheestee_a1-sec-cereeheestee_a1",
+      "title": "cereeheestee a1",
+      "chapter": "cereeheestee a1",
+      "chapter_id": "ch-cereeheestee_a1"
+    },
+    {
+      "id": "ch-cereeheestee_a1-sec-eee",
+      "title": "eee",
+      "chapter": "cereeheestee a1",
+      "chapter_id": "ch-cereeheestee_a1"
+    },
+    {
+      "id": "ch-cereeheestee_a1",
+      "title": "cereeheestee a1",
+      "chapter": "cereeheestee a1",
+      "chapter_id": "ch-cereeheestee_a1"
+    },
+    {
+      "id": "ch-0",
+      "title": "SRTEETATETA",
+      "chapter": "SRTEETATETA",
+      "chapter_id": "ch-0"
+    },
+    {
+      "id": "ch-2",
+      "title": "Sieret nee come Gee HOt",
+      "chapter": "Sieret nee come Gee HOt",
+      "chapter_id": "ch-2"
+    }
+  ],
+  "total_chapters": 3,
+  "total_sections": 2
+}

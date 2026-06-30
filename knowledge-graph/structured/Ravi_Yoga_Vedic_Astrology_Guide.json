@@ -1,0 +1,76 @@
+{
+  "book_id": "Ravi_Yoga_Vedic_Astrology_Guide",
+  "canonical_name": "Ravi Yoga Vedic Astrology Guide",
+  "source_file": "Ravi_Yoga_Vedic_Astrology_Guide.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Executive Summary & Classical Foundation",
+      "level": 1,
+      "start_line": 6,
+      "end_line": 13,
+      "sections": [],
+      "content_preview": "1. Executive Summary & Classical Foundation  In Vedic astrology (Jyotish), specifically within the domain of Muhurta Shastra (the election of auspicious timing), Ravi Yoga is classified as an extraordinarily potent, defect-destroying planetary alignment (Dosha-Nashak Yoga). Class"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "System I: The Nakshatra-Distance System",
+      "level": 1,
+      "start_line": 14,
+      "end_line": 87,
+      "sections": [],
+      "content_preview": "2. System I: The Nakshatra-Distance System  The primary method for calculating daily Ravi Yoga is based on the specific, inclusive positional count from the Sun’s current Nakshatra to the Moon’s current Nakshatra sequentially (from 1 to 27).  Formula: Count = (Moon Nakshatra # - "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "System II: The Vara-Nakshatra System (Ravi Pushya)",
+      "level": 1,
+      "start_line": 88,
+      "end_line": 101,
+      "sections": [],
+      "content_preview": "3. System II: The Vara-Nakshatra System (Ravi Pushya)  In broader Panchang applications, a highly revered sub-category of Ravi Yoga occurs when the weekday (Vara) couples directly with a specific cosmic catalyst. Specifically, when Sunday (Ravivar)—the day ruled directly by the S"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Practical Application Guidelines for Election",
+      "level": 1,
+      "start_line": 102,
+      "end_line": 110,
+      "sections": [],
+      "content_preview": "4. Practical Application Guidelines for Election  When picking a time window using Ravi Yoga, practitioners should apply these three structural rules:  1. Precise Real-Time Boundaries: Ravi Yoga is strictly linked to real-time transitions. It activates exactly when the Moon enter"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Executive Summary & Classical Foundation",
+      "chapter": "Executive Summary & Classical Foundation",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "System I: The Nakshatra-Distance System",
+      "chapter": "System I: The Nakshatra-Distance System",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "System II: The Vara-Nakshatra System (Ravi Pushya)",
+      "chapter": "System II: The Vara-Nakshatra System (Ravi Pushya)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Practical Application Guidelines for Election",
+      "chapter": "Practical Application Guidelines for Election",
+      "chapter_id": "ch-4"
+    }
+  ],
+  "total_chapters": 4,
+  "total_sections": 0
+}

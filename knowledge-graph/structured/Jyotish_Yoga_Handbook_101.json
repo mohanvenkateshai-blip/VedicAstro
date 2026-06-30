@@ -1,0 +1,124 @@
+{
+  "book_id": "Jyotish_Yoga_Handbook_101",
+  "canonical_name": "Jyotish Yoga Handbook 101",
+  "source_file": "Jyotish_Yoga_Handbook_101.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Core Philosophy & Classical Foundations",
+      "level": 1,
+      "start_line": 6,
+      "end_line": 17,
+      "sections": [],
+      "content_preview": "1. Core Philosophy & Classical Foundations  In Vedic Astrology (Jyotish), a 'Yoga' is a specific planetary combination, configuration, or structural alignment that produces results distinct from regular standalone planetary placements. The word originates from the Sanskrit root '"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Natal vs. Transit Yogas: Functional Taxonomy",
+      "level": 1,
+      "start_line": 18,
+      "end_line": 51,
+      "sections": [],
+      "content_preview": "2. Natal vs. Transit Yogas: Functional Taxonomy  Dimension  Natal Yogas (Jataka)  Transit Yogas (Gochara) "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Comprehensive Catalog of Named Classical Yogas",
+      "level": 1,
+      "start_line": 52,
+      "end_line": 383,
+      "sections": [],
+      "content_preview": "3. Comprehensive Catalog of Named Classical Yogas  Category  Yoga Name  Core Classical Mechanics & Definition "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "The Mechanics of Fruition: Dasha-Transit Intersection",
+      "level": 1,
+      "start_line": 384,
+      "end_line": 401,
+      "sections": [],
+      "content_preview": "4. The Mechanics of Fruition: Dasha-Transit Intersection  A common error in planetary analysis is assuming a natal yoga brings material prosperity constantly throughout life. Vedic astrology operates on a multi-tiered fulfillment structure: the Natal Yoga establishes the potentia"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Rules of Engagement: Cancellations & Neutralizations",
+      "level": 1,
+      "start_line": 402,
+      "end_line": 441,
+      "sections": [],
+      "content_preview": "5. Rules of Engagement: Cancellations & Neutralizations  A. Neechabhanga Raja Yoga (Cancellation of Debilitation)  The dispositor (lord of the sign where the planet is debilitated) sits in a Kendra (houses 1, 4, 7, 10) relative to either the Ascendant or the Moon.  The planet tha"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Advanced Edge Cases & Complex Combinations",
+      "level": 1,
+      "start_line": 442,
+      "end_line": 449,
+      "sections": [],
+      "content_preview": "6. Advanced Edge Cases & Complex Combinations  Planetary War (Graha Yuddha): When two non-luminary planets are within 1 degree of each other, they enter a state of planetary war. Even if both planets participate in an auspicious Raja Yoga, the planet with the lower longitude lose"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Core Summary & Quick Recall Rules",
+      "level": 1,
+      "start_line": 450,
+      "end_line": 452,
+      "sections": [],
+      "content_preview": "7. Core Summary & Quick Recall Rules  1. Never read a yoga in isolation. Always verify its root strength using the Navamsha (D9) chart.2. A natal yoga outlines the potential capacity; the Vimshottari Dasha opens the operational window; the transit provides the final physical trig"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Core Philosophy & Classical Foundations",
+      "chapter": "Core Philosophy & Classical Foundations",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Natal vs. Transit Yogas: Functional Taxonomy",
+      "chapter": "Natal vs. Transit Yogas: Functional Taxonomy",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Comprehensive Catalog of Named Classical Yogas",
+      "chapter": "Comprehensive Catalog of Named Classical Yogas",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "The Mechanics of Fruition: Dasha-Transit Intersection",
+      "chapter": "The Mechanics of Fruition: Dasha-Transit Intersection",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Rules of Engagement: Cancellations & Neutralizations",
+      "chapter": "Rules of Engagement: Cancellations & Neutralizations",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Advanced Edge Cases & Complex Combinations",
+      "chapter": "Advanced Edge Cases & Complex Combinations",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Core Summary & Quick Recall Rules",
+      "chapter": "Core Summary & Quick Recall Rules",
+      "chapter_id": "ch-7"
+    }
+  ],
+  "total_chapters": 7,
+  "total_sections": 0
+}

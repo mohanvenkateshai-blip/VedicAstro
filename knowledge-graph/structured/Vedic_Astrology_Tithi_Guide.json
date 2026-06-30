@@ -1,0 +1,76 @@
+{
+  "book_id": "Vedic_Astrology_Tithi_Guide",
+  "canonical_name": "Vedic Astrology Tithi Guide",
+  "source_file": "Vedic_Astrology_Tithi_Guide.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Understanding Tithi & Karyakatva",
+      "level": 1,
+      "start_line": 8,
+      "end_line": 16,
+      "sections": [],
+      "content_preview": "1. Understanding Tithi & Karyakatva  In Vedic Panchang, a Tithi represents a lunar day calculated by the 12-degree angular separation between the Sun and the Moon. Karyakatva refers to the inherent purpose, behavioral qualities, and cosmic tasks assigned to these individual lunar"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Tithi Karyakatva Classification Matrix",
+      "level": 1,
+      "start_line": 17,
+      "end_line": 32,
+      "sections": [],
+      "content_preview": "2. Tithi Karyakatva Classification Matrix  Category Primary Purpose / Significations Best Actions  Nanda 1, 6, 11 Agni / Festive energy, initiating projects, and Housewarming, Concluding final financial (Joyous) Brahma structural expansion. construction, arts, new jobs. settlemen"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Dual Planetary Rulership Framework",
+      "level": 1,
+      "start_line": 33,
+      "end_line": 44,
+      "sections": [],
+      "content_preview": "3. Dual Planetary Rulership Framework  Rulership shifts depending on the system. Under the Element View (Mahabhuta), Guru rules the Jaya group (3rd, 8th, 13th), while Saturn rules Purna. Under the Sequential View, planets cycle through individual days: Sun (1,9), Moon (2,10), Mar"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Tithi and Dagdha Rashi (Burnt Signs) Mapping",
+      "level": 1,
+      "start_line": 45,
+      "end_line": 126,
+      "sections": [],
+      "content_preview": "4. Tithi and Dagdha Rashi (Burnt Signs) Mapping  Dagdha Rashis (Sanskrit Dagdha Rashis (Western  10 11 12 13"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Understanding Tithi & Karyakatva",
+      "chapter": "Understanding Tithi & Karyakatva",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Tithi Karyakatva Classification Matrix",
+      "chapter": "Tithi Karyakatva Classification Matrix",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Dual Planetary Rulership Framework",
+      "chapter": "Dual Planetary Rulership Framework",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Tithi and Dagdha Rashi (Burnt Signs) Mapping",
+      "chapter": "Tithi and Dagdha Rashi (Burnt Signs) Mapping",
+      "chapter_id": "ch-4"
+    }
+  ],
+  "total_chapters": 4,
+  "total_sections": 0
+}

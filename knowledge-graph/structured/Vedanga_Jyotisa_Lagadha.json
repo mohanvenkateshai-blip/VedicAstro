@@ -1,0 +1,1612 @@
+{
+  "book_id": "Vedanga_Jyotisa_Lagadha",
+  "canonical_name": "Vedanga Jyotisa Lagadha",
+  "source_file": "Vedanga_Jyotisa_Lagadha.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Astronomy of the Vedic ‘Sambitas— 2 Datable Vedic passages— 3. Text",
+      "level": 1,
+      "start_line": 110,
+      "end_line": 127,
+      "sections": [],
+      "content_preview": "1. Astronomy of the Vedic ‘Sambitas— 2 Datable Vedic passages— 3. Text of Vedanga Jyotisa (VJ)—4. Date of VJ—S. Verification of the date of Lagadha—6. Contents of the WJ—7. Accuracy of the VJ-—8.  Modern studies on VJ—9. Acknowledgements  Part A: TEXT OF VEDANGA Jyorisa . - a 21 "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Importance of Astronomy .. . . oe 35",
+      "level": 1,
+      "start_line": 128,
+      "end_line": 129,
+      "sections": [],
+      "content_preview": "2. Importance of Astronomy .. . . oe 35  3. Benediction . . . 36  4. Valediction os . . 00 36  SN. ii. MEASURES OF Time, ASTERISMS ETC. . . 37 "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Benediction . . . 36",
+      "level": 1,
+      "start_line": 130,
+      "end_line": 131,
+      "sections": [],
+      "content_preview": "3. Benediction . . . 36  4. Valediction os . . 00 36  SN. ii. MEASURES OF Time, ASTERISMS ETC. . . 37  1. Time measures . . Bo 37 "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Valediction os . . 00 36",
+      "level": 1,
+      "start_line": 132,
+      "end_line": 135,
+      "sections": [],
+      "content_preview": "4. Valediction os . . 00 36  SN. ii. MEASURES OF Time, ASTERISMS ETC. . . 37  1. Time measures . . Bo 37  2. Asterisms—Presiding deities .. . . . 39 "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Time measures . . Bo 37",
+      "level": 1,
+      "start_line": 136,
+      "end_line": 137,
+      "sections": [],
+      "content_preview": "1. Time measures . . Bo 37  2. Asterisms—Presiding deities .. . . . 39  3. Rule of Three . Bo o . «=—40  SN. iii, FUNDAMENTAL AND DERIVED YUGA CONSTANTS no . 41 "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Asterisms—Presiding deities .. . . . 39",
+      "level": 1,
+      "start_line": 138,
+      "end_line": 139,
+      "sections": [],
+      "content_preview": "2. Asterisms—Presiding deities .. . . . 39  3. Rule of Three . Bo o . «=—40  SN. iii, FUNDAMENTAL AND DERIVED YUGA CONSTANTS no . 41  1. Yuga and its elements . . . 41 "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Rule of Three . Bo o . «=—40",
+      "level": 1,
+      "start_line": 140,
+      "end_line": 143,
+      "sections": [],
+      "content_preview": "3. Rule of Three . Bo o . «=—40  SN. iii, FUNDAMENTAL AND DERIVED YUGA CONSTANTS no . 41  1. Yuga and its elements . . . 41  2. Lagnas in the Yuga Oo . Bo Bo 42 "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Yuga and its elements . . . 41",
+      "level": 1,
+      "start_line": 144,
+      "end_line": 145,
+      "sections": [],
+      "content_preview": "1. Yuga and its elements . . . 41  2. Lagnas in the Yuga Oo . Bo Bo 42  3. Day-time . . . a 44  Sn. iv. TITHI, NAKSATRA Etc. oF CERTAIN SPECIAL Days .. . «644 "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Lagnas in the Yuga Oo . Bo Bo 42",
+      "level": 1,
+      "start_line": 146,
+      "end_line": 147,
+      "sections": [],
+      "content_preview": "2. Lagnas in the Yuga Oo . Bo Bo 42  3. Day-time . . . a 44  Sn. iv. TITHI, NAKSATRA Etc. oF CERTAIN SPECIAL Days .. . «644  1. The five-year Yuga . oe . 44 "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Day-time . . . a 44",
+      "level": 1,
+      "start_line": 148,
+      "end_line": 151,
+      "sections": [],
+      "content_preview": "3. Day-time . . . a 44  Sn. iv. TITHI, NAKSATRA Etc. oF CERTAIN SPECIAL Days .. . «644  1. The five-year Yuga . oe . 44  2. Commencement of the Yuga . . 45 "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "The five-year Yuga . oe . 44",
+      "level": 1,
+      "start_line": 152,
+      "end_line": 153,
+      "sections": [],
+      "content_preview": "1. The five-year Yuga . oe . 44  2. Commencement of the Yuga . . 45  3. Naksatras at the aa of the Ayanas D0 no 46  4. The Visuva oe 50 46 "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Commencement of the Yuga . . 45",
+      "level": 1,
+      "start_line": 154,
+      "end_line": 155,
+      "sections": [],
+      "content_preview": "2. Commencement of the Yuga . . 45  3. Naksatras at the aa of the Ayanas D0 no 46  4. The Visuva oe 50 46  5. Rtus in a Yuga . Bo od 47 "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Naksatras at the aa of the Ayanas D0 no 46",
+      "level": 1,
+      "start_line": 156,
+      "end_line": 157,
+      "sections": [],
+      "content_preview": "3. Naksatras at the aa of the Ayanas D0 no 46  4. The Visuva oe 50 46  5. Rtus in a Yuga . Bo od 47  6. Part of the day at which Parva ends .. . . 48 "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "The Visuva oe 50 46",
+      "level": 1,
+      "start_line": 158,
+      "end_line": 159,
+      "sections": [],
+      "content_preview": "4. The Visuva oe 50 46  5. Rtus in a Yuga . Bo od 47  6. Part of the day at which Parva ends .. . . 48  7, Current year of the Yuga .. oo a0 _ 50 ## Page 8"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Rtus in a Yuga . Bo od 47",
+      "level": 1,
+      "start_line": 160,
+      "end_line": 161,
+      "sections": [],
+      "content_preview": "5. Rtus in a Yuga . Bo od 47  6. Part of the day at which Parva ends .. . . 48  7, Current year of the Yuga .. oo a0 _ 50 ## Page 8  6 VEDANGA JYOTISA"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Part of the day at which Parva ends .. . . 48",
+      "level": 1,
+      "start_line": 162,
+      "end_line": 166,
+      "sections": [],
+      "content_preview": "6. Part of the day at which Parva ends .. . . 48  7, Current year of the Yuga .. oo a0 _ 50 ## Page 8  6 VEDANGA JYOTISA  Page"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 167,
+      "end_line": 170,
+      "sections": [],
+      "content_preview": "6 VEDANGA JYOTISA  Page Sn. v. Datty TITHI, NAKSATRA Etc. . . te 51 1. Introductory Oo Bp Oo 51 2. Computation of Parvardsi . . an 31 3. Asterismal parts od od oe 52 4, Bhamsa or Naksatra-parts . . D0 53"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Introductory Oo Bp Oo 51",
+      "level": 1,
+      "start_line": 171,
+      "end_line": 171,
+      "sections": [],
+      "content_preview": "1. Introductory Oo Bp Oo 51 2. Computation of Parvardsi . . an 31 3. Asterismal parts od od oe 52 4, Bhamsa or Naksatra-parts . . D0 53 5. Hour-angle and Lagna . . . 54 6. Naksatra at any Parva . BG BO 56 7. Kalas for Moon’s Naksatra BG BG o 58 8. Tithi-naksatra in the Javadi ser"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Computation of Parvardsi . . an 31",
+      "level": 1,
+      "start_line": 172,
+      "end_line": 172,
+      "sections": [],
+      "content_preview": "2. Computation of Parvardsi . . an 31 3. Asterismal parts od od oe 52 4, Bhamsa or Naksatra-parts . . D0 53 5. Hour-angle and Lagna . . . 54 6. Naksatra at any Parva . BG BO 56 7. Kalas for Moon’s Naksatra BG BG o 58 8. Tithi-naksatra in the Javadi series we . oe 59 9. Bhadanakal"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Asterismal parts od od oe 52",
+      "level": 1,
+      "start_line": 173,
+      "end_line": 174,
+      "sections": [],
+      "content_preview": "3. Asterismal parts od od oe 52 4, Bhamsa or Naksatra-parts . . D0 53 5. Hour-angle and Lagna . . . 54 6. Naksatra at any Parva . BG BO 56 7. Kalas for Moon’s Naksatra BG BG o 58 8. Tithi-naksatra in the Javadi series we . oe 59 9. Bhadanakalas . . . 60 10. Time of the day: Posit"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Hour-angle and Lagna . . . 54",
+      "level": 1,
+      "start_line": 175,
+      "end_line": 175,
+      "sections": [],
+      "content_preview": "5. Hour-angle and Lagna . . . 54 6. Naksatra at any Parva . BG BO 56 7. Kalas for Moon’s Naksatra BG BG o 58 8. Tithi-naksatra in the Javadi series we . oe 59 9. Bhadanakalas . . . 60 10. Time of the day: Position of the Sun... . o 61 11. Sun’s Naksatra at any time . OG 62 12. Da"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Naksatra at any Parva . BG BO 56",
+      "level": 1,
+      "start_line": 176,
+      "end_line": 176,
+      "sections": [],
+      "content_preview": "6. Naksatra at any Parva . BG BO 56 7. Kalas for Moon’s Naksatra BG BG o 58 8. Tithi-naksatra in the Javadi series we . oe 59 9. Bhadanakalas . . . 60 10. Time of the day: Position of the Sun... . o 61 11. Sun’s Naksatra at any time . OG 62 12. Day’s parts at the beginning of the"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Kalas for Moon’s Naksatra BG BG o 58",
+      "level": 1,
+      "start_line": 177,
+      "end_line": 177,
+      "sections": [],
+      "content_preview": "7. Kalas for Moon’s Naksatra BG BG o 58 8. Tithi-naksatra in the Javadi series we . oe 59 9. Bhadanakalas . . . 60 10. Time of the day: Position of the Sun... . o 61 11. Sun’s Naksatra at any time . OG 62 12. Day’s parts at the beginning of the Naksatra o D0 63 13. Corrections fo"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Tithi-naksatra in the Javadi series we . oe 59",
+      "level": 1,
+      "start_line": 178,
+      "end_line": 178,
+      "sections": [],
+      "content_preview": "8. Tithi-naksatra in the Javadi series we . oe 59 9. Bhadanakalas . . . 60 10. Time of the day: Position of the Sun... . o 61 11. Sun’s Naksatra at any time . OG 62 12. Day’s parts at the beginning of the Naksatra o D0 63 13. Corrections for the Sidereal day ae . oO 64 14. Correc"
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Bhadanakalas . . . 60",
+      "level": 1,
+      "start_line": 179,
+      "end_line": 179,
+      "sections": [],
+      "content_preview": "9. Bhadanakalas . . . 60 10. Time of the day: Position of the Sun... . o 61 11. Sun’s Naksatra at any time . OG 62 12. Day’s parts at the beginning of the Naksatra o D0 63 13. Corrections for the Sidereal day ae . oO 64 14. Corrections for the Yuga Oa Bo Bo 65 15. Rtusesa: Tithis"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Time of the day: Position of the Sun... . o 61",
+      "level": 1,
+      "start_line": 180,
+      "end_line": 180,
+      "sections": [],
+      "content_preview": "10. Time of the day: Position of the Sun... . o 61 11. Sun’s Naksatra at any time . OG 62 12. Day’s parts at the beginning of the Naksatra o D0 63 13. Corrections for the Sidereal day ae . oO 64 14. Corrections for the Yuga Oa Bo Bo 65 15. Rtusesa: Tithis yet to elapseina Riu .. "
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Sun’s Naksatra at any time . OG 62",
+      "level": 1,
+      "start_line": 181,
+      "end_line": 181,
+      "sections": [],
+      "content_preview": "11. Sun’s Naksatra at any time . OG 62 12. Day’s parts at the beginning of the Naksatra o D0 63 13. Corrections for the Sidereal day ae . oO 64 14. Corrections for the Yuga Oa Bo Bo 65 15. Rtusesa: Tithis yet to elapseina Riu .. . . 65 16. Day-time at any Parva . . Bo 66 17. Upav"
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Day’s parts at the beginning of the Naksatra o D0 63",
+      "level": 1,
+      "start_line": 182,
+      "end_line": 182,
+      "sections": [],
+      "content_preview": "12. Day’s parts at the beginning of the Naksatra o D0 63 13. Corrections for the Sidereal day ae . oO 64 14. Corrections for the Yuga Oa Bo Bo 65 15. Rtusesa: Tithis yet to elapseina Riu .. . . 65 16. Day-time at any Parva . . Bo 66 17. Upavasatha and Intercalary days . . o 66 BI"
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Corrections for the Sidereal day ae . oO 64",
+      "level": 1,
+      "start_line": 183,
+      "end_line": 183,
+      "sections": [],
+      "content_preview": "13. Corrections for the Sidereal day ae . oO 64 14. Corrections for the Yuga Oa Bo Bo 65 15. Rtusesa: Tithis yet to elapseina Riu .. . . 65 16. Day-time at any Parva . . Bo 66 17. Upavasatha and Intercalary days . . o 66 BIBLIOGRAPHY a . o 68 i. Text editions and Translations . 5"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "Corrections for the Yuga Oa Bo Bo 65",
+      "level": 1,
+      "start_line": 184,
+      "end_line": 184,
+      "sections": [],
+      "content_preview": "14. Corrections for the Yuga Oa Bo Bo 65 15. Rtusesa: Tithis yet to elapseina Riu .. . . 65 16. Day-time at any Parva . . Bo 66 17. Upavasatha and Intercalary days . . o 66 BIBLIOGRAPHY a . o 68 i. Text editions and Translations . 50 Do 68 ii. Studies BG . . . . 68 Verse (Pada) I"
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "Rtusesa: Tithis yet to elapseina Riu .. . . 65",
+      "level": 1,
+      "start_line": 185,
+      "end_line": 185,
+      "sections": [],
+      "content_preview": "15. Rtusesa: Tithis yet to elapseina Riu .. . . 65 16. Day-time at any Parva . . Bo 66 17. Upavasatha and Intercalary days . . o 66 BIBLIOGRAPHY a . o 68 i. Text editions and Translations . 50 Do 68 ii. Studies BG . . . . 68 Verse (Pada) INDEX . on a o 69 ## Page 9"
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "Day-time at any Parva . . Bo 66",
+      "level": 1,
+      "start_line": 186,
+      "end_line": 186,
+      "sections": [],
+      "content_preview": "16. Day-time at any Parva . . Bo 66 17. Upavasatha and Intercalary days . . o 66 BIBLIOGRAPHY a . o 68 i. Text editions and Translations . 50 Do 68 ii. Studies BG . . . . 68 Verse (Pada) INDEX . on a o 69 ## Page 9 "
+    },
+    {
+      "id": "ch-17",
+      "number": "17",
+      "title": "Upavasatha and Intercalary days . . o 66",
+      "level": 1,
+      "start_line": 187,
+      "end_line": 239,
+      "sections": [],
+      "content_preview": "17. Upavasatha and Intercalary days . . o 66 BIBLIOGRAPHY a . o 68 i. Text editions and Translations . 50 Do 68 ii. Studies BG . . . . 68 Verse (Pada) INDEX . on a o 69 ## Page 9  PREFACE"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "VEDANGA SYOTISA",
+      "level": 1,
+      "start_line": 240,
+      "end_line": 337,
+      "sections": [],
+      "content_preview": "8 VEDANGA SYOTISA  issued through the Indian National Science Academy, for two reasons, first, on account of this being a work on a scientific discipline and secondly the current year 1984-85 being the Jubilee Year of the Academy, a suggestion made on behalf of the Academy and ac"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 338,
+      "end_line": 407,
+      "sections": [],
+      "content_preview": "10 VEDANGA JYOTISA  cript to you, you would have done everything else.’ Having the highest regard for Prof. Sastry and appreciation for the confidence that he had been placing on me during our close academic relationship for nearly 30 years, J am happy that my associa- tion which"
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 408,
+      "end_line": 414,
+      "sections": [],
+      "content_preview": "12 VEDANGA JYOTISA  It might also be seen that the sacrificial year commenced with Vasanta (spring). It bad also been noted that the shortest day was at winter solstice when the seasonal year Sisira began with Uttardyana (Kausitaki Brahmane, 19.3) and rose to a maximum at the sum"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Datable Vedic passages",
+      "level": 1,
+      "start_line": 415,
+      "end_line": 447,
+      "sections": [],
+      "content_preview": "2. Datable Vedic passages  It was observed that the moon came back to the same position in the zodiac once in about 27 days and that each day was marked by the asterism or asterismal group (naksatra) near which the moon was seen, resulting in calling the asterism as the day’s nak"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Text of the Vedinga Jyotisa",
+      "level": 1,
+      "start_line": 448,
+      "end_line": 467,
+      "sections": [],
+      "content_preview": "3. Text of the Vedinga Jyotisa  Of the extant Indian astronomical texts, the VJ is the earliest. The astronomical matter forming the basis of the work is of one Lagadha, but the classical language employed in the work as current now would indicate that the original must have been"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Date of the Vedanga Jyotisa",
+      "level": 1,
+      "start_line": 468,
+      "end_line": 480,
+      "sections": [],
+      "content_preview": "4. Date of the Vedanga Jyotisa  Verses 6, 7 and 8 of the Yajur-Vedanga Jyotisa (Y-VJ) show that at the time of Lagadha the winter solstice was at the beginning of the asterism Sravisthad (Delphini) segment and that the summer solstice was at the mid-point of the Aslesd segment. I"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Verification of the date of Lagadha",
+      "level": 1,
+      "start_line": 481,
+      "end_line": 496,
+      "sections": [],
+      "content_preview": "5. Verification of the date of Lagadha  The date arrived at as above can be confirmed by the Saryasiddhdnta and the Siddhdnta Siromani which give 290° polar longitude and 36° polar latitude to Sraivstha. From this, the actual longitude of Sravisthd got is 296° 15’. Since the sidd"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 497,
+      "end_line": 560,
+      "sections": [],
+      "content_preview": "14 VEDANGA JYOTISA  Rr=360°—Rt. as.=50° 47’. RS is the declination=15° 42’. RS is the continuation of SR up to the ecliptic. Now:  () From the rt, angled spherical triangle RrS, it can be calculated that RS=18° 46’; Sr=53° 13’; and angle S=75° 17’. "
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Contents of the Vedanga Jyotisa",
+      "level": 1,
+      "start_line": 561,
+      "end_line": 594,
+      "sections": [],
+      "content_preview": "6. Contents of the Vedanga Jyotisa  The system of the VJ 1s the same as that taught in the Gargasamhita of the Samhita period, being the immediate centuries before Christ and the next following, Paitamaha Siddhanta condensed in the PS and the Jain works like Jyotisakaranda and Su"
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 595,
+      "end_line": 601,
+      "sections": [],
+      "content_preview": "16 VEDANGA JYOTISA  or the double matra or long syllable, to the day, passing on to the yuga. The practical way of measuring time is mentioned as the time taken by a specified quantity of water to flow through the ortfice of a specified clepsydra, as one nddika or 60th part of a "
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Accuracy of the Vedanga Jyotisa",
+      "level": 1,
+      "start_line": 602,
+      "end_line": 670,
+      "sections": [],
+      "content_preview": "7. Accuracy of the Vedanga Jyotisa  We shall now proceed to examme the accuracy of the system, a much discussed affair. The VJ says that there are 1830 civil days in the yuga, in which there are five solar sidereal years and 62 lunar synodic months. This gives 366 days for the ye"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Modern studies on Vedanga Jyotisa",
+      "level": 1,
+      "start_line": 671,
+      "end_line": 693,
+      "sections": [],
+      "content_preview": "8. Modern studies on Vedanga Jyotisa  The above discussion would show how wrong and unjustified Whitney was, when he remarked: “The so-called Vedic astronomical manual (VJ) whose first object seemingly ought to be to give rules on such points (as amdvdsyd etc.) is mostly filled w"
+    },
+    {
+      "id": "ch-18",
+      "number": "18",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 694,
+      "end_line": 765,
+      "sections": [],
+      "content_preview": "18 VEDANGA JYOTISA  to interpret the other verses, in spite of the obscure terms and the apotkegmatic language, because the meaning of these could be guessed if what they are driving at is known. Then, in 1884, H. K. Godbole tried to tackle the problem of the correct religious ca"
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Acknowledgements",
+      "level": 1,
+      "start_line": 766,
+      "end_line": 784,
+      "sections": [],
+      "content_preview": "9. Acknowledgements  T have the satisfaction now that what I began in 1960 and worked off and on has been duly brought to a completion. I think of all those who have helped me in the publication of this edition, especially to the Bharatiya Vidya Bhavan, Bombay who provided a foru"
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 785,
+      "end_line": 965,
+      "sections": [],
+      "content_preview": "20 VEDANGA JYOTISA  REFERENCES ICf. Reveda 1.164 48:  3For a detailed exposition, see B. G. Tilak, Orion, (Bombay, 1893). See esp. ch. IV. Agrahdyana, pp. 61-95. "
+    },
+    {
+      "id": "ch-26",
+      "number": "26",
+      "title": "VEDANGA JYOTISAM",
+      "level": 1,
+      "start_line": 966,
+      "end_line": 1045,
+      "sections": [],
+      "content_preview": "26 VEDANGA JYOTISAM  aero fe «= aaretafasqar: eer Fee ara faarararedt  Srnfe de @ oe mary UR aw wifes Fa 1 aa FATT I"
+    },
+    {
+      "id": "ch-30",
+      "number": "30",
+      "title": "All mss yifea (N Gafa); all mss. afedt (G afer, K. aft). (6) All mss atanq (A. eer,",
+      "level": 1,
+      "start_line": 1046,
+      "end_line": 1223,
+      "sections": [],
+      "content_preview": "30. All mss yifea (N Gafa); all mss. afedt (G afer, K. aft). (6) All mss atanq (A. eer, D. wary, BGK. eat, L site), HK. aftney, N. aferan. (0) All mss. qifta; all mss =fadt G. afer. K. afait). @) G. frarta fragt.  31. @ CE. aveat ef. () (g) Start; CE. wayerg. (c) C.F. aeeted, (@)"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "OF. gat; F. aay",
+      "level": 1,
+      "start_line": 1224,
+      "end_line": 1224,
+      "sections": [],
+      "content_preview": "3. OF. gat; F. aay 4. ME, wifes for afr; A afer aferrq. 4-0. (c) All mss farqat for 3 gat.; all mss. teafwatar (E F. caf: ae) 5. OE F. qa astfr 8. @ A fariet 9. (0) AEF. ade (c) All mss. $2 fir. (@) B aqet, D agit 0. (@) C. ataarea, D at req (6) B-F aifract (c) BOF. aera ey. (d) "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "ME, wifes for afr; A afer aferrq.",
+      "level": 1,
+      "start_line": 1225,
+      "end_line": 1226,
+      "sections": [],
+      "content_preview": "4. ME, wifes for afr; A afer aferrq. 4-0. (c) All mss farqat for 3 gat.; all mss. teafwatar (E F. caf: ae) 5. OE F. qa astfr 8. @ A fariet 9. (0) AEF. ade (c) All mss. $2 fir. (@) B aqet, D agit 0. (@) C. ataarea, D at req (6) B-F aifract (c) BOF. aera ey. (d) A. F. aa 1. ®B C.D."
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "OE F. qa astfr",
+      "level": 1,
+      "start_line": 1227,
+      "end_line": 1247,
+      "sections": [],
+      "content_preview": "5. OE F. qa astfr 8. @ A fariet 9. (0) AEF. ade (c) All mss. $2 fir. (@) B aqet, D agit 0. (@) C. ataarea, D at req (6) B-F aifract (c) BOF. aera ey. (d) A. F. aa 1. ®B C.D. yatgam, all mss. feet, (c) A.B C.D. qe=auatn, F. reaqafer. (d) All mss. 4g (cy); F waem, B.C.D.F. seat 12,"
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "QB geanta",
+      "level": 1,
+      "start_line": 1248,
+      "end_line": 1376,
+      "sections": [],
+      "content_preview": "20. QB geanta 21. ® F. waqr, F. fafa: © All mss. searerreat 22. (6) All mss. # fat. @) B.D. Fret 23. (6) B.D. ait. (@) B. fafa; A. aay ## Page 34  32 "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "IMPORTANCE OF ASTRONOMY",
+      "level": 1,
+      "start_line": 1377,
+      "end_line": 1393,
+      "sections": [],
+      "content_preview": "2. IMPORTANCE OF ASTRONOMY Text 2  veda hi yajfiartham abhipravrttah  kdldnupiirvyd vihitas ca yajhah|  tasmad idam kdalavidhanasdstram"
+    },
+    {
+      "id": "ch-36",
+      "number": "36",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1394,
+      "end_line": 1409,
+      "sections": [],
+      "content_preview": "36 VEDANGA JYOTISA  yatha Sikha mayirdndm naganam manayo yatha] tadvad vedangasastranam jyotisan mirdhani sthitam||R-VJ 35; Y-VJ 4  Like the combs of the peacocks and the crest-jewels of the serpents, so does the lore of Jyotisa stand at the head of all the lores forming the auxi"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "BENEDICTION",
+      "level": 1,
+      "start_line": 1410,
+      "end_line": 1424,
+      "sections": [],
+      "content_preview": "3. BENEDICTION  Text 3  somasiryastrearitam vidvan vedavid aSnute/ somasiiryastrcaritam lokam loke ca santatun|/R-VJ 30; Y-VJ 43  One learned in the Vedas who has also learnt this lore of the movement of"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "VALEDICTION",
+      "level": 1,
+      "start_line": 1425,
+      "end_line": 1445,
+      "sections": [],
+      "content_preview": "4 VALEDICTION  Text 4  ity evam masavarsanam muhiirtodayaparvandm| dinartvayanamdsangam( nam) vyakhydnam Lagadho ‘bravit]/ (¥-VJ, unnumbered verse after 43) "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Time MEASURES",
+      "level": 1,
+      "start_line": 1446,
+      "end_line": 1489,
+      "sections": [],
+      "content_preview": "1. Time MEASURES  Text 5  palani paticadasad apam dhrténi tad Gdhakam dronam atah prameyam| tnbhir vihinam kudavais tu karyam tan nadikdyds tu bhavet pramanam|| Y-VJ 24  A vessel which holds (exactly) 50 palas of water is the measure called ddhaka."
+    },
+    {
+      "id": "ch-38",
+      "number": "38",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1490,
+      "end_line": 1567,
+      "sections": [],
+      "content_preview": "38 VEDANGA JYOTISA Text 8  . -padas trimsat tu saikika](Y-VJ 12b) .. .kasthandm caiva tah kalah|(Y-VJ 30d)  31 kasthds make one pada. (Y-VS 12b). (Four pddas) (equal to 124) kasthas make one kala. (Y-VJ 30d)"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "ASTERISMS: PRESIDING DEITIES",
+      "level": 1,
+      "start_line": 1568,
+      "end_line": 1586,
+      "sections": [],
+      "content_preview": "2. ASTERISMS: PRESIDING DEITIES  Text 12  agnih prajdpatih somo rudro “ditir brhaspatih] sarpa§ ca pitaras caiva bhagas caivdryamapi cal] savita tvastétha vayus cendrdgni mitra eva cal indro nirrtir dpo vai viSvedevas' tathaiva cal]"
+    },
+    {
+      "id": "ch-40",
+      "number": "40",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1587,
+      "end_line": 1621,
+      "sections": [],
+      "content_preview": "40 VEDANGA JYOTISA  Visvedevas, Visnu, Vasus, Varuna, Ajaekapad, Ahirbudhnya, Pisan, Asvins and Yama The people learned in the religious lores say that these deity-names are to be substituted for their own names in the (sankalpa of) the yaga (of the person on whose behalf the sac"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "RULE oF THREE",
+      "level": 1,
+      "start_line": 1622,
+      "end_line": 1650,
+      "sections": [],
+      "content_preview": "3. RULE oF THREE Text 14  ity updyasamuddesah bhityo ‘py aknah prakalpayet) Jfeyardsigatabhyasta (? tam) vibhajet jfianarasina]|R-VJ 24; Y-VJ 42  The following is ‘the rule of three’ (for obtaining the desired result). This rule of three is to be applied again and again to the da"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "YUGA AND ITS ELEMENTS",
+      "level": 1,
+      "start_line": 1651,
+      "end_line": 1685,
+      "sections": [],
+      "content_preview": "1. YUGA AND ITS ELEMENTS Text 15  udaya vasavasya syuh dinarasih sapaficakah|  rser dvisastihinam sydd vimSatyad saikaya strnam|]Y-VJ 29 paficatrumsam Ssatam pausnam ekonam ayandany rseh| parvanam syad catuspado... [|/¥-VJ 30 a-c"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1686,
+      "end_line": 1727,
+      "sections": [],
+      "content_preview": "2 VEDANGA JYOTISA  There are 60+1, 2, 7 (i.e. 61, 62 and 67) sdvana months, lunar (synodic) months, and Moon’s sidereal months (cycles), respectively, in the yuga. Again, the savana month contains 30 days. This plus half (i.e. 303) days make the solar month. The number mentioned "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "LAGNAS IN THE YUGA",
+      "level": 1,
+      "start_line": 1728,
+      "end_line": 1783,
+      "sections": [],
+      "content_preview": "2. LAGNAS IN THE YUGA Text 16  Stavisthabhyo gu(%ga)udbhyastat pragvilagnan vinirdiset] sii( ?sta)ryan masan salabhyastan vidyat candramasan rtin||R-VJ 19 ## Page 45  Il. YUGA CONSTANTS 43"
+    },
+    {
+      "id": "ch-44",
+      "number": "44",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1784,
+      "end_line": 1790,
+      "sections": [],
+      "content_preview": "44 VEDANGA JYOTISA  word, it is easily mistaken to be siirya in the copying of manuscripts. But the lunar ytus cannot be related to the solar months, as it transgresses the statement ardhapai- camabhas tv rtuh, which justifies the emendation. Rgvedins pronounce even classical da "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Day-TIME",
+      "level": 1,
+      "start_line": 1791,
+      "end_line": 1879,
+      "sections": [],
+      "content_preview": "3. Day-TIME Text 17  gharmavrddhir apam prasthah ksapahrasa udaggatau| daksine tau viparydsah sanmuhiirtyayanena tu]/R-VJ 7; Y-VJ 8  During the northward course of the Sun, the increase of day-time per day is the same equivalent of one prastha (of water used in the clepsydra) The"
+    },
+    {
+      "id": "ch-46",
+      "number": "46",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1880,
+      "end_line": 1889,
+      "sections": [],
+      "content_preview": "46 VEDANGA JYOTISA  Note 3. The beginning of the northward movement of the Sun at Sravisthd and the mention of the day-time to be least here (see Sn. I11.3, Y-VJ 8) shows that this is the time of the winter solstice. From this, the time when the original work of Lagadha was writt"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "NAKSATRAS AT THE BEGINNING OF THE AYANAS",
+      "level": 1,
+      "start_line": 1890,
+      "end_line": 1920,
+      "sections": [],
+      "content_preview": "3. NAKSATRAS AT THE BEGINNING OF THE AYANAS Text 20  prathamam saptamam cahur ayanddyam trayodasam| caturtham dagamam caiva (2a dvih) yugmddyam bahule ‘py rtau||(R-VJ 8; Y-VI9)  vasus tvasta bhavo ‘jaf ca mitras sarpo ‘Svinau jalam| dhata@ kas cayanadyads syuh (R-VJ 9a-c; Y-VJ 10"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Tue Visuva",
+      "level": 1,
+      "start_line": 1921,
+      "end_line": 1965,
+      "sections": [],
+      "content_preview": "4. Tue Visuva Text 2]  visuvam tadgunam dvabhyam riipahinam.tu sadgunam| ; yallabdham téni parvani tathordhvam (tathardhawn) Sa tishiv bhovet|R-VI 31. ## Page 49  IV. TITHI, NAKSATRA ETC. a7"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "RTUS IN A YUGA",
+      "level": 1,
+      "start_line": 1966,
+      "end_line": 1976,
+      "sections": [],
+      "content_preview": "5. RTUS IN A YUGA Text 22  ekantare ‘hni, mase ca pirvgam kytva” dir(?m) uttarah| ardhayoh paficavarsanam mrdu (2rdu) paticadasastame||Y-VI 11:  In each of the two halves of the five-year-yuga, in the alternating periods of one synodic month and tithi, the next riu occurs after t"
+    },
+    {
+      "id": "ch-48",
+      "number": "48",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 1977,
+      "end_line": 1991,
+      "sections": [],
+      "content_preview": "48 VEDANGA JYOTISA  two tithis because 30 rtus make up 62 synodic months). Regarding the eighth rtu, the 15th tithi comes as the beginning tithi. (Y-VJ 11)  Note I. The first rtu of the yuga is Sisira, as can be seen from the statement that the first tz month is Tapas (vide R-VJ7"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "PART O£ THE DAY AT WHICH PARVA ENDS",
+      "level": 1,
+      "start_line": 1992,
+      "end_line": 2071,
+      "sections": [],
+      "content_preview": "6. PART O£ THE DAY AT WHICH PARVA ENDS Text 23  du (?dyu) heyam parva cet pade ... bhagatmand *pavrjyamsan mrdiged adhiko yadi/]Y-VJ 12 a,c-d  If the end of the syzygy occurs within the first pdda (ie. 31 parts of the day), that tithi 1s to be omitted from the reckoning. If the p"
+    },
+    {
+      "id": "ch-50",
+      "number": "50",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2072,
+      "end_line": 2078,
+      "sections": [],
+      "content_preview": "50 VEDANGA JYOTISA  that the Moon’s naksatra parts at the parva is 31. This is wrong. On the other hand, itis 93. Hence the meaning of the verse must be quite different. (See my mterpretation here and the explanation in note 5 above.) Mistakes have also been made by ‘Barhaspatya’"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "CURRENT YEAR OF THE YUGA",
+      "level": 1,
+      "start_line": 2079,
+      "end_line": 2147,
+      "sections": [],
+      "content_preview": "7. CURRENT YEAR OF THE YUGA Text 24  ye brhaspatina bhuktah minat prabhrti ragayah| trivrtah (?te hrtah) paficabhir r (? bhii) ta yas Sesas sa parigrahah (Y-VJ, un-numbered verse after 4)  Count the rasi (30° sign division of the zodiac) in which Jupiter 1s situated"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "COMPUTATION OF PARVA-RASI",
+      "level": 1,
+      "start_line": 2148,
+      "end_line": 2165,
+      "sections": [],
+      "content_preview": "2. COMPUTATION OF PARVA-RASI Text 25  mrekam dyadasabhyastam dvigunam gatasamyutam| Sastya sastyd yutam dvabhyam parvanam rdasir ucyate||R-VJ 4; Y-VJ 13  Take the ordinal number of the year in the yuga. Lessen this by 1, multiply by 12, again multiply by 2, add the parvas gone in"
+    },
+    {
+      "id": "ch-52",
+      "number": "52",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2166,
+      "end_line": 2177,
+      "sections": [],
+      "content_preview": "52 VEDANGA JYOTISA  Anuvatsara is the fourth year of the yuga. So, 3 years, 9 months and one parva (Sukla) are gone. From this:  Parva-rai=-(3X 12+9) 2+1-+2 (for 60 parvas gone)=93  Note 1, In each year there are 12 synodic months, each month having 2 parvas."
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "ASTERISMAL PARTS",
+      "level": 1,
+      "start_line": 2178,
+      "end_line": 2259,
+      "sections": [],
+      "content_preview": "3. ASTERISMAL PARTS Text 26  syuk pado ’rdham tripadya ya tridvyeke \"hnah krte( ?ta) sthitim| sdmyenendoh str(2stvr)no \"rye tu parvakah paficasammitah||Y-VJ 14  On account of the civil days of the yuga being divided into quarters, halves and three quarters corresponding to the di"
+    },
+    {
+      "id": "ch-54",
+      "number": "54",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2260,
+      "end_line": 2278,
+      "sections": [],
+      "content_preview": "54 VEDANGA JYOTISA  are 11 for each, and. so the remainder is multiplied by 11 and added. At new moon, the Moon is with the Sun and the parts are the same. But at full moon, the Moon 18 opposite the Sun, that is, 13} segments or 13 naksatras and 62 parts away. So we add 62 parts "
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "HOUR ANGLE AND LAGNA",
+      "level": 1,
+      "start_line": 2279,
+      "end_line": 2359,
+      "sections": [],
+      "content_preview": "5. HOUR ANGLE AND LAGNA  Text 28  navakair udgato ’mSah sydd iinah saptaguno bhavet/ avapas tv ayuje *rdham syat paulastye ’stam gate ’param|/Y-VJ 16  paksat paficadasac cordhvam tad bhuktam iti nirdi§et]"
+    },
+    {
+      "id": "ch-56",
+      "number": "56",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2360,
+      "end_line": 2368,
+      "sections": [],
+      "content_preview": "56 VEDANGA JYOTISA  Note 5. ‘Barhaspatya’ has not translated the third quarter of Y-VJ 16, not understanding what it means. This has landed him in difficulties and he gets out by assuming that the hour angles are not counted from the eastern horizon, as is natural, but are counte"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "NAKSATRA AT ANY PARVA",
+      "level": 1,
+      "start_line": 2369,
+      "end_line": 2456,
+      "sections": [],
+      "content_preview": "6. NAKSATRA AT ANY PARVA Text 29  javadyamSsaih samam vidyat pirvardhe parvasiittarah| bhadanam syac caturdasyam dvi(%dyu)bhagebhyo \"dhiko yadil| R-VJ 15; Y-VI17  jau dra& gah khe Sve *hi ro sa"
+    },
+    {
+      "id": "ch-58",
+      "number": "58",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2457,
+      "end_line": 2465,
+      "sections": [],
+      "content_preview": "58 VEDANGA JYOTISA  Note 3. From the explanation given above, it will be seen that the two rules are not redundant: one refers to the tith: proper and the other to the civil day marked by the tithi. For example, if at parva end the naksatra-parts are 44 and the day-parts are 4, t"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "KALAS FOR Moon’s NAKSATRA",
+      "level": 1,
+      "start_line": 2466,
+      "end_line": 2524,
+      "sections": [],
+      "content_preview": "7. KALAS FOR Moon’s NAKSATRA Text 30  karya bhamsastakasthane kala ekdnnavimSatih] iinasthane dvi(?tri)saptatim udvaped iinasambhave]/R-VJ 11; Y-VJ 19  R-VJ has a better reading for the last quarter: saptatir udvaped iinasammitah. "
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "TirHi-NAKSATRA IN THE JAVADI SERIES",
+      "level": 1,
+      "start_line": 2525,
+      "end_line": 2550,
+      "sections": [],
+      "content_preview": "8. TirHi-NAKSATRA IN THE JAVADI SERIES Text 31  uthin ekddasabhyastam parvabhamsasamanvitam| vibhayya bhasamithena tithinaksatram Gdiset|] Y-VJI 20  Multuply the tithis gone after a parva by 11, and adding it to the parts of the naksatra current at the end of the parva, and divid"
+    },
+    {
+      "id": "ch-60",
+      "number": "60",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2551,
+      "end_line": 2580,
+      "sections": [],
+      "content_preview": "60 VEDANGA JYOTISA  next to a given maksatra will occur 11 places off, because 115 1/124=55 11 /124=1 11/124 (mod. 27). Now, roughly, successive tithis have successive naksatras (the difference being 17 naksatra-parts less for every 5 tithis). So, if the tithis are multiplied by "
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "BHADANAKALA",
+      "level": 1,
+      "start_line": 2581,
+      "end_line": 2608,
+      "sections": [],
+      "content_preview": "9. BHADANAKALA Text 32 yah parvabhadanakalas tdsu saptagunam titkim| uktah (2yuktya) tdsdm vijaniyat tithibhadanikah kalah]/R-VJ 21; Y-VJ 21 R-VJ reads the second half as: praksipet kala (%pettat) samithas tu vidyad adanakih (Whaddnikdh) kalah|  Adding Kalas equal to seven times "
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Time OF THE Day : Posirion oF THE SUN",
+      "level": 1,
+      "start_line": 2609,
+      "end_line": 2640,
+      "sections": [],
+      "content_preview": "10. Time OF THE Day : Posirion oF THE SUN Text 33  atitaparvabhdgebhyah Sodhayed dvigundam. tithim| tesu mandalabhagesu tithinisthamgato ravih||R-VI 20; Y-VJ 22  Subtract twice the number of fithis after a parva from the parts of the day ending the parva. We get the parts of the "
+    },
+    {
+      "id": "ch-62",
+      "number": "62",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2641,
+      "end_line": 2641,
+      "sections": [],
+      "content_preview": "62 VEDANGA JYOTISA 11. Sun’s NAKsATRA AT ANY TIME Text 34  ekadasabhir abhyasya parvani navabhis tithim| yugalabdham saparva syat vartamanadrkabham kramat|] Y-VJ 25  Multiplying (the number of) parvas elapsed by 11 and the tithis elapsed after"
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Sun’s NAKsATRA AT ANY TIME",
+      "level": 1,
+      "start_line": 2642,
+      "end_line": 2686,
+      "sections": [],
+      "content_preview": "11. Sun’s NAKsATRA AT ANY TIME Text 34  ekadasabhir abhyasya parvani navabhis tithim| yugalabdham saparva syat vartamanadrkabham kramat|] Y-VJ 25  Multiplying (the number of) parvas elapsed by 11 and the tithis elapsed after that by 9, (adding the two) and dividing (the total by "
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Day’s PARTS AT THE BEGINNING OF A NAKSATRA",
+      "level": 1,
+      "start_line": 2687,
+      "end_line": 2732,
+      "sections": [],
+      "content_preview": "12. Day’s PARTS AT THE BEGINNING OF A NAKSATRA Text 35  siiryarksabhaggn navabhir vibhajya Sesam dvirabhyasya dinopabhuktih| tithi(?the)r yuta bhuktidinesu kalo yogam (?yogo) dinaikddasakena tadvat|/¥-VJ 26 "
+    },
+    {
+      "id": "ch-64",
+      "number": "64",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2733,
+      "end_line": 2787,
+      "sections": [],
+      "content_preview": "64 VEDANGA JYOTISA  tracted from it, because each tithi is two parts less than a day. But these days have to be subtracted from the given day and parts. So, twice the number of tithis, taken as parts, are added to the parts of the day and the number of tithis, taken as days, are "
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "CoRRECTION FOR THE YUGA",
+      "level": 1,
+      "start_line": 2788,
+      "end_line": 2806,
+      "sections": [],
+      "content_preview": "14. CoRRECTION FOR THE YUGA  Text 37  dvyii( 2dyii)nam dvisastibhdgena heyam saurydt saparvanam| yatkrtav upajdyete madhy ’nte cddhimasakau|/Y-VJ 37  The lunar day is less than the civil day by its 62nd part. The civil day is sub-"
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "RTUSEsA (TITHIS YET TO ELAPSE IN A RTU)",
+      "level": 1,
+      "start_line": 2807,
+      "end_line": 2832,
+      "sections": [],
+      "content_preview": "15. RTUSEsA (TITHIS YET TO ELAPSE IN A RTU)  Text 38  yadartham dinabhdganam saga parvani parvanil rtusesam tu tad vidyat sankhydya saha parvanam|/R-VJ 23; Y-VJ 41  Adding all the half-tithis occuring after each parva of all the parvas, (that"
+    },
+    {
+      "id": "ch-66",
+      "number": "66",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 2833,
+      "end_line": 2837,
+      "sections": [],
+      "content_preview": "66 VEDANGA JYOTISA  Verification: 23 rtus require actually 23x 124—-30=95 parvas and 1 tithi. Since 93 parvas have elapsed, 2 parvas and 1 tithi remain to complete the rtu.  16. DAY-TIME AT ANY PARVA Text 39 "
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "DAY-TIME AT ANY PARVA",
+      "level": 1,
+      "start_line": 2838,
+      "end_line": 2866,
+      "sections": [],
+      "content_preview": "16. DAY-TIME AT ANY PARVA Text 39  yad uttarsydyanato gatam sya-  che(%cche)sam tatha daksinato ‘yanasyal  tadek( ?ka)sastyd dvigunam vibhaktam"
+    },
+    {
+      "id": "ch-17",
+      "number": "17",
+      "title": "UPAVASATHA AND INTERCALARY Days",
+      "level": 1,
+      "start_line": 2867,
+      "end_line": 3079,
+      "sections": [],
+      "content_preview": "17. UPAVASATHA AND INTERCALARY Days Text 40  caturdasim upavasathas tatha bhavet yathodito dinam upaiti candramah| maghasuklahniko yuikte Sravisthayam ca varsikim]|R-VJ 34 "
+    },
+    {
+      "id": "ch-70",
+      "number": "70",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 3080,
+      "end_line": 3489,
+      "sections": [],
+      "content_preview": "70 VEDANGA JYOTISA  qtr wart R 33a; iv. 4 Ruse R 20c, Y 22c; v. 10 & gat ¥ (after 4) c; iv. 7 faatase Y 14b; v.3 i Y 24c; ii. 1 faa Y (after 4) c; iv. 7"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 3490,
+      "end_line": 3631,
+      "sections": [],
+      "content_preview": "14 VEDANGA JYOTISA  Siryaprajnapti, Intro. § 6, 7  Sar, anta, Intro. § 5  Swamikannu Pillai, L. D., on date of W, Intro. § 5, 8"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Astronomy of the Vedic ‘Sambitas— 2 Datable Vedic passages— 3. Text",
+      "chapter": "Astronomy of the Vedic ‘Sambitas— 2 Datable Vedic passages— 3. Text",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Importance of Astronomy .. . . oe 35",
+      "chapter": "Importance of Astronomy .. . . oe 35",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Benediction . . . 36",
+      "chapter": "Benediction . . . 36",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Valediction os . . 00 36",
+      "chapter": "Valediction os . . 00 36",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-1",
+      "title": "Time measures . . Bo 37",
+      "chapter": "Time measures . . Bo 37",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Asterisms—Presiding deities .. . . . 39",
+      "chapter": "Asterisms—Presiding deities .. . . . 39",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Rule of Three . Bo o . «=—40",
+      "chapter": "Rule of Three . Bo o . «=—40",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-1",
+      "title": "Yuga and its elements . . . 41",
+      "chapter": "Yuga and its elements . . . 41",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Lagnas in the Yuga Oo . Bo Bo 42",
+      "chapter": "Lagnas in the Yuga Oo . Bo Bo 42",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Day-time . . . a 44",
+      "chapter": "Day-time . . . a 44",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-1",
+      "title": "The five-year Yuga . oe . 44",
+      "chapter": "The five-year Yuga . oe . 44",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Commencement of the Yuga . . 45",
+      "chapter": "Commencement of the Yuga . . 45",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Naksatras at the aa of the Ayanas D0 no 46",
+      "chapter": "Naksatras at the aa of the Ayanas D0 no 46",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "The Visuva oe 50 46",
+      "chapter": "The Visuva oe 50 46",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Rtus in a Yuga . Bo od 47",
+      "chapter": "Rtus in a Yuga . Bo od 47",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Part of the day at which Parva ends .. . . 48",
+      "chapter": "Part of the day at which Parva ends .. . . 48",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-6",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-1",
+      "title": "Introductory Oo Bp Oo 51",
+      "chapter": "Introductory Oo Bp Oo 51",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Computation of Parvardsi . . an 31",
+      "chapter": "Computation of Parvardsi . . an 31",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Asterismal parts od od oe 52",
+      "chapter": "Asterismal parts od od oe 52",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-5",
+      "title": "Hour-angle and Lagna . . . 54",
+      "chapter": "Hour-angle and Lagna . . . 54",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Naksatra at any Parva . BG BO 56",
+      "chapter": "Naksatra at any Parva . BG BO 56",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Kalas for Moon’s Naksatra BG BG o 58",
+      "chapter": "Kalas for Moon’s Naksatra BG BG o 58",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Tithi-naksatra in the Javadi series we . oe 59",
+      "chapter": "Tithi-naksatra in the Javadi series we . oe 59",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Bhadanakalas . . . 60",
+      "chapter": "Bhadanakalas . . . 60",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Time of the day: Position of the Sun... . o 61",
+      "chapter": "Time of the day: Position of the Sun... . o 61",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Sun’s Naksatra at any time . OG 62",
+      "chapter": "Sun’s Naksatra at any time . OG 62",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "Day’s parts at the beginning of the Naksatra o D0 63",
+      "chapter": "Day’s parts at the beginning of the Naksatra o D0 63",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-13",
+      "title": "Corrections for the Sidereal day ae . oO 64",
+      "chapter": "Corrections for the Sidereal day ae . oO 64",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "Corrections for the Yuga Oa Bo Bo 65",
+      "chapter": "Corrections for the Yuga Oa Bo Bo 65",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-15",
+      "title": "Rtusesa: Tithis yet to elapseina Riu .. . . 65",
+      "chapter": "Rtusesa: Tithis yet to elapseina Riu .. . . 65",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-16",
+      "title": "Day-time at any Parva . . Bo 66",
+      "chapter": "Day-time at any Parva . . Bo 66",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-17",
+      "title": "Upavasatha and Intercalary days . . o 66",
+      "chapter": "Upavasatha and Intercalary days . . o 66",
+      "chapter_id": "ch-17"
+    },
+    {
+      "id": "ch-8",
+      "title": "VEDANGA SYOTISA",
+      "chapter": "VEDANGA SYOTISA",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-10",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-12",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-2",
+      "title": "Datable Vedic passages",
+      "chapter": "Datable Vedic passages",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Text of the Vedinga Jyotisa",
+      "chapter": "Text of the Vedinga Jyotisa",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Date of the Vedanga Jyotisa",
+      "chapter": "Date of the Vedanga Jyotisa",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Verification of the date of Lagadha",
+      "chapter": "Verification of the date of Lagadha",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-14",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-6",
+      "title": "Contents of the Vedanga Jyotisa",
+      "chapter": "Contents of the Vedanga Jyotisa",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-16",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-7",
+      "title": "Accuracy of the Vedanga Jyotisa",
+      "chapter": "Accuracy of the Vedanga Jyotisa",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Modern studies on Vedanga Jyotisa",
+      "chapter": "Modern studies on Vedanga Jyotisa",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-18",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-18"
+    },
+    {
+      "id": "ch-9",
+      "title": "Acknowledgements",
+      "chapter": "Acknowledgements",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-20",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-26",
+      "title": "VEDANGA JYOTISAM",
+      "chapter": "VEDANGA JYOTISAM",
+      "chapter_id": "ch-26"
+    },
+    {
+      "id": "ch-30",
+      "title": "All mss yifea (N Gafa); all mss. afedt (G afer, K. aft). (6) All mss atanq (A. eer,",
+      "chapter": "All mss yifea (N Gafa); all mss. afedt (G afer, K. aft). (6) All mss atanq (A. eer,",
+      "chapter_id": "ch-30"
+    },
+    {
+      "id": "ch-3",
+      "title": "OF. gat; F. aay",
+      "chapter": "OF. gat; F. aay",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "ME, wifes for afr; A afer aferrq.",
+      "chapter": "ME, wifes for afr; A afer aferrq.",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "OE F. qa astfr",
+      "chapter": "OE F. qa astfr",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-20",
+      "title": "QB geanta",
+      "chapter": "QB geanta",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-2",
+      "title": "IMPORTANCE OF ASTRONOMY",
+      "chapter": "IMPORTANCE OF ASTRONOMY",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-36",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-36"
+    },
+    {
+      "id": "ch-3",
+      "title": "BENEDICTION",
+      "chapter": "BENEDICTION",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "VALEDICTION",
+      "chapter": "VALEDICTION",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-1",
+      "title": "Time MEASURES",
+      "chapter": "Time MEASURES",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-38",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-38"
+    },
+    {
+      "id": "ch-2",
+      "title": "ASTERISMS: PRESIDING DEITIES",
+      "chapter": "ASTERISMS: PRESIDING DEITIES",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-40",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-40"
+    },
+    {
+      "id": "ch-3",
+      "title": "RULE oF THREE",
+      "chapter": "RULE oF THREE",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-1",
+      "title": "YUGA AND ITS ELEMENTS",
+      "chapter": "YUGA AND ITS ELEMENTS",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2",
+      "title": "LAGNAS IN THE YUGA",
+      "chapter": "LAGNAS IN THE YUGA",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-44",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-44"
+    },
+    {
+      "id": "ch-3",
+      "title": "Day-TIME",
+      "chapter": "Day-TIME",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-46",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-46"
+    },
+    {
+      "id": "ch-3",
+      "title": "NAKSATRAS AT THE BEGINNING OF THE AYANAS",
+      "chapter": "NAKSATRAS AT THE BEGINNING OF THE AYANAS",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Tue Visuva",
+      "chapter": "Tue Visuva",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "RTUS IN A YUGA",
+      "chapter": "RTUS IN A YUGA",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-48",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-48"
+    },
+    {
+      "id": "ch-6",
+      "title": "PART O£ THE DAY AT WHICH PARVA ENDS",
+      "chapter": "PART O£ THE DAY AT WHICH PARVA ENDS",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-50",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-50"
+    },
+    {
+      "id": "ch-7",
+      "title": "CURRENT YEAR OF THE YUGA",
+      "chapter": "CURRENT YEAR OF THE YUGA",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-2",
+      "title": "COMPUTATION OF PARVA-RASI",
+      "chapter": "COMPUTATION OF PARVA-RASI",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-52",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-52"
+    },
+    {
+      "id": "ch-3",
+      "title": "ASTERISMAL PARTS",
+      "chapter": "ASTERISMAL PARTS",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-54",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-54"
+    },
+    {
+      "id": "ch-5",
+      "title": "HOUR ANGLE AND LAGNA",
+      "chapter": "HOUR ANGLE AND LAGNA",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-56",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-56"
+    },
+    {
+      "id": "ch-6",
+      "title": "NAKSATRA AT ANY PARVA",
+      "chapter": "NAKSATRA AT ANY PARVA",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-58",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-58"
+    },
+    {
+      "id": "ch-7",
+      "title": "KALAS FOR Moon’s NAKSATRA",
+      "chapter": "KALAS FOR Moon’s NAKSATRA",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "TirHi-NAKSATRA IN THE JAVADI SERIES",
+      "chapter": "TirHi-NAKSATRA IN THE JAVADI SERIES",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-60",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-60"
+    },
+    {
+      "id": "ch-9",
+      "title": "BHADANAKALA",
+      "chapter": "BHADANAKALA",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Time OF THE Day : Posirion oF THE SUN",
+      "chapter": "Time OF THE Day : Posirion oF THE SUN",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-62",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-62"
+    },
+    {
+      "id": "ch-11",
+      "title": "Sun’s NAKsATRA AT ANY TIME",
+      "chapter": "Sun’s NAKsATRA AT ANY TIME",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "Day’s PARTS AT THE BEGINNING OF A NAKSATRA",
+      "chapter": "Day’s PARTS AT THE BEGINNING OF A NAKSATRA",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-64",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-64"
+    },
+    {
+      "id": "ch-14",
+      "title": "CoRRECTION FOR THE YUGA",
+      "chapter": "CoRRECTION FOR THE YUGA",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-15",
+      "title": "RTUSEsA (TITHIS YET TO ELAPSE IN A RTU)",
+      "chapter": "RTUSEsA (TITHIS YET TO ELAPSE IN A RTU)",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-66",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-66"
+    },
+    {
+      "id": "ch-16",
+      "title": "DAY-TIME AT ANY PARVA",
+      "chapter": "DAY-TIME AT ANY PARVA",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-17",
+      "title": "UPAVASATHA AND INTERCALARY Days",
+      "chapter": "UPAVASATHA AND INTERCALARY Days",
+      "chapter_id": "ch-17"
+    },
+    {
+      "id": "ch-70",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-70"
+    },
+    {
+      "id": "ch-14",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-14"
+    }
+  ],
+  "total_chapters": 100,
+  "total_sections": 0
+}

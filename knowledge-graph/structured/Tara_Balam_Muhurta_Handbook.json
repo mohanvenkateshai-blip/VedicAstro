@@ -1,0 +1,726 @@
+{
+  "book_id": "Tara_Balam_Muhurta_Handbook",
+  "canonical_name": "Tara Balam Muhurta Handbook",
+  "source_file": "Tara_Balam_Muhurta_Handbook.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-what_tara_balam_means",
+      "number": null,
+      "title": "What Tara Balam means",
+      "level": 1,
+      "start_line": 76,
+      "end_line": 621,
+      "sections": [
+        {
+          "id": "ch-what_tara_balam_means-sec-what_tara_balam_means",
+          "title": "What Tara Balam means",
+          "level": 2,
+          "start_line": 76,
+          "end_line": 79,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-the_core_idea_in_one_sentence",
+          "title": "The core idea in one sentence",
+          "level": 2,
+          "start_line": 80,
+          "end_line": 83,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-tara_balam_is_personal_not_universal",
+          "title": "Tara Balam is personal, not universal",
+          "level": 2,
+          "start_line": 84,
+          "end_line": 93,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-data_required",
+          "title": "Data required",
+          "level": 2,
+          "start_line": 94,
+          "end_line": 131,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-inclusive_counting_formula",
+          "title": "Inclusive counting formula",
+          "level": 2,
+          "start_line": 132,
+          "end_line": 137,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-worked_example",
+          "title": "Worked example",
+          "level": 2,
+          "start_line": 138,
+          "end_line": 313,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-janma_birth_self",
+          "title": "Janma: Birth / self",
+          "level": 2,
+          "start_line": 314,
+          "end_line": 323,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-sampat_wealth_resources",
+          "title": "Sampat: Wealth / resources",
+          "level": 2,
+          "start_line": 324,
+          "end_line": 331,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-vipat_danger_disruption",
+          "title": "Vipat: Danger / disruption",
+          "level": 2,
+          "start_line": 332,
+          "end_line": 341,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-kshema_security_well-being",
+          "title": "Kshema: Security / well-being",
+          "level": 2,
+          "start_line": 342,
+          "end_line": 349,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-pratyak_opposition_obstruction",
+          "title": "Pratyak: Opposition / obstruction",
+          "level": 2,
+          "start_line": 350,
+          "end_line": 359,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-sadhaka_achievement_accomplishment",
+          "title": "Sadhaka: Achievement / accomplishment",
+          "level": 2,
+          "start_line": 360,
+          "end_line": 367,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-vadha_naidhana_destruction_loss",
+          "title": "Vadha / Naidhana: Destruction / loss",
+          "level": 2,
+          "start_line": 368,
+          "end_line": 377,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-maitra_mitra_friendship_harmony",
+          "title": "Maitra / Mitra: Friendship / harmony",
+          "level": 2,
+          "start_line": 378,
+          "end_line": 385,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-parama_maitra_highest_friendship",
+          "title": "Parama Maitra: Highest friendship",
+          "level": 2,
+          "start_line": 386,
+          "end_line": 395,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-three_paryayas_the_severity_changes_by_cycle",
+          "title": "Three Paryayas: the severity changes by cycle",
+          "level": 2,
+          "start_line": 396,
+          "end_line": 431,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-pada-level_cautions_in_the_second_paryaya",
+          "title": "Pada-level cautions in the second Paryaya",
+          "level": 2,
+          "start_line": 432,
+          "end_line": 459,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-ghati-level_relief_in_unfavorable_tara",
+          "title": "Ghati-level relief in unfavorable Tara",
+          "level": 2,
+          "start_line": 460,
+          "end_line": 493,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-janma_anujanma_and_trijanma_nakshatras",
+          "title": "Janma, Anujanma and Trijanma Nakshatras",
+          "level": 2,
+          "start_line": 494,
+          "end_line": 529,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-the_22nd_nakshatra_vainasika_warning",
+          "title": "The 22nd Nakshatra: Vainasika warning",
+          "level": 2,
+          "start_line": 530,
+          "end_line": 533,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-the_27th_nakshatra_parama_maitra_but_not_automatically_safe",
+          "title": "The 27th Nakshatra: Parama Maitra but not automatically safe",
+          "level": 2,
+          "start_line": 534,
+          "end_line": 537,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-the_88th_nakshatra_pada",
+          "title": "The 88th Nakshatra Pada",
+          "level": 2,
+          "start_line": 538,
+          "end_line": 541,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-chandrabala_and_chandra_ashtama",
+          "title": "Chandrabala and Chandra Ashtama",
+          "level": 2,
+          "start_line": 542,
+          "end_line": 569,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-panchanga_shuddhi_tara_is_not_a_standalone_pass",
+          "title": "Panchanga Shuddhi: Tara is not a standalone pass",
+          "level": 2,
+          "start_line": 570,
+          "end_line": 609,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-what_tara_balam_means-sec-gunabahulya_and_dosha-swalpa_excess_good_over_lesser_evil",
+          "title": "Gunabahulya and Dosha-Swalpa: excess good over lesser evil",
+          "level": 2,
+          "start_line": 610,
+          "end_line": 620,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "1.1 What Tara Balam means  Tara Balam literally means the strength or support obtained from the Nakshatra relationship between the native’s birth Moon and the Moon at the chosen muhurta. In electional astrology, the birth Moon is treated as the psychological and experiential anch"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Define the event precisely",
+      "level": 1,
+      "start_line": 622,
+      "end_line": 625,
+      "sections": [],
+      "content_preview": "1. Define the event precisely  Is it marriage, house entry, travel, surgery, business launch, study, buying, worship, agriculture, legal filing or routine work? The purpose decides the rules.  2. Identify the principal native(s)  Record Janma Nakshatra, Janma Rasi, birth Moon pad"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Identify the principal native(s)",
+      "level": 1,
+      "start_line": 626,
+      "end_line": 629,
+      "sections": [],
+      "content_preview": "2. Identify the principal native(s)  Record Janma Nakshatra, Janma Rasi, birth Moon pada, and whether multiple people must be evaluated.  3. Fix real-world constraints  Location, date range, ceremony duration, non-negotiable participants, daylight/night requirements and legal/pra"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Fix real-world constraints",
+      "level": 1,
+      "start_line": 630,
+      "end_line": 633,
+      "sections": [],
+      "content_preview": "3. Fix real-world constraints  Location, date range, ceremony duration, non-negotiable participants, daylight/night requirements and legal/practical deadlines.  4. Remove obvious calendar exclusions  Reject impossible windows, eclipses, unsuitable sankramana zones, and known forb"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Remove obvious calendar exclusions",
+      "level": 1,
+      "start_line": 634,
+      "end_line": 637,
+      "sections": [],
+      "content_preview": "4. Remove obvious calendar exclusions  Reject impossible windows, eclipses, unsuitable sankramana zones, and known forbidden periods in the chosen tradition.  5. Apply Panchanga Shuddhi  Check tithi, vara, nakshatra, yoga and karana for the activity. "
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Apply Panchanga Shuddhi",
+      "level": 1,
+      "start_line": 638,
+      "end_line": 641,
+      "sections": [],
+      "content_preview": "5. Apply Panchanga Shuddhi  Check tithi, vara, nakshatra, yoga and karana for the activity.  6. Apply Tara Balam  Classify the muhurta Moon Nakshatra from each principal Janma Nakshatra. Prefer remainders 2, 4, 6, 8, 0. "
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Apply Tara Balam",
+      "level": 1,
+      "start_line": 642,
+      "end_line": 645,
+      "sections": [],
+      "content_preview": "6. Apply Tara Balam  Classify the muhurta Moon Nakshatra from each principal Janma Nakshatra. Prefer remainders 2, 4, 6, 8, 0.  7. Apply Chandrabala  Check Moon sign from Janma Rasi, avoid 6/8/12 in stricter practice, and treat Chandra Ashtama carefully. "
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Apply Chandrabala",
+      "level": 1,
+      "start_line": 646,
+      "end_line": 649,
+      "sections": [],
+      "content_preview": "7. Apply Chandrabala  Check Moon sign from Janma Rasi, avoid 6/8/12 in stricter practice, and treat Chandra Ashtama carefully.  8. Inspect Paryaya and Pada nuances  For negative Tara, check if it is 1st, 2nd or 3rd Paryaya; inspect specific padas and 88th pada if high-stake. "
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Inspect Paryaya and Pada nuances",
+      "level": 1,
+      "start_line": 650,
+      "end_line": 653,
+      "sections": [],
+      "content_preview": "8. Inspect Paryaya and Pada nuances  For negative Tara, check if it is 1st, 2nd or 3rd Paryaya; inspect specific padas and 88th pada if high-stake.  9. Test special warnings  Check Vainasika 22nd, restricted 27th, Janma group cautions, activity-specific Nakshatra bans. "
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Test special warnings",
+      "level": 1,
+      "start_line": 654,
+      "end_line": 657,
+      "sections": [],
+      "content_preview": "9. Test special warnings  Check Vainasika 22nd, restricted 27th, Janma group cautions, activity-specific Nakshatra bans.  10. Build the election chart  Choose a strong Lagna; avoid malefics in Lagna, Karthari, Moon affliction, weak Lagna lord or afflicted event significator. "
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Build the election chart",
+      "level": 1,
+      "start_line": 658,
+      "end_line": 661,
+      "sections": [],
+      "content_preview": "10. Build the election chart  Choose a strong Lagna; avoid malefics in Lagna, Karthari, Moon affliction, weak Lagna lord or afflicted event significator.  11. Seek strengthening yogas  Prefer benefics in kendras/trikonas, strong Lagna lord, strong relevant house lord, and favorab"
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Seek strengthening yogas",
+      "level": 1,
+      "start_line": 662,
+      "end_line": 665,
+      "sections": [],
+      "content_preview": "11. Seek strengthening yogas  Prefer benefics in kendras/trikonas, strong Lagna lord, strong relevant house lord, and favorable special yogas.  12. Make the final judgment  Use A/B/C/D rating. If a defect is relevant to the activity and cannot be neutralized, reject or downgrade."
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Make the final judgment",
+      "level": 1,
+      "start_line": 666,
+      "end_line": 787,
+      "sections": [
+        {
+          "id": "ch-12-sec-abcd_muhurta_rating",
+          "title": "A/B/C/D Muhurta rating",
+          "level": 2,
+          "start_line": 670,
+          "end_line": 747,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-12-sec-red_flags_that_usually_deserve_rejection",
+          "title": "Red flags that usually deserve rejection",
+          "level": 2,
+          "start_line": 748,
+          "end_line": 765,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-12-sec-when_a_bad_muhurta_can_be_partially_salvaged",
+          "title": "When a bad muhurta can be partially salvaged",
+          "level": 2,
+          "start_line": 766,
+          "end_line": 786,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "12. Make the final judgment  Use A/B/C/D rating. If a defect is relevant to the activity and cannot be neutralized, reject or downgrade.  5.1 A/B/C/D Muhurta rating  Rating "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Read the slot",
+      "level": 1,
+      "start_line": 788,
+      "end_line": 791,
+      "sections": [],
+      "content_preview": "1. Read the slot  Note start time, end time and named muhurta division.  2. Identify the Moon Nakshatra  Use location-specific Panchanga. If a Nakshatra changes inside the slot, split the slot. "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Identify the Moon Nakshatra",
+      "level": 1,
+      "start_line": 792,
+      "end_line": 795,
+      "sections": [],
+      "content_preview": "2. Identify the Moon Nakshatra  Use location-specific Panchanga. If a Nakshatra changes inside the slot, split the slot.  3. Classify Tara  Count from the person’s Janma Nakshatra to the active Moon Nakshatra. "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Classify Tara",
+      "level": 1,
+      "start_line": 796,
+      "end_line": 799,
+      "sections": [],
+      "content_preview": "3. Classify Tara  Count from the person’s Janma Nakshatra to the active Moon Nakshatra.  4. Apply activity filter  Check whether the Tara’s nature supports the actual event. "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Apply activity filter",
+      "level": 1,
+      "start_line": 800,
+      "end_line": 803,
+      "sections": [],
+      "content_preview": "4. Apply activity filter  Check whether the Tara’s nature supports the actual event.  5. Check special exceptions  Paryaya, Pada, Vainasika, 27th, Janma group, 88th Pada. "
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Check special exceptions",
+      "level": 1,
+      "start_line": 804,
+      "end_line": 807,
+      "sections": [],
+      "content_preview": "5. Check special exceptions  Paryaya, Pada, Vainasika, 27th, Janma group, 88th Pada.  6. Combine with named muhurta quality  A good Tara does not automatically override a named inauspicious muhurta division; use both layers. "
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Combine with named muhurta quality",
+      "level": 1,
+      "start_line": 808,
+      "end_line": 811,
+      "sections": [],
+      "content_preview": "6. Combine with named muhurta quality  A good Tara does not automatically override a named inauspicious muhurta division; use both layers.  7. Select best segment  Prefer the sub-slot with favorable Tara, clean Panchanga, good Chandrabala and strongest Lagna. "
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Select best segment",
+      "level": 1,
+      "start_line": 812,
+      "end_line": 1904,
+      "sections": [],
+      "content_preview": "7. Select best segment  Prefer the sub-slot with favorable Tara, clean Panchanga, good Chandrabala and strongest Lagna.  Important for your earlier 2-ghati tables  The “corresponding Nakshatra” beside each 2-ghati interval is the input for Tara Balam. "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-what_tara_balam_means-sec-what_tara_balam_means",
+      "title": "What Tara Balam means",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-the_core_idea_in_one_sentence",
+      "title": "The core idea in one sentence",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-tara_balam_is_personal_not_universal",
+      "title": "Tara Balam is personal, not universal",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-data_required",
+      "title": "Data required",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-inclusive_counting_formula",
+      "title": "Inclusive counting formula",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-worked_example",
+      "title": "Worked example",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-janma_birth_self",
+      "title": "Janma: Birth / self",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-sampat_wealth_resources",
+      "title": "Sampat: Wealth / resources",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-vipat_danger_disruption",
+      "title": "Vipat: Danger / disruption",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-kshema_security_well-being",
+      "title": "Kshema: Security / well-being",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-pratyak_opposition_obstruction",
+      "title": "Pratyak: Opposition / obstruction",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-sadhaka_achievement_accomplishment",
+      "title": "Sadhaka: Achievement / accomplishment",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-vadha_naidhana_destruction_loss",
+      "title": "Vadha / Naidhana: Destruction / loss",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-maitra_mitra_friendship_harmony",
+      "title": "Maitra / Mitra: Friendship / harmony",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-parama_maitra_highest_friendship",
+      "title": "Parama Maitra: Highest friendship",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-three_paryayas_the_severity_changes_by_cycle",
+      "title": "Three Paryayas: the severity changes by cycle",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-pada-level_cautions_in_the_second_paryaya",
+      "title": "Pada-level cautions in the second Paryaya",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-ghati-level_relief_in_unfavorable_tara",
+      "title": "Ghati-level relief in unfavorable Tara",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-janma_anujanma_and_trijanma_nakshatras",
+      "title": "Janma, Anujanma and Trijanma Nakshatras",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-the_22nd_nakshatra_vainasika_warning",
+      "title": "The 22nd Nakshatra: Vainasika warning",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-the_27th_nakshatra_parama_maitra_but_not_automatically_safe",
+      "title": "The 27th Nakshatra: Parama Maitra but not automatically safe",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-the_88th_nakshatra_pada",
+      "title": "The 88th Nakshatra Pada",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-chandrabala_and_chandra_ashtama",
+      "title": "Chandrabala and Chandra Ashtama",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-panchanga_shuddhi_tara_is_not_a_standalone_pass",
+      "title": "Panchanga Shuddhi: Tara is not a standalone pass",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means-sec-gunabahulya_and_dosha-swalpa_excess_good_over_lesser_evil",
+      "title": "Gunabahulya and Dosha-Swalpa: excess good over lesser evil",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-what_tara_balam_means",
+      "title": "What Tara Balam means",
+      "chapter": "What Tara Balam means",
+      "chapter_id": "ch-what_tara_balam_means"
+    },
+    {
+      "id": "ch-1",
+      "title": "Define the event precisely",
+      "chapter": "Define the event precisely",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Identify the principal native(s)",
+      "chapter": "Identify the principal native(s)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Fix real-world constraints",
+      "chapter": "Fix real-world constraints",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Remove obvious calendar exclusions",
+      "chapter": "Remove obvious calendar exclusions",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Apply Panchanga Shuddhi",
+      "chapter": "Apply Panchanga Shuddhi",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Apply Tara Balam",
+      "chapter": "Apply Tara Balam",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Apply Chandrabala",
+      "chapter": "Apply Chandrabala",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Inspect Paryaya and Pada nuances",
+      "chapter": "Inspect Paryaya and Pada nuances",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Test special warnings",
+      "chapter": "Test special warnings",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Build the election chart",
+      "chapter": "Build the election chart",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Seek strengthening yogas",
+      "chapter": "Seek strengthening yogas",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12-sec-abcd_muhurta_rating",
+      "title": "A/B/C/D Muhurta rating",
+      "chapter": "Make the final judgment",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-12-sec-red_flags_that_usually_deserve_rejection",
+      "title": "Red flags that usually deserve rejection",
+      "chapter": "Make the final judgment",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-12-sec-when_a_bad_muhurta_can_be_partially_salvaged",
+      "title": "When a bad muhurta can be partially salvaged",
+      "chapter": "Make the final judgment",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-12",
+      "title": "Make the final judgment",
+      "chapter": "Make the final judgment",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-1",
+      "title": "Read the slot",
+      "chapter": "Read the slot",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Identify the Moon Nakshatra",
+      "chapter": "Identify the Moon Nakshatra",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Classify Tara",
+      "chapter": "Classify Tara",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Apply activity filter",
+      "chapter": "Apply activity filter",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Check special exceptions",
+      "chapter": "Check special exceptions",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Combine with named muhurta quality",
+      "chapter": "Combine with named muhurta quality",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Select best segment",
+      "chapter": "Select best segment",
+      "chapter_id": "ch-7"
+    }
+  ],
+  "total_chapters": 20,
+  "total_sections": 28
+}

@@ -1,0 +1,359 @@
+{
+  "book_id": "vedic_yoga_logic_engine",
+  "canonical_name": "vedic yoga logic engine",
+  "source_file": "vedic_yoga_logic_engine.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Core Data Models",
+      "level": 1,
+      "start_line": 9,
+      "end_line": 9,
+      "sections": [],
+      "content_preview": " 1. Core Data Models  2. Modification Engine  3. Planetary Yoga Libraries  4. Transit (Gochara) Engine  5. Implementation Architecture     "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Modification Engine",
+      "level": 1,
+      "start_line": 10,
+      "end_line": 10,
+      "sections": [],
+      "content_preview": " 2. Modification Engine  3. Planetary Yoga Libraries  4. Transit (Gochara) Engine  5. Implementation Architecture       "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Planetary Yoga Libraries",
+      "level": 1,
+      "start_line": 11,
+      "end_line": 11,
+      "sections": [],
+      "content_preview": " 3. Planetary Yoga Libraries  4. Transit (Gochara) Engine  5. Implementation Architecture         "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Transit (Gochara) Engine",
+      "level": 1,
+      "start_line": 12,
+      "end_line": 12,
+      "sections": [],
+      "content_preview": " 4. Transit (Gochara) Engine  5. Implementation Architecture           1. Core Data Models & Mathematical Specifications"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Implementation Architecture",
+      "level": 1,
+      "start_line": 13,
+      "end_line": 18,
+      "sections": [],
+      "content_preview": " 5. Implementation Architecture           1. Core Data Models & Mathematical Specifications  To program an absolute mathematical engine for parsing structural yogas, specific foundational objects and lookups must be rigorously mapped. The coordinates are calculated down to precis"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Core Data Models & Mathematical Specifications",
+      "level": 1,
+      "start_line": 19,
+      "end_line": 84,
+      "sections": [
+        {
+          "id": "ch-1-sec-primitive_system_maps",
+          "title": "Primitive System Maps",
+          "level": 2,
+          "start_line": 22,
+          "end_line": 45,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-1-sec-exaltation_debilitation_and_moolatrikona_boundaries",
+          "title": "Exaltation, Debilitation, and Moolatrikona Boundaries",
+          "level": 2,
+          "start_line": 46,
+          "end_line": 69,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-1-sec-positional_aspect_graha_drishti_logic",
+          "title": "Positional Aspect (Graha Drishti) Logic",
+          "level": 2,
+          "start_line": 70,
+          "end_line": 83,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 1. Core Data Models & Mathematical Specifications  To program an absolute mathematical engine for parsing structural yogas, specific foundational objects and lookups must be rigorously mapped. The coordinates are calculated down to precise degrees, minutes, and seconds of arc us"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "The Modification Engine (Rules of Integrity & Strength)",
+      "level": 1,
+      "start_line": 85,
+      "end_line": 131,
+      "sections": [
+        {
+          "id": "ch-2-sec-combustion_astayana_orbs_matrix",
+          "title": "Combustion (Astayana) Orbs Matrix",
+          "level": 2,
+          "start_line": 88,
+          "end_line": 99,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-2-sec-planetary_war_graha_yuddha_logic",
+          "title": "Planetary War (Graha Yuddha) Logic",
+          "level": 2,
+          "start_line": 100,
+          "end_line": 102,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-2-sec-neechabhanga_debilitation_cancellation_validation_matrix",
+          "title": "Neechabhanga (Debilitation Cancellation) Validation Matrix",
+          "level": 2,
+          "start_line": 103,
+          "end_line": 130,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 2. The Modification Engine (Rules of Integrity & Strength)  Yogas cannot be calculated solely by sign or house placement. They are modified by mathematical criteria representing solar combustion, mutual planetary wars, positional cancellation, and aspect integrity.   2.1 Combust"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Core Yoga Libraries & Algorithmic Rules",
+      "level": 1,
+      "start_line": 132,
+      "end_line": 271,
+      "sections": [
+        {
+          "id": "ch-3-sec-pancha_mahapurusha_yogas",
+          "title": "Pancha Mahapurusha Yogas",
+          "level": 2,
+          "start_line": 136,
+          "end_line": 209,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-nabhasa_yogas_structural_formations",
+          "title": "Nabhasa Yogas (Structural Formations)",
+          "level": 2,
+          "start_line": 210,
+          "end_line": 228,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-raja_yogas_and_structural_combinations",
+          "title": "Raja Yogas and Structural Combinations",
+          "level": 2,
+          "start_line": 229,
+          "end_line": 270,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 3. Core Yoga Libraries & Algorithmic Rules  This section details the programmatic criteria for the primary planetary yogas across Brihat Parashara Hora Shastra, Saravali, and Jataka Tattva.     3.1 Pancha Mahapurusha Yogas  Formed when a non-luminary planet occupies its own sign"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Transit (Gochara) Logic Engine & Muhurta Optimization",
+      "level": 1,
+      "start_line": 272,
+      "end_line": 326,
+      "sections": [
+        {
+          "id": "ch-4-sec-planetary_transit_vedha_obstruction_matrix",
+          "title": "Planetary Transit Vedha (Obstruction) Matrix",
+          "level": 2,
+          "start_line": 275,
+          "end_line": 297,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-4-sec-the_ashtakavarga_dynamic_filter",
+          "title": "The Ashtakavarga Dynamic Filter",
+          "level": 2,
+          "start_line": 298,
+          "end_line": 325,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 4. Transit (Gochara) Logic Engine & Muhurta Optimization  For a Muhurta application, a static natal yoga is merely latent capability. Transits act as time-varying wave functions that trigger or suppress these configurations. The structural calculus requires evaluating the transi"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Software Application Logic Engine Architecture",
+      "level": 1,
+      "start_line": 327,
+      "end_line": 364,
+      "sections": [
+        {
+          "id": "ch-5-sec-complete_structural_json_data_schema",
+          "title": "Complete Structural JSON Data Schema",
+          "level": 2,
+          "start_line": 330,
+          "end_line": 352,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-5-sec-logic_core_pipeline",
+          "title": "Logic Core Pipeline",
+          "level": 2,
+          "start_line": 353,
+          "end_line": 363,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 5. Software Application Logic Engine Architecture  To program this logic into a real-time computation engine for Muhurta selection, implement a decoupled evaluation pipeline. The calculations process a series of matrices from raw planetary coordinates down to actionable binary s"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Core Data Models",
+      "chapter": "Core Data Models",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Modification Engine",
+      "chapter": "Modification Engine",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Planetary Yoga Libraries",
+      "chapter": "Planetary Yoga Libraries",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Transit (Gochara) Engine",
+      "chapter": "Transit (Gochara) Engine",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Implementation Architecture",
+      "chapter": "Implementation Architecture",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-1-sec-primitive_system_maps",
+      "title": "Primitive System Maps",
+      "chapter": "Core Data Models & Mathematical Specifications",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1-sec-exaltation_debilitation_and_moolatrikona_boundaries",
+      "title": "Exaltation, Debilitation, and Moolatrikona Boundaries",
+      "chapter": "Core Data Models & Mathematical Specifications",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1-sec-positional_aspect_graha_drishti_logic",
+      "title": "Positional Aspect (Graha Drishti) Logic",
+      "chapter": "Core Data Models & Mathematical Specifications",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "Core Data Models & Mathematical Specifications",
+      "chapter": "Core Data Models & Mathematical Specifications",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2-sec-combustion_astayana_orbs_matrix",
+      "title": "Combustion (Astayana) Orbs Matrix",
+      "chapter": "The Modification Engine (Rules of Integrity & Strength)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2-sec-planetary_war_graha_yuddha_logic",
+      "title": "Planetary War (Graha Yuddha) Logic",
+      "chapter": "The Modification Engine (Rules of Integrity & Strength)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2-sec-neechabhanga_debilitation_cancellation_validation_matrix",
+      "title": "Neechabhanga (Debilitation Cancellation) Validation Matrix",
+      "chapter": "The Modification Engine (Rules of Integrity & Strength)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2",
+      "title": "The Modification Engine (Rules of Integrity & Strength)",
+      "chapter": "The Modification Engine (Rules of Integrity & Strength)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3-sec-pancha_mahapurusha_yogas",
+      "title": "Pancha Mahapurusha Yogas",
+      "chapter": "Core Yoga Libraries & Algorithmic Rules",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-nabhasa_yogas_structural_formations",
+      "title": "Nabhasa Yogas (Structural Formations)",
+      "chapter": "Core Yoga Libraries & Algorithmic Rules",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-raja_yogas_and_structural_combinations",
+      "title": "Raja Yogas and Structural Combinations",
+      "chapter": "Core Yoga Libraries & Algorithmic Rules",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3",
+      "title": "Core Yoga Libraries & Algorithmic Rules",
+      "chapter": "Core Yoga Libraries & Algorithmic Rules",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4-sec-planetary_transit_vedha_obstruction_matrix",
+      "title": "Planetary Transit Vedha (Obstruction) Matrix",
+      "chapter": "Transit (Gochara) Logic Engine & Muhurta Optimization",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-4-sec-the_ashtakavarga_dynamic_filter",
+      "title": "The Ashtakavarga Dynamic Filter",
+      "chapter": "Transit (Gochara) Logic Engine & Muhurta Optimization",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-4",
+      "title": "Transit (Gochara) Logic Engine & Muhurta Optimization",
+      "chapter": "Transit (Gochara) Logic Engine & Muhurta Optimization",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5-sec-complete_structural_json_data_schema",
+      "title": "Complete Structural JSON Data Schema",
+      "chapter": "Software Application Logic Engine Architecture",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-5-sec-logic_core_pipeline",
+      "title": "Logic Core Pipeline",
+      "chapter": "Software Application Logic Engine Architecture",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-5",
+      "title": "Software Application Logic Engine Architecture",
+      "chapter": "Software Application Logic Engine Architecture",
+      "chapter_id": "ch-5"
+    }
+  ],
+  "total_chapters": 10,
+  "total_sections": 13
+}

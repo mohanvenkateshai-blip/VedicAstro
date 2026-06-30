@@ -1,0 +1,76 @@
+{
+  "book_id": "utpata_mrityu_kana_siddhi_handbook",
+  "canonical_name": "utpata mrityu kana siddhi handbook",
+  "source_file": "utpata_mrityu_kana_siddhi_handbook.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Identify the Vāra",
+      "level": 1,
+      "start_line": 103,
+      "end_line": 104,
+      "sections": [],
+      "content_preview": " 1. Identify the Vāra  Use the weekday as per the local panchang convention. In many traditional panchangs, Vāra is sunrise-to-sunrise rather than midnight-to-midnight, so local sunrise matters for edge cases.  2. Identify the Moon’s Nakshatra  The yoga changes when the Moon chan"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Identify the Moon’s Nakshatra",
+      "level": 1,
+      "start_line": 105,
+      "end_line": 106,
+      "sections": [],
+      "content_preview": " 2. Identify the Moon’s Nakshatra  The yoga changes when the Moon changes nakshatra. If the nakshatra changes mid-day, the Vāra–Nakṣatra yoga changes at that transition.  3. Match the row  Find the weekday row and compare the current nakshatra against the four cells: Utpāta, Mṛty"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Match the row",
+      "level": 1,
+      "start_line": 107,
+      "end_line": 110,
+      "sections": [],
+      "content_preview": " 3. Match the row  Find the weekday row and compare the current nakshatra against the four cells: Utpāta, Mṛtyu, Kāṇa, or Siddhi.      4. Interpret conservatively  Siddhi is supportive, but it is not a blank cheque. For serious muhurta selection, still examine tithi, tara bala, c"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Interpret conservatively",
+      "level": 1,
+      "start_line": 111,
+      "end_line": 139,
+      "sections": [],
+      "content_preview": " 4. Interpret conservatively  Siddhi is supportive, but it is not a blank cheque. For serious muhurta selection, still examine tithi, tara bala, chandra bala, lagna, yoga, karana, weekday defects, rāhu kāla/yamaganda, and the purpose of the activity.  Working rule: Avoid Utpāta, "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Identify the Vāra",
+      "chapter": "Identify the Vāra",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Identify the Moon’s Nakshatra",
+      "chapter": "Identify the Moon’s Nakshatra",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Match the row",
+      "chapter": "Match the row",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Interpret conservatively",
+      "chapter": "Interpret conservatively",
+      "chapter_id": "ch-4"
+    }
+  ],
+  "total_chapters": 4,
+  "total_sections": 0
+}

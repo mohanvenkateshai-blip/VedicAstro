@@ -196,9 +196,9 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
                 >
                   <div className="font-medium">{ch.title}</div>
                   <div className="text-[10px] text-text-muted">
-                    {ch.nodeIds.length > 0 ? `${ch.nodeIds.length} nodes` : null}
-                    {ch.nodeIds.length > 0 && ch.sourceLocation ? " • " : null}
-                    {ch.sourceLocation}
+                    {ch.properties?.structured ? "Structured • " : ""}
+                    {ch.nodeIds && ch.nodeIds.length > 0 ? `${ch.nodeIds.length} nodes` : null}
+                    {ch.sourceLocation ? ` • ${ch.sourceLocation}` : ""}
                   </div>
                 </a>
               ))

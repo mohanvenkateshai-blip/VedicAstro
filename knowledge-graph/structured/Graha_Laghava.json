@@ -1,0 +1,2581 @@
+{
+  "book_id": "Graha_Laghava",
+  "canonical_name": "Graha Laghava",
+  "source_file": "Graha_Laghava.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Works of Ganesa Daivajiia",
+      "level": 1,
+      "start_line": 82,
+      "end_line": 145,
+      "sections": [],
+      "content_preview": "2. Works of Ganesa Daivajiia  Ganega composed several important works on astronomy, as- trology etc among which his astronomical treatise Grahaldghavam is the most famous. In fact, the remarkable popularity of the Graha ## Page 3  INTRODUCTION Gi)"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Special features of Grahalaghavam",
+      "level": 1,
+      "start_line": 146,
+      "end_line": 173,
+      "sections": [],
+      "content_preview": "3. Special features of Grahalaghavam  Ganeéga has simplified the method of computations of the po- sitions of planets which is otherwise laborious by the traditional method.  To avoid a huge number for the ahargana (number of civil days since the epoch), GaneSa has adopted an aha"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Popularity of Grahalaghavam and its commentators",
+      "level": 1,
+      "start_line": 174,
+      "end_line": 224,
+      "sections": [],
+      "content_preview": "4. Popularity of Grahalaghavam and its commentators  As mentioned earlier, the Grahalaghavam of Ganega Daivajfia is the most popular astronomical text, among the ancient and medi- eval texts, currently used in most parts of India. Further, among the karana works (hand-books) on I"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Some special results of Ganega Daivajiia",
+      "level": 1,
+      "start_line": 225,
+      "end_line": 378,
+      "sections": [],
+      "content_preview": "5. Some special results of Ganega Daivajiia (i) Phase of the Moon  From the newmoon to the fullmoon, the phase of the Moon increases, given by  phase = (1+ cos d)/2 "
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Grahalaghavam (GL)",
+      "level": 1,
+      "start_line": 379,
+      "end_line": 439,
+      "sections": [],
+      "content_preview": "6. Grahalaghavam (GL)  In our present work, for each Sloka we have given a working English translation along with mathematical explanation, deriva- tions, worked examples, tables and diagrams wherever necessary. This work is based on the printed edition of GL, with commentaries #"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "In these chapters computations of the circumstances of the two",
+      "level": 1,
+      "start_line": 440,
+      "end_line": 464,
+      "sections": [],
+      "content_preview": "6. In these chapters computations of the circumstances of the two types of eclipses are explained. The determinations of the sparsa (beginning), madhya (middle) and mokga (end) of an ordinary eclipse and of the sammilanam and the unmilanam of a total eclipse (khagrasa) are demons"
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "(Srrigonnatyadhikara) deals with the rising of the",
+      "level": 1,
+      "start_line": 465,
+      "end_line": 541,
+      "sections": [],
+      "content_preview": "Chapter 12 (Srrigonnatyadhikara) deals with the rising of the Moon’s “horns”. Finding the ‘valanam’ (deflection) is also explained in this chapter. ## Page 12  (xii) GRAHALAGHAVAM OF GAN ESA DAIVAJNA  In Chapter 13, conjunctions of planets (grahayuti) is pre-"
+    },
+    {
+      "id": "ch-82",
+      "number": "82",
+      "title": "GRAHALAGHAVAM OF GANESA DAIVAJNA",
+      "level": 1,
+      "start_line": 542,
+      "end_line": 2507,
+      "sections": [],
+      "content_preview": "82 GRAHALAGHAVAM OF GANESA DAIVAJNA  Sloka 3 : Even though very great scholars composed (astronomical) handbooks, their (mathematical) results are not achieved if sines (and arcs) are left out. Therefore, I (Ganeéa) set forth to compose a (planetary) hand- book of procedures whic"
+    },
+    {
+      "id": "ch-21",
+      "number": "2.1",
+      "title": "Introduction",
+      "level": 1,
+      "start_line": 2508,
+      "end_line": 2519,
+      "sections": [],
+      "content_preview": "2.1. Introduction  In obtaining the mean positions of the Sun and the Moon, it was assumed that these bodies move in circular orbits round the earth with uniform angular velocities. However, by observations it was found that  the motions are non-uniform. "
+    },
+    {
+      "id": "ch-22",
+      "number": "2.2",
+      "title": "Epicyclic theory and Mandaphala",
+      "level": 1,
+      "start_line": 2520,
+      "end_line": 3711,
+      "sections": [
+        {
+          "id": "ch-22-sec-bhujantara_correction",
+          "title": "Bhujantara correction",
+          "level": 2,
+          "start_line": 2657,
+          "end_line": 2764,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-22-sec-further_corrections_for_the_moon",
+          "title": "Further corrections for the Moon",
+          "level": 2,
+          "start_line": 2765,
+          "end_line": 3710,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "2.2. Epicyclic theory and Mandaphala  The theory is that while the mean Sun or the Moon moves along a big circular orbit (dotted in Fig.2.1), the actual (or true) Sun or Moon  Fig. 2.1 ? Epicyclic Theory ## Page 60"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Pratipat 6. Sasti 11. Ekadasi",
+      "level": 1,
+      "start_line": 3712,
+      "end_line": 3712,
+      "sections": [],
+      "content_preview": "1. Pratipat 6. Sasti 11. Ekadasi 2. Dvitiya 7. Saptami 12. Dvadast 3. Trtiya 8. Astami 13. Trayodasi 4. Caturthi 9. Navami 14. Caturdasi  5. Paficami 10. Dasami 15. Parnima or Amavasya ## Page 94 "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Dvitiya 7. Saptami 12. Dvadast",
+      "level": 1,
+      "start_line": 3713,
+      "end_line": 3713,
+      "sections": [],
+      "content_preview": "2. Dvitiya 7. Saptami 12. Dvadast 3. Trtiya 8. Astami 13. Trayodasi 4. Caturthi 9. Navami 14. Caturdasi  5. Paficami 10. Dasami 15. Parnima or Amavasya ## Page 94  82 GRAHALAGHAVAM OF GANESA DAIVAJNA"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Trtiya 8. Astami 13. Trayodasi",
+      "level": 1,
+      "start_line": 3714,
+      "end_line": 3714,
+      "sections": [],
+      "content_preview": "3. Trtiya 8. Astami 13. Trayodasi 4. Caturthi 9. Navami 14. Caturdasi  5. Paficami 10. Dasami 15. Parnima or Amavasya ## Page 94  82 GRAHALAGHAVAM OF GANESA DAIVAJNA "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Caturthi 9. Navami 14. Caturdasi",
+      "level": 1,
+      "start_line": 3715,
+      "end_line": 3716,
+      "sections": [],
+      "content_preview": "4. Caturthi 9. Navami 14. Caturdasi  5. Paficami 10. Dasami 15. Parnima or Amavasya ## Page 94  82 GRAHALAGHAVAM OF GANESA DAIVAJNA  Therefore,"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Paficami 10. Dasami 15. Parnima or Amavasya",
+      "level": 1,
+      "start_line": 3717,
+      "end_line": 3719,
+      "sections": [],
+      "content_preview": "5. Paficami 10. Dasami 15. Parnima or Amavasya ## Page 94  82 GRAHALAGHAVAM OF GANESA DAIVAJNA  Therefore,  Tithi = [Longitude of the Moon — Longitude of the Sun] / 12°"
+    },
+    {
+      "id": "ch-82",
+      "number": "82",
+      "title": "GRAHALAGHAVAM OF GANESA DAIVAJNA",
+      "level": 1,
+      "start_line": 3720,
+      "end_line": 3831,
+      "sections": [],
+      "content_preview": "82 GRAHALAGHAVAM OF GANESA DAIVAJNA  Therefore,  Tithi = [Longitude of the Moon — Longitude of the Sun] / 12° where both the longitudes are in degrees.  The quotient part indicates the number of tithis completed during"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "ASsvini oro\" 13°20\"",
+      "level": 1,
+      "start_line": 3832,
+      "end_line": 3832,
+      "sections": [],
+      "content_preview": "1. ASsvini oro\" 13°20\" 2. Bharani 13°20' 26°40' 3. Krttika 26°40’ 40°00\" 4, Rohini 40°00! 53°20\" 5. Mrgasira 53°20\" 66°40\" 6. Ardré 66°40\" 80°00\" te Punarvasu 80°00\" 93°20' 8. Pusya 93°20\" 106°40°"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Bharani 13°20' 26°40'",
+      "level": 1,
+      "start_line": 3833,
+      "end_line": 3833,
+      "sections": [],
+      "content_preview": "2. Bharani 13°20' 26°40' 3. Krttika 26°40’ 40°00\" 4, Rohini 40°00! 53°20\" 5. Mrgasira 53°20\" 66°40\" 6. Ardré 66°40\" 80°00\" te Punarvasu 80°00\" 93°20' 8. Pusya 93°20\" 106°40° 9. Aslesa 106°40' 120°00'"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Krttika 26°40’ 40°00\"",
+      "level": 1,
+      "start_line": 3834,
+      "end_line": 3835,
+      "sections": [],
+      "content_preview": "3. Krttika 26°40’ 40°00\" 4, Rohini 40°00! 53°20\" 5. Mrgasira 53°20\" 66°40\" 6. Ardré 66°40\" 80°00\" te Punarvasu 80°00\" 93°20' 8. Pusya 93°20\" 106°40° 9. Aslesa 106°40' 120°00' 10. ‘Makha (or Magha) 120°00' 133°20'"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Mrgasira 53°20\" 66°40\"",
+      "level": 1,
+      "start_line": 3836,
+      "end_line": 3836,
+      "sections": [],
+      "content_preview": "5. Mrgasira 53°20\" 66°40\" 6. Ardré 66°40\" 80°00\" te Punarvasu 80°00\" 93°20' 8. Pusya 93°20\" 106°40° 9. Aslesa 106°40' 120°00' 10. ‘Makha (or Magha) 120°00' 133°20' nie Pubba (Parva Phalguni) —133°20' 146°40' 12, Uttara (Uttara Phalguni) 46°40’ 160°00'"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Ardré 66°40\" 80°00\"",
+      "level": 1,
+      "start_line": 3837,
+      "end_line": 3838,
+      "sections": [],
+      "content_preview": "6. Ardré 66°40\" 80°00\" te Punarvasu 80°00\" 93°20' 8. Pusya 93°20\" 106°40° 9. Aslesa 106°40' 120°00' 10. ‘Makha (or Magha) 120°00' 133°20' nie Pubba (Parva Phalguni) —133°20' 146°40' 12, Uttara (Uttara Phalguni) 46°40’ 160°00' 13. Hasta 160°00\" 173°20'"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Pusya 93°20\" 106°40°",
+      "level": 1,
+      "start_line": 3839,
+      "end_line": 3839,
+      "sections": [],
+      "content_preview": "8. Pusya 93°20\" 106°40° 9. Aslesa 106°40' 120°00' 10. ‘Makha (or Magha) 120°00' 133°20' nie Pubba (Parva Phalguni) —133°20' 146°40' 12, Uttara (Uttara Phalguni) 46°40’ 160°00' 13. Hasta 160°00\" 173°20' 14. Citta (or Citra) 173°20\" 186°40' 15. Svati 186°40' 200°00\""
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Aslesa 106°40' 120°00'",
+      "level": 1,
+      "start_line": 3840,
+      "end_line": 3843,
+      "sections": [],
+      "content_preview": "9. Aslesa 106°40' 120°00' 10. ‘Makha (or Magha) 120°00' 133°20' nie Pubba (Parva Phalguni) —133°20' 146°40' 12, Uttara (Uttara Phalguni) 46°40’ 160°00' 13. Hasta 160°00\" 173°20' 14. Citta (or Citra) 173°20\" 186°40' 15. Svati 186°40' 200°00\" 16. Visakha 200°00\" 213°20'"
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Hasta 160°00\" 173°20'",
+      "level": 1,
+      "start_line": 3844,
+      "end_line": 3844,
+      "sections": [],
+      "content_preview": "13. Hasta 160°00\" 173°20' 14. Citta (or Citra) 173°20\" 186°40' 15. Svati 186°40' 200°00\" 16. Visakha 200°00\" 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266 °40'"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "Citta (or Citra) 173°20\" 186°40'",
+      "level": 1,
+      "start_line": 3845,
+      "end_line": 3845,
+      "sections": [],
+      "content_preview": "14. Citta (or Citra) 173°20\" 186°40' 15. Svati 186°40' 200°00\" 16. Visakha 200°00\" 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266 °40' 21. Uttarasadha 266°40' 280°00'"
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "Svati 186°40' 200°00\"",
+      "level": 1,
+      "start_line": 3846,
+      "end_line": 3846,
+      "sections": [],
+      "content_preview": "15. Svati 186°40' 200°00\" 16. Visakha 200°00\" 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266 °40' 21. Uttarasadha 266°40' 280°00' 22, Sravana 280°00' 293°20'"
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "Visakha 200°00\" 213°20'",
+      "level": 1,
+      "start_line": 3847,
+      "end_line": 3847,
+      "sections": [],
+      "content_preview": "16. Visakha 200°00\" 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266 °40' 21. Uttarasadha 266°40' 280°00' 22, Sravana 280°00' 293°20' 23. Dhanistha 293°20' 306°40'"
+    },
+    {
+      "id": "ch-17",
+      "number": "17",
+      "title": "Anuradha 213°20' 226°40'",
+      "level": 1,
+      "start_line": 3848,
+      "end_line": 3849,
+      "sections": [],
+      "content_preview": "17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266 °40' 21. Uttarasadha 266°40' 280°00' 22, Sravana 280°00' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabigaj 306°40' 320°00'"
+    },
+    {
+      "id": "ch-19",
+      "number": "19",
+      "title": "Mala 240°00' 253°20'",
+      "level": 1,
+      "start_line": 3850,
+      "end_line": 3850,
+      "sections": [],
+      "content_preview": "19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266 °40' 21. Uttarasadha 266°40' 280°00' 22, Sravana 280°00' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabigaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40'"
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "Parvasadha 253°20' 266 °40'",
+      "level": 1,
+      "start_line": 3851,
+      "end_line": 3851,
+      "sections": [],
+      "content_preview": "20. Parvasadha 253°20' 266 °40' 21. Uttarasadha 266°40' 280°00' 22, Sravana 280°00' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabigaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40' PYG Revati 346°40' 360°00'"
+    },
+    {
+      "id": "ch-21",
+      "number": "21",
+      "title": "Uttarasadha 266°40' 280°00'",
+      "level": 1,
+      "start_line": 3852,
+      "end_line": 3853,
+      "sections": [],
+      "content_preview": "21. Uttarasadha 266°40' 280°00' 22, Sravana 280°00' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabigaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40' PYG Revati 346°40' 360°00' "
+    },
+    {
+      "id": "ch-23",
+      "number": "23",
+      "title": "Dhanistha 293°20' 306°40'",
+      "level": 1,
+      "start_line": 3854,
+      "end_line": 3854,
+      "sections": [],
+      "content_preview": "23. Dhanistha 293°20' 306°40' 24. Satabigaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40' PYG Revati 346°40' 360°00'  Example : "
+    },
+    {
+      "id": "ch-24",
+      "number": "24",
+      "title": "Satabigaj 306°40' 320°00'",
+      "level": 1,
+      "start_line": 3855,
+      "end_line": 3855,
+      "sections": [],
+      "content_preview": "24. Satabigaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40' PYG Revati 346°40' 360°00'  Example :  Gi) True nirayana Moon = 6* 24° 15'03\" = 12255'03\""
+    },
+    {
+      "id": "ch-25",
+      "number": "25",
+      "title": "Parvabhadra 320°00' 333°20'",
+      "level": 1,
+      "start_line": 3856,
+      "end_line": 3856,
+      "sections": [],
+      "content_preview": "25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40' PYG Revati 346°40' 360°00'  Example :  Gi) True nirayana Moon = 6* 24° 15'03\" = 12255'03\" "
+    },
+    {
+      "id": "ch-26",
+      "number": "26",
+      "title": "Uttarabhadra 333°20' 346°40'",
+      "level": 1,
+      "start_line": 3857,
+      "end_line": 3954,
+      "sections": [],
+      "content_preview": "26. Uttarabhadra 333°20' 346°40' PYG Revati 346°40' 360°00'  Example :  Gi) True nirayana Moon = 6* 24° 15'03\" = 12255'03\"  «a 12255'3\" 15 , 255'03"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Viskambha 15. Vajra",
+      "level": 1,
+      "start_line": 3955,
+      "end_line": 3955,
+      "sections": [],
+      "content_preview": "1. Viskambha 15. Vajra 2. Priti 16. Siddhi 3. Ayusman 17. Vyatipata 4. Saubhagya 18. Varlyan 5. Sobhana 19. Parigha 6. Atiganda 20. Siva  7. Sukarma 21. Siddha"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Priti 16. Siddhi",
+      "level": 1,
+      "start_line": 3956,
+      "end_line": 3956,
+      "sections": [],
+      "content_preview": "2. Priti 16. Siddhi 3. Ayusman 17. Vyatipata 4. Saubhagya 18. Varlyan 5. Sobhana 19. Parigha 6. Atiganda 20. Siva  7. Sukarma 21. Siddha 8. Dhrti 22, Sadhya"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Ayusman 17. Vyatipata",
+      "level": 1,
+      "start_line": 3957,
+      "end_line": 3957,
+      "sections": [],
+      "content_preview": "3. Ayusman 17. Vyatipata 4. Saubhagya 18. Varlyan 5. Sobhana 19. Parigha 6. Atiganda 20. Siva  7. Sukarma 21. Siddha 8. Dhrti 22, Sadhya 9. Sala 23. Subha"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Saubhagya 18. Varlyan",
+      "level": 1,
+      "start_line": 3958,
+      "end_line": 3958,
+      "sections": [],
+      "content_preview": "4. Saubhagya 18. Varlyan 5. Sobhana 19. Parigha 6. Atiganda 20. Siva  7. Sukarma 21. Siddha 8. Dhrti 22, Sadhya 9. Sala 23. Subha 10. Ganda 24, Sukla"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Sobhana 19. Parigha",
+      "level": 1,
+      "start_line": 3959,
+      "end_line": 3959,
+      "sections": [],
+      "content_preview": "5. Sobhana 19. Parigha 6. Atiganda 20. Siva  7. Sukarma 21. Siddha 8. Dhrti 22, Sadhya 9. Sala 23. Subha 10. Ganda 24, Sukla 11. Vrddhi 25. Brahma"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Atiganda 20. Siva",
+      "level": 1,
+      "start_line": 3960,
+      "end_line": 3961,
+      "sections": [],
+      "content_preview": "6. Atiganda 20. Siva  7. Sukarma 21. Siddha 8. Dhrti 22, Sadhya 9. Sala 23. Subha 10. Ganda 24, Sukla 11. Vrddhi 25. Brahma 12. Dhruva 26. Indra"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Sukarma 21. Siddha",
+      "level": 1,
+      "start_line": 3962,
+      "end_line": 3962,
+      "sections": [],
+      "content_preview": "7. Sukarma 21. Siddha 8. Dhrti 22, Sadhya 9. Sala 23. Subha 10. Ganda 24, Sukla 11. Vrddhi 25. Brahma 12. Dhruva 26. Indra 13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti)"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Dhrti 22, Sadhya",
+      "level": 1,
+      "start_line": 3963,
+      "end_line": 3963,
+      "sections": [],
+      "content_preview": "8. Dhrti 22, Sadhya 9. Sala 23. Subha 10. Ganda 24, Sukla 11. Vrddhi 25. Brahma 12. Dhruva 26. Indra 13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti) "
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Sala 23. Subha",
+      "level": 1,
+      "start_line": 3964,
+      "end_line": 3964,
+      "sections": [],
+      "content_preview": "9. Sala 23. Subha 10. Ganda 24, Sukla 11. Vrddhi 25. Brahma 12. Dhruva 26. Indra 13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti)  Note : If the sum of the nirayana longitudes of the Sun and the Moon"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Ganda 24, Sukla",
+      "level": 1,
+      "start_line": 3965,
+      "end_line": 3965,
+      "sections": [],
+      "content_preview": "10. Ganda 24, Sukla 11. Vrddhi 25. Brahma 12. Dhruva 26. Indra 13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti)  Note : If the sum of the nirayana longitudes of the Sun and the Moon (in degrees) exceeds 360°, then subtract 360° from the sum, convert into min-"
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Vrddhi 25. Brahma",
+      "level": 1,
+      "start_line": 3966,
+      "end_line": 3966,
+      "sections": [],
+      "content_preview": "11. Vrddhi 25. Brahma 12. Dhruva 26. Indra 13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti)  Note : If the sum of the nirayana longitudes of the Sun and the Moon (in degrees) exceeds 360°, then subtract 360° from the sum, convert into min- utes and then divide that figure by 8"
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Dhruva 26. Indra",
+      "level": 1,
+      "start_line": 3967,
+      "end_line": 3967,
+      "sections": [],
+      "content_preview": "12. Dhruva 26. Indra 13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti)  Note : If the sum of the nirayana longitudes of the Sun and the Moon (in degrees) exceeds 360°, then subtract 360° from the sum, convert into min- utes and then divide that figure by 800. "
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Vyaghata 27. Vaidhrta",
+      "level": 1,
+      "start_line": 3968,
+      "end_line": 3968,
+      "sections": [],
+      "content_preview": "13. Vyaghata 27. Vaidhrta 14. Harsana (or Vaidhrti)  Note : If the sum of the nirayana longitudes of the Sun and the Moon (in degrees) exceeds 360°, then subtract 360° from the sum, convert into min- utes and then divide that figure by 800.  Example 1 : Sum of the longitudes of t"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "Harsana (or Vaidhrti)",
+      "level": 1,
+      "start_line": 3969,
+      "end_line": 5291,
+      "sections": [],
+      "content_preview": "14. Harsana (or Vaidhrti)  Note : If the sum of the nirayana longitudes of the Sun and the Moon (in degrees) exceeds 360°, then subtract 360° from the sum, convert into min- utes and then divide that figure by 800.  Example 1 : Sum of the longitudes of the Sun and the Moon = 7* 2"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "True daily motion of Kuja",
+      "level": 1,
+      "start_line": 5292,
+      "end_line": 5342,
+      "sections": [],
+      "content_preview": "1. True daily motion of Kuja : (i) Obtain the Manda-corrected motion as explained in the previous Sloka.  (ii) Take the difference between Sighranikas which are obtained in find- ing the second Sighraphala. ## Page 136  $124 GRAHALAGHAVAM OF GANESA DAIVAJNA"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "True daily motion of Budha",
+      "level": 1,
+      "start_line": 5343,
+      "end_line": 5375,
+      "sections": [],
+      "content_preview": "2. True daily motion of Budha (i) Obtain the Manda corrected Budha’s motion as explained earlier.  (ii) Consider the difference between the elapsed Sighranka and the Sighranka to be covered, which are obtained in finding the second Sighraphala.  (iii) Divide the difference obtain"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "True Motion of Guru",
+      "level": 1,
+      "start_line": 5376,
+      "end_line": 5404,
+      "sections": [],
+      "content_preview": "8. True Motion of Guru :  (i) Obtain the Manda corrected motion of Guru as explained earlier.  (ii) Obtain the difference of Sighrarikas which are obtained in finding the second Sighraphala. ## Page 138 "
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "True motion of Sukra",
+      "level": 1,
+      "start_line": 5405,
+      "end_line": 5436,
+      "sections": [],
+      "content_preview": "4. True motion of Sukra :  (i) Obtain the Manda corrected motion of Sukra as explained in the pre- vious Sloka.  (ii) Obtain the difference between the Sighrankas of the second Sighraphala. "
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "True daily motion of Sani",
+      "level": 1,
+      "start_line": 5437,
+      "end_line": 5511,
+      "sections": [],
+      "content_preview": "5. True daily motion of Sani : (i) Obtain the Manda-corrected motion of Sani as explained earlier. (ii) Obtain the difference of the Sighrarikas of the second Sighraphala  (iii) Multiply the above difference by 2 and divide it by 5. The result will be in kalas.  (iv) Add (or subt"
+    },
+    {
+      "id": "ch-53",
+      "number": "53",
+      "title": "This gives the corrected gatiphala (of Kuja, Budha and Sukra). These",
+      "level": 1,
+      "start_line": 5512,
+      "end_line": 6109,
+      "sections": [],
+      "content_preview": "53. This gives the corrected gatiphala (of Kuja, Budha and Sukra). These must be accepted and not the one obtained earlier.  Example : Suppose the second Sighranka of Kuja is 11 and the remain-  der, 11°50’0”. Now, multiplying the remainder by 10 and dividing by 7,  10 iganyam Se"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "When the Sun and lagna are in the same rasi, consider the difference",
+      "level": 1,
+      "start_line": 6110,
+      "end_line": 6112,
+      "sections": [],
+      "content_preview": "1. When the Sun and lagna are in the same rasi, consider the difference between the Sun and the lagna.  2. Multiply the above difference by the duration of rising of the raéi in which both the Sun and the lagna are present.  3. Divide the product obtained in step (2) by 30. This "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Multiply the above difference by the duration of rising of the raéi in",
+      "level": 1,
+      "start_line": 6113,
+      "end_line": 6115,
+      "sections": [],
+      "content_preview": "2. Multiply the above difference by the duration of rising of the raéi in which both the Sun and the lagna are present.  3. Divide the product obtained in step (2) by 30. This gives the time in palas at the given lagna. Divide it by 60 to convert it into ghatis.  Note : If lagna "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Divide the product obtained in step (2) by 30. This gives the time in",
+      "level": 1,
+      "start_line": 6116,
+      "end_line": 11531,
+      "sections": [
+        {
+          "id": "ch-3-sec-34",
+          "title": "34",
+          "level": 2,
+          "start_line": 9199,
+          "end_line": 11530,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "3. Divide the product obtained in step (2) by 30. This gives the time in palas at the given lagna. Divide it by 60 to convert it into ghatis.  Note : If lagna < the Sun, then subtract from 60 the time obtained in step (3).  Example 1 : Séyana lagna = 1\" 98° 37'50\" Sayana Ravi = 1"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "0",
+      "level": 1,
+      "start_line": 11532,
+      "end_line": 11805,
+      "sections": [],
+      "content_preview": "CHAPTER 10 GRAHACCHAYADHIKARAH (Planetary Shadows)  The visibility or otherwise of a planet in the night and obtaining dinagata kala and shadow of a planet are explained.  Sloka 1 : From this loka we find the dinagatakala of the planets and the"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "1",
+      "level": 1,
+      "start_line": 11806,
+      "end_line": 11847,
+      "sections": [],
+      "content_preview": "CHAPTER 11 NAKSATRA CHAYA (Shadow of Stars) In this chapter the shadow of stars is discussed.  Slokas 1 and 2 : The ayana drkkarma corrected dhruvas (polar longi- tudes) of the naksatras (junction stars or yogataras) from Asvini onwards are (in degrees) respectively 8, 21, 38, 49"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Punarvasu 94 6",
+      "level": 1,
+      "start_line": 11848,
+      "end_line": 11848,
+      "sections": [],
+      "content_preview": "7. Punarvasu 94 6 8. Pusya 106 0 9. Aslesa 107 -7 10. Makha (or Magha) 129 0 1. Pubba (Parva Phalguni) 148 12 12. Uttara (Uttara Phalguni) 155 13 13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Pusya 106 0",
+      "level": 1,
+      "start_line": 11849,
+      "end_line": 11849,
+      "sections": [],
+      "content_preview": "8. Pusya 106 0 9. Aslesa 107 -7 10. Makha (or Magha) 129 0 1. Pubba (Parva Phalguni) 148 12 12. Uttara (Uttara Phalguni) 155 13 13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2 15. Svati 198 37"
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Aslesa 107 -7",
+      "level": 1,
+      "start_line": 11850,
+      "end_line": 11850,
+      "sections": [],
+      "content_preview": "9. Aslesa 107 -7 10. Makha (or Magha) 129 0 1. Pubba (Parva Phalguni) 148 12 12. Uttara (Uttara Phalguni) 155 13 13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2 15. Svati 198 37 16. Visakha 212 -1"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Makha (or Magha) 129 0",
+      "level": 1,
+      "start_line": 11851,
+      "end_line": 11851,
+      "sections": [],
+      "content_preview": "10. Makha (or Magha) 129 0 1. Pubba (Parva Phalguni) 148 12 12. Uttara (Uttara Phalguni) 155 13 13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2 15. Svati 198 37 16. Visakha 212 -1 aoe Anuradha 224 -2"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Pubba (Parva Phalguni) 148 12",
+      "level": 1,
+      "start_line": 11852,
+      "end_line": 11852,
+      "sections": [],
+      "content_preview": "1. Pubba (Parva Phalguni) 148 12 12. Uttara (Uttara Phalguni) 155 13 13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2 15. Svati 198 37 16. Visakha 212 -1 aoe Anuradha 224 -2 18. dyestha 230 =e)"
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Uttara (Uttara Phalguni) 155 13",
+      "level": 1,
+      "start_line": 11853,
+      "end_line": 11853,
+      "sections": [],
+      "content_preview": "12. Uttara (Uttara Phalguni) 155 13 13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2 15. Svati 198 37 16. Visakha 212 -1 aoe Anuradha 224 -2 18. dyestha 230 =e) 19. Mala 242 -8"
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Hasta 160 -1l1",
+      "level": 1,
+      "start_line": 11854,
+      "end_line": 11855,
+      "sections": [],
+      "content_preview": "13. Hasta 160 -1l1 14, Citta (or Citra) 183 { -2 15. Svati 198 37 16. Visakha 212 -1 aoe Anuradha 224 -2 18. dyestha 230 =e) 19. Mala 242 -8 20. Parvasadha 255 -5"
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "Svati 198 37",
+      "level": 1,
+      "start_line": 11856,
+      "end_line": 11856,
+      "sections": [],
+      "content_preview": "15. Svati 198 37 16. Visakha 212 -1 aoe Anuradha 224 -2 18. dyestha 230 =e) 19. Mala 242 -8 20. Parvasadha 255 -5 21. 261 -5 22. 258 62"
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "Visakha 212 -1",
+      "level": 1,
+      "start_line": 11857,
+      "end_line": 11859,
+      "sections": [],
+      "content_preview": "16. Visakha 212 -1 aoe Anuradha 224 -2 18. dyestha 230 =e) 19. Mala 242 -8 20. Parvasadha 255 -5 21. 261 -5 22. 258 62 23. Sravana 275 30"
+    },
+    {
+      "id": "ch-19",
+      "number": "19",
+      "title": "Mala 242 -8",
+      "level": 1,
+      "start_line": 11860,
+      "end_line": 11860,
+      "sections": [],
+      "content_preview": "19. Mala 242 -8 20. Parvasadha 255 -5 21. 261 -5 22. 258 62 23. Sravana 275 30 24, Dhanistha 286 | 6 25. Satabhisaj 320 | -3 26. Parvabhadra 325 0"
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "Parvasadha 255 -5",
+      "level": 1,
+      "start_line": 11861,
+      "end_line": 11863,
+      "sections": [],
+      "content_preview": "20. Parvasadha 255 -5 21. 261 -5 22. 258 62 23. Sravana 275 30 24, Dhanistha 286 | 6 25. Satabhisaj 320 | -3 26. Parvabhadra 325 0 27. Uttarabhadra 337 24"
+    },
+    {
+      "id": "ch-23",
+      "number": "23",
+      "title": "Sravana 275 30",
+      "level": 1,
+      "start_line": 11864,
+      "end_line": 11865,
+      "sections": [],
+      "content_preview": "23. Sravana 275 30 24, Dhanistha 286 | 6 25. Satabhisaj 320 | -3 26. Parvabhadra 325 0 27. Uttarabhadra 337 24 28. Revati 0 0 29. Prajapati 61 39 30. Brahmahrdaya 56 30"
+    },
+    {
+      "id": "ch-25",
+      "number": "25",
+      "title": "Satabhisaj 320 | -3",
+      "level": 1,
+      "start_line": 11866,
+      "end_line": 11866,
+      "sections": [],
+      "content_preview": "25. Satabhisaj 320 | -3 26. Parvabhadra 325 0 27. Uttarabhadra 337 24 28. Revati 0 0 29. Prajapati 61 39 30. Brahmahrdaya 56 30 31. Agni 53 8 32. Agastya 88 -76"
+    },
+    {
+      "id": "ch-26",
+      "number": "26",
+      "title": "Parvabhadra 325 0",
+      "level": 1,
+      "start_line": 11867,
+      "end_line": 11867,
+      "sections": [],
+      "content_preview": "26. Parvabhadra 325 0 27. Uttarabhadra 337 24 28. Revati 0 0 29. Prajapati 61 39 30. Brahmahrdaya 56 30 31. Agni 53 8 32. Agastya 88 -76 33. Apamvatsa 183 3"
+    },
+    {
+      "id": "ch-27",
+      "number": "27",
+      "title": "Uttarabhadra 337 24",
+      "level": 1,
+      "start_line": 11868,
+      "end_line": 11868,
+      "sections": [],
+      "content_preview": "27. Uttarabhadra 337 24 28. Revati 0 0 29. Prajapati 61 39 30. Brahmahrdaya 56 30 31. Agni 53 8 32. Agastya 88 -76 33. Apamvatsa 183 3 84. Lubdhaka 81 -40"
+    },
+    {
+      "id": "ch-28",
+      "number": "28",
+      "title": "Revati 0 0",
+      "level": 1,
+      "start_line": 11869,
+      "end_line": 11869,
+      "sections": [],
+      "content_preview": "28. Revati 0 0 29. Prajapati 61 39 30. Brahmahrdaya 56 30 31. Agni 53 8 32. Agastya 88 -76 33. Apamvatsa 183 3 84. Lubdhaka 81 -40 ## Page 316"
+    },
+    {
+      "id": "ch-29",
+      "number": "29",
+      "title": "Prajapati 61 39",
+      "level": 1,
+      "start_line": 11870,
+      "end_line": 11870,
+      "sections": [],
+      "content_preview": "29. Prajapati 61 39 30. Brahmahrdaya 56 30 31. Agni 53 8 32. Agastya 88 -76 33. Apamvatsa 183 3 84. Lubdhaka 81 -40 ## Page 316 "
+    },
+    {
+      "id": "ch-30",
+      "number": "30",
+      "title": "Brahmahrdaya 56 30",
+      "level": 1,
+      "start_line": 11871,
+      "end_line": 11871,
+      "sections": [],
+      "content_preview": "30. Brahmahrdaya 56 30 31. Agni 53 8 32. Agastya 88 -76 33. Apamvatsa 183 3 84. Lubdhaka 81 -40 ## Page 316  NAKSATRA CHAYA (CHAP. 11) a"
+    },
+    {
+      "id": "ch-31",
+      "number": "31",
+      "title": "Agni 53 8",
+      "level": 1,
+      "start_line": 11872,
+      "end_line": 11872,
+      "sections": [],
+      "content_preview": "31. Agni 53 8 32. Agastya 88 -76 33. Apamvatsa 183 3 84. Lubdhaka 81 -40 ## Page 316  NAKSATRA CHAYA (CHAP. 11) a "
+    },
+    {
+      "id": "ch-32",
+      "number": "32",
+      "title": "Agastya 88 -76",
+      "level": 1,
+      "start_line": 11873,
+      "end_line": 11873,
+      "sections": [],
+      "content_preview": "32. Agastya 88 -76 33. Apamvatsa 183 3 84. Lubdhaka 81 -40 ## Page 316  NAKSATRA CHAYA (CHAP. 11) a  Slokas 4 and 5 : The dhruvaméas of Prajapati, Brahmahrdaya, Agni,"
+    },
+    {
+      "id": "ch-33",
+      "number": "33",
+      "title": "Apamvatsa 183 3",
+      "level": 1,
+      "start_line": 11874,
+      "end_line": 11874,
+      "sections": [],
+      "content_preview": "33. Apamvatsa 183 3 84. Lubdhaka 81 -40 ## Page 316  NAKSATRA CHAYA (CHAP. 11) a  Slokas 4 and 5 : The dhruvaméas of Prajapati, Brahmahrdaya, Agni, Agastya, Apamvatsa and Lubdhaka are respectively 61, 56, 53, 88, 183,"
+    },
+    {
+      "id": "ch-84",
+      "number": "84",
+      "title": "Lubdhaka 81 -40",
+      "level": 1,
+      "start_line": 11875,
+      "end_line": 11881,
+      "sections": [],
+      "content_preview": "84. Lubdhaka 81 -40 ## Page 316  NAKSATRA CHAYA (CHAP. 11) a  Slokas 4 and 5 : The dhruvaméas of Prajapati, Brahmahrdaya, Agni, Agastya, Apamvatsa and Lubdhaka are respectively 61, 56, 53, 88, 183, 81. The saraméa of these are respectively 39, 30, 8, 76, 3, 40. Among these,"
+    },
+    {
+      "id": "ch-81",
+      "number": "81",
+      "title": "The saraméa of these are respectively 39, 30, 8, 76, 3, 40. Among these,",
+      "level": 1,
+      "start_line": 11882,
+      "end_line": 11901,
+      "sections": [
+        {
+          "id": "ch-81-sec-gives_the_list_of_the_27_naksatras_in_their_natural_order_an",
+          "title": "gives the list of the 27 naksatras, in their natural order, and their",
+          "level": 2,
+          "start_line": 11887,
+          "end_line": 11900,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "81. The saraméa of these are respectively 39, 30, 8, 76, 3, 40. Among these, Agastya and Lubdhaka have their gara south. The remaining are in the nothern hemisphere.  Table 11.1 lists the naksatras with their dhruvas and Saras. Table 11.2 gives the list of the 27 naksatras, in th"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Mrgasira 53°20’ 66°40'",
+      "level": 1,
+      "start_line": 11902,
+      "end_line": 11904,
+      "sections": [],
+      "content_preview": "5. Mrgasira 53°20’ 66°40' 6 Ardra 66°40\" 80°00\" a Punarvasu 80°00\" 93°20 8. Pusya 93°20' 106°40' 9 Aéslesa 106°40' 120°00' 10. Makha (or Magha) 120°00' 133°20' 11. Pubba (Parva Phalguni) 133°20' 146°40' 12. Uttara (Uttara Phalguni) 146°40' 160°00\""
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Pusya 93°20' 106°40'",
+      "level": 1,
+      "start_line": 11905,
+      "end_line": 11906,
+      "sections": [],
+      "content_preview": "8. Pusya 93°20' 106°40' 9 Aéslesa 106°40' 120°00' 10. Makha (or Magha) 120°00' 133°20' 11. Pubba (Parva Phalguni) 133°20' 146°40' 12. Uttara (Uttara Phalguni) 146°40' 160°00\" ## Page 317  $306"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Makha (or Magha) 120°00' 133°20'",
+      "level": 1,
+      "start_line": 11907,
+      "end_line": 11907,
+      "sections": [],
+      "content_preview": "10. Makha (or Magha) 120°00' 133°20' 11. Pubba (Parva Phalguni) 133°20' 146°40' 12. Uttara (Uttara Phalguni) 146°40' 160°00\" ## Page 317  $306  GRAHALAGHAVAM OF GANESA DAIVAJNA"
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Pubba (Parva Phalguni) 133°20' 146°40'",
+      "level": 1,
+      "start_line": 11908,
+      "end_line": 11908,
+      "sections": [],
+      "content_preview": "11. Pubba (Parva Phalguni) 133°20' 146°40' 12. Uttara (Uttara Phalguni) 146°40' 160°00\" ## Page 317  $306  GRAHALAGHAVAM OF GANESA DAIVAJNA "
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Uttara (Uttara Phalguni) 146°40' 160°00\"",
+      "level": 1,
+      "start_line": 11909,
+      "end_line": 11918,
+      "sections": [],
+      "content_preview": "12. Uttara (Uttara Phalguni) 146°40' 160°00\" ## Page 317  $306  GRAHALAGHAVAM OF GANESA DAIVAJNA  Table 11.2 (continued)"
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Hasta 160°00' 173°20'",
+      "level": 1,
+      "start_line": 11919,
+      "end_line": 11919,
+      "sections": [],
+      "content_preview": "13. Hasta 160°00' 173°20' 14. Citta (or Citra) 173°20' 186°40' 15. Svati 186°40' 200°00' 16. Visakha 200°00' 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266°40'"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "Citta (or Citra) 173°20' 186°40'",
+      "level": 1,
+      "start_line": 11920,
+      "end_line": 11920,
+      "sections": [],
+      "content_preview": "14. Citta (or Citra) 173°20' 186°40' 15. Svati 186°40' 200°00' 16. Visakha 200°00' 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266°40' 21. Uttarasadha 266°40' 280°20'"
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "Svati 186°40' 200°00'",
+      "level": 1,
+      "start_line": 11921,
+      "end_line": 11921,
+      "sections": [],
+      "content_preview": "15. Svati 186°40' 200°00' 16. Visakha 200°00' 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266°40' 21. Uttarasadha 266°40' 280°20' 22. Sravana 280°20' 293°20'"
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "Visakha 200°00' 213°20'",
+      "level": 1,
+      "start_line": 11922,
+      "end_line": 11922,
+      "sections": [],
+      "content_preview": "16. Visakha 200°00' 213°20' 17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266°40' 21. Uttarasadha 266°40' 280°20' 22. Sravana 280°20' 293°20' 23. Dhanistha 293°20' 306°40'"
+    },
+    {
+      "id": "ch-17",
+      "number": "17",
+      "title": "Anuradha 213°20' 226°40'",
+      "level": 1,
+      "start_line": 11923,
+      "end_line": 11924,
+      "sections": [],
+      "content_preview": "17. Anuradha 213°20' 226°40' 18. dyestha 226°40' 240°00' 19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266°40' 21. Uttarasadha 266°40' 280°20' 22. Sravana 280°20' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabisaj 306°40' 320°00'"
+    },
+    {
+      "id": "ch-19",
+      "number": "19",
+      "title": "Mala 240°00' 253°20'",
+      "level": 1,
+      "start_line": 11925,
+      "end_line": 11925,
+      "sections": [],
+      "content_preview": "19. Mala 240°00' 253°20' 20. Parvasadha 253°20' 266°40' 21. Uttarasadha 266°40' 280°20' 22. Sravana 280°20' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabisaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40°"
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "Parvasadha 253°20' 266°40'",
+      "level": 1,
+      "start_line": 11926,
+      "end_line": 11926,
+      "sections": [],
+      "content_preview": "20. Parvasadha 253°20' 266°40' 21. Uttarasadha 266°40' 280°20' 22. Sravana 280°20' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabisaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00'"
+    },
+    {
+      "id": "ch-21",
+      "number": "21",
+      "title": "Uttarasadha 266°40' 280°20'",
+      "level": 1,
+      "start_line": 11927,
+      "end_line": 11927,
+      "sections": [],
+      "content_preview": "21. Uttarasadha 266°40' 280°20' 22. Sravana 280°20' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabisaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00' ## Page 318"
+    },
+    {
+      "id": "ch-22",
+      "number": "22",
+      "title": "Sravana 280°20' 293°20'",
+      "level": 1,
+      "start_line": 11928,
+      "end_line": 11928,
+      "sections": [],
+      "content_preview": "22. Sravana 280°20' 293°20' 23. Dhanistha 293°20' 306°40' 24. Satabisaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00' ## Page 318 "
+    },
+    {
+      "id": "ch-23",
+      "number": "23",
+      "title": "Dhanistha 293°20' 306°40'",
+      "level": 1,
+      "start_line": 11929,
+      "end_line": 11929,
+      "sections": [],
+      "content_preview": "23. Dhanistha 293°20' 306°40' 24. Satabisaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00' ## Page 318  $307"
+    },
+    {
+      "id": "ch-24",
+      "number": "24",
+      "title": "Satabisaj 306°40' 320°00'",
+      "level": 1,
+      "start_line": 11930,
+      "end_line": 11930,
+      "sections": [],
+      "content_preview": "24. Satabisaj 306°40' 320°00' 25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00' ## Page 318  $307 "
+    },
+    {
+      "id": "ch-25",
+      "number": "25",
+      "title": "Parvabhadra 320°00' 333°20'",
+      "level": 1,
+      "start_line": 11931,
+      "end_line": 11931,
+      "sections": [],
+      "content_preview": "25. Parvabhadra 320°00' 333°20' 26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00' ## Page 318  $307  NAKSATRA CHAYA (CHAP. 11)"
+    },
+    {
+      "id": "ch-26",
+      "number": "26",
+      "title": "Uttarabhadra 333°20' 346°40°",
+      "level": 1,
+      "start_line": 11932,
+      "end_line": 11932,
+      "sections": [],
+      "content_preview": "26. Uttarabhadra 333°20' 346°40° 27. Revati 346°40' 360°00' ## Page 318  $307  NAKSATRA CHAYA (CHAP. 11) "
+    },
+    {
+      "id": "ch-27",
+      "number": "27",
+      "title": "Revati 346°40' 360°00'",
+      "level": 1,
+      "start_line": 11933,
+      "end_line": 12062,
+      "sections": [],
+      "content_preview": "27. Revati 346°40' 360°00' ## Page 318  $307  NAKSATRA CHAYA (CHAP. 11)  (panuquos)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Mesa Agvini All",
+      "level": 1,
+      "start_line": 12063,
+      "end_line": 12065,
+      "sections": [],
+      "content_preview": "1. Mesa Agvini All Bharani All Erttika 1 2. Vrsabha Krttika 2, 3,4 Rohini All Mrga! ing) 3. Mithuna Mrgasira 3,4 Ardra All"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Vrsabha Krttika 2, 3,4",
+      "level": 1,
+      "start_line": 12066,
+      "end_line": 12068,
+      "sections": [],
+      "content_preview": "2. Vrsabha Krttika 2, 3,4 Rohini All Mrga! ing) 3. Mithuna Mrgasira 3,4 Ardra All Punarvasu PEPE 4. Karkataka Punarvasu 4 Pusya All"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Mithuna Mrgasira 3,4",
+      "level": 1,
+      "start_line": 12069,
+      "end_line": 12071,
+      "sections": [],
+      "content_preview": "3. Mithuna Mrgasira 3,4 Ardra All Punarvasu PEPE 4. Karkataka Punarvasu 4 Pusya All Aslesa All 5. Simha Makha All Pubba* All"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Karkataka Punarvasu 4",
+      "level": 1,
+      "start_line": 12072,
+      "end_line": 12074,
+      "sections": [],
+      "content_preview": "4. Karkataka Punarvasu 4 Pusya All Aslesa All 5. Simha Makha All Pubba* All Uttara** fT 6. Kanya Uttara** 2, 3,4 Hasta"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Simha Makha All",
+      "level": 1,
+      "start_line": 12075,
+      "end_line": 12077,
+      "sections": [],
+      "content_preview": "5. Simha Makha All Pubba* All Uttara** fT 6. Kanya Uttara** 2, 3,4 Hasta Citta (Citra) ne 7. Tula Citta (Citra) 3,4 Svati All"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Kanya Uttara** 2, 3,4",
+      "level": 1,
+      "start_line": 12078,
+      "end_line": 12080,
+      "sections": [],
+      "content_preview": "6. Kanya Uttara** 2, 3,4 Hasta Citta (Citra) ne 7. Tula Citta (Citra) 3,4 Svati All Visakha 1,2,3 8. Vrscika Visakha 4 Anuradha All"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Tula Citta (Citra) 3,4",
+      "level": 1,
+      "start_line": 12081,
+      "end_line": 12083,
+      "sections": [],
+      "content_preview": "7. Tula Citta (Citra) 3,4 Svati All Visakha 1,2,3 8. Vrscika Visakha 4 Anuradha All Jyestha All 9. Dhanus Mala All Parvasadha All"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Vrscika Visakha 4",
+      "level": 1,
+      "start_line": 12084,
+      "end_line": 12086,
+      "sections": [],
+      "content_preview": "8. Vrscika Visakha 4 Anuradha All Jyestha All 9. Dhanus Mala All Parvasadha All Uttarasadha 1 10. Makara Uttarasadha 2,3,4 Sravana All"
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Dhanus Mala All",
+      "level": 1,
+      "start_line": 12087,
+      "end_line": 12089,
+      "sections": [],
+      "content_preview": "9. Dhanus Mala All Parvasadha All Uttarasadha 1 10. Makara Uttarasadha 2,3,4 Sravana All Dhanistha 1,2 11. Kumbha 3,4 Satabhisaj All"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Makara Uttarasadha 2,3,4",
+      "level": 1,
+      "start_line": 12090,
+      "end_line": 12092,
+      "sections": [],
+      "content_preview": "10. Makara Uttarasadha 2,3,4 Sravana All Dhanistha 1,2 11. Kumbha 3,4 Satabhisaj All Parvabhadra 1, 2,3 12. Mina Parvabhadra 4 Uttarabhadra All"
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Kumbha 3,4",
+      "level": 1,
+      "start_line": 12093,
+      "end_line": 12095,
+      "sections": [],
+      "content_preview": "11. Kumbha 3,4 Satabhisaj All Parvabhadra 1, 2,3 12. Mina Parvabhadra 4 Uttarabhadra All Revati All  * Parva Phalguni is referred to as Pubba."
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Mina Parvabhadra 4",
+      "level": 1,
+      "start_line": 12096,
+      "end_line": 12227,
+      "sections": [],
+      "content_preview": "12. Mina Parvabhadra 4 Uttarabhadra All Revati All  * Parva Phalguni is referred to as Pubba. ** Uttara Phalguni is referred to as Uttara. ## Page 323 "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "2",
+      "level": 1,
+      "start_line": 12228,
+      "end_line": 12228,
+      "sections": [],
+      "content_preview": "CHAPTER 12 CHAPTER 12 CHAPTER 12 CHAPTER 12 CHAPTER 12 ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "2",
+      "level": 1,
+      "start_line": 12229,
+      "end_line": 12229,
+      "sections": [],
+      "content_preview": "CHAPTER 12 CHAPTER 12 CHAPTER 12 CHAPTER 12 ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "2",
+      "level": 1,
+      "start_line": 12230,
+      "end_line": 12230,
+      "sections": [],
+      "content_preview": "CHAPTER 12 CHAPTER 12 CHAPTER 12 ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "2",
+      "level": 1,
+      "start_line": 12231,
+      "end_line": 12231,
+      "sections": [],
+      "content_preview": "CHAPTER 12 CHAPTER 12 ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ (Elevation of the Moon’s Cusps)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "2",
+      "level": 1,
+      "start_line": 12232,
+      "end_line": 12910,
+      "sections": [
+        {
+          "id": "ch-1-sec-tithi_of_the_bright_half_or_in_the_last_quarter_ie_from_75_t",
+          "title": "tithi of the bright half) or in the last quarter (i.e., from 7.5 tithi to the",
+          "level": 2,
+          "start_line": 12258,
+          "end_line": 12909,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "CHAPTER 12 ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ ÙØÑGONNATYADHIKÁRAÇ (Elevation of the Moon’s Cusps) (Elevation of the Moon’s Cusps)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "3",
+      "level": 1,
+      "start_line": 12911,
+      "end_line": 12911,
+      "sections": [],
+      "content_preview": "CHAPTER 13 CHAPTER 13 CHAPTER 13 CHAPTER 13 CHAPTER 13 GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "3",
+      "level": 1,
+      "start_line": 12912,
+      "end_line": 12912,
+      "sections": [],
+      "content_preview": "CHAPTER 13 CHAPTER 13 CHAPTER 13 CHAPTER 13 GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "3",
+      "level": 1,
+      "start_line": 12913,
+      "end_line": 12913,
+      "sections": [],
+      "content_preview": "CHAPTER 13 CHAPTER 13 CHAPTER 13 GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "3",
+      "level": 1,
+      "start_line": 12914,
+      "end_line": 12914,
+      "sections": [],
+      "content_preview": "CHAPTER 13 CHAPTER 13 GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ (Conjunction of Planets)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "3",
+      "level": 1,
+      "start_line": 12915,
+      "end_line": 13662,
+      "sections": [],
+      "content_preview": "CHAPTER 13 GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ GRAHAYUTYADHIKÁRAÇ (Conjunction of Planets) (Conjunction of Planets)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "4",
+      "level": 1,
+      "start_line": 13663,
+      "end_line": 13663,
+      "sections": [],
+      "content_preview": "CHAPTER 14 CHAPTER 14 CHAPTER 14 CHAPTER 14 CHAPTER 14 PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "4",
+      "level": 1,
+      "start_line": 13664,
+      "end_line": 13664,
+      "sections": [],
+      "content_preview": "CHAPTER 14 CHAPTER 14 CHAPTER 14 CHAPTER 14 PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "4",
+      "level": 1,
+      "start_line": 13665,
+      "end_line": 13665,
+      "sections": [],
+      "content_preview": "CHAPTER 14 CHAPTER 14 CHAPTER 14 PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "4",
+      "level": 1,
+      "start_line": 13666,
+      "end_line": 13666,
+      "sections": [],
+      "content_preview": "CHAPTER 14 CHAPTER 14 PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ (Parallel Aspects of Sun and Moon)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "4",
+      "level": 1,
+      "start_line": 13667,
+      "end_line": 15414,
+      "sections": [],
+      "content_preview": "CHAPTER 14 PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ PÁTÁDHIKÁRAÇ (Parallel Aspects of Sun and Moon) (Parallel Aspects of Sun and Moon)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "5",
+      "level": 1,
+      "start_line": 15415,
+      "end_line": 15415,
+      "sections": [],
+      "content_preview": "CHAPTER 15 CHAPTER 15 CHAPTER 15 CHAPTER 15 CHAPTER 15 PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "5",
+      "level": 1,
+      "start_line": 15416,
+      "end_line": 15416,
+      "sections": [],
+      "content_preview": "CHAPTER 15 CHAPTER 15 CHAPTER 15 CHAPTER 15 PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "5",
+      "level": 1,
+      "start_line": 15417,
+      "end_line": 15417,
+      "sections": [],
+      "content_preview": "CHAPTER 15 CHAPTER 15 CHAPTER 15 PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "5",
+      "level": 1,
+      "start_line": 15418,
+      "end_line": 15418,
+      "sections": [],
+      "content_preview": "CHAPTER 15 CHAPTER 15 PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM (Lunar Eclipse from "
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "5",
+      "level": 1,
+      "start_line": 15419,
+      "end_line": 16932,
+      "sections": [],
+      "content_preview": "CHAPTER 15 PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM PAÒCÁÑGA CANDRA GRAHAÏÁNAYANAM (Lunar Eclipse from  (Lunar Eclipse from "
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "This gives the position of the Sun at the end of iúûa tithi (pürïimá for",
+      "level": 1,
+      "start_line": 16933,
+      "end_line": 17387,
+      "sections": [],
+      "content_preview": "9. This gives the position of the Sun at the end of iúûa tithi (pürïimá for lunar eclipse). (2) If the bhuja of the difference between the Sun at the end of the parva (i.e., parvánta kála Ravi) and Ráhu is less than  o 14  then there is a pos- sibility of a lunar eclipse. Example"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "6",
+      "level": 1,
+      "start_line": 17388,
+      "end_line": 17388,
+      "sections": [],
+      "content_preview": "CHAPTER 16 CHAPTER 16 CHAPTER 16 CHAPTER 16 CHAPTER 16 UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "6",
+      "level": 1,
+      "start_line": 17389,
+      "end_line": 17389,
+      "sections": [],
+      "content_preview": "CHAPTER 16 CHAPTER 16 CHAPTER 16 CHAPTER 16 UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "6",
+      "level": 1,
+      "start_line": 17390,
+      "end_line": 17390,
+      "sections": [],
+      "content_preview": "CHAPTER 16 CHAPTER 16 CHAPTER 16 UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "6",
+      "level": 1,
+      "start_line": 17391,
+      "end_line": 17391,
+      "sections": [],
+      "content_preview": "CHAPTER 16 CHAPTER 16 UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA (Concluding Chapter)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "6",
+      "level": 1,
+      "start_line": 17392,
+      "end_line": 21385,
+      "sections": [],
+      "content_preview": "CHAPTER 16 UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA UPASAÍHÁRÁDHIKÁRA (Concluding Chapter) (Concluding Chapter)"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Madhyam¹dhik¹raå",
+      "level": 1,
+      "start_line": 21386,
+      "end_line": 21468,
+      "sections": [],
+      "content_preview": "1. Madhyam¹dhik¹raå ma¡gal¹caraªam : jyøtiå prabodhajanan» pari¶ødhya citta÷ tatsØkta karmacaraªair gahan¹rthapØrª¹ | svalp¹k¶ar¹pi ca tada÷¶¹kÅtairup¹yair vyakt»kÅt¹ jayati ke¶avav¹k ¶ruti¶ca  ||1|| paribhagnasamaurvike¶ac¹pam dÅ©haguªah¹ralasat suvÅttab¹hu |"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Ravicandra spa¬­»karaªa÷",
+      "level": 1,
+      "start_line": 21469,
+      "end_line": 21521,
+      "sections": [],
+      "content_preview": "2.  Ravicandra spa¬­»karaªa÷ bhujako­y¹d»n¹m¹nayam : dostribhona÷ tribhordhvam vi¶e¬ya÷ rasai¶ cakrato¡k¹dhika÷ sy¹d bhujona÷ tribham | ko­irekaikaka÷ tritribhaiå sy¹t pada÷ sØryamandoccama¬­¹drayo÷¶¹ bhavet ||1|| ## Page 389 "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Pañcat¹r¹ spa¬­»karaª¹dhik¹raå",
+      "level": 1,
+      "start_line": 21522,
+      "end_line": 21633,
+      "sections": [],
+      "content_preview": "3. Pañcat¹r¹ spa¬­»karaª¹dhik¹raå bhaumasya ¶»ghraphal¹¡k¹å : khama¬­amarutodribhØbhuva udadhyagorvyo¬­adÅg dÅ¶o navanag¹¶vinok¬ada¶an¹å ¶ar¹¡g¹gnayaå | guª¹¡kadahan¹å khakh¹bdhaya ibh¹¡ga r¹m¹å kram¹n nav¹mbudhidÅ¶o nabhaå k¬hitibhuva¶cal¹¡k¹ ibhe ||1|| budhasya ¶»ghraphal¹¡k"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Tripra¶n¹dhik¹raå",
+      "level": 1,
+      "start_line": 21634,
+      "end_line": 21761,
+      "sections": [],
+      "content_preview": "4. Tripra¶n¹dhik¹raå la¡kodayam¹nena svodayam¹na-s¹dhanam : laªkoday¹ vigha­ik¹ gajabh¹ni go¡ka- dasr¹stripak¬adahan¹å kramagotkramasth¹å | h»n¹nvit¹¶caradalaiå kramagotkramasthair me¬¹dito gha­ata utkramatastvime syuå ||1|| lagn¹nayanam : tatk¹l¹rkaå s¹yanaå svodayaghn¹"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Candragrahaª¹dhik¹raå",
+      "level": 1,
+      "start_line": 21762,
+      "end_line": 21821,
+      "sections": [],
+      "content_preview": "5.  Candragrahaª¹dhik¹raå gatagamyadin¹hatadyubhukteå kharas¹pt¹m¶aviyugyuto grahaå sy¹t| tatk¹labhavastath¹ gha­»ghny¹å kharasairlabdhakalonasamyutaå sy¹t ||1|| grahaªa ni¶cayam ¶aras¹dhanañca : eva÷ parv¹nte vir¹hvarkab¹hor indr¹lp¹m¶¹å sambhava¶ced grahasya | te÷¶¹ nighn¹å ¶a"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "SØryyagrahaª¹dhik¹raå",
+      "level": 1,
+      "start_line": 21822,
+      "end_line": 21854,
+      "sections": [],
+      "content_preview": "6. SØryyagrahaª¹dhik¹raå lambana s¹dhanam : lagana÷ dar¶¹nte tribona÷ pÅthakstha÷ tat kr¹ntyam¶aiå samskÅtok¬o nat¹m¶¹å | tad dvidy(22)am¶o vargita¶ced dvikordhvo dhosau dvayØnaå khaª©itastadyutaå saå ||1|| s¹rko h¹raå sy¹t tribhonoday¹rka- vi¶le¬¹÷¶¹¶¹÷¶ah»naghna¶akr¹å |"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "M¹sagaª¹dhik¹raå",
+      "level": 1,
+      "start_line": 21855,
+      "end_line": 21948,
+      "sections": [],
+      "content_preview": "7.  M¹sagaª¹dhik¹raå atha m¹sagaª¹t sulaghukriyay¹ grahaªadvayasiddhikÅtebhidadhe | sphu­asØryavip¹tatith»ñca vapur grasan¹di vi¶e¬acamatkÅtaye ||1|| k¬epak¹å : k¬epo bh¹dyaå kha÷ kÅt¹ bhØdÅsorke rudr¹å sail¹ n¹gacandr¹ vip¹te |"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Grahaªadvayas¹dhan¹dhik¹raå",
+      "level": 1,
+      "start_line": 21949,
+      "end_line": 21978,
+      "sections": [],
+      "content_preview": "8. Grahaªadvayas¹dhan¹dhik¹raå pañc¹¡g¹t grahaªa dvaya s¹dhanam : atha v¹ya÷ tithipatratovagamyaå parv¹nta¶ca ravistamastitherv¹ | bhasyetai¬yagha­»yutirdyum¹na÷ tebhyotha grahaªadvaya÷ pravacmi ||1|| ## Page 403  S398 GRAHALÁGHAVAM OF GAÏEÙA DAIVAJÒA"
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "Uday¹st¹dhik¹raå",
+      "level": 1,
+      "start_line": 21979,
+      "end_line": 22101,
+      "sections": [],
+      "content_preview": "9. Uday¹st¹dhik¹raå ¶ukla pratipadi candra dars¹na sambhav¹sambhavam : s¹rk¹÷¶¹viha kuru pak¬atik¬ayerkavyagvarkau caramatha keval¹dvyagoryat | ¬a©b¹ªairvihÅtamida÷ kram¹llav¹dya÷ svarªa÷ sy¹dvyaguravigolayoå pÅthak tat ||1|| ## Page 404  S399"
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Grahacch¹y¹dhik¹raå",
+      "level": 1,
+      "start_line": 22102,
+      "end_line": 22130,
+      "sections": [],
+      "content_preview": "10.  Grahacch¹y¹dhik¹raå grah¹ª¹m dÅ¶y¹dÅa¶yatva jñ¹nam : pr¹gdÅ¬­ikarmakhacarastanutolpakost¹t pu¬­a¶ca dÅ¶ya iha khecarabhogyak¹laå | lagnena yuk ca vivarodayayugdyuy¹taå sy¹t khecarasya sitagoryadi gopalonaå ||1|| grah¹ª¹m ch¹y¹ s¹dhanam : jin¹ptok¬¹bh¹ghno¡gulamaya¶arone"
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Nak¬atracch¹y¹dhik¹raå",
+      "level": 1,
+      "start_line": 22131,
+      "end_line": 22197,
+      "sections": [],
+      "content_preview": "11. Nak¬atracch¹y¹dhik¹raå nak¬atra dhruva jñ¹nam : d¹sr¹da¬­a ca mØrcchan¹ gajaguª¹ nand¹bdhayo dÅgras¹å ¬a­tark¹ yugakhecar¹ rasadi¶odry¹¶¹ nav¹rk¹å kram¹t | bh¹gy¹da¬­ayugendavok¬atithayaå kh¹tya¬­ayo÷¶¹ dhruv¹s traya¬­¹bj¹ gajagobhuvo ravidÅ¶aå siddha¶vinaå khatridÅk ||1||"
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Grahayutyadhik¹raå",
+      "level": 1,
+      "start_line": 22198,
+      "end_line": 22217,
+      "sections": [],
+      "content_preview": "13.  Grahayutyadhik¹raå bhaum¹d»n¹m bimba s¹dhanam : pañcartvag¹¡kavi¶ikh¹å pÅthag»¶akarª¹- yog¹hat¹å prakÅtibh¹nvarisiddhar¹maiå | bhakt¹å phalonasahit¹å ¶ravaªedhikone te tryuddhÅt¹å syursÅjo vapura¡gul¹ni ||1|| grahayuti gatai¬yat¹ s¹dhanam : adhikajavakhagedhikelpabhuktera"
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "P¹t¹dhik¹raå",
+      "level": 1,
+      "start_line": 22218,
+      "end_line": 22271,
+      "sections": [],
+      "content_preview": "14.  P¹t¹dhik¹raå vyat»p¹ta vaidhÅtyor lak¬aªam : nandaghn¹yanabh¹gatulyagha­ikon¹å s¹rdhavi¶ve tath¹ t¹r¹st¹vati s¹grayogavigame p¹to vyat»p¹takaå | jñeyo vaidhÅtiratra y¹tagha­ik¹å sarvark¬an¹©»hat¹å spa¬­¹å syuå ¶ara¬a©hÅt¹(65) iha tamorko s¹yan¹÷¶au kuru ||1|| spa¬­ap¹ta sam"
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "Pañc¹¡ga candragrahaª¹nayan¹dhik¹raå",
+      "level": 1,
+      "start_line": 22272,
+      "end_line": 22342,
+      "sections": [],
+      "content_preview": "15. Pañc¹¡ga candragrahaª¹nayan¹dhik¹raå m¹s¹å sv¹rdhayut¹stitherdin¹dya÷ t¹vatyo gha­ik¹¶ca m¹sasa¡gh¹t | trya÷¶¹©hy¹å sahita÷ dvayatray¹bhy¹÷ cakraghn¹k¬anav¹¡gavargayuktam ||1|| ## Page 413  S408 GRAHALÁGHAVAM OF GAÏEÙA DAIVAJÒA nak¬atra dhruvaka s¹dhanam :"
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "Upasa÷h¹r¹dhik¹raå",
+      "level": 1,
+      "start_line": 22343,
+      "end_line": 22557,
+      "sections": [
+        {
+          "id": "ch-16-sec-2003_17-38_new_delhi_2003",
+          "title": "(2003), 17-38, New Delhi, 2003.",
+          "level": 2,
+          "start_line": 22478,
+          "end_line": 22556,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "16.  Upasa÷h¹r¹dhik¹raå 1442 ¶ak¹t pØrvam ahargaªa s¹dhanam : dvy¹bdh»ndr¹å ¶akarahit¹stato bhav¹pta÷ cakr¹khya÷ ravihata¶e¬aka÷ tu h»nam | caitr¹dyaiå pÅthagamutaå sadÅgghnacakr¹t siddh¹©hy¹damaraphal¹dhim¹sayuktam ||1|| khatrighna÷ tithirahita÷ niragracakra ¡g¹÷¶¹©hya÷ pÅthaga"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-2",
+      "title": "Works of Ganesa Daivajiia",
+      "chapter": "Works of Ganesa Daivajiia",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Special features of Grahalaghavam",
+      "chapter": "Special features of Grahalaghavam",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Popularity of Grahalaghavam and its commentators",
+      "chapter": "Popularity of Grahalaghavam and its commentators",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Some special results of Ganega Daivajiia",
+      "chapter": "Some special results of Ganega Daivajiia",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Grahalaghavam (GL)",
+      "chapter": "Grahalaghavam (GL)",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-6",
+      "title": "In these chapters computations of the circumstances of the two",
+      "chapter": "In these chapters computations of the circumstances of the two",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-12",
+      "title": "(Srrigonnatyadhikara) deals with the rising of the",
+      "chapter": "(Srrigonnatyadhikara) deals with the rising of the",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-82",
+      "title": "GRAHALAGHAVAM OF GANESA DAIVAJNA",
+      "chapter": "GRAHALAGHAVAM OF GANESA DAIVAJNA",
+      "chapter_id": "ch-82"
+    },
+    {
+      "id": "ch-21",
+      "title": "Introduction",
+      "chapter": "Introduction",
+      "chapter_id": "ch-21"
+    },
+    {
+      "id": "ch-22-sec-bhujantara_correction",
+      "title": "Bhujantara correction",
+      "chapter": "Epicyclic theory and Mandaphala",
+      "chapter_id": "ch-22"
+    },
+    {
+      "id": "ch-22-sec-further_corrections_for_the_moon",
+      "title": "Further corrections for the Moon",
+      "chapter": "Epicyclic theory and Mandaphala",
+      "chapter_id": "ch-22"
+    },
+    {
+      "id": "ch-22",
+      "title": "Epicyclic theory and Mandaphala",
+      "chapter": "Epicyclic theory and Mandaphala",
+      "chapter_id": "ch-22"
+    },
+    {
+      "id": "ch-1",
+      "title": "Pratipat 6. Sasti 11. Ekadasi",
+      "chapter": "Pratipat 6. Sasti 11. Ekadasi",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Dvitiya 7. Saptami 12. Dvadast",
+      "chapter": "Dvitiya 7. Saptami 12. Dvadast",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Trtiya 8. Astami 13. Trayodasi",
+      "chapter": "Trtiya 8. Astami 13. Trayodasi",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Caturthi 9. Navami 14. Caturdasi",
+      "chapter": "Caturthi 9. Navami 14. Caturdasi",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Paficami 10. Dasami 15. Parnima or Amavasya",
+      "chapter": "Paficami 10. Dasami 15. Parnima or Amavasya",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-82",
+      "title": "GRAHALAGHAVAM OF GANESA DAIVAJNA",
+      "chapter": "GRAHALAGHAVAM OF GANESA DAIVAJNA",
+      "chapter_id": "ch-82"
+    },
+    {
+      "id": "ch-1",
+      "title": "ASsvini oro\" 13°20\"",
+      "chapter": "ASsvini oro\" 13°20\"",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Bharani 13°20' 26°40'",
+      "chapter": "Bharani 13°20' 26°40'",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Krttika 26°40’ 40°00\"",
+      "chapter": "Krttika 26°40’ 40°00\"",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-5",
+      "title": "Mrgasira 53°20\" 66°40\"",
+      "chapter": "Mrgasira 53°20\" 66°40\"",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Ardré 66°40\" 80°00\"",
+      "chapter": "Ardré 66°40\" 80°00\"",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-8",
+      "title": "Pusya 93°20\" 106°40°",
+      "chapter": "Pusya 93°20\" 106°40°",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Aslesa 106°40' 120°00'",
+      "chapter": "Aslesa 106°40' 120°00'",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-13",
+      "title": "Hasta 160°00\" 173°20'",
+      "chapter": "Hasta 160°00\" 173°20'",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "Citta (or Citra) 173°20\" 186°40'",
+      "chapter": "Citta (or Citra) 173°20\" 186°40'",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-15",
+      "title": "Svati 186°40' 200°00\"",
+      "chapter": "Svati 186°40' 200°00\"",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-16",
+      "title": "Visakha 200°00\" 213°20'",
+      "chapter": "Visakha 200°00\" 213°20'",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-17",
+      "title": "Anuradha 213°20' 226°40'",
+      "chapter": "Anuradha 213°20' 226°40'",
+      "chapter_id": "ch-17"
+    },
+    {
+      "id": "ch-19",
+      "title": "Mala 240°00' 253°20'",
+      "chapter": "Mala 240°00' 253°20'",
+      "chapter_id": "ch-19"
+    },
+    {
+      "id": "ch-20",
+      "title": "Parvasadha 253°20' 266 °40'",
+      "chapter": "Parvasadha 253°20' 266 °40'",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-21",
+      "title": "Uttarasadha 266°40' 280°00'",
+      "chapter": "Uttarasadha 266°40' 280°00'",
+      "chapter_id": "ch-21"
+    },
+    {
+      "id": "ch-23",
+      "title": "Dhanistha 293°20' 306°40'",
+      "chapter": "Dhanistha 293°20' 306°40'",
+      "chapter_id": "ch-23"
+    },
+    {
+      "id": "ch-24",
+      "title": "Satabigaj 306°40' 320°00'",
+      "chapter": "Satabigaj 306°40' 320°00'",
+      "chapter_id": "ch-24"
+    },
+    {
+      "id": "ch-25",
+      "title": "Parvabhadra 320°00' 333°20'",
+      "chapter": "Parvabhadra 320°00' 333°20'",
+      "chapter_id": "ch-25"
+    },
+    {
+      "id": "ch-26",
+      "title": "Uttarabhadra 333°20' 346°40'",
+      "chapter": "Uttarabhadra 333°20' 346°40'",
+      "chapter_id": "ch-26"
+    },
+    {
+      "id": "ch-1",
+      "title": "Viskambha 15. Vajra",
+      "chapter": "Viskambha 15. Vajra",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Priti 16. Siddhi",
+      "chapter": "Priti 16. Siddhi",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Ayusman 17. Vyatipata",
+      "chapter": "Ayusman 17. Vyatipata",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Saubhagya 18. Varlyan",
+      "chapter": "Saubhagya 18. Varlyan",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Sobhana 19. Parigha",
+      "chapter": "Sobhana 19. Parigha",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Atiganda 20. Siva",
+      "chapter": "Atiganda 20. Siva",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Sukarma 21. Siddha",
+      "chapter": "Sukarma 21. Siddha",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Dhrti 22, Sadhya",
+      "chapter": "Dhrti 22, Sadhya",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Sala 23. Subha",
+      "chapter": "Sala 23. Subha",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Ganda 24, Sukla",
+      "chapter": "Ganda 24, Sukla",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Vrddhi 25. Brahma",
+      "chapter": "Vrddhi 25. Brahma",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "Dhruva 26. Indra",
+      "chapter": "Dhruva 26. Indra",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-13",
+      "title": "Vyaghata 27. Vaidhrta",
+      "chapter": "Vyaghata 27. Vaidhrta",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "Harsana (or Vaidhrti)",
+      "chapter": "Harsana (or Vaidhrti)",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-1",
+      "title": "True daily motion of Kuja",
+      "chapter": "True daily motion of Kuja",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "True daily motion of Budha",
+      "chapter": "True daily motion of Budha",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-8",
+      "title": "True Motion of Guru",
+      "chapter": "True Motion of Guru",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-4",
+      "title": "True motion of Sukra",
+      "chapter": "True motion of Sukra",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "True daily motion of Sani",
+      "chapter": "True daily motion of Sani",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-53",
+      "title": "This gives the corrected gatiphala (of Kuja, Budha and Sukra). These",
+      "chapter": "This gives the corrected gatiphala (of Kuja, Budha and Sukra). These",
+      "chapter_id": "ch-53"
+    },
+    {
+      "id": "ch-1",
+      "title": "When the Sun and lagna are in the same rasi, consider the difference",
+      "chapter": "When the Sun and lagna are in the same rasi, consider the difference",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Multiply the above difference by the duration of rising of the raéi in",
+      "chapter": "Multiply the above difference by the duration of rising of the raéi in",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3-sec-34",
+      "title": "34",
+      "chapter": "Divide the product obtained in step (2) by 30. This gives the time in",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3",
+      "title": "Divide the product obtained in step (2) by 30. This gives the time in",
+      "chapter": "Divide the product obtained in step (2) by 30. This gives the time in",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-1",
+      "title": "0",
+      "chapter": "0",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "1",
+      "chapter": "1",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-7",
+      "title": "Punarvasu 94 6",
+      "chapter": "Punarvasu 94 6",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Pusya 106 0",
+      "chapter": "Pusya 106 0",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Aslesa 107 -7",
+      "chapter": "Aslesa 107 -7",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Makha (or Magha) 129 0",
+      "chapter": "Makha (or Magha) 129 0",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-1",
+      "title": "Pubba (Parva Phalguni) 148 12",
+      "chapter": "Pubba (Parva Phalguni) 148 12",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-12",
+      "title": "Uttara (Uttara Phalguni) 155 13",
+      "chapter": "Uttara (Uttara Phalguni) 155 13",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-13",
+      "title": "Hasta 160 -1l1",
+      "chapter": "Hasta 160 -1l1",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-15",
+      "title": "Svati 198 37",
+      "chapter": "Svati 198 37",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-16",
+      "title": "Visakha 212 -1",
+      "chapter": "Visakha 212 -1",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-19",
+      "title": "Mala 242 -8",
+      "chapter": "Mala 242 -8",
+      "chapter_id": "ch-19"
+    },
+    {
+      "id": "ch-20",
+      "title": "Parvasadha 255 -5",
+      "chapter": "Parvasadha 255 -5",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-23",
+      "title": "Sravana 275 30",
+      "chapter": "Sravana 275 30",
+      "chapter_id": "ch-23"
+    },
+    {
+      "id": "ch-25",
+      "title": "Satabhisaj 320 | -3",
+      "chapter": "Satabhisaj 320 | -3",
+      "chapter_id": "ch-25"
+    },
+    {
+      "id": "ch-26",
+      "title": "Parvabhadra 325 0",
+      "chapter": "Parvabhadra 325 0",
+      "chapter_id": "ch-26"
+    },
+    {
+      "id": "ch-27",
+      "title": "Uttarabhadra 337 24",
+      "chapter": "Uttarabhadra 337 24",
+      "chapter_id": "ch-27"
+    },
+    {
+      "id": "ch-28",
+      "title": "Revati 0 0",
+      "chapter": "Revati 0 0",
+      "chapter_id": "ch-28"
+    },
+    {
+      "id": "ch-29",
+      "title": "Prajapati 61 39",
+      "chapter": "Prajapati 61 39",
+      "chapter_id": "ch-29"
+    },
+    {
+      "id": "ch-30",
+      "title": "Brahmahrdaya 56 30",
+      "chapter": "Brahmahrdaya 56 30",
+      "chapter_id": "ch-30"
+    },
+    {
+      "id": "ch-31",
+      "title": "Agni 53 8",
+      "chapter": "Agni 53 8",
+      "chapter_id": "ch-31"
+    },
+    {
+      "id": "ch-32",
+      "title": "Agastya 88 -76",
+      "chapter": "Agastya 88 -76",
+      "chapter_id": "ch-32"
+    },
+    {
+      "id": "ch-33",
+      "title": "Apamvatsa 183 3",
+      "chapter": "Apamvatsa 183 3",
+      "chapter_id": "ch-33"
+    },
+    {
+      "id": "ch-84",
+      "title": "Lubdhaka 81 -40",
+      "chapter": "Lubdhaka 81 -40",
+      "chapter_id": "ch-84"
+    },
+    {
+      "id": "ch-81-sec-gives_the_list_of_the_27_naksatras_in_their_natural_order_an",
+      "title": "gives the list of the 27 naksatras, in their natural order, and their",
+      "chapter": "The saraméa of these are respectively 39, 30, 8, 76, 3, 40. Among these,",
+      "chapter_id": "ch-81"
+    },
+    {
+      "id": "ch-81",
+      "title": "The saraméa of these are respectively 39, 30, 8, 76, 3, 40. Among these,",
+      "chapter": "The saraméa of these are respectively 39, 30, 8, 76, 3, 40. Among these,",
+      "chapter_id": "ch-81"
+    },
+    {
+      "id": "ch-5",
+      "title": "Mrgasira 53°20’ 66°40'",
+      "chapter": "Mrgasira 53°20’ 66°40'",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-8",
+      "title": "Pusya 93°20' 106°40'",
+      "chapter": "Pusya 93°20' 106°40'",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-10",
+      "title": "Makha (or Magha) 120°00' 133°20'",
+      "chapter": "Makha (or Magha) 120°00' 133°20'",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Pubba (Parva Phalguni) 133°20' 146°40'",
+      "chapter": "Pubba (Parva Phalguni) 133°20' 146°40'",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "Uttara (Uttara Phalguni) 146°40' 160°00\"",
+      "chapter": "Uttara (Uttara Phalguni) 146°40' 160°00\"",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-13",
+      "title": "Hasta 160°00' 173°20'",
+      "chapter": "Hasta 160°00' 173°20'",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "Citta (or Citra) 173°20' 186°40'",
+      "chapter": "Citta (or Citra) 173°20' 186°40'",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-15",
+      "title": "Svati 186°40' 200°00'",
+      "chapter": "Svati 186°40' 200°00'",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-16",
+      "title": "Visakha 200°00' 213°20'",
+      "chapter": "Visakha 200°00' 213°20'",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-17",
+      "title": "Anuradha 213°20' 226°40'",
+      "chapter": "Anuradha 213°20' 226°40'",
+      "chapter_id": "ch-17"
+    },
+    {
+      "id": "ch-19",
+      "title": "Mala 240°00' 253°20'",
+      "chapter": "Mala 240°00' 253°20'",
+      "chapter_id": "ch-19"
+    },
+    {
+      "id": "ch-20",
+      "title": "Parvasadha 253°20' 266°40'",
+      "chapter": "Parvasadha 253°20' 266°40'",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-21",
+      "title": "Uttarasadha 266°40' 280°20'",
+      "chapter": "Uttarasadha 266°40' 280°20'",
+      "chapter_id": "ch-21"
+    },
+    {
+      "id": "ch-22",
+      "title": "Sravana 280°20' 293°20'",
+      "chapter": "Sravana 280°20' 293°20'",
+      "chapter_id": "ch-22"
+    },
+    {
+      "id": "ch-23",
+      "title": "Dhanistha 293°20' 306°40'",
+      "chapter": "Dhanistha 293°20' 306°40'",
+      "chapter_id": "ch-23"
+    },
+    {
+      "id": "ch-24",
+      "title": "Satabisaj 306°40' 320°00'",
+      "chapter": "Satabisaj 306°40' 320°00'",
+      "chapter_id": "ch-24"
+    },
+    {
+      "id": "ch-25",
+      "title": "Parvabhadra 320°00' 333°20'",
+      "chapter": "Parvabhadra 320°00' 333°20'",
+      "chapter_id": "ch-25"
+    },
+    {
+      "id": "ch-26",
+      "title": "Uttarabhadra 333°20' 346°40°",
+      "chapter": "Uttarabhadra 333°20' 346°40°",
+      "chapter_id": "ch-26"
+    },
+    {
+      "id": "ch-27",
+      "title": "Revati 346°40' 360°00'",
+      "chapter": "Revati 346°40' 360°00'",
+      "chapter_id": "ch-27"
+    },
+    {
+      "id": "ch-1",
+      "title": "Mesa Agvini All",
+      "chapter": "Mesa Agvini All",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Vrsabha Krttika 2, 3,4",
+      "chapter": "Vrsabha Krttika 2, 3,4",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Mithuna Mrgasira 3,4",
+      "chapter": "Mithuna Mrgasira 3,4",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Karkataka Punarvasu 4",
+      "chapter": "Karkataka Punarvasu 4",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Simha Makha All",
+      "chapter": "Simha Makha All",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Kanya Uttara** 2, 3,4",
+      "chapter": "Kanya Uttara** 2, 3,4",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Tula Citta (Citra) 3,4",
+      "chapter": "Tula Citta (Citra) 3,4",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Vrscika Visakha 4",
+      "chapter": "Vrscika Visakha 4",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Dhanus Mala All",
+      "chapter": "Dhanus Mala All",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Makara Uttarasadha 2,3,4",
+      "chapter": "Makara Uttarasadha 2,3,4",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Kumbha 3,4",
+      "chapter": "Kumbha 3,4",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "Mina Parvabhadra 4",
+      "chapter": "Mina Parvabhadra 4",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-1",
+      "title": "2",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "2",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "2",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "2",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1-sec-tithi_of_the_bright_half_or_in_the_last_quarter_ie_from_75_t",
+      "title": "tithi of the bright half) or in the last quarter (i.e., from 7.5 tithi to the",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "2",
+      "chapter": "2",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "3",
+      "chapter": "3",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "3",
+      "chapter": "3",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "3",
+      "chapter": "3",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "3",
+      "chapter": "3",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "3",
+      "chapter": "3",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "4",
+      "chapter": "4",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "4",
+      "chapter": "4",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "4",
+      "chapter": "4",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "4",
+      "chapter": "4",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "4",
+      "chapter": "4",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "5",
+      "chapter": "5",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "5",
+      "chapter": "5",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "5",
+      "chapter": "5",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "5",
+      "chapter": "5",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "5",
+      "chapter": "5",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-9",
+      "title": "This gives the position of the Sun at the end of iúûa tithi (pürïimá for",
+      "chapter": "This gives the position of the Sun at the end of iúûa tithi (pürïimá for",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-1",
+      "title": "6",
+      "chapter": "6",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "6",
+      "chapter": "6",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "6",
+      "chapter": "6",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "6",
+      "chapter": "6",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "6",
+      "chapter": "6",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "Madhyam¹dhik¹raå",
+      "chapter": "Madhyam¹dhik¹raå",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Ravicandra spa¬­»karaªa÷",
+      "chapter": "Ravicandra spa¬­»karaªa÷",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Pañcat¹r¹ spa¬­»karaª¹dhik¹raå",
+      "chapter": "Pañcat¹r¹ spa¬­»karaª¹dhik¹raå",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Tripra¶n¹dhik¹raå",
+      "chapter": "Tripra¶n¹dhik¹raå",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Candragrahaª¹dhik¹raå",
+      "chapter": "Candragrahaª¹dhik¹raå",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "SØryyagrahaª¹dhik¹raå",
+      "chapter": "SØryyagrahaª¹dhik¹raå",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "M¹sagaª¹dhik¹raå",
+      "chapter": "M¹sagaª¹dhik¹raå",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "Grahaªadvayas¹dhan¹dhik¹raå",
+      "chapter": "Grahaªadvayas¹dhan¹dhik¹raå",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "Uday¹st¹dhik¹raå",
+      "chapter": "Uday¹st¹dhik¹raå",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Grahacch¹y¹dhik¹raå",
+      "chapter": "Grahacch¹y¹dhik¹raå",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Nak¬atracch¹y¹dhik¹raå",
+      "chapter": "Nak¬atracch¹y¹dhik¹raå",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-13",
+      "title": "Grahayutyadhik¹raå",
+      "chapter": "Grahayutyadhik¹raå",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "P¹t¹dhik¹raå",
+      "chapter": "P¹t¹dhik¹raå",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-15",
+      "title": "Pañc¹¡ga candragrahaª¹nayan¹dhik¹raå",
+      "chapter": "Pañc¹¡ga candragrahaª¹nayan¹dhik¹raå",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-16-sec-2003_17-38_new_delhi_2003",
+      "title": "(2003), 17-38, New Delhi, 2003.",
+      "chapter": "Upasa÷h¹r¹dhik¹raå",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-16",
+      "title": "Upasa÷h¹r¹dhik¹raå",
+      "chapter": "Upasa÷h¹r¹dhik¹raå",
+      "chapter_id": "ch-16"
+    }
+  ],
+  "total_chapters": 155,
+  "total_sections": 6
+}

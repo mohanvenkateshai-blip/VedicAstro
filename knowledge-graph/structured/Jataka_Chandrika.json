@@ -1,0 +1,28 @@
+{
+  "book_id": "Jataka_Chandrika",
+  "canonical_name": "Jataka Chandrika",
+  "source_file": "Jataka_Chandrika.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-24",
+      "number": "24",
+      "title": "JATAKACHUNDRIKA.",
+      "level": 1,
+      "start_line": 1108,
+      "end_line": 3486,
+      "sections": [],
+      "content_preview": "24. JATAKACHUNDRIKA.  TARTANA GISTATAM ATS ANAT TAT TS AAATT AUR  Stanza XXI.  Where the lords of the 9th and 10th houses are joined"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-24",
+      "title": "JATAKACHUNDRIKA.",
+      "chapter": "JATAKACHUNDRIKA.",
+      "chapter_id": "ch-24"
+    }
+  ],
+  "total_chapters": 1,
+  "total_sections": 0
+}

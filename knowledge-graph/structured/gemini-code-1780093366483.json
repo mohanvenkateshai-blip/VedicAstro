@@ -1,0 +1,148 @@
+{
+  "book_id": "gemini-code-1780093366483",
+  "canonical_name": "gemini-code-1780093366483",
+  "source_file": "gemini-code-1780093366483.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code",
+      "number": null,
+      "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "level": 1,
+      "start_line": 4,
+      "end_line": 5,
+      "sections": [
+        {
+          "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-critical_step_1_the_design_spec_think_before_you_code",
+          "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+          "level": 3,
+          "start_line": 4,
+          "end_line": 4,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "### 🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE) Before writing any code, output a brief 3-bullet design specification outlining your plan: 1. LAYOUT & HIERARCHY: Your structural strategy (e.g., Bento Grid proportions, asymmetry, or section transitions). 2. TYPOGRAP"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "LAYOUT & HIERARCHY: Your structural strategy (e.g., Bento Grid proportions, asymmetry, or section transitions).",
+      "level": 1,
+      "start_line": 6,
+      "end_line": 6,
+      "sections": [],
+      "content_preview": "1. LAYOUT & HIERARCHY: Your structural strategy (e.g., Bento Grid proportions, asymmetry, or section transitions). 2. TYPOGRAPHY & DESIGN TOKENS: Your font sizing rhythm and exact color contrast hex codes. 3. MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, a"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "TYPOGRAPHY & DESIGN TOKENS: Your font sizing rhythm and exact color contrast hex codes.",
+      "level": 1,
+      "start_line": 7,
+      "end_line": 7,
+      "sections": [],
+      "content_preview": "2. TYPOGRAPHY & DESIGN TOKENS: Your font sizing rhythm and exact color contrast hex codes. 3. MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.  ---  ### TECH STACK CONSTRAINTS - Framework: React (TypeScript) + Tailwind CSS u"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "level": 1,
+      "start_line": 8,
+      "end_line": 46,
+      "sections": [
+        {
+          "id": "ch-3-sec-tech_stack_constraints",
+          "title": "TECH STACK CONSTRAINTS",
+          "level": 3,
+          "start_line": 12,
+          "end_line": 20,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-visual_design_system_aesthetic",
+          "title": "VISUAL DESIGN SYSTEM & AESTHETIC",
+          "level": 3,
+          "start_line": 21,
+          "end_line": 29,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-layout_structure_components",
+          "title": "LAYOUT STRUCTURE & COMPONENTS",
+          "level": 3,
+          "start_line": 30,
+          "end_line": 40,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-micro-interactions_motion_requirements_framer_motion",
+          "title": "MICRO-INTERACTIONS & MOTION REQUIREMENTS (FRAMER MOTION)",
+          "level": 3,
+          "start_line": 41,
+          "end_line": 45,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "3. MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.  ---  ### TECH STACK CONSTRAINTS - Framework: React (TypeScript) + Tailwind CSS utilities. - Icons: Lucide React. - Animation: Framer Motion (declarative physics-based or s"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-critical_step_1_the_design_spec_think_before_you_code",
+      "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code",
+      "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-1",
+      "title": "LAYOUT & HIERARCHY: Your structural strategy (e.g., Bento Grid proportions, asymmetry, or section transitions).",
+      "chapter": "LAYOUT & HIERARCHY: Your structural strategy (e.g., Bento Grid proportions, asymmetry, or section transitions).",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "TYPOGRAPHY & DESIGN TOKENS: Your font sizing rhythm and exact color contrast hex codes.",
+      "chapter": "TYPOGRAPHY & DESIGN TOKENS: Your font sizing rhythm and exact color contrast hex codes.",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3-sec-tech_stack_constraints",
+      "title": "TECH STACK CONSTRAINTS",
+      "chapter": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-visual_design_system_aesthetic",
+      "title": "VISUAL DESIGN SYSTEM & AESTHETIC",
+      "chapter": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-layout_structure_components",
+      "title": "LAYOUT STRUCTURE & COMPONENTS",
+      "chapter": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-micro-interactions_motion_requirements_framer_motion",
+      "title": "MICRO-INTERACTIONS & MOTION REQUIREMENTS (FRAMER MOTION)",
+      "chapter": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3",
+      "title": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "chapter": "MOTION CHOREOGRAPHY: Your plan for entrance animations, hover states, and structural micro-interactions.",
+      "chapter_id": "ch-3"
+    }
+  ],
+  "total_chapters": 4,
+  "total_sections": 5
+}

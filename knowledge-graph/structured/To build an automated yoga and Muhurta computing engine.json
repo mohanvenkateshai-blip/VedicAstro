@@ -1,0 +1,156 @@
+{
+  "book_id": "To build an automated yoga and Muhurta computing engine",
+  "canonical_name": "To build an automated yoga and Muhurta computing engine",
+  "source_file": "To build an automated yoga and Muhurta computing engine.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Logic Engine Core Architecture & Computational Flow",
+      "level": 1,
+      "start_line": 8,
+      "end_line": 55,
+      "sections": [],
+      "content_preview": "1. Logic Engine Core Architecture & Computational Flow  To accurately compute classical yogas without generating false positives, the logic engine must evaluate planetary states sequentially. A yoga is never a simple \"planet in house\" check; it is a conditional vector equation.  "
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Mathematical Definition of Planetary Afflictions & Modifications",
+      "level": 1,
+      "start_line": 56,
+      "end_line": 97,
+      "sections": [],
+      "content_preview": "2. Mathematical Definition of Planetary Afflictions & Modifications  Before the core yoga rules are run, your application must process the baseline modifications that dictate whether a yoga is Functional/Effective or Dysfunctional/Ineffective.  A. Combustion (Astangata) Logic  A "
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "The Exhaustive Yoga Combinatorial Directory",
+      "level": 1,
+      "start_line": 98,
+      "end_line": 169,
+      "sections": [],
+      "content_preview": "3. The Exhaustive Yoga Combinatorial Directory  The following database matrix dictates the rules for formation, amplification, and structural functional statuses across the three foundational texts.  A. Pancha Mahapurusha Yogas (Source: BPHS / Saravali)  Applies only when planets"
+    },
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Asraya Yogas (Sign-Based Spatial Layout)",
+      "level": 1,
+      "start_line": 170,
+      "end_line": 189,
+      "sections": [],
+      "content_preview": "1. Asraya Yogas (Sign-Based Spatial Layout)  Rajju Yoga Formation: All 7 visible planets occupy Moveable Signs ($1, 4, 7, 10$).  Logic Engine Check: all(Sign[p] in [1, 4, 7, 10] for p in VisiblePlanets)  Functional Output: High operational agility, constant geographical mobility,"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Akriti Yogas (Geometric Mapping Patterns)",
+      "level": 1,
+      "start_line": 190,
+      "end_line": 209,
+      "sections": [],
+      "content_preview": "2. Akriti Yogas (Geometric Mapping Patterns)  Sakata Yoga: All 7 visible planets sit strictly in the 1st and 7th houses.  Logic Engine Check: all(House[p] in [1, 7] for p in VisiblePlanets)  Functional Output: A cyclical life curve resembling a rotating wheel. Sudden wealth follo"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Sankhya Yogas (Distribution/Density Vectors)",
+      "level": 1,
+      "start_line": 210,
+      "end_line": 245,
+      "sections": [],
+      "content_preview": "3. Sankhya Yogas (Distribution/Density Vectors)  Evaluated only if no structural Asraya or Akriti configurations are triggered.  Vallaki Yoga: Planets distributed across exactly 7 distinct signs. (Polymath intellect, high-fidelity creative output).  Dama Yoga: Planets distributed"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Architectural Rules for Modification & Cancellation",
+      "level": 1,
+      "start_line": 246,
+      "end_line": 335,
+      "sections": [],
+      "content_preview": "4. Architectural Rules for Modification & Cancellation  Your logic engine must apply validation layers to prevent dead code from running.  Is Natal Combination Present?            │ "
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Dynamic Muhurta Logic: The Transit Validation Engine",
+      "level": 1,
+      "start_line": 336,
+      "end_line": 417,
+      "sections": [],
+      "content_preview": "5. Dynamic Muhurta Logic: The Transit Validation Engine  To calculate a true Muhurta (Inception Window) or predict the exact Fruition Timeline of a natal yoga, your logic engine must evaluate the intersection of the natal blueprint with real-time transit data.         [ NATAL BLU"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Document Automation Engine (Python Source Code)",
+      "level": 1,
+      "start_line": 418,
+      "end_line": 718,
+      "sections": [],
+      "content_preview": "6. Document Automation Engine (Python Source Code)  Run this Python script locally to generate the complete corporate-grade document structure with precise page margins and professional table formatting.  Python  import docx "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Logic Engine Core Architecture & Computational Flow",
+      "chapter": "Logic Engine Core Architecture & Computational Flow",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Mathematical Definition of Planetary Afflictions & Modifications",
+      "chapter": "Mathematical Definition of Planetary Afflictions & Modifications",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "The Exhaustive Yoga Combinatorial Directory",
+      "chapter": "The Exhaustive Yoga Combinatorial Directory",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-1",
+      "title": "Asraya Yogas (Sign-Based Spatial Layout)",
+      "chapter": "Asraya Yogas (Sign-Based Spatial Layout)",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "Akriti Yogas (Geometric Mapping Patterns)",
+      "chapter": "Akriti Yogas (Geometric Mapping Patterns)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "Sankhya Yogas (Distribution/Density Vectors)",
+      "chapter": "Sankhya Yogas (Distribution/Density Vectors)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Architectural Rules for Modification & Cancellation",
+      "chapter": "Architectural Rules for Modification & Cancellation",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "Dynamic Muhurta Logic: The Transit Validation Engine",
+      "chapter": "Dynamic Muhurta Logic: The Transit Validation Engine",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Document Automation Engine (Python Source Code)",
+      "chapter": "Document Automation Engine (Python Source Code)",
+      "chapter_id": "ch-6"
+    }
+  ],
+  "total_chapters": 9,
+  "total_sections": 0
+}

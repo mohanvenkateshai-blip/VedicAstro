@@ -1,0 +1,124 @@
+{
+  "book_id": "Activity_Mapping",
+  "canonical_name": "Activity Mapping",
+  "source_file": "Activity_Mapping.md",
+  "graph_version": "newbooks-v1",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "**B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)",
+      "level": 1,
+      "start_line": 1139,
+      "end_line": 1139,
+      "sections": [],
+      "content_preview": "1. **B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "**Brihat Parasara Hora Sastra (BPHS)** (foundational authority)",
+      "level": 1,
+      "start_line": 1140,
+      "end_line": 1140,
+      "sections": [],
+      "content_preview": "2. **Brihat Parasara Hora Sastra (BPHS)** (foundational authority)"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "**Muhurta Chintamani** (classical muhurta text)",
+      "level": 1,
+      "start_line": 1141,
+      "end_line": 1141,
+      "sections": [],
+      "content_preview": "3. **Muhurta Chintamani** (classical muhurta text)"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "**Phaladeepika** (Mantreswara — supplementary)",
+      "level": 1,
+      "start_line": 1142,
+      "end_line": 1142,
+      "sections": [],
+      "content_preview": "4. **Phaladeepika** (Mantreswara — supplementary)"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "**Gochar Phaladeepika** (Pulippani — transit-specific rules)",
+      "level": 1,
+      "start_line": 1143,
+      "end_line": 1143,
+      "sections": [],
+      "content_preview": "5. **Gochar Phaladeepika** (Pulippani — transit-specific rules)"
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "**Hora Sara** (Prithuyasas — supplementary)",
+      "level": 1,
+      "start_line": 1144,
+      "end_line": 1144,
+      "sections": [],
+      "content_preview": "6. **Hora Sara** (Prithuyasas — supplementary)"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "**Sarvartha Chintamani** (supplementary)",
+      "level": 1,
+      "start_line": 1145,
+      "end_line": 1149,
+      "sections": [],
+      "content_preview": "7. **Sarvartha Chintamani** (supplementary)"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "**B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)",
+      "chapter": "**B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "**Brihat Parasara Hora Sastra (BPHS)** (foundational authority)",
+      "chapter": "**Brihat Parasara Hora Sastra (BPHS)** (foundational authority)",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "**Muhurta Chintamani** (classical muhurta text)",
+      "chapter": "**Muhurta Chintamani** (classical muhurta text)",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "**Phaladeepika** (Mantreswara — supplementary)",
+      "chapter": "**Phaladeepika** (Mantreswara — supplementary)",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "**Gochar Phaladeepika** (Pulippani — transit-specific rules)",
+      "chapter": "**Gochar Phaladeepika** (Pulippani — transit-specific rules)",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "**Hora Sara** (Prithuyasas — supplementary)",
+      "chapter": "**Hora Sara** (Prithuyasas — supplementary)",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "**Sarvartha Chintamani** (supplementary)",
+      "chapter": "**Sarvartha Chintamani** (supplementary)",
+      "chapter_id": "ch-7"
+    }
+  ],
+  "total_chapters": 7,
+  "total_sections": 0
+}
