@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Clock, Loader, AlertCircle, ChevronDown, Zap } from "lucide-react";
 import type { DashaPrediction, FructificationResult, FructificationWindow } from "@/lib/types";
 import { motion, AnimatePresence } from "motion/react";

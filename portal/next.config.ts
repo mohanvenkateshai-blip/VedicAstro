@@ -29,7 +29,8 @@ const nextConfig: NextConfig = {
               "form-action 'self'",
             ].join("; "),
           },
-        ].filter((h) => !!(process.env.AUTH_SECRET || h.key !== "Content-Security-Policy")),
+        ], // CSP always emitted with data: support for embedded fonts (BookReader etc.)
+
       },
     ];
   },

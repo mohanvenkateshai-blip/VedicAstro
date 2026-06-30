@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { BookOpen, ArrowLeft, ArrowRight } from "lucide-react";
-import { getBookTextNodes, getJaiminiNodes, DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
 
 type TextNode = {
   id: string;
@@ -58,41 +57,30 @@ export default function JaiminiSutrasPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [source, setSource] = useState<string>("(searching...)");
-  const [usedVersion, setUsedVersion] = useState<string>(DEFAULT_GRAPH_VERSION);
+  const [usedVersion, setUsedVersion] = useState<string>("newbooks-v1");
 
   useEffect(() => {
     async function load() {
       setLoading(true);
       try {
-        // 1. Try fuzzy Jaimini search first (catches any source_file/label with jaimini/upadesa)
-        const fuzzy = await getJaiminiNodes();
-        if (fuzzy && fuzzy.length > 0) {
-          setNodes(fuzzy as TextNode[]);
-          setSource(fuzzy[0]?.source_file || "fuzzy:jaimini*");
-          setUsedVersion(DEFAULT_GRAPH_VERSION);
+        const res = await fetch("/api/learn/jaimini", { cache: "no-store" });
+        if (res.ok) {
+          const payload = await res.json();
+          if (payload.nodes && payload.nodes.length > 0) {
+            setNodes(payload.nodes as TextNode[]);
+            setSource(payload.source || "live");
+            setUsedVersion(payload.version || "newbooks-v1");
+            return;
+          }
+          // empty nodes → use fallback but update labels
+          setSource(payload.source || "Jaimini_Sutras.md (corpus excerpt)");
+          setUsedVersion(payload.version || "newbooks-v1");
           return;
         }
-
-        // 2. Try exact candidates from the actual ingested raw files
-        for (const candidate of JAIMINI_CANDIDATES) {
-          try {
-            const data = await getBookTextNodes(candidate);
-            if (data && data.length > 0) {
-              setNodes(data as TextNode[]);
-              setSource(candidate);
-              setUsedVersion(DEFAULT_GRAPH_VERSION);
-              return;
-            }
-          } catch {
-            // continue
-          }
-        }
-
-        // 3. Keep rich real excerpts (from the actual Jaimini_Sutras.md in the corpus)
-        setSource("Jaimini_Sutras.md (corpus excerpt)");
-      } finally {
-        setLoading(false);
+      } catch {
+        // fall through to excerpt
       }
+      setSource("Jaimini_Sutras.md (corpus excerpt)");
     }
     load();
   }, []);
