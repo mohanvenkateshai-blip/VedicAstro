@@ -53,18 +53,25 @@ export function BookReaderClient({ chapters, fullMarkdown, nodesContent }: BookR
           <div className="text-xs uppercase tracking-widest text-text-muted mb-3">Chapters (from graph)</div>
           <div className="space-y-1 text-sm max-h-[60vh] overflow-auto">
             {chapters.length > 0 ? (
-              chapters.map((ch) => (
-                <button
-                  key={ch.id}
-                  onClick={() => scrollToChapter(ch.title)}
-                  className="w-full text-left px-3 py-2 rounded-lg border border-hairline/60 hover:border-accent/40 hover:bg-surface/80 transition text-left"
-                >
-                  <div className="font-medium">{ch.title}</div>
-                  <div className="text-[10px] text-text-muted">
-                    {ch.nodeIds.length} nodes • {ch.sourceLocation}
-                  </div>
-                </button>
-              ))
+              chapters.map((ch, idx) => {
+                const slug = ch.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                return (
+                  <a
+                    key={ch.id}
+                    href={`#ch-${idx}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToChapter(ch.title);
+                    }}
+                    className="block w-full text-left px-3 py-2 rounded-lg border border-hairline/60 hover:border-accent/40 hover:bg-surface/80 transition no-underline text-inherit"
+                  >
+                    <div className="font-medium">{ch.title}</div>
+                    <div className="text-[10px] text-text-muted">
+                      {ch.nodeIds.length} nodes • {ch.sourceLocation}
+                    </div>
+                  </a>
+                );
+              })
             ) : (
               <div className="text-text-muted text-sm">No chapter grouping found. All content in main section.</div>
             )}
