@@ -5,7 +5,7 @@ import { listBooks } from "@/lib/books";
 export default async function LearnPage() {
   let books: Awaited<ReturnType<typeof listBooks>> = [];
   try {
-    books = await listBooks();
+    books = await listBooks("newbooks-v1");
   } catch {
     books = [];
   }
