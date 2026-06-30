@@ -3,106 +3,1707 @@
   "canonical_name": "Bhrigu Samhita TMRao",
   "source_file": "Bhrigu_Samhita_TMRao.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "0",
+      "id": "ch-the_book",
+      "number": null,
+      "title": "The book",
       "level": 1,
-      "start_line": 70,
-      "end_line": 72,
+      "start_line": 297,
+      "end_line": 475,
       "sections": [],
-      "content_preview": "Chapter -10 Capricorn 210 Chapter -11 Aquarius 23 1 Chapter -12"
+      "content_preview": "The book gives very valuable hints on how to find out"
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "1",
+      "id": "ch-shukra_who",
+      "number": null,
+      "title": "Shukra, who",
       "level": 1,
-      "start_line": 73,
-      "end_line": 76,
+      "start_line": 476,
+      "end_line": 565,
       "sections": [],
-      "content_preview": "Chapter -11 Aquarius 23 1 Chapter -12 Pisces 253 Basic Terminology and Case Studies 275"
+      "content_preview": "Shukra, who was better known than Bhrigu himself. The sage Chyavana was also"
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "2",
+      "id": "ch-universe_according",
+      "number": null,
+      "title": "Universe. According",
       "level": 1,
-      "start_line": 77,
-      "end_line": 47516,
+      "start_line": 566,
+      "end_line": 625,
       "sections": [],
-      "content_preview": "Chapter -12 Pisces 253 Basic Terminology and Case Studies 275 Some Basics (Terminology) of the Planets 277 A Few Case Studies 282 Conclusion 309"
+      "content_preview": "Universe. According to the popular tradition, only about a"
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "The Sun",
+      "id": "ch-bhrigu_was",
+      "number": null,
+      "title": "Bhrigu was",
       "level": 1,
-      "start_line": 47517,
-      "end_line": 52075,
+      "start_line": 626,
+      "end_line": 637,
       "sections": [],
-      "content_preview": "1. The Sun is in his own house with Jupiter. His stature"
+      "content_preview": "Bhrigu was the first compiler of predictive astrology, which came to"
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Bhrigu Samhita Paddhati",
+      "id": "ch-fifth_veda",
+      "number": null,
+      "title": "Fifth Veda",
       "level": 1,
-      "start_line": 52076,
-      "end_line": 52087,
+      "start_line": 638,
+      "end_line": 1419,
       "sections": [],
-      "content_preview": "1. Bhrigu Samhita Paddhati - by Bhagawandas Mittal 2. Brhat Samhita - by M. Ramakrishna Bhatt 3. Bhrigu Samhita"
+      "content_preview": "Fifth Veda of Treta Yug, which is an ancient"
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "How to Judge a Horoscope,",
+      "id": "ch-similarly_when",
+      "number": null,
+      "title": "Similarly, when",
       "level": 1,
-      "start_line": 52088,
+      "start_line": 1420,
+      "end_line": 1767,
+      "sections": [],
+      "content_preview": "Similarly, when both have malefic dashas the period is harmful. When there"
+    },
+    {
+      "id": "ch-sun_moon_mars",
+      "number": null,
+      "title": "Sun, Moon, Mars",
+      "level": 1,
+      "start_line": 1768,
+      "end_line": 1776,
+      "sections": [],
+      "content_preview": "Sun, Moon, Mars and Jupiter Daitya - Venus, Saturn, Dragon's Head, Dragon's"
+    },
+    {
+      "id": "ch-the_deva_planets",
+      "number": null,
+      "title": "The Deva planets",
+      "level": 1,
+      "start_line": 1777,
+      "end_line": 2436,
+      "sections": [],
+      "content_preview": "The Deva planets are friends among themselves and are enemies of the planets of the Daitya. Mercury"
+    },
+    {
+      "id": "ch-various_ascendants",
+      "number": null,
+      "title": "Various Ascendants",
+      "level": 1,
+      "start_line": 2437,
+      "end_line": 2773,
+      "sections": [],
+      "content_preview": "Various Ascendants  ## Page 16  CHAPTER - 1 Aries"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_aries_ascendant",
+      "number": null,
+      "title": "Predictions of Moon in Aries Ascendant",
+      "level": 1,
+      "start_line": 2774,
+      "end_line": 3093,
+      "sections": [],
+      "content_preview": "Predictions of Moon in Aries Ascendant Moon in the 1st House (Aries) Gets happiness"
+    },
+    {
+      "id": "ch-predictions_of_mars_in_aries_ascendant",
+      "number": null,
+      "title": "Predictions of Mars in Aries Ascendant",
+      "level": 1,
+      "start_line": 3094,
+      "end_line": 4149,
+      "sections": [],
+      "content_preview": "Predictions of Mars in Aries Ascendant Mars in the 1st House (Aries) Gets fame and"
+    },
+    {
+      "id": "ch-predictions_of_venus_in_aries_ascendant",
+      "number": null,
+      "title": "Predictions of Venus in Aries Ascendant",
+      "level": 1,
+      "start_line": 4150,
+      "end_line": 4368,
+      "sections": [],
+      "content_preview": "Predictions of Venus in Aries Ascendant Venus in the 1st House (Aries) Has a good"
+    },
+    {
+      "id": "ch-bhrigu_samhita",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 4369,
+      "end_line": 5018,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Venus in the Vllth House (Libra) Earns much wealth and occupies good position, gets a beautiful wife"
+    },
+    {
+      "id": "ch-bhrigu_samhita-2",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 5019,
+      "end_line": 5501,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Rahu in the IXth House (Sagittarius) Feels unhappy,"
+    },
+    {
+      "id": "ch-yearly_predictions_on_monetary_gains",
+      "number": null,
+      "title": "Yearly Predictions on Monetary Gains",
+      "level": 1,
+      "start_line": 5502,
+      "end_line": 5671,
+      "sections": [],
+      "content_preview": "Yearly Predictions on Monetary Gains The native will get the rise of destiny and"
+    },
+    {
+      "id": "ch-saturn_when",
+      "number": null,
+      "title": "Saturn when",
+      "level": 1,
+      "start_line": 5672,
+      "end_line": 6198,
+      "sections": [],
+      "content_preview": "Saturn when owns Scorpio, it creates strength in connection"
+    },
+    {
+      "id": "ch-ivth_house",
+      "number": null,
+      "title": "IVth House",
+      "level": 1,
+      "start_line": 6199,
+      "end_line": 7085,
+      "sections": [],
+      "content_preview": "IVth House (Leo) Happiness through brothers and sisters, gets"
+    },
+    {
+      "id": "ch-ivth_house-2",
+      "number": null,
+      "title": "IVth House",
+      "level": 1,
+      "start_line": 7086,
+      "end_line": 7415,
+      "sections": [],
+      "content_preview": "IVth House (Leo) Lives long, fame in life and career, separation in the house of mother, benefit from contact of foreign countries, mixed relations with father, opposition from government"
+    },
+    {
+      "id": "ch-ivth_house-3",
+      "number": null,
+      "title": "IVth House",
+      "level": 1,
+      "start_line": 7416,
+      "end_line": 8141,
+      "sections": [],
+      "content_preview": "IVth House (Leo) Enmity with mother, gets some loss"
+    },
+    {
+      "id": "ch-ivth_house-4",
+      "number": null,
+      "title": "IVth House",
+      "level": 1,
+      "start_line": 8142,
+      "end_line": 12671,
+      "sections": [],
+      "content_preview": "IVth House (Leo) Loss in house of mother, loses land and"
+    },
+    {
+      "id": "ch-bhrigu_samhita-3",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 12672,
+      "end_line": 12715,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Sun in the Xlth House (Taurus) Gets power of wealth and gains, makes money through money, gets jewels and ornaments, is very brilliant,"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_cancer_ascendant",
+      "number": null,
+      "title": "Predictions of Moon in Cancer Ascendant",
+      "level": 1,
+      "start_line": 12716,
+      "end_line": 13092,
+      "sections": [],
+      "content_preview": "Predictions of Moon in Cancer Ascendant Moon in the 1st House (Cancer) Is of fair complexion and symmetrical body, can control"
+    },
+    {
+      "id": "ch-predictions_of_mars_in_cancer_ascendant",
+      "number": null,
+      "title": "Predictions of Mars in Cancer Ascendant",
+      "level": 1,
+      "start_line": 13093,
+      "end_line": 13542,
+      "sections": [],
+      "content_preview": "Predictions of Mars in Cancer Ascendant Mars in the 1st House (Cancer) Is not influential, does not get good respect from parents, pays great attention"
+    },
+    {
+      "id": "ch-earns_money",
+      "number": null,
+      "title": "Earns money,",
+      "level": 1,
+      "start_line": 13543,
+      "end_line": 15133,
+      "sections": [],
+      "content_preview": "Earns money, some incomplete happiness in the house of brothers"
+    },
+    {
+      "id": "ch-bhrigu_samhita-4",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 15134,
+      "end_line": 15434,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Rahu in the IXth House (Pisces) Great loss in the house"
+    },
+    {
+      "id": "ch-bhrigu_samhita-5",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 15435,
+      "end_line": 15951,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Ketu in the Vlllth House (Aquarius) Some integral complaint"
+    },
+    {
+      "id": "ch-libra_or_aries",
+      "number": null,
+      "title": "Libra or Aries",
+      "level": 1,
+      "start_line": 15952,
+      "end_line": 17731,
+      "sections": [],
+      "content_preview": "Libra or Aries sign, it will cause gains and progress of the matters"
+    },
+    {
+      "id": "ch-works_much_with",
+      "number": null,
+      "title": "Works much with",
+      "level": 1,
+      "start_line": 17732,
+      "end_line": 20165,
+      "sections": [],
+      "content_preview": "Works much with his strength and energy, gets honour and"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_virgo_ascendant",
+      "number": null,
+      "title": "Predictions of Moon in Virgo Ascendant",
+      "level": 1,
+      "start_line": 20166,
+      "end_line": 20575,
+      "sections": [],
+      "content_preview": "Predictions of Moon in Virgo Ascendant Moon in the 1st House (Virgo) Gets gains with"
+    },
+    {
+      "id": "ch-spends_much",
+      "number": null,
+      "title": "Spends much,",
+      "level": 1,
+      "start_line": 20576,
+      "end_line": 20919,
+      "sections": [],
+      "content_preview": "Spends much, is of fickle and restless mind, thinks of remote things,"
+    },
+    {
+      "id": "ch-gets_some",
+      "number": null,
+      "title": "Gets some",
+      "level": 1,
+      "start_line": 20920,
+      "end_line": 21343,
+      "sections": [],
+      "content_preview": "Gets some loss in the side of enemies and maternal grandfather, gets some loss of brother and wife, loss on"
+    },
+    {
+      "id": "ch-spends_much-2",
+      "number": null,
+      "title": "Spends much,",
+      "level": 1,
+      "start_line": 21344,
+      "end_line": 23503,
+      "sections": [],
+      "content_preview": "Spends much, lives in foreign countries, some weakness in the house of father,"
+    },
+    {
+      "id": "ch-venus_when",
+      "number": null,
+      "title": "Venus when",
+      "level": 1,
+      "start_line": 23504,
+      "end_line": 25702,
+      "sections": [],
+      "content_preview": "Venus when will occupy either Pisces or Virgo sign, or Moon when"
+    },
+    {
+      "id": "ch-gets_many",
+      "number": null,
+      "title": "Gets many",
+      "level": 1,
+      "start_line": 25703,
+      "end_line": 30554,
+      "sections": [],
+      "content_preview": "Gets many kinds of gains in his life, but feels"
+    },
+    {
+      "id": "ch-some_weakness",
+      "number": null,
+      "title": "Some weakness",
+      "level": 1,
+      "start_line": 30555,
+      "end_line": 30648,
+      "sections": [],
+      "content_preview": "Some weakness and loss in the house of father and"
+    },
+    {
+      "id": "ch-gochara_transit",
+      "number": null,
+      "title": "Gochara (Transit)",
+      "level": 1,
+      "start_line": 30649,
+      "end_line": 30669,
+      "sections": [],
+      "content_preview": "Gochara (Transit) in Scorpio Ascendant Daily Predictions on Monetary Gains The Moon when occupies either Cancer or Leo or Virgo or Sagittarius or"
+    },
+    {
+      "id": "ch-monthly_predictions_on_monetary_gains",
+      "number": null,
+      "title": "Monthly Predictions on Monetary Gains",
+      "level": 1,
+      "start_line": 30670,
+      "end_line": 31781,
+      "sections": [],
+      "content_preview": "Monthly Predictions on Monetary Gains The Sun when occupies either Leo or Virgo or Scorpio or Sagittarius"
+    },
+    {
+      "id": "ch-bhrigu_samhita-6",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 31782,
+      "end_line": 31900,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Moon in the Vlllth House (Cancer) Has"
+    },
+    {
+      "id": "ch-predictions_of_mars",
+      "number": null,
+      "title": "Predictions of Mars",
+      "level": 1,
+      "start_line": 31901,
+      "end_line": 32037,
+      "sections": [],
+      "content_preview": "Predictions of Mars in Sagittarius Ascendant Mars in the 1st House"
+    },
+    {
+      "id": "ch-bhrigu_samhita-7",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 32038,
+      "end_line": 32307,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Mars in the Vllth House (Gemini) Experiences loss in"
+    },
+    {
+      "id": "ch-mercury_in",
+      "number": null,
+      "title": "Mercury in",
+      "level": 1,
+      "start_line": 32308,
+      "end_line": 32423,
+      "sections": [],
+      "content_preview": "Mercury in the IVth House (Pisces) Bears loss and weakness in the house of honour,"
+    },
+    {
+      "id": "ch-ixth_house",
+      "number": null,
+      "title": "IXth House",
+      "level": 1,
+      "start_line": 32424,
+      "end_line": 33086,
+      "sections": [],
+      "content_preview": "IXth House (Leo) Takes good care of Dharma in business and occupation, gets a dutiful and beautiful wife, gets nice"
+    },
+    {
+      "id": "ch-bhrigu_samhita-8",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 33087,
+      "end_line": 33107,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Venus in the Vlllth House (Cancer) Bears numerous worries for getting gains and income, some elegance"
+    },
+    {
+      "id": "ch-ixth_house-2",
+      "number": null,
+      "title": "IXth House",
+      "level": 1,
+      "start_line": 33108,
+      "end_line": 33570,
+      "sections": [],
+      "content_preview": "IXth House (Leo) Gets gains but some uneasiness in"
+    },
+    {
+      "id": "ch-predictions_of_dragons_head_rahu",
+      "number": null,
+      "title": "Predictions of Dragon's Head (Rahu)",
+      "level": 1,
+      "start_line": 33571,
+      "end_line": 33572,
+      "sections": [],
+      "content_preview": "Predictions of Dragon's Head (Rahu) in Sagittariu s Ascendant Rahu in the 1st House (Sagittarius) Bears physical"
+    },
+    {
+      "id": "ch-sagittariu_s_ascendant",
+      "number": null,
+      "title": "Sagittariu s Ascendant",
+      "level": 1,
+      "start_line": 33573,
+      "end_line": 33766,
+      "sections": [],
+      "content_preview": "Sagittariu s Ascendant Rahu in the 1st House (Sagittarius) Bears physical distress and worry, gets"
+    },
+    {
+      "id": "ch-bhrigu_samhita-9",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 33767,
+      "end_line": 35315,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Rahu in the Vlllth House (Cancer) Bears perplexities in"
+    },
+    {
+      "id": "ch-vlllth_house",
+      "number": null,
+      "title": "Vlllth House",
+      "level": 1,
+      "start_line": 35316,
+      "end_line": 37881,
+      "sections": [],
+      "content_preview": "Vlllth House (Leo) Bears loss in wife's house, bears"
+    },
+    {
+      "id": "ch-predictions_on_monetary_gains",
+      "number": null,
+      "title": "Predictions on Monetary Gains",
+      "level": 1,
+      "start_line": 37882,
+      "end_line": 38337,
+      "sections": [],
+      "content_preview": "Predictions on Monetary Gains The native will have advantages in the"
+    },
+    {
+      "id": "ch-business_government",
+      "number": null,
+      "title": "Business, Government",
+      "level": 1,
+      "start_line": 38338,
+      "end_line": 38515,
+      "sections": [],
+      "content_preview": "Business, Government and Society Venus when occupies either Libra or Scorpio or Capricorn or Aries or Pisces or Cancer or Taurus"
+    },
+    {
+      "id": "ch-bhrigu_samhita-10",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 38516,
+      "end_line": 40998,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Sun in the Vlth House (Cancer) Gets influence from the house of wife"
+    },
+    {
+      "id": "ch-saturn_in_the_vllth_house",
+      "number": null,
+      "title": "Saturn in the Vllth House",
+      "level": 1,
+      "start_line": 40999,
+      "end_line": 42752,
+      "sections": [],
+      "content_preview": "Saturn in the Vllth House (Leo) Faces perplexity in domestic life, has"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_pisces_ascendant",
+      "number": null,
+      "title": "Predictions of Moon in Pisces Ascendant",
+      "level": 1,
+      "start_line": 42753,
+      "end_line": 42982,
+      "sections": [],
+      "content_preview": "Predictions of Moon in Pisces Ascendant Moon in the 1st house (Pisces) Gets ideal strength"
+    },
+    {
+      "id": "ch-bhrigu_samhita-11",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 42983,
+      "end_line": 43168,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Moon in the Vllth House (Virgo) Achieves success in"
+    },
+    {
+      "id": "ch-pisces_m",
+      "number": null,
+      "title": "Pisces m",
+      "level": 1,
+      "start_line": 43169,
+      "end_line": 43170,
+      "sections": [],
+      "content_preview": "Pisces m 257 Predictions of Mars in Pisces Ascendant Mars in the 1st House (Pisces)"
+    },
+    {
+      "id": "ch-predictions_of_mars_in_pisces_ascendant",
+      "number": null,
+      "title": "Predictions of Mars in Pisces Ascendant",
+      "level": 1,
+      "start_line": 43171,
+      "end_line": 43348,
+      "sections": [],
+      "content_preview": "Predictions of Mars in Pisces Ascendant Mars in the 1st House (Pisces) Gets wealth"
+    },
+    {
+      "id": "ch-bhrigu_samhita-12",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 43349,
+      "end_line": 46531,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Mars in the Vllth House (Virgo) Experiences progress in occupation through his fortune, earns wealth, gains wealth due"
+    },
+    {
+      "id": "ch-bhrigu_samhita-13",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 46532,
+      "end_line": 46656,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Virgo sign, or when Venus will occupy either Pisces or Taurus"
+    },
+    {
+      "id": "ch-basic_terminology",
+      "number": null,
+      "title": "Basic Terminology",
+      "level": 1,
+      "start_line": 46657,
+      "end_line": 46726,
+      "sections": [],
+      "content_preview": "Basic Terminology and Case Studies  ## Page 271  Some Basics"
+    },
+    {
+      "id": "ch-libra_or",
+      "number": null,
+      "title": "Libra or",
+      "level": 1,
+      "start_line": 46727,
+      "end_line": 46774,
+      "sections": [],
+      "content_preview": "Libra or Tula 8. Scorpio or Vrishchika 9. Sagittarius or"
+    },
+    {
+      "id": "ch-aries_or",
+      "number": null,
+      "title": "Aries or",
+      "level": 1,
+      "start_line": 46775,
+      "end_line": 46792,
+      "sections": [],
+      "content_preview": "Aries or Mesha Mars 2 Taurus or Vrishiihha Venus"
+    },
+    {
+      "id": "ch-cancer_or",
+      "number": null,
+      "title": "Cancer or",
+      "level": 1,
+      "start_line": 46793,
+      "end_line": 46815,
+      "sections": [],
+      "content_preview": "Cancer or Karka Moon 10 Capricorn or Makora Saturn"
+    },
+    {
+      "id": "ch-libra_or-2",
+      "number": null,
+      "title": "Libra or",
+      "level": 1,
+      "start_line": 46816,
+      "end_line": 47190,
+      "sections": [],
+      "content_preview": "Libra or Tula Venus 6 Virgo or Kanya Mercury"
+    },
+    {
+      "id": "ch-saturn",
+      "number": null,
+      "title": "Saturn <",
+      "level": 1,
+      "start_line": 47191,
+      "end_line": 47274,
+      "sections": [],
+      "content_preview": "Saturn < ^ •* Saturn having the 3rd, 7th and 10th aspects from the sign ofits occupation  ## Page 276  A Few Case"
+    },
+    {
+      "id": "ch-balance_ofsaturn_dosha_at_birth_years_15-6-6",
+      "number": null,
+      "title": "Balance ofSaturn Dosha at Birth: Years 15-6-6",
+      "level": 1,
+      "start_line": 47275,
+      "end_line": 47325,
+      "sections": [],
+      "content_preview": "Balance ofSaturn Dosha at Birth: Years 15-6-6 Lagna Venus Sun Rahu Mercury Mars Jupiter"
+    },
+    {
+      "id": "ch-scorpio_and",
+      "number": null,
+      "title": "Scorpio and",
+      "level": 1,
+      "start_line": 47326,
+      "end_line": 47332,
+      "sections": [],
+      "content_preview": "Scorpio and is free from good or evil aspects. In the Navamsa  ## Page 277  A Few Case Studies"
+    },
+    {
+      "id": "ch-a_few_case_studies",
+      "number": null,
+      "title": "A Few Case Studies",
+      "level": 1,
+      "start_line": 47333,
+      "end_line": 47451,
+      "sections": [],
+      "content_preview": "A Few Case Studies 283 lagna, the native will share the"
+    },
+    {
+      "id": "ch-balance_ofrahu_dosha_at_birth_years_3-8-8",
+      "number": null,
+      "title": "Balance ofRahu Dosha at Birth: Years 3-8-8",
+      "level": 1,
+      "start_line": 47452,
+      "end_line": 47606,
+      "sections": [],
+      "content_preview": "Balance ofRahu Dosha at Birth: Years 3-8-8 Lagna is not occupied by any planet"
+    },
+    {
+      "id": "ch-balance_ofsaturn_dosha_at_birth_years_7-0-22",
+      "number": null,
+      "title": "Balance ofSaturn Dosha at Birth: Years 7-0-22",
+      "level": 1,
+      "start_line": 47607,
+      "end_line": 47731,
+      "sections": [],
+      "content_preview": "Balance ofSaturn Dosha at Birth: Years 7-0-22 Lagna no doubt is occupied by Ketu,"
+    },
+    {
+      "id": "ch-the_moon",
+      "number": null,
+      "title": "The Moon",
+      "level": 1,
+      "start_line": 47732,
+      "end_line": 47784,
+      "sections": [],
+      "content_preview": "The Moon is aspected by Saturn. Therefore, the native is"
+    },
+    {
+      "id": "ch-balance_ofmoon_dosha_at_birth_years_6-0-14",
+      "number": null,
+      "title": "Balance ofMoon Dosha at Birth: Years 6-0-14",
+      "level": 1,
+      "start_line": 47785,
+      "end_line": 47975,
+      "sections": [],
+      "content_preview": "Balance ofMoon Dosha at Birth: Years 6-0-14 Lagna is Mithuna or Gemini. It is aspected by neither good nor bad planets."
+    },
+    {
+      "id": "ch-lord_of_the",
+      "number": null,
+      "title": "Lord of the",
+      "level": 1,
+      "start_line": 47976,
+      "end_line": 48105,
+      "sections": [],
+      "content_preview": "Lord of the 5th is exalted in the 10th. Jupiter"
+    },
+    {
+      "id": "ch-sun_and_mercury",
+      "number": null,
+      "title": "Sun and Mercury,",
+      "level": 1,
+      "start_line": 48106,
+      "end_line": 48118,
+      "sections": [],
+      "content_preview": "Sun and Mercury, lords of the 2nd and 3rd. This is not very propitious. Lord of lagna, viz. the Moon"
+    },
+    {
+      "id": "ch-lord_of_lagna",
+      "number": null,
+      "title": "Lord of lagna",
+      "level": 1,
+      "start_line": 48119,
+      "end_line": 48225,
+      "sections": [],
+      "content_preview": "Lord of lagna is aspected by Jupiter (in the Navamsa) and is hammed between"
+    },
+    {
+      "id": "ch-balance_ofmars_dosha_at_birth_years_6-1-12",
+      "number": null,
+      "title": "Balance ofMars Dosha at Birth: Years 6-1-12",
+      "level": 1,
+      "start_line": 48226,
+      "end_line": 48283,
+      "sections": [],
+      "content_preview": "Balance ofMars Dosha at Birth: Years 6-1-12 Lagna is Cancer. Mars yogakaraka for this lagna,"
+    },
+    {
+      "id": "ch-saturn_the",
+      "number": null,
+      "title": "Saturn. The",
+      "level": 1,
+      "start_line": 48284,
+      "end_line": 48442,
+      "sections": [],
+      "content_preview": "Saturn. The first aspect is good, while the second"
+    },
+    {
+      "id": "ch-a_few_case_studies-2",
+      "number": null,
+      "title": "A Few Case Studies",
+      "level": 1,
+      "start_line": 48443,
+      "end_line": 48466,
+      "sections": [],
+      "content_preview": "A Few Case Studies 289 Sinha or Leo Chart- Mars Venus Sun Moon"
+    },
+    {
+      "id": "ch-balance_ofthe_moon_dosha_at_birth_years_3-3-8",
+      "number": null,
+      "title": "Balance ofthe Moon Dosha at Birth: Years 3-3-8",
+      "level": 1,
+      "start_line": 48467,
+      "end_line": 48474,
+      "sections": [],
+      "content_preview": "Balance ofthe Moon Dosha at Birth: Years 3-3-8 Lagna is occupied by Ketu and aspected by Rahu. Lagna is therefore weak."
+    },
+    {
+      "id": "ch-lord_of_lagna-2",
+      "number": null,
+      "title": "Lord of lagna",
+      "level": 1,
+      "start_line": 48475,
+      "end_line": 48594,
+      "sections": [],
+      "content_preview": "Lord of lagna viz., the Sun is in Taurus an inimical sign with"
+    },
+    {
+      "id": "ch-balance_ofthe_sun_dosha_at_birth_years_2-1-18",
+      "number": null,
+      "title": "Balance ofthe Sun Dosha at Birth: Years 2-1-18",
+      "level": 1,
+      "start_line": 48595,
+      "end_line": 48670,
+      "sections": [],
+      "content_preview": "Balance ofthe Sun Dosha at Birth: Years 2-1-18 Mars aspect on lagna gives a fair mddiness to"
+    },
+    {
+      "id": "ch-a_few_case_studies-3",
+      "number": null,
+      "title": "A Few Case Studies",
+      "level": 1,
+      "start_line": 48671,
+      "end_line": 48699,
+      "sections": [],
+      "content_preview": "A Few Case Studies 291 Kanya or Virgo Chart-10 Ketu ' Jupiter Rasi"
+    },
+    {
+      "id": "ch-balance_ofmoon_dosha_at_birth_years_7-5-25",
+      "number": null,
+      "title": "Balance ofMoon Dosha at Birth: Years 7-5-25",
+      "level": 1,
+      "start_line": 48700,
+      "end_line": 48753,
+      "sections": [],
+      "content_preview": "Balance ofMoon Dosha at Birth: Years 7-5-25 Lagna is occupied by its own lord in exaltation with"
+    },
+    {
+      "id": "ch-saturn_the-2",
+      "number": null,
+      "title": "Saturn. The",
+      "level": 1,
+      "start_line": 48754,
+      "end_line": 48940,
+      "sections": [],
+      "content_preview": "Saturn. The 1st house is not well-fortified. Virgo is a watery"
+    },
+    {
+      "id": "ch-balance_ofmoon_dosha_at_birth_years_9-8-1",
+      "number": null,
+      "title": "Balance ofMoon Dosha at Birth: Years 9-8-1",
+      "level": 1,
+      "start_line": 48941,
+      "end_line": 49080,
+      "sections": [],
+      "content_preview": "Balance ofMoon Dosha at Birth: Years 9-8-1 7 Lagna is not occupied or aspected by any good or evil planets."
+    },
+    {
+      "id": "ch-balance_ofsaturn_dosha_at_birth_years_8-11-3",
+      "number": null,
+      "title": "Balance ofSaturn Dosha at Birth : Years 8-11-3",
+      "level": 1,
+      "start_line": 49081,
+      "end_line": 49205,
+      "sections": [],
+      "content_preview": "Balance ofSaturn Dosha at Birth : Years 8-11-3 The ascendant is occupied by Moon, lord of the 9th."
+    },
+    {
+      "id": "ch-case_studies",
+      "number": null,
+      "title": "Case Studies",
+      "level": 1,
+      "start_line": 49206,
+      "end_line": 49208,
+      "sections": [],
+      "content_preview": "Case Studies • 295 Chart -14 Moon Ketu Rasi Sun"
+    },
+    {
+      "id": "ch-chart_-14",
+      "number": null,
+      "title": "Chart -14",
+      "level": 1,
+      "start_line": 49209,
+      "end_line": 49231,
+      "sections": [],
+      "content_preview": "Chart -14 Moon Ketu Rasi Sun Mars Saturn Venus"
+    },
+    {
+      "id": "ch-balance_ofsundosha_at_birth_years_1-9-18",
+      "number": null,
+      "title": "Balance ofSunDosha at Birth: Years 1-9-18.",
+      "level": 1,
+      "start_line": 49232,
+      "end_line": 49428,
+      "sections": [],
+      "content_preview": "Balance ofSunDosha at Birth: Years 1-9-18. He is inclined towards corpulence because Jupiter"
+    },
+    {
+      "id": "ch-balance_ofrahu_dosha_atbirth_years_11-6-11",
+      "number": null,
+      "title": "Balance ofRahu Dosha atBirth: Years 11-6-11",
+      "level": 1,
+      "start_line": 49429,
+      "end_line": 49639,
+      "sections": [],
+      "content_preview": "Balance ofRahu Dosha atBirth: Years 11-6-11 Lord of lagna Jupiter is in the 3rd, again hemmed"
+    },
+    {
+      "id": "ch-a_few_case_studies-4",
+      "number": null,
+      "title": "A Few Case Studies",
+      "level": 1,
+      "start_line": 49640,
+      "end_line": 49975,
+      "sections": [],
+      "content_preview": "A Few Case Studies 297 Makaraov Capricorn Chart- 16 Saturn Rahu Rasi Lagna"
+    },
+    {
+      "id": "ch-chart-_18",
+      "number": null,
+      "title": "Chart- 18",
+      "level": 1,
+      "start_line": 49976,
+      "end_line": 50038,
+      "sections": [],
+      "content_preview": "Chart- 18 Lagna Ketu Sun Venus Rasi Mercury Jupiter"
+    },
+    {
+      "id": "ch-jupiter_seems",
+      "number": null,
+      "title": "Jupiter seems",
+      "level": 1,
+      "start_line": 50039,
+      "end_line": 50077,
+      "sections": [],
+      "content_preview": "Jupiter seems to be prominent so far as physical characteristics are concerned. The body is not corpulent"
+    },
+    {
+      "id": "ch-balance_ofmercury_dosha_atbirth_year_7-8-12",
+      "number": null,
+      "title": "Balance ofMercury Dosha atBirth: Year 7-8-12",
+      "level": 1,
+      "start_line": 50078,
+      "end_line": 50301,
+      "sections": [],
+      "content_preview": "Balance ofMercury Dosha atBirth: Year 7-8-12  ## Page 294  300 \" Bhrigu Samhita"
+    },
+    {
+      "id": "ch-case_studies-2",
+      "number": null,
+      "title": "Case Studies",
+      "level": 1,
+      "start_line": 50302,
+      "end_line": 50657,
+      "sections": [],
+      "content_preview": "Case Studies 301 Mars in the 6th House Mars Rahu Sun"
+    },
+    {
+      "id": "ch-if_mercury",
+      "number": null,
+      "title": "If Mercury",
+      "level": 1,
+      "start_line": 50658,
+      "end_line": 50704,
+      "sections": [],
+      "content_preview": "If Mercury is in the 9th house, the native"
+    },
+    {
+      "id": "ch-case_studies-3",
+      "number": null,
+      "title": "Case Studies",
+      "level": 1,
+      "start_line": 50705,
+      "end_line": 50753,
+      "sections": [],
+      "content_preview": "Case Studies 303 ascendant and the 4th. For Leo ascendant,"
+    },
+    {
+      "id": "ch-for_libra_ascendant_he_will_be",
+      "number": null,
+      "title": "For Libra ascendant, he will be",
+      "level": 1,
+      "start_line": 50754,
+      "end_line": 50855,
+      "sections": [],
+      "content_preview": "For Libra ascendant, he will be in the 9th as lord of 9th. For"
+    },
+    {
+      "id": "ch-if_mercury-2",
+      "number": null,
+      "title": "If Mercury",
+      "level": 1,
+      "start_line": 50856,
+      "end_line": 51017,
+      "sections": [],
+      "content_preview": "If Mercury is in his own house of the sign of"
+    },
+    {
+      "id": "ch-dayal_upadhyaya",
+      "number": null,
+      "title": "Dayal Upadhyaya,",
+      "level": 1,
+      "start_line": 51018,
+      "end_line": 51036,
+      "sections": [],
+      "content_preview": "Dayal Upadhyaya, a very popular Janasangh leader. Jupiter in the"
+    },
+    {
+      "id": "ch-if_jupiter",
+      "number": null,
+      "title": "If Jupiter",
+      "level": 1,
+      "start_line": 51037,
+      "end_line": 51214,
+      "sections": [],
+      "content_preview": "If Jupiter is in his own sign (Sagittarius or Pisces)"
+    },
+    {
+      "id": "ch-a_few_case_studies-5",
+      "number": null,
+      "title": "A Few Case Studies",
+      "level": 1,
+      "start_line": 51215,
+      "end_line": 51394,
+      "sections": [],
+      "content_preview": "A Few Case Studies 305 and Cancer in the ascendant (Lagna Kendra) also"
+    },
+    {
+      "id": "ch-bhrigu_samhita-14",
+      "number": null,
+      "title": "Bhrigu Samhita",
+      "level": 1,
+      "start_line": 51395,
+      "end_line": 51530,
+      "sections": [],
+      "content_preview": "Bhrigu Samhita Venus in the 10th house Venus Moon Mars"
+    },
+    {
+      "id": "ch-case_studies-4",
+      "number": null,
+      "title": "Case Studies",
+      "level": 1,
+      "start_line": 51531,
+      "end_line": 51545,
+      "sections": [],
+      "content_preview": "Case Studies • 307 Saturn in the 1st house Mercury Sun Jupiter"
+    },
+    {
+      "id": "ch-if_saturn",
+      "number": null,
+      "title": "If Saturn",
+      "level": 1,
+      "start_line": 51546,
+      "end_line": 51693,
+      "sections": [],
+      "content_preview": "If Saturn is in the 1st house (ascendant), the native"
+    },
+    {
+      "id": "ch-if_the_moon",
+      "number": null,
+      "title": "If the Moon",
+      "level": 1,
+      "start_line": 51694,
+      "end_line": 51720,
+      "sections": [],
+      "content_preview": "If the Moon is in the 1st house (ascendant), the native"
+    },
+    {
+      "id": "ch-ifthe_moon",
+      "number": null,
+      "title": "Ifthe Moon",
+      "level": 1,
+      "start_line": 51721,
       "end_line": 52095,
       "sections": [],
-      "content_preview": "5. How to Judge a Horoscope, Vol. I - by Dr B.V Raman 6. Hindu Predictive Astrology - by Dr B.V. Raman "
+      "content_preview": "Ifthe Moon is in Aries, Taurus or Cancer, the native will be well-versed in shastras (Hindu"
     }
   ],
   "toc": [
     {
-      "id": "ch-1",
-      "title": "0",
-      "chapter": "0",
-      "chapter_id": "ch-1"
+      "id": "ch-the_book",
+      "title": "The book",
+      "chapter": "The book",
+      "chapter_id": "ch-the_book"
     },
     {
-      "id": "ch-1",
-      "title": "1",
-      "chapter": "1",
-      "chapter_id": "ch-1"
+      "id": "ch-shukra_who",
+      "title": "Shukra, who",
+      "chapter": "Shukra, who",
+      "chapter_id": "ch-shukra_who"
     },
     {
-      "id": "ch-1",
-      "title": "2",
-      "chapter": "2",
-      "chapter_id": "ch-1"
+      "id": "ch-universe_according",
+      "title": "Universe. According",
+      "chapter": "Universe. According",
+      "chapter_id": "ch-universe_according"
     },
     {
-      "id": "ch-1",
-      "title": "The Sun",
-      "chapter": "The Sun",
-      "chapter_id": "ch-1"
+      "id": "ch-bhrigu_was",
+      "title": "Bhrigu was",
+      "chapter": "Bhrigu was",
+      "chapter_id": "ch-bhrigu_was"
     },
     {
-      "id": "ch-1",
-      "title": "Bhrigu Samhita Paddhati",
-      "chapter": "Bhrigu Samhita Paddhati",
-      "chapter_id": "ch-1"
+      "id": "ch-fifth_veda",
+      "title": "Fifth Veda",
+      "chapter": "Fifth Veda",
+      "chapter_id": "ch-fifth_veda"
     },
     {
-      "id": "ch-5",
-      "title": "How to Judge a Horoscope,",
-      "chapter": "How to Judge a Horoscope,",
-      "chapter_id": "ch-5"
+      "id": "ch-similarly_when",
+      "title": "Similarly, when",
+      "chapter": "Similarly, when",
+      "chapter_id": "ch-similarly_when"
+    },
+    {
+      "id": "ch-sun_moon_mars",
+      "title": "Sun, Moon, Mars",
+      "chapter": "Sun, Moon, Mars",
+      "chapter_id": "ch-sun_moon_mars"
+    },
+    {
+      "id": "ch-the_deva_planets",
+      "title": "The Deva planets",
+      "chapter": "The Deva planets",
+      "chapter_id": "ch-the_deva_planets"
+    },
+    {
+      "id": "ch-various_ascendants",
+      "title": "Various Ascendants",
+      "chapter": "Various Ascendants",
+      "chapter_id": "ch-various_ascendants"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_aries_ascendant",
+      "title": "Predictions of Moon in Aries Ascendant",
+      "chapter": "Predictions of Moon in Aries Ascendant",
+      "chapter_id": "ch-predictions_of_moon_in_aries_ascendant"
+    },
+    {
+      "id": "ch-predictions_of_mars_in_aries_ascendant",
+      "title": "Predictions of Mars in Aries Ascendant",
+      "chapter": "Predictions of Mars in Aries Ascendant",
+      "chapter_id": "ch-predictions_of_mars_in_aries_ascendant"
+    },
+    {
+      "id": "ch-predictions_of_venus_in_aries_ascendant",
+      "title": "Predictions of Venus in Aries Ascendant",
+      "chapter": "Predictions of Venus in Aries Ascendant",
+      "chapter_id": "ch-predictions_of_venus_in_aries_ascendant"
+    },
+    {
+      "id": "ch-bhrigu_samhita",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita"
+    },
+    {
+      "id": "ch-bhrigu_samhita-2",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-2"
+    },
+    {
+      "id": "ch-yearly_predictions_on_monetary_gains",
+      "title": "Yearly Predictions on Monetary Gains",
+      "chapter": "Yearly Predictions on Monetary Gains",
+      "chapter_id": "ch-yearly_predictions_on_monetary_gains"
+    },
+    {
+      "id": "ch-saturn_when",
+      "title": "Saturn when",
+      "chapter": "Saturn when",
+      "chapter_id": "ch-saturn_when"
+    },
+    {
+      "id": "ch-ivth_house",
+      "title": "IVth House",
+      "chapter": "IVth House",
+      "chapter_id": "ch-ivth_house"
+    },
+    {
+      "id": "ch-ivth_house-2",
+      "title": "IVth House",
+      "chapter": "IVth House",
+      "chapter_id": "ch-ivth_house-2"
+    },
+    {
+      "id": "ch-ivth_house-3",
+      "title": "IVth House",
+      "chapter": "IVth House",
+      "chapter_id": "ch-ivth_house-3"
+    },
+    {
+      "id": "ch-ivth_house-4",
+      "title": "IVth House",
+      "chapter": "IVth House",
+      "chapter_id": "ch-ivth_house-4"
+    },
+    {
+      "id": "ch-bhrigu_samhita-3",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-3"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_cancer_ascendant",
+      "title": "Predictions of Moon in Cancer Ascendant",
+      "chapter": "Predictions of Moon in Cancer Ascendant",
+      "chapter_id": "ch-predictions_of_moon_in_cancer_ascendant"
+    },
+    {
+      "id": "ch-predictions_of_mars_in_cancer_ascendant",
+      "title": "Predictions of Mars in Cancer Ascendant",
+      "chapter": "Predictions of Mars in Cancer Ascendant",
+      "chapter_id": "ch-predictions_of_mars_in_cancer_ascendant"
+    },
+    {
+      "id": "ch-earns_money",
+      "title": "Earns money,",
+      "chapter": "Earns money,",
+      "chapter_id": "ch-earns_money"
+    },
+    {
+      "id": "ch-bhrigu_samhita-4",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-4"
+    },
+    {
+      "id": "ch-bhrigu_samhita-5",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-5"
+    },
+    {
+      "id": "ch-libra_or_aries",
+      "title": "Libra or Aries",
+      "chapter": "Libra or Aries",
+      "chapter_id": "ch-libra_or_aries"
+    },
+    {
+      "id": "ch-works_much_with",
+      "title": "Works much with",
+      "chapter": "Works much with",
+      "chapter_id": "ch-works_much_with"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_virgo_ascendant",
+      "title": "Predictions of Moon in Virgo Ascendant",
+      "chapter": "Predictions of Moon in Virgo Ascendant",
+      "chapter_id": "ch-predictions_of_moon_in_virgo_ascendant"
+    },
+    {
+      "id": "ch-spends_much",
+      "title": "Spends much,",
+      "chapter": "Spends much,",
+      "chapter_id": "ch-spends_much"
+    },
+    {
+      "id": "ch-gets_some",
+      "title": "Gets some",
+      "chapter": "Gets some",
+      "chapter_id": "ch-gets_some"
+    },
+    {
+      "id": "ch-spends_much-2",
+      "title": "Spends much,",
+      "chapter": "Spends much,",
+      "chapter_id": "ch-spends_much-2"
+    },
+    {
+      "id": "ch-venus_when",
+      "title": "Venus when",
+      "chapter": "Venus when",
+      "chapter_id": "ch-venus_when"
+    },
+    {
+      "id": "ch-gets_many",
+      "title": "Gets many",
+      "chapter": "Gets many",
+      "chapter_id": "ch-gets_many"
+    },
+    {
+      "id": "ch-some_weakness",
+      "title": "Some weakness",
+      "chapter": "Some weakness",
+      "chapter_id": "ch-some_weakness"
+    },
+    {
+      "id": "ch-gochara_transit",
+      "title": "Gochara (Transit)",
+      "chapter": "Gochara (Transit)",
+      "chapter_id": "ch-gochara_transit"
+    },
+    {
+      "id": "ch-monthly_predictions_on_monetary_gains",
+      "title": "Monthly Predictions on Monetary Gains",
+      "chapter": "Monthly Predictions on Monetary Gains",
+      "chapter_id": "ch-monthly_predictions_on_monetary_gains"
+    },
+    {
+      "id": "ch-bhrigu_samhita-6",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-6"
+    },
+    {
+      "id": "ch-predictions_of_mars",
+      "title": "Predictions of Mars",
+      "chapter": "Predictions of Mars",
+      "chapter_id": "ch-predictions_of_mars"
+    },
+    {
+      "id": "ch-bhrigu_samhita-7",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-7"
+    },
+    {
+      "id": "ch-mercury_in",
+      "title": "Mercury in",
+      "chapter": "Mercury in",
+      "chapter_id": "ch-mercury_in"
+    },
+    {
+      "id": "ch-ixth_house",
+      "title": "IXth House",
+      "chapter": "IXth House",
+      "chapter_id": "ch-ixth_house"
+    },
+    {
+      "id": "ch-bhrigu_samhita-8",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-8"
+    },
+    {
+      "id": "ch-ixth_house-2",
+      "title": "IXth House",
+      "chapter": "IXth House",
+      "chapter_id": "ch-ixth_house-2"
+    },
+    {
+      "id": "ch-predictions_of_dragons_head_rahu",
+      "title": "Predictions of Dragon's Head (Rahu)",
+      "chapter": "Predictions of Dragon's Head (Rahu)",
+      "chapter_id": "ch-predictions_of_dragons_head_rahu"
+    },
+    {
+      "id": "ch-sagittariu_s_ascendant",
+      "title": "Sagittariu s Ascendant",
+      "chapter": "Sagittariu s Ascendant",
+      "chapter_id": "ch-sagittariu_s_ascendant"
+    },
+    {
+      "id": "ch-bhrigu_samhita-9",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-9"
+    },
+    {
+      "id": "ch-vlllth_house",
+      "title": "Vlllth House",
+      "chapter": "Vlllth House",
+      "chapter_id": "ch-vlllth_house"
+    },
+    {
+      "id": "ch-predictions_on_monetary_gains",
+      "title": "Predictions on Monetary Gains",
+      "chapter": "Predictions on Monetary Gains",
+      "chapter_id": "ch-predictions_on_monetary_gains"
+    },
+    {
+      "id": "ch-business_government",
+      "title": "Business, Government",
+      "chapter": "Business, Government",
+      "chapter_id": "ch-business_government"
+    },
+    {
+      "id": "ch-bhrigu_samhita-10",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-10"
+    },
+    {
+      "id": "ch-saturn_in_the_vllth_house",
+      "title": "Saturn in the Vllth House",
+      "chapter": "Saturn in the Vllth House",
+      "chapter_id": "ch-saturn_in_the_vllth_house"
+    },
+    {
+      "id": "ch-predictions_of_moon_in_pisces_ascendant",
+      "title": "Predictions of Moon in Pisces Ascendant",
+      "chapter": "Predictions of Moon in Pisces Ascendant",
+      "chapter_id": "ch-predictions_of_moon_in_pisces_ascendant"
+    },
+    {
+      "id": "ch-bhrigu_samhita-11",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-11"
+    },
+    {
+      "id": "ch-pisces_m",
+      "title": "Pisces m",
+      "chapter": "Pisces m",
+      "chapter_id": "ch-pisces_m"
+    },
+    {
+      "id": "ch-predictions_of_mars_in_pisces_ascendant",
+      "title": "Predictions of Mars in Pisces Ascendant",
+      "chapter": "Predictions of Mars in Pisces Ascendant",
+      "chapter_id": "ch-predictions_of_mars_in_pisces_ascendant"
+    },
+    {
+      "id": "ch-bhrigu_samhita-12",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-12"
+    },
+    {
+      "id": "ch-bhrigu_samhita-13",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-13"
+    },
+    {
+      "id": "ch-basic_terminology",
+      "title": "Basic Terminology",
+      "chapter": "Basic Terminology",
+      "chapter_id": "ch-basic_terminology"
+    },
+    {
+      "id": "ch-libra_or",
+      "title": "Libra or",
+      "chapter": "Libra or",
+      "chapter_id": "ch-libra_or"
+    },
+    {
+      "id": "ch-aries_or",
+      "title": "Aries or",
+      "chapter": "Aries or",
+      "chapter_id": "ch-aries_or"
+    },
+    {
+      "id": "ch-cancer_or",
+      "title": "Cancer or",
+      "chapter": "Cancer or",
+      "chapter_id": "ch-cancer_or"
+    },
+    {
+      "id": "ch-libra_or-2",
+      "title": "Libra or",
+      "chapter": "Libra or",
+      "chapter_id": "ch-libra_or-2"
+    },
+    {
+      "id": "ch-saturn",
+      "title": "Saturn <",
+      "chapter": "Saturn <",
+      "chapter_id": "ch-saturn"
+    },
+    {
+      "id": "ch-balance_ofsaturn_dosha_at_birth_years_15-6-6",
+      "title": "Balance ofSaturn Dosha at Birth: Years 15-6-6",
+      "chapter": "Balance ofSaturn Dosha at Birth: Years 15-6-6",
+      "chapter_id": "ch-balance_ofsaturn_dosha_at_birth_years_15-6-6"
+    },
+    {
+      "id": "ch-scorpio_and",
+      "title": "Scorpio and",
+      "chapter": "Scorpio and",
+      "chapter_id": "ch-scorpio_and"
+    },
+    {
+      "id": "ch-a_few_case_studies",
+      "title": "A Few Case Studies",
+      "chapter": "A Few Case Studies",
+      "chapter_id": "ch-a_few_case_studies"
+    },
+    {
+      "id": "ch-balance_ofrahu_dosha_at_birth_years_3-8-8",
+      "title": "Balance ofRahu Dosha at Birth: Years 3-8-8",
+      "chapter": "Balance ofRahu Dosha at Birth: Years 3-8-8",
+      "chapter_id": "ch-balance_ofrahu_dosha_at_birth_years_3-8-8"
+    },
+    {
+      "id": "ch-balance_ofsaturn_dosha_at_birth_years_7-0-22",
+      "title": "Balance ofSaturn Dosha at Birth: Years 7-0-22",
+      "chapter": "Balance ofSaturn Dosha at Birth: Years 7-0-22",
+      "chapter_id": "ch-balance_ofsaturn_dosha_at_birth_years_7-0-22"
+    },
+    {
+      "id": "ch-the_moon",
+      "title": "The Moon",
+      "chapter": "The Moon",
+      "chapter_id": "ch-the_moon"
+    },
+    {
+      "id": "ch-balance_ofmoon_dosha_at_birth_years_6-0-14",
+      "title": "Balance ofMoon Dosha at Birth: Years 6-0-14",
+      "chapter": "Balance ofMoon Dosha at Birth: Years 6-0-14",
+      "chapter_id": "ch-balance_ofmoon_dosha_at_birth_years_6-0-14"
+    },
+    {
+      "id": "ch-lord_of_the",
+      "title": "Lord of the",
+      "chapter": "Lord of the",
+      "chapter_id": "ch-lord_of_the"
+    },
+    {
+      "id": "ch-sun_and_mercury",
+      "title": "Sun and Mercury,",
+      "chapter": "Sun and Mercury,",
+      "chapter_id": "ch-sun_and_mercury"
+    },
+    {
+      "id": "ch-lord_of_lagna",
+      "title": "Lord of lagna",
+      "chapter": "Lord of lagna",
+      "chapter_id": "ch-lord_of_lagna"
+    },
+    {
+      "id": "ch-balance_ofmars_dosha_at_birth_years_6-1-12",
+      "title": "Balance ofMars Dosha at Birth: Years 6-1-12",
+      "chapter": "Balance ofMars Dosha at Birth: Years 6-1-12",
+      "chapter_id": "ch-balance_ofmars_dosha_at_birth_years_6-1-12"
+    },
+    {
+      "id": "ch-saturn_the",
+      "title": "Saturn. The",
+      "chapter": "Saturn. The",
+      "chapter_id": "ch-saturn_the"
+    },
+    {
+      "id": "ch-a_few_case_studies-2",
+      "title": "A Few Case Studies",
+      "chapter": "A Few Case Studies",
+      "chapter_id": "ch-a_few_case_studies-2"
+    },
+    {
+      "id": "ch-balance_ofthe_moon_dosha_at_birth_years_3-3-8",
+      "title": "Balance ofthe Moon Dosha at Birth: Years 3-3-8",
+      "chapter": "Balance ofthe Moon Dosha at Birth: Years 3-3-8",
+      "chapter_id": "ch-balance_ofthe_moon_dosha_at_birth_years_3-3-8"
+    },
+    {
+      "id": "ch-lord_of_lagna-2",
+      "title": "Lord of lagna",
+      "chapter": "Lord of lagna",
+      "chapter_id": "ch-lord_of_lagna-2"
+    },
+    {
+      "id": "ch-balance_ofthe_sun_dosha_at_birth_years_2-1-18",
+      "title": "Balance ofthe Sun Dosha at Birth: Years 2-1-18",
+      "chapter": "Balance ofthe Sun Dosha at Birth: Years 2-1-18",
+      "chapter_id": "ch-balance_ofthe_sun_dosha_at_birth_years_2-1-18"
+    },
+    {
+      "id": "ch-a_few_case_studies-3",
+      "title": "A Few Case Studies",
+      "chapter": "A Few Case Studies",
+      "chapter_id": "ch-a_few_case_studies-3"
+    },
+    {
+      "id": "ch-balance_ofmoon_dosha_at_birth_years_7-5-25",
+      "title": "Balance ofMoon Dosha at Birth: Years 7-5-25",
+      "chapter": "Balance ofMoon Dosha at Birth: Years 7-5-25",
+      "chapter_id": "ch-balance_ofmoon_dosha_at_birth_years_7-5-25"
+    },
+    {
+      "id": "ch-saturn_the-2",
+      "title": "Saturn. The",
+      "chapter": "Saturn. The",
+      "chapter_id": "ch-saturn_the-2"
+    },
+    {
+      "id": "ch-balance_ofmoon_dosha_at_birth_years_9-8-1",
+      "title": "Balance ofMoon Dosha at Birth: Years 9-8-1",
+      "chapter": "Balance ofMoon Dosha at Birth: Years 9-8-1",
+      "chapter_id": "ch-balance_ofmoon_dosha_at_birth_years_9-8-1"
+    },
+    {
+      "id": "ch-balance_ofsaturn_dosha_at_birth_years_8-11-3",
+      "title": "Balance ofSaturn Dosha at Birth : Years 8-11-3",
+      "chapter": "Balance ofSaturn Dosha at Birth : Years 8-11-3",
+      "chapter_id": "ch-balance_ofsaturn_dosha_at_birth_years_8-11-3"
+    },
+    {
+      "id": "ch-case_studies",
+      "title": "Case Studies",
+      "chapter": "Case Studies",
+      "chapter_id": "ch-case_studies"
+    },
+    {
+      "id": "ch-chart_-14",
+      "title": "Chart -14",
+      "chapter": "Chart -14",
+      "chapter_id": "ch-chart_-14"
+    },
+    {
+      "id": "ch-balance_ofsundosha_at_birth_years_1-9-18",
+      "title": "Balance ofSunDosha at Birth: Years 1-9-18.",
+      "chapter": "Balance ofSunDosha at Birth: Years 1-9-18.",
+      "chapter_id": "ch-balance_ofsundosha_at_birth_years_1-9-18"
+    },
+    {
+      "id": "ch-balance_ofrahu_dosha_atbirth_years_11-6-11",
+      "title": "Balance ofRahu Dosha atBirth: Years 11-6-11",
+      "chapter": "Balance ofRahu Dosha atBirth: Years 11-6-11",
+      "chapter_id": "ch-balance_ofrahu_dosha_atbirth_years_11-6-11"
+    },
+    {
+      "id": "ch-a_few_case_studies-4",
+      "title": "A Few Case Studies",
+      "chapter": "A Few Case Studies",
+      "chapter_id": "ch-a_few_case_studies-4"
+    },
+    {
+      "id": "ch-chart-_18",
+      "title": "Chart- 18",
+      "chapter": "Chart- 18",
+      "chapter_id": "ch-chart-_18"
+    },
+    {
+      "id": "ch-jupiter_seems",
+      "title": "Jupiter seems",
+      "chapter": "Jupiter seems",
+      "chapter_id": "ch-jupiter_seems"
+    },
+    {
+      "id": "ch-balance_ofmercury_dosha_atbirth_year_7-8-12",
+      "title": "Balance ofMercury Dosha atBirth: Year 7-8-12",
+      "chapter": "Balance ofMercury Dosha atBirth: Year 7-8-12",
+      "chapter_id": "ch-balance_ofmercury_dosha_atbirth_year_7-8-12"
+    },
+    {
+      "id": "ch-case_studies-2",
+      "title": "Case Studies",
+      "chapter": "Case Studies",
+      "chapter_id": "ch-case_studies-2"
+    },
+    {
+      "id": "ch-if_mercury",
+      "title": "If Mercury",
+      "chapter": "If Mercury",
+      "chapter_id": "ch-if_mercury"
+    },
+    {
+      "id": "ch-case_studies-3",
+      "title": "Case Studies",
+      "chapter": "Case Studies",
+      "chapter_id": "ch-case_studies-3"
+    },
+    {
+      "id": "ch-for_libra_ascendant_he_will_be",
+      "title": "For Libra ascendant, he will be",
+      "chapter": "For Libra ascendant, he will be",
+      "chapter_id": "ch-for_libra_ascendant_he_will_be"
+    },
+    {
+      "id": "ch-if_mercury-2",
+      "title": "If Mercury",
+      "chapter": "If Mercury",
+      "chapter_id": "ch-if_mercury-2"
+    },
+    {
+      "id": "ch-dayal_upadhyaya",
+      "title": "Dayal Upadhyaya,",
+      "chapter": "Dayal Upadhyaya,",
+      "chapter_id": "ch-dayal_upadhyaya"
+    },
+    {
+      "id": "ch-if_jupiter",
+      "title": "If Jupiter",
+      "chapter": "If Jupiter",
+      "chapter_id": "ch-if_jupiter"
+    },
+    {
+      "id": "ch-a_few_case_studies-5",
+      "title": "A Few Case Studies",
+      "chapter": "A Few Case Studies",
+      "chapter_id": "ch-a_few_case_studies-5"
+    },
+    {
+      "id": "ch-bhrigu_samhita-14",
+      "title": "Bhrigu Samhita",
+      "chapter": "Bhrigu Samhita",
+      "chapter_id": "ch-bhrigu_samhita-14"
+    },
+    {
+      "id": "ch-case_studies-4",
+      "title": "Case Studies",
+      "chapter": "Case Studies",
+      "chapter_id": "ch-case_studies-4"
+    },
+    {
+      "id": "ch-if_saturn",
+      "title": "If Saturn",
+      "chapter": "If Saturn",
+      "chapter_id": "ch-if_saturn"
+    },
+    {
+      "id": "ch-if_the_moon",
+      "title": "If the Moon",
+      "chapter": "If the Moon",
+      "chapter_id": "ch-if_the_moon"
+    },
+    {
+      "id": "ch-ifthe_moon",
+      "title": "Ifthe Moon",
+      "chapter": "Ifthe Moon",
+      "chapter_id": "ch-ifthe_moon"
     }
   ],
-  "total_chapters": 6,
+  "total_chapters": 106,
   "total_sections": 0
 }

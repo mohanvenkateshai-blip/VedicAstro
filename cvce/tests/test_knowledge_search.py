@@ -1,6 +1,7 @@
 """Tests for KnowledgeEngine vector / hybrid search."""
 
 import json
+import os
 
 import pytest
 
@@ -167,3 +168,29 @@ def test_on_embeddings_updated_clears_cache(supabase_store_with_embeddings):
     assert result["status"] == "embeddings_updated"
     assert result["chunks_embedded"] == 42
     assert result["vector_search_available"] is True
+
+
+# ------------------------------------------------------------------
+# Live (non-mocked) verification — runs only when explicitly enabled.
+# Use after embeddings land: REAL_KE_SEARCH=1 pytest cvce/tests/test_knowledge_search.py::test_real_ke_search_when_live -s
+# ------------------------------------------------------------------
+
+def _real_ke_available() -> bool:
+    return bool(os.environ.get("REAL_KE_SEARCH") or os.environ.get("KE_REAL_EMBEDDINGS"))
+
+
+@pytest.mark.skipif(not _real_ke_available(), reason="set REAL_KE_SEARCH=1 (or KE_REAL_EMBEDDINGS) to run against live store")
+def test_real_ke_search_when_live():
+    """When embeddings live: vector flag true + real search hits carry source_id + similarity (vector path)."""
+    from knowledge_engine.integration import get_knowledge_engine, search_knowledge
+
+    ke = get_knowledge_engine()
+    assert ke.vector_search_available() is True, "vector_search_available must be True once corpus_chunks embeddings exist"
+
+    for q in ("dasha", "muhurta", "yoga"):
+        hits = search_knowledge(q, top_k=3) or ke.search(q, top_k=3) or []
+        assert hits, f"expected hits for {q}"
+        for h in hits[:2]:
+            assert "source_id" in h and h["source_id"], f"hit for {q} missing source_id"
+            # similarity present when vector contributed (may be 0.0 for pure keyword merge)
+            assert "similarity" in h, f"hit for {q} missing similarity key"

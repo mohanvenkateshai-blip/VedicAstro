@@ -975,7 +975,7 @@
       "content_preview": "Lagna and its trines.  167  ---  ## Page 168 "
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-2",
       "number": null,
       "title": "Phaladeepika\" composed by Mantreswara.",
       "level": 1,
@@ -1015,7 +1015,7 @@
       "content_preview": "Effects of aspects on the Moon  6. If the Moon be in Aries the effects of aspect on her by the Sun, Mars, Mercury, Jupiter, Venus and Saturn will respectively make the native (1) poor, (2) a king, (3) learned, (4) equal to a king, and (6) a thief.  If the Moon be in Taurus and be"
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-3",
       "number": null,
       "title": "Phaladeepika composed by Mantreswara.",
       "level": 1,
@@ -1085,7 +1085,7 @@
       "content_preview": "Chapter 21  Divisions of a sign  1. In this chapter is explained the method of calculating the antar dasa and pratyantar dasa. There are antar dasas of all the nine planets in a dasa. For example, in the dasa of the Sun there will be the antar dasas of the Sun and all the other p"
     },
     {
-      "id": "ch-divisions_of_a_sign",
+      "id": "ch-divisions_of_a_sign-2",
       "number": null,
       "title": "Divisions of a sign",
       "level": 1,
@@ -1115,7 +1115,7 @@
       "content_preview": "Jupiter in the dasa of Rahu.  201  ---  ## Page 202 "
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-4",
       "number": null,
       "title": "Phaladeepika composed by Mantreswara.",
       "level": 1,
@@ -1185,7 +1185,7 @@
       "content_preview": "Pindayur Dam  21. If the Sun and other planets are in their deep exaltation, the number Pindayurdaya Year allotted them are as follows — The Sun 19, The Moon 25, Mars 15, Mercury 12, Jupiter 15, Venus 21, and Saturn 20. All the reductions should be gone through as before. When a "
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-5",
       "number": null,
       "title": "Phaladeepika composed by Mantreswara.",
       "level": 1,
@@ -1495,7 +1495,7 @@
       "content_preview": "Distribution amongst limbs Effects  (a) The 1st and 2nd - face great fear  (b) 3rd, 4th, 5th, 6th - headd safety  (©) 7th, 8th - back victory over enemies (d) 9th. 10th - two eyes gain of wealth"
     },
     {
-      "id": "ch-distribution_amongst_limbs_effects",
+      "id": "ch-distribution_amongst_limbs_effects-2",
       "number": null,
       "title": "Distribution amongst limbs Effects",
       "level": 1,
@@ -1515,7 +1515,7 @@
       "content_preview": "The transits of Mercury, Jupiter and Venus  Distribution amongst limbs Effects  254  --- "
     },
     {
-      "id": "ch-distribution_amongst_limbs_effects",
+      "id": "ch-distribution_amongst_limbs_effects-3",
       "number": null,
       "title": "Distribution amongst limbs Effects",
       "level": 1,
@@ -1525,7 +1525,7 @@
       "content_preview": "Distribution amongst limbs Effects  254  ---  ## Page 255 "
     },
     {
-      "id": "ch-distribution_amongst_limbs_effects",
+      "id": "ch-distribution_amongst_limbs_effects-4",
       "number": null,
       "title": "Distribution amongst Limbs Effects",
       "level": 1,
@@ -2169,10 +2169,10 @@
       "chapter_id": "ch-lagna_and_its_trines"
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-2",
       "title": "Phaladeepika\" composed by Mantreswara.",
       "chapter": "Phaladeepika\" composed by Mantreswara.",
-      "chapter_id": "ch-phaladeepika_composed_by_mantreswara"
+      "chapter_id": "ch-phaladeepika_composed_by_mantreswara-2"
     },
     {
       "id": "ch-chapter_18",
@@ -2193,10 +2193,10 @@
       "chapter_id": "ch-effects_of_aspects_on_the_moon"
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-3",
       "title": "Phaladeepika composed by Mantreswara.",
       "chapter": "Phaladeepika composed by Mantreswara.",
-      "chapter_id": "ch-phaladeepika_composed_by_mantreswara"
+      "chapter_id": "ch-phaladeepika_composed_by_mantreswara-3"
     },
     {
       "id": "ch-chapter_19",
@@ -2235,10 +2235,10 @@
       "chapter_id": "ch-chapter_21"
     },
     {
-      "id": "ch-divisions_of_a_sign",
+      "id": "ch-divisions_of_a_sign-2",
       "title": "Divisions of a sign",
       "chapter": "Divisions of a sign",
-      "chapter_id": "ch-divisions_of_a_sign"
+      "chapter_id": "ch-divisions_of_a_sign-2"
     },
     {
       "id": "ch-in_120_years_the_duration_is_6_years",
@@ -2253,10 +2253,10 @@
       "chapter_id": "ch-jupiter_in_the_dasa_of_rahu"
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-4",
       "title": "Phaladeepika composed by Mantreswara.",
       "chapter": "Phaladeepika composed by Mantreswara.",
-      "chapter_id": "ch-phaladeepika_composed_by_mantreswara"
+      "chapter_id": "ch-phaladeepika_composed_by_mantreswara-4"
     },
     {
       "id": "ch-chapter_22",
@@ -2295,10 +2295,10 @@
       "chapter_id": "ch-pindayur_dam"
     },
     {
-      "id": "ch-phaladeepika_composed_by_mantreswara",
+      "id": "ch-phaladeepika_composed_by_mantreswara-5",
       "title": "Phaladeepika composed by Mantreswara.",
       "chapter": "Phaladeepika composed by Mantreswara.",
-      "chapter_id": "ch-phaladeepika_composed_by_mantreswara"
+      "chapter_id": "ch-phaladeepika_composed_by_mantreswara-5"
     },
     {
       "id": "ch-merc_ven",
@@ -2481,10 +2481,10 @@
       "chapter_id": "ch-distribution_amongst_limbs_effects"
     },
     {
-      "id": "ch-distribution_amongst_limbs_effects",
+      "id": "ch-distribution_amongst_limbs_effects-2",
       "title": "Distribution amongst limbs Effects",
       "chapter": "Distribution amongst limbs Effects",
-      "chapter_id": "ch-distribution_amongst_limbs_effects"
+      "chapter_id": "ch-distribution_amongst_limbs_effects-2"
     },
     {
       "id": "ch-the_transits_of_mercury_jupiter_and_venus",
@@ -2493,16 +2493,16 @@
       "chapter_id": "ch-the_transits_of_mercury_jupiter_and_venus"
     },
     {
-      "id": "ch-distribution_amongst_limbs_effects",
+      "id": "ch-distribution_amongst_limbs_effects-3",
       "title": "Distribution amongst limbs Effects",
       "chapter": "Distribution amongst limbs Effects",
-      "chapter_id": "ch-distribution_amongst_limbs_effects"
+      "chapter_id": "ch-distribution_amongst_limbs_effects-3"
     },
     {
-      "id": "ch-distribution_amongst_limbs_effects",
+      "id": "ch-distribution_amongst_limbs_effects-4",
       "title": "Distribution amongst Limbs Effects",
       "chapter": "Distribution amongst Limbs Effects",
-      "chapter_id": "ch-distribution_amongst_limbs_effects"
+      "chapter_id": "ch-distribution_amongst_limbs_effects-4"
     },
     {
       "id": "ch-the_lattas_are_of_two_kinds",

@@ -377,6 +377,7 @@ def build_report_facts(
     )
 
     # Consumer update: attach chapter hierarchy to graph matches/citations in output
+    # Expanded: also enrich from engine results that now carry chapter_citation/hierarchy_path
     try:
         for ins in (enhancements or {}).get("natal_insights") or []:
             for gm in (ins.get("graph_matches") or [])[:1]:
@@ -391,6 +392,17 @@ def build_report_facts(
                 if nid:
                     yc["chapter_hierarchy"] = get_hierarchy_for_node(nid)
                     break
+        # Pull from predictor outputs (yogas, dasha, ashtakavarga) which now resolve via KE
+        if getattr(pred, "yogas", None):
+            for y in (pred.yogas or [])[:3]:
+                if hasattr(y, "chapter_citation") and y.chapter_citation:
+                    # surface first concrete one
+                    if "yoga_chapter_citation" not in (pred.__dict__ if hasattr(pred, "__dict__") else {}):
+                        setattr(pred, "yoga_chapter_citation", y.chapter_citation)
+        if getattr(pred, "dasha", None) and getattr(pred.dasha, "chapter_citation", None):
+            setattr(pred, "dasha_chapter_citation", pred.dasha.chapter_citation)
+        if getattr(pred, "ashtakavarga", None) and getattr(pred.ashtakavarga, "chapter_citation", None):
+            setattr(pred, "ashtakavarga_chapter_citation", pred.ashtakavarga.chapter_citation)
     except Exception:
         pass
 
@@ -594,6 +606,12 @@ def build_report_facts(
             "god_node_insights": (enhancements or {}).get("god_node_insights") or [],
             "text_conflicts": (enhancements or {}).get("text_conflicts") or [],
             "graph_stats": (enhancements or {}).get("graph_stats"),
+        },
+        # Chapter-aware classical provenance (from engines consuming KE structured chapters + patches)
+        "classical_sources": {
+            "yoga": getattr(pred, "yoga_chapter_citation", None) or (getattr(pred, "yogas", [None])[0].chapter_citation if getattr(pred, "yogas", None) and getattr(pred.yogas[0], "chapter_citation", None) else None),
+            "dasha": getattr(pred, "dasha_chapter_citation", None) or getattr(getattr(pred, "dasha", None), "chapter_citation", None),
+            "ashtakavarga": getattr(pred, "ashtakavarga_chapter_citation", None) or getattr(getattr(pred, "ashtakavarga", None), "chapter_citation", None),
         },
         "next_shubh_days": next_shubh_days,
         "timing_merge": timing_merge,

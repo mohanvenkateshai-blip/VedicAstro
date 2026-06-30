@@ -91,8 +91,18 @@ def _notify_knowledge_engine_after_promote(graph_path: Path) -> None:
     from knowledge_engine.engine import KnowledgeEngine
 
     version = _promoted_graph_version()
-    KnowledgeEngine().on_new_literature_ingested(graph_path, version)
+    ke = KnowledgeEngine()
+    ke.on_new_literature_ingested(graph_path, version)
     print(f"✓ KnowledgeEngine cascade ({version}) → {graph_path}")
+
+    # === KE now owns the organised structured data ===
+    # After new literature is promoted, re-trigger structured chapter tree build + node remapping
+    # so that Learn / CVCE consumers receive the clean chapters + linked KE nodes for the new content.
+    try:
+        rb = ke.rebuild_and_remap_structured()
+        print(f"✓ KE structured ownership refreshed (structured={rb.get('structured',{}).get('status')}, mapping={rb.get('mapping',{}).get('status')})")
+    except Exception as e:
+        print(f"  (structured remap optional step skipped: {e})")
 
 
 def _md_name_for_pdf(pdf: Path) -> str:

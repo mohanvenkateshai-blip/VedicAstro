@@ -1,68 +1,527 @@
 {
-  "generated_at": "2026-06-30T03:32:00Z",
-  "source": "Structured Library Quality Auditor subagent",
-  "overall_health": 62,
+  "generated_at": "2026-06-30T02:55:33.663338Z",
+  "source": "Audit Regenerator + Quality Rebuilder agent (parallel wave)",
+  "overall_health": 77,
   "total_books": 61,
-  "books_with_zero_chapters": 6,
-  "books_with_less_than_3_real_chapters": 11,
-  "books_with_zero_sections": 29,
-  "needs_review_critical": [
-    "Jaimini_Sutras",
-    "Hora_Sara",
-    "Bhavartha_Ratnakara",
-    "Jataka_Chandrika",
-    "Jataka_Tatva_Mahadeva",
-    "Vedanga_Jyotisa_Lagadha",
-    "Brihat_Parasara_Hora_Sastra_Vol_2",
-    "Do_Ghati_Muhurta_Reference_Mysuru_Athlone",
-    "Panchang_analysis_medhraj",
-    "Tithi Astrology Master Reference Guide",
-    "Tithi–Vāra Yoga Handbook",
-    "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress",
-    "muhurta_yogas"
-  ],
+  "books_with_zero_chapters": 1,
+  "books_with_less_than_3_real_chapters": 5,
+  "books_with_zero_sections": 28,
+  "parse_quality": {
+    "medium": 57,
+    "high": 3,
+    "needs_review": 1
+  },
+  "median_per_book_health": 80,
+  "mean_per_book_health": 76.9,
   "high_quality": [
-    "Ashtakavarga_System_Comprehensive_Handbook",
-    "vedic_astrology_unified_handbook",
-    "vedic_yoga_logic_engine",
-    "Uttara_Kalamrita",
-    "Tara_Balam_Muhurta_Handbook",
-    "rath_s_jaimini_maharishis_upadesa_sutra",
     "Crux_of_Vedic_Astrology_Timing_of_Events1",
-    "Bhava_and_Graha_Balas_BVRaman_1996",
-    "Prasna_Marga_Part_1",
-    "Prasna_Marga_Part_2",
-    "Phaladeepika_English_Translation",
-    "patel_cs_aiyar_cas_ashtakavarga",
-    "Predict_Effectively_Through_Yogini_Dasha",
-    "Predicting_Through_Jaimini_Astrology",
-    "Introduction_to_Vedic_Astrology_Sanjay_Rath",
-    "wilhelm_ernst_classical_muhurta_jyotish",
-    "boney_marc_intricate_patterns_of_destiny_how_to_make_accurat",
-    "the_jyotish_digest_2005_volume_1_no_01_january_1",
-    "the_jyotish_digest_2007_volume_3_no_04_november_1",
-    "the_jyotish_digest_2009_volume_5_no_04_october_15",
-    "Ravi_Yoga_Vedic_Astrology_Guide",
-    "SBC_Vedha_and_Panchang_Reference_Guide",
-    "Vedic_Astrology_Panchang_Handbook",
-    "Vedic_Astrology_Tithi_Guide",
-    "utpata_mrityu_kana_siddhi_handbook",
-    "gemini-code-1780093366483"
+    "Jaimini_Sutras",
+    "vedic_astrology_unified_handbook",
+    "vedic_yoga_logic_engine"
   ],
-  "priority_fix_order": [
-    "Jaimini_Sutras (high user visibility in /learn/jaimini)",
-    "Six zero-chapter books (add ##/heading fallback)",
-    "Hora_Sara / Bhavartha / Vedanga (header denylist)",
-    "Brihat_Samhita / BPHS (TOC guard)",
-    "Add Sutra/Stanza section patterns for classics"
+  "needs_review_critical": [
+    "Activity_Mapping",
+    "Jataka_Tatva_Mahadeva",
+    "gemini-code-1780093366483",
+    "Tithi–Vāra Yoga Handbook",
+    "Phaladeepika_English_Translation"
   ],
   "key_stats": {
-    "avg_chapters": 139.2,
-    "median_chapters": 34,
-    "avg_real_chapters": 116.3,
-    "median_real_chapters": 26,
-    "total_sections": 641,
-    "classics_zero_section_pct": 97
+    "total_chapters": 12150,
+    "avg_chapters": 199.2,
+    "median_chapters": 119,
+    "total_sections": 1520,
+    "books_with_parse_quality": 61
   },
-  "notes": "Full detailed report in docs/structured-gyan-library-audit-2026-06-30.md. Use high_quality list for immediate reader integration and needs_review for targeted parser work by refiner/mapper."
+  "per_book": [
+    {
+      "book_id": "Crux_of_Vedic_Astrology_Timing_of_Events1",
+      "chapters": 132,
+      "sections": 94,
+      "parse_quality": "medium",
+      "health": 100,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Jaimini_Sutras",
+      "chapters": 10,
+      "sections": 659,
+      "parse_quality": "high",
+      "health": 100,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "vedic_astrology_unified_handbook",
+      "chapters": 5,
+      "sections": 15,
+      "parse_quality": "high",
+      "health": 100,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "vedic_yoga_logic_engine",
+      "chapters": 5,
+      "sections": 13,
+      "parse_quality": "high",
+      "health": 100,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Ashtakavarga_System_Comprehensive_Handbook",
+      "chapters": 49,
+      "sections": 13,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Bhava_and_Graha_Balas_BVRaman_1996",
+      "chapters": 251,
+      "sections": 69,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Bhavartha_Ratnakara",
+      "chapters": 106,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Bhrigu_Samhita_TMRao",
+      "chapters": 106,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Brihat_Jataka",
+      "chapters": 54,
+      "sections": 1,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Brihat_Parasara_Hora_Sastra_Vol_1",
+      "chapters": 281,
+      "sections": 70,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Brihat_Samhita",
+      "chapters": 43,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Do_Ghati_Muhurta_Comprehensive_Handbook",
+      "chapters": 220,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Do_Ghati_Muhurta_Reference_Mysuru_Athlone",
+      "chapters": 59,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "FireShot Capture 034 - Vara Tithi Nakshatra Yogas - Celestial Alignments for Auspicious Be_ - [blog.cosmicinsights.net]",
+      "chapters": 15,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Hora_Sara",
+      "chapters": 32,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Hora_Shastra_Varahamihira",
+      "chapters": 119,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Jataka_Chandrika",
+      "chapters": 80,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Jataka_Parijata",
+      "chapters": 49,
+      "sections": 0,
+      "parse_quality": "medium-improved",
+      "health": 75,
+      "junk_titles": 0,
+      "note": "page-group rescue from OCR (49 Pages X-Y ranges)"
+    },
+    {
+      "book_id": "Jyotish_Yoga_Handbook_101",
+      "chapters": 132,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Laghu_Parashari",
+      "chapters": 56,
+      "sections": 7,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Panchang_analysis_medhraj",
+      "chapters": 9,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Phaladeepika_Mantreswara",
+      "chapters": 157,
+      "sections": 1,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Phaladeepika_Mantreswara_1961",
+      "chapters": 3,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Prasna_Marga_Part_2",
+      "chapters": 12,
+      "sections": 3,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Predict_Effectively_Through_Yogini_Dasha",
+      "chapters": 270,
+      "sections": 5,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Ravi_Yoga_Vedic_Astrology_Guide",
+      "chapters": 21,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "SBC_Vedha_and_Panchang_Reference_Guide",
+      "chapters": 16,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Saravali",
+      "chapters": 144,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Sarvartha_Chintamani",
+      "chapters": 90,
+      "sections": 12,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Tithi Astrology Master Reference Guide",
+      "chapters": 208,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "To build an automated yoga and Muhurta computing engine",
+      "chapters": 44,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Uttara_Kalamrita",
+      "chapters": 277,
+      "sections": 64,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Vedanga_Jyotisa_Lagadha",
+      "chapters": 148,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Vedic_Astrology_Panchang_Handbook",
+      "chapters": 16,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Vedic_Astrology_Tithi_Guide",
+      "chapters": 17,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "boney_marc_intricate_patterns_of_destiny_how_to_make_accurat",
+      "chapters": 181,
+      "sections": 13,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress",
+      "chapters": 40,
+      "sections": 1,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "muhurta_yogas",
+      "chapters": 18,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "patel_cs_aiyar_cas_ashtakavarga",
+      "chapters": 208,
+      "sections": 39,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "the_jyotish_digest_2007_volume_3_no_04_november_1",
+      "chapters": 242,
+      "sections": 7,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "the_jyotish_digest_2009_volume_5_no_04_october_15",
+      "chapters": 230,
+      "sections": 5,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "utpata_mrityu_kana_siddhi_handbook",
+      "chapters": 8,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 80,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Brihat_Parasara_Hora_Sastra_Vol_2",
+      "chapters": 336,
+      "sections": 2,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Deva_Keralam_1",
+      "chapters": 731,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Deva_Keralam_2",
+      "chapters": 898,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Deva_Keralam_3",
+      "chapters": 625,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Gochar_Phaladeepika_Pulippani",
+      "chapters": 433,
+      "sections": 10,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Graha_Laghava",
+      "chapters": 737,
+      "sections": 6,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Introduction_to_Vedic_Astrology_Sanjay_Rath",
+      "chapters": 532,
+      "sections": 33,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Prasna_Marga_Part_1",
+      "chapters": 716,
+      "sections": 3,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Predicting_Through_Jaimini_Astrology",
+      "chapters": 429,
+      "sections": 4,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Tara_Balam_Muhurta_Handbook",
+      "chapters": 461,
+      "sections": 28,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Vedic_remedies_by_srath_pdf_free",
+      "chapters": 833,
+      "sections": 62,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "rath_s_jaimini_maharishis_upadesa_sutra",
+      "chapters": 355,
+      "sections": 111,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "the_jyotish_digest_2005_volume_1_no_01_january_1",
+      "chapters": 341,
+      "sections": 39,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "wilhelm_ernst_classical_muhurta_jyotish",
+      "chapters": 426,
+      "sections": 9,
+      "parse_quality": "medium",
+      "health": 70,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Activity_Mapping",
+      "chapters": 1,
+      "sections": 115,
+      "parse_quality": "medium",
+      "health": 60,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Jataka_Tatva_Mahadeva",
+      "chapters": 0,
+      "sections": 0,
+      "parse_quality": "needs_review",
+      "health": 60,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "gemini-code-1780093366483",
+      "chapters": 1,
+      "sections": 5,
+      "parse_quality": "medium",
+      "health": 60,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Tithi–Vāra Yoga Handbook",
+      "chapters": 2,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 50,
+      "junk_titles": 0
+    },
+    {
+      "book_id": "Phaladeepika_English_Translation",
+      "chapters": 1,
+      "sections": 0,
+      "parse_quality": "medium",
+      "health": 40,
+      "junk_titles": 0
+    }
+  ]
 }

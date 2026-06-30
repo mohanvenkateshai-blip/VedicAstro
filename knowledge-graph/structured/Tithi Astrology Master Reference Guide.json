@@ -156,7 +156,7 @@
       "content_preview": "Thithi Name  Tithi Group  Ruling Planet  Element "
     },
     {
-      "id": "ch-tithi_group",
+      "id": "ch-tithi_group-2",
       "number": null,
       "title": "Tithi Group",
       "level": 1,
@@ -166,7 +166,7 @@
       "content_preview": "Tithi Group  Ruling Planet  Element  Actionable Fruits & Best Activities "
     },
     {
-      "id": "ch-ruling_planet",
+      "id": "ch-ruling_planet-2",
       "number": null,
       "title": "Ruling Planet",
       "level": 1,
@@ -956,7 +956,7 @@
       "content_preview": "Shravana, Rohini, Mrigashira, Pushya, Anuradha  Tuesday(Mangala)  Uttara Ashadha  Shatabhisha "
     },
     {
-      "id": "ch-uttara_ashadha",
+      "id": "ch-uttara_ashadha-2",
       "number": null,
       "title": "Uttara Ashadha",
       "level": 1,
@@ -1116,7 +1116,7 @@
       "content_preview": "Purva Phalguni  Brahma  5  Shobhana "
     },
     {
-      "id": "ch-uttara_phalguni",
+      "id": "ch-uttara_phalguni-2",
       "number": null,
       "title": "Uttara Phalguni",
       "level": 1,
@@ -1166,7 +1166,7 @@
       "content_preview": "Pavana Deva  14  Harshana  Auspicious "
     },
     {
-      "id": "ch-uttara_ashadha",
+      "id": "ch-uttara_ashadha-3",
       "number": null,
       "title": "Uttara Ashadha",
       "level": 1,
@@ -1176,7 +1176,7 @@
       "content_preview": "Uttara Ashadha  Bhaga  15  Vajra "
     },
     {
-      "id": "ch-purva_bhadrapada",
+      "id": "ch-purva_bhadrapada-2",
       "number": null,
       "title": "Purva Bhadrapada",
       "level": 1,
@@ -1286,7 +1286,7 @@
       "content_preview": "Puro-Latta (Forward)  12th Nakshatra ahead  Ruin of ventures, legal troubles, friction with father or authority.  Mars "
     },
     {
-      "id": "ch-puro-latta_forward",
+      "id": "ch-puro-latta_forward-2",
       "number": null,
       "title": "Puro-Latta (Forward)",
       "level": 1,
@@ -1296,7 +1296,7 @@
       "content_preview": "Puro-Latta (Forward)  3rd Nakshatra ahead  Utter ruination, physical injuries, accidents, and severe conflict with siblings.  Jupiter "
     },
     {
-      "id": "ch-puro-latta_forward",
+      "id": "ch-puro-latta_forward-3",
       "number": null,
       "title": "Puro-Latta (Forward)",
       "level": 1,
@@ -1306,7 +1306,7 @@
       "content_preview": "Puro-Latta (Forward)  6th Nakshatra ahead  Ultimate ruin, financial losses, separation from family, and insecurity.  Saturn "
     },
     {
-      "id": "ch-puro-latta_forward",
+      "id": "ch-puro-latta_forward-4",
       "number": null,
       "title": "Puro-Latta (Forward)",
       "level": 1,
@@ -1356,7 +1356,7 @@
       "content_preview": "Intense mental anxiety and significant financial losses.  Mercury  Prashchat-Latta (Backward)  7th Nakshatra behind "
     },
     {
-      "id": "ch-prashchat-latta_backward",
+      "id": "ch-prashchat-latta_backward-2",
       "number": null,
       "title": "Prashchat-Latta (Backward)",
       "level": 1,
@@ -1376,7 +1376,7 @@
       "content_preview": "Failures in communication, career downfalls, and business disasters.  Venus  Prashchat-Latta (Backward)  5th Nakshatra behind "
     },
     {
-      "id": "ch-prashchat-latta_backward",
+      "id": "ch-prashchat-latta_backward-3",
       "number": null,
       "title": "Prashchat-Latta (Backward)",
       "level": 1,
@@ -1386,7 +1386,7 @@
       "content_preview": "Prashchat-Latta (Backward)  5th Nakshatra behind  Marital disharmony, illness or trouble to the spouse, and relationship strain.  Rahu "
     },
     {
-      "id": "ch-prashchat-latta_backward",
+      "id": "ch-prashchat-latta_backward-4",
       "number": null,
       "title": "Prashchat-Latta (Backward)",
       "level": 1,
@@ -1476,7 +1476,7 @@
       "content_preview": "Type / Classification  Ruling Planet  Ruling Deity  Inherent Quality "
     },
     {
-      "id": "ch-ruling_planet",
+      "id": "ch-ruling_planet-3",
       "number": null,
       "title": "Ruling Planet",
       "level": 1,
@@ -1526,7 +1526,7 @@
       "content_preview": "Movable (Chara)  Sun  Indra  Benefic "
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-2",
       "number": null,
       "title": "Movable (Chara)",
       "level": 1,
@@ -1536,7 +1536,7 @@
       "content_preview": "Movable (Chara)  Moon  Brahma  Benefic "
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-3",
       "number": null,
       "title": "Movable (Chara)",
       "level": 1,
@@ -1556,7 +1556,7 @@
       "content_preview": "Surya / Mitra  Benefic  Strengthening friendships, setting up partnerships, purchasing or caring for animals, agriculture, and love/marriage affairs.  4 "
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-4",
       "number": null,
       "title": "Movable (Chara)",
       "level": 1,
@@ -1566,7 +1566,7 @@
       "content_preview": "Movable (Chara)  Mercury  Vishvakarma  Benefic "
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-5",
       "number": null,
       "title": "Movable (Chara)",
       "level": 1,
@@ -1576,7 +1576,7 @@
       "content_preview": "Movable (Chara)  Jupiter  Prithvi  Benefic "
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-6",
       "number": null,
       "title": "Movable (Chara)",
       "level": 1,
@@ -1596,7 +1596,7 @@
       "content_preview": "Vishti (Bhadra)  Movable (Chara)  Saturn  Yama "
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-7",
       "number": null,
       "title": "Movable (Chara)",
       "level": 1,
@@ -1646,7 +1646,7 @@
       "content_preview": "Mild Malefic  Curing long-term diseases, administering medicine, handling herbs, architectural repairs, and settling ongoing disputes.  9  Chatuspada "
     },
     {
-      "id": "ch-fixed_sthira",
+      "id": "ch-fixed_sthira-2",
       "number": null,
       "title": "Fixed (Sthira)",
       "level": 1,
@@ -1656,7 +1656,7 @@
       "content_preview": "Fixed (Sthira)  Ketu  Rudra  Mild Malefic "
     },
     {
-      "id": "ch-mild_malefic",
+      "id": "ch-mild_malefic-2",
       "number": null,
       "title": "Mild Malefic",
       "level": 1,
@@ -1666,7 +1666,7 @@
       "content_preview": "Mild Malefic  Governance, political activities, interactions with cattle/livestock, ancestral rites (Shraddha), and internal structural demolition.  10  Naga "
     },
     {
-      "id": "ch-fixed_sthira",
+      "id": "ch-fixed_sthira-3",
       "number": null,
       "title": "Fixed (Sthira)",
       "level": 1,
@@ -1676,7 +1676,7 @@
       "content_preview": "Fixed (Sthira)  Rahu  Naga Deva  Malefic "
     },
     {
-      "id": "ch-naga_deva",
+      "id": "ch-naga_deva-2",
       "number": null,
       "title": "Naga Deva",
       "level": 1,
@@ -1686,7 +1686,7 @@
       "content_preview": "Naga Deva  Malefic  Direct operations related to mining, mineral extraction, land clearings, and forceful actions aimed at neutralizing an opposition.  11 "
     },
     {
-      "id": "ch-fixed_sthira",
+      "id": "ch-fixed_sthira-4",
       "number": null,
       "title": "Fixed (Sthira)",
       "level": 1,
@@ -1876,7 +1876,7 @@
       "content_preview": "Leo (2nd)  Bhadra (2, 7, 12)  Wednesday  Anuradha "
     },
     {
-      "id": "ch-bhadra_2_7_12",
+      "id": "ch-bhadra_2_7_12-2",
       "number": null,
       "title": "Bhadra (2, 7, 12)",
       "level": 1,
@@ -1936,7 +1936,7 @@
       "content_preview": "Gemini (10th)  Purna (5, 10, 15, 30)  Saturday  Shravana "
     },
     {
-      "id": "ch-purna_5_10_15_30",
+      "id": "ch-purna_5_10_15_30-2",
       "number": null,
       "title": "Purna (5, 10, 15, 30)",
       "level": 1,
@@ -1986,7 +1986,7 @@
       "content_preview": "Taurus (7th)  Nanda (1, 6, 11)  Friday  Revati "
     },
     {
-      "id": "ch-nanda_1_6_11",
+      "id": "ch-nanda_1_6_11-2",
       "number": null,
       "title": "Nanda (1, 6, 11)",
       "level": 1,
@@ -2006,7 +2006,7 @@
       "content_preview": "Pisces (4th)  Jaya (3, 8, 13)  Friday  Bharani "
     },
     {
-      "id": "ch-jaya_3_8_13",
+      "id": "ch-jaya_3_8_13-2",
       "number": null,
       "title": "Jaya (3, 8, 13)",
       "level": 1,
@@ -2026,7 +2026,7 @@
       "content_preview": "Leo (8th)  Rikta (4, 9, 14)  Tuesday  Rohini "
     },
     {
-      "id": "ch-rikta_4_9_14",
+      "id": "ch-rikta_4_9_14-2",
       "number": null,
       "title": "Rikta (4, 9, 14)",
       "level": 1,
@@ -2036,7 +2036,7 @@
       "content_preview": "Rikta (4, 9, 14)  Tuesday  Rohini  Vaishakha "
     },
     {
-      "id": "ch-mars_sun",
+      "id": "ch-mars_sun-2",
       "number": null,
       "title": "Mars / Sun",
       "level": 1,
@@ -2056,7 +2056,7 @@
       "content_preview": "Sagittarius (11th)  Jaya (3, 8, 13)  Thursday  Ardra "
     },
     {
-      "id": "ch-jaya_3_8_13",
+      "id": "ch-jaya_3_8_13-3",
       "number": null,
       "title": "Jaya (3, 8, 13)",
       "level": 1,
@@ -2076,7 +2076,7 @@
       "content_preview": "Aquarius (12th)  Purna (5, 10, 15, 30)  Friday  Ashlesha "
     },
     {
-      "id": "ch-purna_5_10_15_30",
+      "id": "ch-purna_5_10_15_30-3",
       "number": null,
       "title": "Purna (5, 10, 15, 30)",
       "level": 1,
@@ -2178,16 +2178,16 @@
       "chapter_id": "ch-thithi_name"
     },
     {
-      "id": "ch-tithi_group",
+      "id": "ch-tithi_group-2",
       "title": "Tithi Group",
       "chapter": "Tithi Group",
-      "chapter_id": "ch-tithi_group"
+      "chapter_id": "ch-tithi_group-2"
     },
     {
-      "id": "ch-ruling_planet",
+      "id": "ch-ruling_planet-2",
       "title": "Ruling Planet",
       "chapter": "Ruling Planet",
-      "chapter_id": "ch-ruling_planet"
+      "chapter_id": "ch-ruling_planet-2"
     },
     {
       "id": "ch-actionable_fruits_best_activities",
@@ -2658,10 +2658,10 @@
       "chapter_id": "ch-shravana_rohini_mrigashira_pushya_anuradha"
     },
     {
-      "id": "ch-uttara_ashadha",
+      "id": "ch-uttara_ashadha-2",
       "title": "Uttara Ashadha",
       "chapter": "Uttara Ashadha",
-      "chapter_id": "ch-uttara_ashadha"
+      "chapter_id": "ch-uttara_ashadha-2"
     },
     {
       "id": "ch-purva_bhadrapada",
@@ -2754,10 +2754,10 @@
       "chapter_id": "ch-purva_phalguni"
     },
     {
-      "id": "ch-uttara_phalguni",
+      "id": "ch-uttara_phalguni-2",
       "title": "Uttara Phalguni",
       "chapter": "Uttara Phalguni",
-      "chapter_id": "ch-uttara_phalguni"
+      "chapter_id": "ch-uttara_phalguni-2"
     },
     {
       "id": "ch-naga_deva",
@@ -2784,16 +2784,16 @@
       "chapter_id": "ch-pavana_deva"
     },
     {
-      "id": "ch-uttara_ashadha",
+      "id": "ch-uttara_ashadha-3",
       "title": "Uttara Ashadha",
       "chapter": "Uttara Ashadha",
-      "chapter_id": "ch-uttara_ashadha"
+      "chapter_id": "ch-uttara_ashadha-3"
     },
     {
-      "id": "ch-purva_bhadrapada",
+      "id": "ch-purva_bhadrapada-2",
       "title": "Purva Bhadrapada",
       "chapter": "Purva Bhadrapada",
-      "chapter_id": "ch-purva_bhadrapada"
+      "chapter_id": "ch-purva_bhadrapada-2"
     },
     {
       "id": "ch-uttara_bhadrapada",
@@ -2856,22 +2856,22 @@
       "chapter_id": "ch-puro-latta_forward"
     },
     {
-      "id": "ch-puro-latta_forward",
+      "id": "ch-puro-latta_forward-2",
       "title": "Puro-Latta (Forward)",
       "chapter": "Puro-Latta (Forward)",
-      "chapter_id": "ch-puro-latta_forward"
+      "chapter_id": "ch-puro-latta_forward-2"
     },
     {
-      "id": "ch-puro-latta_forward",
+      "id": "ch-puro-latta_forward-3",
       "title": "Puro-Latta (Forward)",
       "chapter": "Puro-Latta (Forward)",
-      "chapter_id": "ch-puro-latta_forward"
+      "chapter_id": "ch-puro-latta_forward-3"
     },
     {
-      "id": "ch-puro-latta_forward",
+      "id": "ch-puro-latta_forward-4",
       "title": "Puro-Latta (Forward)",
       "chapter": "Puro-Latta (Forward)",
-      "chapter_id": "ch-puro-latta_forward"
+      "chapter_id": "ch-puro-latta_forward-4"
     },
     {
       "id": "ch-bodily_discomfort_long-term_illness_and_depression",
@@ -2898,10 +2898,10 @@
       "chapter_id": "ch-intense_mental_anxiety_and_significant_financial_losses"
     },
     {
-      "id": "ch-prashchat-latta_backward",
+      "id": "ch-prashchat-latta_backward-2",
       "title": "Prashchat-Latta (Backward)",
       "chapter": "Prashchat-Latta (Backward)",
-      "chapter_id": "ch-prashchat-latta_backward"
+      "chapter_id": "ch-prashchat-latta_backward-2"
     },
     {
       "id": "ch-failures_in_communication_career_downfalls_and_business_disa",
@@ -2910,16 +2910,16 @@
       "chapter_id": "ch-failures_in_communication_career_downfalls_and_business_disa"
     },
     {
-      "id": "ch-prashchat-latta_backward",
+      "id": "ch-prashchat-latta_backward-3",
       "title": "Prashchat-Latta (Backward)",
       "chapter": "Prashchat-Latta (Backward)",
-      "chapter_id": "ch-prashchat-latta_backward"
+      "chapter_id": "ch-prashchat-latta_backward-3"
     },
     {
-      "id": "ch-prashchat-latta_backward",
+      "id": "ch-prashchat-latta_backward-4",
       "title": "Prashchat-Latta (Backward)",
       "chapter": "Prashchat-Latta (Backward)",
-      "chapter_id": "ch-prashchat-latta_backward"
+      "chapter_id": "ch-prashchat-latta_backward-4"
     },
     {
       "id": "ch-authority_and_references_from_authentic_texts_scholars",
@@ -2970,10 +2970,10 @@
       "chapter_id": "ch-type_classification"
     },
     {
-      "id": "ch-ruling_planet",
+      "id": "ch-ruling_planet-3",
       "title": "Ruling Planet",
       "chapter": "Ruling Planet",
-      "chapter_id": "ch-ruling_planet"
+      "chapter_id": "ch-ruling_planet-3"
     },
     {
       "id": "ch-ruling_deity",
@@ -3000,16 +3000,16 @@
       "chapter_id": "ch-movable_chara"
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-2",
       "title": "Movable (Chara)",
       "chapter": "Movable (Chara)",
-      "chapter_id": "ch-movable_chara"
+      "chapter_id": "ch-movable_chara-2"
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-3",
       "title": "Movable (Chara)",
       "chapter": "Movable (Chara)",
-      "chapter_id": "ch-movable_chara"
+      "chapter_id": "ch-movable_chara-3"
     },
     {
       "id": "ch-surya_mitra",
@@ -3018,22 +3018,22 @@
       "chapter_id": "ch-surya_mitra"
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-4",
       "title": "Movable (Chara)",
       "chapter": "Movable (Chara)",
-      "chapter_id": "ch-movable_chara"
+      "chapter_id": "ch-movable_chara-4"
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-5",
       "title": "Movable (Chara)",
       "chapter": "Movable (Chara)",
-      "chapter_id": "ch-movable_chara"
+      "chapter_id": "ch-movable_chara-5"
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-6",
       "title": "Movable (Chara)",
       "chapter": "Movable (Chara)",
-      "chapter_id": "ch-movable_chara"
+      "chapter_id": "ch-movable_chara-6"
     },
     {
       "id": "ch-vishti_bhadra",
@@ -3042,10 +3042,10 @@
       "chapter_id": "ch-vishti_bhadra"
     },
     {
-      "id": "ch-movable_chara",
+      "id": "ch-movable_chara-7",
       "title": "Movable (Chara)",
       "chapter": "Movable (Chara)",
-      "chapter_id": "ch-movable_chara"
+      "chapter_id": "ch-movable_chara-7"
     },
     {
       "id": "ch-severe_malefic",
@@ -3072,34 +3072,34 @@
       "chapter_id": "ch-mild_malefic"
     },
     {
-      "id": "ch-fixed_sthira",
+      "id": "ch-fixed_sthira-2",
       "title": "Fixed (Sthira)",
       "chapter": "Fixed (Sthira)",
-      "chapter_id": "ch-fixed_sthira"
+      "chapter_id": "ch-fixed_sthira-2"
     },
     {
-      "id": "ch-mild_malefic",
+      "id": "ch-mild_malefic-2",
       "title": "Mild Malefic",
       "chapter": "Mild Malefic",
-      "chapter_id": "ch-mild_malefic"
+      "chapter_id": "ch-mild_malefic-2"
     },
     {
-      "id": "ch-fixed_sthira",
+      "id": "ch-fixed_sthira-3",
       "title": "Fixed (Sthira)",
       "chapter": "Fixed (Sthira)",
-      "chapter_id": "ch-fixed_sthira"
+      "chapter_id": "ch-fixed_sthira-3"
     },
     {
-      "id": "ch-naga_deva",
+      "id": "ch-naga_deva-2",
       "title": "Naga Deva",
       "chapter": "Naga Deva",
-      "chapter_id": "ch-naga_deva"
+      "chapter_id": "ch-naga_deva-2"
     },
     {
-      "id": "ch-fixed_sthira",
+      "id": "ch-fixed_sthira-4",
       "title": "Fixed (Sthira)",
       "chapter": "Fixed (Sthira)",
-      "chapter_id": "ch-fixed_sthira"
+      "chapter_id": "ch-fixed_sthira-4"
     },
     {
       "id": "ch-ghaat_घत",
@@ -3210,10 +3210,10 @@
       "chapter_id": "ch-leo_2nd"
     },
     {
-      "id": "ch-bhadra_2_7_12",
+      "id": "ch-bhadra_2_7_12-2",
       "title": "Bhadra (2, 7, 12)",
       "chapter": "Bhadra (2, 7, 12)",
-      "chapter_id": "ch-bhadra_2_7_12"
+      "chapter_id": "ch-bhadra_2_7_12-2"
     },
     {
       "id": "ch-leo_simha",
@@ -3246,10 +3246,10 @@
       "chapter_id": "ch-gemini_10th"
     },
     {
-      "id": "ch-purna_5_10_15_30",
+      "id": "ch-purna_5_10_15_30-2",
       "title": "Purna (5, 10, 15, 30)",
       "chapter": "Purna (5, 10, 15, 30)",
-      "chapter_id": "ch-purna_5_10_15_30"
+      "chapter_id": "ch-purna_5_10_15_30-2"
     },
     {
       "id": "ch-libra_tula",
@@ -3276,10 +3276,10 @@
       "chapter_id": "ch-taurus_7th"
     },
     {
-      "id": "ch-nanda_1_6_11",
+      "id": "ch-nanda_1_6_11-2",
       "title": "Nanda (1, 6, 11)",
       "chapter": "Nanda (1, 6, 11)",
-      "chapter_id": "ch-nanda_1_6_11"
+      "chapter_id": "ch-nanda_1_6_11-2"
     },
     {
       "id": "ch-pisces_4th",
@@ -3288,10 +3288,10 @@
       "chapter_id": "ch-pisces_4th"
     },
     {
-      "id": "ch-jaya_3_8_13",
+      "id": "ch-jaya_3_8_13-2",
       "title": "Jaya (3, 8, 13)",
       "chapter": "Jaya (3, 8, 13)",
-      "chapter_id": "ch-jaya_3_8_13"
+      "chapter_id": "ch-jaya_3_8_13-2"
     },
     {
       "id": "ch-leo_8th",
@@ -3300,16 +3300,16 @@
       "chapter_id": "ch-leo_8th"
     },
     {
-      "id": "ch-rikta_4_9_14",
+      "id": "ch-rikta_4_9_14-2",
       "title": "Rikta (4, 9, 14)",
       "chapter": "Rikta (4, 9, 14)",
-      "chapter_id": "ch-rikta_4_9_14"
+      "chapter_id": "ch-rikta_4_9_14-2"
     },
     {
-      "id": "ch-mars_sun",
+      "id": "ch-mars_sun-2",
       "title": "Mars / Sun",
       "chapter": "Mars / Sun",
-      "chapter_id": "ch-mars_sun"
+      "chapter_id": "ch-mars_sun-2"
     },
     {
       "id": "ch-sagittarius_11th",
@@ -3318,10 +3318,10 @@
       "chapter_id": "ch-sagittarius_11th"
     },
     {
-      "id": "ch-jaya_3_8_13",
+      "id": "ch-jaya_3_8_13-3",
       "title": "Jaya (3, 8, 13)",
       "chapter": "Jaya (3, 8, 13)",
-      "chapter_id": "ch-jaya_3_8_13"
+      "chapter_id": "ch-jaya_3_8_13-3"
     },
     {
       "id": "ch-aquarius_12th",
@@ -3330,10 +3330,10 @@
       "chapter_id": "ch-aquarius_12th"
     },
     {
-      "id": "ch-purna_5_10_15_30",
+      "id": "ch-purna_5_10_15_30-3",
       "title": "Purna (5, 10, 15, 30)",
       "chapter": "Purna (5, 10, 15, 30)",
-      "chapter_id": "ch-purna_5_10_15_30"
+      "chapter_id": "ch-purna_5_10_15_30-3"
     }
   ],
   "total_chapters": 208,

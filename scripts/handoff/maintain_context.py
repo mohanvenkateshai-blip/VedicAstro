@@ -169,6 +169,25 @@ def generate_takeover_pack(state: dict[str, Any], dry_run: bool = False) -> Path
 
 ---
 
+**🚨 MANDATORY MULTI-AGENT PROTOCOL (ALWAYS APPLY)**  
+**NEVER start substantial work with fewer than 5 parallel agents.** Use `Task` multiple times in the opening response to launch ≥5 specialized sub-agents. One of the first 5 **MUST** be a Multi-Agent Compliance/Reminder/Orchestrator.  
+**Rule file (permanent):** `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true)  
+See `docs/MULTI_AGENT_MANDATORY_RULE.md` and `docs/agents-launched.log`. Scale to 8–12 normally or 15–30+ for large tasks. Sequential execution violates project protocol.
+
+---
+
+## 0. Multi-Agent Health (for this snapshot)
+
+| Aspect                    | Status                              | Evidence |
+|---------------------------|-------------------------------------|----------|
+| Protocol Rule             | Active (alwaysApply)                | `.cursor/rules/multi-agent-mandatory-protocol.mdc` |
+| Minimum Agents            | 5+ in parallel, first response      | `Task` tool; orchestrator required in wave 1 |
+| Handoff References        | Required in all major status files  | CONTEXT.md, STATUS.md, knowledge-engine-status.md, KNOWLEDGE_CATALOG.md, this pack |
+| Maintainer Obligation     | This script must surface the rule   | Future generations of this pack + CONTEXT auto-sections cite the protocol |
+| Last Launch Record        | See `docs/agents-launched.log`      | Records sessions that started with 6+ agents (scaling beyond baseline) |
+
+---
+
 ## 1. One-Sentence Summary
 VedicAstro is a FastAPI (CVCE) + Next.js (Portal) system with a central **KnowledgeEngine** that owns the Vedic Knowledge Graph (Supabase + graph.json) and cascades refreshes to all registered prediction engines.
 
@@ -207,12 +226,16 @@ python scripts/handoff/maintain_context.py --update-all
 4. Background revival cron (every 6–12h)
 
 ## 6. Critical Files for Any New AI
-- `CONTEXT.md` (root) — immutable guardrails + topology
-- `docs/knowledge-engine-status.md` — full status report
-- `docs/knowledge-engine-architecture.md` — mermaid diagrams + flow
+- `.cursor/rules/multi-agent-mandatory-protocol.mdc` — **MANDATORY: always launch ≥5 agents in parallel at start of work (alwaysApply: true)**
+- `docs/MULTI_AGENT_MANDATORY_RULE.md` — human codex + enforcement notes for the protocol
+- `CONTEXT.md` (root) — immutable guardrails + topology + Multi-Agent Health
+- `STATUS.md` — live status + Multi-Agent Health section
+- `docs/knowledge-engine-status.md` — KE status report + Multi-Agent Health
+- `knowledge-graph/KNOWLEDGE_CATALOG.md` — texts + Multi-Agent Health
+- `docs/handoff/AI_TAKEOVER_PACK.md` — this handoff pack (always declares the rule)
 - `cvce/knowledge_engine/engine.py` + `registry.py` — core implementation
 - `cvce/knowledge_engine/refresh_auditor.py` — impact scoring after refresh
-- `scripts/handoff/maintain_context.py` — this script (keeps docs fresh)
+- `scripts/handoff/maintain_context.py` — this script (keeps docs fresh; bakes protocol refs into snapshots)
 
 ## 7. Verification Checklist (run before any change)
 ```bash

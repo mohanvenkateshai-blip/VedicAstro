@@ -36,9 +36,18 @@
       <strong>Controls</strong><br>
       <button onclick="resetZoom()">Reset Zoom</button>
       <button onclick="toggleLabels()">Toggle Labels</button>
+      <div style="margin-top:6px; font-size:11px;">
+        <strong>Provenance filter:</strong><br>
+        <button onclick="setProvFilter('all')">All</button>
+        <button onclick="setProvFilter('has_prov')">Has chapter</button>
+        <button onclick="setProvFilter('high')">High pq</button>
+        <button onclick="setProvFilter('medium')">Medium</button>
+        <button onclick="setProvFilter('needs_review')">Needs</button>
+      </div>
     </div>
 
     <div class="legend" id="legend"></div>
+    <div style="margin-top:6px;font-size:10px;color:#64748b;">Green stroke=high pq • Yellow=medium • Orange=patched low-pq</div>
 
     <div style="margin-top: 24px; font-size: 12px; color: #64748b;">
       Click a node to highlight its connections.<br>
@@ -60,6 +69,9 @@ const svg = d3.select("#graph")
 
 const tooltip = d3.select("#tooltip");
 let showLabels = true;
+let provenanceByNode = {}; // node_id -> {hierarchy_path, method, confidence, chapter_id, book_id, parse_quality}
+let bookParseQuality = {}; // book_id -> "high" | "medium" | "needs_review"
+let currentFilter = "all"; // all | has_prov | high | medium | needs_review
 
 // Load graph data (expects same structure as graph.json)
 async function loadGraph() {
@@ -105,12 +117,88 @@ async function loadGraph() {
   return data;
 }
 
+async function loadProvenance() {
+  // Try consolidated map first, then a couple per-book patches
+  const patchPaths = [
+    "../knowledge-graph/patches/node-chapter-map.json",
+    "../../knowledge-graph/patches/node-chapter-map.json",
+    "knowledge-graph/patches/node-chapter-map.json",
+    "/knowledge-graph/patches/node-chapter-map.json"
+  ];
+  let patchData = null;
+  for (const p of patchPaths) {
+    try {
+      const r = await fetch(p);
+      if (r.ok) { patchData = await r.json(); console.log("Loaded patches from", p); break; }
+    } catch(e) {}
+  }
+  if (patchData && Array.isArray(patchData.patches)) {
+    for (const pr of patchData.patches) {
+      if (pr && pr.node_id) {
+        provenanceByNode[pr.node_id] = {
+          hierarchy_path: pr.hierarchy_path || "",
+          method: pr.method || "",
+          confidence: pr.confidence || 0,
+          chapter_id: pr.chapter_id || "",
+          book_id: pr.book_id || "",
+        };
+      }
+    }
+  } else if (patchData && patchData.patches) {
+    // some shapes use {patches: [...]}
+    const arr = patchData.patches || [];
+    for (const pr of arr) {
+      if (pr && pr.node_id) provenanceByNode[pr.node_id] = {
+        hierarchy_path: pr.hierarchy_path || "",
+        method: pr.method || "",
+        confidence: pr.confidence || 0,
+        chapter_id: pr.chapter_id || "",
+        book_id: pr.book_id || "",
+      };
+    }
+  }
+
+  // Try to pull parse_quality from AUDIT_SUMMARY or a few structured books
+  const auditPaths = [
+    "../knowledge-graph/structured/AUDIT_SUMMARY.json",
+    "knowledge-graph/structured/AUDIT_SUMMARY.json"
+  ];
+  for (const ap of auditPaths) {
+    try {
+      const r = await fetch(ap);
+      if (r.ok) {
+        const ad = await r.json();
+        if (ad.per_book) {
+          for (const b of ad.per_book) {
+            if (b.book_id) bookParseQuality[b.book_id] = b.parse_quality || "medium";
+          }
+        }
+        break;
+      }
+    } catch(e) {}
+  }
+  // Fallback: if no per_book, at least mark known high ones
+  if (Object.keys(bookParseQuality).length === 0) {
+    ["Jaimini_Sutras","Ashtakavarga_System_Comprehensive_Handbook","vedic_astrology_unified_handbook"].forEach(k => bookParseQuality[k]="high");
+  }
+}
+
+function getNodeProvenance(node) {
+  const p = provenanceByNode[node.id] || provenanceByNode[node.label] || null;
+  if (!p) return null;
+  const pq = p.book_id ? (bookParseQuality[p.book_id] || null) : null;
+  return {...p, parse_quality: pq};
+}
+
 function renderStats(data) {
   const statsEl = document.getElementById("stats");
+  const provCount = Object.keys(provenanceByNode).length;
+  const highBooks = Object.values(bookParseQuality).filter(v => v === "high").length;
   statsEl.innerHTML = `
     <div class="stat">Nodes: <strong>${data.nodes.length}</strong></div>
     <div class="stat">Links: <strong>${data.links.length}</strong></div>
-    <div class="stat">Hyperedges: <strong>${data.hyperedges?.length || 0}</strong></div>
+    <div class="stat">Provenance entries: <strong>${provCount}</strong></div>
+    <div class="stat">High-pq books (known): <strong>${highBooks}</strong></div>
   `;
 }
 
@@ -133,6 +221,7 @@ function renderLegend(communities) {
 
 async function main() {
   const data = await loadGraph();
+  await loadProvenance();
 
   const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -156,15 +245,23 @@ async function main() {
     .attr("class", "link")
     .attr("stroke-width", 1.2);
 
-  // Draw nodes
+  // Draw nodes — provenance-aware styling
   const node = svg.append("g")
     .attr("class", "nodes")
     .selectAll("circle")
     .data(nodes)
     .join("circle")
     .attr("class", "node")
-    .attr("r", 7)
+    .attr("r", d => (provenanceByNode[d.id] || provenanceByNode[d.label]) ? 9 : 7)
     .attr("fill", d => color(d.community))
+    .attr("stroke", d => {
+      const p = getNodeProvenance(d);
+      if (p && p.parse_quality === "high") return "#22c55e";
+      if (p && p.parse_quality === "medium") return "#eab308";
+      if (p) return "#f97316";
+      return "#1e2937";
+    })
+    .attr("stroke-width", d => (getNodeProvenance(d) ? 2.5 : 1.5))
     .call(drag(simulation));
 
   // Node labels
@@ -177,11 +274,19 @@ async function main() {
     .attr("dy", -12)
     .text(d => d.label?.slice(0, 25) || d.id);
 
-  // Tooltip + click interaction
+  // Tooltip + click interaction (with chapter provenance)
   node
     .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html(`<strong>${d.label || d.id}</strong><br>Community: ${d.community}`)
+      const p = getNodeProvenance(d);
+      let html = `<strong>${d.label || d.id}</strong><br>Community: ${d.community}`;
+      if (p) {
+        html += `<br><span style="color:#86efac">📍 ${p.hierarchy_path || p.chapter_id || ""}</span>`;
+        html += `<br><small>method: ${p.method || "?"} conf: ${(p.confidence||0).toFixed ? (p.confidence).toFixed(2) : p.confidence}</small>`;
+        if (p.parse_quality) html += ` <span style="font-size:10px;background:#052e16;padding:1px 4px;border-radius:3px;">pq:${p.parse_quality}</span>`;
+      } else {
+        html += `<br><span style="opacity:0.6">(no chapter patch)</span>`;
+      }
+      tooltip.style("opacity", 1).html(html)
         .style("left", (event.pageX + 12) + "px")
         .style("top", (event.pageY - 10) + "px");
     })
@@ -273,6 +378,28 @@ function toggleLabels() {
   const labels = d3.selectAll(".node-label");
   window._labelVisible = !window._labelVisible;
   labels.style("opacity", window._labelVisible ? 1 : 0);
+}
+
+function setProvFilter(mode) {
+  currentFilter = mode;
+  const nodes = d3.selectAll(".node");
+  nodes.style("opacity", d => {
+    const p = getNodeProvenance(d);
+    if (mode === "all") return 1;
+    if (mode === "has_prov") return p ? 1 : 0.15;
+    if (mode === "high") return (p && p.parse_quality === "high") ? 1 : 0.1;
+    if (mode === "medium") return (p && p.parse_quality === "medium") ? 1 : 0.1;
+    if (mode === "needs_review") return (p && p.parse_quality === "needs_review") || (!p && d.community) ? 0.9 : 0.15;
+    return 1;
+  });
+  // dim non-matching further via stroke for visibility
+  nodes.attr("stroke-opacity", d => {
+    const p = getNodeProvenance(d);
+    if (mode === "all") return 1;
+    if (mode === "has_prov") return p ? 1 : 0.2;
+    if (mode === "high") return (p && p.parse_quality==="high") ? 1 : 0.2;
+    return 0.6;
+  });
 }
 
 // Boot

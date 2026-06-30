@@ -3,42 +3,9 @@
   "canonical_name": "Jataka Tatva Mahadeva",
   "source_file": "Jataka_Tatva_Mahadeva.md",
   "graph_version": "newbooks-v1",
-  "chapters": [
-    {
-      "id": "ch-sutra",
-      "number": "Sutra",
-      "title": "35",
-      "level": 1,
-      "start_line": 2686,
-      "end_line": 13357,
-      "sections": [],
-      "content_preview": "Sutra 35 above is occupied by a malefic planet, the particular leg corresponding to that house will be out of order or rickety."
-    },
-    {
-      "id": "ch-sutra",
-      "number": "Sutra",
-      "title": "4",
-      "level": 1,
-      "start_line": 13358,
-      "end_line": 39686,
-      "sections": [],
-      "content_preview": "Sutra 4 above appear to be contradictory* But in practice, one wonld have come across many intelligent persons whose memory is weak. 3$r srflrc:"
-    }
-  ],
-  "toc": [
-    {
-      "id": "ch-sutra",
-      "title": "35",
-      "chapter": "35",
-      "chapter_id": "ch-sutra"
-    },
-    {
-      "id": "ch-sutra",
-      "title": "4",
-      "chapter": "4",
-      "chapter_id": "ch-sutra"
-    }
-  ],
-  "total_chapters": 2,
+  "parse_quality": "needs_review",
+  "chapters": [],
+  "toc": [],
+  "total_chapters": 0,
   "total_sections": 0
 }

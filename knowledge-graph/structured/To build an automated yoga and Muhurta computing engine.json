@@ -3,154 +3,715 @@
   "canonical_name": "To build an automated yoga and Muhurta computing engine",
   "source_file": "To build an automated yoga and Muhurta computing engine.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Logic Engine Core Architecture & Computational Flow",
+      "id": "ch-required_programmatic_input_vector",
+      "number": null,
+      "title": "Required Programmatic Input Vector",
       "level": 1,
-      "start_line": 8,
-      "end_line": 55,
+      "start_line": 38,
+      "end_line": 41,
       "sections": [],
-      "content_preview": "1. Logic Engine Core Architecture & Computational Flow  To accurately compute classical yogas without generating false positives, the logic engine must evaluate planetary states sequentially. A yoga is never a simple \"planet in house\" check; it is a conditional vector equation.  "
+      "content_preview": "Required Programmatic Input Vector  For every calculation, the engine requires an array containing the following state parameters for all 9 planets ($P_1$ to $P_9$) plus the Ascendant ($Lagna$):  Longitude ($\\lambda$): Float value ($0.0^\\circ$ to $359.99^\\circ$).  House Placement"
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Mathematical Definition of Planetary Afflictions & Modifications",
+      "id": "ch-longitude_lambda_float_value_00circ_to_35999circ",
+      "number": null,
+      "title": "Longitude ($\\lambda$): Float value ($0.0^\\circ$ to $359.99^\\circ$).",
       "level": 1,
-      "start_line": 56,
-      "end_line": 97,
+      "start_line": 42,
+      "end_line": 59,
       "sections": [],
-      "content_preview": "2. Mathematical Definition of Planetary Afflictions & Modifications  Before the core yoga rules are run, your application must process the baseline modifications that dictate whether a yoga is Functional/Effective or Dysfunctional/Ineffective.  A. Combustion (Astangata) Logic  A "
+      "content_preview": "Longitude ($\\lambda$): Float value ($0.0^\\circ$ to $359.99^\\circ$).  House Placement ($H_n$): Integer (1 to 12) calculated from the chosen house-cusp system (typically Sri Pati or Equal House for classical yogas).  Sign Placement ($R_n$): Integer (1 to 12) representing Aries to P"
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "The Exhaustive Yoga Combinatorial Directory",
+      "id": "ch-a_combustion_astangata_logic",
+      "number": null,
+      "title": "A. Combustion (Astangata) Logic",
       "level": 1,
-      "start_line": 98,
-      "end_line": 169,
+      "start_line": 60,
+      "end_line": 65,
       "sections": [],
-      "content_preview": "3. The Exhaustive Yoga Combinatorial Directory  The following database matrix dictates the rules for formation, amplification, and structural functional statuses across the three foundational texts.  A. Pancha Mahapurusha Yogas (Source: BPHS / Saravali)  Applies only when planets"
+      "content_preview": "A. Combustion (Astangata) Logic  A planet loses its external material expression if its longitude falls within the critical orb of the Sun ($\\lambda_{\\text{Sun}}$).  $$\\text{If } |\\lambda_n - \\lambda_{\\text{Sun}}| \\le \\theta_{\\text{combust}}, \\text{ then } Combust_n = \\text{True}"
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Asraya Yogas (Sign-Based Spatial Layout)",
+      "id": "ch-mars_17circ",
+      "number": null,
+      "title": "Mars: $17^\\circ$",
       "level": 1,
-      "start_line": 170,
-      "end_line": 189,
+      "start_line": 66,
+      "end_line": 67,
       "sections": [],
-      "content_preview": "1. Asraya Yogas (Sign-Based Spatial Layout)  Rajju Yoga Formation: All 7 visible planets occupy Moveable Signs ($1, 4, 7, 10$).  Logic Engine Check: all(Sign[p] in [1, 4, 7, 10] for p in VisiblePlanets)  Functional Output: High operational agility, constant geographical mobility,"
+      "content_preview": "Mars: $17^\\circ$  Mercury: $14^\\circ$ (Retrograde: $12^\\circ$)  Jupiter: $11^\\circ$  Venus: $10^\\circ$ (Retrograde: $8^\\circ$) "
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Akriti Yogas (Geometric Mapping Patterns)",
+      "id": "ch-mercury_14circ_retrograde_12circ",
+      "number": null,
+      "title": "Mercury: $14^\\circ$ (Retrograde: $12^\\circ$)",
       "level": 1,
-      "start_line": 190,
-      "end_line": 209,
+      "start_line": 68,
+      "end_line": 69,
       "sections": [],
-      "content_preview": "2. Akriti Yogas (Geometric Mapping Patterns)  Sakata Yoga: All 7 visible planets sit strictly in the 1st and 7th houses.  Logic Engine Check: all(House[p] in [1, 7] for p in VisiblePlanets)  Functional Output: A cyclical life curve resembling a rotating wheel. Sudden wealth follo"
+      "content_preview": "Mercury: $14^\\circ$ (Retrograde: $12^\\circ$)  Jupiter: $11^\\circ$  Venus: $10^\\circ$ (Retrograde: $8^\\circ$)  Saturn: $15^\\circ$ "
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Sankhya Yogas (Distribution/Density Vectors)",
+      "id": "ch-jupiter_11circ",
+      "number": null,
+      "title": "Jupiter: $11^\\circ$",
       "level": 1,
-      "start_line": 210,
-      "end_line": 245,
+      "start_line": 70,
+      "end_line": 71,
       "sections": [],
-      "content_preview": "3. Sankhya Yogas (Distribution/Density Vectors)  Evaluated only if no structural Asraya or Akriti configurations are triggered.  Vallaki Yoga: Planets distributed across exactly 7 distinct signs. (Polymath intellect, high-fidelity creative output).  Dama Yoga: Planets distributed"
+      "content_preview": "Jupiter: $11^\\circ$  Venus: $10^\\circ$ (Retrograde: $8^\\circ$)  Saturn: $15^\\circ$  Programmatic Behavior: If $Combust_n = \\text{True}$, any auspicious yoga dependent on $Item_n$ is marked as Materially Inert but remains Intellectually/Spiritually Active. "
     },
     {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Architectural Rules for Modification & Cancellation",
+      "id": "ch-venus_10circ_retrograde_8circ",
+      "number": null,
+      "title": "Venus: $10^\\circ$ (Retrograde: $8^\\circ$)",
       "level": 1,
-      "start_line": 246,
-      "end_line": 335,
+      "start_line": 72,
+      "end_line": 73,
       "sections": [],
-      "content_preview": "4. Architectural Rules for Modification & Cancellation  Your logic engine must apply validation layers to prevent dead code from running.  Is Natal Combination Present?            │ "
+      "content_preview": "Venus: $10^\\circ$ (Retrograde: $8^\\circ$)  Saturn: $15^\\circ$  Programmatic Behavior: If $Combust_n = \\text{True}$, any auspicious yoga dependent on $Item_n$ is marked as Materially Inert but remains Intellectually/Spiritually Active.  B. Planetary War (Graha Yuddha) Logic "
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Dynamic Muhurta Logic: The Transit Validation Engine",
+      "id": "ch-saturn_15circ",
+      "number": null,
+      "title": "Saturn: $15^\\circ$",
       "level": 1,
-      "start_line": 336,
-      "end_line": 417,
+      "start_line": 74,
+      "end_line": 77,
       "sections": [],
-      "content_preview": "5. Dynamic Muhurta Logic: The Transit Validation Engine  To calculate a true Muhurta (Inception Window) or predict the exact Fruition Timeline of a natal yoga, your logic engine must evaluate the intersection of the natal blueprint with real-time transit data.         [ NATAL BLU"
+      "content_preview": "Saturn: $15^\\circ$  Programmatic Behavior: If $Combust_n = \\text{True}$, any auspicious yoga dependent on $Item_n$ is marked as Materially Inert but remains Intellectually/Spiritually Active.  B. Planetary War (Graha Yuddha) Logic  Applies only to non-luminary planets (Mars, Merc"
     },
     {
-      "id": "ch-6",
-      "number": "6",
-      "title": "Document Automation Engine (Python Source Code)",
+      "id": "ch-b_planetary_war_graha_yuddha_logic",
+      "number": null,
+      "title": "B. Planetary War (Graha Yuddha) Logic",
       "level": 1,
-      "start_line": 418,
+      "start_line": 78,
+      "end_line": 89,
+      "sections": [],
+      "content_preview": "B. Planetary War (Graha Yuddha) Logic  Applies only to non-luminary planets (Mars, Mercury, Jupiter, Venus, Saturn).  $$\\text{If } |\\lambda_m - \\lambda_n| < 1.0^\\circ \\text{ and } m, n \\in \\{\\text{Mars, Mercury, Jupiter, Venus, Saturn}\\}$$  Winner Determination: The planet with t"
+    },
+    {
+      "id": "ch-c_rashi_sandhi_bhava_sandhi_logic",
+      "number": null,
+      "title": "C. Rashi Sandhi & Bhava Sandhi Logic",
+      "level": 1,
+      "start_line": 90,
+      "end_line": 101,
+      "sections": [],
+      "content_preview": "C. Rashi Sandhi & Bhava Sandhi Logic  Planets sitting on the structural boundary lines between signs or houses cannot hold structural integrity.  $$\\text{If } (\\lambda_n \\pmod{30^\\circ}) \\le 1.0^\\circ \\text{ or } (\\lambda_n \\pmod{30^\\circ}) \\ge 29.0^\\circ, \\text{ then } Sandhi_n "
+    },
+    {
+      "id": "ch-a_pancha_mahapurusha_yogas_source_bphs_saravali",
+      "number": null,
+      "title": "A. Pancha Mahapurusha Yogas (Source: BPHS / Saravali)",
+      "level": 1,
+      "start_line": 102,
+      "end_line": 105,
+      "sections": [],
+      "content_preview": "A. Pancha Mahapurusha Yogas (Source: BPHS / Saravali)  Applies only when planets occupy Angular houses ($H_n \\in \\{1, 4, 7, 10\\}$) from the Ascendant.  Yoga Name  Planet (Pn​) "
+    },
+    {
+      "id": "ch-yoga_name",
+      "number": null,
+      "title": "Yoga Name",
+      "level": 1,
+      "start_line": 106,
+      "end_line": 107,
+      "sections": [],
+      "content_preview": "Yoga Name  Planet (Pn​)  Essential Dignity Conditions (Rn​)  Functional Target / Output "
+    },
+    {
+      "id": "ch-planet_pn",
+      "number": null,
+      "title": "Planet (Pn​)",
+      "level": 1,
+      "start_line": 108,
+      "end_line": 109,
+      "sections": [],
+      "content_preview": "Planet (Pn​)  Essential Dignity Conditions (Rn​)  Functional Target / Output  Modification & Disruption Rules "
+    },
+    {
+      "id": "ch-essential_dignity_conditions_rn",
+      "number": null,
+      "title": "Essential Dignity Conditions (Rn​)",
+      "level": 1,
+      "start_line": 110,
+      "end_line": 111,
+      "sections": [],
+      "content_preview": "Essential Dignity Conditions (Rn​)  Functional Target / Output  Modification & Disruption Rules  Ruchaka "
+    },
+    {
+      "id": "ch-functional_target_output",
+      "number": null,
+      "title": "Functional Target / Output",
+      "level": 1,
+      "start_line": 112,
+      "end_line": 113,
+      "sections": [],
+      "content_preview": "Functional Target / Output  Modification & Disruption Rules  Ruchaka  Mars "
+    },
+    {
+      "id": "ch-modification_disruption_rules",
+      "number": null,
+      "title": "Modification & Disruption Rules",
+      "level": 1,
+      "start_line": 114,
+      "end_line": 119,
+      "sections": [],
+      "content_preview": "Modification & Disruption Rules  Ruchaka  Mars  Own Sign ($1, 8$) or Exalted ($10$) "
+    },
+    {
+      "id": "ch-own_sign_1_8_or_exalted_10",
+      "number": null,
+      "title": "Own Sign ($1, 8$) or Exalted ($10$)",
+      "level": 1,
+      "start_line": 120,
+      "end_line": 121,
+      "sections": [],
+      "content_preview": "Own Sign ($1, 8$) or Exalted ($10$)  Executive execution, military command, physical courage.  Neutralized if: Mars conjoins Rahu/Ketu. Enhanced if: Aspected by a strong 9th Lord.  Bhadra "
+    },
+    {
+      "id": "ch-executive_execution_military_command_physical_courage",
+      "number": null,
+      "title": "Executive execution, military command, physical courage.",
+      "level": 1,
+      "start_line": 122,
+      "end_line": 129,
+      "sections": [],
+      "content_preview": "Executive execution, military command, physical courage.  Neutralized if: Mars conjoins Rahu/Ketu. Enhanced if: Aspected by a strong 9th Lord.  Bhadra  Mercury "
+    },
+    {
+      "id": "ch-own_sign_3_6_or_exalted_6",
+      "number": null,
+      "title": "Own Sign ($3, 6$) or Exalted ($6$)",
+      "level": 1,
+      "start_line": 130,
+      "end_line": 131,
+      "sections": [],
+      "content_preview": "Own Sign ($3, 6$) or Exalted ($6$)  Supreme commercial strategy, logic, advanced systems design.  Neutralized if: Combust by Sun. Ineffective if: Moon sits in 8th house, causing mental exhaustion.  Hamsa "
+    },
+    {
+      "id": "ch-supreme_commercial_strategy_logic_advanced_systems_design",
+      "number": null,
+      "title": "Supreme commercial strategy, logic, advanced systems design.",
+      "level": 1,
+      "start_line": 132,
+      "end_line": 139,
+      "sections": [],
+      "content_preview": "Supreme commercial strategy, logic, advanced systems design.  Neutralized if: Combust by Sun. Ineffective if: Moon sits in 8th house, causing mental exhaustion.  Hamsa  Jupiter "
+    },
+    {
+      "id": "ch-own_sign_9_12_or_exalted_4",
+      "number": null,
+      "title": "Own Sign ($9, 12$) or Exalted ($4$)",
+      "level": 1,
+      "start_line": 140,
+      "end_line": 141,
+      "sections": [],
+      "content_preview": "Own Sign ($9, 12$) or Exalted ($4$)  Institutional authority, moral architecture, jurisprudence.  Neutralized if: Subject to Kendradhipati Dosha (acting as a functional malefic for Gemini/Virgo ascendants).  Malavya "
+    },
+    {
+      "id": "ch-institutional_authority_moral_architecture_jurisprudence",
+      "number": null,
+      "title": "Institutional authority, moral architecture, jurisprudence.",
+      "level": 1,
+      "start_line": 142,
+      "end_line": 149,
+      "sections": [],
+      "content_preview": "Institutional authority, moral architecture, jurisprudence.  Neutralized if: Subject to Kendradhipati Dosha (acting as a functional malefic for Gemini/Virgo ascendants).  Malavya  Venus "
+    },
+    {
+      "id": "ch-own_sign_2_7_or_exalted_12",
+      "number": null,
+      "title": "Own Sign ($2, 7$) or Exalted ($12$)",
+      "level": 1,
+      "start_line": 150,
+      "end_line": 151,
+      "sections": [],
+      "content_preview": "Own Sign ($2, 7$) or Exalted ($12$)  High-fidelity design, media assets, strategic negotiation.  Neutralized if: Afflicted by Saturn or Mars in the Navamsha (D9) chart.  Sasa "
+    },
+    {
+      "id": "ch-high-fidelity_design_media_assets_strategic_negotiation",
+      "number": null,
+      "title": "High-fidelity design, media assets, strategic negotiation.",
+      "level": 1,
+      "start_line": 152,
+      "end_line": 159,
+      "sections": [],
+      "content_preview": "High-fidelity design, media assets, strategic negotiation.  Neutralized if: Afflicted by Saturn or Mars in the Navamsha (D9) chart.  Sasa  Saturn "
+    },
+    {
+      "id": "ch-own_sign_10_11_or_exalted_7",
+      "number": null,
+      "title": "Own Sign ($10, 11$) or Exalted ($7$)",
+      "level": 1,
+      "start_line": 160,
+      "end_line": 161,
+      "sections": [],
+      "content_preview": "Own Sign ($10, 11$) or Exalted ($7$)  Mass governance, structural execution, systematic scaling.  Enhanced if: Sits in the 10th house from Ascendant. Dysfunctional if: Sun aspects, creating institutional friction.  B. Nabhasa Yogas (Source: BPHS / Saravali) "
+    },
+    {
+      "id": "ch-mass_governance_structural_execution_systematic_scaling",
+      "number": null,
+      "title": "Mass governance, structural execution, systematic scaling.",
+      "level": 1,
+      "start_line": 162,
+      "end_line": 165,
+      "sections": [],
+      "content_preview": "Mass governance, structural execution, systematic scaling.  Enhanced if: Sits in the 10th house from Ascendant. Dysfunctional if: Sun aspects, creating institutional friction.  B. Nabhasa Yogas (Source: BPHS / Saravali)  These structural configurations shape the entire chart. The"
+    },
+    {
+      "id": "ch-b_nabhasa_yogas_source_bphs_saravali",
+      "number": null,
+      "title": "B. Nabhasa Yogas (Source: BPHS / Saravali)",
+      "level": 1,
+      "start_line": 166,
+      "end_line": 227,
+      "sections": [],
+      "content_preview": "B. Nabhasa Yogas (Source: BPHS / Saravali)  These structural configurations shape the entire chart. They do not depend on Dashas; they represent permanent baseline code running continuously.  1. Asraya Yogas (Sign-Based Spatial Layout)  Rajju Yoga Formation: All 7 visible planets"
+    },
+    {
+      "id": "ch-c_jataka_tattva_core_combinations_source_mahadeva",
+      "number": null,
+      "title": "C. Jataka Tattva Core Combinations (Source: Mahadeva)",
+      "level": 1,
+      "start_line": 228,
+      "end_line": 231,
+      "sections": [],
+      "content_preview": "C. Jataka Tattva Core Combinations (Source: Mahadeva)  The Jataka Tattva breaks down formulas using micro-elemental conditions (Tattvas). It relies on precise math involving house-lord combinations.  Vipareeta Raja Yoga (Reverse Structural Elevation):  Logic Rule: The 6th, 8th, o"
+    },
+    {
+      "id": "ch-vipareeta_raja_yoga_reverse_structural_elevation",
+      "number": null,
+      "title": "Vipareeta Raja Yoga (Reverse Structural Elevation)",
+      "level": 1,
+      "start_line": 232,
+      "end_line": 239,
+      "sections": [],
+      "content_preview": "Vipareeta Raja Yoga (Reverse Structural Elevation):  Logic Rule: The 6th, 8th, or 12th house lord must occupy the 6th, 8th, or 12th house, while being completely unassociated with Kendra/Trikona lords.  Algorithmic Target: if House[LordOf(6)] in [6, 8, 12] and not AspectedByKendr"
+    },
+    {
+      "id": "ch-dhana_yoga_capital_realization_matrix",
+      "number": null,
+      "title": "Dhana Yoga (Capital Realization Matrix)",
+      "level": 1,
+      "start_line": 240,
+      "end_line": 249,
+      "sections": [],
+      "content_preview": "Dhana Yoga (Capital Realization Matrix):  Logic Rule: Mutual combinations, aspects, or exchanges between the 1st, 2nd, 5th, 9th, and 11th house lords.  Mathematical Indexing: Generate a relational score between these nodes. If the connectivity value $V_{\\text{connect}} \\ge 3$, th"
+    },
+    {
+      "id": "ch-is_natal_combination_present",
+      "number": null,
+      "title": "Is Natal Combination Present?",
+      "level": 1,
+      "start_line": 250,
+      "end_line": 271,
+      "sections": [],
+      "content_preview": "Is Natal Combination Present?            │            ├──► NO  ──► Terminate Check            │ "
+    },
+    {
+      "id": "ch-a_neechabhanga_raja_yoga_algorithmic_cancellation_architectu",
+      "number": null,
+      "title": "A. Neechabhanga Raja Yoga (Algorithmic Cancellation Architecture)",
+      "level": 1,
+      "start_line": 272,
+      "end_line": 329,
+      "sections": [],
+      "content_preview": "A. Neechabhanga Raja Yoga (Algorithmic Cancellation Architecture)  When a planet is debilitated ($R_n = \\text{Debilitation Sign}$), its performance coefficient is initially set to $-1.0$. Your engine must run a loop checking five validation parameters to see if this weakness conv"
+    },
+    {
+      "id": "ch-if_check_neechabhanga_returns_true_update_the_planetary_stat",
+      "number": null,
+      "title": "If check_neechabhanga returns True, update the planetary status",
+      "level": 1,
+      "start_line": 330,
+      "end_line": 339,
+      "sections": [],
+      "content_preview": "If check_neechabhanga returns True, update the planetary status:  $$\\text{Potency}_{\\text{planet}} = | \\text{Initial Deficit} | \\times 1.5$$  The text commands that this triggers an ultimate architectural turnaround: early-stage operational friction followed by massive scaling.  "
+    },
+    {
+      "id": "ch-natal_blueprint_real-time_transit",
+      "number": null,
+      "title": "[ NATAL BLUEPRINT ] [ REAL-TIME TRANSIT ]",
+      "level": 1,
+      "start_line": 340,
+      "end_line": 349,
+      "sections": [],
+      "content_preview": "       [ NATAL BLUEPRINT ]                           [ REAL-TIME TRANSIT ]     Static potential code stored                Continuous stream of planetary coordinates                   │                                           │                   └───────────────────┬───────────"
+    },
+    {
+      "id": "ch-the_dasha_bhukti_executive_gateway",
+      "number": null,
+      "title": "[ THE DASHA / BHUKTI EXECUTIVE GATEWAY ]",
+      "level": 1,
+      "start_line": 350,
+      "end_line": 351,
+      "sections": [],
+      "content_preview": "                    [ THE DASHA / BHUKTI EXECUTIVE GATEWAY ]                          Is the time window open? (True)                                       │                                       ▼ "
+    },
+    {
+      "id": "ch-is_the_time_window_open_true",
+      "number": null,
+      "title": "Is the time window open? (True)",
+      "level": 1,
+      "start_line": 352,
+      "end_line": 357,
+      "sections": [],
+      "content_preview": "                        Is the time window open? (True)                                       │                                       ▼                        [ THE GEOGRAPHIC CATALYST MATRIX ] "
+    },
+    {
+      "id": "ch-the_geographic_catalyst_matrix",
+      "number": null,
+      "title": "[ THE GEOGRAPHIC CATALYST MATRIX ]",
+      "level": 1,
+      "start_line": 358,
+      "end_line": 359,
+      "sections": [],
+      "content_preview": "                      [ THE GEOGRAPHIC CATALYST MATRIX ]                   Do transit longitudes aspect or conjoin natal nodes?                                       │                                       ▼ "
+    },
+    {
+      "id": "ch-do_transit_longitudes_aspect_or_conjoin_natal_nodes",
+      "number": null,
+      "title": "Do transit longitudes aspect or conjoin natal nodes?",
+      "level": 1,
+      "start_line": 360,
+      "end_line": 365,
+      "sections": [],
+      "content_preview": "                 Do transit longitudes aspect or conjoin natal nodes?                                       │                                       ▼                                [ FRUITION POINT ] "
+    },
+    {
+      "id": "ch-fruition_point",
+      "number": null,
+      "title": "[ FRUITION POINT ]",
+      "level": 1,
+      "start_line": 366,
+      "end_line": 367,
+      "sections": [],
+      "content_preview": "                              [ FRUITION POINT ]  The Three-Tier Logic Matrix  The Structural Blueprint (Natal Chart): Compiles the native's capacity code. If a yoga does not exist in the natal chart, no transit configuration can trigger it.  The Executive Window (Vimshottari Das"
+    },
+    {
+      "id": "ch-the_three-tier_logic_matrix",
+      "number": null,
+      "title": "The Three-Tier Logic Matrix",
+      "level": 1,
+      "start_line": 368,
+      "end_line": 375,
+      "sections": [],
+      "content_preview": "The Three-Tier Logic Matrix  The Structural Blueprint (Natal Chart): Compiles the native's capacity code. If a yoga does not exist in the natal chart, no transit configuration can trigger it.  The Executive Window (Vimshottari Dasha): The time coordinate framework. If a native ha"
+    },
+    {
+      "id": "ch-algorithmic_logic_for_timing_engine_execution",
+      "number": null,
+      "title": "Algorithmic Logic for Timing Engine Execution",
+      "level": 1,
+      "start_line": 376,
+      "end_line": 457,
+      "sections": [],
+      "content_preview": "Algorithmic Logic for Timing Engine Execution  Python  def evaluate_fruition_state(natal_yoga, current_dasha, transit_positions):      # Step 1: Ensure the time gateway is unlocked "
+    },
+    {
+      "id": "ch-color_primary_hex_1b365d_corporate_navy",
+      "number": null,
+      "title": "COLOR_PRIMARY_HEX = \"1B365D\" # Corporate Navy",
+      "level": 1,
+      "start_line": 458,
+      "end_line": 459,
+      "sections": [],
+      "content_preview": "    COLOR_PRIMARY_HEX = \"1B365D\"    # Corporate Navy      COLOR_SECONDARY_HEX = \"4A777A\"  # Muted Teal      COLOR_LIGHT_BG_HEX = \"F4F6F8\"   # Subtle Gray       "
+    },
+    {
+      "id": "ch-color_secondary_hex_4a777a_muted_teal",
+      "number": null,
+      "title": "COLOR_SECONDARY_HEX = \"4A777A\" # Muted Teal",
+      "level": 1,
+      "start_line": 460,
+      "end_line": 461,
+      "sections": [],
+      "content_preview": "    COLOR_SECONDARY_HEX = \"4A777A\"  # Muted Teal      COLOR_LIGHT_BG_HEX = \"F4F6F8\"   # Subtle Gray            COLOR_PRIMARY = RGBColor(27, 54, 93) "
+    },
+    {
+      "id": "ch-color_light_bg_hex_f4f6f8_subtle_gray",
+      "number": null,
+      "title": "COLOR_LIGHT_BG_HEX = \"F4F6F8\" # Subtle Gray",
+      "level": 1,
+      "start_line": 462,
       "end_line": 718,
       "sections": [],
-      "content_preview": "6. Document Automation Engine (Python Source Code)  Run this Python script locally to generate the complete corporate-grade document structure with precise page margins and professional table formatting.  Python  import docx "
+      "content_preview": "    COLOR_LIGHT_BG_HEX = \"F4F6F8\"   # Subtle Gray            COLOR_PRIMARY = RGBColor(27, 54, 93)      COLOR_SECONDARY = RGBColor(74, 119, 122) "
     }
   ],
   "toc": [
     {
-      "id": "ch-1",
-      "title": "Logic Engine Core Architecture & Computational Flow",
-      "chapter": "Logic Engine Core Architecture & Computational Flow",
-      "chapter_id": "ch-1"
+      "id": "ch-required_programmatic_input_vector",
+      "title": "Required Programmatic Input Vector",
+      "chapter": "Required Programmatic Input Vector",
+      "chapter_id": "ch-required_programmatic_input_vector"
     },
     {
-      "id": "ch-2",
-      "title": "Mathematical Definition of Planetary Afflictions & Modifications",
-      "chapter": "Mathematical Definition of Planetary Afflictions & Modifications",
-      "chapter_id": "ch-2"
+      "id": "ch-longitude_lambda_float_value_00circ_to_35999circ",
+      "title": "Longitude ($\\lambda$): Float value ($0.0^\\circ$ to $359.99^\\circ$).",
+      "chapter": "Longitude ($\\lambda$): Float value ($0.0^\\circ$ to $359.99^\\circ$).",
+      "chapter_id": "ch-longitude_lambda_float_value_00circ_to_35999circ"
     },
     {
-      "id": "ch-3",
-      "title": "The Exhaustive Yoga Combinatorial Directory",
-      "chapter": "The Exhaustive Yoga Combinatorial Directory",
-      "chapter_id": "ch-3"
+      "id": "ch-a_combustion_astangata_logic",
+      "title": "A. Combustion (Astangata) Logic",
+      "chapter": "A. Combustion (Astangata) Logic",
+      "chapter_id": "ch-a_combustion_astangata_logic"
     },
     {
-      "id": "ch-1",
-      "title": "Asraya Yogas (Sign-Based Spatial Layout)",
-      "chapter": "Asraya Yogas (Sign-Based Spatial Layout)",
-      "chapter_id": "ch-1"
+      "id": "ch-mars_17circ",
+      "title": "Mars: $17^\\circ$",
+      "chapter": "Mars: $17^\\circ$",
+      "chapter_id": "ch-mars_17circ"
     },
     {
-      "id": "ch-2",
-      "title": "Akriti Yogas (Geometric Mapping Patterns)",
-      "chapter": "Akriti Yogas (Geometric Mapping Patterns)",
-      "chapter_id": "ch-2"
+      "id": "ch-mercury_14circ_retrograde_12circ",
+      "title": "Mercury: $14^\\circ$ (Retrograde: $12^\\circ$)",
+      "chapter": "Mercury: $14^\\circ$ (Retrograde: $12^\\circ$)",
+      "chapter_id": "ch-mercury_14circ_retrograde_12circ"
     },
     {
-      "id": "ch-3",
-      "title": "Sankhya Yogas (Distribution/Density Vectors)",
-      "chapter": "Sankhya Yogas (Distribution/Density Vectors)",
-      "chapter_id": "ch-3"
+      "id": "ch-jupiter_11circ",
+      "title": "Jupiter: $11^\\circ$",
+      "chapter": "Jupiter: $11^\\circ$",
+      "chapter_id": "ch-jupiter_11circ"
     },
     {
-      "id": "ch-4",
-      "title": "Architectural Rules for Modification & Cancellation",
-      "chapter": "Architectural Rules for Modification & Cancellation",
-      "chapter_id": "ch-4"
+      "id": "ch-venus_10circ_retrograde_8circ",
+      "title": "Venus: $10^\\circ$ (Retrograde: $8^\\circ$)",
+      "chapter": "Venus: $10^\\circ$ (Retrograde: $8^\\circ$)",
+      "chapter_id": "ch-venus_10circ_retrograde_8circ"
     },
     {
-      "id": "ch-5",
-      "title": "Dynamic Muhurta Logic: The Transit Validation Engine",
-      "chapter": "Dynamic Muhurta Logic: The Transit Validation Engine",
-      "chapter_id": "ch-5"
+      "id": "ch-saturn_15circ",
+      "title": "Saturn: $15^\\circ$",
+      "chapter": "Saturn: $15^\\circ$",
+      "chapter_id": "ch-saturn_15circ"
     },
     {
-      "id": "ch-6",
-      "title": "Document Automation Engine (Python Source Code)",
-      "chapter": "Document Automation Engine (Python Source Code)",
-      "chapter_id": "ch-6"
+      "id": "ch-b_planetary_war_graha_yuddha_logic",
+      "title": "B. Planetary War (Graha Yuddha) Logic",
+      "chapter": "B. Planetary War (Graha Yuddha) Logic",
+      "chapter_id": "ch-b_planetary_war_graha_yuddha_logic"
+    },
+    {
+      "id": "ch-c_rashi_sandhi_bhava_sandhi_logic",
+      "title": "C. Rashi Sandhi & Bhava Sandhi Logic",
+      "chapter": "C. Rashi Sandhi & Bhava Sandhi Logic",
+      "chapter_id": "ch-c_rashi_sandhi_bhava_sandhi_logic"
+    },
+    {
+      "id": "ch-a_pancha_mahapurusha_yogas_source_bphs_saravali",
+      "title": "A. Pancha Mahapurusha Yogas (Source: BPHS / Saravali)",
+      "chapter": "A. Pancha Mahapurusha Yogas (Source: BPHS / Saravali)",
+      "chapter_id": "ch-a_pancha_mahapurusha_yogas_source_bphs_saravali"
+    },
+    {
+      "id": "ch-yoga_name",
+      "title": "Yoga Name",
+      "chapter": "Yoga Name",
+      "chapter_id": "ch-yoga_name"
+    },
+    {
+      "id": "ch-planet_pn",
+      "title": "Planet (Pn​)",
+      "chapter": "Planet (Pn​)",
+      "chapter_id": "ch-planet_pn"
+    },
+    {
+      "id": "ch-essential_dignity_conditions_rn",
+      "title": "Essential Dignity Conditions (Rn​)",
+      "chapter": "Essential Dignity Conditions (Rn​)",
+      "chapter_id": "ch-essential_dignity_conditions_rn"
+    },
+    {
+      "id": "ch-functional_target_output",
+      "title": "Functional Target / Output",
+      "chapter": "Functional Target / Output",
+      "chapter_id": "ch-functional_target_output"
+    },
+    {
+      "id": "ch-modification_disruption_rules",
+      "title": "Modification & Disruption Rules",
+      "chapter": "Modification & Disruption Rules",
+      "chapter_id": "ch-modification_disruption_rules"
+    },
+    {
+      "id": "ch-own_sign_1_8_or_exalted_10",
+      "title": "Own Sign ($1, 8$) or Exalted ($10$)",
+      "chapter": "Own Sign ($1, 8$) or Exalted ($10$)",
+      "chapter_id": "ch-own_sign_1_8_or_exalted_10"
+    },
+    {
+      "id": "ch-executive_execution_military_command_physical_courage",
+      "title": "Executive execution, military command, physical courage.",
+      "chapter": "Executive execution, military command, physical courage.",
+      "chapter_id": "ch-executive_execution_military_command_physical_courage"
+    },
+    {
+      "id": "ch-own_sign_3_6_or_exalted_6",
+      "title": "Own Sign ($3, 6$) or Exalted ($6$)",
+      "chapter": "Own Sign ($3, 6$) or Exalted ($6$)",
+      "chapter_id": "ch-own_sign_3_6_or_exalted_6"
+    },
+    {
+      "id": "ch-supreme_commercial_strategy_logic_advanced_systems_design",
+      "title": "Supreme commercial strategy, logic, advanced systems design.",
+      "chapter": "Supreme commercial strategy, logic, advanced systems design.",
+      "chapter_id": "ch-supreme_commercial_strategy_logic_advanced_systems_design"
+    },
+    {
+      "id": "ch-own_sign_9_12_or_exalted_4",
+      "title": "Own Sign ($9, 12$) or Exalted ($4$)",
+      "chapter": "Own Sign ($9, 12$) or Exalted ($4$)",
+      "chapter_id": "ch-own_sign_9_12_or_exalted_4"
+    },
+    {
+      "id": "ch-institutional_authority_moral_architecture_jurisprudence",
+      "title": "Institutional authority, moral architecture, jurisprudence.",
+      "chapter": "Institutional authority, moral architecture, jurisprudence.",
+      "chapter_id": "ch-institutional_authority_moral_architecture_jurisprudence"
+    },
+    {
+      "id": "ch-own_sign_2_7_or_exalted_12",
+      "title": "Own Sign ($2, 7$) or Exalted ($12$)",
+      "chapter": "Own Sign ($2, 7$) or Exalted ($12$)",
+      "chapter_id": "ch-own_sign_2_7_or_exalted_12"
+    },
+    {
+      "id": "ch-high-fidelity_design_media_assets_strategic_negotiation",
+      "title": "High-fidelity design, media assets, strategic negotiation.",
+      "chapter": "High-fidelity design, media assets, strategic negotiation.",
+      "chapter_id": "ch-high-fidelity_design_media_assets_strategic_negotiation"
+    },
+    {
+      "id": "ch-own_sign_10_11_or_exalted_7",
+      "title": "Own Sign ($10, 11$) or Exalted ($7$)",
+      "chapter": "Own Sign ($10, 11$) or Exalted ($7$)",
+      "chapter_id": "ch-own_sign_10_11_or_exalted_7"
+    },
+    {
+      "id": "ch-mass_governance_structural_execution_systematic_scaling",
+      "title": "Mass governance, structural execution, systematic scaling.",
+      "chapter": "Mass governance, structural execution, systematic scaling.",
+      "chapter_id": "ch-mass_governance_structural_execution_systematic_scaling"
+    },
+    {
+      "id": "ch-b_nabhasa_yogas_source_bphs_saravali",
+      "title": "B. Nabhasa Yogas (Source: BPHS / Saravali)",
+      "chapter": "B. Nabhasa Yogas (Source: BPHS / Saravali)",
+      "chapter_id": "ch-b_nabhasa_yogas_source_bphs_saravali"
+    },
+    {
+      "id": "ch-c_jataka_tattva_core_combinations_source_mahadeva",
+      "title": "C. Jataka Tattva Core Combinations (Source: Mahadeva)",
+      "chapter": "C. Jataka Tattva Core Combinations (Source: Mahadeva)",
+      "chapter_id": "ch-c_jataka_tattva_core_combinations_source_mahadeva"
+    },
+    {
+      "id": "ch-vipareeta_raja_yoga_reverse_structural_elevation",
+      "title": "Vipareeta Raja Yoga (Reverse Structural Elevation)",
+      "chapter": "Vipareeta Raja Yoga (Reverse Structural Elevation)",
+      "chapter_id": "ch-vipareeta_raja_yoga_reverse_structural_elevation"
+    },
+    {
+      "id": "ch-dhana_yoga_capital_realization_matrix",
+      "title": "Dhana Yoga (Capital Realization Matrix)",
+      "chapter": "Dhana Yoga (Capital Realization Matrix)",
+      "chapter_id": "ch-dhana_yoga_capital_realization_matrix"
+    },
+    {
+      "id": "ch-is_natal_combination_present",
+      "title": "Is Natal Combination Present?",
+      "chapter": "Is Natal Combination Present?",
+      "chapter_id": "ch-is_natal_combination_present"
+    },
+    {
+      "id": "ch-a_neechabhanga_raja_yoga_algorithmic_cancellation_architectu",
+      "title": "A. Neechabhanga Raja Yoga (Algorithmic Cancellation Architecture)",
+      "chapter": "A. Neechabhanga Raja Yoga (Algorithmic Cancellation Architecture)",
+      "chapter_id": "ch-a_neechabhanga_raja_yoga_algorithmic_cancellation_architectu"
+    },
+    {
+      "id": "ch-if_check_neechabhanga_returns_true_update_the_planetary_stat",
+      "title": "If check_neechabhanga returns True, update the planetary status",
+      "chapter": "If check_neechabhanga returns True, update the planetary status",
+      "chapter_id": "ch-if_check_neechabhanga_returns_true_update_the_planetary_stat"
+    },
+    {
+      "id": "ch-natal_blueprint_real-time_transit",
+      "title": "[ NATAL BLUEPRINT ] [ REAL-TIME TRANSIT ]",
+      "chapter": "[ NATAL BLUEPRINT ] [ REAL-TIME TRANSIT ]",
+      "chapter_id": "ch-natal_blueprint_real-time_transit"
+    },
+    {
+      "id": "ch-the_dasha_bhukti_executive_gateway",
+      "title": "[ THE DASHA / BHUKTI EXECUTIVE GATEWAY ]",
+      "chapter": "[ THE DASHA / BHUKTI EXECUTIVE GATEWAY ]",
+      "chapter_id": "ch-the_dasha_bhukti_executive_gateway"
+    },
+    {
+      "id": "ch-is_the_time_window_open_true",
+      "title": "Is the time window open? (True)",
+      "chapter": "Is the time window open? (True)",
+      "chapter_id": "ch-is_the_time_window_open_true"
+    },
+    {
+      "id": "ch-the_geographic_catalyst_matrix",
+      "title": "[ THE GEOGRAPHIC CATALYST MATRIX ]",
+      "chapter": "[ THE GEOGRAPHIC CATALYST MATRIX ]",
+      "chapter_id": "ch-the_geographic_catalyst_matrix"
+    },
+    {
+      "id": "ch-do_transit_longitudes_aspect_or_conjoin_natal_nodes",
+      "title": "Do transit longitudes aspect or conjoin natal nodes?",
+      "chapter": "Do transit longitudes aspect or conjoin natal nodes?",
+      "chapter_id": "ch-do_transit_longitudes_aspect_or_conjoin_natal_nodes"
+    },
+    {
+      "id": "ch-fruition_point",
+      "title": "[ FRUITION POINT ]",
+      "chapter": "[ FRUITION POINT ]",
+      "chapter_id": "ch-fruition_point"
+    },
+    {
+      "id": "ch-the_three-tier_logic_matrix",
+      "title": "The Three-Tier Logic Matrix",
+      "chapter": "The Three-Tier Logic Matrix",
+      "chapter_id": "ch-the_three-tier_logic_matrix"
+    },
+    {
+      "id": "ch-algorithmic_logic_for_timing_engine_execution",
+      "title": "Algorithmic Logic for Timing Engine Execution",
+      "chapter": "Algorithmic Logic for Timing Engine Execution",
+      "chapter_id": "ch-algorithmic_logic_for_timing_engine_execution"
+    },
+    {
+      "id": "ch-color_primary_hex_1b365d_corporate_navy",
+      "title": "COLOR_PRIMARY_HEX = \"1B365D\" # Corporate Navy",
+      "chapter": "COLOR_PRIMARY_HEX = \"1B365D\" # Corporate Navy",
+      "chapter_id": "ch-color_primary_hex_1b365d_corporate_navy"
+    },
+    {
+      "id": "ch-color_secondary_hex_4a777a_muted_teal",
+      "title": "COLOR_SECONDARY_HEX = \"4A777A\" # Muted Teal",
+      "chapter": "COLOR_SECONDARY_HEX = \"4A777A\" # Muted Teal",
+      "chapter_id": "ch-color_secondary_hex_4a777a_muted_teal"
+    },
+    {
+      "id": "ch-color_light_bg_hex_f4f6f8_subtle_gray",
+      "title": "COLOR_LIGHT_BG_HEX = \"F4F6F8\" # Subtle Gray",
+      "chapter": "COLOR_LIGHT_BG_HEX = \"F4F6F8\" # Subtle Gray",
+      "chapter_id": "ch-color_light_bg_hex_f4f6f8_subtle_gray"
     }
   ],
-  "total_chapters": 9,
+  "total_chapters": 44,
   "total_sections": 0
 }

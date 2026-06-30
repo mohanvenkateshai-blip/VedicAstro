@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-30T02:54:51.421208+00:00",
-  "patch_source": "high-node mapper wave 2026-06-30",
+  "generated_at": "2026-06-30T04:05:00+00:00",
+  "patch_source": "Jataka_Parijata structured parser refinement (page-group rescue + junk filter)",
   "total_nodes": 12098,
   "total_patched": 16366,
   "overall_pct": 135.3,
@@ -111,7 +111,9 @@
       "book": "Jataka_Parijata",
       "nodes_total": 485,
       "patched": 483,
-      "pct": 99.6
+      "pct": 99.6,
+      "structured_quality": "medium-improved (49 page-group chapters from OCR page markers; previously 178 garbage titles)",
+      "note": "Usable for /learn nav via Pages X–Y ranges; semantic chapter titles unavailable in raw source."
     }
   ]
 }

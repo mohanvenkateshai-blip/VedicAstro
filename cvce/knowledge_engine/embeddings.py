@@ -8,8 +8,10 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-EMBED_MODEL = "text-embedding-004"
-EMBED_DIM = 768
+# Prefer a model the key recognizes. text-embedding-004 may 404 on some projects;
+# gemini-embedding-001 is recognized (may require separate embedding credits).
+EMBED_MODEL = os.environ.get("EMBED_MODEL", "models/gemini-embedding-001")
+EMBED_DIM = int(os.environ.get("EMBED_DIM", "768") or 768)
 
 
 def get_genai_client() -> Any | None:

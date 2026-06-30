@@ -2,6 +2,8 @@
 
 Modern Vedic Astrology platform with Knowledge Graph.
 
+**Live status:** see [STATUS.md](STATUS.md) (service health, phase roadmap, deploy state).
+
 ## Development Setup (June 2026)
 
 This project uses `uv` + `ruff` for fast, modern Python development.

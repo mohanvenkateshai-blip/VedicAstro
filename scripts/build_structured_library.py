@@ -67,6 +67,8 @@ STRUCTURED.mkdir(parents=True, exist_ok=True)
 CHAPTER_PATTERNS = [
     # "Chapter 1", "Chapter - 7", "Ch. 3 - Foo", "Ch 2: Title"
     re.compile(r"^(?:Chapter|Ch\.?|Ch)\s*[:\-]?\s*(\d+[\.\d\-]*)[\.\s:\-–—]*(.*)$", re.I),
+    # Roman-numeral classics: "CHAPTER. I", "CHAPTER II.", "CHAPTER. XVI." (Brihat Samhita, etc.)
+    re.compile(r"^(?:CHAPTER|Chapter)\.?\s*([IVX]+)[\.,]*\s*(.*)$", re.I),
     # "1. Foundations", "3.1 Foo"
     re.compile(r"^(\d{1,2}(?:\.\d+)?)\.\s+([A-Z][^\n]{3,120})$"),
     # All-caps style but require a longer/more distinctive title (avoid "2 JAIMINISUTRAS")
@@ -125,7 +127,6 @@ BOOK_OVERRIDES: dict[str, dict] = {
             re.compile(r"^[A-Za-z]*ADHY[A-Z]*\s*([0-9IVX]+|[०-९]+)", re.I),
             re.compile(r"Chapter\s+(\d+)", re.I),
         ],
-        "min_lines_per_chapter": 8,
         "reject_patterns": [
             re.compile(r"JAIMINISUTRAS|JATMINISUTRAS", re.I),
             re.compile(r"^(Su\.|St\.)", re.I),
@@ -160,6 +161,145 @@ BOOK_OVERRIDES: dict[str, dict] = {
         "min_lines_per_chapter": 5,
         "allow_heading_promote": True,
     },
+    "Brihat_Samhita": {
+        "prefer_patterns": [
+            re.compile(r"^(?:CHAPTER|Chapter)\.?\s*([IVX]+)[\.,]*\s*(.*)$", re.I),
+        ],
+        "reject_patterns": [
+            re.compile(r"/\d+|,\s*On\s+[A-Z]"),
+            re.compile(r"^\d{1,4}$"),
+            re.compile(r"BRINAT SAMHIYA|BRIBAT SAMHITA", re.I),
+        ],
+        "min_lines_per_chapter": 20,
+        "allow_heading_promote": False,
+    },
+    "Hora_Sara": {
+        "prefer_patterns": [
+            re.compile(r"^CHAPTER\s+(\d+)[\s:,\-]*([A-Za-z][A-Za-z][A-Za-z\s'\-]{2,80})$", re.I),
+            re.compile(r"^Chapter\s+(\d+)[\s:,\-]*([A-Za-z][A-Za-z][A-Za-z\s'\-]{2,80})$", re.I),
+        ],
+        "reject_patterns": [
+            re.compile(r"HORASARA", re.I),
+            re.compile(r"^CHAPTER\s+\d+\s+\d+$", re.I),
+            re.compile(r"^\d+$"),
+            re.compile(r"[§।\u0900-\u097F]"),
+            re.compile(r"CHAPTER\s+\d+\s*[\dॐ\.\,\|\`]", re.I),
+        ],
+        "min_lines_per_chapter": 20,
+        "allow_heading_promote": False,
+    },
+    "Sarvartha_Chintamani": {
+        "prefer_patterns": [
+            re.compile(r"^CHAPTER\s+(\d+)[\s:,\-]*(.*)$", re.I),
+        ],
+        "reject_patterns": [
+            re.compile(r"^\d+$"),
+            re.compile(r"chapter\s+\d+.*chapter", re.I),
+        ],
+        "min_lines_per_chapter": 10,
+        "allow_heading_promote": True,
+    },
+    "Gochar_Phaladeepika_Pulippani": {
+        "prefer_patterns": [
+            re.compile(r"^(\d{1,2})\.\s+([A-Z][^\n]{8,120})$"),
+        ],
+        "reject_patterns": [
+            re.compile(r"^\d+$"),
+        ],
+        "min_lines_per_chapter": 8,
+        "allow_heading_promote": True,
+    },
+    "Jataka_Chandrika": {
+        # Verse text with heavy running headers "24. JATAKACHUNDRIKA." 
+        # Prefer not to create dozens of micro chs; allow heading promote + synthetic for 1 solid chapter.
+        "prefer_patterns": [],
+        "reject_patterns": [
+            re.compile(r"JATAKACHUNDRIKA", re.I),
+        ],
+        "min_lines_per_chapter": 5,
+        "allow_heading_promote": True,
+    },
+    "Jataka_Tatva_Mahadeva": {
+        "prefer_patterns": [
+            re.compile(r"^(?:Chapter|Ch\.?|ADHYAYA)\s*(\d+)[\s:\-]*(.*)$", re.I),
+        ],
+        "reject_patterns": [
+            re.compile(r"JATAKATATVA|JATAKA TATVA", re.I),
+            re.compile(r"^\d+$"),
+            re.compile(r"^[A-Z][a-z]+ [A-Z][a-z]+ [A-Z]"),  # name-like headers e.g. author
+        ],
+        "min_lines_per_chapter": 50,
+        "allow_heading_promote": False,
+    },
+    "Jataka_Parijata": {
+        # Extremely poor OCR: no real chapter markers, only page breaks + garbled fragments.
+        # Disable greedy patterns; rely on page-group rescue + strong junk rejection.
+        "prefer_patterns": [],
+        "reject_patterns": [
+            re.compile(r"JATAKA\s*PARIJATA|JATAKAPARIJATA", re.I),
+            re.compile(r"^\d+$"),
+            re.compile(r"^[A-Za-z]{2,6}\s+[a-z]{2,6}\s+[a-z]{2,6}$"),  # 3-word lowercase-ish garbage
+        ],
+        "min_lines_per_chapter": 80,
+        "allow_heading_promote": False,
+    },
+    # Targeted overrides for the audited books to produce canonical ch-N ids and avoid slug/over-split.
+    # These make deep-link chapter ids align with existing patch chapter_ids (ch-1, ch-3, ...).
+    "Ashtakavarga_System_Comprehensive_Handbook": {
+        "prefer_patterns": [
+            re.compile(r"^(\d{1,2}(?:\.\d+)?)\.\s+([A-Z][^\n]{5,140})$"),
+        ],
+        "reject_patterns": [
+            re.compile(r"^(Sun|Moon|Mars|Mercury|Jupiter|Venus|Saturn|Rahu|Ketu|Total|Functional|Planet Matrix|Bindus|Table)\b", re.I),
+            re.compile(r"^\d+$"),
+            re.compile(r"^[A-Z][a-z]+ \([A-Z]"),
+            re.compile(r"^[A-Za-z]+ = \d"),
+            re.compile(r"^(THE ASHTAKAVARGA|An Authoritative Reference|Planet Matrix|Total Auspicious)", re.I),
+        ],
+        "min_lines_per_chapter": 5,
+        "allow_heading_promote": False,
+    },
+    "Phaladeepika_English_Translation": {
+        "prefer_patterns": [
+            # Primary: ADHYAYA N (handles leading junk, OCR dots, Roman, Devanagari)
+            re.compile(r"(?:^|[^\w])(?:ADHYAYA|Adhyaya)\s*(\d{1,2}|[IVX]+|[०-९]+)[\s\.\:\+\u0964।]*", re.I),
+            re.compile(r"^(?:Chapter|Ch\.?)\s*(\d+)[\s:\-]*(.*)$", re.I),
+        ],
+        "reject_patterns": [
+            re.compile(r"(Thus ends|ends the|Adhyaya Slokas|Adhyaya =|^\.?\s*ADHYAYA\s*$)", re.I),
+            re.compile(r"^\d+$"),
+            re.compile(r"^[A-Z]{2,}\s+ADHYAYA", re.I),
+        ],
+        "min_lines_per_chapter": 25,
+        "allow_heading_promote": False,
+    },
+    "Saravali": {
+        "prefer_patterns": [
+            re.compile(r"^(?:Chapter|Ch\.?)\s*(\d+)[\s:\-]*(.*)$", re.I),
+        ],
+        "reject_patterns": [
+            re.compile(r"^(KALYANA|RANJAN|Published by|R\. SANTHANAM|By R\.|PROLEGOMENA)", re.I),
+            re.compile(r"^\d+$"),
+            re.compile(r"Phone|Price|First Edition", re.I),
+        ],
+        "min_lines_per_chapter": 12,
+        "allow_heading_promote": False,
+    },
+    "Brihat_Parasara_Hora_Sastra_Vol_1": {
+        "prefer_patterns": [
+            re.compile(r"^(\d{1,2})\.\s+([A-Z][^\n]{5,120}?)(?:\s+\d{2,4})?\s*$"),
+            re.compile(r"^(?:Chapter|Ch\.?)\s*(\d+)[\s:\-]*(.*)$", re.I),
+            re.compile(r"^(\d{1,2})\.\s+([A-Z][A-Z][^\n]{3,80})(?:\s+\d{2,4})?$"),
+        ],
+        "reject_patterns": [
+            re.compile(r"^\d{1,4}$"),
+            re.compile(r"Ch\. Details|CONTENTS|Preface by|MAHARSHI PARASARA| BRIHAT PARASARA", re.I),
+            re.compile(r"^The (Creation|Great Incarnations)", re.I),
+            re.compile(r"^\d+\.\s+(Parasara|The Navamsha|Effects of|Lord of|In the|When the|If the|Should the|A planet)", re.I),
+        ],
+        "min_lines_per_chapter": 25,
+        "allow_heading_promote": False,
+    },
 }
 
 def normalize_num(n: str | None) -> str | None:
@@ -167,7 +307,8 @@ def normalize_num(n: str | None) -> str | None:
         return None
     n = n.translate(DEVANAGARI_NUM_MAP)
     # Basic roman to decimal for Adhyaya/Pada stability (common small values)
-    rom = {"I": "1", "II": "2", "III": "3", "IV": "4", "V": "5", "VI": "6", "VII": "7", "VIII": "8", "IX": "9", "X": "10"}
+    rom = {"I": "1", "II": "2", "III": "3", "IV": "4", "V": "5", "VI": "6", "VII": "7", "VIII": "8", "IX": "9", "X": "10",
+           "XI": "11", "XII": "12", "XIII": "13", "XIV": "14", "XV": "15", "XVI": "16", "XVII": "17", "XVIII": "18", "XIX": "19", "XX": "20"}
     nu = n.upper()
     if nu in rom:
         return rom[nu]
@@ -179,20 +320,23 @@ def is_likely_running_header(line: str, book_stem: str) -> bool:
     """
     s = line.strip()
     su = s.upper().strip(":-–—., ")
-    standalone_junk = {"JAIMINISUTRAS", "JATMINISUTRAS", "BHAVARTHA RATNAKARA", "BHAVARTHARATNAKARA", "JAIMINI SUTRAS", "SAGAR PUBLICATIONS", "CH. DETAILS", "BANGALORE VENKATA", "BISTOR"}
+    standalone_junk = {"JAIMINISUTRAS", "JATMINISUTRAS", "BHAVARTHA RATNAKARA", "BHAVARTHARATNAKARA", "JAIMINI SUTRAS", "SAGAR PUBLICATIONS", "CH. DETAILS", "BANGALORE VENKATA", "BISTOR", "JATAKACHUNDRIKA", "JATAKA TATVA", "JATAKATATVA", "JATAKA PARIJATA", "JATAKAPARIJATA"}
     if su in standalone_junk or "BHAVART" in su and "RATNA" in su:
         return True
     if re.match(r"^\d{1,4}$", s):
         return True
     if re.search(r"^Phone\s*:|^\d{3,}$", s, re.I):
         return True
-    # Very short all-caps after a number at start of line
-    m = re.match(r"^(\d+|[०-९]+)\s+([A-Z][A-Z'\-–— ]{2,40})$", s)
+    # Number + dot/comma + ALLCAPS book name (common running header bleed e.g. "24. JATAKACHUNDRIKA.")
+    if re.match(r"^\d+[\.\,]\s*[A-Z]{4,}", s) and any(tok in s.upper() for tok in ["JATAKA", "JATMINI", "HORASARA", "BHAVARTHA", "VEDANGA"]):
+        return True
+    # Very short all-caps after a number at start of line (tolerate trailing . : , from OCR)
+    m = re.match(r"^(\d+|[०-९]+)\s+([A-Z][A-Z'\-–— ]{2,40})[\.\,\:\s]*$", s)
     if not m:
         return False
     title = m.group(2).strip()
     stem_norm = book_stem.replace("_", " ").upper()
-    junk_tokens = {"JAIMINISUTRAS", "JATMINISUTRAS", "CREATION", "THE CREATION", "BHAVARTHA RATNAKARA"}
+    junk_tokens = {"JAIMINISUTRAS", "JATMINISUTRAS", "CREATION", "THE CREATION", "BHAVARTHA RATNAKARA", "JATAKACHUNDRIKA", "JATAKA TATVA", "JATAKA PARIJATA", "JATAKAPARIJATA"}
     if title.upper() in junk_tokens:
         return True
     if title.upper() in stem_norm or stem_norm in title.upper():
@@ -258,9 +402,9 @@ def looks_like_junk_chapter_title(title: str, number: str | None, book_stem: str
     if not t:
         return True
     tu = t.upper().replace(" ", "")
-    if tu in {"JAIMINISUTRAS", "JATMINISUTRAS", "JAIMINISUTRAS", "CREATION", "THECREATION", "BHAVARTHARATNAKARA"}:
+    if tu in {"JAIMINISUTRAS", "JATMINISUTRAS", "JAIMINISUTRAS", "CREATION", "THECREATION", "BHAVARTHARATNAKARA", "JATAKACHUNDRIKA", "JATAKACHUNDRIKA.", "JATAKATATVA", "JATAKAPARIJATA", "JATAKAPARIJATA."}:
         return True
-    if "JAIMINISUT" in tu or "BHAVARTHARATNA" in tu or ("BHAVART" in tu and "RATNA" in tu):
+    if "JAIMINISUT" in tu or "BHAVARTHARATNA" in tu or ("BHAVART" in tu and "RATNA" in tu) or "JATAKACHUN" in tu:
         return True
     stem_words = set(re.findall(r"[A-Z]+", book_stem.upper()))
     if tu in stem_words:
@@ -274,9 +418,19 @@ def looks_like_junk_chapter_title(title: str, number: str | None, book_stem: str
         return True
     if re.search(r"Phone|Girish|Preface by|Ch\. Details|Sl\. No\.|translator| Sagar |Brihat Parasara Hora Shastra \d|Distribution by|Parasz|Parase", t, re.I):
         return True
-    if re.search(r"\d{3,}$", t):
+    # Avoid flagging page-range titles like "Pages 471–582" or normal numeric suffixes in ranges
+    if re.search(r"\d{3,}$", t) and not re.search(r"Pages\s+\d", t, re.I):
         return True
     if re.search(r"hours, at |These are used|Venus \| |Mars Sun|DEK,|Speculam|Mooltri|Lord of the Portion", t, re.I):
+        return True
+    # OCR garbage: very short tokens, mixed case fragments, mostly non-words
+    words = re.findall(r"[A-Za-z]{2,}", t)
+    if len(words) >= 2 and len(words) <= 6:
+        avg_len = sum(len(w) for w in words) / len(words)
+        if avg_len < 4.5:
+            # e.g. "Re di ee ek a", "Bir Se Ne i a"
+            return True
+    if len(t) <= 18 and len(words) >= 3 and sum(1 for w in words if len(w) <= 3) >= 2:
         return True
     return False
 
@@ -324,6 +478,7 @@ def parse_book(path: Path) -> dict[str, Any]:
     ch_pats = override.get("prefer_patterns") or CHAPTER_PATTERNS
     reject_pats = override.get("reject_patterns", [])
     min_gap = override.get("min_lines_per_chapter", 0)
+    strict_prefer = bool(override.get("prefer_patterns"))
 
     chapters: list[Chapter] = []
     current_chapter: Chapter | None = None
@@ -392,10 +547,20 @@ def parse_book(path: Path) -> dict[str, Any]:
                     title = clean_title(raw_title) if raw_title else ""
                 if not title:
                     # Title may be on next line or absent; use a placeholder that will be improved later
-                    title = f"Chapter {num}" if num else line[:60]
+                    # For strict prefer (e.g. Roman classics), look ahead a couple lines for a prose title
+                    if strict_prefer:
+                        for off in (1,2,3):
+                            if i+off < len(lines):
+                                cand = lines[i+off].strip()
+                                if cand and 4 <= len(cand) <= 80 and not cand.startswith("##") and not re.match(r"^\d{1,4}$", cand) and not is_likely_running_header(cand, stem):
+                                    title = clean_title(cand)
+                                    break
+                    if not title:
+                        title = f"Chapter {num}" if num else line[:60]
                 if title:
                     title = re.sub(r"\s+\d{2,4}\s*$", "", title).strip()
                     title = clean_title(title)
+                matched_ch = True  # candidate unless a later guard rejects
                 # Apply per-book reject patterns (e.g. duplicate TOC, page nums)
                 for rp in reject_pats:
                     if rp.search(line) or (title and rp.search(title)):
@@ -418,11 +583,16 @@ def parse_book(path: Path) -> dict[str, Any]:
                         matched_ch = False
                         break
                 # For loose number patterns, require prose-like title
-                if pat.pattern.startswith("^(\\d") and not title_looks_like_prose(title):
+                prose_ok = title_looks_like_prose(title) if pat.pattern.startswith("^(\\d") else True
+                if pat.pattern.startswith("^(\\d") and not prose_ok:
                     matched_ch = False
                     break
                 finish_chapter()
-                ch_id = f"ch-{slug(num or title)}"
+                # Canonical ch-N scheme: when a clean numeric chapter number is captured, use ch-N for deep-link + patch alignment.
+                if num:
+                    ch_id = f"ch-{num}"
+                else:
+                    ch_id = f"ch-{slug(title)}"
                 current_chapter = Chapter(
                     id=ch_id,
                     number=num,
@@ -438,7 +608,9 @@ def parse_book(path: Path) -> dict[str, Any]:
             continue
 
         # Heading promotion only for non-classic books or when explicitly allowed; classics rely on prefer + gap
-        allow_hp = override.get("allow_heading_promote", True) if override else True
+        # When a book override supplies prefer_patterns, default to no promotion to prevent table/row explosion.
+        default_hp = False if override.get("prefer_patterns") else True
+        allow_hp = override.get("allow_heading_promote", default_hp) if override else True
         # Heading promotion for strong all-caps / title-case headings (TOC listed chs, handbook sections, zero-ch fallback in main)
         s = line
         is_strong_heading = (
@@ -558,7 +730,7 @@ def parse_book(path: Path) -> dict[str, Any]:
                     start_line=i,
                     content_preview=s[:200]
                 ))
-        if len(synthetic) >= 2:
+        if len(synthetic) >= 2 and not strict_prefer:
             chapters = synthetic
 
     # For sutra-style texts, prefer Adhyaya/Pada chapters as the logical structure.
@@ -608,6 +780,243 @@ def parse_book(path: Path) -> dict[str, Any]:
                         ch.sections.append(Section(id=f"{ch.id}-sec-{slug(sec_title)}", title=sec_title, level=2, start_line=j))
             chapters = adh_chapters
 
+    
+    # Classic CHAPTER marker rescue for Brihat_Samhita / Hora_Sara style OCR translations.
+    # When prefer patterns + main logic produced 0 or implausible counts, rebuild strictly from "CHAPTER N" (Roman or Arabic)
+    # using line ranges between markers. Titles are taken from the first prose line after the marker.
+    first_junk = bool(chapters) and looks_like_junk_chapter_title(chapters[0].title if chapters else "", chapters[0].number if chapters else None, stem)
+    if stem in ("Brihat_Samhita", "Hora_Sara", "Brihat_Parasara_Hora_Sastra_Vol_1", "Saravali") and (len(chapters) < 3 or first_junk):
+        ch_markers = []
+        ch_pat = re.compile(r"^CHAPTER\.?\s*([0-9IVX]+)", re.I)
+        for i, ln in enumerate(lines):
+            m = ch_pat.match(ln.strip())
+            if m:
+                num_raw = m.group(1)
+                num = normalize_num(num_raw) or num_raw
+                # Prefer title on same line after "N. " or "Chapter N ", else lookahead
+                title = f"Chapter {num}"
+                same = ln.strip()
+                mtitle = re.match(r"^(?:\d{1,2}|CHAPTER\.?)\s*[\.\:\-]?\s*\d+[\.\:\-]?\s*(.+)$", same, re.I)
+                if mtitle:
+                    candt = clean_title(re.sub(r"\s+\d{2,4}\s*$", "", mtitle.group(1)))
+                    if len(candt) >= 4 and not is_likely_running_header(candt, stem):
+                        title = candt
+                if title == f"Chapter {num}":
+                    for off in range(1, 8):
+                        if i+off >= len(lines): break
+                        cand = lines[i+off].strip()
+                        if not cand or PAGE_HEADER.match(cand): continue
+                        if re.match(r"^CHAPTER", cand, re.I): break  # next ch marker
+                        if len(cand) >= 8 and not re.match(r"^\d{1,4}$", cand) and not is_likely_running_header(cand, stem) and not re.match(r"^\d", cand):
+                            title = clean_title(re.sub(r"\s+\d{2,4}\s*$", "", cand))
+                            break
+                ch_markers.append((i, num, title))
+        # Dedup by chapter num, keep first occurrence only (handles repeated OCR bleed of "CHAPTER 5 89")
+        seen_num = {}
+        deduped = []
+        for pos, num, title in ch_markers:
+            if num not in seen_num:
+                seen_num[num] = True
+                deduped.append((pos, num, title))
+        ch_markers = deduped
+        if len(ch_markers) >= 2:
+            new_chs = []
+            for idx, (start, num, title) in enumerate(ch_markers):
+                end = ch_markers[idx+1][0] - 1 if idx+1 < len(ch_markers) else len(lines)-1
+                new_chs.append(Chapter(
+                    id=f"ch-{num}",
+                    number=num,
+                    title=title,
+                    level=1,
+                    start_line=start,
+                    end_line=end
+                ))
+            chapters = new_chs
+            print(f"[classic-rescue] {stem}: rebuilt {len(chapters)} chapters from CHAPTER markers")
+
+    # ADHYAYA rescue for Phaladeepika_English_Translation (and tolerant for others) when main pass produced too few or junky chapters.
+    # Rebuild strictly from ADHYAYA N markers (Arabic preferred; tolerant of leading "." and OCR).
+    first_junk = bool(chapters) and looks_like_junk_chapter_title(chapters[0].title if chapters else "", chapters[0].number if chapters else None, stem)
+    if stem in ("Phaladeepika_English_Translation",) and (len(chapters) < 3 or first_junk):
+        adh_markers = []
+        adh_pat = re.compile(r"(?:^|[^\w])(?:ADHYAYA|Adhyaya)\s*(\d{1,2}|[IVX]+)[\s\.\:\+\u0964।]*", re.I)
+        for i, ln in enumerate(lines):
+            m = adh_pat.search(ln)
+            if m:
+                num_raw = m.group(1)
+                num = normalize_num(num_raw) or num_raw
+                # skip obvious frontmatter refs (Adhyaya which was..., the XXV Adhyaya which...)
+                if i < 300 and ("which was" in ln.lower() or "unavailable" in ln.lower()):
+                    continue
+                title = f"Adhyaya {num}"
+                # Prefer title from marker line if present, e.g. "ADHYAYA 1. The nature..."
+                same = ln.strip()
+                mtitle = re.search(r"(?:ADHYAYA|Adhyaya)\s*(?:\d+|[IVX]+)[\s\.\:\+\u0964।]*\s*(.+)$", same, re.I)
+                if mtitle:
+                    candt = clean_title(re.sub(r"\s+\d{2,4}\s*$", "", mtitle.group(1)))
+                    if len(candt) >= 4 and not is_likely_running_header(candt, stem) and not re.match(r"^\d", candt):
+                        title = candt
+                if title == f"Adhyaya {num}":
+                    for off in range(1, 6):
+                        if i+off >= len(lines): break
+                        cand = lines[i+off].strip()
+                        if not cand or PAGE_HEADER.match(cand): continue
+                        if re.search(r"ADHYAYA", cand, re.I): break
+                        if len(cand) >= 8 and not re.match(r"^\d{1,4}$", cand) and not is_likely_running_header(cand, stem):
+                            title = clean_title(re.sub(r"\s+\d{2,4}\s*$", "", cand))
+                            break
+                adh_markers.append((i, num, title))
+        # Dedup by num
+        seen_num = {}
+        deduped = []
+        for pos, num, title in adh_markers:
+            if num not in seen_num:
+                seen_num[num] = True
+                deduped.append((pos, num, title))
+        adh_markers = deduped
+        if len(adh_markers) >= 3:
+            new_chs = []
+            for idx, (start, num, title) in enumerate(adh_markers):
+                end = adh_markers[idx+1][0] - 1 if idx+1 < len(adh_markers) else len(lines)-1
+                new_chs.append(Chapter(
+                    id=f"ch-{num}",
+                    number=num,
+                    title=title,
+                    level=1,
+                    start_line=start,
+                    end_line=end
+                ))
+            chapters = new_chs
+            print(f"[adhyaya-rescue] {stem}: rebuilt {len(chapters)} chapters from ADHYAYA markers")
+
+    # Page-group rescue for Jataka_Parijata (and similarly damaged OCR page-dump classics).
+    # Raw source has no chapter markers; only "## Page N" separators with heavy OCR bleed.
+    # Group pages into larger synthetic chapters (aim ~40-60) with stable "ch-pX-pY" ids and "Pages X–Y" titles.
+    # This makes the /learn nav usable even if titles are not semantic.
+    first_junk = bool(chapters) and looks_like_junk_chapter_title(chapters[0].title if chapters else "", chapters[0].number if chapters else None, stem)
+    too_fragmented = len(chapters) > 80
+    if stem == "Jataka_Parijata" and (len(chapters) < 2 or first_junk or too_fragmented):
+        page_markers = []
+        page_pat = re.compile(r"^##\s*Page\s+(\d+)", re.I)
+        for i, ln in enumerate(lines):
+            m = page_pat.match(ln.strip())
+            if m:
+                pg = int(m.group(1))
+                page_markers.append((i, pg))
+        if len(page_markers) >= 10:
+            # Group every ~8-12 pages into one chapter to keep chapter count reasonable (~50)
+            group_size = 10
+            grouped = []
+            for g in range(0, len(page_markers), group_size):
+                start_idx, start_pg = page_markers[g]
+                end_pair = page_markers[min(g + group_size, len(page_markers) - 1)]
+                end_idx, end_pg = end_pair
+                # end_line should be just before next group's first page (or EOF)
+                next_start = page_markers[g + group_size][0] if g + group_size < len(page_markers) else len(lines)
+                title = f"Pages {start_pg}–{end_pg}"
+                grouped.append((start_idx, f"ch-p{start_pg}-p{end_pg}", title, next_start - 1))
+            if len(grouped) >= 3:
+                new_chs = []
+                for idx, (start, ch_id, title, end) in enumerate(grouped):
+                    new_chs.append(Chapter(
+                        id=ch_id,
+                        number=str(idx + 1),
+                        title=title,
+                        level=1,
+                        start_line=start,
+                        end_line=end
+                    ))
+                chapters = new_chs
+                print(f"[page-group-rescue] {stem}: rebuilt {len(chapters)} page-group chapters from {len(page_markers)} page markers")
+
+    # --- Canonical ch-N normalization (stronger overrides + ch-N scheme) ---
+    # Force ids to "ch-N" (and populate .number) for any chapter that carries or implies a clean integer chapter number.
+    # This ensures deep link ids (used by reader) exactly match the chapter_ids already present in patches (node-chapter-map + per-book patches).
+    # Dedup by logical number; keep the earliest non-junk occurrence.
+    def _derive_num(ch: Chapter) -> str | None:
+        if ch.number and re.match(r"^\d+[\.\d]*$", str(ch.number)):
+            return str(ch.number)
+        t = (ch.title or "").strip()
+        m = re.match(r"^(\d{1,3}(?:\.\d+)?)[\.\s:\-]", t)
+        if m:
+            return normalize_num(m.group(1)) or m.group(1)
+        m = re.search(r"\b(?:Chapter|Ch\.?|ADHYAYA)\s*(\d{1,3})", t, re.I)
+        if m:
+            return normalize_num(m.group(1)) or m.group(1)
+        return None
+
+    if chapters:
+        num_to_best: dict[str, Chapter] = {}
+        for ch in chapters:
+            n = _derive_num(ch)
+            if n:
+                ch.number = n  # ensure populated for mapper explicit match + sourceLocation
+                cand_id = f"ch-{n}"
+                if n not in num_to_best:
+                    ch.id = cand_id
+                    num_to_best[n] = ch
+                else:
+                    prev = num_to_best[n]
+                    # Prefer the one that starts earlier in doc and/or has a fuller title (avoid TOC stubs)
+                    prev_start = prev.start_line or 0
+                    cur_start = ch.start_line or 0
+                    if cur_start < prev_start or (cur_start == prev_start and len(ch.title or "") > len(prev.title or "")):
+                        # swap: mark prev as dup and take current as canonical
+                        if not prev.id.endswith("-dup"):
+                            prev.id = f"{prev.id}-dup"
+                        ch.id = cand_id
+                        num_to_best[n] = ch
+            # non-numeric keep their (improved) slug id
+
+    # Ensure chapter ids are unique (defensive). Collisions happen on dense/OCR sources
+    # with repeated titles or bare numbers. Suffix -2, -3... while preserving first occurrence.
+    # For canonical ch-N, collapse dups instead of suffixing.
+    seen_ids: dict[str, int] = {}
+    for ch in chapters:
+        base = ch.id or "ch"
+        if base not in seen_ids:
+            seen_ids[base] = 1
+            continue
+        # If this is already a ch-N, drop the duplicate rather than polluting id space
+        if re.match(r"^ch-\d+[\.\d]*$", base):
+            # mark for later filter
+            ch.id = base + "-dup"
+            continue
+        seen_ids[base] += 1
+        ch.id = f"{base}-{seen_ids[base]}"
+        # also update any sections that used the old ch id prefix
+        for sec in (ch.sections or []):
+            if sec.id and sec.id.startswith(base + "-sec-"):
+                # keep as-is (section uniqueness within ch is separate)
+                pass
+
+    # Fill missing content_previews (important for page-group rescues and any late chapter sets)
+    for ch in chapters:
+        if not ch.content_preview:
+            start = ch.start_line or 0
+            end = ch.end_line or min(start + 12, len(lines))
+            ch.content_preview = " ".join(lines[start:end])[:280]
+
+    # Finalize ordering + drop -dup numeric collisions
+    chapters = [c for c in chapters if not (c.id or "").endswith("-dup")]
+    def _sort_key(c):
+        n = c.number or ""
+        try:
+            nkey = (0, float(n)) if n else (1, c.start_line or 0)
+        except Exception:
+            nkey = (1, c.start_line or 0)
+        return (c.start_line or 0, nkey, c.title or "")
+    chapters.sort(key=_sort_key)
+    # Re-assign unique within any remaining slug collisions (ch-N already deduped above)
+    seen_ids = {}
+    for ch in chapters:
+        base = ch.id or "ch"
+        if base not in seen_ids:
+            seen_ids[base] = 1
+            continue
+        seen_ids[base] += 1
+        ch.id = f"{base}-{seen_ids[base]}"
+
     # Build flat toc and assign end lines roughly
     toc = []
     for idx, ch in enumerate(chapters):
@@ -637,6 +1046,10 @@ def parse_book(path: Path) -> dict[str, Any]:
         junk_count = sum(1 for c in chs if looks_like_junk_chapter_title(c.title, c.number, book_stem))
         empty_sec = sum(1 for c in chs if not c.sections)
         has_dev = any(c.number and any(ord(ch) > 0x0900 for ch in str(c.number)) for c in chs)
+        # Page-group style (synthetic but stable) for badly OCR'd page dumps is acceptable as "medium"
+        page_grouped = all("Pages " in (c.title or "") for c in chs) if chs else False
+        if page_grouped and n >= 5 and junk_count == 0:
+            return "medium-improved"
         # Reasonable structure: several chapters, few junk titles, some sections, no dev nums in ids
         if n >= 3 and junk_count <= 1 and (empty_sec / n) < 0.6 and not has_dev:
             return "high"

@@ -137,9 +137,6 @@ def get_prediction_enhancer():
     from graph_rag.enhancer import PredictionEnhancer
 
     enhancer = PredictionEnhancer()
-    # Ensure enhancer uses the same graph instance as KE when possible
-    if hasattr(ke.store, "_graph") and ke.store._graph is not None:
-        enhancer.graph = ke.store._graph  # type: ignore[attr-defined]
     return enhancer
 
 
@@ -182,3 +179,106 @@ def remap_nodes_to_structured(books: list[str] | None = None) -> dict:
     """Recompute node→chapter linkages (scripts/map_nodes_to_structured.py)."""
     ke = get_knowledge_engine()
     return ke.remap_nodes_to_structured(books=books)
+
+def rebuild_and_remap_structured(books: list[str] | None = None) -> dict:
+    """Rebuild structured chapters then remap node linkages (full KE-owned step)."""
+    ke = get_knowledge_engine()
+    return ke.rebuild_and_remap_structured(books=books)
+
+
+# ------------------------------------------------------------------ #
+# Invalidation (chapter-aware via KE)
+# ------------------------------------------------------------------
+
+
+def invalidate_nodes(
+    node_ids: list[str] | None = None,
+    pattern: str | None = None,
+    reason: str = "manual",
+    details: str = "",
+) -> list[str]:
+    """Invalidate nodes by explicit IDs or glob pattern. Reason is a string mapped to InvalidationReason."""
+    ke = get_knowledge_engine()
+    from .models import InvalidationReason
+
+    try:
+        r = InvalidationReason(reason)
+    except Exception:
+        r = InvalidationReason.MANUAL
+    return ke.invalidate(node_ids=node_ids, pattern=pattern, reason=r, details=details)
+
+
+def invalidate_chapter(book_id: str, chapter_id: str, reason: str = "manual", details: str = "") -> dict:
+    """Resolve nodes for a chapter and invalidate them. Dry-run friendly (caller decides)."""
+    ke = get_knowledge_engine()
+    nodes = ke.get_nodes_for_chapter(book_id, chapter_id)
+    nids = [n.get("id") for n in nodes if isinstance(n, dict) and n.get("id")]
+    from .models import InvalidationReason
+
+    try:
+        r = InvalidationReason(reason)
+    except Exception:
+        r = InvalidationReason.MANUAL
+    invalidated = ke.invalidate(node_ids=nids, reason=r, details=details or f"chapter {chapter_id}@{book_id}")
+    return {
+        "book_id": book_id,
+        "chapter_id": chapter_id,
+        "nodes_targeted": len(nids),
+        "invalidated": invalidated,
+    }
+
+
+# ------------------------------------------------------------------ #
+# Structured coverage snapshot (for CLI / ops)
+# ------------------------------------------------------------------
+
+
+def get_structured_coverage() -> dict:
+    """Return a snapshot of structured books, chapter counts, and patch linkage stats."""
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    structured_dir = root / "knowledge-graph" / "structured"
+    patch_file = root / "knowledge-graph" / "patches" / "node-chapter-map.json"
+
+    books: list[dict] = []
+    total_chapters = 0
+    total_patched_nodes = 0
+
+    if structured_dir.exists():
+        for p in sorted(structured_dir.glob("*.json")):
+            try:
+                data = json.loads(p.read_text(encoding="utf-8"))
+                chs = data.get("chapters") or []
+                bid = data.get("book_id") or p.stem
+                total_chapters += len(chs)
+                books.append({
+                    "book_id": bid,
+                    "chapters": len(chs),
+                    "source_file": data.get("source_file"),
+                })
+            except Exception:
+                continue
+
+    patch_stats: dict = {"present": False, "entries": 0, "books_covered": 0}
+    if patch_file.exists():
+        try:
+            pdata = json.loads(patch_file.read_text(encoding="utf-8"))
+            patches = pdata.get("patches") or []
+            patch_stats["present"] = True
+            patch_stats["entries"] = len(patches)
+            covered = {p.get("book_id") for p in patches if p.get("book_id")}
+            patch_stats["books_covered"] = len(covered)
+            total_patched_nodes = len(patches)
+        except Exception:
+            pass
+
+    return {
+        "books": len(books),
+        "total_chapters": total_chapters,
+        "total_patched_nodes": total_patched_nodes,
+        "patch": patch_stats,
+        "books_detail": books[:50],  # cap for CLI readability
+    }
+

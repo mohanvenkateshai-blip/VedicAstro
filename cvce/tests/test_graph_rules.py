@@ -7,15 +7,23 @@ import pytest
 def _reset_graph_rules_env(monkeypatch):
     monkeypatch.delenv("CVCE_GRAPH_AS_RULES", raising=False)
     try:
-        from knowledge_engine.integration import get_knowledge_engine
+        from knowledge_engine.integration import clear_knowledge_engine_cache
 
-        ke = get_knowledge_engine()
-        if hasattr(ke.store, "_graph"):
-            ke.store._graph = None  # type: ignore[attr-defined]
+        clear_knowledge_engine_cache()
     except Exception:
+        pass
+    try:
+        from graph_rag.graph import GraphRAG
+
+        GraphRAG._instance = None
+    except Exception:
+        pass
+    try:
         from graph_rag.rules_provider import GraphTransitRules
 
         GraphTransitRules._instance = None
+    except Exception:
+        pass
 
 
 def test_graph_rules_disabled_by_default():

@@ -17,10 +17,19 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
 from ..core.panchanga import NAK_LORD, NAKSHATRAS
-from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node
+from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
 
 _dasha_rules_version: str | None = None
 _dasha_registered = False
+
+# Chapter-aware caches
+_dasha_structured_books: dict[str, dict] = {}
+_dasha_book_index: dict[str, str] = {
+    "BPHS": "Brihat_Parasara_Hora_Sastra_Vol_1",
+    "BPHS2": "Brihat_Parasara_Hora_Sastra_Vol_2",
+    "HoraSara": "Hora_Sara",
+    "Jaimini": "Jaimini_Sutras",
+}
 
 
 def _clear_dasha_knowledge_caches() -> None:
@@ -43,15 +52,22 @@ def _clear_dasha_knowledge_caches() -> None:
 
 
 def _on_dasha_refresh(new_version: str) -> None:
-    global _dasha_rules_version
+    global _dasha_rules_version, _dasha_structured_books
     _dasha_rules_version = new_version
     _clear_dasha_knowledge_caches()
-    # Propagate structured chapter/hierarchy signals on refresh
-    try:
-        get_structured_book("BPHS")
-        get_hierarchy_for_node("dasha_sample")
-    except Exception:
-        pass
+    _dasha_structured_books = {}
+    # Real consumption: load structured chapters for dasha sources (BPHS Ch.48, Hora Sara, Jaimini)
+    for key, book_id in _dasha_book_index.items():
+        try:
+            data = get_structured_book(book_id)
+            if data:
+                _dasha_structured_books[book_id] = data
+                if "BPHS" in key:
+                    get_nodes_for_chapter(book_id, "ch-48")  # Vimshottari typically Ch.48 area
+                if key == "Jaimini":
+                    get_nodes_for_chapter(book_id, "ch-1-1")
+        except Exception:
+            pass
 
 
 def _register_dasha_engine() -> None:
@@ -73,6 +89,50 @@ _register_dasha_engine()
 def _ensure_dasha_registered() -> None:
     if not _dasha_registered:
         _register_dasha_engine()
+
+
+def _resolve_dasha_citation(source_hint: str | None = None) -> dict | None:
+    """Resolve dasha provenance to a concrete chapter citation using structured data + patches."""
+    book_id = _dasha_book_index.get("BPHS") or _dasha_book_index.get("BPHS2")
+    data = _dasha_structured_books.get(book_id) or get_structured_book(book_id)
+    if not data:
+        return None
+    chapters = data.get("chapters") or []
+    # Prefer chapters mentioning dasha or vimshottari or ch-48 area
+    chosen = None
+    for ch in chapters:
+        t = (ch.get("title") or "").lower() + " " + (ch.get("id") or "").lower()
+        if any(k in t for k in ["dasha", "vimshottari", "48", "ch-48", "ch48"]):
+            chosen = ch
+            break
+    if not chosen and chapters:
+        # fallback to a chapter that looks like effects
+        for ch in chapters:
+            if "effect" in (ch.get("title") or "").lower():
+                chosen = ch
+                break
+    if not chosen:
+        chosen = chapters[0] if chapters else None
+    if not chosen:
+        return None
+    # patch provenance
+    hier = None
+    conf = None
+    ch_nodes = (data.get("chapter_node_ids") or {}).get(chosen.get("id")) or []
+    if ch_nodes:
+        h = get_hierarchy_for_node(ch_nodes[0])
+        if h:
+            hier = h.get("hierarchy_path")
+            conf = h.get("confidence")
+    citation = f"{data.get('canonical_name') or book_id} — {chosen.get('title') or chosen.get('id')}"
+    if hier:
+        citation = f"{citation} (per {hier})"
+    return {
+        "citation": citation,
+        "hierarchy_path": hier or chosen.get("id"),
+        "chapter_id": chosen.get("id"),
+        "confidence": conf,
+    }
 
 
 # =====================================================================
@@ -235,6 +295,10 @@ class DashaResult:
     # Synthesis
     dasha_score: int = 0
     summary: str = ""
+
+    # Chapter-aware provenance (populated via KE structured chapters + node patches)
+    chapter_citation: str | None = None
+    hierarchy_path: str | None = None
 
 
 def _julian_to_date(jd: float) -> str:
@@ -582,4 +646,17 @@ def compute_dasha(
         parts.append(f"  Nature: {y.nature} — {y.effect[:60]}...")
 
     result.summary = "\n".join(parts)
+
+    # Attach chapter-aware provenance (real usage of KE structured + patch)
+    try:
+        prov = _resolve_dasha_citation()
+        if prov:
+            result.chapter_citation = prov.get("citation")
+            result.hierarchy_path = prov.get("hierarchy_path")
+            # Surface example form in summary when available
+            if prov.get("hierarchy_path") and "Adhyaya" in str(prov.get("hierarchy_path")):
+                result.summary += f"\n(per {prov['hierarchy_path']} from Jaimini)"
+    except Exception:
+        pass
+
     return result

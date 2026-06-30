@@ -3,122 +3,1638 @@
   "canonical_name": "Activity Mapping",
   "source_file": "Activity_Mapping.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "**B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)",
+      "id": "ch-scoring_methodology",
+      "number": null,
+      "title": "Scoring Methodology",
       "level": 1,
-      "start_line": 1139,
-      "end_line": 1139,
-      "sections": [],
-      "content_preview": "1. **B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)"
-    },
-    {
-      "id": "ch-2",
-      "number": "2",
-      "title": "**Brihat Parasara Hora Sastra (BPHS)** (foundational authority)",
-      "level": 1,
-      "start_line": 1140,
-      "end_line": 1140,
-      "sections": [],
-      "content_preview": "2. **Brihat Parasara Hora Sastra (BPHS)** (foundational authority)"
-    },
-    {
-      "id": "ch-3",
-      "number": "3",
-      "title": "**Muhurta Chintamani** (classical muhurta text)",
-      "level": 1,
-      "start_line": 1141,
-      "end_line": 1141,
-      "sections": [],
-      "content_preview": "3. **Muhurta Chintamani** (classical muhurta text)"
-    },
-    {
-      "id": "ch-4",
-      "number": "4",
-      "title": "**Phaladeepika** (Mantreswara — supplementary)",
-      "level": 1,
-      "start_line": 1142,
-      "end_line": 1142,
-      "sections": [],
-      "content_preview": "4. **Phaladeepika** (Mantreswara — supplementary)"
-    },
-    {
-      "id": "ch-5",
-      "number": "5",
-      "title": "**Gochar Phaladeepika** (Pulippani — transit-specific rules)",
-      "level": 1,
-      "start_line": 1143,
-      "end_line": 1143,
-      "sections": [],
-      "content_preview": "5. **Gochar Phaladeepika** (Pulippani — transit-specific rules)"
-    },
-    {
-      "id": "ch-6",
-      "number": "6",
-      "title": "**Hora Sara** (Prithuyasas — supplementary)",
-      "level": 1,
-      "start_line": 1144,
-      "end_line": 1144,
-      "sections": [],
-      "content_preview": "6. **Hora Sara** (Prithuyasas — supplementary)"
-    },
-    {
-      "id": "ch-7",
-      "number": "7",
-      "title": "**Sarvartha Chintamani** (supplementary)",
-      "level": 1,
-      "start_line": 1145,
+      "start_line": 10,
       "end_line": 1149,
-      "sections": [],
-      "content_preview": "7. **Sarvartha Chintamani** (supplementary)"
+      "sections": [
+        {
+          "id": "ch-scoring_methodology-sec-scoring_methodology",
+          "title": "Scoring Methodology",
+          "level": 2,
+          "start_line": 10,
+          "end_line": 31,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-general_rules_all_activities",
+          "title": "General Rules (All Activities)",
+          "level": 2,
+          "start_line": 32,
+          "end_line": 53,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_1_business_finance_9_activities",
+          "title": "Category 1: Business & Finance (9 activities)",
+          "level": 2,
+          "start_line": 54,
+          "end_line": 55,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-11_accounting_bookkeeping",
+          "title": "1.1 Accounting & Bookkeeping",
+          "level": 3,
+          "start_line": 56,
+          "end_line": 66,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-12_borrowing",
+          "title": "1.2 Borrowing",
+          "level": 3,
+          "start_line": 67,
+          "end_line": 77,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-13_investing",
+          "title": "1.3 Investing",
+          "level": 3,
+          "start_line": 78,
+          "end_line": 88,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-14_lending",
+          "title": "1.4 Lending",
+          "level": 3,
+          "start_line": 89,
+          "end_line": 99,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-15_opening_a_business_or_store",
+          "title": "1.5 Opening a Business or Store",
+          "level": 3,
+          "start_line": 100,
+          "end_line": 110,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-16_paying_debts",
+          "title": "1.6 Paying Debts",
+          "level": 3,
+          "start_line": 111,
+          "end_line": 121,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-17_selling",
+          "title": "1.7 Selling",
+          "level": 3,
+          "start_line": 122,
+          "end_line": 132,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-18_buying_general_transactions",
+          "title": "1.8 Buying & General Transactions",
+          "level": 3,
+          "start_line": 133,
+          "end_line": 143,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-19_signing_contracts_agreements",
+          "title": "1.9 Signing Contracts & Agreements",
+          "level": 3,
+          "start_line": 144,
+          "end_line": 156,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_2_jewelry_gems_3_activities",
+          "title": "Category 2: Jewelry & Gems (3 activities)",
+          "level": 2,
+          "start_line": 157,
+          "end_line": 158,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-21_making_jewelry_with_gems",
+          "title": "2.1 Making Jewelry with Gems",
+          "level": 3,
+          "start_line": 159,
+          "end_line": 169,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-22_making_other_jewelry",
+          "title": "2.2 Making Other Jewelry",
+          "level": 3,
+          "start_line": 170,
+          "end_line": 180,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-23_wearing_a_gem_first_time",
+          "title": "2.3 Wearing a Gem First Time",
+          "level": 3,
+          "start_line": 181,
+          "end_line": 193,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_3_construction_home_4_activities",
+          "title": "Category 3: Construction & Home (4 activities)",
+          "level": 2,
+          "start_line": 194,
+          "end_line": 195,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-31_starting_construction",
+          "title": "3.1 Starting Construction",
+          "level": 3,
+          "start_line": 196,
+          "end_line": 206,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-32_digging_foundation_bhumi_puja",
+          "title": "3.2 Digging Foundation (Bhumi Puja)",
+          "level": 3,
+          "start_line": 207,
+          "end_line": 217,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-33_installing_the_main_door",
+          "title": "3.3 Installing the Main Door",
+          "level": 3,
+          "start_line": 218,
+          "end_line": 228,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-34_house_warming_griha_pravesh",
+          "title": "3.4 House Warming (Griha Pravesh)",
+          "level": 3,
+          "start_line": 229,
+          "end_line": 241,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_4_crafts_arts_2_activities",
+          "title": "Category 4: Crafts & Arts (2 activities)",
+          "level": 2,
+          "start_line": 242,
+          "end_line": 243,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-41_learning_making_crafts",
+          "title": "4.1 Learning & Making Crafts",
+          "level": 3,
+          "start_line": 244,
+          "end_line": 254,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-42_beginning_a_painting",
+          "title": "4.2 Beginning a Painting",
+          "level": 3,
+          "start_line": 255,
+          "end_line": 267,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_5_dental_2_activities",
+          "title": "Category 5: Dental (2 activities)",
+          "level": 2,
+          "start_line": 268,
+          "end_line": 269,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-51_cleaning_checkup",
+          "title": "5.1 Cleaning & Checkup",
+          "level": 3,
+          "start_line": 270,
+          "end_line": 280,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-52_oral_surgery_extraction",
+          "title": "5.2 Oral Surgery & Extraction",
+          "level": 3,
+          "start_line": 281,
+          "end_line": 293,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_6_ear_piercing_1_activity",
+          "title": "Category 6: Ear Piercing (1 activity)",
+          "level": 2,
+          "start_line": 294,
+          "end_line": 295,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-61_karna-vedha",
+          "title": "6.1 Karna-Vedha",
+          "level": 3,
+          "start_line": 296,
+          "end_line": 308,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_7_education_learning_8_activities",
+          "title": "Category 7: Education & Learning (8 activities)",
+          "level": 2,
+          "start_line": 309,
+          "end_line": 310,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-71_learning_alphabet_aksharabhyasa",
+          "title": "7.1 Learning Alphabet (Aksharabhyasa)",
+          "level": 3,
+          "start_line": 311,
+          "end_line": 321,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-72_learning_astrology_jyotisha",
+          "title": "7.2 Learning Astrology (Jyotisha)",
+          "level": 3,
+          "start_line": 322,
+          "end_line": 332,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-73_learning_grammar_language",
+          "title": "7.3 Learning Grammar & Language",
+          "level": 3,
+          "start_line": 333,
+          "end_line": 343,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-74_learning_mathematics",
+          "title": "7.4 Learning Mathematics",
+          "level": 3,
+          "start_line": 344,
+          "end_line": 354,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-75_studying_medicine",
+          "title": "7.5 Studying Medicine",
+          "level": 3,
+          "start_line": 355,
+          "end_line": 365,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-76_studying_art_music",
+          "title": "7.6 Studying Art & Music",
+          "level": 3,
+          "start_line": 366,
+          "end_line": 376,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-77_all_other_studies_vidyarambha",
+          "title": "7.7 All Other Studies (Vidyarambha)",
+          "level": 3,
+          "start_line": 377,
+          "end_line": 387,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-78_starting_a_trade_or_apprenticeship",
+          "title": "7.8 Starting a Trade or Apprenticeship",
+          "level": 3,
+          "start_line": 388,
+          "end_line": 400,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_8_grooming_3_activities",
+          "title": "Category 8: Grooming (3 activities)",
+          "level": 2,
+          "start_line": 401,
+          "end_line": 402,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-81_hair_beard_cutting_kshaura",
+          "title": "8.1 Hair & Beard Cutting (Kshaura)",
+          "level": 3,
+          "start_line": 403,
+          "end_line": 413,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-82_nail_cutting",
+          "title": "8.2 Nail Cutting",
+          "level": 3,
+          "start_line": 414,
+          "end_line": 424,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-83_shaving",
+          "title": "8.3 Shaving",
+          "level": 3,
+          "start_line": 425,
+          "end_line": 437,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_9_house_home_4_activities",
+          "title": "Category 9: House & Home (4 activities)",
+          "level": 2,
+          "start_line": 438,
+          "end_line": 439,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-9194_entering_new_house_4_directions",
+          "title": "9.1–9.4 Entering New House (4 directions)",
+          "level": 3,
+          "start_line": 440,
+          "end_line": 452,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_10_job_career_6_activities",
+          "title": "Category 10: Job & Career (6 activities)",
+          "level": 2,
+          "start_line": 453,
+          "end_line": 454,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-101_applying_for_a_new_job",
+          "title": "10.1 Applying for a New Job",
+          "level": 3,
+          "start_line": 455,
+          "end_line": 465,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-102_job_interview",
+          "title": "10.2 Job Interview",
+          "level": 3,
+          "start_line": 466,
+          "end_line": 476,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-103_asking_for_promotion",
+          "title": "10.3 Asking for Promotion",
+          "level": 3,
+          "start_line": 477,
+          "end_line": 487,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-104_resignation",
+          "title": "10.4 Resignation",
+          "level": 3,
+          "start_line": 488,
+          "end_line": 498,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-105_hiring_a_new_employee",
+          "title": "10.5 Hiring a New Employee",
+          "level": 3,
+          "start_line": 499,
+          "end_line": 509,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-106_starting_a_new_position",
+          "title": "10.6 Starting a New Position",
+          "level": 3,
+          "start_line": 510,
+          "end_line": 522,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_11_litigation_legal_3_activities",
+          "title": "Category 11: Litigation & Legal (3 activities)",
+          "level": 2,
+          "start_line": 523,
+          "end_line": 524,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-111_filing_a_case",
+          "title": "11.1 Filing a Case",
+          "level": 3,
+          "start_line": 525,
+          "end_line": 535,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-112_taking_an_oath_or_swearing-in",
+          "title": "11.2 Taking an Oath or Swearing-In",
+          "level": 3,
+          "start_line": 536,
+          "end_line": 546,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-113_signing_important_legal_documents",
+          "title": "11.3 Signing Important Legal Documents",
+          "level": 3,
+          "start_line": 547,
+          "end_line": 559,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_12_marriage_family_samskaras_7_activities",
+          "title": "Category 12: Marriage & Family — Samskaras (7 activities)",
+          "level": 2,
+          "start_line": 560,
+          "end_line": 561,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-121_engagement_vagdhana",
+          "title": "12.1 Engagement (Vagdhana)",
+          "level": 3,
+          "start_line": 562,
+          "end_line": 572,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-122_wedding_vivaha",
+          "title": "12.2 Wedding (Vivaha)",
+          "level": 3,
+          "start_line": 573,
+          "end_line": 583,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-123_first_conception_garbhadhana",
+          "title": "12.3 First Conception (Garbhadhana)",
+          "level": 3,
+          "start_line": 584,
+          "end_line": 594,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-124_naming_ceremony_namakarana",
+          "title": "12.4 Naming Ceremony (Namakarana)",
+          "level": 3,
+          "start_line": 595,
+          "end_line": 605,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-125_first_solid_food_annaprashana",
+          "title": "12.5 First Solid Food (Annaprashana)",
+          "level": 3,
+          "start_line": 606,
+          "end_line": 616,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-126_first_haircut_chudakarana",
+          "title": "12.6 First Haircut (Chudakarana)",
+          "level": 3,
+          "start_line": 617,
+          "end_line": 627,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-127_first_outing_nishkramana",
+          "title": "12.7 First Outing (Nishkramana)",
+          "level": 3,
+          "start_line": 628,
+          "end_line": 640,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_13_medical_surgery_5_activities",
+          "title": "Category 13: Medical & Surgery (5 activities)",
+          "level": 2,
+          "start_line": 641,
+          "end_line": 642,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-131_cosmetic_surgery",
+          "title": "13.1 Cosmetic Surgery",
+          "level": 3,
+          "start_line": 643,
+          "end_line": 653,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-132_general_surgery_sastra-karma",
+          "title": "13.2 General Surgery (Sastra-Karma)",
+          "level": 3,
+          "start_line": 654,
+          "end_line": 664,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-133_laxatives_purgatives_virechana",
+          "title": "13.3 Laxatives & Purgatives (Virechana)",
+          "level": 3,
+          "start_line": 665,
+          "end_line": 675,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-134_taking_medicine_or_beginning_treatment",
+          "title": "13.4 Taking Medicine or Beginning Treatment",
+          "level": 3,
+          "start_line": 676,
+          "end_line": 686,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-135_eye_treatment",
+          "title": "13.5 Eye Treatment",
+          "level": 3,
+          "start_line": 687,
+          "end_line": 699,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_14_music_performing_arts_2_activities",
+          "title": "Category 14: Music & Performing Arts (2 activities)",
+          "level": 2,
+          "start_line": 700,
+          "end_line": 701,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-141_first_use_of_musical_instrument",
+          "title": "14.1 First Use of Musical Instrument",
+          "level": 3,
+          "start_line": 702,
+          "end_line": 712,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-142_dance_music_acting_learning_performing",
+          "title": "14.2 Dance, Music & Acting (Learning & Performing)",
+          "level": 3,
+          "start_line": 713,
+          "end_line": 725,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_15_health_wellness_3_activities",
+          "title": "Category 15: Health & Wellness (3 activities)",
+          "level": 2,
+          "start_line": 726,
+          "end_line": 727,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-151_starting_a_diet_or_fast_upavasa",
+          "title": "15.1 Starting a Diet or Fast (Upavasa)",
+          "level": 3,
+          "start_line": 728,
+          "end_line": 738,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-152_beginning_exercise_or_yoga_practice",
+          "title": "15.2 Beginning Exercise or Yoga Practice",
+          "level": 3,
+          "start_line": 739,
+          "end_line": 749,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-153_first_bath_after_illness",
+          "title": "15.3 First Bath After Illness",
+          "level": 3,
+          "start_line": 750,
+          "end_line": 762,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_16_real_estate_3_activities",
+          "title": "Category 16: Real Estate (3 activities)",
+          "level": 2,
+          "start_line": 763,
+          "end_line": 764,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-161_purchasing_property",
+          "title": "16.1 Purchasing Property",
+          "level": 3,
+          "start_line": 765,
+          "end_line": 775,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-162_selling_property",
+          "title": "16.2 Selling Property",
+          "level": 3,
+          "start_line": 776,
+          "end_line": 786,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-163_dividing_property",
+          "title": "16.3 Dividing Property",
+          "level": 3,
+          "start_line": 787,
+          "end_line": 799,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_17_religion_spirituality_7_activities",
+          "title": "Category 17: Religion & Spirituality (7 activities)",
+          "level": 2,
+          "start_line": 800,
+          "end_line": 801,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-171_mantra_initiation_diksha",
+          "title": "17.1 Mantra Initiation (Diksha)",
+          "level": 3,
+          "start_line": 802,
+          "end_line": 812,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-172_installing_a_deity_pratishtha",
+          "title": "17.2 Installing a Deity (Pratishtha)",
+          "level": 3,
+          "start_line": 813,
+          "end_line": 823,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-173_sacred_thread_ceremony_upanayanam",
+          "title": "17.3 Sacred Thread Ceremony (Upanayanam)",
+          "level": 3,
+          "start_line": 824,
+          "end_line": 834,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-174_religious_study",
+          "title": "17.4 Religious Study",
+          "level": 3,
+          "start_line": 835,
+          "end_line": 845,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-175_performing_ceremonies_puja_yajna",
+          "title": "17.5 Performing Ceremonies (Puja & Yajna)",
+          "level": 3,
+          "start_line": 846,
+          "end_line": 856,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-176_planetary_pacification_shanti_karma",
+          "title": "17.6 Planetary Pacification (Shanti Karma)",
+          "level": 3,
+          "start_line": 857,
+          "end_line": 867,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-177_beginning_a_vrata_religious_observance",
+          "title": "17.7 Beginning a Vrata (Religious Observance)",
+          "level": 3,
+          "start_line": 868,
+          "end_line": 880,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_18_travel_journey_6_activities",
+          "title": "Category 18: Travel & Journey (6 activities)",
+          "level": 2,
+          "start_line": 881,
+          "end_line": 882,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-181_any_direction_yatra",
+          "title": "18.1 Any Direction (Yatra)",
+          "level": 3,
+          "start_line": 883,
+          "end_line": 893,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-182_returning_home",
+          "title": "18.2 Returning Home",
+          "level": 3,
+          "start_line": 894,
+          "end_line": 904,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-183_short_journey",
+          "title": "18.3 Short Journey",
+          "level": 3,
+          "start_line": 905,
+          "end_line": 915,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-184_long_journey",
+          "title": "18.4 Long Journey",
+          "level": 3,
+          "start_line": 916,
+          "end_line": 926,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-185_relocation_moving_home",
+          "title": "18.5 Relocation (Moving Home)",
+          "level": 3,
+          "start_line": 927,
+          "end_line": 937,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-186_pilgrimage_tirtha-yatra",
+          "title": "18.6 Pilgrimage (Tirtha-Yatra)",
+          "level": 3,
+          "start_line": 938,
+          "end_line": 950,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_19_vehicles_2_activities",
+          "title": "Category 19: Vehicles (2 activities)",
+          "level": 2,
+          "start_line": 951,
+          "end_line": 952,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-191_first_driving_learning",
+          "title": "19.1 First Driving (Learning)",
+          "level": 3,
+          "start_line": 953,
+          "end_line": 963,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-192_buying_a_vehicle_vahana-kraya",
+          "title": "19.2 Buying a Vehicle (Vahana-Kraya)",
+          "level": 3,
+          "start_line": 964,
+          "end_line": 976,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_20_agriculture_farming_5_activities",
+          "title": "Category 20: Agriculture & Farming (5 activities)",
+          "level": 2,
+          "start_line": 977,
+          "end_line": 978,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-201_sowing_seeds_vapana",
+          "title": "20.1 Sowing Seeds (Vapana)",
+          "level": 3,
+          "start_line": 979,
+          "end_line": 989,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-202_harvesting",
+          "title": "20.2 Harvesting",
+          "level": 3,
+          "start_line": 990,
+          "end_line": 1000,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-203_buying_cattle_livestock",
+          "title": "20.3 Buying Cattle & Livestock",
+          "level": 3,
+          "start_line": 1001,
+          "end_line": 1011,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-204_planting_trees_vriksha-ropana",
+          "title": "20.4 Planting Trees (Vriksha-Ropana)",
+          "level": 3,
+          "start_line": 1012,
+          "end_line": 1022,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-205_taming_or_training_animals",
+          "title": "20.5 Taming or Training Animals",
+          "level": 3,
+          "start_line": 1023,
+          "end_line": 1035,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_21_well_water_1_activity",
+          "title": "Category 21: Well & Water (1 activity)",
+          "level": 2,
+          "start_line": 1036,
+          "end_line": 1037,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-211_digging_a_well_or_borewell",
+          "title": "21.1 Digging a Well or Borewell",
+          "level": 3,
+          "start_line": 1038,
+          "end_line": 1050,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_22_writing_1_activity",
+          "title": "Category 22: Writing (1 activity)",
+          "level": 2,
+          "start_line": 1051,
+          "end_line": 1052,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-221_starting_a_new_writing_project",
+          "title": "22.1 Starting a New Writing Project",
+          "level": 3,
+          "start_line": 1053,
+          "end_line": 1065,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-category_23_personal_3_activities",
+          "title": "Category 23: Personal (3 activities)",
+          "level": 2,
+          "start_line": 1066,
+          "end_line": 1067,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-231_wearing_new_clothes_first_time",
+          "title": "23.1 Wearing New Clothes First Time",
+          "level": 3,
+          "start_line": 1068,
+          "end_line": 1078,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-232_first_bath_in_holy_river_tirtha-snana",
+          "title": "23.2 First Bath in Holy River (Tirtha-Snana)",
+          "level": 3,
+          "start_line": 1079,
+          "end_line": 1089,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-233_beginning_a_new_habit_or_routine",
+          "title": "23.3 Beginning a New Habit or Routine",
+          "level": 3,
+          "start_line": 1090,
+          "end_line": 1102,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-appendix_nakshatra_classification_reference",
+          "title": "Appendix: Nakshatra Classification Reference",
+          "level": 2,
+          "start_line": 1103,
+          "end_line": 1116,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-appendix_karana_classification_reference",
+          "title": "Appendix: Karana Classification Reference",
+          "level": 2,
+          "start_line": 1117,
+          "end_line": 1134,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-scoring_methodology-sec-source_hierarchy",
+          "title": "Source Hierarchy",
+          "level": 2,
+          "start_line": 1135,
+          "end_line": 1148,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "## Scoring Methodology  Every activity is scored on a 0–100 scale using these factors:  | Factor | Weight | Effect | |--------|--------|--------| | Prescribed Nakshatra (Moon in) | +14 | The day's Moon occupies a star classically prescribed for the activity | | Contraindicated Na"
     }
   ],
   "toc": [
     {
-      "id": "ch-1",
-      "title": "**B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)",
-      "chapter": "**B.V. Raman's *Muhurtha*** (primary — most comprehensive and practical)",
-      "chapter_id": "ch-1"
+      "id": "ch-scoring_methodology-sec-scoring_methodology",
+      "title": "Scoring Methodology",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     },
     {
-      "id": "ch-2",
-      "title": "**Brihat Parasara Hora Sastra (BPHS)** (foundational authority)",
-      "chapter": "**Brihat Parasara Hora Sastra (BPHS)** (foundational authority)",
-      "chapter_id": "ch-2"
+      "id": "ch-scoring_methodology-sec-general_rules_all_activities",
+      "title": "General Rules (All Activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     },
     {
-      "id": "ch-3",
-      "title": "**Muhurta Chintamani** (classical muhurta text)",
-      "chapter": "**Muhurta Chintamani** (classical muhurta text)",
-      "chapter_id": "ch-3"
+      "id": "ch-scoring_methodology-sec-category_1_business_finance_9_activities",
+      "title": "Category 1: Business & Finance (9 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     },
     {
-      "id": "ch-4",
-      "title": "**Phaladeepika** (Mantreswara — supplementary)",
-      "chapter": "**Phaladeepika** (Mantreswara — supplementary)",
-      "chapter_id": "ch-4"
+      "id": "ch-scoring_methodology-sec-11_accounting_bookkeeping",
+      "title": "1.1 Accounting & Bookkeeping",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     },
     {
-      "id": "ch-5",
-      "title": "**Gochar Phaladeepika** (Pulippani — transit-specific rules)",
-      "chapter": "**Gochar Phaladeepika** (Pulippani — transit-specific rules)",
-      "chapter_id": "ch-5"
+      "id": "ch-scoring_methodology-sec-12_borrowing",
+      "title": "1.2 Borrowing",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     },
     {
-      "id": "ch-6",
-      "title": "**Hora Sara** (Prithuyasas — supplementary)",
-      "chapter": "**Hora Sara** (Prithuyasas — supplementary)",
-      "chapter_id": "ch-6"
+      "id": "ch-scoring_methodology-sec-13_investing",
+      "title": "1.3 Investing",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     },
     {
-      "id": "ch-7",
-      "title": "**Sarvartha Chintamani** (supplementary)",
-      "chapter": "**Sarvartha Chintamani** (supplementary)",
-      "chapter_id": "ch-7"
+      "id": "ch-scoring_methodology-sec-14_lending",
+      "title": "1.4 Lending",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-15_opening_a_business_or_store",
+      "title": "1.5 Opening a Business or Store",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-16_paying_debts",
+      "title": "1.6 Paying Debts",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-17_selling",
+      "title": "1.7 Selling",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-18_buying_general_transactions",
+      "title": "1.8 Buying & General Transactions",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-19_signing_contracts_agreements",
+      "title": "1.9 Signing Contracts & Agreements",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_2_jewelry_gems_3_activities",
+      "title": "Category 2: Jewelry & Gems (3 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-21_making_jewelry_with_gems",
+      "title": "2.1 Making Jewelry with Gems",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-22_making_other_jewelry",
+      "title": "2.2 Making Other Jewelry",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-23_wearing_a_gem_first_time",
+      "title": "2.3 Wearing a Gem First Time",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_3_construction_home_4_activities",
+      "title": "Category 3: Construction & Home (4 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-31_starting_construction",
+      "title": "3.1 Starting Construction",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-32_digging_foundation_bhumi_puja",
+      "title": "3.2 Digging Foundation (Bhumi Puja)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-33_installing_the_main_door",
+      "title": "3.3 Installing the Main Door",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-34_house_warming_griha_pravesh",
+      "title": "3.4 House Warming (Griha Pravesh)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_4_crafts_arts_2_activities",
+      "title": "Category 4: Crafts & Arts (2 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-41_learning_making_crafts",
+      "title": "4.1 Learning & Making Crafts",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-42_beginning_a_painting",
+      "title": "4.2 Beginning a Painting",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_5_dental_2_activities",
+      "title": "Category 5: Dental (2 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-51_cleaning_checkup",
+      "title": "5.1 Cleaning & Checkup",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-52_oral_surgery_extraction",
+      "title": "5.2 Oral Surgery & Extraction",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_6_ear_piercing_1_activity",
+      "title": "Category 6: Ear Piercing (1 activity)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-61_karna-vedha",
+      "title": "6.1 Karna-Vedha",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_7_education_learning_8_activities",
+      "title": "Category 7: Education & Learning (8 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-71_learning_alphabet_aksharabhyasa",
+      "title": "7.1 Learning Alphabet (Aksharabhyasa)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-72_learning_astrology_jyotisha",
+      "title": "7.2 Learning Astrology (Jyotisha)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-73_learning_grammar_language",
+      "title": "7.3 Learning Grammar & Language",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-74_learning_mathematics",
+      "title": "7.4 Learning Mathematics",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-75_studying_medicine",
+      "title": "7.5 Studying Medicine",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-76_studying_art_music",
+      "title": "7.6 Studying Art & Music",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-77_all_other_studies_vidyarambha",
+      "title": "7.7 All Other Studies (Vidyarambha)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-78_starting_a_trade_or_apprenticeship",
+      "title": "7.8 Starting a Trade or Apprenticeship",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_8_grooming_3_activities",
+      "title": "Category 8: Grooming (3 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-81_hair_beard_cutting_kshaura",
+      "title": "8.1 Hair & Beard Cutting (Kshaura)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-82_nail_cutting",
+      "title": "8.2 Nail Cutting",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-83_shaving",
+      "title": "8.3 Shaving",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_9_house_home_4_activities",
+      "title": "Category 9: House & Home (4 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-9194_entering_new_house_4_directions",
+      "title": "9.1–9.4 Entering New House (4 directions)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_10_job_career_6_activities",
+      "title": "Category 10: Job & Career (6 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-101_applying_for_a_new_job",
+      "title": "10.1 Applying for a New Job",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-102_job_interview",
+      "title": "10.2 Job Interview",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-103_asking_for_promotion",
+      "title": "10.3 Asking for Promotion",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-104_resignation",
+      "title": "10.4 Resignation",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-105_hiring_a_new_employee",
+      "title": "10.5 Hiring a New Employee",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-106_starting_a_new_position",
+      "title": "10.6 Starting a New Position",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_11_litigation_legal_3_activities",
+      "title": "Category 11: Litigation & Legal (3 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-111_filing_a_case",
+      "title": "11.1 Filing a Case",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-112_taking_an_oath_or_swearing-in",
+      "title": "11.2 Taking an Oath or Swearing-In",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-113_signing_important_legal_documents",
+      "title": "11.3 Signing Important Legal Documents",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_12_marriage_family_samskaras_7_activities",
+      "title": "Category 12: Marriage & Family — Samskaras (7 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-121_engagement_vagdhana",
+      "title": "12.1 Engagement (Vagdhana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-122_wedding_vivaha",
+      "title": "12.2 Wedding (Vivaha)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-123_first_conception_garbhadhana",
+      "title": "12.3 First Conception (Garbhadhana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-124_naming_ceremony_namakarana",
+      "title": "12.4 Naming Ceremony (Namakarana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-125_first_solid_food_annaprashana",
+      "title": "12.5 First Solid Food (Annaprashana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-126_first_haircut_chudakarana",
+      "title": "12.6 First Haircut (Chudakarana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-127_first_outing_nishkramana",
+      "title": "12.7 First Outing (Nishkramana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_13_medical_surgery_5_activities",
+      "title": "Category 13: Medical & Surgery (5 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-131_cosmetic_surgery",
+      "title": "13.1 Cosmetic Surgery",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-132_general_surgery_sastra-karma",
+      "title": "13.2 General Surgery (Sastra-Karma)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-133_laxatives_purgatives_virechana",
+      "title": "13.3 Laxatives & Purgatives (Virechana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-134_taking_medicine_or_beginning_treatment",
+      "title": "13.4 Taking Medicine or Beginning Treatment",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-135_eye_treatment",
+      "title": "13.5 Eye Treatment",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_14_music_performing_arts_2_activities",
+      "title": "Category 14: Music & Performing Arts (2 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-141_first_use_of_musical_instrument",
+      "title": "14.1 First Use of Musical Instrument",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-142_dance_music_acting_learning_performing",
+      "title": "14.2 Dance, Music & Acting (Learning & Performing)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_15_health_wellness_3_activities",
+      "title": "Category 15: Health & Wellness (3 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-151_starting_a_diet_or_fast_upavasa",
+      "title": "15.1 Starting a Diet or Fast (Upavasa)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-152_beginning_exercise_or_yoga_practice",
+      "title": "15.2 Beginning Exercise or Yoga Practice",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-153_first_bath_after_illness",
+      "title": "15.3 First Bath After Illness",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_16_real_estate_3_activities",
+      "title": "Category 16: Real Estate (3 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-161_purchasing_property",
+      "title": "16.1 Purchasing Property",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-162_selling_property",
+      "title": "16.2 Selling Property",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-163_dividing_property",
+      "title": "16.3 Dividing Property",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_17_religion_spirituality_7_activities",
+      "title": "Category 17: Religion & Spirituality (7 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-171_mantra_initiation_diksha",
+      "title": "17.1 Mantra Initiation (Diksha)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-172_installing_a_deity_pratishtha",
+      "title": "17.2 Installing a Deity (Pratishtha)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-173_sacred_thread_ceremony_upanayanam",
+      "title": "17.3 Sacred Thread Ceremony (Upanayanam)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-174_religious_study",
+      "title": "17.4 Religious Study",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-175_performing_ceremonies_puja_yajna",
+      "title": "17.5 Performing Ceremonies (Puja & Yajna)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-176_planetary_pacification_shanti_karma",
+      "title": "17.6 Planetary Pacification (Shanti Karma)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-177_beginning_a_vrata_religious_observance",
+      "title": "17.7 Beginning a Vrata (Religious Observance)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_18_travel_journey_6_activities",
+      "title": "Category 18: Travel & Journey (6 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-181_any_direction_yatra",
+      "title": "18.1 Any Direction (Yatra)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-182_returning_home",
+      "title": "18.2 Returning Home",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-183_short_journey",
+      "title": "18.3 Short Journey",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-184_long_journey",
+      "title": "18.4 Long Journey",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-185_relocation_moving_home",
+      "title": "18.5 Relocation (Moving Home)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-186_pilgrimage_tirtha-yatra",
+      "title": "18.6 Pilgrimage (Tirtha-Yatra)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_19_vehicles_2_activities",
+      "title": "Category 19: Vehicles (2 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-191_first_driving_learning",
+      "title": "19.1 First Driving (Learning)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-192_buying_a_vehicle_vahana-kraya",
+      "title": "19.2 Buying a Vehicle (Vahana-Kraya)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_20_agriculture_farming_5_activities",
+      "title": "Category 20: Agriculture & Farming (5 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-201_sowing_seeds_vapana",
+      "title": "20.1 Sowing Seeds (Vapana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-202_harvesting",
+      "title": "20.2 Harvesting",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-203_buying_cattle_livestock",
+      "title": "20.3 Buying Cattle & Livestock",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-204_planting_trees_vriksha-ropana",
+      "title": "20.4 Planting Trees (Vriksha-Ropana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-205_taming_or_training_animals",
+      "title": "20.5 Taming or Training Animals",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_21_well_water_1_activity",
+      "title": "Category 21: Well & Water (1 activity)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-211_digging_a_well_or_borewell",
+      "title": "21.1 Digging a Well or Borewell",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_22_writing_1_activity",
+      "title": "Category 22: Writing (1 activity)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-221_starting_a_new_writing_project",
+      "title": "22.1 Starting a New Writing Project",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-category_23_personal_3_activities",
+      "title": "Category 23: Personal (3 activities)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-231_wearing_new_clothes_first_time",
+      "title": "23.1 Wearing New Clothes First Time",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-232_first_bath_in_holy_river_tirtha-snana",
+      "title": "23.2 First Bath in Holy River (Tirtha-Snana)",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-233_beginning_a_new_habit_or_routine",
+      "title": "23.3 Beginning a New Habit or Routine",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-appendix_nakshatra_classification_reference",
+      "title": "Appendix: Nakshatra Classification Reference",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-appendix_karana_classification_reference",
+      "title": "Appendix: Karana Classification Reference",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology-sec-source_hierarchy",
+      "title": "Source Hierarchy",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
+    },
+    {
+      "id": "ch-scoring_methodology",
+      "title": "Scoring Methodology",
+      "chapter": "Scoring Methodology",
+      "chapter_id": "ch-scoring_methodology"
     }
   ],
-  "total_chapters": 7,
-  "total_sections": 0
+  "total_chapters": 1,
+  "total_sections": 115
 }

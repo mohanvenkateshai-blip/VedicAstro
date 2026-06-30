@@ -1,6 +1,7 @@
 # VedicAstro — Comprehensive Gap Analysis
 
 **Created:** June 27, 2026 (Phase 3)  
+**Last revised:** June 30, 2026 — aligned with Phases 2–5+ completion per [STATUS.md](../STATUS.md)  
 **Sources:** [generic_vedic_astrology_software_features.md](Requirements/generic_vedic_astrology_software_features.md), [STATUS.md](../STATUS.md), [feature-progress.json](../portal/docs/feature-progress.json), CVCE `/orchestrate` manifest, portal routes, archived audits in [archive/](archive/)
 
 **Legend:** ✅ Done · ⚠️ Partial · ❌ Missing
@@ -11,15 +12,15 @@
 
 | Layer | Done | Partial | Missing | Notes |
 |-------|------|---------|---------|-------|
-| **7 major systems** (requirements §1–6) | 2 | 4 | 1 | Core calc + explorers strong; workspace/transits/yogas weak |
-| **51 flagship enhancements** (§7) | 6 | 8 | 37 | Most are desktop-suite features out of web scope |
-| **CVCE engine endpoints** | ~20 live | ~4 partial | ~6 | See §Engine coverage |
-| **Portal routes** | 14 | 2 | 0 | Yogas + auth production wiring |
-| **Classical rule accuracy** (audits) | ~40% | ~35% | ~25% | Engine-level gaps documented in audits |
+| **7 major systems** (requirements §1–6) | 3 | 3 | 1 | Core calc + explorers + report strong; desktop worksheet depth out of scope |
+| **51 flagship enhancements** (§7) | 8 | 8 | 35 | Most are desktop-suite features out of web scope |
+| **CVCE engine endpoints** | ~22 live | ~3 partial | ~4 | Chara/Kalachakra dashas partial |
+| **Portal routes** | 16 | 1 | 0 | Report depth still growing |
+| **Classical rule accuracy** (audits) | ~55% | ~30% | ~15% | Phase 5+ audit fixes landed; residual yoga depth |
 
-**Honest platform completion:** ~65% shell/UI, ~45% classical calculation coverage, ~55% production readiness (post Phase 2 CVCE recovery).
+**Honest platform completion (June 2026):** ~75% shell/UI, ~55% classical calculation coverage, ~70% production readiness (CVCE live, auth/DB env-gated, GraphRAG rules on Fly).
 
-**Critical path after this document:** Phase 4 (GraphRAG rules) → Phase 5+ items marked **P0/P1** below.
+**Critical path after this document:** Hiranya report polish, vector embeddings fill, residual audit P1 items — see §14.
 
 ---
 
@@ -94,7 +95,7 @@ Statuses:
 | Varshaphala (Tajika / solar return) | ✅ Done | F26, `/varshaphala`, CVCE endpoint |
 | Muhurta engine | ⚠️ Partial | Frozen iframe to muhurtha.uvwx.me; no prop-driven fork |
 | Koota / Guna Milan | ✅ Done | F14/F18, `/koota-match`, `/compatibility` |
-| Prashna horary | ⚠️ Partial | CVCE `/prashna` stub; no one-click portal UX |
+| Prashna horary | ✅ Done | F37, `/prashna` page + CVCE `/prashna` |
 
 **System verdict:** ✅ **Mostly done** for KP, Varshaphala, compatibility; Muhurta integration deferred by design.
 
@@ -104,8 +105,8 @@ Statuses:
 
 | Feature | Status | Evidence |
 |---------|--------|----------|
-| Graha explorer | ⚠️ Partial | Special points panel; not full graha isolation workbook |
-| Bhava explorer | ❌ Missing | No dedicated house explorer route |
+| Graha explorer | ✅ Done | F36, `/learn/grahas` |
+| Bhava explorer | ✅ Done | F35, `/learn/bhavas` |
 | Rashi explorer | ✅ Done | F16, `/learn/rashis` |
 | Nakshatra explorer | ✅ Done | F15, `/learn/nakshatras` |
 
@@ -118,9 +119,9 @@ Statuses:
 | Feature | Status | Evidence |
 |---------|--------|----------|
 | Vimshottari (5 levels) | ✅ Done | Audit PASS; `/dasha-deep`, DashaDeepTree |
-| Yogini dasha | ⚠️ Partial | Audit FAIL on antardasha + balance (`audit_dasha_vargas.md`) |
-| Ashtottari dasha | ⚠️ Partial | PyJHora gap on Fly; fallback in `/dashas` after server.py fix |
-| Chara / Kalachakra / Shaddashika / Drig | ❌ Missing | Not in CVCE endpoint list |
+| Yogini dasha | ✅ Done | Balance + antardasha fixed (Phase 5+ audit) |
+| Ashtottari dasha | ✅ Done | PyJHora nested lord tuple parsing fixed |
+| Chara / Kalachakra / Shaddashika / Drig | ⚠️ Partial | Kaksha + Chara/Kalachakra initial integration in `/dashas` |
 
 **System verdict:** ⚠️ **Partial** — Vimshottari production-ready; alternative dashas incomplete.
 
@@ -130,11 +131,11 @@ Statuses:
 
 | Feature | Status | Evidence |
 |---------|--------|----------|
-| Classical yoga detection engine | ⚠️ Partial | CVCE `/yogas`; audit: 14/34+ detected (`audit_yogas.md`) |
-| Side-by-side yoga delineation UI | ❌ Missing | `/chart/yogas` = "Coming soon" placeholder |
-| Nabhasa / Raja / Dhana / Adhi yogas | ⚠️ Partial | Many defined but **NOT IMPLEMENTED** in detection |
+| Classical yoga detection engine | ⚠️ Partial | CVCE `/yogas`; audit: improved but not exhaustive |
+| Side-by-side yoga delineation UI | ✅ Done | F32, `/chart/yogas` + `YogasPanel` |
+| Nabhasa / Raja / Dhana / Adhi yogas | ⚠️ Partial | Detection gaps remain for rare yogas |
 
-**System verdict:** ❌ **Missing at UI layer**; ⚠️ **Partial at engine layer** — P0 for Phase 5+.
+**System verdict:** ⚠️ **Partial at engine** — UI complete; rare yoga detection still expanding.
 
 ---
 
@@ -142,12 +143,12 @@ Statuses:
 
 | Feature | Status | Evidence |
 |---------|--------|----------|
-| Graph ingestion (448 nodes) | ✅ Done | `knowledge-graph/graphify-out/graph.json` |
+| Graph ingestion (26,722 nodes) | ✅ Done | `cvce/graph_rag/graph.json`, `newbooks-v1` on Fly |
 | GraphRAG citation enrichment | ✅ Done | F01, `PredictionEnhancer` |
-| GraphRAG as `/predict` rules source | ❌ Missing | F31, Phase 4; hardcoded `transit_rules.py` today |
-| Unified rules engine | ⚠️ Partial | F29 (70%); orchestrator exists, graph queries pending |
+| GraphRAG as `/predict` rules source | ✅ Done | F31, `graph_rag/rules_provider.py`, `CVCE_GRAPH_AS_RULES=1` on Fly |
+| Unified rules engine | ✅ Done | F29, orchestrator + graph rules with hardcoded fallback |
 
-**System verdict:** ⚠️ **Partial** — data asset ready; intelligence routing is Phase 4.
+**System verdict:** ✅ **Done** — graph is production rules source with env-gated fallback.
 
 ---
 
@@ -155,12 +156,12 @@ Statuses:
 
 | Feature | Status | Evidence |
 |---------|--------|----------|
-| Neon Postgres + encryption schema | ⚠️ Partial | F03 (60%); code in `portal/src/lib/db.ts`, `schema.sql` |
-| Google OAuth / NextAuth | ⚠️ Partial | F04 (50%); null-session without env vars |
-| Save/load charts + dashboard | ⚠️ Partial | F05 (70%); `/dashboard` not RBAC-gated in prod |
-| RBAC (free/pro/premium/admin) | ❌ Missing | Phase 5+; `proxy.ts` seam not wired |
+| Neon Postgres + encryption schema | ✅ Done | F03, `portal/src/lib/db.ts`, `schema.sql` |
+| Google OAuth / NextAuth | ✅ Done | F04, env-gated; anonymous mode when unset |
+| Save/load/delete charts + dashboard | ✅ Done | F05, `/dashboard` with tier save limits |
+| RBAC (free/pro/premium/admin) | ✅ Done | F34, `proxy.ts` + `requireSession()` + Varshaphala pro gate |
 
-**System verdict:** ⚠️ **Partial** — scaffold only; Phase 5+ production target.
+**System verdict:** ✅ **Done in code** — production use requires Vercel env vars (`AUTH_SECRET`, `DATABASE_URL`, etc.).
 
 ---
 
@@ -185,10 +186,11 @@ Statuses:
 |-------|--------|-------|
 | `/`, `/vedicastro` | ✅ | Primary chart entry |
 | `/chart/*` (dasha, transits, kp, varshaphala, special) | ✅ | 11-route architecture (F20) |
-| `/chart/yogas` | ❌ | Placeholder stub |
-| `/learn/nakshatras`, `/learn/rashis` | ✅ | Explorers |
-| `/compatibility`, `/muhurta` | ✅ | iframe / matcher |
-| `/dashboard`, `/auth/*` | ⚠️ | Env-gated scaffold |
+| `/chart/yogas` | ✅ | YogasPanel + shadbala summary (F32) |
+| `/chart/report` | ⚠️ | HoroscopeReport — 8 chapters; LLM narration optional |
+| `/learn/nakshatras`, `/learn/rashis`, `/learn/jaimini` | ✅ | Explorers + classical reader |
+| `/compatibility`, `/muhurta`, `/prashna` | ✅ | Matcher, iframe, horary |
+| `/dashboard`, `/auth/*` | ✅ | Env-gated; proxy redirects when auth configured |
 
 ---
 
@@ -248,19 +250,19 @@ Prioritized from archived audits — these affect **correctness**, not just UI:
 
 Ordered by impact × dependency alignment with roadmap:
 
-| Priority | Work item | Phase | Depends on |
-|----------|-----------|-------|------------|
-| **P0** | Wire `/chart/yogas` UI to CVCE `/yogas` + fix detection gaps (Y1) | 5+ | — |
-| **P0** | GraphRAG rules source for `/predict` (F31) | **4** | — |
-| **P1** | Fix gochar rule discrepancies G1–G4 | 5+ | Phase 4 optional |
-| **P1** | Yogini dasha antardasha + balance (D1) | 5+ | — |
-| **P1** | Ashtakavarga Shodhana + Kaksha (A1) | 5+ | — |
-| **P2** | Auth/DB/RBAC production wiring (F03–F05) | 5+ | User sign-off |
-| **P2** | Jaimini Chara Karakas (D2) | 5+ | — |
-| **P3** | Prop-driven Muhurta fork | deferred | Frozen constraint |
-| **P3** | Desktop-suite enhancements (30-cell worksheets, etc.) | out of scope | — |
-
-**Update 2026-06-29:** Vector embeddings on corpus_chunks, LLM narration (CVCE_LLM_NARRATION), Kaksha+Chara/Kalachakra dashas, and deeper Hiranya report UI polish promoted from deferred/later to active P0/P1. Implementation started in parallel.
+| Priority | Work item | Status | Notes |
+|----------|-----------|--------|-------|
+| ~~**P0**~~ | Wire `/chart/yogas` UI (F32) | ✅ Done | YogasPanel |
+| ~~**P0**~~ | GraphRAG rules source (F31) | ✅ Done | Phase 4 |
+| ~~**P1**~~ | Gochar rule fixes G1–G4 | ✅ Done | Phase 5+ audit fixes |
+| ~~**P1**~~ | Yogini antardasha + balance (D1) | ✅ Done | |
+| ~~**P1**~~ | Auth/DB/RBAC (F03–F05, F34) | ✅ Done | Env-gated |
+| **P0** | LLM narration polish (`CVCE_LLM_NARRATION`) | In progress | Gate wired |
+| **P0** | Vector embeddings fill on corpus_chunks | In progress | Schema + scripts landed |
+| **P1** | Residual yoga detection (Y1 rare types) | Open | Not all 34+ yogas |
+| **P1** | Jaimini Chara Karakas (D2) | Open | |
+| **P2** | Prop-driven Muhurta fork | Deferred | Frozen constraint |
+| **P3** | Desktop-suite enhancements | Out of scope | 30-cell worksheets, etc. |
 
 ---
 
@@ -277,4 +279,4 @@ Ordered by impact × dependency alignment with roadmap:
 
 ---
 
-*Phases 0–4 complete. Phase 5+ backlog in [docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md).*
+*Phases 0–5+ core items complete. Residual backlog in §14. Live health: [STATUS.md](../STATUS.md).*

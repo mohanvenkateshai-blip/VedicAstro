@@ -15,13 +15,24 @@ Each yoga has:
   - confidence: 1.0 (direct) or 0.7 (partial match)
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from ..core.panchanga import RASHIS
-from knowledge_engine.integration import get_structured_book, get_nodes_for_chapter
+from knowledge_engine.integration import get_structured_book, get_nodes_for_chapter, get_hierarchy_for_node
 
 _yoga_rules_version: str | None = None
 _yoga_registered = False
+
+# Chapter-aware caches populated on KE refresh
+_yoga_structured_books: dict[str, dict] = {}
+_yoga_book_index: dict[str, str] = {
+    "BPHS": "Brihat_Parasara_Hora_Sastra_Vol_1",
+    "BPHS2": "Brihat_Parasara_Hora_Sastra_Vol_2",
+    "PD": "Phaladeepika_English_Translation",
+    "SC": "Sarvartha_Chintamani",
+    "HoraSara": "Hora_Sara",
+    "Jaimini": "Jaimini_Sutras",
+}
 
 
 def _clear_yoga_knowledge_caches() -> None:
@@ -37,15 +48,25 @@ def _clear_yoga_knowledge_caches() -> None:
 
 
 def _on_yoga_refresh(new_version: str) -> None:
-    global _yoga_rules_version
+    global _yoga_rules_version, _yoga_structured_books
     _yoga_rules_version = new_version
     _clear_yoga_knowledge_caches()
-    # Propagate structured signals (nodes for chapter) on refresh
-    try:
-        get_structured_book("Phaladeepika")
-        get_nodes_for_chapter("BPHS", "ch-36")
-    except Exception:
-        pass
+    _yoga_structured_books = {}
+    # Real consumption: load structured chapter trees + node provenance for key sources
+    for key, book_id in _yoga_book_index.items():
+        try:
+            data = get_structured_book(book_id)
+            if data:
+                _yoga_structured_books[book_id] = data
+                # Also warm nodes for representative chapters (e.g. yoga chapters)
+                if "BPHS" in key:
+                    get_nodes_for_chapter(book_id, "ch-36")
+                if key == "PD":
+                    get_nodes_for_chapter(book_id, "ch-6")
+                if key == "SC":
+                    get_nodes_for_chapter(book_id, "ch-8")
+        except Exception:
+            pass
 
 
 def _register_yoga_engine() -> None:
@@ -69,6 +90,87 @@ def _ensure_yoga_registered() -> None:
         _register_yoga_engine()
 
 
+def _resolve_chapter_citation(source: str) -> dict | None:
+    """Resolve a source tag (e.g. 'BPHS-Ch36', 'PD-Ch7') to chapter hierarchy + citation text.
+
+    Uses cached structured books (populated on refresh) and falls back to live KE calls.
+    Returns dict with citation, hierarchy_path, chapter_id, confidence (from patch if present).
+    """
+    if not source:
+        return None
+    s = source.strip()
+    # Map common tags to book keys
+    book_id = None
+    ch_hint = None
+    if s.upper().startswith("BPHS"):
+        book_id = _yoga_book_index.get("BPHS")
+        # try to extract chapter number
+        import re
+        m = re.search(r"(\d+)", s)
+        if m:
+            ch_hint = m.group(1)
+    elif s.upper().startswith("PD"):
+        book_id = _yoga_book_index.get("PD")
+        m = re.search(r"(\d+)", s)
+        if m:
+            ch_hint = m.group(1)
+    elif s.upper().startswith("SC"):
+        book_id = _yoga_book_index.get("SC")
+        m = re.search(r"(\d+)", s)
+        if m:
+            ch_hint = m.group(1)
+    elif "HORASARA" in s.upper() or s.upper().startswith("HORA"):
+        book_id = _yoga_book_index.get("HoraSara")
+        m = re.search(r"(\d+)", s)
+        if m:
+            ch_hint = m.group(1)
+    elif "JAIMINI" in s.upper():
+        book_id = _yoga_book_index.get("Jaimini")
+        m = re.search(r"(\d+)", s)
+        if m:
+            ch_hint = m.group(1)
+    if not book_id:
+        return None
+    data = _yoga_structured_books.get(book_id) or get_structured_book(book_id)
+    if not data:
+        return None
+    chapters = data.get("chapters") or []
+    chosen = None
+    for ch in chapters:
+        cid = (ch.get("id") or "").lower()
+        title = (ch.get("title") or "").lower()
+        num = str(ch.get("number") or "").lower()
+        if ch_hint and (ch_hint in cid or ch_hint in title or ch_hint in num):
+            chosen = ch
+            break
+        if any(h in cid or h in title for h in ["ch-36", "ch36", "chapter 36", "raja", "yoga"]):
+            if not chosen:
+                chosen = ch
+    if not chosen and chapters:
+        chosen = chapters[0]
+    if not chosen:
+        return None
+    # Try patch-derived hierarchy for first associated node if present
+    hier = None
+    conf = None
+    ch_nodes = (data.get("chapter_node_ids") or {}).get(chosen.get("id")) or []
+    if ch_nodes:
+        h = get_hierarchy_for_node(ch_nodes[0])
+        if h:
+            hier = h.get("hierarchy_path") or h.get("chapter_id")
+            conf = h.get("confidence")
+    citation = f"{data.get('canonical_name') or book_id} — {chosen.get('title') or chosen.get('id')}"
+    if hier:
+        citation = f"{citation} (per {hier})"
+    return {
+        "citation": citation,
+        "hierarchy_path": hier or chosen.get("id"),
+        "chapter_id": chosen.get("id"),
+        "chapter_title": chosen.get("title"),
+        "confidence": conf,
+    }
+
+
 @dataclass
 class DetectedYoga:
     """A detected yoga with its details."""
@@ -80,6 +182,10 @@ class DetectedYoga:
     source: str
     benefic: bool
     confidence: float  # 0-1
+    # Chapter-aware provenance from KE structured library + node-chapter patches
+    chapter_citation: str | None = None
+    hierarchy_path: str | None = None
+    chapter_confidence: float | None = None
 
 
 # =====================================================================
@@ -1512,5 +1618,19 @@ def detect_yogas(natal_sign: dict, lagna_sign_idx: int, moon_rashi_idx: int = No
                 )
             )
             break  # one instance suffices
+
+    # Chapter-aware enrichment using KE structured chapters + patch provenance
+    for y in detected:
+        try:
+            info = _resolve_chapter_citation(y.source)
+            if info:
+                y.chapter_citation = info.get("citation")
+                y.hierarchy_path = info.get("hierarchy_path")
+                y.chapter_confidence = info.get("confidence")
+                # Example of desired surface: "per Adhyaya 1 Pada 2 from Jaimini"
+                if y.hierarchy_path and "Adhyaya" in str(y.hierarchy_path):
+                    y.chapter_citation = f"per {y.hierarchy_path} from {(_yoga_structured_books.get(_yoga_book_index.get('Jaimini', ''), {}) or {}).get('canonical_name', 'Jaimini')}"
+        except Exception:
+            pass
 
     return detected

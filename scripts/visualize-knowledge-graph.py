@@ -23,7 +23,38 @@ def load_graph(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def build_viz(graph: dict, max_nodes: int = 500, community_limit: int = 0):
+def load_provenance_map() -> dict:
+    """Load node -> chapter provenance from consolidated or per-book patches."""
+    root = Path(__file__).resolve().parents[1]
+    candidates = [
+        root / "knowledge-graph/patches/node-chapter-map.json",
+        root / "knowledge-graph/patches/patch-Ashtakavarga_System_Comprehensive_Handbook.json",
+    ]
+    prov = {}
+    for c in candidates:
+        if not c.exists(): continue
+        try:
+            data = json.loads(c.read_text(encoding="utf-8"))
+            arr = data.get("patches") or (data if isinstance(data, list) else [])
+            for p in arr:
+                nid = p.get("node_id")
+                if nid:
+                    prov[nid] = {
+                        "hierarchy_path": p.get("hierarchy_path"),
+                        "method": p.get("method"),
+                        "confidence": p.get("confidence"),
+                        "chapter_id": p.get("chapter_id"),
+                        "book_id": p.get("book_id"),
+                    }
+            if prov:
+                break
+        except Exception:
+            pass
+    return prov
+
+
+def build_viz(graph: dict, max_nodes: int = 500, community_limit: int = 0, provenance: dict | None = None):
+    provenance = provenance or {}
     nodes = graph.get("nodes", [])[:max_nodes]
     links = graph.get("links", [])
 
@@ -54,7 +85,15 @@ def build_viz(graph: dict, max_nodes: int = 500, community_limit: int = 0):
 
     x = [positions.get(nid, (0, 0))[0] for nid in node_ids]
     y = [positions.get(nid, (0, 0))[1] for nid in node_ids]
-    labels = [n.get("label", nid)[:40] for nid, n in zip(node_ids, nodes)]
+    labels = []
+    for nid, n in zip(node_ids, nodes):
+        base = n.get("label", nid)[:36]
+        pr = provenance.get(nid) or provenance.get(n.get("label"))
+        if pr:
+            hp = (pr.get("hierarchy_path") or pr.get("chapter_id") or "")[:28]
+            labels.append(f"{base}  |  {hp} ({pr.get('method','?')})")
+        else:
+            labels.append(base)
     colors = [n.get("community", -1) for n in nodes]
 
     # Edges (sample for performance)
@@ -121,9 +160,10 @@ def main():
         return
 
     graph = load_graph(graph_path)
-    fig = build_viz(graph, max_nodes=args.limit, community_limit=args.communities)
+    prov = load_provenance_map()
+    fig = build_viz(graph, max_nodes=args.limit, community_limit=args.communities, provenance=prov)
     fig.write_html(args.output, include_plotlyjs="cdn")
-    print(f"✓ Visualization written to {args.output}")
+    print(f"✓ Visualization written to {args.output} (provenance loaded for {len(prov)} nodes)")
 
 
 if __name__ == "__main__":

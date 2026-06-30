@@ -19,10 +19,19 @@ is transiting through (from SAV) or the specific planet's BAV.
 from dataclasses import dataclass, field
 
 from ..core.panchanga import PLANETS, RASHIS, rashi_index
-from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node
+from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
 
 _ashtakavarga_rules_version: str | None = None
 _ashtakavarga_registered = False
+
+# Chapter-aware caches
+_akv_structured_books: dict[str, dict] = {}
+_akv_book_index: dict[str, str] = {
+    "BPHS": "Brihat_Parasara_Hora_Sastra_Vol_1",
+    "BPHS2": "Brihat_Parasara_Hora_Sastra_Vol_2",
+    "GocharPhala": "Gochar_Phaladeepika_Pulippani",
+    "AshtakavargaHandbook": "Ashtakavarga_System_Comprehensive_Handbook",
+}
 
 # =====================================================================
 # BAV Tables — Benefic Placements (BPHS standard)
@@ -200,6 +209,10 @@ class AshtakavargaResult:
     # Synthesis
     summary: str = ""
 
+    # Chapter-aware provenance from KE
+    chapter_citation: str | None = None
+    hierarchy_path: str | None = None
+
 
 def compute_ashtakavarga(natal_sign: dict, lagna_sign_idx: int) -> AshtakavargaResult:
     """Compute Bhinnashtakavarga (BAV) and Sarvashtakavarga (SAV).
@@ -299,6 +312,16 @@ def compute_transit_ashtakavarga(
         lines.append(line)
 
     akv.summary = "\n".join(lines)
+
+    # Chapter-aware provenance (structured chapters + patch)
+    try:
+        prov = _resolve_akv_citation()
+        if prov:
+            akv.chapter_citation = prov.get("citation")
+            akv.hierarchy_path = prov.get("hierarchy_path")
+    except Exception:
+        pass
+
     return akv
 
 
@@ -334,15 +357,20 @@ def _clear_ashtakavarga_knowledge_caches() -> None:
 
 
 def _on_ashtakavarga_refresh(new_version: str) -> None:
-    global _ashtakavarga_rules_version
+    global _ashtakavarga_rules_version, _akv_structured_books
     _ashtakavarga_rules_version = new_version
     _clear_ashtakavarga_knowledge_caches()
-    # Additional engine path: calls structured on on_refresh to propagate signals
-    try:
-        get_structured_book("BPHS")
-        get_hierarchy_for_node("ashtakavarga_gyan")
-    except Exception:
-        pass
+    _akv_structured_books = {}
+    # Real consumption: load structured chapters for ashtakavarga (BPHS Ch.67-72, handbook)
+    for key, book_id in _akv_book_index.items():
+        try:
+            data = get_structured_book(book_id)
+            if data:
+                _akv_structured_books[book_id] = data
+                if "BPHS" in key:
+                    get_nodes_for_chapter(book_id, "ch-67")
+        except Exception:
+            pass
 
 
 def _register_ashtakavarga_engine() -> None:
@@ -364,3 +392,34 @@ _register_ashtakavarga_engine()
 def _ensure_ashtakavarga_registered() -> None:
     if not _ashtakavarga_registered:
         _register_ashtakavarga_engine()
+
+
+def _resolve_akv_citation() -> dict | None:
+    """Resolve ashtakavarga to chapter citation using structured book + patch provenance."""
+    book_id = _akv_book_index.get("BPHS") or _akv_book_index.get("AshtakavargaHandbook")
+    data = _akv_structured_books.get(book_id) or get_structured_book(book_id)
+    if not data:
+        return None
+    chapters = data.get("chapters") or []
+    chosen = None
+    for ch in chapters:
+        t = ((ch.get("title") or "") + " " + (ch.get("id") or "")).lower()
+        if any(k in t for k in ["ashtakavarga", "67", "68", "69", "70", "71", "72", "bindu", "bav", "sav"]):
+            chosen = ch
+            break
+    if not chosen and chapters:
+        chosen = chapters[0]
+    if not chosen:
+        return None
+    hier = None
+    conf = None
+    ch_nodes = (data.get("chapter_node_ids") or {}).get(chosen.get("id")) or []
+    if ch_nodes:
+        h = get_hierarchy_for_node(ch_nodes[0])
+        if h:
+            hier = h.get("hierarchy_path")
+            conf = h.get("confidence")
+    citation = f"{data.get('canonical_name') or book_id} — {chosen.get('title') or chosen.get('id')}"
+    if hier:
+        citation = f"{citation} (per {hier})"
+    return {"citation": citation, "hierarchy_path": hier or chosen.get("id"), "chapter_id": chosen.get("id"), "confidence": conf}

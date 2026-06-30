@@ -12,6 +12,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from .models import GraphVersion, InvalidationReason, KnowledgeValidity
 from .registry import EngineRegistry, RegisteredEngine
@@ -20,11 +21,27 @@ from .store.supabase_store import SupabaseKnowledgeStore
 
 logger = logging.getLogger(__name__)
 
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_CVCE_ROOT = Path(__file__).resolve().parents[1]
+
+
+def default_graph_path() -> Path:
+    """Resolve graph.json for local dev and tests (cwd-independent)."""
+    candidates = [
+        _CVCE_ROOT / "graph_rag" / "graph.json",
+        _REPO_ROOT / "knowledge-graph" / "graphify-out" / "graph.json",
+        Path("knowledge-graph/graphify-out/graph.json"),
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
+    return candidates[0]
+
 
 # Fallback file-based store (current behavior)
 class _FileKnowledgeStore(KnowledgeStore):
     def __init__(self, graph_path: Path | None = None):
-        self.graph_path = graph_path or Path("knowledge-graph/graphify-out/graph.json")
+        self.graph_path = graph_path or default_graph_path()
         self._graph = None
 
     def _load(self):

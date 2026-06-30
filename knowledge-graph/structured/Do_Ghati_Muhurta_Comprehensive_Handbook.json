@@ -6,216 +6,3528 @@
   "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "What Do-Ghati Muhurta means",
+      "id": "ch-do-ghati_muhurta_handbook",
+      "number": null,
+      "title": "Do-Ghati Muhurta Handbook",
       "level": 1,
-      "start_line": 16,
-      "end_line": 17,
+      "start_line": 2,
+      "end_line": 5,
       "sections": [],
-      "content_preview": "1. What Do-Ghati Muhurta means"
+      "content_preview": "Do-Ghati Muhurta Handbook  30 Two-Ghati Muhurtas • Nakshatra Mapping • Purpose Guide • Date-wise Tables  Prepared for: 22-Apr-1975 Mysuru and 30-May-2026 Athlone  Version 1.0 • Generated 30 May 2026 "
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Source basis and authenticity notes",
+      "id": "ch-prepared_for_22-apr-1975_mysuru_and_30-may-2026_athlone",
+      "number": null,
+      "title": "Prepared for: 22-Apr-1975 Mysuru and 30-May-2026 Athlone",
       "level": 1,
-      "start_line": 18,
-      "end_line": 19,
+      "start_line": 6,
+      "end_line": 9,
       "sections": [],
-      "content_preview": "2. Source basis and authenticity notes"
+      "content_preview": "Prepared for: 22-Apr-1975 Mysuru and 30-May-2026 Athlone  Version 1.0 • Generated 30 May 2026  Reader’s orientation  This handbook separates three things that are often mixed up: (1) the time division called Do-Ghati Muhurta, (2) the fixed muhurta-lord Nakshatra mapping used by P"
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Calculation method used in this handbook",
+      "id": "ch-readers_orientation",
+      "number": null,
+      "title": "Reader’s orientation",
       "level": 1,
-      "start_line": 20,
-      "end_line": 21,
+      "start_line": 10,
+      "end_line": 37,
       "sections": [],
-      "content_preview": "3. Calculation method used in this handbook"
+      "content_preview": "Reader’s orientation  This handbook separates three things that are often mixed up: (1) the time division called Do-Ghati Muhurta, (2) the fixed muhurta-lord Nakshatra mapping used by Panchang systems, and (3) the practical purpose/avoidance guidance derived from muhurta and Naks"
     },
     {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose",
+      "id": "ch-traditional_rule",
+      "number": null,
+      "title": "Traditional rule",
       "level": 1,
-      "start_line": 22,
-      "end_line": 23,
+      "start_line": 38,
+      "end_line": 39,
       "sections": [],
-      "content_preview": "4. Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose"
+      "content_preview": "Traditional rule  Practical meaning  Complete Panchang day  Sunrise to next sunrise "
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Calculated table: Mysuru, 22-Apr-1975",
+      "id": "ch-practical_meaning",
+      "number": null,
+      "title": "Practical meaning",
       "level": 1,
-      "start_line": 24,
-      "end_line": 25,
+      "start_line": 40,
+      "end_line": 41,
       "sections": [],
-      "content_preview": "5. Calculated table: Mysuru, 22-Apr-1975"
+      "content_preview": "Practical meaning  Complete Panchang day  Sunrise to next sunrise  Not midnight to midnight. "
     },
     {
-      "id": "ch-6",
-      "number": "6",
-      "title": "Calculated table: Athlone, 30-May-2026",
+      "id": "ch-complete_panchang_day",
+      "number": null,
+      "title": "Complete Panchang day",
       "level": 1,
-      "start_line": 26,
-      "end_line": 27,
+      "start_line": 42,
+      "end_line": 43,
       "sections": [],
-      "content_preview": "6. Calculated table: Athlone, 30-May-2026"
+      "content_preview": "Complete Panchang day  Sunrise to next sunrise  Not midnight to midnight.  Day half "
     },
     {
-      "id": "ch-7",
-      "number": "7",
-      "title": "Practical election checklist",
+      "id": "ch-sunrise_to_next_sunrise",
+      "number": null,
+      "title": "Sunrise to next sunrise",
       "level": 1,
-      "start_line": 28,
-      "end_line": 29,
+      "start_line": 44,
+      "end_line": 45,
       "sections": [],
-      "content_preview": "7. Practical election checklist"
+      "content_preview": "Sunrise to next sunrise  Not midnight to midnight.  Day half  Sunrise to sunset = 30 ghatis "
     },
     {
-      "id": "ch-8",
-      "number": "8",
-      "title": "Glossary and references",
+      "id": "ch-not_midnight_to_midnight",
+      "number": null,
+      "title": "Not midnight to midnight.",
       "level": 1,
-      "start_line": 30,
-      "end_line": 31,
+      "start_line": 46,
+      "end_line": 47,
       "sections": [],
-      "content_preview": "8. Glossary and references"
+      "content_preview": "Not midnight to midnight.  Day half  Sunrise to sunset = 30 ghatis  15 day muhurtas, each 2 ghatis. "
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "What Do-Ghati Muhurta Means",
+      "id": "ch-day_half",
+      "number": null,
+      "title": "Day half",
       "level": 1,
-      "start_line": 32,
-      "end_line": 69,
+      "start_line": 48,
+      "end_line": 49,
       "sections": [],
-      "content_preview": "1. What Do-Ghati Muhurta Means"
+      "content_preview": "Day half  Sunrise to sunset = 30 ghatis  15 day muhurtas, each 2 ghatis.  Night half "
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Source Basis and Authenticity Notes",
+      "id": "ch-sunrise_to_sunset_30_ghatis",
+      "number": null,
+      "title": "Sunrise to sunset = 30 ghatis",
       "level": 1,
-      "start_line": 70,
-      "end_line": 103,
+      "start_line": 50,
+      "end_line": 53,
       "sections": [],
-      "content_preview": "2. Source Basis and Authenticity Notes"
+      "content_preview": "Sunrise to sunset = 30 ghatis  15 day muhurtas, each 2 ghatis.  Night half  Sunset to next sunrise = 30 ghatis "
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Calculation Method Used",
+      "id": "ch-night_half",
+      "number": null,
+      "title": "Night half",
       "level": 1,
-      "start_line": 104,
-      "end_line": 145,
+      "start_line": 54,
+      "end_line": 55,
       "sections": [],
-      "content_preview": "3. Calculation Method Used"
+      "content_preview": "Night half  Sunset to next sunrise = 30 ghatis  15 night muhurtas, each 2 ghatis.  Fixed 48 minutes? "
     },
     {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Master Table: 30 Do-Ghati Muhurtas, Nakshatra Mapping and Use Guide",
+      "id": "ch-sunset_to_next_sunrise_30_ghatis",
+      "number": null,
+      "title": "Sunset to next sunrise = 30 ghatis",
       "level": 1,
-      "start_line": 146,
-      "end_line": 1975,
+      "start_line": 56,
+      "end_line": 59,
       "sections": [],
-      "content_preview": "4. Master Table: 30 Do-Ghati Muhurtas, Nakshatra Mapping and Use Guide"
+      "content_preview": "Sunset to next sunrise = 30 ghatis  15 night muhurtas, each 2 ghatis.  Fixed 48 minutes?  Only approximately true near equal day/night "
     },
     {
-      "id": "ch-7",
-      "number": "7",
-      "title": "Practical Election Checklist",
+      "id": "ch-fixed_48_minutes",
+      "number": null,
+      "title": "Fixed 48 minutes?",
       "level": 1,
-      "start_line": 1976,
+      "start_line": 60,
+      "end_line": 61,
+      "sections": [],
+      "content_preview": "Fixed 48 minutes?  Only approximately true near equal day/night  The actual slot length changes by date and location.  Important correction "
+    },
+    {
+      "id": "ch-only_approximately_true_near_equal_daynight",
+      "number": null,
+      "title": "Only approximately true near equal day/night",
+      "level": 1,
+      "start_line": 62,
+      "end_line": 65,
+      "sections": [],
+      "content_preview": "Only approximately true near equal day/night  The actual slot length changes by date and location.  Important correction  Do not assume every muhurta is exactly 48 minutes. For example, on 30-May-2026 in Athlone, the day slots are about 66m 26s each and the night slots are only a"
+    },
+    {
+      "id": "ch-important_correction",
+      "number": null,
+      "title": "Important correction",
+      "level": 1,
+      "start_line": 66,
+      "end_line": 73,
+      "sections": [],
+      "content_preview": "Important correction  Do not assume every muhurta is exactly 48 minutes. For example, on 30-May-2026 in Athlone, the day slots are about 66m 26s each and the night slots are only about 29m 30s each because summer daylight is long at that latitude.  2. Source Basis and Authenticit"
+    },
+    {
+      "id": "ch-what_it_contributes",
+      "number": null,
+      "title": "What it contributes",
+      "level": 1,
+      "start_line": 74,
+      "end_line": 75,
+      "sections": [],
+      "content_preview": "What it contributes  Used for  Vedic/Brahmana background  Texts such as the Taittiriya Brahmana and Satapatha Brahmana preserve muhūrta as an ancient time measure and ritual time concept. This supports the time-unit foundation, not every later election rule. [S4] "
+    },
+    {
+      "id": "ch-used_for",
+      "number": null,
+      "title": "Used for",
+      "level": 1,
+      "start_line": 76,
+      "end_line": 77,
+      "sections": [],
+      "content_preview": "Used for  Vedic/Brahmana background  Texts such as the Taittiriya Brahmana and Satapatha Brahmana preserve muhūrta as an ancient time measure and ritual time concept. This supports the time-unit foundation, not every later election rule. [S4]  Primary-text background "
+    },
+    {
+      "id": "ch-vedicbrahmana_background",
+      "number": null,
+      "title": "Vedic/Brahmana background",
+      "level": 1,
+      "start_line": 78,
+      "end_line": 81,
+      "sections": [],
+      "content_preview": "Vedic/Brahmana background  Texts such as the Taittiriya Brahmana and Satapatha Brahmana preserve muhūrta as an ancient time measure and ritual time concept. This supports the time-unit foundation, not every later election rule. [S4]  Primary-text background  Panchang practice "
+    },
+    {
+      "id": "ch-primary-text_background",
+      "number": null,
+      "title": "Primary-text background",
+      "level": 1,
+      "start_line": 82,
+      "end_line": 83,
+      "sections": [],
+      "content_preview": "Primary-text background  Panchang practice  Modern Panchang references describe the day as sunrise-to-sunrise, split day/night into ghatis, and list the 30 Do-Ghati Muhurtas with auspicious/inauspicious status. [S1]  Calculation + names/status "
+    },
+    {
+      "id": "ch-panchang_practice",
+      "number": null,
+      "title": "Panchang practice",
+      "level": 1,
+      "start_line": 84,
+      "end_line": 87,
+      "sections": [],
+      "content_preview": "Panchang practice  Modern Panchang references describe the day as sunrise-to-sunrise, split day/night into ghatis, and list the 30 Do-Ghati Muhurtas with auspicious/inauspicious status. [S1]  Calculation + names/status  Nakshatra mapping "
+    },
+    {
+      "id": "ch-calculation_namesstatus",
+      "number": null,
+      "title": "Calculation + names/status",
+      "level": 1,
+      "start_line": 88,
+      "end_line": 89,
+      "sections": [],
+      "content_preview": "Calculation + names/status  Nakshatra mapping  The fixed mapping used here follows the table where 15 day muhurtas and 15 night muhurtas are allotted to Nakshatra lords. [S2]  Mapping table "
+    },
+    {
+      "id": "ch-nakshatra_mapping",
+      "number": null,
+      "title": "Nakshatra mapping",
+      "level": 1,
+      "start_line": 90,
+      "end_line": 93,
+      "sections": [],
+      "content_preview": "Nakshatra mapping  The fixed mapping used here follows the table where 15 day muhurtas and 15 night muhurtas are allotted to Nakshatra lords. [S2]  Mapping table  Purpose interpretation "
+    },
+    {
+      "id": "ch-mapping_table",
+      "number": null,
+      "title": "Mapping table",
+      "level": 1,
+      "start_line": 94,
+      "end_line": 95,
+      "sections": [],
+      "content_preview": "Mapping table  Purpose interpretation  B. V. Raman’s Muhurtha summarises Nakshatra natures from Brihat Samhita tradition: fixed, soft, light, sharp, movable, dreadful and mixed; these categories are used to infer suitable/unsuitable work types. [S3]  Purpose guide "
+    },
+    {
+      "id": "ch-purpose_interpretation",
+      "number": null,
+      "title": "Purpose interpretation",
+      "level": 1,
+      "start_line": 96,
+      "end_line": 99,
+      "sections": [],
+      "content_preview": "Purpose interpretation  B. V. Raman’s Muhurtha summarises Nakshatra natures from Brihat Samhita tradition: fixed, soft, light, sharp, movable, dreadful and mixed; these categories are used to infer suitable/unsuitable work types. [S3]  Purpose guide  Honesty note: The activity de"
+    },
+    {
+      "id": "ch-purpose_guide",
+      "number": null,
+      "title": "Purpose guide",
+      "level": 1,
+      "start_line": 100,
+      "end_line": 115,
+      "sections": [],
+      "content_preview": "Purpose guide  Honesty note: The activity descriptions in the master table are a practical synthesis, not a claim that one single Vedic verse lists all modern uses. The exact timing method and fixed Nakshatra mapping are source-based; the use guide blends muhurta name, deity symb"
+    },
+    {
+      "id": "ch-astronomical_apparent_sunrisesunset_local_timezone_applied",
+      "number": null,
+      "title": "Astronomical apparent sunrise/sunset; local timezone applied.",
+      "level": 1,
+      "start_line": 116,
+      "end_line": 121,
+      "sections": [],
+      "content_preview": "Astronomical apparent sunrise/sunset; local timezone applied.  2  Day muhurta duration = (sunset − sunrise) ÷ 15.  Slots 1–15. "
+    },
+    {
+      "id": "ch-slots_115",
+      "number": null,
+      "title": "Slots 1–15.",
+      "level": 1,
+      "start_line": 122,
+      "end_line": 137,
+      "sections": [],
+      "content_preview": "Slots 1–15.  3  Night muhurta duration = (next sunrise − sunset) ÷ 15.  Slots 16–30; past-midnight times belong to the same Panchang day. "
+    },
+    {
+      "id": "ch-round_display_times_to_nearest_minute",
+      "number": null,
+      "title": "Round display times to nearest minute.",
+      "level": 1,
+      "start_line": 138,
+      "end_line": 141,
+      "sections": [],
+      "content_preview": "Round display times to nearest minute.  Underlying calculations were done to seconds; table times are for easy reference.  Nakshatra mapping vs actual Moon Nakshatra  In Do-Ghati tables, the Nakshatra column is a fixed muhurta-lord mapping: slot 1 corresponds to Ardra, slot 2 to "
+    },
+    {
+      "id": "ch-nakshatra_mapping_vs_actual_moon_nakshatra",
+      "number": null,
+      "title": "Nakshatra mapping vs actual Moon Nakshatra",
+      "level": 1,
+      "start_line": 142,
+      "end_line": 153,
+      "sections": [],
+      "content_preview": "Nakshatra mapping vs actual Moon Nakshatra  In Do-Ghati tables, the Nakshatra column is a fixed muhurta-lord mapping: slot 1 corresponds to Ardra, slot 2 to Ashlesha by day / Purva Bhadrapada by night, and so on. This is different from the Moon’s real-time Nakshatra on that date."
+    },
+    {
+      "id": "ch-muhurta_name_variants",
+      "number": null,
+      "title": "Muhurta name variants",
+      "level": 1,
+      "start_line": 154,
+      "end_line": 155,
+      "sections": [],
+      "content_preview": "Muhurta name variants  Mapped Nakshatra  Nature  Status "
+    },
+    {
+      "id": "ch-mapped_nakshatra",
+      "number": null,
+      "title": "Mapped Nakshatra",
+      "level": 1,
+      "start_line": 156,
+      "end_line": 161,
+      "sections": [],
+      "content_preview": "Mapped Nakshatra  Nature  Status  Best used for "
+    },
+    {
+      "id": "ch-best_used_for",
+      "number": null,
+      "title": "Best used for",
+      "level": 1,
+      "start_line": 162,
+      "end_line": 163,
+      "sections": [],
+      "content_preview": "Best used for  Avoid / caution  1  Day "
+    },
+    {
+      "id": "ch-avoid_caution",
+      "number": null,
+      "title": "Avoid / caution",
+      "level": 1,
+      "start_line": 164,
+      "end_line": 171,
+      "sections": [],
+      "content_preview": "Avoid / caution  1  Day  Pratah "
+    },
+    {
+      "id": "ch-rudra_raudra",
+      "number": null,
+      "title": "Rudra / Raudra",
+      "level": 1,
+      "start_line": 172,
+      "end_line": 181,
+      "sections": [],
+      "content_preview": "Rudra / Raudra  Ardra  Sharp  Avoid "
+    },
+    {
+      "id": "ch-auspicious_beginnings_marriage_gentle_agreements",
+      "number": null,
+      "title": "Auspicious beginnings, marriage, gentle agreements.",
+      "level": 1,
+      "start_line": 182,
+      "end_line": 189,
+      "sections": [],
+      "content_preview": "Auspicious beginnings, marriage, gentle agreements.  2  Day  Pratah "
+    },
+    {
+      "id": "ch-uraga_ahi",
+      "number": null,
+      "title": "Uraga / Ahi",
+      "level": 1,
+      "start_line": 190,
+      "end_line": 199,
+      "sections": [],
+      "content_preview": "Uraga / Ahi  Ashlesha  Sharp  Avoid "
+    },
+    {
+      "id": "ch-new_partnerships_celebrations_soft_launches",
+      "number": null,
+      "title": "New partnerships, celebrations, soft launches.",
+      "level": 1,
+      "start_line": 200,
+      "end_line": 217,
+      "sections": [],
+      "content_preview": "New partnerships, celebrations, soft launches.  3  Day  Pratah "
+    },
+    {
+      "id": "ch-aggressive_confrontation_or_coercive_action",
+      "number": null,
+      "title": "Aggressive confrontation or coercive action.",
+      "level": 1,
+      "start_line": 218,
+      "end_line": 225,
+      "sections": [],
+      "content_preview": "Aggressive confrontation or coercive action.  4  Day  Sangava "
+    },
+    {
+      "id": "ch-pitara_pitru",
+      "number": null,
+      "title": "Pitara / Pitru",
+      "level": 1,
+      "start_line": 226,
+      "end_line": 233,
+      "sections": [],
+      "content_preview": "Pitara / Pitru  Magha  Dreadful  Avoid "
+    },
+    {
+      "id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli",
+      "number": null,
+      "title": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "level": 1,
+      "start_line": 234,
+      "end_line": 235,
+      "sections": [],
+      "content_preview": "Ancestor remembrance, family lineage duties, clearing old obligations.  Major new auspicious work, marriage, business launch.  5  Day "
+    },
+    {
+      "id": "ch-major_new_auspicious_work_marriage_business_launch",
+      "number": null,
+      "title": "Major new auspicious work, marriage, business launch.",
+      "level": 1,
+      "start_line": 236,
+      "end_line": 261,
+      "sections": [],
+      "content_preview": "Major new auspicious work, marriage, business launch.  5  Day  Sangava "
+    },
+    {
+      "id": "ch-ambu_vara",
+      "number": null,
+      "title": "Ambu / Vara",
+      "level": 1,
+      "start_line": 262,
+      "end_line": 263,
+      "sections": [],
+      "content_preview": "Ambu / Vara  Purva Ashadha  Dreadful  Favourable "
+    },
+    {
+      "id": "ch-purva_ashadha",
+      "number": null,
+      "title": "Purva Ashadha",
+      "level": 1,
+      "start_line": 264,
+      "end_line": 271,
+      "sections": [],
+      "content_preview": "Purva Ashadha  Dreadful  Favourable  Cleansing, water-related tasks, persuasive campaigns, decisive clean-up. "
+    },
+    {
+      "id": "ch-sensitive_relationship_work_and_delicate_ceremonies",
+      "number": null,
+      "title": "Sensitive relationship work and delicate ceremonies.",
+      "level": 1,
+      "start_line": 272,
+      "end_line": 281,
+      "sections": [],
+      "content_preview": "Sensitive relationship work and delicate ceremonies.  7  Day  Madhyahna "
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "number": null,
+      "title": "Uttara Ashadha",
+      "level": 1,
+      "start_line": 282,
+      "end_line": 289,
+      "sections": [],
+      "content_preview": "Uttara Ashadha  Fixed  Favourable  Long-term commitments, foundations, oath-taking, institutional decisions. "
+    },
+    {
+      "id": "ch-quick_reversible_tasks_that_need_flexibility",
+      "number": null,
+      "title": "Quick reversible tasks that need flexibility.",
+      "level": 1,
+      "start_line": 290,
+      "end_line": 297,
+      "sections": [],
+      "content_preview": "Quick reversible tasks that need flexibility.  8  Day  Madhyahna "
+    },
+    {
+      "id": "ch-vidhi_abhijit",
+      "number": null,
+      "title": "Vidhi / Abhijit",
+      "level": 1,
+      "start_line": 298,
+      "end_line": 315,
+      "sections": [],
+      "content_preview": "Vidhi / Abhijit  Abhijit  Light  Favourable "
+    },
+    {
+      "id": "ch-brahma_satamukhi",
+      "number": null,
+      "title": "Brahma / Satamukhi",
+      "level": 1,
+      "start_line": 316,
+      "end_line": 325,
+      "sections": [],
+      "content_preview": "Brahma / Satamukhi  Rohini  Fixed  Favourable "
+    },
+    {
+      "id": "ch-purely_destructive_or_separation-oriented_actions",
+      "number": null,
+      "title": "Purely destructive or separation-oriented actions.",
+      "level": 1,
+      "start_line": 326,
+      "end_line": 333,
+      "sections": [],
+      "content_preview": "Purely destructive or separation-oriented actions.  10  Day  Aparahna "
+    },
+    {
+      "id": "ch-indra_puruhuta",
+      "number": null,
+      "title": "Indra / Puruhuta",
+      "level": 1,
+      "start_line": 334,
+      "end_line": 343,
+      "sections": [],
+      "content_preview": "Indra / Puruhuta  Jyeshtha  Sharp  Favourable "
+    },
+    {
+      "id": "ch-marriage_and_delicate_harmony-focused_events",
+      "number": null,
+      "title": "Marriage and delicate harmony-focused events.",
+      "level": 1,
+      "start_line": 344,
+      "end_line": 351,
+      "sections": [],
+      "content_preview": "Marriage and delicate harmony-focused events.  11  Day  Aparahna "
+    },
+    {
+      "id": "ch-indragni_vahni",
+      "number": null,
+      "title": "Indragni / Vahni",
+      "level": 1,
+      "start_line": 352,
+      "end_line": 361,
+      "sections": [],
+      "content_preview": "Indragni / Vahni  Vishakha  Mixed  Avoid "
+    },
+    {
+      "id": "ch-good_elections_requiring_calm_gentle_sustained_blessing",
+      "number": null,
+      "title": "Good elections requiring calm, gentle, sustained blessing.",
+      "level": 1,
+      "start_line": 362,
+      "end_line": 369,
+      "sections": [],
+      "content_preview": "Good elections requiring calm, gentle, sustained blessing.  12  Day  Aparahna "
+    },
+    {
+      "id": "ch-daitya_naktanchara_nairrita",
+      "number": null,
+      "title": "Daitya / Naktanchara / Nairrita",
+      "level": 1,
+      "start_line": 370,
+      "end_line": 377,
+      "sections": [],
+      "content_preview": "Daitya / Naktanchara / Nairrita  Mula  Sharp  Avoid "
+    },
+    {
+      "id": "ch-root-cause_analysis_investigation_removal_deconstruction_res",
+      "number": null,
+      "title": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "level": 1,
+      "start_line": 378,
+      "end_line": 379,
+      "sections": [],
+      "content_preview": "Root-cause analysis, investigation, removal, deconstruction, research.  Marriage, housewarming, naming, investment launch.  13  Day "
+    },
+    {
+      "id": "ch-marriage_housewarming_naming_investment_launch",
+      "number": null,
+      "title": "Marriage, housewarming, naming, investment launch.",
+      "level": 1,
+      "start_line": 380,
+      "end_line": 407,
+      "sections": [],
+      "content_preview": "Marriage, housewarming, naming, investment launch.  13  Day  Sayahna "
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "number": null,
+      "title": "Uttara Phalguni",
+      "level": 1,
+      "start_line": 408,
+      "end_line": 415,
+      "sections": [],
+      "content_preview": "Uttara Phalguni  Fixed  Favourable  Contracts, patronage, family agreements, commitments, stable alliances. "
+    },
+    {
+      "id": "ch-impulsive_short-term_experimentation",
+      "number": null,
+      "title": "Impulsive short-term experimentation.",
+      "level": 1,
+      "start_line": 416,
+      "end_line": 425,
+      "sections": [],
+      "content_preview": "Impulsive short-term experimentation.  15  Day  Sayahna "
+    },
+    {
+      "id": "ch-purva_phalguni",
+      "number": null,
+      "title": "Purva Phalguni",
+      "level": 1,
+      "start_line": 426,
+      "end_line": 449,
+      "sections": [],
+      "content_preview": "Purva Phalguni  Dreadful  Avoid  Rest, hospitality, arts, recreation, charity without high-stakes commitment. "
+    },
+    {
+      "id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release",
+      "number": null,
+      "title": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "level": 1,
+      "start_line": 450,
+      "end_line": 451,
+      "sections": [],
+      "content_preview": "Shiva worship, austerity, emergency clean-up, inner release.  Auspicious worldly beginnings and celebratory rituals.  17  Night "
+    },
+    {
+      "id": "ch-auspicious_worldly_beginnings_and_celebratory_rituals",
+      "number": null,
+      "title": "Auspicious worldly beginnings and celebratory rituals.",
+      "level": 1,
+      "start_line": 452,
+      "end_line": 459,
+      "sections": [],
+      "content_preview": "Auspicious worldly beginnings and celebratory rituals.  17  Night  Pradosha "
+    },
+    {
+      "id": "ch-ajaikapada_ajapada",
+      "number": null,
+      "title": "Ajaikapada / Ajapada",
+      "level": 1,
+      "start_line": 460,
+      "end_line": 461,
+      "sections": [],
+      "content_preview": "Ajaikapada / Ajapada  Purva Bhadrapada  Dreadful  Avoid "
+    },
+    {
+      "id": "ch-purva_bhadrapada",
+      "number": null,
+      "title": "Purva Bhadrapada",
+      "level": 1,
+      "start_line": 462,
+      "end_line": 467,
+      "sections": [],
+      "content_preview": "Purva Bhadrapada  Dreadful  Avoid  Tapas, vows, confronting harsh truths, endings, spiritual seriousness. "
+    },
+    {
+      "id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou",
+      "number": null,
+      "title": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "level": 1,
+      "start_line": 468,
+      "end_line": 469,
+      "sections": [],
+      "content_preview": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.  Marriage, housewarming, gentle family rituals.  18  Night "
+    },
+    {
+      "id": "ch-marriage_housewarming_gentle_family_rituals",
+      "number": null,
+      "title": "Marriage, housewarming, gentle family rituals.",
+      "level": 1,
+      "start_line": 470,
+      "end_line": 479,
+      "sections": [],
+      "content_preview": "Marriage, housewarming, gentle family rituals.  18  Night  Pradosha "
+    },
+    {
+      "id": "ch-uttara_bhadrapada",
+      "number": null,
+      "title": "Uttara Bhadrapada",
+      "level": 1,
+      "start_line": 480,
+      "end_line": 487,
+      "sections": [],
+      "content_preview": "Uttara Bhadrapada  Fixed  Favourable  Meditation, stable planning, long-term strategy, savings, patience-based work. "
+    },
+    {
+      "id": "ch-fast-moving_tasks_needing_immediate_visible_outcome",
+      "number": null,
+      "title": "Fast-moving tasks needing immediate visible outcome.",
+      "level": 1,
+      "start_line": 488,
+      "end_line": 495,
+      "sections": [],
+      "content_preview": "Fast-moving tasks needing immediate visible outcome.  19  Night  Ratri "
+    },
+    {
+      "id": "ch-pusha_pushan",
+      "number": null,
+      "title": "Pusha / Pushan",
+      "level": 1,
+      "start_line": 496,
+      "end_line": 505,
+      "sections": [],
+      "content_preview": "Pusha / Pushan  Revati  Soft  Favourable "
+    },
+    {
+      "id": "ch-aggressive_disputes_or_litigation_starts",
+      "number": null,
+      "title": "Aggressive disputes or litigation starts.",
+      "level": 1,
+      "start_line": 506,
+      "end_line": 513,
+      "sections": [],
+      "content_preview": "Aggressive disputes or litigation starts.  20  Night  Ratri "
+    },
+    {
+      "id": "ch-ashwini_kumara",
+      "number": null,
+      "title": "Ashwini Kumara",
+      "level": 1,
+      "start_line": 514,
+      "end_line": 521,
+      "sections": [],
+      "content_preview": "Ashwini Kumara  Ashwini  Light  Favourable "
+    },
+    {
+      "id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol",
+      "number": null,
+      "title": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "level": 1,
+      "start_line": 522,
+      "end_line": 539,
+      "sections": [],
+      "content_preview": "Healing, medicine, fast starts, travel, repair, quick problem-solving.  Slow solemn commitments where steadiness is the main criterion.  21  Night "
+    },
+    {
+      "id": "ch-discipline_endings_legalethical_boundary-setting_restraint",
+      "number": null,
+      "title": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "level": 1,
+      "start_line": 540,
+      "end_line": 559,
+      "sections": [],
+      "content_preview": "Discipline, endings, legal/ethical boundary-setting, restraint.  Auspicious beginnings, ceremonies, marriage, children-related celebrations.  22  Night "
+    },
+    {
+      "id": "ch-soft_relationship_work_and_gentle_ceremonies",
+      "number": null,
+      "title": "Soft relationship work and gentle ceremonies.",
+      "level": 1,
+      "start_line": 560,
+      "end_line": 567,
+      "sections": [],
+      "content_preview": "Soft relationship work and gentle ceremonies.  23  Night  Nishita "
+    },
+    {
+      "id": "ch-vidhatri_brahma",
+      "number": null,
+      "title": "Vidhatri / Brahma",
+      "level": 1,
+      "start_line": 568,
+      "end_line": 577,
+      "sections": [],
+      "content_preview": "Vidhatri / Brahma  Rohini  Fixed  Favourable "
+    },
+    {
+      "id": "ch-needless_confrontation",
+      "number": null,
+      "title": "Needless confrontation.",
+      "level": 1,
+      "start_line": 578,
+      "end_line": 585,
+      "sections": [],
+      "content_preview": "Needless confrontation.  24  Night  Ratri "
+    },
+    {
+      "id": "ch-chanda_canda",
+      "number": null,
+      "title": "Chanda / Canda",
+      "level": 1,
+      "start_line": 586,
+      "end_line": 593,
+      "sections": [],
+      "content_preview": "Chanda / Canda  Mrigashira  Soft  Favourable "
+    },
+    {
+      "id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh",
+      "number": null,
+      "title": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "level": 1,
+      "start_line": 594,
+      "end_line": 595,
+      "sections": [],
+      "content_preview": "Research, searching, learning, music, arts, gentle travel, courtship.  Final irreversible commitments without supporting factors.  25  Night "
+    },
+    {
+      "id": "ch-final_irreversible_commitments_without_supporting_factors",
+      "number": null,
+      "title": "Final irreversible commitments without supporting factors.",
+      "level": 1,
+      "start_line": 596,
+      "end_line": 611,
+      "sections": [],
+      "content_preview": "Final irreversible commitments without supporting factors.  25  Night  Ratri "
+    },
+    {
+      "id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin",
+      "number": null,
+      "title": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "level": 1,
+      "start_line": 612,
+      "end_line": 613,
+      "sections": [],
+      "content_preview": "Renewal, return journeys, home repair, restart, recovery, teaching.  Tasks that must remain absolutely fixed and unchanged.  26  Night "
+    },
+    {
+      "id": "ch-tasks_that_must_remain_absolutely_fixed_and_unchanged",
+      "number": null,
+      "title": "Tasks that must remain absolutely fixed and unchanged.",
+      "level": 1,
+      "start_line": 614,
+      "end_line": 621,
+      "sections": [],
+      "content_preview": "Tasks that must remain absolutely fixed and unchanged.  26  Night  Ratri "
+    },
+    {
+      "id": "ch-jiva_brihaspati_guru",
+      "number": null,
+      "title": "Jiva / Brihaspati / Guru",
+      "level": 1,
+      "start_line": 622,
+      "end_line": 631,
+      "sections": [],
+      "content_preview": "Jiva / Brihaspati / Guru  Pushya  Light  Favourable "
+    },
+    {
+      "id": "ch-marriage_in_traditions_that_avoid_pushya_for_marriage",
+      "number": null,
+      "title": "Marriage in traditions that avoid Pushya for marriage.",
+      "level": 1,
+      "start_line": 632,
+      "end_line": 649,
+      "sections": [],
+      "content_preview": "Marriage in traditions that avoid Pushya for marriage.  27  Night  Ratri "
+    },
+    {
+      "id": "ch-tasks_needing_total_immobility_or_secrecy",
+      "number": null,
+      "title": "Tasks needing total immobility or secrecy.",
+      "level": 1,
+      "start_line": 650,
+      "end_line": 657,
+      "sections": [],
+      "content_preview": "Tasks needing total immobility or secrecy.  28  Night  Ratri "
+    },
+    {
+      "id": "ch-arka_surya_yamagadyuti",
+      "number": null,
+      "title": "Arka / Surya / Yamagadyuti",
+      "level": 1,
+      "start_line": 658,
+      "end_line": 667,
+      "sections": [],
+      "content_preview": "Arka / Surya / Yamagadyuti  Hasta  Light  Favourable "
+    },
+    {
+      "id": "ch-cruel_or_destructive_action",
+      "number": null,
+      "title": "Cruel or destructive action.",
+      "level": 1,
+      "start_line": 668,
+      "end_line": 675,
+      "sections": [],
+      "content_preview": "Cruel or destructive action.  29  Night  Arunodaya "
+    },
+    {
+      "id": "ch-tvashta_brahma",
+      "number": null,
+      "title": "Tvashta / Brahma",
+      "level": 1,
+      "start_line": 676,
+      "end_line": 683,
+      "sections": [],
+      "content_preview": "Tvashta / Brahma  Chitra  Soft  Favourable "
+    },
+    {
+      "id": "ch-design_architecture_aesthetics_craft_beautification_planning",
+      "number": null,
+      "title": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "level": 1,
+      "start_line": 684,
+      "end_line": 685,
+      "sections": [],
+      "content_preview": "Design, architecture, aesthetics, craft, beautification, planning.  High-conflict tasks.  30  Night "
+    },
+    {
+      "id": "ch-high-conflict_tasks",
+      "number": null,
+      "title": "High-conflict tasks.",
+      "level": 1,
+      "start_line": 686,
+      "end_line": 693,
+      "sections": [],
+      "content_preview": "High-conflict tasks.  30  Night  Arunodaya "
+    },
+    {
+      "id": "ch-samirana_vayu_samudra",
+      "number": null,
+      "title": "Samirana / Vayu / Samudra",
+      "level": 1,
+      "start_line": 694,
+      "end_line": 703,
+      "sections": [],
+      "content_preview": "Samirana / Vayu / Samudra  Swati  Movable  Favourable "
+    },
+    {
+      "id": "ch-permanent_foundations_when_a_fixed_slot_is_available",
+      "number": null,
+      "title": "Permanent foundations when a fixed slot is available.",
+      "level": 1,
+      "start_line": 704,
+      "end_line": 705,
+      "sections": [],
+      "content_preview": "Permanent foundations when a fixed slot is available.  Nakshatra Nature Quick Key  Nature  Nakshatras "
+    },
+    {
+      "id": "ch-nakshatra_nature_quick_key",
+      "number": null,
+      "title": "Nakshatra Nature Quick Key",
+      "level": 1,
+      "start_line": 706,
+      "end_line": 711,
+      "sections": [],
+      "content_preview": "Nakshatra Nature Quick Key  Nature  Nakshatras  Traditional election tendency "
+    },
+    {
+      "id": "ch-traditional_election_tendency",
+      "number": null,
+      "title": "Traditional election tendency",
+      "level": 1,
+      "start_line": 712,
+      "end_line": 715,
+      "sections": [],
+      "content_preview": "Traditional election tendency  Fixed  Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada  Permanent foundations, commitments, planting, stable institutions. "
+    },
+    {
+      "id": "ch-rohini_uttara_phalguni_uttara_ashadha_uttara_bhadrapada",
+      "number": null,
+      "title": "Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada",
+      "level": 1,
+      "start_line": 716,
+      "end_line": 717,
+      "sections": [],
+      "content_preview": "Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada  Permanent foundations, commitments, planting, stable institutions.  Soft  Chitra, Anuradha, Mrigashira, Revati "
+    },
+    {
+      "id": "ch-permanent_foundations_commitments_planting_stable_institutio",
+      "number": null,
+      "title": "Permanent foundations, commitments, planting, stable institutions.",
+      "level": 1,
+      "start_line": 718,
+      "end_line": 721,
+      "sections": [],
+      "content_preview": "Permanent foundations, commitments, planting, stable institutions.  Soft  Chitra, Anuradha, Mrigashira, Revati  Fine arts, relationship harmony, learning, clothing, gentle auspicious ceremonies. "
+    },
+    {
+      "id": "ch-chitra_anuradha_mrigashira_revati",
+      "number": null,
+      "title": "Chitra, Anuradha, Mrigashira, Revati",
+      "level": 1,
+      "start_line": 722,
+      "end_line": 727,
+      "sections": [],
+      "content_preview": "Chitra, Anuradha, Mrigashira, Revati  Fine arts, relationship harmony, learning, clothing, gentle auspicious ceremonies.  Light  Ashwini, Pushya, Hasta, Abhijit "
+    },
+    {
+      "id": "ch-ashwini_pushya_hasta_abhijit",
+      "number": null,
+      "title": "Ashwini, Pushya, Hasta, Abhijit",
+      "level": 1,
+      "start_line": 728,
+      "end_line": 733,
+      "sections": [],
+      "content_preview": "Ashwini, Pushya, Hasta, Abhijit  Medicine, travel, ornamentation, learning, quick starts, practical remedies.  Sharp  Mula, Jyeshtha, Ardra, Ashlesha "
+    },
+    {
+      "id": "ch-mula_jyeshtha_ardra_ashlesha",
+      "number": null,
+      "title": "Mula, Jyeshtha, Ardra, Ashlesha",
+      "level": 1,
+      "start_line": 734,
+      "end_line": 739,
+      "sections": [],
+      "content_preview": "Mula, Jyeshtha, Ardra, Ashlesha  Separation, removal, discipline, intense correction—not gentle ceremonies.  Movable  Shravana, Dhanishtha, Shatabhisha, Punarvasu, Swati "
+    },
+    {
+      "id": "ch-shravana_dhanishtha_shatabhisha_punarvasu_swati",
+      "number": null,
+      "title": "Shravana, Dhanishtha, Shatabhisha, Punarvasu, Swati",
+      "level": 1,
+      "start_line": 740,
+      "end_line": 741,
+      "sections": [],
+      "content_preview": "Shravana, Dhanishtha, Shatabhisha, Punarvasu, Swati  Travel, processions, movement, vehicles, flexible work.  Dreadful  Purva Phalguni, Purva Ashadha, Purva Bhadrapada, Bharani, Magha "
+    },
+    {
+      "id": "ch-travel_processions_movement_vehicles_flexible_work",
+      "number": null,
+      "title": "Travel, processions, movement, vehicles, flexible work.",
+      "level": 1,
+      "start_line": 742,
+      "end_line": 745,
+      "sections": [],
+      "content_preview": "Travel, processions, movement, vehicles, flexible work.  Dreadful  Purva Phalguni, Purva Ashadha, Purva Bhadrapada, Bharani, Magha  Harsh or destructive purposes in classical texts; avoid auspicious starts. "
+    },
+    {
+      "id": "ch-purva_phalguni_purva_ashadha_purva_bhadrapada_bharani_magha",
+      "number": null,
+      "title": "Purva Phalguni, Purva Ashadha, Purva Bhadrapada, Bharani, Magha",
+      "level": 1,
+      "start_line": 746,
+      "end_line": 751,
+      "sections": [],
+      "content_preview": "Purva Phalguni, Purva Ashadha, Purva Bhadrapada, Bharani, Magha  Harsh or destructive purposes in classical texts; avoid auspicious starts.  Mixed  Krittika, Vishakha "
+    },
+    {
+      "id": "ch-krittika_vishakha",
+      "number": null,
+      "title": "Krittika, Vishakha",
+      "level": 1,
+      "start_line": 752,
+      "end_line": 753,
+      "sections": [],
+      "content_preview": "Krittika, Vishakha  Daily/routine work; use caution for major auspicious beginnings.  Mysuru, Karnataka, India — 22 Apr 1975  Input / result "
+    },
+    {
+      "id": "ch-dailyroutine_work_use_caution_for_major_auspicious_beginning",
+      "number": null,
+      "title": "Daily/routine work; use caution for major auspicious beginnings.",
+      "level": 1,
+      "start_line": 754,
+      "end_line": 757,
+      "sections": [],
+      "content_preview": "Daily/routine work; use caution for major auspicious beginnings.  Mysuru, Karnataka, India — 22 Apr 1975  Input / result  Value "
+    },
+    {
+      "id": "ch-input_result",
+      "number": null,
+      "title": "Input / result",
+      "level": 1,
+      "start_line": 758,
+      "end_line": 763,
+      "sections": [],
+      "content_preview": "Input / result  Value  Meaning  Latitude / Longitude "
+    },
+    {
+      "id": "ch-latitude_longitude",
+      "number": null,
+      "title": "Latitude / Longitude",
+      "level": 1,
+      "start_line": 764,
+      "end_line": 767,
+      "sections": [],
+      "content_preview": "Latitude / Longitude  12.3000, 76.6333  Local calculation point  Timezone "
+    },
+    {
+      "id": "ch-local_calculation_point",
+      "number": null,
+      "title": "Local calculation point",
+      "level": 1,
+      "start_line": 768,
+      "end_line": 771,
+      "sections": [],
+      "content_preview": "Local calculation point  Timezone  India Standard Time (UTC+05:30)  DST included where applicable "
+    },
+    {
+      "id": "ch-india_standard_time_utc0530",
+      "number": null,
+      "title": "India Standard Time (UTC+05:30)",
+      "level": 1,
+      "start_line": 772,
+      "end_line": 779,
+      "sections": [],
+      "content_preview": "India Standard Time (UTC+05:30)  DST included where applicable  Sunrise  22 Apr 1975 06:07:57 "
+    },
+    {
+      "id": "ch-apparent_sunrise",
+      "number": null,
+      "title": "Apparent sunrise",
+      "level": 1,
+      "start_line": 780,
+      "end_line": 785,
+      "sections": [],
+      "content_preview": "Apparent sunrise  Sunset  22 Apr 1975 18:36:27  Apparent sunset "
+    },
+    {
+      "id": "ch-apparent_sunset",
+      "number": null,
+      "title": "Apparent sunset",
+      "level": 1,
+      "start_line": 786,
+      "end_line": 787,
+      "sections": [],
+      "content_preview": "Apparent sunset  Next sunrise  23 Apr 1975 06:07:27  Ends the Panchang day "
+    },
+    {
+      "id": "ch-next_sunrise",
+      "number": null,
+      "title": "Next sunrise",
+      "level": 1,
+      "start_line": 788,
+      "end_line": 791,
+      "sections": [],
+      "content_preview": "Next sunrise  23 Apr 1975 06:07:27  Ends the Panchang day  Day slot length "
+    },
+    {
+      "id": "ch-ends_the_panchang_day",
+      "number": null,
+      "title": "Ends the Panchang day",
+      "level": 1,
+      "start_line": 792,
+      "end_line": 793,
+      "sections": [],
+      "content_preview": "Ends the Panchang day  Day slot length  49m 54s  Each day muhurta, slots 1–15 "
+    },
+    {
+      "id": "ch-day_slot_length",
+      "number": null,
+      "title": "Day slot length",
+      "level": 1,
+      "start_line": 794,
+      "end_line": 797,
+      "sections": [],
+      "content_preview": "Day slot length  49m 54s  Each day muhurta, slots 1–15  Night slot length "
+    },
+    {
+      "id": "ch-each_day_muhurta_slots_115",
+      "number": null,
+      "title": "Each day muhurta, slots 1–15",
+      "level": 1,
+      "start_line": 798,
+      "end_line": 799,
+      "sections": [],
+      "content_preview": "Each day muhurta, slots 1–15  Night slot length  46m 4s  Each night muhurta, slots 16–30 "
+    },
+    {
+      "id": "ch-night_slot_length",
+      "number": null,
+      "title": "Night slot length",
+      "level": 1,
+      "start_line": 800,
+      "end_line": 803,
+      "sections": [],
+      "content_preview": "Night slot length  46m 4s  Each night muhurta, slots 16–30  Coordinates from uploaded chart: 12°18′ N, 76°38′ E. Uploaded chart records birth time as 19:15 IST; this falls in Do-Ghati slot 16, Ishwara/Girisha—Ardra. "
+    },
+    {
+      "id": "ch-each_night_muhurta_slots_1630",
+      "number": null,
+      "title": "Each night muhurta, slots 16–30",
+      "level": 1,
+      "start_line": 804,
+      "end_line": 813,
+      "sections": [],
+      "content_preview": "Each night muhurta, slots 16–30  Coordinates from uploaded chart: 12°18′ N, 76°38′ E. Uploaded chart records birth time as 19:15 IST; this falls in Do-Ghati slot 16, Ishwara/Girisha—Ardra.  No.  Phase "
+    },
+    {
+      "id": "ch-local_time_slot",
+      "number": null,
+      "title": "Local time slot",
+      "level": 1,
+      "start_line": 814,
+      "end_line": 817,
+      "sections": [],
+      "content_preview": "Local time slot  Muhurta  Mapped Nakshatra  Nature "
+    },
+    {
+      "id": "ch-mapped_nakshatra-2",
+      "number": null,
+      "title": "Mapped Nakshatra",
+      "level": 1,
+      "start_line": 818,
+      "end_line": 823,
+      "sections": [],
+      "content_preview": "Mapped Nakshatra  Nature  Status  Best used for "
+    },
+    {
+      "id": "ch-best_used_for-2",
+      "number": null,
+      "title": "Best used for",
+      "level": 1,
+      "start_line": 824,
+      "end_line": 833,
+      "sections": [],
+      "content_preview": "Best used for  1  Day  Pratah "
+    },
+    {
+      "id": "ch-rudra_raudra-2",
+      "number": null,
+      "title": "Rudra / Raudra",
+      "level": 1,
+      "start_line": 834,
+      "end_line": 851,
+      "sections": [],
+      "content_preview": "Rudra / Raudra  Ardra  Sharp  Avoid "
+    },
+    {
+      "id": "ch-uraga_ahi-2",
+      "number": null,
+      "title": "Uraga / Ahi",
+      "level": 1,
+      "start_line": 852,
+      "end_line": 887,
+      "sections": [],
+      "content_preview": "Uraga / Ahi  Ashlesha  Sharp  Avoid "
+    },
+    {
+      "id": "ch-pitara_pitru-2",
+      "number": null,
+      "title": "Pitara / Pitru",
+      "level": 1,
+      "start_line": 888,
+      "end_line": 895,
+      "sections": [],
+      "content_preview": "Pitara / Pitru  Magha  Dreadful  Avoid "
+    },
+    {
+      "id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli-2",
+      "number": null,
+      "title": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "level": 1,
+      "start_line": 896,
+      "end_line": 923,
+      "sections": [],
+      "content_preview": "Ancestor remembrance, family lineage duties, clearing old obligations.  5  Day  Sangava "
+    },
+    {
+      "id": "ch-ambu_vara-2",
+      "number": null,
+      "title": "Ambu / Vara",
+      "level": 1,
+      "start_line": 924,
+      "end_line": 925,
+      "sections": [],
+      "content_preview": "Ambu / Vara  Purva Ashadha  Dreadful  Favourable "
+    },
+    {
+      "id": "ch-purva_ashadha-2",
+      "number": null,
+      "title": "Purva Ashadha",
+      "level": 1,
+      "start_line": 926,
+      "end_line": 943,
+      "sections": [],
+      "content_preview": "Purva Ashadha  Dreadful  Favourable  Cleansing, water-related tasks, persuasive campaigns, decisive clean-up. "
+    },
+    {
+      "id": "ch-uttara_ashadha-2",
+      "number": null,
+      "title": "Uttara Ashadha",
+      "level": 1,
+      "start_line": 944,
+      "end_line": 959,
+      "sections": [],
+      "content_preview": "Uttara Ashadha  Fixed  Favourable  Long-term commitments, foundations, oath-taking, institutional decisions. "
+    },
+    {
+      "id": "ch-vidhi_abhijit-2",
+      "number": null,
+      "title": "Vidhi / Abhijit",
+      "level": 1,
+      "start_line": 960,
+      "end_line": 977,
+      "sections": [],
+      "content_preview": "Vidhi / Abhijit  Abhijit  Light  Favourable "
+    },
+    {
+      "id": "ch-brahma_satamukhi-2",
+      "number": null,
+      "title": "Brahma / Satamukhi",
+      "level": 1,
+      "start_line": 978,
+      "end_line": 995,
+      "sections": [],
+      "content_preview": "Brahma / Satamukhi  Rohini  Fixed  Favourable "
+    },
+    {
+      "id": "ch-indra_puruhuta-2",
+      "number": null,
+      "title": "Indra / Puruhuta",
+      "level": 1,
+      "start_line": 996,
+      "end_line": 1013,
+      "sections": [],
+      "content_preview": "Indra / Puruhuta  Jyeshtha  Sharp  Favourable "
+    },
+    {
+      "id": "ch-indragni_vahni-2",
+      "number": null,
+      "title": "Indragni / Vahni",
+      "level": 1,
+      "start_line": 1014,
+      "end_line": 1031,
+      "sections": [],
+      "content_preview": "Indragni / Vahni  Vishakha  Mixed  Avoid "
+    },
+    {
+      "id": "ch-daitya_naktanchara_nairrita-2",
+      "number": null,
+      "title": "Daitya / Naktanchara / Nairrita",
+      "level": 1,
+      "start_line": 1032,
+      "end_line": 1039,
+      "sections": [],
+      "content_preview": "Daitya / Naktanchara / Nairrita  Mula  Sharp  Avoid "
+    },
+    {
+      "id": "ch-root-cause_analysis_investigation_removal_deconstruction_res-2",
+      "number": null,
+      "title": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "level": 1,
+      "start_line": 1040,
+      "end_line": 1069,
+      "sections": [],
+      "content_preview": "Root-cause analysis, investigation, removal, deconstruction, research.  13  Day  Sayahna "
+    },
+    {
+      "id": "ch-uttara_phalguni-2",
+      "number": null,
+      "title": "Uttara Phalguni",
+      "level": 1,
+      "start_line": 1070,
+      "end_line": 1087,
+      "sections": [],
+      "content_preview": "Uttara Phalguni  Fixed  Favourable  Contracts, patronage, family agreements, commitments, stable alliances. "
+    },
+    {
+      "id": "ch-purva_phalguni-2",
+      "number": null,
+      "title": "Purva Phalguni",
+      "level": 1,
+      "start_line": 1088,
+      "end_line": 1111,
+      "sections": [],
+      "content_preview": "Purva Phalguni  Dreadful  Avoid  Rest, hospitality, arts, recreation, charity without high-stakes commitment. "
+    },
+    {
+      "id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release-2",
+      "number": null,
+      "title": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "level": 1,
+      "start_line": 1112,
+      "end_line": 1121,
+      "sections": [],
+      "content_preview": "Shiva worship, austerity, emergency clean-up, inner release.  17  Night  Pradosha "
+    },
+    {
+      "id": "ch-ajaikapada_ajapada-2",
+      "number": null,
+      "title": "Ajaikapada / Ajapada",
+      "level": 1,
+      "start_line": 1122,
+      "end_line": 1123,
+      "sections": [],
+      "content_preview": "Ajaikapada / Ajapada  Purva Bhadrapada  Dreadful  Avoid "
+    },
+    {
+      "id": "ch-purva_bhadrapada-2",
+      "number": null,
+      "title": "Purva Bhadrapada",
+      "level": 1,
+      "start_line": 1124,
+      "end_line": 1129,
+      "sections": [],
+      "content_preview": "Purva Bhadrapada  Dreadful  Avoid  Tapas, vows, confronting harsh truths, endings, spiritual seriousness. "
+    },
+    {
+      "id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou-2",
+      "number": null,
+      "title": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "level": 1,
+      "start_line": 1130,
+      "end_line": 1141,
+      "sections": [],
+      "content_preview": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.  18  Night  Pradosha "
+    },
+    {
+      "id": "ch-uttara_bhadrapada-2",
+      "number": null,
+      "title": "Uttara Bhadrapada",
+      "level": 1,
+      "start_line": 1142,
+      "end_line": 1157,
+      "sections": [],
+      "content_preview": "Uttara Bhadrapada  Fixed  Favourable  Meditation, stable planning, long-term strategy, savings, patience-based work. "
+    },
+    {
+      "id": "ch-pusha_pushan-2",
+      "number": null,
+      "title": "Pusha / Pushan",
+      "level": 1,
+      "start_line": 1158,
+      "end_line": 1175,
+      "sections": [],
+      "content_preview": "Pusha / Pushan  Revati  Soft  Favourable "
+    },
+    {
+      "id": "ch-ashwini_kumara-2",
+      "number": null,
+      "title": "Ashwini Kumara",
+      "level": 1,
+      "start_line": 1176,
+      "end_line": 1183,
+      "sections": [],
+      "content_preview": "Ashwini Kumara  Ashwini  Light  Favourable "
+    },
+    {
+      "id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol-2",
+      "number": null,
+      "title": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "level": 1,
+      "start_line": 1184,
+      "end_line": 1201,
+      "sections": [],
+      "content_preview": "Healing, medicine, fast starts, travel, repair, quick problem-solving.  21  Night  Ratri "
+    },
+    {
+      "id": "ch-discipline_endings_legalethical_boundary-setting_restraint-2",
+      "number": null,
+      "title": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "level": 1,
+      "start_line": 1202,
+      "end_line": 1229,
+      "sections": [],
+      "content_preview": "Discipline, endings, legal/ethical boundary-setting, restraint.  22  Night  Ratri "
+    },
+    {
+      "id": "ch-vidhatri_brahma-2",
+      "number": null,
+      "title": "Vidhatri / Brahma",
+      "level": 1,
+      "start_line": 1230,
+      "end_line": 1247,
+      "sections": [],
+      "content_preview": "Vidhatri / Brahma  Rohini  Fixed  Favourable "
+    },
+    {
+      "id": "ch-chanda_canda-2",
+      "number": null,
+      "title": "Chanda / Canda",
+      "level": 1,
+      "start_line": 1248,
+      "end_line": 1255,
+      "sections": [],
+      "content_preview": "Chanda / Canda  Mrigashira  Soft  Favourable "
+    },
+    {
+      "id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh-2",
+      "number": null,
+      "title": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "level": 1,
+      "start_line": 1256,
+      "end_line": 1273,
+      "sections": [],
+      "content_preview": "Research, searching, learning, music, arts, gentle travel, courtship.  25  Night  Ratri "
+    },
+    {
+      "id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin-2",
+      "number": null,
+      "title": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "level": 1,
+      "start_line": 1274,
+      "end_line": 1283,
+      "sections": [],
+      "content_preview": "Renewal, return journeys, home repair, restart, recovery, teaching.  26  Night  Ratri "
+    },
+    {
+      "id": "ch-jiva_brihaspati_guru-2",
+      "number": null,
+      "title": "Jiva / Brihaspati / Guru",
+      "level": 1,
+      "start_line": 1284,
+      "end_line": 1319,
+      "sections": [],
+      "content_preview": "Jiva / Brihaspati / Guru  Pushya  Light  Favourable "
+    },
+    {
+      "id": "ch-arka_surya_yamagadyuti-2",
+      "number": null,
+      "title": "Arka / Surya / Yamagadyuti",
+      "level": 1,
+      "start_line": 1320,
+      "end_line": 1337,
+      "sections": [],
+      "content_preview": "Arka / Surya / Yamagadyuti  Hasta  Light  Favourable "
+    },
+    {
+      "id": "ch-tvashta_brahma-2",
+      "number": null,
+      "title": "Tvashta / Brahma",
+      "level": 1,
+      "start_line": 1338,
+      "end_line": 1345,
+      "sections": [],
+      "content_preview": "Tvashta / Brahma  Chitra  Soft  Favourable "
+    },
+    {
+      "id": "ch-design_architecture_aesthetics_craft_beautification_planning-2",
+      "number": null,
+      "title": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "level": 1,
+      "start_line": 1346,
+      "end_line": 1355,
+      "sections": [],
+      "content_preview": "Design, architecture, aesthetics, craft, beautification, planning.  30  Night  Arunodaya "
+    },
+    {
+      "id": "ch-samirana_vayu_samudra-2",
+      "number": null,
+      "title": "Samirana / Vayu / Samudra",
+      "level": 1,
+      "start_line": 1356,
+      "end_line": 1367,
+      "sections": [],
+      "content_preview": "Samirana / Vayu / Samudra  Swati  Movable  Favourable "
+    },
+    {
+      "id": "ch-input_result-2",
+      "number": null,
+      "title": "Input / result",
+      "level": 1,
+      "start_line": 1368,
+      "end_line": 1373,
+      "sections": [],
+      "content_preview": "Input / result  Value  Meaning  Latitude / Longitude "
+    },
+    {
+      "id": "ch-latitude_longitude-2",
+      "number": null,
+      "title": "Latitude / Longitude",
+      "level": 1,
+      "start_line": 1374,
+      "end_line": 1377,
+      "sections": [],
+      "content_preview": "Latitude / Longitude  53.4239, -7.9407  Local calculation point  Timezone "
+    },
+    {
+      "id": "ch-local_calculation_point-2",
+      "number": null,
+      "title": "Local calculation point",
+      "level": 1,
+      "start_line": 1378,
+      "end_line": 1381,
+      "sections": [],
+      "content_preview": "Local calculation point  Timezone  Irish Summer Time (UTC+01:00)  DST included where applicable "
+    },
+    {
+      "id": "ch-irish_summer_time_utc0100",
+      "number": null,
+      "title": "Irish Summer Time (UTC+01:00)",
+      "level": 1,
+      "start_line": 1382,
+      "end_line": 1389,
+      "sections": [],
+      "content_preview": "Irish Summer Time (UTC+01:00)  DST included where applicable  Sunrise  30 May 2026 05:11:29 "
+    },
+    {
+      "id": "ch-apparent_sunrise-2",
+      "number": null,
+      "title": "Apparent sunrise",
+      "level": 1,
+      "start_line": 1390,
+      "end_line": 1395,
+      "sections": [],
+      "content_preview": "Apparent sunrise  Sunset  30 May 2026 21:47:55  Apparent sunset "
+    },
+    {
+      "id": "ch-apparent_sunset-2",
+      "number": null,
+      "title": "Apparent sunset",
+      "level": 1,
+      "start_line": 1396,
+      "end_line": 1397,
+      "sections": [],
+      "content_preview": "Apparent sunset  Next sunrise  31 May 2026 05:10:31  Ends the Panchang day "
+    },
+    {
+      "id": "ch-next_sunrise-2",
+      "number": null,
+      "title": "Next sunrise",
+      "level": 1,
+      "start_line": 1398,
+      "end_line": 1401,
+      "sections": [],
+      "content_preview": "Next sunrise  31 May 2026 05:10:31  Ends the Panchang day  Day slot length "
+    },
+    {
+      "id": "ch-ends_the_panchang_day-2",
+      "number": null,
+      "title": "Ends the Panchang day",
+      "level": 1,
+      "start_line": 1402,
+      "end_line": 1403,
+      "sections": [],
+      "content_preview": "Ends the Panchang day  Day slot length  1h 6m 26s  Each day muhurta, slots 1–15 "
+    },
+    {
+      "id": "ch-day_slot_length-2",
+      "number": null,
+      "title": "Day slot length",
+      "level": 1,
+      "start_line": 1404,
+      "end_line": 1407,
+      "sections": [],
+      "content_preview": "Day slot length  1h 6m 26s  Each day muhurta, slots 1–15  Night slot length "
+    },
+    {
+      "id": "ch-each_day_muhurta_slots_115-2",
+      "number": null,
+      "title": "Each day muhurta, slots 1–15",
+      "level": 1,
+      "start_line": 1408,
+      "end_line": 1409,
+      "sections": [],
+      "content_preview": "Each day muhurta, slots 1–15  Night slot length  29m 30s  Each night muhurta, slots 16–30 "
+    },
+    {
+      "id": "ch-night_slot_length-2",
+      "number": null,
+      "title": "Night slot length",
+      "level": 1,
+      "start_line": 1410,
+      "end_line": 1413,
+      "sections": [],
+      "content_preview": "Night slot length  29m 30s  Each night muhurta, slots 16–30  Location approximated to central Athlone. “Today” is interpreted as 30 May 2026, the current date of this session. "
+    },
+    {
+      "id": "ch-each_night_muhurta_slots_1630-2",
+      "number": null,
+      "title": "Each night muhurta, slots 16–30",
+      "level": 1,
+      "start_line": 1414,
+      "end_line": 1423,
+      "sections": [],
+      "content_preview": "Each night muhurta, slots 16–30  Location approximated to central Athlone. “Today” is interpreted as 30 May 2026, the current date of this session.  No.  Phase "
+    },
+    {
+      "id": "ch-local_time_slot-2",
+      "number": null,
+      "title": "Local time slot",
+      "level": 1,
+      "start_line": 1424,
+      "end_line": 1427,
+      "sections": [],
+      "content_preview": "Local time slot  Muhurta  Mapped Nakshatra  Nature "
+    },
+    {
+      "id": "ch-mapped_nakshatra-3",
+      "number": null,
+      "title": "Mapped Nakshatra",
+      "level": 1,
+      "start_line": 1428,
+      "end_line": 1433,
+      "sections": [],
+      "content_preview": "Mapped Nakshatra  Nature  Status  Best used for "
+    },
+    {
+      "id": "ch-best_used_for-3",
+      "number": null,
+      "title": "Best used for",
+      "level": 1,
+      "start_line": 1434,
+      "end_line": 1443,
+      "sections": [],
+      "content_preview": "Best used for  1  Day  Pratah "
+    },
+    {
+      "id": "ch-rudra_raudra-3",
+      "number": null,
+      "title": "Rudra / Raudra",
+      "level": 1,
+      "start_line": 1444,
+      "end_line": 1461,
+      "sections": [],
+      "content_preview": "Rudra / Raudra  Ardra  Sharp  Avoid "
+    },
+    {
+      "id": "ch-uraga_ahi-3",
+      "number": null,
+      "title": "Uraga / Ahi",
+      "level": 1,
+      "start_line": 1462,
+      "end_line": 1497,
+      "sections": [],
+      "content_preview": "Uraga / Ahi  Ashlesha  Sharp  Avoid "
+    },
+    {
+      "id": "ch-pitara_pitru-3",
+      "number": null,
+      "title": "Pitara / Pitru",
+      "level": 1,
+      "start_line": 1498,
+      "end_line": 1505,
+      "sections": [],
+      "content_preview": "Pitara / Pitru  Magha  Dreadful  Avoid "
+    },
+    {
+      "id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli-3",
+      "number": null,
+      "title": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "level": 1,
+      "start_line": 1506,
+      "end_line": 1533,
+      "sections": [],
+      "content_preview": "Ancestor remembrance, family lineage duties, clearing old obligations.  5  Day  Sangava "
+    },
+    {
+      "id": "ch-ambu_vara-3",
+      "number": null,
+      "title": "Ambu / Vara",
+      "level": 1,
+      "start_line": 1534,
+      "end_line": 1535,
+      "sections": [],
+      "content_preview": "Ambu / Vara  Purva Ashadha  Dreadful  Favourable "
+    },
+    {
+      "id": "ch-purva_ashadha-3",
+      "number": null,
+      "title": "Purva Ashadha",
+      "level": 1,
+      "start_line": 1536,
+      "end_line": 1553,
+      "sections": [],
+      "content_preview": "Purva Ashadha  Dreadful  Favourable  Cleansing, water-related tasks, persuasive campaigns, decisive clean-up. "
+    },
+    {
+      "id": "ch-uttara_ashadha-3",
+      "number": null,
+      "title": "Uttara Ashadha",
+      "level": 1,
+      "start_line": 1554,
+      "end_line": 1569,
+      "sections": [],
+      "content_preview": "Uttara Ashadha  Fixed  Favourable  Long-term commitments, foundations, oath-taking, institutional decisions. "
+    },
+    {
+      "id": "ch-vidhi_abhijit-3",
+      "number": null,
+      "title": "Vidhi / Abhijit",
+      "level": 1,
+      "start_line": 1570,
+      "end_line": 1587,
+      "sections": [],
+      "content_preview": "Vidhi / Abhijit  Abhijit  Light  Favourable "
+    },
+    {
+      "id": "ch-brahma_satamukhi-3",
+      "number": null,
+      "title": "Brahma / Satamukhi",
+      "level": 1,
+      "start_line": 1588,
+      "end_line": 1605,
+      "sections": [],
+      "content_preview": "Brahma / Satamukhi  Rohini  Fixed  Favourable "
+    },
+    {
+      "id": "ch-indra_puruhuta-3",
+      "number": null,
+      "title": "Indra / Puruhuta",
+      "level": 1,
+      "start_line": 1606,
+      "end_line": 1623,
+      "sections": [],
+      "content_preview": "Indra / Puruhuta  Jyeshtha  Sharp  Favourable "
+    },
+    {
+      "id": "ch-indragni_vahni-3",
+      "number": null,
+      "title": "Indragni / Vahni",
+      "level": 1,
+      "start_line": 1624,
+      "end_line": 1641,
+      "sections": [],
+      "content_preview": "Indragni / Vahni  Vishakha  Mixed  Avoid "
+    },
+    {
+      "id": "ch-daitya_naktanchara_nairrita-3",
+      "number": null,
+      "title": "Daitya / Naktanchara / Nairrita",
+      "level": 1,
+      "start_line": 1642,
+      "end_line": 1649,
+      "sections": [],
+      "content_preview": "Daitya / Naktanchara / Nairrita  Mula  Sharp  Avoid "
+    },
+    {
+      "id": "ch-root-cause_analysis_investigation_removal_deconstruction_res-3",
+      "number": null,
+      "title": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "level": 1,
+      "start_line": 1650,
+      "end_line": 1679,
+      "sections": [],
+      "content_preview": "Root-cause analysis, investigation, removal, deconstruction, research.  13  Day  Sayahna "
+    },
+    {
+      "id": "ch-uttara_phalguni-3",
+      "number": null,
+      "title": "Uttara Phalguni",
+      "level": 1,
+      "start_line": 1680,
+      "end_line": 1697,
+      "sections": [],
+      "content_preview": "Uttara Phalguni  Fixed  Favourable  Contracts, patronage, family agreements, commitments, stable alliances. "
+    },
+    {
+      "id": "ch-purva_phalguni-3",
+      "number": null,
+      "title": "Purva Phalguni",
+      "level": 1,
+      "start_line": 1698,
+      "end_line": 1721,
+      "sections": [],
+      "content_preview": "Purva Phalguni  Dreadful  Avoid  Rest, hospitality, arts, recreation, charity without high-stakes commitment. "
+    },
+    {
+      "id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release-3",
+      "number": null,
+      "title": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "level": 1,
+      "start_line": 1722,
+      "end_line": 1731,
+      "sections": [],
+      "content_preview": "Shiva worship, austerity, emergency clean-up, inner release.  17  Night  Pradosha "
+    },
+    {
+      "id": "ch-ajaikapada_ajapada-3",
+      "number": null,
+      "title": "Ajaikapada / Ajapada",
+      "level": 1,
+      "start_line": 1732,
+      "end_line": 1733,
+      "sections": [],
+      "content_preview": "Ajaikapada / Ajapada  Purva Bhadrapada  Dreadful  Avoid "
+    },
+    {
+      "id": "ch-purva_bhadrapada-3",
+      "number": null,
+      "title": "Purva Bhadrapada",
+      "level": 1,
+      "start_line": 1734,
+      "end_line": 1739,
+      "sections": [],
+      "content_preview": "Purva Bhadrapada  Dreadful  Avoid  Tapas, vows, confronting harsh truths, endings, spiritual seriousness. "
+    },
+    {
+      "id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou-3",
+      "number": null,
+      "title": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "level": 1,
+      "start_line": 1740,
+      "end_line": 1751,
+      "sections": [],
+      "content_preview": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.  18  Night  Pradosha "
+    },
+    {
+      "id": "ch-uttara_bhadrapada-3",
+      "number": null,
+      "title": "Uttara Bhadrapada",
+      "level": 1,
+      "start_line": 1752,
+      "end_line": 1767,
+      "sections": [],
+      "content_preview": "Uttara Bhadrapada  Fixed  Favourable  Meditation, stable planning, long-term strategy, savings, patience-based work. "
+    },
+    {
+      "id": "ch-pusha_pushan-3",
+      "number": null,
+      "title": "Pusha / Pushan",
+      "level": 1,
+      "start_line": 1768,
+      "end_line": 1785,
+      "sections": [],
+      "content_preview": "Pusha / Pushan  Revati  Soft  Favourable "
+    },
+    {
+      "id": "ch-ashwini_kumara-3",
+      "number": null,
+      "title": "Ashwini Kumara",
+      "level": 1,
+      "start_line": 1786,
+      "end_line": 1793,
+      "sections": [],
+      "content_preview": "Ashwini Kumara  Ashwini  Light  Favourable "
+    },
+    {
+      "id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol-3",
+      "number": null,
+      "title": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "level": 1,
+      "start_line": 1794,
+      "end_line": 1811,
+      "sections": [],
+      "content_preview": "Healing, medicine, fast starts, travel, repair, quick problem-solving.  21  Night  Ratri "
+    },
+    {
+      "id": "ch-discipline_endings_legalethical_boundary-setting_restraint-3",
+      "number": null,
+      "title": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "level": 1,
+      "start_line": 1812,
+      "end_line": 1839,
+      "sections": [],
+      "content_preview": "Discipline, endings, legal/ethical boundary-setting, restraint.  22  Night  Ratri "
+    },
+    {
+      "id": "ch-vidhatri_brahma-3",
+      "number": null,
+      "title": "Vidhatri / Brahma",
+      "level": 1,
+      "start_line": 1840,
+      "end_line": 1857,
+      "sections": [],
+      "content_preview": "Vidhatri / Brahma  Rohini  Fixed  Favourable "
+    },
+    {
+      "id": "ch-chanda_canda-3",
+      "number": null,
+      "title": "Chanda / Canda",
+      "level": 1,
+      "start_line": 1858,
+      "end_line": 1865,
+      "sections": [],
+      "content_preview": "Chanda / Canda  Mrigashira  Soft  Favourable "
+    },
+    {
+      "id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh-3",
+      "number": null,
+      "title": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "level": 1,
+      "start_line": 1866,
+      "end_line": 1883,
+      "sections": [],
+      "content_preview": "Research, searching, learning, music, arts, gentle travel, courtship.  25  Night  Ratri "
+    },
+    {
+      "id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin-3",
+      "number": null,
+      "title": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "level": 1,
+      "start_line": 1884,
+      "end_line": 1893,
+      "sections": [],
+      "content_preview": "Renewal, return journeys, home repair, restart, recovery, teaching.  26  Night  Ratri "
+    },
+    {
+      "id": "ch-jiva_brihaspati_guru-3",
+      "number": null,
+      "title": "Jiva / Brihaspati / Guru",
+      "level": 1,
+      "start_line": 1894,
+      "end_line": 1929,
+      "sections": [],
+      "content_preview": "Jiva / Brihaspati / Guru  Pushya  Light  Favourable "
+    },
+    {
+      "id": "ch-arka_surya_yamagadyuti-3",
+      "number": null,
+      "title": "Arka / Surya / Yamagadyuti",
+      "level": 1,
+      "start_line": 1930,
+      "end_line": 1947,
+      "sections": [],
+      "content_preview": "Arka / Surya / Yamagadyuti  Hasta  Light  Favourable "
+    },
+    {
+      "id": "ch-tvashta_brahma-3",
+      "number": null,
+      "title": "Tvashta / Brahma",
+      "level": 1,
+      "start_line": 1948,
+      "end_line": 1955,
+      "sections": [],
+      "content_preview": "Tvashta / Brahma  Chitra  Soft  Favourable "
+    },
+    {
+      "id": "ch-design_architecture_aesthetics_craft_beautification_planning-3",
+      "number": null,
+      "title": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "level": 1,
+      "start_line": 1956,
+      "end_line": 1965,
+      "sections": [],
+      "content_preview": "Design, architecture, aesthetics, craft, beautification, planning.  30  Night  Arunodaya "
+    },
+    {
+      "id": "ch-samirana_vayu_samudra-3",
+      "number": null,
+      "title": "Samirana / Vayu / Samudra",
+      "level": 1,
+      "start_line": 1966,
+      "end_line": 1981,
+      "sections": [],
+      "content_preview": "Samirana / Vayu / Samudra  Swati  Movable  Favourable "
+    },
+    {
+      "id": "ch-what_to_do",
+      "number": null,
+      "title": "What to do",
+      "level": 1,
+      "start_line": 1982,
+      "end_line": 1985,
+      "sections": [],
+      "content_preview": "What to do  1  Purpose fit  Choose a slot whose muhurta, Nakshatra nature and status match the action. Do not use a sharp/dreadful slot for a gentle ceremony unless there is a compelling reason. "
+    },
+    {
+      "id": "ch-purpose_fit",
+      "number": null,
+      "title": "Purpose fit",
+      "level": 1,
+      "start_line": 1986,
+      "end_line": 1991,
+      "sections": [],
+      "content_preview": "Purpose fit  Choose a slot whose muhurta, Nakshatra nature and status match the action. Do not use a sharp/dreadful slot for a gentle ceremony unless there is a compelling reason.  2  Panchanga shuddhi "
+    },
+    {
+      "id": "ch-panchanga_shuddhi",
+      "number": null,
+      "title": "Panchanga shuddhi",
+      "level": 1,
+      "start_line": 1992,
+      "end_line": 2015,
+      "sections": [],
+      "content_preview": "Panchanga shuddhi  Check Tithi, Vara, actual lunar Nakshatra, Yoga and Karana. A good Do-Ghati slot does not override a badly afflicted full Panchanga.  3  Tara-bala "
+    },
+    {
+      "id": "ch-sandhya_awareness",
+      "number": null,
+      "title": "Sandhya awareness",
+      "level": 1,
+      "start_line": 2016,
+      "end_line": 2021,
+      "sections": [],
+      "content_preview": "Sandhya awareness  The beginnings and endings of day/night are traditionally reserved for worship, transition and purification; avoid rushing worldly launches there unless required.  7  When forced "
+    },
+    {
+      "id": "ch-when_forced",
+      "number": null,
+      "title": "When forced",
+      "level": 1,
+      "start_line": 2022,
+      "end_line": 2025,
+      "sections": [],
+      "content_preview": "When forced  Use the principle of more good than harm: select the least problematic slot, strengthen the intent with prayer/remedies and avoid known tyajya/visha portions.  Best-Fit Examples  Task "
+    },
+    {
+      "id": "ch-best-fit_examples",
+      "number": null,
+      "title": "Best-Fit Examples",
+      "level": 1,
+      "start_line": 2026,
+      "end_line": 2029,
+      "sections": [],
+      "content_preview": "Best-Fit Examples  Task  Prefer these Do-Ghati signatures  Why "
+    },
+    {
+      "id": "ch-prefer_these_do-ghati_signatures",
+      "number": null,
+      "title": "Prefer these Do-Ghati signatures",
+      "level": 1,
+      "start_line": 2030,
+      "end_line": 2033,
+      "sections": [],
+      "content_preview": "Prefer these Do-Ghati signatures  Why  Signing a stable agreement  Aryama/Uttara Phalguni, Vishwedeva/Uttara Ashadha, Brahma/Rohini "
+    },
+    {
+      "id": "ch-signing_a_stable_agreement",
+      "number": null,
+      "title": "Signing a stable agreement",
+      "level": 1,
+      "start_line": 2034,
+      "end_line": 2035,
+      "sections": [],
+      "content_preview": "Signing a stable agreement  Aryama/Uttara Phalguni, Vishwedeva/Uttara Ashadha, Brahma/Rohini  Fixed-nature slots support stability.  Travel or logistics "
+    },
+    {
+      "id": "ch-aryamauttara_phalguni_vishwedevauttara_ashadha_brahmarohini",
+      "number": null,
+      "title": "Aryama/Uttara Phalguni, Vishwedeva/Uttara Ashadha, Brahma/Rohini",
+      "level": 1,
+      "start_line": 2036,
+      "end_line": 2037,
+      "sections": [],
+      "content_preview": "Aryama/Uttara Phalguni, Vishwedeva/Uttara Ashadha, Brahma/Rohini  Fixed-nature slots support stability.  Travel or logistics  Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati "
+    },
+    {
+      "id": "ch-fixed-nature_slots_support_stability",
+      "number": null,
+      "title": "Fixed-nature slots support stability.",
+      "level": 1,
+      "start_line": 2038,
+      "end_line": 2039,
+      "sections": [],
+      "content_preview": "Fixed-nature slots support stability.  Travel or logistics  Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati  Light/movable/soft slots are more aligned with movement and safe completion. "
+    },
+    {
+      "id": "ch-travel_or_logistics",
+      "number": null,
+      "title": "Travel or logistics",
+      "level": 1,
+      "start_line": 2040,
+      "end_line": 2041,
+      "sections": [],
+      "content_preview": "Travel or logistics  Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati  Light/movable/soft slots are more aligned with movement and safe completion.  Healing or medical consultation "
+    },
+    {
+      "id": "ch-ashwini_pushanrevati_vishnushravana_samiranaswati",
+      "number": null,
+      "title": "Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati",
+      "level": 1,
+      "start_line": 2042,
+      "end_line": 2045,
+      "sections": [],
+      "content_preview": "Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati  Light/movable/soft slots are more aligned with movement and safe completion.  Healing or medical consultation  Ashwini, Pushya, Varuna/Shatabhisha, Vidhi/Abhijit "
+    },
+    {
+      "id": "ch-healing_or_medical_consultation",
+      "number": null,
+      "title": "Healing or medical consultation",
+      "level": 1,
+      "start_line": 2046,
+      "end_line": 2047,
+      "sections": [],
+      "content_preview": "Healing or medical consultation  Ashwini, Pushya, Varuna/Shatabhisha, Vidhi/Abhijit  Light/healing symbolism and remedial tone.  Creative/design work "
+    },
+    {
+      "id": "ch-ashwini_pushya_varunashatabhisha_vidhiabhijit",
+      "number": null,
+      "title": "Ashwini, Pushya, Varuna/Shatabhisha, Vidhi/Abhijit",
+      "level": 1,
+      "start_line": 2048,
+      "end_line": 2049,
+      "sections": [],
+      "content_preview": "Ashwini, Pushya, Varuna/Shatabhisha, Vidhi/Abhijit  Light/healing symbolism and remedial tone.  Creative/design work  Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha "
+    },
+    {
+      "id": "ch-lighthealing_symbolism_and_remedial_tone",
+      "number": null,
+      "title": "Light/healing symbolism and remedial tone.",
+      "level": 1,
+      "start_line": 2050,
+      "end_line": 2051,
+      "sections": [],
+      "content_preview": "Light/healing symbolism and remedial tone.  Creative/design work  Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha  Soft/artistic signatures. "
+    },
+    {
+      "id": "ch-creativedesign_work",
+      "number": null,
+      "title": "Creative/design work",
+      "level": 1,
+      "start_line": 2052,
+      "end_line": 2053,
+      "sections": [],
+      "content_preview": "Creative/design work  Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha  Soft/artistic signatures.  Removing a bad habit or hard reset "
+    },
+    {
+      "id": "ch-tvashtachitra_chandamrigashira_mitraanuradha",
+      "number": null,
+      "title": "Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha",
+      "level": 1,
+      "start_line": 2054,
+      "end_line": 2055,
+      "sections": [],
+      "content_preview": "Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha  Soft/artistic signatures.  Removing a bad habit or hard reset  Rudra/Ardra, Mula, Agni/Krittika "
+    },
+    {
+      "id": "ch-softartistic_signatures",
+      "number": null,
+      "title": "Soft/artistic signatures.",
+      "level": 1,
+      "start_line": 2056,
+      "end_line": 2057,
+      "sections": [],
+      "content_preview": "Soft/artistic signatures.  Removing a bad habit or hard reset  Rudra/Ardra, Mula, Agni/Krittika  Sharp/cutting signatures can suit removal, but avoid for auspicious launches. "
+    },
+    {
+      "id": "ch-removing_a_bad_habit_or_hard_reset",
+      "number": null,
+      "title": "Removing a bad habit or hard reset",
+      "level": 1,
+      "start_line": 2058,
+      "end_line": 2059,
+      "sections": [],
+      "content_preview": "Removing a bad habit or hard reset  Rudra/Ardra, Mula, Agni/Krittika  Sharp/cutting signatures can suit removal, but avoid for auspicious launches.  8. Glossary "
+    },
+    {
+      "id": "ch-rudraardra_mula_agnikrittika",
+      "number": null,
+      "title": "Rudra/Ardra, Mula, Agni/Krittika",
+      "level": 1,
+      "start_line": 2060,
+      "end_line": 2075,
+      "sections": [],
+      "content_preview": "Rudra/Ardra, Mula, Agni/Krittika  Sharp/cutting signatures can suit removal, but avoid for auspicious launches.  8. Glossary  Term "
+    },
+    {
+      "id": "ch-two_ghatis_one_muhūrta_slot_in_this_system",
+      "number": null,
+      "title": "Two ghatis; one muhūrta slot in this system.",
+      "level": 1,
+      "start_line": 2076,
+      "end_line": 2109,
+      "sections": [],
+      "content_preview": "Two ghatis; one muhūrta slot in this system.  Muhurta  A selected or measured time segment; in this handbook, one of the 30 Do-Ghati divisions.  Nakshatra "
+    },
+    {
+      "id": "ch-final_caution",
+      "number": null,
+      "title": "Final caution",
+      "level": 1,
+      "start_line": 2110,
       "end_line": 2112,
       "sections": [],
-      "content_preview": "7. Practical Election Checklist"
+      "content_preview": "Final caution  This handbook is deliberately practical, but advanced Muhurta is layered. Use the Do-Ghati slot as one filter. For life events such as marriage, griha pravesha, surgery, major business launch or consecration, a competent Jyotisha/Panchanga practitioner should verif"
     }
   ],
   "toc": [
     {
-      "id": "ch-1",
-      "title": "What Do-Ghati Muhurta means",
-      "chapter": "What Do-Ghati Muhurta means",
-      "chapter_id": "ch-1"
+      "id": "ch-do-ghati_muhurta_handbook",
+      "title": "Do-Ghati Muhurta Handbook",
+      "chapter": "Do-Ghati Muhurta Handbook",
+      "chapter_id": "ch-do-ghati_muhurta_handbook"
     },
     {
-      "id": "ch-2",
-      "title": "Source basis and authenticity notes",
-      "chapter": "Source basis and authenticity notes",
-      "chapter_id": "ch-2"
+      "id": "ch-prepared_for_22-apr-1975_mysuru_and_30-may-2026_athlone",
+      "title": "Prepared for: 22-Apr-1975 Mysuru and 30-May-2026 Athlone",
+      "chapter": "Prepared for: 22-Apr-1975 Mysuru and 30-May-2026 Athlone",
+      "chapter_id": "ch-prepared_for_22-apr-1975_mysuru_and_30-may-2026_athlone"
     },
     {
-      "id": "ch-3",
-      "title": "Calculation method used in this handbook",
-      "chapter": "Calculation method used in this handbook",
-      "chapter_id": "ch-3"
+      "id": "ch-readers_orientation",
+      "title": "Reader’s orientation",
+      "chapter": "Reader’s orientation",
+      "chapter_id": "ch-readers_orientation"
     },
     {
-      "id": "ch-4",
-      "title": "Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose",
-      "chapter": "Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose",
-      "chapter_id": "ch-4"
+      "id": "ch-traditional_rule",
+      "title": "Traditional rule",
+      "chapter": "Traditional rule",
+      "chapter_id": "ch-traditional_rule"
     },
     {
-      "id": "ch-5",
-      "title": "Calculated table: Mysuru, 22-Apr-1975",
-      "chapter": "Calculated table: Mysuru, 22-Apr-1975",
-      "chapter_id": "ch-5"
+      "id": "ch-practical_meaning",
+      "title": "Practical meaning",
+      "chapter": "Practical meaning",
+      "chapter_id": "ch-practical_meaning"
     },
     {
-      "id": "ch-6",
-      "title": "Calculated table: Athlone, 30-May-2026",
-      "chapter": "Calculated table: Athlone, 30-May-2026",
-      "chapter_id": "ch-6"
+      "id": "ch-complete_panchang_day",
+      "title": "Complete Panchang day",
+      "chapter": "Complete Panchang day",
+      "chapter_id": "ch-complete_panchang_day"
     },
     {
-      "id": "ch-7",
-      "title": "Practical election checklist",
-      "chapter": "Practical election checklist",
-      "chapter_id": "ch-7"
+      "id": "ch-sunrise_to_next_sunrise",
+      "title": "Sunrise to next sunrise",
+      "chapter": "Sunrise to next sunrise",
+      "chapter_id": "ch-sunrise_to_next_sunrise"
     },
     {
-      "id": "ch-8",
-      "title": "Glossary and references",
-      "chapter": "Glossary and references",
-      "chapter_id": "ch-8"
+      "id": "ch-not_midnight_to_midnight",
+      "title": "Not midnight to midnight.",
+      "chapter": "Not midnight to midnight.",
+      "chapter_id": "ch-not_midnight_to_midnight"
     },
     {
-      "id": "ch-1",
-      "title": "What Do-Ghati Muhurta Means",
-      "chapter": "What Do-Ghati Muhurta Means",
-      "chapter_id": "ch-1"
+      "id": "ch-day_half",
+      "title": "Day half",
+      "chapter": "Day half",
+      "chapter_id": "ch-day_half"
     },
     {
-      "id": "ch-2",
-      "title": "Source Basis and Authenticity Notes",
-      "chapter": "Source Basis and Authenticity Notes",
-      "chapter_id": "ch-2"
+      "id": "ch-sunrise_to_sunset_30_ghatis",
+      "title": "Sunrise to sunset = 30 ghatis",
+      "chapter": "Sunrise to sunset = 30 ghatis",
+      "chapter_id": "ch-sunrise_to_sunset_30_ghatis"
     },
     {
-      "id": "ch-3",
-      "title": "Calculation Method Used",
-      "chapter": "Calculation Method Used",
-      "chapter_id": "ch-3"
+      "id": "ch-night_half",
+      "title": "Night half",
+      "chapter": "Night half",
+      "chapter_id": "ch-night_half"
     },
     {
-      "id": "ch-4",
-      "title": "Master Table: 30 Do-Ghati Muhurtas, Nakshatra Mapping and Use Guide",
-      "chapter": "Master Table: 30 Do-Ghati Muhurtas, Nakshatra Mapping and Use Guide",
-      "chapter_id": "ch-4"
+      "id": "ch-sunset_to_next_sunrise_30_ghatis",
+      "title": "Sunset to next sunrise = 30 ghatis",
+      "chapter": "Sunset to next sunrise = 30 ghatis",
+      "chapter_id": "ch-sunset_to_next_sunrise_30_ghatis"
     },
     {
-      "id": "ch-7",
-      "title": "Practical Election Checklist",
-      "chapter": "Practical Election Checklist",
-      "chapter_id": "ch-7"
+      "id": "ch-fixed_48_minutes",
+      "title": "Fixed 48 minutes?",
+      "chapter": "Fixed 48 minutes?",
+      "chapter_id": "ch-fixed_48_minutes"
+    },
+    {
+      "id": "ch-only_approximately_true_near_equal_daynight",
+      "title": "Only approximately true near equal day/night",
+      "chapter": "Only approximately true near equal day/night",
+      "chapter_id": "ch-only_approximately_true_near_equal_daynight"
+    },
+    {
+      "id": "ch-important_correction",
+      "title": "Important correction",
+      "chapter": "Important correction",
+      "chapter_id": "ch-important_correction"
+    },
+    {
+      "id": "ch-what_it_contributes",
+      "title": "What it contributes",
+      "chapter": "What it contributes",
+      "chapter_id": "ch-what_it_contributes"
+    },
+    {
+      "id": "ch-used_for",
+      "title": "Used for",
+      "chapter": "Used for",
+      "chapter_id": "ch-used_for"
+    },
+    {
+      "id": "ch-vedicbrahmana_background",
+      "title": "Vedic/Brahmana background",
+      "chapter": "Vedic/Brahmana background",
+      "chapter_id": "ch-vedicbrahmana_background"
+    },
+    {
+      "id": "ch-primary-text_background",
+      "title": "Primary-text background",
+      "chapter": "Primary-text background",
+      "chapter_id": "ch-primary-text_background"
+    },
+    {
+      "id": "ch-panchang_practice",
+      "title": "Panchang practice",
+      "chapter": "Panchang practice",
+      "chapter_id": "ch-panchang_practice"
+    },
+    {
+      "id": "ch-calculation_namesstatus",
+      "title": "Calculation + names/status",
+      "chapter": "Calculation + names/status",
+      "chapter_id": "ch-calculation_namesstatus"
+    },
+    {
+      "id": "ch-nakshatra_mapping",
+      "title": "Nakshatra mapping",
+      "chapter": "Nakshatra mapping",
+      "chapter_id": "ch-nakshatra_mapping"
+    },
+    {
+      "id": "ch-mapping_table",
+      "title": "Mapping table",
+      "chapter": "Mapping table",
+      "chapter_id": "ch-mapping_table"
+    },
+    {
+      "id": "ch-purpose_interpretation",
+      "title": "Purpose interpretation",
+      "chapter": "Purpose interpretation",
+      "chapter_id": "ch-purpose_interpretation"
+    },
+    {
+      "id": "ch-purpose_guide",
+      "title": "Purpose guide",
+      "chapter": "Purpose guide",
+      "chapter_id": "ch-purpose_guide"
+    },
+    {
+      "id": "ch-astronomical_apparent_sunrisesunset_local_timezone_applied",
+      "title": "Astronomical apparent sunrise/sunset; local timezone applied.",
+      "chapter": "Astronomical apparent sunrise/sunset; local timezone applied.",
+      "chapter_id": "ch-astronomical_apparent_sunrisesunset_local_timezone_applied"
+    },
+    {
+      "id": "ch-slots_115",
+      "title": "Slots 1–15.",
+      "chapter": "Slots 1–15.",
+      "chapter_id": "ch-slots_115"
+    },
+    {
+      "id": "ch-round_display_times_to_nearest_minute",
+      "title": "Round display times to nearest minute.",
+      "chapter": "Round display times to nearest minute.",
+      "chapter_id": "ch-round_display_times_to_nearest_minute"
+    },
+    {
+      "id": "ch-nakshatra_mapping_vs_actual_moon_nakshatra",
+      "title": "Nakshatra mapping vs actual Moon Nakshatra",
+      "chapter": "Nakshatra mapping vs actual Moon Nakshatra",
+      "chapter_id": "ch-nakshatra_mapping_vs_actual_moon_nakshatra"
+    },
+    {
+      "id": "ch-muhurta_name_variants",
+      "title": "Muhurta name variants",
+      "chapter": "Muhurta name variants",
+      "chapter_id": "ch-muhurta_name_variants"
+    },
+    {
+      "id": "ch-mapped_nakshatra",
+      "title": "Mapped Nakshatra",
+      "chapter": "Mapped Nakshatra",
+      "chapter_id": "ch-mapped_nakshatra"
+    },
+    {
+      "id": "ch-best_used_for",
+      "title": "Best used for",
+      "chapter": "Best used for",
+      "chapter_id": "ch-best_used_for"
+    },
+    {
+      "id": "ch-avoid_caution",
+      "title": "Avoid / caution",
+      "chapter": "Avoid / caution",
+      "chapter_id": "ch-avoid_caution"
+    },
+    {
+      "id": "ch-rudra_raudra",
+      "title": "Rudra / Raudra",
+      "chapter": "Rudra / Raudra",
+      "chapter_id": "ch-rudra_raudra"
+    },
+    {
+      "id": "ch-auspicious_beginnings_marriage_gentle_agreements",
+      "title": "Auspicious beginnings, marriage, gentle agreements.",
+      "chapter": "Auspicious beginnings, marriage, gentle agreements.",
+      "chapter_id": "ch-auspicious_beginnings_marriage_gentle_agreements"
+    },
+    {
+      "id": "ch-uraga_ahi",
+      "title": "Uraga / Ahi",
+      "chapter": "Uraga / Ahi",
+      "chapter_id": "ch-uraga_ahi"
+    },
+    {
+      "id": "ch-new_partnerships_celebrations_soft_launches",
+      "title": "New partnerships, celebrations, soft launches.",
+      "chapter": "New partnerships, celebrations, soft launches.",
+      "chapter_id": "ch-new_partnerships_celebrations_soft_launches"
+    },
+    {
+      "id": "ch-aggressive_confrontation_or_coercive_action",
+      "title": "Aggressive confrontation or coercive action.",
+      "chapter": "Aggressive confrontation or coercive action.",
+      "chapter_id": "ch-aggressive_confrontation_or_coercive_action"
+    },
+    {
+      "id": "ch-pitara_pitru",
+      "title": "Pitara / Pitru",
+      "chapter": "Pitara / Pitru",
+      "chapter_id": "ch-pitara_pitru"
+    },
+    {
+      "id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli",
+      "title": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "chapter": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "chapter_id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli"
+    },
+    {
+      "id": "ch-major_new_auspicious_work_marriage_business_launch",
+      "title": "Major new auspicious work, marriage, business launch.",
+      "chapter": "Major new auspicious work, marriage, business launch.",
+      "chapter_id": "ch-major_new_auspicious_work_marriage_business_launch"
+    },
+    {
+      "id": "ch-ambu_vara",
+      "title": "Ambu / Vara",
+      "chapter": "Ambu / Vara",
+      "chapter_id": "ch-ambu_vara"
+    },
+    {
+      "id": "ch-purva_ashadha",
+      "title": "Purva Ashadha",
+      "chapter": "Purva Ashadha",
+      "chapter_id": "ch-purva_ashadha"
+    },
+    {
+      "id": "ch-sensitive_relationship_work_and_delicate_ceremonies",
+      "title": "Sensitive relationship work and delicate ceremonies.",
+      "chapter": "Sensitive relationship work and delicate ceremonies.",
+      "chapter_id": "ch-sensitive_relationship_work_and_delicate_ceremonies"
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "title": "Uttara Ashadha",
+      "chapter": "Uttara Ashadha",
+      "chapter_id": "ch-uttara_ashadha"
+    },
+    {
+      "id": "ch-quick_reversible_tasks_that_need_flexibility",
+      "title": "Quick reversible tasks that need flexibility.",
+      "chapter": "Quick reversible tasks that need flexibility.",
+      "chapter_id": "ch-quick_reversible_tasks_that_need_flexibility"
+    },
+    {
+      "id": "ch-vidhi_abhijit",
+      "title": "Vidhi / Abhijit",
+      "chapter": "Vidhi / Abhijit",
+      "chapter_id": "ch-vidhi_abhijit"
+    },
+    {
+      "id": "ch-brahma_satamukhi",
+      "title": "Brahma / Satamukhi",
+      "chapter": "Brahma / Satamukhi",
+      "chapter_id": "ch-brahma_satamukhi"
+    },
+    {
+      "id": "ch-purely_destructive_or_separation-oriented_actions",
+      "title": "Purely destructive or separation-oriented actions.",
+      "chapter": "Purely destructive or separation-oriented actions.",
+      "chapter_id": "ch-purely_destructive_or_separation-oriented_actions"
+    },
+    {
+      "id": "ch-indra_puruhuta",
+      "title": "Indra / Puruhuta",
+      "chapter": "Indra / Puruhuta",
+      "chapter_id": "ch-indra_puruhuta"
+    },
+    {
+      "id": "ch-marriage_and_delicate_harmony-focused_events",
+      "title": "Marriage and delicate harmony-focused events.",
+      "chapter": "Marriage and delicate harmony-focused events.",
+      "chapter_id": "ch-marriage_and_delicate_harmony-focused_events"
+    },
+    {
+      "id": "ch-indragni_vahni",
+      "title": "Indragni / Vahni",
+      "chapter": "Indragni / Vahni",
+      "chapter_id": "ch-indragni_vahni"
+    },
+    {
+      "id": "ch-good_elections_requiring_calm_gentle_sustained_blessing",
+      "title": "Good elections requiring calm, gentle, sustained blessing.",
+      "chapter": "Good elections requiring calm, gentle, sustained blessing.",
+      "chapter_id": "ch-good_elections_requiring_calm_gentle_sustained_blessing"
+    },
+    {
+      "id": "ch-daitya_naktanchara_nairrita",
+      "title": "Daitya / Naktanchara / Nairrita",
+      "chapter": "Daitya / Naktanchara / Nairrita",
+      "chapter_id": "ch-daitya_naktanchara_nairrita"
+    },
+    {
+      "id": "ch-root-cause_analysis_investigation_removal_deconstruction_res",
+      "title": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "chapter": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "chapter_id": "ch-root-cause_analysis_investigation_removal_deconstruction_res"
+    },
+    {
+      "id": "ch-marriage_housewarming_naming_investment_launch",
+      "title": "Marriage, housewarming, naming, investment launch.",
+      "chapter": "Marriage, housewarming, naming, investment launch.",
+      "chapter_id": "ch-marriage_housewarming_naming_investment_launch"
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "title": "Uttara Phalguni",
+      "chapter": "Uttara Phalguni",
+      "chapter_id": "ch-uttara_phalguni"
+    },
+    {
+      "id": "ch-impulsive_short-term_experimentation",
+      "title": "Impulsive short-term experimentation.",
+      "chapter": "Impulsive short-term experimentation.",
+      "chapter_id": "ch-impulsive_short-term_experimentation"
+    },
+    {
+      "id": "ch-purva_phalguni",
+      "title": "Purva Phalguni",
+      "chapter": "Purva Phalguni",
+      "chapter_id": "ch-purva_phalguni"
+    },
+    {
+      "id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release",
+      "title": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "chapter": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "chapter_id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release"
+    },
+    {
+      "id": "ch-auspicious_worldly_beginnings_and_celebratory_rituals",
+      "title": "Auspicious worldly beginnings and celebratory rituals.",
+      "chapter": "Auspicious worldly beginnings and celebratory rituals.",
+      "chapter_id": "ch-auspicious_worldly_beginnings_and_celebratory_rituals"
+    },
+    {
+      "id": "ch-ajaikapada_ajapada",
+      "title": "Ajaikapada / Ajapada",
+      "chapter": "Ajaikapada / Ajapada",
+      "chapter_id": "ch-ajaikapada_ajapada"
+    },
+    {
+      "id": "ch-purva_bhadrapada",
+      "title": "Purva Bhadrapada",
+      "chapter": "Purva Bhadrapada",
+      "chapter_id": "ch-purva_bhadrapada"
+    },
+    {
+      "id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou",
+      "title": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "chapter": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "chapter_id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou"
+    },
+    {
+      "id": "ch-marriage_housewarming_gentle_family_rituals",
+      "title": "Marriage, housewarming, gentle family rituals.",
+      "chapter": "Marriage, housewarming, gentle family rituals.",
+      "chapter_id": "ch-marriage_housewarming_gentle_family_rituals"
+    },
+    {
+      "id": "ch-uttara_bhadrapada",
+      "title": "Uttara Bhadrapada",
+      "chapter": "Uttara Bhadrapada",
+      "chapter_id": "ch-uttara_bhadrapada"
+    },
+    {
+      "id": "ch-fast-moving_tasks_needing_immediate_visible_outcome",
+      "title": "Fast-moving tasks needing immediate visible outcome.",
+      "chapter": "Fast-moving tasks needing immediate visible outcome.",
+      "chapter_id": "ch-fast-moving_tasks_needing_immediate_visible_outcome"
+    },
+    {
+      "id": "ch-pusha_pushan",
+      "title": "Pusha / Pushan",
+      "chapter": "Pusha / Pushan",
+      "chapter_id": "ch-pusha_pushan"
+    },
+    {
+      "id": "ch-aggressive_disputes_or_litigation_starts",
+      "title": "Aggressive disputes or litigation starts.",
+      "chapter": "Aggressive disputes or litigation starts.",
+      "chapter_id": "ch-aggressive_disputes_or_litigation_starts"
+    },
+    {
+      "id": "ch-ashwini_kumara",
+      "title": "Ashwini Kumara",
+      "chapter": "Ashwini Kumara",
+      "chapter_id": "ch-ashwini_kumara"
+    },
+    {
+      "id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol",
+      "title": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "chapter": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "chapter_id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol"
+    },
+    {
+      "id": "ch-discipline_endings_legalethical_boundary-setting_restraint",
+      "title": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "chapter": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "chapter_id": "ch-discipline_endings_legalethical_boundary-setting_restraint"
+    },
+    {
+      "id": "ch-soft_relationship_work_and_gentle_ceremonies",
+      "title": "Soft relationship work and gentle ceremonies.",
+      "chapter": "Soft relationship work and gentle ceremonies.",
+      "chapter_id": "ch-soft_relationship_work_and_gentle_ceremonies"
+    },
+    {
+      "id": "ch-vidhatri_brahma",
+      "title": "Vidhatri / Brahma",
+      "chapter": "Vidhatri / Brahma",
+      "chapter_id": "ch-vidhatri_brahma"
+    },
+    {
+      "id": "ch-needless_confrontation",
+      "title": "Needless confrontation.",
+      "chapter": "Needless confrontation.",
+      "chapter_id": "ch-needless_confrontation"
+    },
+    {
+      "id": "ch-chanda_canda",
+      "title": "Chanda / Canda",
+      "chapter": "Chanda / Canda",
+      "chapter_id": "ch-chanda_canda"
+    },
+    {
+      "id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh",
+      "title": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "chapter": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "chapter_id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh"
+    },
+    {
+      "id": "ch-final_irreversible_commitments_without_supporting_factors",
+      "title": "Final irreversible commitments without supporting factors.",
+      "chapter": "Final irreversible commitments without supporting factors.",
+      "chapter_id": "ch-final_irreversible_commitments_without_supporting_factors"
+    },
+    {
+      "id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin",
+      "title": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "chapter": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "chapter_id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin"
+    },
+    {
+      "id": "ch-tasks_that_must_remain_absolutely_fixed_and_unchanged",
+      "title": "Tasks that must remain absolutely fixed and unchanged.",
+      "chapter": "Tasks that must remain absolutely fixed and unchanged.",
+      "chapter_id": "ch-tasks_that_must_remain_absolutely_fixed_and_unchanged"
+    },
+    {
+      "id": "ch-jiva_brihaspati_guru",
+      "title": "Jiva / Brihaspati / Guru",
+      "chapter": "Jiva / Brihaspati / Guru",
+      "chapter_id": "ch-jiva_brihaspati_guru"
+    },
+    {
+      "id": "ch-marriage_in_traditions_that_avoid_pushya_for_marriage",
+      "title": "Marriage in traditions that avoid Pushya for marriage.",
+      "chapter": "Marriage in traditions that avoid Pushya for marriage.",
+      "chapter_id": "ch-marriage_in_traditions_that_avoid_pushya_for_marriage"
+    },
+    {
+      "id": "ch-tasks_needing_total_immobility_or_secrecy",
+      "title": "Tasks needing total immobility or secrecy.",
+      "chapter": "Tasks needing total immobility or secrecy.",
+      "chapter_id": "ch-tasks_needing_total_immobility_or_secrecy"
+    },
+    {
+      "id": "ch-arka_surya_yamagadyuti",
+      "title": "Arka / Surya / Yamagadyuti",
+      "chapter": "Arka / Surya / Yamagadyuti",
+      "chapter_id": "ch-arka_surya_yamagadyuti"
+    },
+    {
+      "id": "ch-cruel_or_destructive_action",
+      "title": "Cruel or destructive action.",
+      "chapter": "Cruel or destructive action.",
+      "chapter_id": "ch-cruel_or_destructive_action"
+    },
+    {
+      "id": "ch-tvashta_brahma",
+      "title": "Tvashta / Brahma",
+      "chapter": "Tvashta / Brahma",
+      "chapter_id": "ch-tvashta_brahma"
+    },
+    {
+      "id": "ch-design_architecture_aesthetics_craft_beautification_planning",
+      "title": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "chapter": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "chapter_id": "ch-design_architecture_aesthetics_craft_beautification_planning"
+    },
+    {
+      "id": "ch-high-conflict_tasks",
+      "title": "High-conflict tasks.",
+      "chapter": "High-conflict tasks.",
+      "chapter_id": "ch-high-conflict_tasks"
+    },
+    {
+      "id": "ch-samirana_vayu_samudra",
+      "title": "Samirana / Vayu / Samudra",
+      "chapter": "Samirana / Vayu / Samudra",
+      "chapter_id": "ch-samirana_vayu_samudra"
+    },
+    {
+      "id": "ch-permanent_foundations_when_a_fixed_slot_is_available",
+      "title": "Permanent foundations when a fixed slot is available.",
+      "chapter": "Permanent foundations when a fixed slot is available.",
+      "chapter_id": "ch-permanent_foundations_when_a_fixed_slot_is_available"
+    },
+    {
+      "id": "ch-nakshatra_nature_quick_key",
+      "title": "Nakshatra Nature Quick Key",
+      "chapter": "Nakshatra Nature Quick Key",
+      "chapter_id": "ch-nakshatra_nature_quick_key"
+    },
+    {
+      "id": "ch-traditional_election_tendency",
+      "title": "Traditional election tendency",
+      "chapter": "Traditional election tendency",
+      "chapter_id": "ch-traditional_election_tendency"
+    },
+    {
+      "id": "ch-rohini_uttara_phalguni_uttara_ashadha_uttara_bhadrapada",
+      "title": "Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada",
+      "chapter": "Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada",
+      "chapter_id": "ch-rohini_uttara_phalguni_uttara_ashadha_uttara_bhadrapada"
+    },
+    {
+      "id": "ch-permanent_foundations_commitments_planting_stable_institutio",
+      "title": "Permanent foundations, commitments, planting, stable institutions.",
+      "chapter": "Permanent foundations, commitments, planting, stable institutions.",
+      "chapter_id": "ch-permanent_foundations_commitments_planting_stable_institutio"
+    },
+    {
+      "id": "ch-chitra_anuradha_mrigashira_revati",
+      "title": "Chitra, Anuradha, Mrigashira, Revati",
+      "chapter": "Chitra, Anuradha, Mrigashira, Revati",
+      "chapter_id": "ch-chitra_anuradha_mrigashira_revati"
+    },
+    {
+      "id": "ch-ashwini_pushya_hasta_abhijit",
+      "title": "Ashwini, Pushya, Hasta, Abhijit",
+      "chapter": "Ashwini, Pushya, Hasta, Abhijit",
+      "chapter_id": "ch-ashwini_pushya_hasta_abhijit"
+    },
+    {
+      "id": "ch-mula_jyeshtha_ardra_ashlesha",
+      "title": "Mula, Jyeshtha, Ardra, Ashlesha",
+      "chapter": "Mula, Jyeshtha, Ardra, Ashlesha",
+      "chapter_id": "ch-mula_jyeshtha_ardra_ashlesha"
+    },
+    {
+      "id": "ch-shravana_dhanishtha_shatabhisha_punarvasu_swati",
+      "title": "Shravana, Dhanishtha, Shatabhisha, Punarvasu, Swati",
+      "chapter": "Shravana, Dhanishtha, Shatabhisha, Punarvasu, Swati",
+      "chapter_id": "ch-shravana_dhanishtha_shatabhisha_punarvasu_swati"
+    },
+    {
+      "id": "ch-travel_processions_movement_vehicles_flexible_work",
+      "title": "Travel, processions, movement, vehicles, flexible work.",
+      "chapter": "Travel, processions, movement, vehicles, flexible work.",
+      "chapter_id": "ch-travel_processions_movement_vehicles_flexible_work"
+    },
+    {
+      "id": "ch-purva_phalguni_purva_ashadha_purva_bhadrapada_bharani_magha",
+      "title": "Purva Phalguni, Purva Ashadha, Purva Bhadrapada, Bharani, Magha",
+      "chapter": "Purva Phalguni, Purva Ashadha, Purva Bhadrapada, Bharani, Magha",
+      "chapter_id": "ch-purva_phalguni_purva_ashadha_purva_bhadrapada_bharani_magha"
+    },
+    {
+      "id": "ch-krittika_vishakha",
+      "title": "Krittika, Vishakha",
+      "chapter": "Krittika, Vishakha",
+      "chapter_id": "ch-krittika_vishakha"
+    },
+    {
+      "id": "ch-dailyroutine_work_use_caution_for_major_auspicious_beginning",
+      "title": "Daily/routine work; use caution for major auspicious beginnings.",
+      "chapter": "Daily/routine work; use caution for major auspicious beginnings.",
+      "chapter_id": "ch-dailyroutine_work_use_caution_for_major_auspicious_beginning"
+    },
+    {
+      "id": "ch-input_result",
+      "title": "Input / result",
+      "chapter": "Input / result",
+      "chapter_id": "ch-input_result"
+    },
+    {
+      "id": "ch-latitude_longitude",
+      "title": "Latitude / Longitude",
+      "chapter": "Latitude / Longitude",
+      "chapter_id": "ch-latitude_longitude"
+    },
+    {
+      "id": "ch-local_calculation_point",
+      "title": "Local calculation point",
+      "chapter": "Local calculation point",
+      "chapter_id": "ch-local_calculation_point"
+    },
+    {
+      "id": "ch-india_standard_time_utc0530",
+      "title": "India Standard Time (UTC+05:30)",
+      "chapter": "India Standard Time (UTC+05:30)",
+      "chapter_id": "ch-india_standard_time_utc0530"
+    },
+    {
+      "id": "ch-apparent_sunrise",
+      "title": "Apparent sunrise",
+      "chapter": "Apparent sunrise",
+      "chapter_id": "ch-apparent_sunrise"
+    },
+    {
+      "id": "ch-apparent_sunset",
+      "title": "Apparent sunset",
+      "chapter": "Apparent sunset",
+      "chapter_id": "ch-apparent_sunset"
+    },
+    {
+      "id": "ch-next_sunrise",
+      "title": "Next sunrise",
+      "chapter": "Next sunrise",
+      "chapter_id": "ch-next_sunrise"
+    },
+    {
+      "id": "ch-ends_the_panchang_day",
+      "title": "Ends the Panchang day",
+      "chapter": "Ends the Panchang day",
+      "chapter_id": "ch-ends_the_panchang_day"
+    },
+    {
+      "id": "ch-day_slot_length",
+      "title": "Day slot length",
+      "chapter": "Day slot length",
+      "chapter_id": "ch-day_slot_length"
+    },
+    {
+      "id": "ch-each_day_muhurta_slots_115",
+      "title": "Each day muhurta, slots 1–15",
+      "chapter": "Each day muhurta, slots 1–15",
+      "chapter_id": "ch-each_day_muhurta_slots_115"
+    },
+    {
+      "id": "ch-night_slot_length",
+      "title": "Night slot length",
+      "chapter": "Night slot length",
+      "chapter_id": "ch-night_slot_length"
+    },
+    {
+      "id": "ch-each_night_muhurta_slots_1630",
+      "title": "Each night muhurta, slots 16–30",
+      "chapter": "Each night muhurta, slots 16–30",
+      "chapter_id": "ch-each_night_muhurta_slots_1630"
+    },
+    {
+      "id": "ch-local_time_slot",
+      "title": "Local time slot",
+      "chapter": "Local time slot",
+      "chapter_id": "ch-local_time_slot"
+    },
+    {
+      "id": "ch-mapped_nakshatra-2",
+      "title": "Mapped Nakshatra",
+      "chapter": "Mapped Nakshatra",
+      "chapter_id": "ch-mapped_nakshatra-2"
+    },
+    {
+      "id": "ch-best_used_for-2",
+      "title": "Best used for",
+      "chapter": "Best used for",
+      "chapter_id": "ch-best_used_for-2"
+    },
+    {
+      "id": "ch-rudra_raudra-2",
+      "title": "Rudra / Raudra",
+      "chapter": "Rudra / Raudra",
+      "chapter_id": "ch-rudra_raudra-2"
+    },
+    {
+      "id": "ch-uraga_ahi-2",
+      "title": "Uraga / Ahi",
+      "chapter": "Uraga / Ahi",
+      "chapter_id": "ch-uraga_ahi-2"
+    },
+    {
+      "id": "ch-pitara_pitru-2",
+      "title": "Pitara / Pitru",
+      "chapter": "Pitara / Pitru",
+      "chapter_id": "ch-pitara_pitru-2"
+    },
+    {
+      "id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli-2",
+      "title": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "chapter": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "chapter_id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli-2"
+    },
+    {
+      "id": "ch-ambu_vara-2",
+      "title": "Ambu / Vara",
+      "chapter": "Ambu / Vara",
+      "chapter_id": "ch-ambu_vara-2"
+    },
+    {
+      "id": "ch-purva_ashadha-2",
+      "title": "Purva Ashadha",
+      "chapter": "Purva Ashadha",
+      "chapter_id": "ch-purva_ashadha-2"
+    },
+    {
+      "id": "ch-uttara_ashadha-2",
+      "title": "Uttara Ashadha",
+      "chapter": "Uttara Ashadha",
+      "chapter_id": "ch-uttara_ashadha-2"
+    },
+    {
+      "id": "ch-vidhi_abhijit-2",
+      "title": "Vidhi / Abhijit",
+      "chapter": "Vidhi / Abhijit",
+      "chapter_id": "ch-vidhi_abhijit-2"
+    },
+    {
+      "id": "ch-brahma_satamukhi-2",
+      "title": "Brahma / Satamukhi",
+      "chapter": "Brahma / Satamukhi",
+      "chapter_id": "ch-brahma_satamukhi-2"
+    },
+    {
+      "id": "ch-indra_puruhuta-2",
+      "title": "Indra / Puruhuta",
+      "chapter": "Indra / Puruhuta",
+      "chapter_id": "ch-indra_puruhuta-2"
+    },
+    {
+      "id": "ch-indragni_vahni-2",
+      "title": "Indragni / Vahni",
+      "chapter": "Indragni / Vahni",
+      "chapter_id": "ch-indragni_vahni-2"
+    },
+    {
+      "id": "ch-daitya_naktanchara_nairrita-2",
+      "title": "Daitya / Naktanchara / Nairrita",
+      "chapter": "Daitya / Naktanchara / Nairrita",
+      "chapter_id": "ch-daitya_naktanchara_nairrita-2"
+    },
+    {
+      "id": "ch-root-cause_analysis_investigation_removal_deconstruction_res-2",
+      "title": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "chapter": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "chapter_id": "ch-root-cause_analysis_investigation_removal_deconstruction_res-2"
+    },
+    {
+      "id": "ch-uttara_phalguni-2",
+      "title": "Uttara Phalguni",
+      "chapter": "Uttara Phalguni",
+      "chapter_id": "ch-uttara_phalguni-2"
+    },
+    {
+      "id": "ch-purva_phalguni-2",
+      "title": "Purva Phalguni",
+      "chapter": "Purva Phalguni",
+      "chapter_id": "ch-purva_phalguni-2"
+    },
+    {
+      "id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release-2",
+      "title": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "chapter": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "chapter_id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release-2"
+    },
+    {
+      "id": "ch-ajaikapada_ajapada-2",
+      "title": "Ajaikapada / Ajapada",
+      "chapter": "Ajaikapada / Ajapada",
+      "chapter_id": "ch-ajaikapada_ajapada-2"
+    },
+    {
+      "id": "ch-purva_bhadrapada-2",
+      "title": "Purva Bhadrapada",
+      "chapter": "Purva Bhadrapada",
+      "chapter_id": "ch-purva_bhadrapada-2"
+    },
+    {
+      "id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou-2",
+      "title": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "chapter": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "chapter_id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou-2"
+    },
+    {
+      "id": "ch-uttara_bhadrapada-2",
+      "title": "Uttara Bhadrapada",
+      "chapter": "Uttara Bhadrapada",
+      "chapter_id": "ch-uttara_bhadrapada-2"
+    },
+    {
+      "id": "ch-pusha_pushan-2",
+      "title": "Pusha / Pushan",
+      "chapter": "Pusha / Pushan",
+      "chapter_id": "ch-pusha_pushan-2"
+    },
+    {
+      "id": "ch-ashwini_kumara-2",
+      "title": "Ashwini Kumara",
+      "chapter": "Ashwini Kumara",
+      "chapter_id": "ch-ashwini_kumara-2"
+    },
+    {
+      "id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol-2",
+      "title": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "chapter": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "chapter_id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol-2"
+    },
+    {
+      "id": "ch-discipline_endings_legalethical_boundary-setting_restraint-2",
+      "title": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "chapter": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "chapter_id": "ch-discipline_endings_legalethical_boundary-setting_restraint-2"
+    },
+    {
+      "id": "ch-vidhatri_brahma-2",
+      "title": "Vidhatri / Brahma",
+      "chapter": "Vidhatri / Brahma",
+      "chapter_id": "ch-vidhatri_brahma-2"
+    },
+    {
+      "id": "ch-chanda_canda-2",
+      "title": "Chanda / Canda",
+      "chapter": "Chanda / Canda",
+      "chapter_id": "ch-chanda_canda-2"
+    },
+    {
+      "id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh-2",
+      "title": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "chapter": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "chapter_id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh-2"
+    },
+    {
+      "id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin-2",
+      "title": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "chapter": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "chapter_id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin-2"
+    },
+    {
+      "id": "ch-jiva_brihaspati_guru-2",
+      "title": "Jiva / Brihaspati / Guru",
+      "chapter": "Jiva / Brihaspati / Guru",
+      "chapter_id": "ch-jiva_brihaspati_guru-2"
+    },
+    {
+      "id": "ch-arka_surya_yamagadyuti-2",
+      "title": "Arka / Surya / Yamagadyuti",
+      "chapter": "Arka / Surya / Yamagadyuti",
+      "chapter_id": "ch-arka_surya_yamagadyuti-2"
+    },
+    {
+      "id": "ch-tvashta_brahma-2",
+      "title": "Tvashta / Brahma",
+      "chapter": "Tvashta / Brahma",
+      "chapter_id": "ch-tvashta_brahma-2"
+    },
+    {
+      "id": "ch-design_architecture_aesthetics_craft_beautification_planning-2",
+      "title": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "chapter": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "chapter_id": "ch-design_architecture_aesthetics_craft_beautification_planning-2"
+    },
+    {
+      "id": "ch-samirana_vayu_samudra-2",
+      "title": "Samirana / Vayu / Samudra",
+      "chapter": "Samirana / Vayu / Samudra",
+      "chapter_id": "ch-samirana_vayu_samudra-2"
+    },
+    {
+      "id": "ch-input_result-2",
+      "title": "Input / result",
+      "chapter": "Input / result",
+      "chapter_id": "ch-input_result-2"
+    },
+    {
+      "id": "ch-latitude_longitude-2",
+      "title": "Latitude / Longitude",
+      "chapter": "Latitude / Longitude",
+      "chapter_id": "ch-latitude_longitude-2"
+    },
+    {
+      "id": "ch-local_calculation_point-2",
+      "title": "Local calculation point",
+      "chapter": "Local calculation point",
+      "chapter_id": "ch-local_calculation_point-2"
+    },
+    {
+      "id": "ch-irish_summer_time_utc0100",
+      "title": "Irish Summer Time (UTC+01:00)",
+      "chapter": "Irish Summer Time (UTC+01:00)",
+      "chapter_id": "ch-irish_summer_time_utc0100"
+    },
+    {
+      "id": "ch-apparent_sunrise-2",
+      "title": "Apparent sunrise",
+      "chapter": "Apparent sunrise",
+      "chapter_id": "ch-apparent_sunrise-2"
+    },
+    {
+      "id": "ch-apparent_sunset-2",
+      "title": "Apparent sunset",
+      "chapter": "Apparent sunset",
+      "chapter_id": "ch-apparent_sunset-2"
+    },
+    {
+      "id": "ch-next_sunrise-2",
+      "title": "Next sunrise",
+      "chapter": "Next sunrise",
+      "chapter_id": "ch-next_sunrise-2"
+    },
+    {
+      "id": "ch-ends_the_panchang_day-2",
+      "title": "Ends the Panchang day",
+      "chapter": "Ends the Panchang day",
+      "chapter_id": "ch-ends_the_panchang_day-2"
+    },
+    {
+      "id": "ch-day_slot_length-2",
+      "title": "Day slot length",
+      "chapter": "Day slot length",
+      "chapter_id": "ch-day_slot_length-2"
+    },
+    {
+      "id": "ch-each_day_muhurta_slots_115-2",
+      "title": "Each day muhurta, slots 1–15",
+      "chapter": "Each day muhurta, slots 1–15",
+      "chapter_id": "ch-each_day_muhurta_slots_115-2"
+    },
+    {
+      "id": "ch-night_slot_length-2",
+      "title": "Night slot length",
+      "chapter": "Night slot length",
+      "chapter_id": "ch-night_slot_length-2"
+    },
+    {
+      "id": "ch-each_night_muhurta_slots_1630-2",
+      "title": "Each night muhurta, slots 16–30",
+      "chapter": "Each night muhurta, slots 16–30",
+      "chapter_id": "ch-each_night_muhurta_slots_1630-2"
+    },
+    {
+      "id": "ch-local_time_slot-2",
+      "title": "Local time slot",
+      "chapter": "Local time slot",
+      "chapter_id": "ch-local_time_slot-2"
+    },
+    {
+      "id": "ch-mapped_nakshatra-3",
+      "title": "Mapped Nakshatra",
+      "chapter": "Mapped Nakshatra",
+      "chapter_id": "ch-mapped_nakshatra-3"
+    },
+    {
+      "id": "ch-best_used_for-3",
+      "title": "Best used for",
+      "chapter": "Best used for",
+      "chapter_id": "ch-best_used_for-3"
+    },
+    {
+      "id": "ch-rudra_raudra-3",
+      "title": "Rudra / Raudra",
+      "chapter": "Rudra / Raudra",
+      "chapter_id": "ch-rudra_raudra-3"
+    },
+    {
+      "id": "ch-uraga_ahi-3",
+      "title": "Uraga / Ahi",
+      "chapter": "Uraga / Ahi",
+      "chapter_id": "ch-uraga_ahi-3"
+    },
+    {
+      "id": "ch-pitara_pitru-3",
+      "title": "Pitara / Pitru",
+      "chapter": "Pitara / Pitru",
+      "chapter_id": "ch-pitara_pitru-3"
+    },
+    {
+      "id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli-3",
+      "title": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "chapter": "Ancestor remembrance, family lineage duties, clearing old obligations.",
+      "chapter_id": "ch-ancestor_remembrance_family_lineage_duties_clearing_old_obli-3"
+    },
+    {
+      "id": "ch-ambu_vara-3",
+      "title": "Ambu / Vara",
+      "chapter": "Ambu / Vara",
+      "chapter_id": "ch-ambu_vara-3"
+    },
+    {
+      "id": "ch-purva_ashadha-3",
+      "title": "Purva Ashadha",
+      "chapter": "Purva Ashadha",
+      "chapter_id": "ch-purva_ashadha-3"
+    },
+    {
+      "id": "ch-uttara_ashadha-3",
+      "title": "Uttara Ashadha",
+      "chapter": "Uttara Ashadha",
+      "chapter_id": "ch-uttara_ashadha-3"
+    },
+    {
+      "id": "ch-vidhi_abhijit-3",
+      "title": "Vidhi / Abhijit",
+      "chapter": "Vidhi / Abhijit",
+      "chapter_id": "ch-vidhi_abhijit-3"
+    },
+    {
+      "id": "ch-brahma_satamukhi-3",
+      "title": "Brahma / Satamukhi",
+      "chapter": "Brahma / Satamukhi",
+      "chapter_id": "ch-brahma_satamukhi-3"
+    },
+    {
+      "id": "ch-indra_puruhuta-3",
+      "title": "Indra / Puruhuta",
+      "chapter": "Indra / Puruhuta",
+      "chapter_id": "ch-indra_puruhuta-3"
+    },
+    {
+      "id": "ch-indragni_vahni-3",
+      "title": "Indragni / Vahni",
+      "chapter": "Indragni / Vahni",
+      "chapter_id": "ch-indragni_vahni-3"
+    },
+    {
+      "id": "ch-daitya_naktanchara_nairrita-3",
+      "title": "Daitya / Naktanchara / Nairrita",
+      "chapter": "Daitya / Naktanchara / Nairrita",
+      "chapter_id": "ch-daitya_naktanchara_nairrita-3"
+    },
+    {
+      "id": "ch-root-cause_analysis_investigation_removal_deconstruction_res-3",
+      "title": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "chapter": "Root-cause analysis, investigation, removal, deconstruction, research.",
+      "chapter_id": "ch-root-cause_analysis_investigation_removal_deconstruction_res-3"
+    },
+    {
+      "id": "ch-uttara_phalguni-3",
+      "title": "Uttara Phalguni",
+      "chapter": "Uttara Phalguni",
+      "chapter_id": "ch-uttara_phalguni-3"
+    },
+    {
+      "id": "ch-purva_phalguni-3",
+      "title": "Purva Phalguni",
+      "chapter": "Purva Phalguni",
+      "chapter_id": "ch-purva_phalguni-3"
+    },
+    {
+      "id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release-3",
+      "title": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "chapter": "Shiva worship, austerity, emergency clean-up, inner release.",
+      "chapter_id": "ch-shiva_worship_austerity_emergency_clean-up_inner_release-3"
+    },
+    {
+      "id": "ch-ajaikapada_ajapada-3",
+      "title": "Ajaikapada / Ajapada",
+      "chapter": "Ajaikapada / Ajapada",
+      "chapter_id": "ch-ajaikapada_ajapada-3"
+    },
+    {
+      "id": "ch-purva_bhadrapada-3",
+      "title": "Purva Bhadrapada",
+      "chapter": "Purva Bhadrapada",
+      "chapter_id": "ch-purva_bhadrapada-3"
+    },
+    {
+      "id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou-3",
+      "title": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "chapter": "Tapas, vows, confronting harsh truths, endings, spiritual seriousness.",
+      "chapter_id": "ch-tapas_vows_confronting_harsh_truths_endings_spiritual_seriou-3"
+    },
+    {
+      "id": "ch-uttara_bhadrapada-3",
+      "title": "Uttara Bhadrapada",
+      "chapter": "Uttara Bhadrapada",
+      "chapter_id": "ch-uttara_bhadrapada-3"
+    },
+    {
+      "id": "ch-pusha_pushan-3",
+      "title": "Pusha / Pushan",
+      "chapter": "Pusha / Pushan",
+      "chapter_id": "ch-pusha_pushan-3"
+    },
+    {
+      "id": "ch-ashwini_kumara-3",
+      "title": "Ashwini Kumara",
+      "chapter": "Ashwini Kumara",
+      "chapter_id": "ch-ashwini_kumara-3"
+    },
+    {
+      "id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol-3",
+      "title": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "chapter": "Healing, medicine, fast starts, travel, repair, quick problem-solving.",
+      "chapter_id": "ch-healing_medicine_fast_starts_travel_repair_quick_problem-sol-3"
+    },
+    {
+      "id": "ch-discipline_endings_legalethical_boundary-setting_restraint-3",
+      "title": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "chapter": "Discipline, endings, legal/ethical boundary-setting, restraint.",
+      "chapter_id": "ch-discipline_endings_legalethical_boundary-setting_restraint-3"
+    },
+    {
+      "id": "ch-vidhatri_brahma-3",
+      "title": "Vidhatri / Brahma",
+      "chapter": "Vidhatri / Brahma",
+      "chapter_id": "ch-vidhatri_brahma-3"
+    },
+    {
+      "id": "ch-chanda_canda-3",
+      "title": "Chanda / Canda",
+      "chapter": "Chanda / Canda",
+      "chapter_id": "ch-chanda_canda-3"
+    },
+    {
+      "id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh-3",
+      "title": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "chapter": "Research, searching, learning, music, arts, gentle travel, courtship.",
+      "chapter_id": "ch-research_searching_learning_music_arts_gentle_travel_courtsh-3"
+    },
+    {
+      "id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin-3",
+      "title": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "chapter": "Renewal, return journeys, home repair, restart, recovery, teaching.",
+      "chapter_id": "ch-renewal_return_journeys_home_repair_restart_recovery_teachin-3"
+    },
+    {
+      "id": "ch-jiva_brihaspati_guru-3",
+      "title": "Jiva / Brihaspati / Guru",
+      "chapter": "Jiva / Brihaspati / Guru",
+      "chapter_id": "ch-jiva_brihaspati_guru-3"
+    },
+    {
+      "id": "ch-arka_surya_yamagadyuti-3",
+      "title": "Arka / Surya / Yamagadyuti",
+      "chapter": "Arka / Surya / Yamagadyuti",
+      "chapter_id": "ch-arka_surya_yamagadyuti-3"
+    },
+    {
+      "id": "ch-tvashta_brahma-3",
+      "title": "Tvashta / Brahma",
+      "chapter": "Tvashta / Brahma",
+      "chapter_id": "ch-tvashta_brahma-3"
+    },
+    {
+      "id": "ch-design_architecture_aesthetics_craft_beautification_planning-3",
+      "title": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "chapter": "Design, architecture, aesthetics, craft, beautification, planning.",
+      "chapter_id": "ch-design_architecture_aesthetics_craft_beautification_planning-3"
+    },
+    {
+      "id": "ch-samirana_vayu_samudra-3",
+      "title": "Samirana / Vayu / Samudra",
+      "chapter": "Samirana / Vayu / Samudra",
+      "chapter_id": "ch-samirana_vayu_samudra-3"
+    },
+    {
+      "id": "ch-what_to_do",
+      "title": "What to do",
+      "chapter": "What to do",
+      "chapter_id": "ch-what_to_do"
+    },
+    {
+      "id": "ch-purpose_fit",
+      "title": "Purpose fit",
+      "chapter": "Purpose fit",
+      "chapter_id": "ch-purpose_fit"
+    },
+    {
+      "id": "ch-panchanga_shuddhi",
+      "title": "Panchanga shuddhi",
+      "chapter": "Panchanga shuddhi",
+      "chapter_id": "ch-panchanga_shuddhi"
+    },
+    {
+      "id": "ch-sandhya_awareness",
+      "title": "Sandhya awareness",
+      "chapter": "Sandhya awareness",
+      "chapter_id": "ch-sandhya_awareness"
+    },
+    {
+      "id": "ch-when_forced",
+      "title": "When forced",
+      "chapter": "When forced",
+      "chapter_id": "ch-when_forced"
+    },
+    {
+      "id": "ch-best-fit_examples",
+      "title": "Best-Fit Examples",
+      "chapter": "Best-Fit Examples",
+      "chapter_id": "ch-best-fit_examples"
+    },
+    {
+      "id": "ch-prefer_these_do-ghati_signatures",
+      "title": "Prefer these Do-Ghati signatures",
+      "chapter": "Prefer these Do-Ghati signatures",
+      "chapter_id": "ch-prefer_these_do-ghati_signatures"
+    },
+    {
+      "id": "ch-signing_a_stable_agreement",
+      "title": "Signing a stable agreement",
+      "chapter": "Signing a stable agreement",
+      "chapter_id": "ch-signing_a_stable_agreement"
+    },
+    {
+      "id": "ch-aryamauttara_phalguni_vishwedevauttara_ashadha_brahmarohini",
+      "title": "Aryama/Uttara Phalguni, Vishwedeva/Uttara Ashadha, Brahma/Rohini",
+      "chapter": "Aryama/Uttara Phalguni, Vishwedeva/Uttara Ashadha, Brahma/Rohini",
+      "chapter_id": "ch-aryamauttara_phalguni_vishwedevauttara_ashadha_brahmarohini"
+    },
+    {
+      "id": "ch-fixed-nature_slots_support_stability",
+      "title": "Fixed-nature slots support stability.",
+      "chapter": "Fixed-nature slots support stability.",
+      "chapter_id": "ch-fixed-nature_slots_support_stability"
+    },
+    {
+      "id": "ch-travel_or_logistics",
+      "title": "Travel or logistics",
+      "chapter": "Travel or logistics",
+      "chapter_id": "ch-travel_or_logistics"
+    },
+    {
+      "id": "ch-ashwini_pushanrevati_vishnushravana_samiranaswati",
+      "title": "Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati",
+      "chapter": "Ashwini, Pushan/Revati, Vishnu/Shravana, Samirana/Swati",
+      "chapter_id": "ch-ashwini_pushanrevati_vishnushravana_samiranaswati"
+    },
+    {
+      "id": "ch-healing_or_medical_consultation",
+      "title": "Healing or medical consultation",
+      "chapter": "Healing or medical consultation",
+      "chapter_id": "ch-healing_or_medical_consultation"
+    },
+    {
+      "id": "ch-ashwini_pushya_varunashatabhisha_vidhiabhijit",
+      "title": "Ashwini, Pushya, Varuna/Shatabhisha, Vidhi/Abhijit",
+      "chapter": "Ashwini, Pushya, Varuna/Shatabhisha, Vidhi/Abhijit",
+      "chapter_id": "ch-ashwini_pushya_varunashatabhisha_vidhiabhijit"
+    },
+    {
+      "id": "ch-lighthealing_symbolism_and_remedial_tone",
+      "title": "Light/healing symbolism and remedial tone.",
+      "chapter": "Light/healing symbolism and remedial tone.",
+      "chapter_id": "ch-lighthealing_symbolism_and_remedial_tone"
+    },
+    {
+      "id": "ch-creativedesign_work",
+      "title": "Creative/design work",
+      "chapter": "Creative/design work",
+      "chapter_id": "ch-creativedesign_work"
+    },
+    {
+      "id": "ch-tvashtachitra_chandamrigashira_mitraanuradha",
+      "title": "Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha",
+      "chapter": "Tvashta/Chitra, Chanda/Mrigashira, Mitra/Anuradha",
+      "chapter_id": "ch-tvashtachitra_chandamrigashira_mitraanuradha"
+    },
+    {
+      "id": "ch-softartistic_signatures",
+      "title": "Soft/artistic signatures.",
+      "chapter": "Soft/artistic signatures.",
+      "chapter_id": "ch-softartistic_signatures"
+    },
+    {
+      "id": "ch-removing_a_bad_habit_or_hard_reset",
+      "title": "Removing a bad habit or hard reset",
+      "chapter": "Removing a bad habit or hard reset",
+      "chapter_id": "ch-removing_a_bad_habit_or_hard_reset"
+    },
+    {
+      "id": "ch-rudraardra_mula_agnikrittika",
+      "title": "Rudra/Ardra, Mula, Agni/Krittika",
+      "chapter": "Rudra/Ardra, Mula, Agni/Krittika",
+      "chapter_id": "ch-rudraardra_mula_agnikrittika"
+    },
+    {
+      "id": "ch-two_ghatis_one_muhūrta_slot_in_this_system",
+      "title": "Two ghatis; one muhūrta slot in this system.",
+      "chapter": "Two ghatis; one muhūrta slot in this system.",
+      "chapter_id": "ch-two_ghatis_one_muhūrta_slot_in_this_system"
+    },
+    {
+      "id": "ch-final_caution",
+      "title": "Final caution",
+      "chapter": "Final caution",
+      "chapter_id": "ch-final_caution"
     }
   ],
-  "total_chapters": 13,
+  "total_chapters": 220,
   "total_sections": 0
 }

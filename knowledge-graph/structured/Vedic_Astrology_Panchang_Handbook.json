@@ -3,90 +3,267 @@
   "canonical_name": "Vedic Astrology Panchang Handbook",
   "source_file": "Vedic_Astrology_Panchang_Handbook.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "The 27 Nakshatras and Their Ruling Lords",
+      "id": "ch-vedic_astrology_quick_reference_handbook",
+      "number": null,
+      "title": "Vedic Astrology Quick Reference Handbook",
       "level": 1,
-      "start_line": 6,
-      "end_line": 60,
+      "start_line": 4,
+      "end_line": 58,
       "sections": [],
-      "content_preview": "1. The 27 Nakshatras and Their Ruling Lords  In Vedic astrology, the zodiac is divided into 27 lunar mansions or constellations known as Nakshatras. Each Nakshatra spans 13 degrees and 20 minutes of the zodiac and is governed by a specific ruling planet (Graha) and a presiding  d"
+      "content_preview": "Vedic Astrology Quick Reference Handbook  1. The 27 Nakshatras and Their Ruling Lords  In Vedic astrology, the zodiac is divided into 27 lunar mansions or constellations known as Nakshatras. Each Nakshatra spans 13 degrees and 20 minutes of the zodiac and is governed by a specifi"
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Tithis, Their Nature, and Dagdha Rashi",
+      "id": "ch-vedic_astrology_quick_reference_handbook-2",
+      "number": null,
+      "title": "Vedic Astrology Quick Reference Handbook",
       "level": 1,
-      "start_line": 61,
-      "end_line": 100,
+      "start_line": 59,
+      "end_line": 75,
       "sections": [],
-      "content_preview": "2. Tithis, Their Nature, and Dagdha Rashi  A Tithi is a lunar day. Tithis are categorized into five groups based on their nature: Nanda (joy), Bhadra (auspicious), Jaya (victory), Rikta (empty), and Purna (full). 'Dagdha Rashi' translates to 'burnt sign' and refers to zodiac sign"
+      "content_preview": "Vedic Astrology Quick Reference Handbook  2. Tithis, Their Nature, and Dagdha Rashi  A Tithi is a lunar day. Tithis are categorized into five groups based on their nature: Nanda (joy), Bhadra (auspicious), Jaya (victory), Rikta (empty), and Purna (full). 'Dagdha Rashi' translates"
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Auspicious (Shubh) and Inauspicious (Ashubh) Yogas",
+      "id": "ch-saptami_bhadra_cancer_sagittarius",
+      "number": null,
+      "title": "Saptami Bhadra Cancer, Sagittarius",
       "level": 1,
-      "start_line": 101,
-      "end_line": 139,
+      "start_line": 76,
+      "end_line": 79,
       "sections": [],
-      "content_preview": "3. Auspicious (Shubh) and Inauspicious (Ashubh) Yogas  Yogas are specific combinations of Weekdays (Vara), Lunar Days (Tithis), or Nakshatras that produce highly auspicious or inauspicious periods for Muhurat (timing).  Auspicious Yogas:  Yoga Name Weekday Nakshatra Effects"
+      "content_preview": "Saptami Bhadra Cancer, Sagittarius  Ashtami Jaya Gemini, Virgo Becomes Victorious Jaya on Tuesday  Navami Rikta Leo, Scorpio  Dashami | Puma | Leo, Scorpio "
     },
     {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Sarvartha Siddhi Yoga",
+      "id": "ch-navami_rikta_leo_scorpio",
+      "number": null,
+      "title": "Navami Rikta Leo, Scorpio",
       "level": 1,
-      "start_line": 140,
-      "end_line": 161,
+      "start_line": 80,
+      "end_line": 81,
       "sections": [],
-      "content_preview": "4. Sarvartha Siddhi Yoga  Translates to ‘accomplishment of all goals'. Formed when a specific Nakshatra coincides with a specific day of the week. This Muhurat brings success to new ventures.  Weekday Nakshatras forming Yoga Sunday Hasta, Pushya, Moola, Ashwini, U. Phalguni, U. A"
+      "content_preview": "Navami Rikta Leo, Scorpio  Dashami | Puma | Leo, Scorpio  Ekadashi | Nanda | Sagittarius, Pisces  Dwadashi 12/27 Bhadra Libra, Capricorn Trayodashi 13/28 Jaya Taurus, Leo"
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Do Ghati Muhurat (Time Cycles)",
+      "id": "ch-dashami_puma_leo_scorpio",
+      "number": null,
+      "title": "Dashami | Puma | Leo, Scorpio",
       "level": 1,
-      "start_line": 162,
+      "start_line": 82,
+      "end_line": 83,
+      "sections": [],
+      "content_preview": "Dashami | Puma | Leo, Scorpio  Ekadashi | Nanda | Sagittarius, Pisces  Dwadashi 12/27 Bhadra Libra, Capricorn Trayodashi 13/28 Jaya Taurus, Leo  Chaturdashi 14/29 Rikta Pisces, Gem, Vir, Sag"
+    },
+    {
+      "id": "ch-ekadashi_nanda_sagittarius_pisces",
+      "number": null,
+      "title": "Ekadashi | Nanda | Sagittarius, Pisces",
+      "level": 1,
+      "start_line": 84,
+      "end_line": 98,
+      "sections": [],
+      "content_preview": "Ekadashi | Nanda | Sagittarius, Pisces  Dwadashi 12/27 Bhadra Libra, Capricorn Trayodashi 13/28 Jaya Taurus, Leo  Chaturdashi 14/29 Rikta Pisces, Gem, Vir, Sag | Pumima | 15 | Puma | Nore | Full Moon Amavasya 30 | Puma | Nore | New Moon"
+    },
+    {
+      "id": "ch-vedic_astrology_quick_reference_handbook-3",
+      "number": null,
+      "title": "Vedic Astrology Quick Reference Handbook",
+      "level": 1,
+      "start_line": 99,
+      "end_line": 105,
+      "sections": [],
+      "content_preview": "Vedic Astrology Quick Reference Handbook  3. Auspicious (Shubh) and Inauspicious (Ashubh) Yogas  Yogas are specific combinations of Weekdays (Vara), Lunar Days (Tithis), or Nakshatras that produce highly auspicious or inauspicious periods for Muhurat (timing).  Auspicious Yogas:"
+    },
+    {
+      "id": "ch-auspicious_yogas",
+      "number": null,
+      "title": "Auspicious Yogas",
+      "level": 1,
+      "start_line": 106,
+      "end_line": 107,
+      "sections": [],
+      "content_preview": "Auspicious Yogas:  Yoga Name Weekday Nakshatra Effects  Ravi Pushya Yoga Sunday Pushya Best for gold, contracts, new responsibilities  Guru Pushya Yoga Amrit Siddhi Yoga"
+    },
+    {
+      "id": "ch-yoga_name_weekday_nakshatra_effects",
+      "number": null,
+      "title": "Yoga Name Weekday Nakshatra Effects",
+      "level": 1,
+      "start_line": 108,
+      "end_line": 119,
+      "sections": [],
+      "content_preview": "Yoga Name Weekday Nakshatra Effects  Ravi Pushya Yoga Sunday Pushya Best for gold, contracts, new responsibilities  Guru Pushya Yoga Amrit Siddhi Yoga Amrit Siddhi Yoga Amrit Siddhi Yoga"
+    },
+    {
+      "id": "ch-pushya_best_for_new_business_investments",
+      "number": null,
+      "title": "Pushya Best for new business, investments",
+      "level": 1,
+      "start_line": 120,
+      "end_line": 121,
+      "sections": [],
+      "content_preview": "Pushya Best for new business, investments  Sunday Hasta Real estate and vehicles  Monday Shravana New ventures, lawsuits  Tuesday Ashwini Medical treatments, bold actions "
+    },
+    {
+      "id": "ch-sunday_hasta_real_estate_and_vehicles",
+      "number": null,
+      "title": "Sunday Hasta Real estate and vehicles",
+      "level": 1,
+      "start_line": 122,
+      "end_line": 123,
+      "sections": [],
+      "content_preview": "Sunday Hasta Real estate and vehicles  Monday Shravana New ventures, lawsuits  Tuesday Ashwini Medical treatments, bold actions  Wednesday Anuradha Commerce, networking "
+    },
+    {
+      "id": "ch-monday_shravana_new_ventures_lawsuits",
+      "number": null,
+      "title": "Monday Shravana New ventures, lawsuits",
+      "level": 1,
+      "start_line": 124,
+      "end_line": 125,
+      "sections": [],
+      "content_preview": "Monday Shravana New ventures, lawsuits  Tuesday Ashwini Medical treatments, bold actions  Wednesday Anuradha Commerce, networking  Inauspicious Yogas (Vish and Hutashana): "
+    },
+    {
+      "id": "ch-tuesday_ashwini_medical_treatments_bold_actions",
+      "number": null,
+      "title": "Tuesday Ashwini Medical treatments, bold actions",
+      "level": 1,
+      "start_line": 126,
+      "end_line": 127,
+      "sections": [],
+      "content_preview": "Tuesday Ashwini Medical treatments, bold actions  Wednesday Anuradha Commerce, networking  Inauspicious Yogas (Vish and Hutashana):  Yoga Name Weekday Tithi Effects Vish Yoga Sunday 4th (Chaturthi) Destroys karma; avoid new ventures"
+    },
+    {
+      "id": "ch-wednesday_anuradha_commerce_networking",
+      "number": null,
+      "title": "Wednesday Anuradha Commerce, networking",
+      "level": 1,
+      "start_line": 128,
+      "end_line": 129,
+      "sections": [],
+      "content_preview": "Wednesday Anuradha Commerce, networking  Inauspicious Yogas (Vish and Hutashana):  Yoga Name Weekday Tithi Effects Vish Yoga Sunday 4th (Chaturthi) Destroys karma; avoid new ventures Vish Yoga Monday 6th (Shashti) Destroys karma; avoid new ventures Vish Yoga Tuesday 7th (Saptami)"
+    },
+    {
+      "id": "ch-inauspicious_yogas_vish_and_hutashana",
+      "number": null,
+      "title": "Inauspicious Yogas (Vish and Hutashana)",
+      "level": 1,
+      "start_line": 130,
+      "end_line": 159,
+      "sections": [],
+      "content_preview": "Inauspicious Yogas (Vish and Hutashana):  Yoga Name Weekday Tithi Effects Vish Yoga Sunday 4th (Chaturthi) Destroys karma; avoid new ventures Vish Yoga Monday 6th (Shashti) Destroys karma; avoid new ventures Vish Yoga Tuesday 7th (Saptami) Destroys karma; avoid new ventures Hutas"
+    },
+    {
+      "id": "ch-vedic_astrology_quick_reference_handbook-4",
+      "number": null,
+      "title": "Vedic Astrology Quick Reference Handbook",
+      "level": 1,
+      "start_line": 160,
       "end_line": 202,
       "sections": [],
-      "content_preview": "5. Do Ghati Muhurat (Time Cycles)  A Ghati is approx. 24 minutes. 'Do Ghati' means two Ghatis, making a 48-minute block. The day consists of 30 Do Ghati Muhurats. Each is linked to a specific Nakshatra/Deity.  Seq Muhurat/Deity Nakshatra Nature Offset Ex: 6:00AM Sunrise 1 | Rudra"
+      "content_preview": "Vedic Astrology Quick Reference Handbook  5. Do Ghati Muhurat (Time Cycles)  A Ghati is approx. 24 minutes. 'Do Ghati' means two Ghatis, making a 48-minute block. The day consists of 30 Do Ghati Muhurats. Each is linked to a specific Nakshatra/Deity.  Seq Muhurat/Deity Nakshatra "
     }
   ],
   "toc": [
     {
-      "id": "ch-1",
-      "title": "The 27 Nakshatras and Their Ruling Lords",
-      "chapter": "The 27 Nakshatras and Their Ruling Lords",
-      "chapter_id": "ch-1"
+      "id": "ch-vedic_astrology_quick_reference_handbook",
+      "title": "Vedic Astrology Quick Reference Handbook",
+      "chapter": "Vedic Astrology Quick Reference Handbook",
+      "chapter_id": "ch-vedic_astrology_quick_reference_handbook"
     },
     {
-      "id": "ch-2",
-      "title": "Tithis, Their Nature, and Dagdha Rashi",
-      "chapter": "Tithis, Their Nature, and Dagdha Rashi",
-      "chapter_id": "ch-2"
+      "id": "ch-vedic_astrology_quick_reference_handbook-2",
+      "title": "Vedic Astrology Quick Reference Handbook",
+      "chapter": "Vedic Astrology Quick Reference Handbook",
+      "chapter_id": "ch-vedic_astrology_quick_reference_handbook-2"
     },
     {
-      "id": "ch-3",
-      "title": "Auspicious (Shubh) and Inauspicious (Ashubh) Yogas",
-      "chapter": "Auspicious (Shubh) and Inauspicious (Ashubh) Yogas",
-      "chapter_id": "ch-3"
+      "id": "ch-saptami_bhadra_cancer_sagittarius",
+      "title": "Saptami Bhadra Cancer, Sagittarius",
+      "chapter": "Saptami Bhadra Cancer, Sagittarius",
+      "chapter_id": "ch-saptami_bhadra_cancer_sagittarius"
     },
     {
-      "id": "ch-4",
-      "title": "Sarvartha Siddhi Yoga",
-      "chapter": "Sarvartha Siddhi Yoga",
-      "chapter_id": "ch-4"
+      "id": "ch-navami_rikta_leo_scorpio",
+      "title": "Navami Rikta Leo, Scorpio",
+      "chapter": "Navami Rikta Leo, Scorpio",
+      "chapter_id": "ch-navami_rikta_leo_scorpio"
     },
     {
-      "id": "ch-5",
-      "title": "Do Ghati Muhurat (Time Cycles)",
-      "chapter": "Do Ghati Muhurat (Time Cycles)",
-      "chapter_id": "ch-5"
+      "id": "ch-dashami_puma_leo_scorpio",
+      "title": "Dashami | Puma | Leo, Scorpio",
+      "chapter": "Dashami | Puma | Leo, Scorpio",
+      "chapter_id": "ch-dashami_puma_leo_scorpio"
+    },
+    {
+      "id": "ch-ekadashi_nanda_sagittarius_pisces",
+      "title": "Ekadashi | Nanda | Sagittarius, Pisces",
+      "chapter": "Ekadashi | Nanda | Sagittarius, Pisces",
+      "chapter_id": "ch-ekadashi_nanda_sagittarius_pisces"
+    },
+    {
+      "id": "ch-vedic_astrology_quick_reference_handbook-3",
+      "title": "Vedic Astrology Quick Reference Handbook",
+      "chapter": "Vedic Astrology Quick Reference Handbook",
+      "chapter_id": "ch-vedic_astrology_quick_reference_handbook-3"
+    },
+    {
+      "id": "ch-auspicious_yogas",
+      "title": "Auspicious Yogas",
+      "chapter": "Auspicious Yogas",
+      "chapter_id": "ch-auspicious_yogas"
+    },
+    {
+      "id": "ch-yoga_name_weekday_nakshatra_effects",
+      "title": "Yoga Name Weekday Nakshatra Effects",
+      "chapter": "Yoga Name Weekday Nakshatra Effects",
+      "chapter_id": "ch-yoga_name_weekday_nakshatra_effects"
+    },
+    {
+      "id": "ch-pushya_best_for_new_business_investments",
+      "title": "Pushya Best for new business, investments",
+      "chapter": "Pushya Best for new business, investments",
+      "chapter_id": "ch-pushya_best_for_new_business_investments"
+    },
+    {
+      "id": "ch-sunday_hasta_real_estate_and_vehicles",
+      "title": "Sunday Hasta Real estate and vehicles",
+      "chapter": "Sunday Hasta Real estate and vehicles",
+      "chapter_id": "ch-sunday_hasta_real_estate_and_vehicles"
+    },
+    {
+      "id": "ch-monday_shravana_new_ventures_lawsuits",
+      "title": "Monday Shravana New ventures, lawsuits",
+      "chapter": "Monday Shravana New ventures, lawsuits",
+      "chapter_id": "ch-monday_shravana_new_ventures_lawsuits"
+    },
+    {
+      "id": "ch-tuesday_ashwini_medical_treatments_bold_actions",
+      "title": "Tuesday Ashwini Medical treatments, bold actions",
+      "chapter": "Tuesday Ashwini Medical treatments, bold actions",
+      "chapter_id": "ch-tuesday_ashwini_medical_treatments_bold_actions"
+    },
+    {
+      "id": "ch-wednesday_anuradha_commerce_networking",
+      "title": "Wednesday Anuradha Commerce, networking",
+      "chapter": "Wednesday Anuradha Commerce, networking",
+      "chapter_id": "ch-wednesday_anuradha_commerce_networking"
+    },
+    {
+      "id": "ch-inauspicious_yogas_vish_and_hutashana",
+      "title": "Inauspicious Yogas (Vish and Hutashana)",
+      "chapter": "Inauspicious Yogas (Vish and Hutashana)",
+      "chapter_id": "ch-inauspicious_yogas_vish_and_hutashana"
+    },
+    {
+      "id": "ch-vedic_astrology_quick_reference_handbook-4",
+      "title": "Vedic Astrology Quick Reference Handbook",
+      "chapter": "Vedic Astrology Quick Reference Handbook",
+      "chapter_id": "ch-vedic_astrology_quick_reference_handbook-4"
     }
   ],
-  "total_chapters": 5,
+  "total_chapters": 16,
   "total_sections": 0
 }

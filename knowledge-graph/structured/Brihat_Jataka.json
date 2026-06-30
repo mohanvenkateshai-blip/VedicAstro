@@ -3,313 +3,890 @@
   "canonical_name": "Brihat Jataka",
   "source_file": "Brihat_Jataka.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "It would be relevant to make mention of another prin",
+      "id": "ch-on_signs",
+      "number": null,
+      "title": "On Signs",
       "level": 1,
-      "start_line": 2275,
-      "end_line": 5001,
+      "start_line": 392,
+      "end_line": 505,
+      "sections": [],
+      "content_preview": "On Signs  11  ((Griha\", \"Riksh\", \"Bha\" and \"Bhaoan\" are aIl synonyms. The  twelve signs ie Aries, Taurus, Gemini, Cancer, Leo, Virgo,  Libra, Scorpio, Sagittarius, Capricorn, Acquarius and Pisces  represent respectively one's head, face, upper portion of the  chest, heart, belly,"
+    },
+    {
+      "id": "ch-lord_of_signs_dwadashamshas",
+      "number": null,
+      "title": "Lord of Signs & Dwadashamshas",
+      "level": 1,
+      "start_line": 506,
+      "end_line": 561,
+      "sections": [],
+      "content_preview": "Lord of Signs & Dwadashamshas  1  Mars  2  Venus  3  Mercury  4 "
+    },
+    {
+      "id": "ch-ti_it_i1ëf1if11lh1qmpl_il_7_il",
+      "number": null,
+      "title": "TI it ~: ~'i1ëf1If<.1!?1\"lh\"1q&mP:l: Il 7 Il",
+      "level": 1,
+      "start_line": 562,
+      "end_line": 756,
+      "sections": [],
+      "content_preview": "TI it ~: ~'i1ëf1If<.1!?1\"lh\"1q&mP:l: Il 7 Il  c  ln odd signs (1, 3, 5, 7, 9 and 11), the lord of the first five  degrees will be Mars, the next 5 degrees ie from 6 to 10 the lord  will be Saturn. The next 8 degrees ie from 11 to 18 the lord will  be Jupiter, of the next 7 ie 19 "
+    },
+    {
+      "id": "ch-debilita-_10",
+      "number": null,
+      "title": "Debilita- 10",
+      "level": 1,
+      "start_line": 757,
+      "end_line": 844,
+      "sections": [],
+      "content_preview": "Debilita- 10  3  28  15  5  tion degree  Mars: According to the table given above, Mars is ~xalted  in th~ sign Capricorn and in a constellation whose lor~ ~s Mars "
+    },
+    {
+      "id": "ch-libra_20th",
+      "number": null,
+      "title": "Libra 20th",
+      "level": 1,
+      "start_line": 845,
+      "end_line": 1134,
+      "sections": [],
+      "content_preview": "Libra 20th  Rahu  ln-the tables above, no degrees of exaltation or debilitation  have been given for Rahu and ketu. Obviously for the reason  that Rahu and Ketu are not mate rial bodies and they generally  act under the influence of the planets by whom they may be  aspected or wi"
+    },
+    {
+      "id": "ch-brihat_j_ataka",
+      "number": null,
+      "title": "Brihat J ataka",
+      "level": 1,
+      "start_line": 1135,
+      "end_line": 1175,
+      "sections": [],
+      "content_preview": "Brihat J ataka  ~; ~;  >Ml1~  ëiU1f: ~  fèll'\"4I~II&i  R1ëfi{g(jI~i<;JG\\1Îli  \"1 ~:  Il 20 Il "
+    },
+    {
+      "id": "ch-north_north",
+      "number": null,
+      "title": "North North",
+      "level": 1,
+      "start_line": 1176,
+      "end_line": 1178,
+      "sections": [],
+      "content_preview": "North North  West  East  East West  East  ~ J<j)êHI~rl1rQ{'tï~ ëiJ~G\\ljI('j~ mmr~~~: 'll'2fl1: II  Il  Thus ends the first chaptar on Signs in Brihat Jatak  composed by Varahamihira. "
+    },
+    {
+      "id": "ch-east_west",
+      "number": null,
+      "title": "East West",
+      "level": 1,
+      "start_line": 1179,
+      "end_line": 1339,
+      "sections": [],
+      "content_preview": "East West  East  ~ J<j)êHI~rl1rQ{'tï~ ëiJ~G\\ljI('j~ mmr~~~: 'll'2fl1: II  Il  Thus ends the first chaptar on Signs in Brihat Jatak  composed by Varahamihira.  2  !l8<i\\Pt9Q «1 0011(;4:  Planets "
+    },
+    {
+      "id": "ch-up1_er_1s",
+      "number": null,
+      "title": "Up1 er 1S",
+      "level": 1,
+      "start_line": 1340,
+      "end_line": 1354,
+      "sections": [],
+      "content_preview": "Up1 er 1S  .\"  d \"Ijya\"  .  .  1) \"A zira\" \"Surguru\" \"Vachaspab,  an  . "
+    },
+    {
+      "id": "ch-shukras_names_are",
+      "number": null,
+      "title": "Shukra's names are",
+      "level": 1,
+      "start_line": 1355,
+      "end_line": 1597,
+      "sections": [],
+      "content_preview": "Shukra's names are  ngu ,  _  .  is called \"Tarn\", \"Agu\" and. \"Asur\" (demon).  Ketu 18  called \"Shikhi\". "
+    },
+    {
+      "id": "ch-îch_1_ëitsfirêfi1_il_l3",
+      "number": null,
+      "title": "ÎCh ~1 ëit~sfi:rêfi1: Il l3",
+      "level": 1,
+      "start_line": 1598,
+      "end_line": 1758,
+      "sections": [],
+      "content_preview": "ÎCh ~1 ëit~sfi:rêfi1: Il l3  1 1  A planet aspects ie throws its influence on the 3rd and lOth  place with 1/4th of its total aspect. It aspects the place 5th and  9th from it with half of its aspect, it influences the place 4th  and 8th from it with 3/4th of its power of aspect."
+    },
+    {
+      "id": "ch-brihat_j_ataka-2",
+      "number": null,
+      "title": "Brihat J ataka",
+      "level": 1,
+      "start_line": 1759,
+      "end_line": 1885,
+      "sections": [],
+      "content_preview": "Brihat J ataka  39  Planets  strength if it occupies the 7th house. Similarly Venus and  Moon when situated in the 4th house of any birth chart get  directional strength.  Commentary: The directional strength of planets becom~s  zero in the 7th bouse from that specified. ln the i"
+    },
+    {
+      "id": "ch-w1rt1_",
+      "number": null,
+      "title": "W1RT1_ ~",
+      "level": 1,
+      "start_line": 1886,
+      "end_line": 1903,
+      "sections": [],
+      "content_preview": "W1RT1_ ~  ~  &i q~fB1nÙ;k)~ 1fcà11 4  Il  The colour of the body of the animal should be ascertained  from the colour of the navamsha sign in the lagna or from the  colour of the planet associated with or aspecting the lagna  whichever is stronger. The number of planets located i"
+    },
+    {
+      "id": "ch-non-human_births",
+      "number": null,
+      "title": "Non-Human Births",
+      "level": 1,
+      "start_line": 1904,
+      "end_line": 2141,
+      "sections": [],
+      "content_preview": "Non-Human Births  43  If in the birth chart there is in the ascendant the  navamsha of a movable sign and a strong planet in lagna  occupies a \"bird decante\" the birth of a bird takes place.  Similarly if the navamshain the lagna belongs to Mercury and  the lagna is associated wi"
+    },
+    {
+      "id": "ch-sex_of_child",
+      "number": null,
+      "title": "Sex of Child",
+      "level": 1,
+      "start_line": 2142,
+      "end_line": 2612,
+      "sections": [],
+      "content_preview": "Sex of Child  ~  S{ît!li~l~g~:  ~  ~ët~ffil1i~lëfîJI~4J~g ~:  1  ~  ~ "
+    },
+    {
+      "id": "ch-birth_conditions",
+      "number": null,
+      "title": "Birth Conditions",
+      "level": 1,
+      "start_line": 2613,
+      "end_line": 2661,
+      "sections": [],
+      "content_preview": "Birth Conditions  59  Birth as Twins  -m1t fu%' ~ ~ ~ mts~ ~ 1  u~<i~F81~< TTBl ~  ~1(Yj~fG2:(1: Il 5 Il  If the Sun is located in an animal sign (1, 2, 5, the latter  portion of Sagittarius or the Ist half of Capricorn) a~d the ~est "
+    },
+    {
+      "id": "ch-bhii",
+      "number": null,
+      "title": "BHI~I~ ~",
+      "level": 1,
+      "start_line": 2662,
+      "end_line": 2985,
+      "sections": [],
+      "content_preview": "BHI~I~ ~  ~  ~~ ~I  ~W~sfqCfT~~~118  Il  .  h  . "
+    },
+    {
+      "id": "ch-birth_conditions-2",
+      "number": null,
+      "title": "Birth Conditions",
+      "level": 1,
+      "start_line": 2986,
+      "end_line": 3120,
+      "sections": [],
+      "content_preview": "Birth Conditions  65  Body of the Child  (.1l '1'1qi~lqÜt\"lldj: flll~09)@~ Üt\"lldjëlll  'tI'{'8qd1qi~lqqOI:  êfîlfcJéI(.1l1féli1<Rl'l1lTBf: Il 23 Il  The body of the child born will have the characteristics ~f  the planet who is the lord of the navamsha of the lagna, or it "
+    },
+    {
+      "id": "ch-lagna_ascendant_at_birth",
+      "number": null,
+      "title": "Lagna ascendant at birth",
+      "level": 1,
+      "start_line": 3121,
+      "end_line": 3124,
+      "sections": [],
+      "content_preview": "Lagna ascendant at birth  1  1  9  Longitude of Sun at birth  3  11  35 "
+    },
+    {
+      "id": "ch-longitude_of_sun_at_birth",
+      "number": null,
+      "title": "Longitude of Sun at birth",
+      "level": 1,
+      "start_line": 3125,
+      "end_line": 3128,
+      "sections": [],
+      "content_preview": "Longitude of Sun at birth  3  11  35  Longitude of Moon at birth 3  13  14  . Since Moon is below horizon, we will have to take its "
+    },
+    {
+      "id": "ch-longitude_of_moon_at_birth_3",
+      "number": null,
+      "title": "Longitude of Moon at birth 3",
+      "level": 1,
+      "start_line": 3129,
+      "end_line": 3155,
       "sections": [
         {
-          "id": "ch-2-sec-the_siderial_time_at_noon_according_to_lahiri_was",
+          "id": "ch-longitude_of_moon_at_birth_3-sec-the_siderial_time_at_noon_according_to_lahiri_was",
           "title": "the siderial time at noon according to Lahiri was",
           "level": 2,
           "start_line": 3138,
-          "end_line": 5000,
+          "end_line": 3154,
           "content_preview": ""
         }
       ],
-      "content_preview": "2. It would be relevant to make mention of another prin-  ciple applicable to the multiple births. Multiple births are  obviously not only in number more than the usual one, they  also denote the simultaneous birth of co-sisters or brothers ..  Mercury being a planet of multiplic"
+      "content_preview": "Longitude of Moon at birth 3  13  14  . Since Moon is below horizon, we will have to take its  dls~ance. ~rom the asc.endant (~-1-9). This distance is 73° 5',  w~lch divided by 12 grves quotient as 6. Since Moon is of the  bright half ~nd below horizon, we will have to add 6 days"
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Yupa ('ri), 2. Ishu",
+      "id": "ch-factors_for_early_deth",
+      "number": null,
+      "title": "Factors for Early De.th",
       "level": 1,
-      "start_line": 5002,
-      "end_line": 5004,
+      "start_line": 3156,
+      "end_line": 3518,
       "sections": [],
-      "content_preview": "1. Yupa ('ri), 2. Ishu  ._.\".  d (~) 8 Chhatram  5. Dandam (<\\U6), 6. Gada (1T\"\\[), 7. Samu ra  ._.\".  ## Page 56 "
+      "content_preview": "Factors for Early De.th  ~~~~I  ~  ){If~tqtqflq~: ~  \"fi fc~11~1:t~fct Il  1  Il  A child born at the Sandhya (Twi light--ie the duration "
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Dandam (<\\U6), 6. Gada (1T\"\\[), 7. Samu ra",
+      "id": "ch-fqtsuj1cj1sftr_ëjfql41",
+      "number": null,
+      "title": "FqtSUJ1cJ1sftr ~ ~ë.jfql41 ~~",
       "level": 1,
-      "start_line": 5005,
-      "end_line": 5012,
+      "start_line": 3519,
+      "end_line": 3615,
       "sections": [],
-      "content_preview": "5. Dandam (<\\U6), 6. Gada (1T\"\\[), 7. Samu ra  ._.\".  ## Page 56  108  Brihat Jataka  (~), 9. Ardha Chandram (31i ~), "
+      "content_preview": "FqtSUJ1cJ1sftr ~ ~ë.jfql41 ~~  ï:Tt1  ~q~~qi ~S62:Ië.jnti Wfqy 1Iqffi~11: ~II  711  Vishnu Gupta, Devaswami and Siddhasen have followed a  system of determining longevity. The fault in the system  adopted by them lies in the fact that after leaving 8 years for  infantile death th"
     },
     {
-      "id": "ch-10",
-      "number": "10",
-      "title": "Shakatam (W<R),",
+      "id": "ch-span_oflife",
+      "number": null,
+      "title": "Span ofLife",
       "level": 1,
-      "start_line": 5013,
-      "end_line": 5013,
+      "start_line": 3616,
+      "end_line": 3695,
       "sections": [],
-      "content_preview": "10. Shakatam (W<R),  11. Ambujam (3fOj\\lf),  12. Pakshi (1lll.-TT) , 13. Nau (1'~),  14. Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),  17. Karmukam (~),  18. Kutam (~), 19. Vapi (qrql-),  20. Shringashtak (~).  The names of Sankhya Yogas are: "
+      "content_preview": "Span ofLife  d  te Satyacharya enjoins  h  d i his own ecana ,  .  own navams a an ln  'nvolved which gIves "
     },
     {
-      "id": "ch-11",
-      "number": "11",
-      "title": "Ambujam (3fOj\\lf),",
+      "id": "ch-if_more_than_one_planet_is_situated",
+      "number": null,
+      "title": "If more than one planet is situated .",
       "level": 1,
-      "start_line": 5014,
-      "end_line": 5014,
+      "start_line": 3696,
+      "end_line": 3833,
       "sections": [],
-      "content_preview": "11. Ambujam (3fOj\\lf),  12. Pakshi (1lll.-TT) , 13. Nau (1'~),  14. Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),  17. Karmukam (~),  18. Kutam (~), 19. Vapi (qrql-),  20. Shringashtak (~).  The names of Sankhya Yogas are:  1. Veena, (ëft;rr) 2. Vardamah (~), "
+      "content_preview": "If more than one planet is situated .  .  who has contributed the gr te t  ln a sign, the planet  strong will have the d  eafi s number of years to life and is  asa irst When planet  f "
     },
     {
-      "id": "ch-12",
-      "number": "12",
-      "title": "Pakshi (1lll.-TT) , 13. Nau (1'~),",
+      "id": "ch-brihat_jataka",
+      "number": null,
+      "title": "Brihat Jataka",
       "level": 1,
-      "start_line": 5015,
-      "end_line": 5015,
+      "start_line": 3834,
+      "end_line": 3981,
       "sections": [],
-      "content_preview": "12. Pakshi (1lll.-TT) , 13. Nau (1'~),  14. Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),  17. Karmukam (~),  18. Kutam (~), 19. Vapi (qrql-),  20. Shringashtak (~).  The names of Sankhya Yogas are:  1. Veena, (ëft;rr) 2. Vardamah (~),  3. Pashah (\"I1\"m), "
+      "content_preview": "Brihat Jataka  ~  tl'R'I<::q{1f6~<>~1 11~ ~  ~'ilM  1  ~  f'11\"1qf{'\"1i181 ~~~  ~II "
     },
     {
-      "id": "ch-14",
-      "number": "14",
-      "title": "Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),",
+      "id": "ch-ruting_and_sub_ruling_periods",
+      "number": null,
+      "title": "Ruting and Sub Ruling Periods",
       "level": 1,
-      "start_line": 5016,
-      "end_line": 5016,
+      "start_line": 3982,
+      "end_line": 3983,
       "sections": [],
-      "content_preview": "14. Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),  17. Karmukam (~),  18. Kutam (~), 19. Vapi (qrql-),  20. Shringashtak (~).  The names of Sankhya Yogas are:  1. Veena, (ëft;rr) 2. Vardamah (~),  3. Pashah (\"I1\"m),  4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~). "
+      "content_preview": "Ruting and Sub Ruling Periods  87  Dasa of Moon  ~:  >fTlZ{ m ~ ~~ qT'5lr~Cï1If1~ëtl-  .;fi~a:n {rqChI{('R~êf1~ q Shl:s Ir(kll?l~:  f1S:J(1f4%r~Cï1lqHrd: ~  itmm "
     },
     {
-      "id": "ch-17",
-      "number": "17",
-      "title": "Karmukam (~),",
+      "id": "ch-dasa_of_moon",
+      "number": null,
+      "title": "Dasa of Moon",
       "level": 1,
-      "start_line": 5017,
-      "end_line": 5017,
+      "start_line": 3984,
+      "end_line": 4070,
       "sections": [],
-      "content_preview": "17. Karmukam (~),  18. Kutam (~), 19. Vapi (qrql-),  20. Shringashtak (~).  The names of Sankhya Yogas are:  1. Veena, (ëft;rr) 2. Vardamah (~),  3. Pashah (\"I1\"m),  4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).  The names of Ashraya Yogas are: "
+      "content_preview": "Dasa of Moon  ~:  >fTlZ{ m ~ ~~ qT'5lr~Cï1If1~ëtl-  .;fi~a:n {rqChI{('R~êf1~ q Shl:s Ir(kll?l~:  f1S:J(1f4%r~Cï1lqHrd: ~  itmm  ~~ap:I)  'q Glfuf~ ~'1UT 'q Il 13 Il "
     },
     {
-      "id": "ch-18",
-      "number": "18",
-      "title": "Kutam (~), 19. Vapi (qrql-),",
+      "id": "ch-dasa_of_venus",
+      "number": null,
+      "title": "Dasa of Venus",
       "level": 1,
-      "start_line": 5018,
-      "end_line": 5018,
+      "start_line": 4071,
+      "end_line": 4228,
       "sections": [],
-      "content_preview": "18. Kutam (~), 19. Vapi (qrql-),  20. Shringashtak (~).  The names of Sankhya Yogas are:  1. Veena, (ëft;rr) 2. Vardamah (~),  3. Pashah (\"I1\"m),  4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).  The names of Ashraya Yogas are:  1. Rajju (~), 2. N ala (~), 3. Moosal ('Tff"
+      "content_preview": "Dasa of Venus  ~  JAct{fd>ljOikmf'>l~oq'l'IqIiIJ04{  '\"  ~l{M~f(1Ir::cj~lqêfî{OI'iiI~Gêfq':'lI'IGI:  1  ~  Çfïqf2lÇfï~ ~~~if'WI41 "
     },
     {
-      "id": "ch-20",
-      "number": "20",
-      "title": "Shringashtak (~).",
+      "id": "ch-ashlak_varga",
+      "number": null,
+      "title": "Ashlak Varga",
       "level": 1,
-      "start_line": 5019,
-      "end_line": 5020,
+      "start_line": 4229,
+      "end_line": 4422,
       "sections": [],
-      "content_preview": "20. Shringashtak (~).  The names of Sankhya Yogas are:  1. Veena, (ëft;rr) 2. Vardamah (~),  3. Pashah (\"I1\"m),  4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).  The names of Ashraya Yogas are:  1. Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),  5. Sarpa (\"Wf). "
+      "content_preview": "Ashlak Varga  ~:~~  q<;tïlffqlf\"q ~  <fq'J1I~<;tïI('flHh'4IRg  1  \\J1Îqlot:4~(i11l~I~g  <\\~13lI11IIRJI:  ~- "
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Veena, (ëft;rr) 2. Vardamah (~),",
+      "id": "ch-transit_results_should_b",
+      "number": null,
+      "title": "Transit results should b",
       "level": 1,
-      "start_line": 5021,
-      "end_line": 5021,
+      "start_line": 4423,
+      "end_line": 4428,
       "sections": [],
-      "content_preview": "1. Veena, (ëft;rr) 2. Vardamah (~),  3. Pashah (\"I1\"m),  4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).  The names of Ashraya Yogas are:  1. Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),  5. Sarpa (\"Wf).  .  9, 10 and 8 multiplied respectively by 3,3 and 4 giv"
+      "content_preview": "Transit results should b  id  d  ane s concerned.  e consr ere from th'  .  Moon at birth. Planets in upach  h "
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Pashah (\"I1\"m),",
+      "id": "ch-moon_at_birth_planets_in_upach",
+      "number": null,
+      "title": "Moon at birth. Planets in upach",
       "level": 1,
-      "start_line": 5022,
-      "end_line": 5022,
+      "start_line": 4429,
+      "end_line": 4465,
       "sections": [],
-      "content_preview": "3. Pashah (\"I1\"m),  4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).  The names of Ashraya Yogas are:  1. Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),  5. Sarpa (\"Wf).  .  9, 10 and 8 multiplied respectively by 3,3 and 4 give 27,30  and 32 as the number of N ab"
+      "content_preview": "Moon at birth. Planets in upach  h  e sign occupled by  friendly houses in their  h aya ou~es (3, 6, 10 and 11), in  ,  own OUses or ln th'  . "
     },
     {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).",
+      "id": "ch-nature_of_profession",
+      "number": null,
+      "title": "Nature of Profession",
       "level": 1,
-      "start_line": 5023,
-      "end_line": 5024,
+      "start_line": 4466,
+      "end_line": 4679,
       "sections": [],
-      "content_preview": "4. Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).  The names of Ashraya Yogas are:  1. Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),  5. Sarpa (\"Wf).  .  9, 10 and 8 multiplied respectively by 3,3 and 4 give 27,30  and 32 as the number of N abhas Yogas in differe"
+      "content_preview": "Nature of Profession  3T~:  R1ctql(jflqM~I5jP\"\"l5j~'lO\"Jctq;\"111~ëjlq;<I~:  1  Co  c  ....:;  c "
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),",
+      "id": "ch-1_1_t1",
+      "number": null,
+      "title": "1!'\" \\1 T1",
       "level": 1,
-      "start_line": 5025,
-      "end_line": 5025,
+      "start_line": 4680,
+      "end_line": 4700,
       "sections": [],
-      "content_preview": "1. Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),  5. Sarpa (\"Wf).  .  9, 10 and 8 multiplied respectively by 3,3 and 4 give 27,30  and 32 as the number of N abhas Yogas in different combina-  tions of 2, 3 or 4 of the Aakriti; Ashraya etc. The Yavanacharya  has held th"
+      "content_preview": "1!'\" \\1 T1  ~  ~  \"j:1'l1~lf~I'l1lq51 ~  1  ~  ~  lJ{î~lf~lfB(1Iwfi:T ~ "
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Sarpa (\"Wf).",
+      "id": "ch-brihat_jataka-2",
+      "number": null,
+      "title": "Brihat Jataka",
       "level": 1,
-      "start_line": 5026,
-      "end_line": 5049,
+      "start_line": 4701,
+      "end_line": 4880,
       "sections": [],
-      "content_preview": "5. Sarpa (\"Wf).  .  9, 10 and 8 multiplied respectively by 3,3 and 4 give 27,30  and 32 as the number of N abhas Yogas in different combina-  tions of 2, 3 or 4 of the Aakriti; Ashraya etc. The Yavanacharya  has held them to be of 1800 types, but in this book these have  heen dea"
+      "content_preview": "Brihat Jataka  ~ ~  ~  êl2qllq~~g rn-  4qRlttilS~  ~ ~:~  ëW~1  ~ ~ lf<ff ~IRl WI~ "
     },
     {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Aakriti Yogas",
+      "id": "ch-il_18_1",
+      "number": null,
+      "title": "Il 18 1 \\",
       "level": 1,
-      "start_line": 5050,
-      "end_line": 8343,
+      "start_line": 4881,
+      "end_line": 4888,
       "sections": [],
-      "content_preview": "5. Aakriti Yogas  311fl.....,~~'lOJël\"iG;q~Jf<;I@-H\"~1;:qf\\i~g~lêfî2·  fcwT: ~:  1  ~  'iq'\"\"lq:gj'\"\"l(1J1fi~(\"hl\"lf~!ë.1f'\"\"lfct  ~  ~:II "
+      "content_preview": "Il 18 1 \\  -:;  -:;  t Ju iter Venus or Mercury  If the sign in lagna belon~s. °th P7th house Sun is in the  12 2 7 3 or 6) Saturn IS m e  ,  t . "
     },
     {
-      "id": "ch-15",
-      "number": "15",
-      "title": "The Iagna has to be a",
+      "id": "ch-cie_9",
+      "number": null,
+      "title": "Cie 9, ,\"",
       "level": 1,
-      "start_line": 8344,
-      "end_line": 9343,
+      "start_line": 4889,
+      "end_line": 5058,
       "sections": [],
-      "content_preview": "15. The Iagna has to be a  sign owned by Mars or Sat-  urn. Moon and Venus shouid  be in Iagna and aspected by  maiefics. Then the girl  aiongwith her mother will  commit aduitery.  ~~~~lWIT~~~1 "
+      "content_preview": "Cie 9, ,\"  '.  h  a will have enjoymen s m  O h th person born m suc a yog  (by  1 t,  e "
     },
     {
-      "id": "ch-27",
-      "number": "27",
-      "title": "The remainder sh rac ~~g nme from this total, divide it by",
+      "id": "ch-nabhas_heavenly_yogas",
+      "number": null,
+      "title": "Nabhas (Heavenly) Yogas",
       "level": 1,
-      "start_line": 9344,
+      "start_line": 5059,
+      "end_line": 5156,
+      "sections": [],
+      "content_preview": "Nabhas (Heavenly) Yogas  109  If all the planets occupy only two adjoining kendras  \"Gada\" Yoga is formed (It would be of four types ie as between  lagna and 4th, 4th and 7th, 7th and 10th, and 10th and lst). If  aIl the planets are in the lst and 7th houses, the yoga goes by  th"
+    },
+    {
+      "id": "ch-nabhas_heauenly_yogas",
+      "number": null,
+      "title": "Nabhas (Heauenly) Yogas",
+      "level": 1,
+      "start_line": 5157,
+      "end_line": 5273,
+      "sections": [],
+      "content_preview": "Nabhas (Heauenly) Yogas  111  When the seven planets (Sun, Moon, Mars, Mercury, Jupi-  ter, Venus and Saturn) occupy any seven places in the, horo-  scope, they create one of the sankhya yogas called \"Vallaki\". If  the seven planets occupy any six places of the horoscope they  cr"
+    },
+    {
+      "id": "ch-nabhas_heavenly_yogas-2",
+      "number": null,
+      "title": "Nabhas (Heavenly) Yogas",
+      "level": 1,
+      "start_line": 5274,
+      "end_line": 5792,
+      "sections": [],
+      "content_preview": "Nabhas (Heavenly) Yogas  113  Nau etc  ~~~:~~~:  ~S'1 (\"j C(1 q '1 <SI ;:q;r:r~ ;Jf[(!: 1  .: fël 'l1 '1 «î &:1 Ch ~S'f<:j «î &:1 :  m~ ~: >l~S'f<:j«î&:l: Il  16 Il "
+    },
+    {
+      "id": "ch-mercury_rahu",
+      "number": null,
+      "title": "Mercury Rahu",
+      "level": 1,
+      "start_line": 5793,
+      "end_line": 5933,
+      "sections": [],
+      "content_preview": "Mercury Rahu  Venus  Jupiter  L  Saturn  Ketu  ## Page 65"
+    },
+    {
+      "id": "ch-traits_of_asterisms",
+      "number": null,
+      "title": "Traits of Asterisms",
+      "level": 1,
+      "start_line": 5934,
+      "end_line": 6200,
+      "sections": [],
+      "content_preview": "Traits of Asterisms  129  One born with Moon in \"Vishakha\" nakshatra is jealous,  greedy, active, clever at speech, engaged in querrels. One born  in \"Anuradha\" nakshatra is wealthy, lives in another country,  feels hungry too often and is roaming always.  ~.,.~:  ~ "
+    },
+    {
+      "id": "ch-moon_in_capricorn",
+      "number": null,
+      "title": "Moon in Capricorn",
+      "level": 1,
+      "start_line": 6201,
+      "end_line": 6605,
+      "sections": [],
+      "content_preview": "Moon in Capricorn  m ~  {:qi!J{\\11l1t~~S'Q:  <pl:  fCia,i: a,\"lIYêhfè:'j\\3Î(jqiH:  \"BT~SffiT: 1  ~n(jlwf1;ffisz;:r~  \"1Tcf>1: -mmf~: ~- "
+    },
+    {
+      "id": "ch-tftr_lfll_fl0wliflfd",
+      "number": null,
+      "title": "TfT!r: lFll\": fl0!W<lIflf~d",
+      "level": 1,
+      "start_line": 6606,
+      "end_line": 8065,
+      "sections": [],
+      "content_preview": "TfT!r: lFll\": fl0!W<lIflf~d  ~  o;  ~  '\\1'l....,:.l~1  ~  fèli;HIG<.jl 1q;jjf1(1q~sftm'qTT:  Il 1611 "
+    },
+    {
+      "id": "ch-female_horoscopy",
+      "number": null,
+      "title": "Female Horoscopy",
+      "level": 1,
+      "start_line": 8066,
+      "end_line": 8098,
+      "sections": [],
+      "content_preview": "Female Horoscopy  ~  ~~5a;lti14~'1Hi \\11'1G:~\\qr(jg ël! ~  ~  (ffil]' TI ~  f.r:R ~ ~  ~~JI\\1IB1li~  1:ffu~11 1 "
+    },
+    {
+      "id": "ch-female_horoscopy-2",
+      "number": null,
+      "title": "Female Horoscopy",
+      "level": 1,
+      "start_line": 8099,
+      "end_line": 8537,
+      "sections": [],
+      "content_preview": "Female Horoscopy  177  When the lagna and the sign occupied by the Moon are  even signs, the woman will be modest; if these are aspected by  benefics, she is virtuous.  If the lagna and the Moon-sign are odd signs she has a  masculine form and nature. If these are with or aspecte"
+    },
+    {
+      "id": "ch-when_the_sùn_and_others_occu_th",
+      "number": null,
+      "title": "When the Sùn and others occu th",
+      "level": 1,
+      "start_line": 8538,
+      "end_line": 8546,
+      "sections": [],
+      "content_preview": "When the Sùn and others occu th  . h  death is respectively' nue t fi  py e eig th house, then  thirst and h  .  0 ire, water, weapon, fever, disease  unger. "
+    },
+    {
+      "id": "ch-when_the_eighth_ho",
+      "number": null,
+      "title": "When the eighth ho'",
+      "level": 1,
+      "start_line": 8547,
+      "end_line": 9316,
+      "sections": [],
+      "content_preview": "When the eighth ho'  .  his place' when it . s fi used l~ta  .movable sign, death is outside  ,  1  ixec, 1 lS at home and wh  't' "
+    },
+    {
+      "id": "ch-this_must_be_done_with_si",
+      "number": null,
+      "title": "This must be done with si",
+      "level": 1,
+      "start_line": 9317,
+      "end_line": 9514,
+      "sections": [],
+      "content_preview": "This must be done with si  If  must also undergo this proce~~:~'  a planet is in lagna, it  Note: Reduce the degr  f th  \"  minutes. Then multiply it e:stoh .re nsmg.sign at query with "
+    },
+    {
+      "id": "ch-il_16_il",
+      "number": null,
+      "title": "Il 16 Il",
+      "level": 1,
+      "start_line": 9515,
+      "end_line": 9871,
+      "sections": [],
+      "content_preview": "Il 16 Il  ,~  The figures from east, south east, south and so on to north  east are 2, 3, 14, 10, 15,21,9 and 8. These are to be multiplied  by 15. Add the number ofperson, looking at the same direction  as the questioner. Divide this by 27 and count the remainder  from Dhanishth"
+    },
+    {
+      "id": "ch-sfî1q1fltllif1",
+      "number": null,
+      "title": "Sfî1q1:fl\\TllIf1 ~~",
+      "level": 1,
+      "start_line": 9872,
+      "end_line": 10026,
+      "sections": [],
+      "content_preview": "Sfî1q1:fl\\TllIf1 ~~  \\~~  ~'lWT:  Il 25 Il  The first drekkana of Dhanush is a man with a human face  and the body of a horse. He has a bow in hand, resides in a  hermitage, and protects sacrificial items and sages.  ~ "
+    },
+    {
+      "id": "ch-concluding_chaptel",
+      "number": null,
+      "title": "Concluding Chaptel",
+      "level": 1,
+      "start_line": 10027,
+      "end_line": 10095,
+      "sections": [],
+      "content_preview": "Concluding Chaptel  ~ïf~  ~  fq<nf1'l1;:qIS21 f1Qêhêhl<.1: 1  ~S21  m.n muT 312.TTSS9J<{~IIfqqlc:hlSQêhëPf~l\\\"l: Il 111  The first chapter is Rasi Prabheda,  the second Graha yoni Bheda, "
+    },
+    {
+      "id": "ch-1_wst_1",
+      "number": null,
+      "title": "1'.[ \"WS!T 1",
+      "level": 1,
+      "start_line": 10096,
+      "end_line": 10455,
+      "sections": [],
+      "content_preview": "1'.[ \"WS!T 1  ~Sll'  ll<TT ~  ~  fuor:r Il  611  <  (1) Pras na Prabheda, (2) Tithi BaIa, (3), Nakshatra "
+    },
+    {
+      "id": "ch-over_900_big_size_pages",
+      "number": null,
+      "title": "Over 900 big size pages.",
+      "level": 1,
+      "start_line": 10456,
       "end_line": 10457,
       "sections": [],
-      "content_preview": "27. The remainder sh rac ~~g nme from this total, divide it by  counted from Ashvini.ows  e star at the time of birth. It is  From the lagna at query, the seventh, third, fûth and sixth  Unknoum Horoscopes  203  bhavas can also be indicated alongwith the stars falling in  them. "
+      "content_preview": "Over 900 big size pages. "
     }
   ],
   "toc": [
     {
-      "id": "ch-2-sec-the_siderial_time_at_noon_according_to_lahiri_was",
+      "id": "ch-on_signs",
+      "title": "On Signs",
+      "chapter": "On Signs",
+      "chapter_id": "ch-on_signs"
+    },
+    {
+      "id": "ch-lord_of_signs_dwadashamshas",
+      "title": "Lord of Signs & Dwadashamshas",
+      "chapter": "Lord of Signs & Dwadashamshas",
+      "chapter_id": "ch-lord_of_signs_dwadashamshas"
+    },
+    {
+      "id": "ch-ti_it_i1ëf1if11lh1qmpl_il_7_il",
+      "title": "TI it ~: ~'i1ëf1If<.1!?1\"lh\"1q&mP:l: Il 7 Il",
+      "chapter": "TI it ~: ~'i1ëf1If<.1!?1\"lh\"1q&mP:l: Il 7 Il",
+      "chapter_id": "ch-ti_it_i1ëf1if11lh1qmpl_il_7_il"
+    },
+    {
+      "id": "ch-debilita-_10",
+      "title": "Debilita- 10",
+      "chapter": "Debilita- 10",
+      "chapter_id": "ch-debilita-_10"
+    },
+    {
+      "id": "ch-libra_20th",
+      "title": "Libra 20th",
+      "chapter": "Libra 20th",
+      "chapter_id": "ch-libra_20th"
+    },
+    {
+      "id": "ch-brihat_j_ataka",
+      "title": "Brihat J ataka",
+      "chapter": "Brihat J ataka",
+      "chapter_id": "ch-brihat_j_ataka"
+    },
+    {
+      "id": "ch-north_north",
+      "title": "North North",
+      "chapter": "North North",
+      "chapter_id": "ch-north_north"
+    },
+    {
+      "id": "ch-east_west",
+      "title": "East West",
+      "chapter": "East West",
+      "chapter_id": "ch-east_west"
+    },
+    {
+      "id": "ch-up1_er_1s",
+      "title": "Up1 er 1S",
+      "chapter": "Up1 er 1S",
+      "chapter_id": "ch-up1_er_1s"
+    },
+    {
+      "id": "ch-shukras_names_are",
+      "title": "Shukra's names are",
+      "chapter": "Shukra's names are",
+      "chapter_id": "ch-shukras_names_are"
+    },
+    {
+      "id": "ch-îch_1_ëitsfirêfi1_il_l3",
+      "title": "ÎCh ~1 ëit~sfi:rêfi1: Il l3",
+      "chapter": "ÎCh ~1 ëit~sfi:rêfi1: Il l3",
+      "chapter_id": "ch-îch_1_ëitsfirêfi1_il_l3"
+    },
+    {
+      "id": "ch-brihat_j_ataka-2",
+      "title": "Brihat J ataka",
+      "chapter": "Brihat J ataka",
+      "chapter_id": "ch-brihat_j_ataka-2"
+    },
+    {
+      "id": "ch-w1rt1_",
+      "title": "W1RT1_ ~",
+      "chapter": "W1RT1_ ~",
+      "chapter_id": "ch-w1rt1_"
+    },
+    {
+      "id": "ch-non-human_births",
+      "title": "Non-Human Births",
+      "chapter": "Non-Human Births",
+      "chapter_id": "ch-non-human_births"
+    },
+    {
+      "id": "ch-sex_of_child",
+      "title": "Sex of Child",
+      "chapter": "Sex of Child",
+      "chapter_id": "ch-sex_of_child"
+    },
+    {
+      "id": "ch-birth_conditions",
+      "title": "Birth Conditions",
+      "chapter": "Birth Conditions",
+      "chapter_id": "ch-birth_conditions"
+    },
+    {
+      "id": "ch-bhii",
+      "title": "BHI~I~ ~",
+      "chapter": "BHI~I~ ~",
+      "chapter_id": "ch-bhii"
+    },
+    {
+      "id": "ch-birth_conditions-2",
+      "title": "Birth Conditions",
+      "chapter": "Birth Conditions",
+      "chapter_id": "ch-birth_conditions-2"
+    },
+    {
+      "id": "ch-lagna_ascendant_at_birth",
+      "title": "Lagna ascendant at birth",
+      "chapter": "Lagna ascendant at birth",
+      "chapter_id": "ch-lagna_ascendant_at_birth"
+    },
+    {
+      "id": "ch-longitude_of_sun_at_birth",
+      "title": "Longitude of Sun at birth",
+      "chapter": "Longitude of Sun at birth",
+      "chapter_id": "ch-longitude_of_sun_at_birth"
+    },
+    {
+      "id": "ch-longitude_of_moon_at_birth_3-sec-the_siderial_time_at_noon_according_to_lahiri_was",
       "title": "the siderial time at noon according to Lahiri was",
-      "chapter": "It would be relevant to make mention of another prin",
-      "chapter_id": "ch-2"
+      "chapter": "Longitude of Moon at birth 3",
+      "chapter_id": "ch-longitude_of_moon_at_birth_3"
     },
     {
-      "id": "ch-2",
-      "title": "It would be relevant to make mention of another prin",
-      "chapter": "It would be relevant to make mention of another prin",
-      "chapter_id": "ch-2"
+      "id": "ch-longitude_of_moon_at_birth_3",
+      "title": "Longitude of Moon at birth 3",
+      "chapter": "Longitude of Moon at birth 3",
+      "chapter_id": "ch-longitude_of_moon_at_birth_3"
     },
     {
-      "id": "ch-1",
-      "title": "Yupa ('ri), 2. Ishu",
-      "chapter": "Yupa ('ri), 2. Ishu",
-      "chapter_id": "ch-1"
+      "id": "ch-factors_for_early_deth",
+      "title": "Factors for Early De.th",
+      "chapter": "Factors for Early De.th",
+      "chapter_id": "ch-factors_for_early_deth"
     },
     {
-      "id": "ch-5",
-      "title": "Dandam (<\\U6), 6. Gada (1T\"\\[), 7. Samu ra",
-      "chapter": "Dandam (<\\U6), 6. Gada (1T\"\\[), 7. Samu ra",
-      "chapter_id": "ch-5"
+      "id": "ch-fqtsuj1cj1sftr_ëjfql41",
+      "title": "FqtSUJ1cJ1sftr ~ ~ë.jfql41 ~~",
+      "chapter": "FqtSUJ1cJ1sftr ~ ~ë.jfql41 ~~",
+      "chapter_id": "ch-fqtsuj1cj1sftr_ëjfql41"
     },
     {
-      "id": "ch-10",
-      "title": "Shakatam (W<R),",
-      "chapter": "Shakatam (W<R),",
-      "chapter_id": "ch-10"
+      "id": "ch-span_oflife",
+      "title": "Span ofLife",
+      "chapter": "Span ofLife",
+      "chapter_id": "ch-span_oflife"
     },
     {
-      "id": "ch-11",
-      "title": "Ambujam (3fOj\\lf),",
-      "chapter": "Ambujam (3fOj\\lf),",
-      "chapter_id": "ch-11"
+      "id": "ch-if_more_than_one_planet_is_situated",
+      "title": "If more than one planet is situated .",
+      "chapter": "If more than one planet is situated .",
+      "chapter_id": "ch-if_more_than_one_planet_is_situated"
     },
     {
-      "id": "ch-12",
-      "title": "Pakshi (1lll.-TT) , 13. Nau (1'~),",
-      "chapter": "Pakshi (1lll.-TT) , 13. Nau (1'~),",
-      "chapter_id": "ch-12"
+      "id": "ch-brihat_jataka",
+      "title": "Brihat Jataka",
+      "chapter": "Brihat Jataka",
+      "chapter_id": "ch-brihat_jataka"
     },
     {
-      "id": "ch-14",
-      "title": "Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),",
-      "chapter": "Chakram ('qçn) , 15. Vajram (qqr), 16. Halam (Q~),",
-      "chapter_id": "ch-14"
+      "id": "ch-ruting_and_sub_ruling_periods",
+      "title": "Ruting and Sub Ruling Periods",
+      "chapter": "Ruting and Sub Ruling Periods",
+      "chapter_id": "ch-ruting_and_sub_ruling_periods"
     },
     {
-      "id": "ch-17",
-      "title": "Karmukam (~),",
-      "chapter": "Karmukam (~),",
-      "chapter_id": "ch-17"
+      "id": "ch-dasa_of_moon",
+      "title": "Dasa of Moon",
+      "chapter": "Dasa of Moon",
+      "chapter_id": "ch-dasa_of_moon"
     },
     {
-      "id": "ch-18",
-      "title": "Kutam (~), 19. Vapi (qrql-),",
-      "chapter": "Kutam (~), 19. Vapi (qrql-),",
-      "chapter_id": "ch-18"
+      "id": "ch-dasa_of_venus",
+      "title": "Dasa of Venus",
+      "chapter": "Dasa of Venus",
+      "chapter_id": "ch-dasa_of_venus"
     },
     {
-      "id": "ch-20",
-      "title": "Shringashtak (~).",
-      "chapter": "Shringashtak (~).",
-      "chapter_id": "ch-20"
+      "id": "ch-ashlak_varga",
+      "title": "Ashlak Varga",
+      "chapter": "Ashlak Varga",
+      "chapter_id": "ch-ashlak_varga"
     },
     {
-      "id": "ch-1",
-      "title": "Veena, (ëft;rr) 2. Vardamah (~),",
-      "chapter": "Veena, (ëft;rr) 2. Vardamah (~),",
-      "chapter_id": "ch-1"
+      "id": "ch-transit_results_should_b",
+      "title": "Transit results should b",
+      "chapter": "Transit results should b",
+      "chapter_id": "ch-transit_results_should_b"
     },
     {
-      "id": "ch-3",
-      "title": "Pashah (\"I1\"m),",
-      "chapter": "Pashah (\"I1\"m),",
-      "chapter_id": "ch-3"
+      "id": "ch-moon_at_birth_planets_in_upach",
+      "title": "Moon at birth. Planets in upach",
+      "chapter": "Moon at birth. Planets in upach",
+      "chapter_id": "ch-moon_at_birth_planets_in_upach"
     },
     {
-      "id": "ch-4",
-      "title": "Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).",
-      "chapter": "Kedar (~), 5. Shool (W1), 6. Yugam (TT), 7. Gol (~).",
-      "chapter_id": "ch-4"
+      "id": "ch-nature_of_profession",
+      "title": "Nature of Profession",
+      "chapter": "Nature of Profession",
+      "chapter_id": "ch-nature_of_profession"
     },
     {
-      "id": "ch-1",
-      "title": "Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),",
-      "chapter": "Rajju (~), 2. N ala (~), 3. Moosal ('Tffi), 4. Srak (~),",
-      "chapter_id": "ch-1"
+      "id": "ch-1_1_t1",
+      "title": "1!'\" \\1 T1",
+      "chapter": "1!'\" \\1 T1",
+      "chapter_id": "ch-1_1_t1"
     },
     {
-      "id": "ch-5",
-      "title": "Sarpa (\"Wf).",
-      "chapter": "Sarpa (\"Wf).",
-      "chapter_id": "ch-5"
+      "id": "ch-brihat_jataka-2",
+      "title": "Brihat Jataka",
+      "chapter": "Brihat Jataka",
+      "chapter_id": "ch-brihat_jataka-2"
     },
     {
-      "id": "ch-5",
-      "title": "Aakriti Yogas",
-      "chapter": "Aakriti Yogas",
-      "chapter_id": "ch-5"
+      "id": "ch-il_18_1",
+      "title": "Il 18 1 \\",
+      "chapter": "Il 18 1 \\",
+      "chapter_id": "ch-il_18_1"
     },
     {
-      "id": "ch-15",
-      "title": "The Iagna has to be a",
-      "chapter": "The Iagna has to be a",
-      "chapter_id": "ch-15"
+      "id": "ch-cie_9",
+      "title": "Cie 9, ,\"",
+      "chapter": "Cie 9, ,\"",
+      "chapter_id": "ch-cie_9"
     },
     {
-      "id": "ch-27",
-      "title": "The remainder sh rac ~~g nme from this total, divide it by",
-      "chapter": "The remainder sh rac ~~g nme from this total, divide it by",
-      "chapter_id": "ch-27"
+      "id": "ch-nabhas_heavenly_yogas",
+      "title": "Nabhas (Heavenly) Yogas",
+      "chapter": "Nabhas (Heavenly) Yogas",
+      "chapter_id": "ch-nabhas_heavenly_yogas"
+    },
+    {
+      "id": "ch-nabhas_heauenly_yogas",
+      "title": "Nabhas (Heauenly) Yogas",
+      "chapter": "Nabhas (Heauenly) Yogas",
+      "chapter_id": "ch-nabhas_heauenly_yogas"
+    },
+    {
+      "id": "ch-nabhas_heavenly_yogas-2",
+      "title": "Nabhas (Heavenly) Yogas",
+      "chapter": "Nabhas (Heavenly) Yogas",
+      "chapter_id": "ch-nabhas_heavenly_yogas-2"
+    },
+    {
+      "id": "ch-mercury_rahu",
+      "title": "Mercury Rahu",
+      "chapter": "Mercury Rahu",
+      "chapter_id": "ch-mercury_rahu"
+    },
+    {
+      "id": "ch-traits_of_asterisms",
+      "title": "Traits of Asterisms",
+      "chapter": "Traits of Asterisms",
+      "chapter_id": "ch-traits_of_asterisms"
+    },
+    {
+      "id": "ch-moon_in_capricorn",
+      "title": "Moon in Capricorn",
+      "chapter": "Moon in Capricorn",
+      "chapter_id": "ch-moon_in_capricorn"
+    },
+    {
+      "id": "ch-tftr_lfll_fl0wliflfd",
+      "title": "TfT!r: lFll\": fl0!W<lIflf~d",
+      "chapter": "TfT!r: lFll\": fl0!W<lIflf~d",
+      "chapter_id": "ch-tftr_lfll_fl0wliflfd"
+    },
+    {
+      "id": "ch-female_horoscopy",
+      "title": "Female Horoscopy",
+      "chapter": "Female Horoscopy",
+      "chapter_id": "ch-female_horoscopy"
+    },
+    {
+      "id": "ch-female_horoscopy-2",
+      "title": "Female Horoscopy",
+      "chapter": "Female Horoscopy",
+      "chapter_id": "ch-female_horoscopy-2"
+    },
+    {
+      "id": "ch-when_the_sùn_and_others_occu_th",
+      "title": "When the Sùn and others occu th",
+      "chapter": "When the Sùn and others occu th",
+      "chapter_id": "ch-when_the_sùn_and_others_occu_th"
+    },
+    {
+      "id": "ch-when_the_eighth_ho",
+      "title": "When the eighth ho'",
+      "chapter": "When the eighth ho'",
+      "chapter_id": "ch-when_the_eighth_ho"
+    },
+    {
+      "id": "ch-this_must_be_done_with_si",
+      "title": "This must be done with si",
+      "chapter": "This must be done with si",
+      "chapter_id": "ch-this_must_be_done_with_si"
+    },
+    {
+      "id": "ch-il_16_il",
+      "title": "Il 16 Il",
+      "chapter": "Il 16 Il",
+      "chapter_id": "ch-il_16_il"
+    },
+    {
+      "id": "ch-sfî1q1fltllif1",
+      "title": "Sfî1q1:fl\\TllIf1 ~~",
+      "chapter": "Sfî1q1:fl\\TllIf1 ~~",
+      "chapter_id": "ch-sfî1q1fltllif1"
+    },
+    {
+      "id": "ch-concluding_chaptel",
+      "title": "Concluding Chaptel",
+      "chapter": "Concluding Chaptel",
+      "chapter_id": "ch-concluding_chaptel"
+    },
+    {
+      "id": "ch-1_wst_1",
+      "title": "1'.[ \"WS!T 1",
+      "chapter": "1'.[ \"WS!T 1",
+      "chapter_id": "ch-1_wst_1"
+    },
+    {
+      "id": "ch-over_900_big_size_pages",
+      "title": "Over 900 big size pages.",
+      "chapter": "Over 900 big size pages.",
+      "chapter_id": "ch-over_900_big_size_pages"
     }
   ],
-  "total_chapters": 18,
+  "total_chapters": 54,
   "total_sections": 1
 }

@@ -346,7 +346,7 @@
       "content_preview": "Samirana / Vayu  Swati  05:21:26, 23 Apr 1975  06:07:31, 23 Apr 1975 "
     },
     {
-      "id": "ch-next_sunrise",
+      "id": "ch-next_sunrise-2",
       "number": null,
       "title": "Next sunrise",
       "level": 1,
@@ -356,7 +356,7 @@
       "content_preview": "Next sunrise  Day slot length  Night slot length  05:12:02 "
     },
     {
-      "id": "ch-day_slot_length",
+      "id": "ch-day_slot_length-2",
       "number": null,
       "title": "Day slot length",
       "level": 1,
@@ -366,7 +366,7 @@
       "content_preview": "Day slot length  Night slot length  05:12:02  21:47:06 "
     },
     {
-      "id": "ch-night_slot_length",
+      "id": "ch-night_slot_length-2",
       "number": null,
       "title": "Night slot length",
       "level": 1,
@@ -376,7 +376,7 @@
       "content_preview": "Night slot length  05:12:02  21:47:06  05:11:03, 31 May 2026 "
     },
     {
-      "id": "ch-muhurat_name",
+      "id": "ch-muhurat_name-2",
       "number": null,
       "title": "Muhurat name",
       "level": 1,
@@ -386,7 +386,7 @@
       "content_preview": "Muhurat name  Corresponding nakshatra  Start  End "
     },
     {
-      "id": "ch-corresponding_nakshatra",
+      "id": "ch-corresponding_nakshatra-2",
       "number": null,
       "title": "Corresponding nakshatra",
       "level": 1,
@@ -396,7 +396,7 @@
       "content_preview": "Corresponding nakshatra  Start  End  1 "
     },
     {
-      "id": "ch-uraga_ahi",
+      "id": "ch-uraga_ahi-2",
       "number": null,
       "title": "Uraga / Ahi",
       "level": 1,
@@ -406,7 +406,7 @@
       "content_preview": "Uraga / Ahi  Ashlesha  06:18:22  07:24:42 "
     },
     {
-      "id": "ch-pitara_pitru",
+      "id": "ch-pitara_pitru-2",
       "number": null,
       "title": "Pitara / Pitru",
       "level": 1,
@@ -416,7 +416,7 @@
       "content_preview": "Pitara / Pitru  Magha  08:31:02  09:37:23 "
     },
     {
-      "id": "ch-ambu_jala",
+      "id": "ch-ambu_jala-2",
       "number": null,
       "title": "Ambu / Jala",
       "level": 1,
@@ -426,7 +426,7 @@
       "content_preview": "Ambu / Jala  Purva Ashadha  10:43:43  11:50:03 "
     },
     {
-      "id": "ch-purva_ashadha",
+      "id": "ch-purva_ashadha-2",
       "number": null,
       "title": "Purva Ashadha",
       "level": 1,
@@ -436,7 +436,7 @@
       "content_preview": "Purva Ashadha  10:43:43  11:50:03  7 "
     },
     {
-      "id": "ch-uttara_ashadha",
+      "id": "ch-uttara_ashadha-2",
       "number": null,
       "title": "Uttara Ashadha",
       "level": 1,
@@ -446,7 +446,7 @@
       "content_preview": "Uttara Ashadha  11:50:03  12:56:24  8 "
     },
     {
-      "id": "ch-indragni_vahni",
+      "id": "ch-indragni_vahni-2",
       "number": null,
       "title": "Indragni / Vahni",
       "level": 1,
@@ -456,7 +456,7 @@
       "content_preview": "Indragni / Vahni  Vishakha  16:15:24  17:21:45 "
     },
     {
-      "id": "ch-daitya_naktanchara",
+      "id": "ch-daitya_naktanchara-2",
       "number": null,
       "title": "Daitya / Naktanchara",
       "level": 1,
@@ -466,7 +466,7 @@
       "content_preview": "Daitya / Naktanchara  Mula  17:21:45  18:28:05 "
     },
     {
-      "id": "ch-uttara_phalguni",
+      "id": "ch-uttara_phalguni-2",
       "number": null,
       "title": "Uttara Phalguni",
       "level": 1,
@@ -476,7 +476,7 @@
       "content_preview": "Uttara Phalguni  19:34:25  20:40:45  15 "
     },
     {
-      "id": "ch-purva_phalguni",
+      "id": "ch-purva_phalguni-2",
       "number": null,
       "title": "Purva Phalguni",
       "level": 1,
@@ -486,7 +486,7 @@
       "content_preview": "Purva Phalguni  20:40:45  21:47:06  16 "
     },
     {
-      "id": "ch-ajaikapada_ajapada",
+      "id": "ch-ajaikapada_ajapada-2",
       "number": null,
       "title": "Ajaikapada / Ajapada",
       "level": 1,
@@ -496,7 +496,7 @@
       "content_preview": "Ajaikapada / Ajapada  Purva Bhadrapada  22:16:41  22:46:17 "
     },
     {
-      "id": "ch-purva_bhadrapada",
+      "id": "ch-purva_bhadrapada-2",
       "number": null,
       "title": "Purva Bhadrapada",
       "level": 1,
@@ -506,7 +506,7 @@
       "content_preview": "Purva Bhadrapada  22:16:41  22:46:17  18 "
     },
     {
-      "id": "ch-uttara_bhadrapada",
+      "id": "ch-uttara_bhadrapada-2",
       "number": null,
       "title": "Uttara Bhadrapada",
       "level": 1,
@@ -516,7 +516,7 @@
       "content_preview": "Uttara Bhadrapada  22:46:17  23:15:53  19 "
     },
     {
-      "id": "ch-pusha_pushan",
+      "id": "ch-pusha_pushan-2",
       "number": null,
       "title": "Pusha / Pushan",
       "level": 1,
@@ -526,7 +526,7 @@
       "content_preview": "Pusha / Pushan  Revati  23:15:53  23:45:29 "
     },
     {
-      "id": "ch-ashwini_kumara",
+      "id": "ch-ashwini_kumara-2",
       "number": null,
       "title": "Ashwini Kumara",
       "level": 1,
@@ -536,7 +536,7 @@
       "content_preview": "Ashwini Kumara  Ashwini  23:45:29  00:15:05, 31 May 2026 "
     },
     {
-      "id": "ch-brahma_vidhatri",
+      "id": "ch-brahma_vidhatri-2",
       "number": null,
       "title": "Brahma / Vidhatri",
       "level": 1,
@@ -546,7 +546,7 @@
       "content_preview": "Brahma / Vidhatri  Rohini  01:14:16, 31 May 2026  01:43:52, 31 May 2026 "
     },
     {
-      "id": "ch-chandra_chanda",
+      "id": "ch-chandra_chanda-2",
       "number": null,
       "title": "Chandra / Chanda",
       "level": 1,
@@ -556,7 +556,7 @@
       "content_preview": "Chandra / Chanda  Mrigashira  01:43:52, 31 May 2026  02:13:28, 31 May 2026 "
     },
     {
-      "id": "ch-brihaspati_jiva",
+      "id": "ch-brihaspati_jiva-2",
       "number": null,
       "title": "Brihaspati / Jiva",
       "level": 1,
@@ -566,7 +566,7 @@
       "content_preview": "Brihaspati / Jiva  Pushya  02:43:04, 31 May 2026  03:12:39, 31 May 2026 "
     },
     {
-      "id": "ch-surya_arka",
+      "id": "ch-surya_arka-2",
       "number": null,
       "title": "Surya / Arka",
       "level": 1,
@@ -576,7 +576,7 @@
       "content_preview": "Surya / Arka  Hasta  03:42:15, 31 May 2026  04:11:51, 31 May 2026 "
     },
     {
-      "id": "ch-samirana_vayu",
+      "id": "ch-samirana_vayu-2",
       "number": null,
       "title": "Samirana / Vayu",
       "level": 1,
@@ -802,148 +802,148 @@
       "chapter_id": "ch-samirana_vayu"
     },
     {
-      "id": "ch-next_sunrise",
+      "id": "ch-next_sunrise-2",
       "title": "Next sunrise",
       "chapter": "Next sunrise",
-      "chapter_id": "ch-next_sunrise"
+      "chapter_id": "ch-next_sunrise-2"
     },
     {
-      "id": "ch-day_slot_length",
+      "id": "ch-day_slot_length-2",
       "title": "Day slot length",
       "chapter": "Day slot length",
-      "chapter_id": "ch-day_slot_length"
+      "chapter_id": "ch-day_slot_length-2"
     },
     {
-      "id": "ch-night_slot_length",
+      "id": "ch-night_slot_length-2",
       "title": "Night slot length",
       "chapter": "Night slot length",
-      "chapter_id": "ch-night_slot_length"
+      "chapter_id": "ch-night_slot_length-2"
     },
     {
-      "id": "ch-muhurat_name",
+      "id": "ch-muhurat_name-2",
       "title": "Muhurat name",
       "chapter": "Muhurat name",
-      "chapter_id": "ch-muhurat_name"
+      "chapter_id": "ch-muhurat_name-2"
     },
     {
-      "id": "ch-corresponding_nakshatra",
+      "id": "ch-corresponding_nakshatra-2",
       "title": "Corresponding nakshatra",
       "chapter": "Corresponding nakshatra",
-      "chapter_id": "ch-corresponding_nakshatra"
+      "chapter_id": "ch-corresponding_nakshatra-2"
     },
     {
-      "id": "ch-uraga_ahi",
+      "id": "ch-uraga_ahi-2",
       "title": "Uraga / Ahi",
       "chapter": "Uraga / Ahi",
-      "chapter_id": "ch-uraga_ahi"
+      "chapter_id": "ch-uraga_ahi-2"
     },
     {
-      "id": "ch-pitara_pitru",
+      "id": "ch-pitara_pitru-2",
       "title": "Pitara / Pitru",
       "chapter": "Pitara / Pitru",
-      "chapter_id": "ch-pitara_pitru"
+      "chapter_id": "ch-pitara_pitru-2"
     },
     {
-      "id": "ch-ambu_jala",
+      "id": "ch-ambu_jala-2",
       "title": "Ambu / Jala",
       "chapter": "Ambu / Jala",
-      "chapter_id": "ch-ambu_jala"
+      "chapter_id": "ch-ambu_jala-2"
     },
     {
-      "id": "ch-purva_ashadha",
+      "id": "ch-purva_ashadha-2",
       "title": "Purva Ashadha",
       "chapter": "Purva Ashadha",
-      "chapter_id": "ch-purva_ashadha"
+      "chapter_id": "ch-purva_ashadha-2"
     },
     {
-      "id": "ch-uttara_ashadha",
+      "id": "ch-uttara_ashadha-2",
       "title": "Uttara Ashadha",
       "chapter": "Uttara Ashadha",
-      "chapter_id": "ch-uttara_ashadha"
+      "chapter_id": "ch-uttara_ashadha-2"
     },
     {
-      "id": "ch-indragni_vahni",
+      "id": "ch-indragni_vahni-2",
       "title": "Indragni / Vahni",
       "chapter": "Indragni / Vahni",
-      "chapter_id": "ch-indragni_vahni"
+      "chapter_id": "ch-indragni_vahni-2"
     },
     {
-      "id": "ch-daitya_naktanchara",
+      "id": "ch-daitya_naktanchara-2",
       "title": "Daitya / Naktanchara",
       "chapter": "Daitya / Naktanchara",
-      "chapter_id": "ch-daitya_naktanchara"
+      "chapter_id": "ch-daitya_naktanchara-2"
     },
     {
-      "id": "ch-uttara_phalguni",
+      "id": "ch-uttara_phalguni-2",
       "title": "Uttara Phalguni",
       "chapter": "Uttara Phalguni",
-      "chapter_id": "ch-uttara_phalguni"
+      "chapter_id": "ch-uttara_phalguni-2"
     },
     {
-      "id": "ch-purva_phalguni",
+      "id": "ch-purva_phalguni-2",
       "title": "Purva Phalguni",
       "chapter": "Purva Phalguni",
-      "chapter_id": "ch-purva_phalguni"
+      "chapter_id": "ch-purva_phalguni-2"
     },
     {
-      "id": "ch-ajaikapada_ajapada",
+      "id": "ch-ajaikapada_ajapada-2",
       "title": "Ajaikapada / Ajapada",
       "chapter": "Ajaikapada / Ajapada",
-      "chapter_id": "ch-ajaikapada_ajapada"
+      "chapter_id": "ch-ajaikapada_ajapada-2"
     },
     {
-      "id": "ch-purva_bhadrapada",
+      "id": "ch-purva_bhadrapada-2",
       "title": "Purva Bhadrapada",
       "chapter": "Purva Bhadrapada",
-      "chapter_id": "ch-purva_bhadrapada"
+      "chapter_id": "ch-purva_bhadrapada-2"
     },
     {
-      "id": "ch-uttara_bhadrapada",
+      "id": "ch-uttara_bhadrapada-2",
       "title": "Uttara Bhadrapada",
       "chapter": "Uttara Bhadrapada",
-      "chapter_id": "ch-uttara_bhadrapada"
+      "chapter_id": "ch-uttara_bhadrapada-2"
     },
     {
-      "id": "ch-pusha_pushan",
+      "id": "ch-pusha_pushan-2",
       "title": "Pusha / Pushan",
       "chapter": "Pusha / Pushan",
-      "chapter_id": "ch-pusha_pushan"
+      "chapter_id": "ch-pusha_pushan-2"
     },
     {
-      "id": "ch-ashwini_kumara",
+      "id": "ch-ashwini_kumara-2",
       "title": "Ashwini Kumara",
       "chapter": "Ashwini Kumara",
-      "chapter_id": "ch-ashwini_kumara"
+      "chapter_id": "ch-ashwini_kumara-2"
     },
     {
-      "id": "ch-brahma_vidhatri",
+      "id": "ch-brahma_vidhatri-2",
       "title": "Brahma / Vidhatri",
       "chapter": "Brahma / Vidhatri",
-      "chapter_id": "ch-brahma_vidhatri"
+      "chapter_id": "ch-brahma_vidhatri-2"
     },
     {
-      "id": "ch-chandra_chanda",
+      "id": "ch-chandra_chanda-2",
       "title": "Chandra / Chanda",
       "chapter": "Chandra / Chanda",
-      "chapter_id": "ch-chandra_chanda"
+      "chapter_id": "ch-chandra_chanda-2"
     },
     {
-      "id": "ch-brihaspati_jiva",
+      "id": "ch-brihaspati_jiva-2",
       "title": "Brihaspati / Jiva",
       "chapter": "Brihaspati / Jiva",
-      "chapter_id": "ch-brihaspati_jiva"
+      "chapter_id": "ch-brihaspati_jiva-2"
     },
     {
-      "id": "ch-surya_arka",
+      "id": "ch-surya_arka-2",
       "title": "Surya / Arka",
       "chapter": "Surya / Arka",
-      "chapter_id": "ch-surya_arka"
+      "chapter_id": "ch-surya_arka-2"
     },
     {
-      "id": "ch-samirana_vayu",
+      "id": "ch-samirana_vayu-2",
       "title": "Samirana / Vayu",
       "chapter": "Samirana / Vayu",
-      "chapter_id": "ch-samirana_vayu"
+      "chapter_id": "ch-samirana_vayu-2"
     },
     {
       "id": "ch-references_used",

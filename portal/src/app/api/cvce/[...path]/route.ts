@@ -27,6 +27,9 @@ const ALLOWED = new Set([
 
 const ALLOWED_GET = new Set(["places"]);
 
+// KnowledgeEngine structured endpoints (Learn reader owns chapter tree + node linkage)
+const KNOWLEDGE_PREFIX = "knowledge/";
+
 const SERVER_TIMEOUT_MS = 120_000;
 
 export async function POST(
@@ -36,7 +39,8 @@ export async function POST(
   const { path } = await context.params;
   const cvcePath = path.join("/");
 
-  if (!ALLOWED.has(cvcePath)) {
+  const isKnowledge = cvcePath.startsWith(KNOWLEDGE_PREFIX);
+  if (!ALLOWED.has(cvcePath) && !isKnowledge) {
     return NextResponse.json({ error: `Unknown endpoint: ${cvcePath}` }, { status: 404 });
   }
 
@@ -90,25 +94,24 @@ export async function GET(
   const { path } = await context.params;
   const cvcePath = path.join("/");
 
-  if (!ALLOWED_GET.has(cvcePath)) {
+  const isKnowledge = cvcePath.startsWith(KNOWLEDGE_PREFIX);
+  if (!ALLOWED_GET.has(cvcePath) && !isKnowledge) {
     return NextResponse.json({ error: `Unknown endpoint: ${cvcePath}` }, { status: 404 });
   }
 
-  const q = req.nextUrl.searchParams.get("q") ?? "";
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 10_000);
 
   try {
-    const res = await fetch(
-      `${CVCE_BASE_URL}/${cvcePath}?q=${encodeURIComponent(q)}`,
-      { signal: controller.signal, cache: "no-store" },
-    );
+    const qs = req.nextUrl.search ? req.nextUrl.search : "";
+    const url = `${CVCE_BASE_URL}/${cvcePath}${qs}`;
+    const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
     const payload = await res.json();
     return NextResponse.json(payload, { status: res.status });
   } catch (e) {
     const message =
       e instanceof DOMException && e.name === "AbortError"
-        ? "Places search timed out"
+        ? "Request timed out"
         : "Engine unreachable";
     return NextResponse.json({ error: message }, { status: 504 });
   } finally {

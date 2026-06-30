@@ -230,3 +230,150 @@ COVERAGE_MATRIX + RUN_LOG written
   - Deva_Keralam_2: ~795/827 (96.1%)
   - Jataka_Parijata: 483/485 (99.6%)  [STRUCTURED QUALITY POOR: only 3 chapters with garbled titles like "cereeheestee_a1", "SRTEETATETA"; suggest re-parsing source with better chapter heuristics]
 New per-book patches written. Canonical union updated (+4480, total 16366). Consumers loading per-book patches or re-merged snapshot now see coverage.
+
+================================================================================
+VECTOR EMBEDDINGS + SEMANTIC SEARCH ACTIVATION - RUN LOG
+================================================================================
+Session: 2026-06-30 (parallel wave, independent)
+Agent: Vector Embeddings & Semantic Search Activator (generalPurpose)
+Goal: Inspect corpus_chunks embeddings, invoke generator for 61 structured books, ensure KE owns vector_search_available() + search(), report metrics, unblock if schema/keys.
+
+1. INSPECTION (before any pop)
+   - corpus_sources: 61 (brought to full via md-sync in wave)
+   - corpus_chunks table: ABSENT (PGRST205 "no table in schema cache")
+   - non-null embeddings: 0
+   - vector_search_available() via KE: False
+   - KE.search(...) : 0 hits (both vector and keyword paths hit 404)
+   - raw books: 61, estimated chunks: 26743 (para ~800c chunker)
+   - KE store: SupabaseKnowledgeStore (correct)
+   - GEMINI_API_KEY: present in .env.local (preloaded for runs); no GOOGLE fallback needed
+   - generator script: present + exercised (dry-run)
+   - integration: full (notify -> on_embeddings_updated -> mark + registry + cache clear)
+   - engine.py: search delegates to store; no missing wires
+
+2. ACTIONS TAKEN
+   - Preloaded portal/.env.local keys into os for generator/KE
+   - Ran sync_markdown path (via sync script --md-only) → sources=61
+   - Invoked scripts/generate-embeddings.py --dry-run --limit 5 (exercised client load + fetch path)
+   - Queried via KE + direct REST multiple times for counts/health/search
+   - Verified /knowledge/search + embeddings-updated server endpoints route to KE
+   - Confirmed match_corpus_chunks RPC also absent (expected)
+   - No code edits (ownership already correct under KE)
+
+3. BLOCKER (exact)
+   - Schema DDL not applied to Supabase project bfoeygzneobrhtkdjfwc
+   - File: portal/supabase-corpus-schema.sql (contains CREATE TABLE corpus_chunks + vector(768) + hnsw + RLS + match_corpus_chunks RPC + vector ext)
+   - sync_chunks and generator both target the table → 404
+   - No DB admin key / psql url present; must paste into Dashboard SQL Editor
+   - Network transient seen once during long sync (recovered for small queries)
+
+4. METRICS
+   BEFORE: sources=61, chunks_table=0/absent, embedded=0, vector_avail=False, search_hits=0, KE_healthy=True
+   TARGET (after unblock): chunks~26743, embedded~26743, vector=True, real hybrid results w/ similarity, notify called
+   PROVIDER: google-genai / text-embedding-004 / dim=768
+   COST: $0 observed (no live embeds; low expected for 27k)
+   TIME: est 20-90min full (0.05s delay + api + retries); use --limit batches or background
+   POST KE HEALTH: same healthy; vector flag flips on first non-null after generator
+
+5. COMMANDS FOR NEXT (fix + populate agent or manual)
+   a) Apply: copy portal/supabase-corpus-schema.sql → https://supabase.com/dashboard/project/bfoeygzneobrhtkdjfwc/sql/new → Run
+   b) Create chunk rows: python scripts/supabase-corpus-sync.py --md-only --skip-gcp
+   c) Embed (long job, bg friendly):
+      source portal/.env.local
+      python scripts/generate-embeddings.py
+      # test slice first: ... --limit 100
+   d) Verify:
+      python -c '
+        import os; [os.environ.setdefault(*l.split("=",1)) for l in open("portal/.env.local") if "=" in l and not l.startswith("#")]
+        from cvce.knowledge_engine.integration import get_knowledge_engine
+        ke=get_knowledge_engine()
+        print("vector?", ke.vector_search_available())
+        print("sample hits:", len(ke.search("dasha period", 5)))
+        print("KE reports vector in search endpoint payload")
+      '
+   e) (optional) curl -X POST "http://.../knowledge/embeddings-updated?chunk_count=N"
+
+6. STATUS CHANGE + KE OWNERSHIP
+   - KE already owns: vector_search_available, search(), on_embeddings_updated, notify path, server routes.
+   - After population: vector_search_available()==True, search() returns real semantic results (hybrid).
+   - "Expose real semantic search under KnowledgeEngine" — already wired; just needs data + schema.
+   - Roadmap item advanced from "not populated" to "fully prepped + schema blocker documented + ready-to-run generator".
+
+7. OUTPUTS
+   - Full report: docs/embeddings-activation-report-2026-06-30.md
+   - This RUN_LOG entry
+   - No other files modified in this activator pass
+
+[2026-06-30] Vector activation wave: inspection + dry exec + metrics + exact blocker doc complete. Long job ready to launch post-schema. Independent execution done.
+================================================================================
+
+================================================================================
+JATAKA_PARIJATA STRUCTURED PARSER REFINEMENT (parallel subagent)
+================================================================================
+Timestamp: 2026-06-30 ~04:00
+Agent: Jataka_Parijata Structured Parser Refiner (generalPurpose)
+Goal: Replace garbage OCR chapter titles with usable page-group structure; refresh patch + canonical.
+
+1. DIAGNOSIS (before)
+   - Structured: 178 chapters, titles like "Sisk we wept ee)", "Bir Se Ne i a pt le Toaal", "Rengarieniresrsress ereere!"
+   - parse_quality: "medium" (misleading)
+   - Patch: 483/485 (99.6%) but mapped to unusable ch-* with garbled hierarchy_path
+   - Raw: 5921 lines, 483 page markers, ZERO recognizable "Chapter/Adhyaya/Sloka" markers (heavy OCR)
+
+2. ACTIONS
+   - Extended scripts/build_structured_library.py:
+     * Added Jataka_Parijata to BOOK_OVERRIDES (prefer_patterns=[], min_gap=80, allow_heading_promote=False)
+     * Added "JATAKA PARIJATA"/"JATAKAPARIJATA" to junk denylists
+     * Added OCR-garbage heuristics (short-token fragments, avg word len <4.5)
+     * Fixed \d{3,}$ heuristic to not nuke page-range titles "Pages N–M"
+     * Implemented [page-group-rescue] for Jataka_Parijata: groups ~10 pages → "Pages X–Y" chapters with ch-pX-pY ids
+     * Post-fill content_preview for rescued chapters
+     * _assess_quality recognizes page-grouped → "medium-improved"
+   - Rebuilt: python3 scripts/build_structured_library.py --books "Jataka_Parijata"
+   - Remapped: python3 scripts/map_nodes_to_structured.py --books "Jataka_Parijata" --graph ... --out patch-Jataka_Parijata.json
+   - Updated canonical node-chapter-map.json (replaced 483 Jataka entries)
+   - Updated COVERAGE_MATRIX + RUN_LOG
+
+3. RESULTS (after)
+   - Structured chapters: 49 (down from 178), titles: "Pages 5–31", "Pages 31–46", ..., "Pages 680–682"
+   - parse_quality: "medium-improved"
+   - Patch count: 483/485 (99.6%), review_needed: 0 (was many)
+   - Unique chapter_ids in patch: 49 (all page groups used)
+   - Hierarchy now stable for /learn left-nav (Pages ranges)
+   - content_preview populated from raw slices
+
+4. METRICS
+   - Before: 178 garbage chapters, ~3 real, many review_needed
+   - After: 49 usable page-group chapters, 0 review_needed, parse_quality=medium-improved
+   - ch/sec before vs after: not applicable (no real chapters existed); now 49 coherent ranges
+   - Files touched: build_structured_library.py, Jataka_Parijata.json (structured), patch-Jataka_Parijata.json, node-chapter-map.json, COVERAGE_MATRIX.json, RUN_LOG.txt, JATAKA_PARIJATA_FIX.md (new)
+
+5. USABILITY FOR /learn
+   - YES — left-nav will show 49 "Pages X–Y" entries. Clicking jumps to page ranges in the BookReader.
+   - Semantic titles unavailable without manual raw cleanup or better source scan.
+   - If a cleaner Jataka_Parijata.md (with Adhyaya/Chapter markers) becomes available, re-run build + map to upgrade to high.
+
+6. NOTES / FUTURE
+   - Similar risk for other OCR classics (Brihat_Jataka, Sarvartha etc. may benefit from page-group fallback).
+   - Consider generalizing page-group rescue behind a flag for any book with 0 strong chapter signals + many page markers.
+   - Raw source flagged for potential re-OCR or manual chapter annotation if higher fidelity needed.
+
+
+[2026-06-30 Supabase+Graph Patch Applier] FULL NODE->CHAPTER PATCH APPLY (11886->16366)
+CMD_LOCAL: python3 scripts/apply_node_chapter_patch.py --books "Ashtakavarga_...,Brihat_Jataka,...Uttara_Kalamrita" --write --apply-to-graph
+  local: matched=16366 applied=~3826 (delta from prior 8060) skipped=~8060 ; backup graph.json.bak-*
+  post-local: 26722 total, 16366 with chapter_id/hierarchy_path/patch_method/patch_conf/review_needed (where flagged)
+CMD_SYNC: python3 scripts/supabase-corpus-sync.py --graph-only --incremental
+  pushed: 26722 nodes / 38881 links (graph.json with enriched properties)
+  used: upsert_rows BATCH=400, on_conflict for graph_nodes (id,graph_version)
+ENRICH (partial): targeted PATCH for review_needed=True on flagged nodes (first ~160 succeeded before transient conn reset; many books already carried via properties sync)
+KE: from cvce.knowledge_engine.integration import get_knowledge_engine; ke.trigger_global_refresh(reason="node_chapter_patch_apply_20260630")
+  -> status=triggered, version=newbooks-v1, engines_notified=(registry in proc)
+SUPABASE BEFORE (intermittent prior): many books 0 or low chapter (Jaimini 0, Saravali low, etc); partial ~873 in early runs.
+SUPABASE AFTER (samples):
+  total: 26722
+  Saravali/Hora_Sara/Jataka_Tatva/Uttara: 380-400/400 with chapter + high patch_method
+  Jaimini/Prasna: partial-mid (source stem matching variance)
+  rnT in samples: increased (44+ in 2k after enrich start)
+  Exact nodes carry: chapter_id, hierarchy_path, patch_method, patch_conf; review_needed propagation via properties sub-object confirmed on local, partial on remote due to sync timing.
+ARTIFACTS: graph.json updated + .bak; patches/RUN_LOG appended; canonical node-chapter-map.json (16366)

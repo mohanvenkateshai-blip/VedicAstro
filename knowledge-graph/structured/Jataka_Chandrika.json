@@ -3,26 +3,1291 @@
   "canonical_name": "Jataka Chandrika",
   "source_file": "Jataka_Chandrika.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-24",
-      "number": "24",
-      "title": "JATAKACHUNDRIKA.",
+      "id": "ch-second_edition",
+      "number": null,
+      "title": "SECOND EDITION.",
       "level": 1,
-      "start_line": 1108,
+      "start_line": 28,
+      "end_line": 29,
+      "sections": [],
+      "content_preview": "SECOND EDITION.  THOROUGHLY REVISED.  sae SHladuas:  Prinrep at THE Roya Vicrorta Press,"
+    },
+    {
+      "id": "ch-thoroughly_revised",
+      "number": null,
+      "title": "THOROUGHLY REVISED.",
+      "level": 1,
+      "start_line": 30,
+      "end_line": 44,
+      "sections": [],
+      "content_preview": "THOROUGHLY REVISED.  sae SHladuas:  Prinrep at THE Roya Vicrorta Press, BY K. KRISHNASWAMI AIYAR, B.A. "
+    },
+    {
+      "id": "ch-sra_3b_sero_62",
+      "number": null,
+      "title": "SrA 3B sero. 6.2",
+      "level": 1,
+      "start_line": 45,
+      "end_line": 46,
+      "sections": [],
+      "content_preview": "SrA 3B sero. 6.2  HARVARD COLLEGE LIBRARY  DEXTER FUND Mayes 92)  Qo."
+    },
+    {
+      "id": "ch-harvard_college_library",
+      "number": null,
+      "title": "HARVARD COLLEGE LIBRARY",
+      "level": 1,
+      "start_line": 47,
+      "end_line": 178,
+      "sections": [],
+      "content_preview": "HARVARD COLLEGE LIBRARY  DEXTER FUND Mayes 92)  Qo. ## Page 3 "
+    },
+    {
+      "id": "ch-b_suryanarain_row_8a_mras_ma8b",
+      "number": null,
+      "title": "B. SURYANARAIN ROW, 8.A., M.R.A.S., M.A.8.B.",
+      "level": 1,
+      "start_line": 179,
+      "end_line": 190,
+      "sections": [],
+      "content_preview": "B. SURYANARAIN ROW, 8.A., M.R.A.S., M.A.8.B.  tet April, 1900.  Manpzas, } Invia. ## Page 7 "
+    },
+    {
+      "id": "ch-rratatraereg_qpatdacatee",
+      "number": null,
+      "title": "Rratatraereg qpatdacatee",
+      "level": 1,
+      "start_line": 191,
+      "end_line": 194,
+      "sections": [],
+      "content_preview": "Rratatraereg qpatdacatee:  SEU  ENGLISH TRANSLATION.  ooo "
+    },
+    {
+      "id": "ch-english_translation",
+      "number": null,
+      "title": "ENGLISH TRANSLATION.",
+      "level": 1,
+      "start_line": 195,
+      "end_line": 198,
+      "sections": [],
+      "content_preview": "ENGLISH TRANSLATION.  ooo  Stanza I.  I invoke the help of that Glorious Light which repre- sents the sum total of the knowledge of Brahmopanishads"
+    },
+    {
+      "id": "ch-stanza_i",
+      "number": null,
+      "title": "Stanza I.",
+      "level": 1,
+      "start_line": 199,
+      "end_line": 267,
+      "sections": [],
+      "content_preview": "Stanza I.  I invoke the help of that Glorious Light which repre- sents the sum total of the knowledge of Brahmopanishads whom we call Saraswathi, the exalted spouse of Brahma, who holds the Veena (lute), and who is most beautiful (all perfect): "
+    },
+    {
+      "id": "ch-srayza_ii",
+      "number": null,
+      "title": "Srayza II.",
+      "level": 1,
+      "start_line": 268,
+      "end_line": 274,
+      "sections": [],
+      "content_preview": "Srayza II.  I shall try to explain the most important principles of astrology in an intelligible manuer and I shall be guided in the compilation of my present book by, the works of the re- nowned Maharishi Parasara. ,  _ NOTES,"
+    },
+    {
+      "id": "ch-_notes",
+      "number": null,
+      "title": "NOTES,",
+      "level": 1,
+      "start_line": 275,
+      "end_line": 325,
+      "sections": [],
+      "content_preview": "_ NOTES,  The author Venkatesa Pundit does not pretend to give the readers any original information on astrology.” He frankly tells us the source from which he draws his knowledge _ and he commands respect not for  . the original matter he puts before his readers, but for the ori"
+    },
+    {
+      "id": "ch-rey_o_ll",
+      "number": null,
+      "title": "Rey o lL",
+      "level": 1,
+      "start_line": 326,
+      "end_line": 329,
+      "sections": [],
+      "content_preview": "Rey o lL  a al Stanza IIT,  By referring to ordinary works the student can learn the details of the Jataka Bhaga, but I am going to expound"
+    },
+    {
+      "id": "ch-stanza_iit",
+      "number": null,
+      "title": "Stanza IIT,",
+      "level": 1,
+      "start_line": 330,
+      "end_line": 360,
+      "sections": [],
+      "content_preview": "Stanza IIT,  By referring to ordinary works the student can learn the details of the Jataka Bhaga, but I am going to expound in my works principles of astrology which would help the intelligent student in his progress in the astrological studies, "
+    },
+    {
+      "id": "ch-stanza_iv",
+      "number": null,
+      "title": "Stanza IV.",
+      "level": 1,
+      "start_line": 361,
+      "end_line": 391,
+      "sections": [],
+      "content_preview": "Stanza IV.  All the planets aspect the 7th house. Saturn, Jupiter, and Mars, (Sani, Guru and Kuja) have a special vision. Saturn aspects 3rd and 10th houses better, Jupiter 5th and 9th houses, and Mars 4th and 8th houses,  NOTES."
+    },
+    {
+      "id": "ch-stanza_v",
+      "number": null,
+      "title": "Stanza V,",
+      "level": 1,
+      "start_line": 392,
+      "end_line": 453,
+      "sections": [],
+      "content_preview": "Stanza V,  Lords of the 5th and 9th houses are always good, while lords of the 3rd, 6th and 11th are always evil. ‘ NOTES.  The counting of the planets must always be from the birth time or lagna, Ravi owns Simha, Chundra owns Kataka, Buda owns"
+    },
+    {
+      "id": "ch-rta_aa_tht_tatu",
+      "number": null,
+      "title": "RTA AA THT TATU",
+      "level": 1,
+      "start_line": 454,
+      "end_line": 524,
+      "sections": [],
+      "content_preview": "RTA AA THT TATU  ‘Stanza VI  When Benefics own quadrants they produce evil. When Malefics own quadrants they produce good; the good and evil planets become more and more powerful as they are lords of ' Ist, 4th, 7th, or 10th, houses ; 5th"
+    },
+    {
+      "id": "ch-stanza_viii-",
+      "number": null,
+      "title": "Stanza VIII",
+      "level": 1,
+      "start_line": 525,
+      "end_line": 587,
+      "sections": [],
+      "content_preview": "Stanza VIII-  Lord of the 8th house produces evil because he owns the 12th house from the 9th, which is the house of Bhagya (wealth). If he chances to be the lord of 1st also, he be- comes good-  - NOTES"
+    },
+    {
+      "id": "ch-stanza_ix",
+      "number": null,
+      "title": "Stanza IX.",
+      "level": 1,
+      "start_line": 588,
+      "end_line": 617,
+      "sections": [],
+      "content_preview": "Stanza IX.  Guru and Sukra owning quadrants become very in- auspicious. When they occupy the 2nd and 7th houses with such ownership, they become powerful in inflicting certain death to the native. ## Page 17 "
+    },
+    {
+      "id": "ch-sranza_x",
+      "number": null,
+      "title": "Sranza X.",
+      "level": 1,
+      "start_line": 618,
+      "end_line": 623,
+      "sections": [],
+      "content_preview": "Sranza X.  Buda is less malicious than Guru and Sukra and Chundra is less than Buda. Ravi and Chundra do not give evil even when they own the 8th house.  ‘ NOTES, "
+    },
+    {
+      "id": "ch-notes",
+      "number": null,
+      "title": "‘ NOTES,",
+      "level": 1,
+      "start_line": 624,
+      "end_line": 660,
+      "sections": [],
+      "content_preview": "‘ NOTES,  We have seen the principle that good planets owning quadrants are inauspicious. Buda is not a complete benefic. His goodness or badness depends upon his associations. Therefore he comes next in order after Guru and Sukra, Chundra comes after Buda, for even without evil "
+    },
+    {
+      "id": "ch-sranza_xi",
+      "number": null,
+      "title": "Sranza XI,",
+      "level": 1,
+      "start_line": 661,
+      "end_line": 694,
+      "sections": [],
+      "content_preview": "Sranza XI,  Kuja (Mars) does not become good when he owns only the 10th house. He must own the 5th also to become thoroughly good,  NOTES, "
+    },
+    {
+      "id": "ch-srayza_xii",
+      "number": null,
+      "title": "Srayza XII.",
+      "level": 1,
+      "start_line": 695,
+      "end_line": 727,
+      "sections": [],
+      "content_preview": "Srayza XII.  Rahu and Kethu give the samie results as those given by the houses they occupy, the planets they are in con- junction with, and the aspects they are subjected to but with greater strength,  NOTLZS."
+    },
+    {
+      "id": "ch-birth_sani",
+      "number": null,
+      "title": "Birth. | Sani",
+      "level": 1,
+      "start_line": 728,
+      "end_line": 729,
+      "sections": [],
+      "content_preview": "Birth. | Sani  Buda. tay  Ravi. ee  Kuja. iH———| -  Rasce."
+    },
+    {
+      "id": "ch-buda_tay",
+      "number": null,
+      "title": "Buda. tay",
+      "level": 1,
+      "start_line": 730,
+      "end_line": 736,
+      "sections": [],
+      "content_preview": "Buda. tay  Ravi. ee  Kuja. iH———| -  Rasce.  Kethu.| Guru."
+    },
+    {
+      "id": "ch-kethu_guru",
+      "number": null,
+      "title": "Kethu.| Guru.",
+      "level": 1,
+      "start_line": 737,
+      "end_line": 753,
+      "sections": [],
+      "content_preview": "Kethu.| Guru.  because he isin the house of, Guru and aspected by Sukra. The phalam of the houses they occupy viz Mithuna and Dhanas must also be taken into consideration. But in giving good or evil they act with greater energy, and when badly disposed they do mcre harm, if well "
+    },
+    {
+      "id": "ch-sranza_xiii",
+      "number": null,
+      "title": "Sranza XIII.",
+      "level": 1,
+      "start_line": 754,
+      "end_line": 823,
+      "sections": [],
+      "content_preview": "Sranza XIII.  If the lords of the Kendras are in conjunction with the lords of the Thrikonas without being associated with the lords of other houses, they become extremely power- ful in producing good results. ## Page 21 "
+    },
+    {
+      "id": "ch-sranza_xiv",
+      "number": null,
+      "title": "Sranza XIV",
+      "level": 1,
+      "start_line": 824,
+      "end_line": 866,
+      "sections": [],
+      "content_preview": "Sranza XIV  The lords of the Kendras and Thrikonas in con- junetion produce good from the simple fact .of their union even when they are weak otherwise.  NOTES. "
+    },
+    {
+      "id": "ch-pravaisraaagan_sr",
+      "number": null,
+      "title": "Pravaisraaagan sR",
+      "level": 1,
+      "start_line": 867,
+      "end_line": 870,
+      "sections": [],
+      "content_preview": "Pravaisraaagan sR  mike) |  Sraxza XV,  If the lords of the 9th and 10th houses join together and occupy the 9th or 10th, or if the lord of the 9th"
+    },
+    {
+      "id": "ch-sraxza_xv",
+      "number": null,
+      "title": "Sraxza XV,",
+      "level": 1,
+      "start_line": 871,
+      "end_line": 923,
+      "sections": [],
+      "content_preview": "Sraxza XV,  If the lords of the 9th and 10th houses join together and occupy the 9th or 10th, or if the lord of the 9th vecupies the 9th and the lord of the 10th occupies 10th house they produce good, ## Page 24 "
+    },
+    {
+      "id": "ch-stanza_xvi",
+      "number": null,
+      "title": "Stanza. XVI",
+      "level": 1,
+      "start_line": 924,
+      "end_line": 928,
+      "sections": [],
+      "content_preview": "Stanza. XVI  Lords of Kendras joining with or lying between lords of Thrikonas produce Rajayoga.  . NOTES.  This is a difficult stanza and can be interpreted in various ways"
+    },
+    {
+      "id": "ch-notes-2",
+      "number": null,
+      "title": ". NOTES.",
+      "level": 1,
+      "start_line": 929,
+      "end_line": 970,
+      "sections": [],
+      "content_preview": ". NOTES.  This is a difficult stanza and can be interpreted in various ways We havealready seen that the combination of the Lords of Kendras and Thrikonas is productive of good. The word Madhya used in the sloka confuses the passage a little. It means middle or with and the mean-"
+    },
+    {
+      "id": "ch-oat_atratatet_ta_fett_taht",
+      "number": null,
+      "title": "OAT ATRATATET TA FETT TAHT",
+      "level": 1,
+      "start_line": 971,
+      "end_line": 1011,
+      "sections": [],
+      "content_preview": "OAT ATRATATET TA FETT TAHT  OTT NIN Sranza XVII  When an evil planet intervenes between the Dasas of two Yoga-karaka planets, not in union with them he produces good when his subperiods occur in those"
+    },
+    {
+      "id": "ch-tl_tagcuaatgarm_sta_hrs",
+      "number": null,
+      "title": "Tl TAGCUAATGARM STA HRS",
+      "level": 1,
+      "start_line": 1012,
+      "end_line": 1013,
+      "sections": [],
+      "content_preview": "Tl TAGCUAATGARM STA HRS Nei Stanza XVIII.  Evil planets viz. lords of 3rd, 6th, 8th, 11th, and 12th houses, when in conjunction with powerful Rajayoga pla- nets, also produce favourable results in their subperiods according to their own sources of strength at the time."
+    },
+    {
+      "id": "ch-stanza_xviii",
+      "number": null,
+      "title": "Stanza XVIII.",
+      "level": 1,
+      "start_line": 1014,
+      "end_line": 1041,
+      "sections": [],
+      "content_preview": "Stanza XVIII.  Evil planets viz. lords of 3rd, 6th, 8th, 11th, and 12th houses, when in conjunction with powerful Rajayoga pla- nets, also produce favourable results in their subperiods according to their own sources of strength at the time.  NOTES."
+    },
+    {
+      "id": "ch-sranza_xix",
+      "number": null,
+      "title": "Sranza XIX.",
+      "level": 1,
+      "start_line": 1042,
+      "end_line": 1112,
+      "sections": [],
+      "content_preview": "Sranza XIX.  When Rahu and Kethu occupy Kendras or Thriko- nas with the lords of other houses they produce good.  NOTHS,  When Rahn and Kethu occupy Kendras or Thrikonas with other"
+    },
+    {
+      "id": "ch-stanza_xxi",
+      "number": null,
+      "title": "Stanza XXI.",
+      "level": 1,
+      "start_line": 1113,
+      "end_line": 1192,
+      "sections": [],
+      "content_preview": "Stanza XXI.  Where the lords of the 9th and 10th houses are joined by the lords of the 8th and 11th houses success is endangered.  NOTES .  It has been already explained that the combination of the lords"
+    },
+    {
+      "id": "ch-sani_buda",
+      "number": null,
+      "title": "Sani. | Buda.",
+      "level": 1,
+      "start_line": 1193,
+      "end_line": 1202,
+      "sections": [],
+      "content_preview": "Sani. | Buda. ## Page 32  26 JATAKACHUNDRIKA.  . s  AACA ASAE AIT AAT TM"
+    },
+    {
+      "id": "ch-stanza_xxiii",
+      "number": null,
+      "title": "Stanza XXIII.",
+      "level": 1,
+      "start_line": 1203,
+      "end_line": 1246,
+      "sections": [],
+      "content_preview": "Stanza XXIII.  The 2nd house is stronger in inflicting death than the 7th; planets who occupy the 2ndare stronger in killing persons than the lords of the 2nd; those who are in con- junction with the lord of the 2nd are still more powerful in causing death. "
+    },
+    {
+      "id": "ch-sranza_xxiv",
+      "number": null,
+      "title": "Sranza XXIV.",
+      "level": 1,
+      "start_line": 1247,
+      "end_line": 1280,
+      "sections": [],
+      "content_preview": "Sranza XXIV.  The close of the periods: of the planets who are with the lords of the 2nd and 7th houses causes death; next the periods of the planets who occupy the 2nd ane the 7th houses cause death; if death does no happen in the above circumstances it will be caused in the das"
+    },
+    {
+      "id": "ch-sranza_xxy",
+      "number": null,
+      "title": "Sranza XXY,",
+      "level": 1,
+      "start_line": 1281,
+      "end_line": 1340,
+      "sections": [],
+      "content_preview": "Sranza XXY,  lf the periods of the planets occupying or owning death houses do not come in time to cause death then death may happen inthe Dasa of plarets who are not Yoga- karakas but who are auspicious and combina with the lords of death houses: if death does not happen in thes"
+    },
+    {
+      "id": "ch-stanza_xxvi",
+      "number": null,
+      "title": "Stanza XXVI.",
+      "level": 1,
+      "start_line": 1341,
+      "end_line": 1394,
+      "sections": [],
+      "content_preview": "Stanza XXVI.  When the periods of death- inflicting planets are not appearing in time to cause death, the planet most inaus- picious in the horoscope will cause death at any time. ## Page 36  30 JATAKACHUNDRIKA."
+    },
+    {
+      "id": "ch-stanza_xxvii",
+      "number": null,
+      "title": "Stanza XXVII.",
+      "level": 1,
+      "start_line": 1395,
+      "end_line": 1459,
+      "sections": [],
+      "content_preview": "Stanza XXVII.  Sani, inclined to do evil by his conjunction with lords of death houses or those who have any power to inflict death, will cause death in preference to any of those planets.  NOTES. "
+    },
+    {
+      "id": "ch-oottara_pair_period_extending_over_6_years",
+      "number": null,
+      "title": "Oottara pair period extending over 6 years,",
+      "level": 1,
+      "start_line": 1460,
+      "end_line": 1485,
+      "sections": [],
+      "content_preview": "Oottara pair period extending over 6 years,  Rohiny  Hasta Sravanam Mrigasira Chitta"
+    },
+    {
+      "id": "ch-sanis_dasa_19_years",
+      "number": null,
+      "title": "Sani’s Dasa 19 years.",
+      "level": 1,
+      "start_line": 1486,
+      "end_line": 1504,
+      "sections": [],
+      "content_preview": "Sani’s Dasa 19 years. ## Page 39  JATAKACHUNDRIKA. 33 Auslasha > Jaista Buda’s Period 17 years. Raivathy Makha ."
+    },
+    {
+      "id": "ch-please_note_carefully_the",
+      "number": null,
+      "title": "Please note carefully the",
+      "level": 1,
+      "start_line": 1505,
+      "end_line": 1568,
+      "sections": [],
+      "content_preview": "Please note carefully the  Rahu. reasoning—Guru is the lord f the 8th and 11th houses  nd is evil. He occupies 10th  ouse from birth with Ravi"
+    },
+    {
+      "id": "ch-sranza_xxviii",
+      "number": null,
+      "title": "Sranza XXVIII.",
+      "level": 1,
+      "start_line": 1569,
+      "end_line": 1586,
+      "sections": [],
+      "content_preview": "Sranza XXVIII.  Planets do not give in their Periods and sub-periods all the good or evil they are able to do by their positions, associations and aspects in the horoseape.  NOTES. "
+    },
+    {
+      "id": "ch-jararachundrika_35",
+      "number": null,
+      "title": "JaraRACHUNDRIKA: 35",
+      "level": 1,
+      "start_line": 1587,
+      "end_line": 1645,
+      "sections": [],
+      "content_preview": "JaraRACHUNDRIKA: 35  work on Astrology, the period of the most powerful planet in the Kendras is the firstin order. There is the Vimeotiart (120 years) and Astottari (108 ye&rs) systerfis prevalent in Southern and Northern India respectively. The terms of years ascribed to the pl"
+    },
+    {
+      "id": "ch-notes-3",
+      "number": null,
+      "title": ". NOTES. |",
+      "level": 1,
+      "start_line": 1646,
+      "end_line": 1818,
+      "sections": [],
+      "content_preview": ". NOTES. |  The Dasa and its Sub-Divisions have to be calculated with refer- | ence to the rising constellation at the time of birth. That is called the Janma Nakshatra. I have already given the Dasas (Periods of planets) for the 27 constellations. Krittika at birth commences wit"
+    },
+    {
+      "id": "ch-stanza_xxxii",
+      "number": null,
+      "title": "Stanza XXXII.",
+      "level": 1,
+      "start_line": 1819,
+      "end_line": 1827,
+      "sections": [],
+      "content_preview": "Stanza XXXII.  Good planets in conjunction with the lords of the death inflicting houses give success. These planets when they are not in conjunction with the above give moderate success in their sub-periods. Powerful planets give good success in the Bhookties even when they are "
+    },
+    {
+      "id": "ch-notes-4",
+      "number": null,
+      "title": "; NOTES.",
+      "level": 1,
+      "start_line": 1828,
+      "end_line": 1850,
+      "sections": [],
+      "content_preview": "; NOTES.  Stanzas 33 and 84 refer to Dasas and the Bhookties which inter- vene during them. The Dasa may be generelly good but the sub- periods of planets which are evil in themselves or of the planets who are opposed to the influences of the Dasanatha, will not be so very favour"
+    },
+    {
+      "id": "ch-sranza_xxxiv",
+      "number": null,
+      "title": "Sranza XXXIV.",
+      "level": 1,
+      "start_line": 1851,
+      "end_line": 1909,
+      "sections": [],
+      "content_preview": "Sranza XXXIV.  Planets which are disposed to give Rajayoga will do so in their sub-periods, which intervene during the general periods af planets with which they are not associated.  NOTES. ue The stanza is plain enough. -A planet which becomes good for"
+    },
+    {
+      "id": "ch-wene_tum_yartacdyat",
+      "number": null,
+      "title": "WeNe TUM: Yartacdyat |",
+      "level": 1,
+      "start_line": 1910,
+      "end_line": 1911,
+      "sections": [],
+      "content_preview": "WeNe TUM: Yartacdyat |  FRU WTS MATT TTHA | FE UI  wafa Rerneat aeat arrartony |  MAT WTBSAT Aad ATATAMT Il F9 UI Stanzas XXXVI & XXXVII.-"
+    },
+    {
+      "id": "ch-fru_wts_matt_ttha_fe_ui",
+      "number": null,
+      "title": "FRU WTS MATT TTHA | FE UI",
+      "level": 1,
+      "start_line": 1912,
+      "end_line": 1933,
+      "sections": [],
+      "content_preview": "FRU WTS MATT TTHA | FE UI  wafa Rerneat aeat arrartony |  MAT WTBSAT Aad ATATAMT Il F9 UI Stanzas XXXVI & XXXVII.-  If the lords of the Dasa are evil and the lords of the"
+    },
+    {
+      "id": "ch-notes-5",
+      "number": null,
+      "title": "NOTES. .",
+      "level": 1,
+      "start_line": 1934,
+      "end_line": 2007,
+      "sections": [],
+      "content_preview": "NOTES. .  Again the idea seems to be repeated. It may be to make the matter more emphatic that the author is laying much stress on this point. There is however a nice distinction drawn by the author. He seems to make a difference between good planets Shubhagrahas and planets whic"
+    },
+    {
+      "id": "ch-jatarachundrie_a_45",
+      "number": null,
+      "title": "JATARACHUNDRIE A. 45",
+      "level": 1,
+      "start_line": 2008,
+      "end_line": 2047,
+      "sections": [],
+      "content_preview": "JATARACHUNDRIE A. 45  the ae o malic who: are not in conjunction with NOTES. Ltt gt  There are two combinations contemplated here and 1 they must be specially borne in mind. First’ we have to determine’ who is the most Painful planet to inflict death and then if his general Perio"
+    },
+    {
+      "id": "ch-46_satakachundrika",
+      "number": null,
+      "title": "46 SATAKACHUNDRIKA.",
+      "level": 1,
+      "start_line": 2048,
+      "end_line": 2081,
+      "sections": [],
+      "content_preview": "46 SATAKACHUNDRIKA.  NOTES.  These | two planets seem to have a peculiar affinity and produce |  good or evil in an intense form inversely in thier Dasas and Bhookties. If Sani is good and his Dasa governs man, the Bhookti of Sukra, when"
+    },
+    {
+      "id": "ch-stanza_xl",
+      "number": null,
+      "title": "Stanza XL.",
+      "level": 1,
+      "start_line": 2082,
+      "end_line": 2175,
+      "sections": [],
+      "content_preview": "Stanza XL.  attend aera ter fave THATS TE wav FTE UN ve UI  We shall now.speak of the different evil’ and good prospects which the’ planets give in the Zodiacal signs from Mesha (Aries) to Meena (Pisces). These good and bad re-"
+    },
+    {
+      "id": "ch-satakachundrika_49",
+      "number": null,
+      "title": "SATAKACHUNDRIKA. 49",
+      "level": 1,
+      "start_line": 2176,
+      "end_line": 2177,
+      "sections": [],
+      "content_preview": "SATAKACHUNDRIKA. 49  Sranza: XLII.  But on the other hand Guru when combined with Sani, not only does not give good but will actively produce evil. Sukra does not himself kill the native although he possesses death-inflicting powers. :"
+    },
+    {
+      "id": "ch-sranza_xlii",
+      "number": null,
+      "title": "Sranza: XLII.",
+      "level": 1,
+      "start_line": 2178,
+      "end_line": 2321,
+      "sections": [],
+      "content_preview": "Sranza: XLII.  But on the other hand Guru when combined with Sani, not only does not give good but will actively produce evil. Sukra does not himself kill the native although he possesses death-inflicting powers. :  NOTES."
+    },
+    {
+      "id": "ch-stanza_xliv_vrishabha-taurus",
+      "number": null,
+      "title": "Stanza XLIV. Vrishabha-Taurus.",
+      "level": 1,
+      "start_line": 2322,
+      "end_line": 2328,
+      "sections": [],
+      "content_preview": "Stanza XLIV. Vrishabha-Taurus.  To the person born in Vrishabha (Taurus) Lagnam, Guru, Sukra and Chundra ere evil planets ; Sani and Ravi are good planets. “Sani alone is capable of giving Raja- yogam to the person born in Vrishabhalagnam.  NOTES. :"
+    },
+    {
+      "id": "ch-notes-6",
+      "number": null,
+      "title": "NOTES.",
+      "level": 1,
+      "start_line": 2329,
+      "end_line": 2349,
+      "sections": [],
+      "content_preview": "NOTES. :  Guru is the lord of 8th and 11th houses both of which: are de- clared bad. Sukra is the lord of 1st and 6th houses and these are bad, as the first is a quadrant, and when owned by a benefic the result isevil. Sixth house is equally bad, Chundra is the lord of the third "
+    },
+    {
+      "id": "ch-stanza_xlv",
+      "number": null,
+      "title": "Stanza. XLV.",
+      "level": 1,
+      "start_line": 2350,
+      "end_line": 2400,
+      "sections": [],
+      "content_preview": "Stanza. XLV.  If evil planets like Guru ho. are possessed of death- inflicting powers they will kill the native born in Vrishabha in their respective periods and sub-periods. NOTES.  Guru now figures prominently ‘as.the death-inflicting lord to"
+    },
+    {
+      "id": "ch-atta_baa_me_i",
+      "number": null,
+      "title": "ATTA BAA: Me I",
+      "level": 1,
+      "start_line": 2401,
+      "end_line": 2404,
+      "sections": [],
+      "content_preview": "ATTA BAA: Me I  wbarestt Preah wags aeATaY eT: |  UIA BOTA AAT TIAA | ve Ul  AS, 47-48-49, "
+    },
+    {
+      "id": "ch-uia_bota_aat_tiaa_ve_ul",
+      "number": null,
+      "title": "UIA BOTA AAT TIAA | ve Ul",
+      "level": 1,
+      "start_line": 2405,
+      "end_line": 2406,
+      "sections": [],
+      "content_preview": "UIA BOTA AAT TIAA | ve Ul  AS, 47-48-49,  ‘uja, Ravi and Chundra are inauspicions. Sukre alone is good. If Sukra and Buda are well associated they give Rajayoga (47). "
+    },
+    {
+      "id": "ch-as_47-48-49",
+      "number": null,
+      "title": "AS, 47-48-49,",
+      "level": 1,
+      "start_line": 2407,
+      "end_line": 2476,
+      "sections": [],
+      "content_preview": "AS, 47-48-49,  ‘uja, Ravi and Chundra are inauspicions. Sukre alone is good. If Sukra and Buda are well associated they give Rajayoga (47).  ‘When Sani joins Guru, the result ‘will be similar to what they produce on the person born in Mesha. Sani will"
+    },
+    {
+      "id": "ch-sua_tsim_aat_1_su",
+      "number": null,
+      "title": "SUA TSIM AAT 1 SU",
+      "level": 1,
+      "start_line": 2477,
+      "end_line": 2575,
+      "sections": [],
+      "content_preview": "SUA TSIM AAT 1 SU  Stanza 50—51—52. Kataka Lagna.  Gukra, Sani, and Buda are evil for persons born in Kataka (Cancer) ; Guru and Kuja are also evil. es is alone capable of giving Raja yoga (50). "
+    },
+    {
+      "id": "ch-when_kuja_joins_guru_the_combination_produces_much",
+      "number": null,
+      "title": "When Kuja joins Guru the combination produces much",
+      "level": 1,
+      "start_line": 2576,
+      "end_line": 2620,
+      "sections": [],
+      "content_preview": "When Kuja joins Guru the combination produces much  good. Sani does not kill the native himself when he is en- dowed with Maraka powers (54).  Buda and other evil planets kill the person born in Simha, when they have Maraka powers. The wisemen after good consultation must predict"
+    },
+    {
+      "id": "ch-pa_tt_pte_hat_wat_ta_ug",
+      "number": null,
+      "title": "Pa TT: PTE HAT WAT TA: UG",
+      "level": 1,
+      "start_line": 2621,
+      "end_line": 2622,
+      "sections": [],
+      "content_preview": "Pa TT: PTE HAT WAT TA: UG  Stanza 56,57. Kanya Lagna (Virgo).  Sukra, Chundra, Guru and Kuja are evil to the person born in Kanya (Virgo). Sukraalone gives good. Buda and Sukra when in conjunction produce Rajayoga (57). Ravi does not kil the person himself. Kuja and others who ar"
+    },
+    {
+      "id": "ch-stanza_5657_kanya_lagna_virgo",
+      "number": null,
+      "title": "Stanza 56,57. Kanya Lagna (Virgo).",
+      "level": 1,
+      "start_line": 2623,
+      "end_line": 2684,
+      "sections": [],
+      "content_preview": "Stanza 56,57. Kanya Lagna (Virgo).  Sukra, Chundra, Guru and Kuja are evil to the person born in Kanya (Virgo). Sukraalone gives good. Buda and Sukra when in conjunction produce Rajayoga (57). Ravi does not kil the person himself. Kuja and others who are evil kill the native. In "
+    },
+    {
+      "id": "ch-jatakaghundrika_61",
+      "number": null,
+      "title": "JATAKAGHUNDRIKA. ‘ 61",
+      "level": 1,
+      "start_line": 2685,
+      "end_line": 2726,
+      "sections": [],
+      "content_preview": "JATAKAGHUNDRIKA. ‘ 61  Gur and other evil! planets kill the petson when poss- essed of death-inflictiag powers ; the good and bad results must be carefully predicted to persons born in Thula (60).  NOTES. "
+    },
+    {
+      "id": "ch-62_jatakacaundrika",
+      "number": null,
+      "title": "62 JATAKACAUNDRIKA.",
+      "level": 1,
+      "start_line": 2727,
+      "end_line": 2749,
+      "sections": [],
+      "content_preview": "62 JATAKACAUNDRIKA.  comes perfectly good as the two houses he owns are the 4th and 5th and both are good. But in the case of Buda and Chundra, there is some difference. Chundra, it is true, is the Lord of the 10th house and as he is Lord of one house he becomes good if he is in "
+    },
+    {
+      "id": "ch-tiaa_wort",
+      "number": null,
+      "title": "TIAA: WORT",
+      "level": 1,
+      "start_line": 2750,
+      "end_line": 2972,
+      "sections": [],
+      "content_preview": "TIAA: WORT  eure tat Soe U2 u Sea PITTA ATT EATS I Tae Trg 1 BS I  Sranzas 61—62. Vrishchika Lagna. (Scorpio). "
+    },
+    {
+      "id": "ch-68_jatakacbundrika",
+      "number": null,
+      "title": "68 JATAKACBUNDRIKA.",
+      "level": 1,
+      "start_line": 2973,
+      "end_line": 3144,
+      "sections": [],
+      "content_preview": "68 JATAKACBUNDRIKA.  aspected he becomes auspicious and must produce evil-when he. owns quadrants. Sukra is good because he owns 5th and 10th houses. In cases where a good planet owns trines and quadrants together he seems to lose the evil that he would otherwise produce as lord "
+    },
+    {
+      "id": "ch-stanza_72",
+      "number": null,
+      "title": "Stanza 72.",
+      "level": 1,
+      "start_line": 3145,
+      "end_line": 3271,
+      "sections": [],
+      "content_preview": "Stanza 72.  In this way the results of the planetary combinations for the 12 Zodiacal signs must be understood by the learned in astrology. In a similar way also should be explained the results of combinations for the signification of the 12 houses commencing fromthe Lagna whiche"
+    },
+    {
+      "id": "ch-japakachundrika_75",
+      "number": null,
+      "title": "JAPAKACHUNDRIKA, 75",
+      "level": 1,
+      "start_line": 3272,
+      "end_line": 3352,
+      "sections": [],
+      "content_preview": "JAPAKACHUNDRIKA, 75  ‘Now the author seems to have completely ignored the firat kind of influence I have hinted. In the illustration given above. Ravi in an exalted position at the time of birth must raise the position of the person far above the ordinary throughout the period of"
+    },
+    {
+      "id": "ch-jatakacrundrika_77",
+      "number": null,
+      "title": "JATAKACRUNDRIKA; 77",
+      "level": 1,
+      "start_line": 3353,
+      "end_line": 3354,
+      "sections": [],
+      "content_preview": "JATAKACRUNDRIKA; 77  NOTES. -  Manuscripts are‘at considerable variance with each other in the few stanzas which complete the work, and I shall not give the readers the trouble of different readings pointing out the probable stanza which might have been written by the author. The"
+    },
+    {
+      "id": "ch-notes_-",
+      "number": null,
+      "title": "NOTES.",
+      "level": 1,
+      "start_line": 3355,
+      "end_line": 3376,
+      "sections": [],
+      "content_preview": "NOTES. -  Manuscripts are‘at considerable variance with each other in the few stanzas which complete the work, and I shall not give the readers the trouble of different readings pointing out the probable stanza which might have been written by the author. The occupation of planet"
+    },
+    {
+      "id": "ch-sranza_76",
+      "number": null,
+      "title": "Sranza. 76.",
+      "level": 1,
+      "start_line": 3377,
+      "end_line": 3435,
+      "sections": [],
+      "content_preview": "Sranza. 76.  Planets, by their becoming good and evil and being bound by well-defined principles, produce good or evil in their own Dasas (periods) and Bhukties (sub-periods).  NOTES. "
+    },
+    {
+      "id": "ch-japakachundrika_79",
+      "number": null,
+      "title": "JAPAKACHUNDRIKA. 79",
+      "level": 1,
+      "start_line": 3436,
+      "end_line": 3445,
+      "sections": [],
+      "content_preview": "JAPAKACHUNDRIKA. 79  MATT AIR TL | deearrts gr wawaleat Ilse tl Sranza-78.  This work Jataka Chundrika has been written by the learned Pundit Venkatasa Sastrulu, Son of the Dikshit"
+    },
+    {
+      "id": "ch-8_notes",
+      "number": null,
+      "title": "8 ¥ NOTES.",
+      "level": 1,
+      "start_line": 3446,
+      "end_line": 3483,
+      "sections": [],
+      "content_preview": "8 ¥ NOTES.  The father of the auther seems to have been a Dikshit or one who had performed various Yagnams or sacrifices, she nobility of the author’s birth is therefore placed beyond any doubt. The author callg himself a learned pundit and he could not have been otherwise. In th"
+    },
+    {
+      "id": "ch-the_end",
+      "number": null,
+      "title": "The End.",
+      "level": 1,
+      "start_line": 3484,
       "end_line": 3486,
       "sections": [],
-      "content_preview": "24. JATAKACHUNDRIKA.  TARTANA GISTATAM ATS ANAT TAT TS AAATT AUR  Stanza XXI.  Where the lords of the 9th and 10th houses are joined"
+      "content_preview": "The End.  Printed at the Royal Victoria Press :—Madras. —"
     }
   ],
   "toc": [
     {
-      "id": "ch-24",
-      "title": "JATAKACHUNDRIKA.",
-      "chapter": "JATAKACHUNDRIKA.",
-      "chapter_id": "ch-24"
+      "id": "ch-second_edition",
+      "title": "SECOND EDITION.",
+      "chapter": "SECOND EDITION.",
+      "chapter_id": "ch-second_edition"
+    },
+    {
+      "id": "ch-thoroughly_revised",
+      "title": "THOROUGHLY REVISED.",
+      "chapter": "THOROUGHLY REVISED.",
+      "chapter_id": "ch-thoroughly_revised"
+    },
+    {
+      "id": "ch-sra_3b_sero_62",
+      "title": "SrA 3B sero. 6.2",
+      "chapter": "SrA 3B sero. 6.2",
+      "chapter_id": "ch-sra_3b_sero_62"
+    },
+    {
+      "id": "ch-harvard_college_library",
+      "title": "HARVARD COLLEGE LIBRARY",
+      "chapter": "HARVARD COLLEGE LIBRARY",
+      "chapter_id": "ch-harvard_college_library"
+    },
+    {
+      "id": "ch-b_suryanarain_row_8a_mras_ma8b",
+      "title": "B. SURYANARAIN ROW, 8.A., M.R.A.S., M.A.8.B.",
+      "chapter": "B. SURYANARAIN ROW, 8.A., M.R.A.S., M.A.8.B.",
+      "chapter_id": "ch-b_suryanarain_row_8a_mras_ma8b"
+    },
+    {
+      "id": "ch-rratatraereg_qpatdacatee",
+      "title": "Rratatraereg qpatdacatee",
+      "chapter": "Rratatraereg qpatdacatee",
+      "chapter_id": "ch-rratatraereg_qpatdacatee"
+    },
+    {
+      "id": "ch-english_translation",
+      "title": "ENGLISH TRANSLATION.",
+      "chapter": "ENGLISH TRANSLATION.",
+      "chapter_id": "ch-english_translation"
+    },
+    {
+      "id": "ch-stanza_i",
+      "title": "Stanza I.",
+      "chapter": "Stanza I.",
+      "chapter_id": "ch-stanza_i"
+    },
+    {
+      "id": "ch-srayza_ii",
+      "title": "Srayza II.",
+      "chapter": "Srayza II.",
+      "chapter_id": "ch-srayza_ii"
+    },
+    {
+      "id": "ch-_notes",
+      "title": "NOTES,",
+      "chapter": "NOTES,",
+      "chapter_id": "ch-_notes"
+    },
+    {
+      "id": "ch-rey_o_ll",
+      "title": "Rey o lL",
+      "chapter": "Rey o lL",
+      "chapter_id": "ch-rey_o_ll"
+    },
+    {
+      "id": "ch-stanza_iit",
+      "title": "Stanza IIT,",
+      "chapter": "Stanza IIT,",
+      "chapter_id": "ch-stanza_iit"
+    },
+    {
+      "id": "ch-stanza_iv",
+      "title": "Stanza IV.",
+      "chapter": "Stanza IV.",
+      "chapter_id": "ch-stanza_iv"
+    },
+    {
+      "id": "ch-stanza_v",
+      "title": "Stanza V,",
+      "chapter": "Stanza V,",
+      "chapter_id": "ch-stanza_v"
+    },
+    {
+      "id": "ch-rta_aa_tht_tatu",
+      "title": "RTA AA THT TATU",
+      "chapter": "RTA AA THT TATU",
+      "chapter_id": "ch-rta_aa_tht_tatu"
+    },
+    {
+      "id": "ch-stanza_viii-",
+      "title": "Stanza VIII",
+      "chapter": "Stanza VIII",
+      "chapter_id": "ch-stanza_viii-"
+    },
+    {
+      "id": "ch-stanza_ix",
+      "title": "Stanza IX.",
+      "chapter": "Stanza IX.",
+      "chapter_id": "ch-stanza_ix"
+    },
+    {
+      "id": "ch-sranza_x",
+      "title": "Sranza X.",
+      "chapter": "Sranza X.",
+      "chapter_id": "ch-sranza_x"
+    },
+    {
+      "id": "ch-notes",
+      "title": "‘ NOTES,",
+      "chapter": "‘ NOTES,",
+      "chapter_id": "ch-notes"
+    },
+    {
+      "id": "ch-sranza_xi",
+      "title": "Sranza XI,",
+      "chapter": "Sranza XI,",
+      "chapter_id": "ch-sranza_xi"
+    },
+    {
+      "id": "ch-srayza_xii",
+      "title": "Srayza XII.",
+      "chapter": "Srayza XII.",
+      "chapter_id": "ch-srayza_xii"
+    },
+    {
+      "id": "ch-birth_sani",
+      "title": "Birth. | Sani",
+      "chapter": "Birth. | Sani",
+      "chapter_id": "ch-birth_sani"
+    },
+    {
+      "id": "ch-buda_tay",
+      "title": "Buda. tay",
+      "chapter": "Buda. tay",
+      "chapter_id": "ch-buda_tay"
+    },
+    {
+      "id": "ch-kethu_guru",
+      "title": "Kethu.| Guru.",
+      "chapter": "Kethu.| Guru.",
+      "chapter_id": "ch-kethu_guru"
+    },
+    {
+      "id": "ch-sranza_xiii",
+      "title": "Sranza XIII.",
+      "chapter": "Sranza XIII.",
+      "chapter_id": "ch-sranza_xiii"
+    },
+    {
+      "id": "ch-sranza_xiv",
+      "title": "Sranza XIV",
+      "chapter": "Sranza XIV",
+      "chapter_id": "ch-sranza_xiv"
+    },
+    {
+      "id": "ch-pravaisraaagan_sr",
+      "title": "Pravaisraaagan sR",
+      "chapter": "Pravaisraaagan sR",
+      "chapter_id": "ch-pravaisraaagan_sr"
+    },
+    {
+      "id": "ch-sraxza_xv",
+      "title": "Sraxza XV,",
+      "chapter": "Sraxza XV,",
+      "chapter_id": "ch-sraxza_xv"
+    },
+    {
+      "id": "ch-stanza_xvi",
+      "title": "Stanza. XVI",
+      "chapter": "Stanza. XVI",
+      "chapter_id": "ch-stanza_xvi"
+    },
+    {
+      "id": "ch-notes-2",
+      "title": ". NOTES.",
+      "chapter": ". NOTES.",
+      "chapter_id": "ch-notes-2"
+    },
+    {
+      "id": "ch-oat_atratatet_ta_fett_taht",
+      "title": "OAT ATRATATET TA FETT TAHT",
+      "chapter": "OAT ATRATATET TA FETT TAHT",
+      "chapter_id": "ch-oat_atratatet_ta_fett_taht"
+    },
+    {
+      "id": "ch-tl_tagcuaatgarm_sta_hrs",
+      "title": "Tl TAGCUAATGARM STA HRS",
+      "chapter": "Tl TAGCUAATGARM STA HRS",
+      "chapter_id": "ch-tl_tagcuaatgarm_sta_hrs"
+    },
+    {
+      "id": "ch-stanza_xviii",
+      "title": "Stanza XVIII.",
+      "chapter": "Stanza XVIII.",
+      "chapter_id": "ch-stanza_xviii"
+    },
+    {
+      "id": "ch-sranza_xix",
+      "title": "Sranza XIX.",
+      "chapter": "Sranza XIX.",
+      "chapter_id": "ch-sranza_xix"
+    },
+    {
+      "id": "ch-stanza_xxi",
+      "title": "Stanza XXI.",
+      "chapter": "Stanza XXI.",
+      "chapter_id": "ch-stanza_xxi"
+    },
+    {
+      "id": "ch-sani_buda",
+      "title": "Sani. | Buda.",
+      "chapter": "Sani. | Buda.",
+      "chapter_id": "ch-sani_buda"
+    },
+    {
+      "id": "ch-stanza_xxiii",
+      "title": "Stanza XXIII.",
+      "chapter": "Stanza XXIII.",
+      "chapter_id": "ch-stanza_xxiii"
+    },
+    {
+      "id": "ch-sranza_xxiv",
+      "title": "Sranza XXIV.",
+      "chapter": "Sranza XXIV.",
+      "chapter_id": "ch-sranza_xxiv"
+    },
+    {
+      "id": "ch-sranza_xxy",
+      "title": "Sranza XXY,",
+      "chapter": "Sranza XXY,",
+      "chapter_id": "ch-sranza_xxy"
+    },
+    {
+      "id": "ch-stanza_xxvi",
+      "title": "Stanza XXVI.",
+      "chapter": "Stanza XXVI.",
+      "chapter_id": "ch-stanza_xxvi"
+    },
+    {
+      "id": "ch-stanza_xxvii",
+      "title": "Stanza XXVII.",
+      "chapter": "Stanza XXVII.",
+      "chapter_id": "ch-stanza_xxvii"
+    },
+    {
+      "id": "ch-oottara_pair_period_extending_over_6_years",
+      "title": "Oottara pair period extending over 6 years,",
+      "chapter": "Oottara pair period extending over 6 years,",
+      "chapter_id": "ch-oottara_pair_period_extending_over_6_years"
+    },
+    {
+      "id": "ch-sanis_dasa_19_years",
+      "title": "Sani’s Dasa 19 years.",
+      "chapter": "Sani’s Dasa 19 years.",
+      "chapter_id": "ch-sanis_dasa_19_years"
+    },
+    {
+      "id": "ch-please_note_carefully_the",
+      "title": "Please note carefully the",
+      "chapter": "Please note carefully the",
+      "chapter_id": "ch-please_note_carefully_the"
+    },
+    {
+      "id": "ch-sranza_xxviii",
+      "title": "Sranza XXVIII.",
+      "chapter": "Sranza XXVIII.",
+      "chapter_id": "ch-sranza_xxviii"
+    },
+    {
+      "id": "ch-jararachundrika_35",
+      "title": "JaraRACHUNDRIKA: 35",
+      "chapter": "JaraRACHUNDRIKA: 35",
+      "chapter_id": "ch-jararachundrika_35"
+    },
+    {
+      "id": "ch-notes-3",
+      "title": ". NOTES. |",
+      "chapter": ". NOTES. |",
+      "chapter_id": "ch-notes-3"
+    },
+    {
+      "id": "ch-stanza_xxxii",
+      "title": "Stanza XXXII.",
+      "chapter": "Stanza XXXII.",
+      "chapter_id": "ch-stanza_xxxii"
+    },
+    {
+      "id": "ch-notes-4",
+      "title": "; NOTES.",
+      "chapter": "; NOTES.",
+      "chapter_id": "ch-notes-4"
+    },
+    {
+      "id": "ch-sranza_xxxiv",
+      "title": "Sranza XXXIV.",
+      "chapter": "Sranza XXXIV.",
+      "chapter_id": "ch-sranza_xxxiv"
+    },
+    {
+      "id": "ch-wene_tum_yartacdyat",
+      "title": "WeNe TUM: Yartacdyat |",
+      "chapter": "WeNe TUM: Yartacdyat |",
+      "chapter_id": "ch-wene_tum_yartacdyat"
+    },
+    {
+      "id": "ch-fru_wts_matt_ttha_fe_ui",
+      "title": "FRU WTS MATT TTHA | FE UI",
+      "chapter": "FRU WTS MATT TTHA | FE UI",
+      "chapter_id": "ch-fru_wts_matt_ttha_fe_ui"
+    },
+    {
+      "id": "ch-notes-5",
+      "title": "NOTES. .",
+      "chapter": "NOTES. .",
+      "chapter_id": "ch-notes-5"
+    },
+    {
+      "id": "ch-jatarachundrie_a_45",
+      "title": "JATARACHUNDRIE A. 45",
+      "chapter": "JATARACHUNDRIE A. 45",
+      "chapter_id": "ch-jatarachundrie_a_45"
+    },
+    {
+      "id": "ch-46_satakachundrika",
+      "title": "46 SATAKACHUNDRIKA.",
+      "chapter": "46 SATAKACHUNDRIKA.",
+      "chapter_id": "ch-46_satakachundrika"
+    },
+    {
+      "id": "ch-stanza_xl",
+      "title": "Stanza XL.",
+      "chapter": "Stanza XL.",
+      "chapter_id": "ch-stanza_xl"
+    },
+    {
+      "id": "ch-satakachundrika_49",
+      "title": "SATAKACHUNDRIKA. 49",
+      "chapter": "SATAKACHUNDRIKA. 49",
+      "chapter_id": "ch-satakachundrika_49"
+    },
+    {
+      "id": "ch-sranza_xlii",
+      "title": "Sranza: XLII.",
+      "chapter": "Sranza: XLII.",
+      "chapter_id": "ch-sranza_xlii"
+    },
+    {
+      "id": "ch-stanza_xliv_vrishabha-taurus",
+      "title": "Stanza XLIV. Vrishabha-Taurus.",
+      "chapter": "Stanza XLIV. Vrishabha-Taurus.",
+      "chapter_id": "ch-stanza_xliv_vrishabha-taurus"
+    },
+    {
+      "id": "ch-notes-6",
+      "title": "NOTES.",
+      "chapter": "NOTES.",
+      "chapter_id": "ch-notes-6"
+    },
+    {
+      "id": "ch-stanza_xlv",
+      "title": "Stanza. XLV.",
+      "chapter": "Stanza. XLV.",
+      "chapter_id": "ch-stanza_xlv"
+    },
+    {
+      "id": "ch-atta_baa_me_i",
+      "title": "ATTA BAA: Me I",
+      "chapter": "ATTA BAA: Me I",
+      "chapter_id": "ch-atta_baa_me_i"
+    },
+    {
+      "id": "ch-uia_bota_aat_tiaa_ve_ul",
+      "title": "UIA BOTA AAT TIAA | ve Ul",
+      "chapter": "UIA BOTA AAT TIAA | ve Ul",
+      "chapter_id": "ch-uia_bota_aat_tiaa_ve_ul"
+    },
+    {
+      "id": "ch-as_47-48-49",
+      "title": "AS, 47-48-49,",
+      "chapter": "AS, 47-48-49,",
+      "chapter_id": "ch-as_47-48-49"
+    },
+    {
+      "id": "ch-sua_tsim_aat_1_su",
+      "title": "SUA TSIM AAT 1 SU",
+      "chapter": "SUA TSIM AAT 1 SU",
+      "chapter_id": "ch-sua_tsim_aat_1_su"
+    },
+    {
+      "id": "ch-when_kuja_joins_guru_the_combination_produces_much",
+      "title": "When Kuja joins Guru the combination produces much",
+      "chapter": "When Kuja joins Guru the combination produces much",
+      "chapter_id": "ch-when_kuja_joins_guru_the_combination_produces_much"
+    },
+    {
+      "id": "ch-pa_tt_pte_hat_wat_ta_ug",
+      "title": "Pa TT: PTE HAT WAT TA: UG",
+      "chapter": "Pa TT: PTE HAT WAT TA: UG",
+      "chapter_id": "ch-pa_tt_pte_hat_wat_ta_ug"
+    },
+    {
+      "id": "ch-stanza_5657_kanya_lagna_virgo",
+      "title": "Stanza 56,57. Kanya Lagna (Virgo).",
+      "chapter": "Stanza 56,57. Kanya Lagna (Virgo).",
+      "chapter_id": "ch-stanza_5657_kanya_lagna_virgo"
+    },
+    {
+      "id": "ch-jatakaghundrika_61",
+      "title": "JATAKAGHUNDRIKA. ‘ 61",
+      "chapter": "JATAKAGHUNDRIKA. ‘ 61",
+      "chapter_id": "ch-jatakaghundrika_61"
+    },
+    {
+      "id": "ch-62_jatakacaundrika",
+      "title": "62 JATAKACAUNDRIKA.",
+      "chapter": "62 JATAKACAUNDRIKA.",
+      "chapter_id": "ch-62_jatakacaundrika"
+    },
+    {
+      "id": "ch-tiaa_wort",
+      "title": "TIAA: WORT",
+      "chapter": "TIAA: WORT",
+      "chapter_id": "ch-tiaa_wort"
+    },
+    {
+      "id": "ch-68_jatakacbundrika",
+      "title": "68 JATAKACBUNDRIKA.",
+      "chapter": "68 JATAKACBUNDRIKA.",
+      "chapter_id": "ch-68_jatakacbundrika"
+    },
+    {
+      "id": "ch-stanza_72",
+      "title": "Stanza 72.",
+      "chapter": "Stanza 72.",
+      "chapter_id": "ch-stanza_72"
+    },
+    {
+      "id": "ch-japakachundrika_75",
+      "title": "JAPAKACHUNDRIKA, 75",
+      "chapter": "JAPAKACHUNDRIKA, 75",
+      "chapter_id": "ch-japakachundrika_75"
+    },
+    {
+      "id": "ch-jatakacrundrika_77",
+      "title": "JATAKACRUNDRIKA; 77",
+      "chapter": "JATAKACRUNDRIKA; 77",
+      "chapter_id": "ch-jatakacrundrika_77"
+    },
+    {
+      "id": "ch-notes_-",
+      "title": "NOTES.",
+      "chapter": "NOTES.",
+      "chapter_id": "ch-notes_-"
+    },
+    {
+      "id": "ch-sranza_76",
+      "title": "Sranza. 76.",
+      "chapter": "Sranza. 76.",
+      "chapter_id": "ch-sranza_76"
+    },
+    {
+      "id": "ch-japakachundrika_79",
+      "title": "JAPAKACHUNDRIKA. 79",
+      "chapter": "JAPAKACHUNDRIKA. 79",
+      "chapter_id": "ch-japakachundrika_79"
+    },
+    {
+      "id": "ch-8_notes",
+      "title": "8 ¥ NOTES.",
+      "chapter": "8 ¥ NOTES.",
+      "chapter_id": "ch-8_notes"
+    },
+    {
+      "id": "ch-the_end",
+      "title": "The End.",
+      "chapter": "The End.",
+      "chapter_id": "ch-the_end"
     }
   ],
-  "total_chapters": 1,
+  "total_chapters": 80,
   "total_sections": 0
 }

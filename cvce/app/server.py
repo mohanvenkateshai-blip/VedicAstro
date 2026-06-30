@@ -766,6 +766,8 @@ def predict(req: PredictionRequest):
             else None,
             "score": dasha.dasha_score if dasha else 0,
             "summary": dasha.summary if dasha else "",
+            "chapter_citation": getattr(dasha, "chapter_citation", None),
+            "hierarchy_path": getattr(dasha, "hierarchy_path", None),
         }
         if dasha
         else None,
@@ -776,6 +778,9 @@ def predict(req: PredictionRequest):
                 "description": y.description,
                 "benefic": y.benefic,
                 "planets": y.planets_involved,
+                "source": getattr(y, "source", None),
+                "chapter_citation": getattr(y, "chapter_citation", None),
+                "hierarchy_path": getattr(y, "hierarchy_path", None),
             }
             for y in (r.yogas or [])
         ],
@@ -791,6 +796,8 @@ def predict(req: PredictionRequest):
             }
             if r.ashtakavarga.transit_sav
             else {},
+            "chapter_citation": getattr(r.ashtakavarga, "chapter_citation", None),
+            "hierarchy_path": getattr(r.ashtakavarga, "hierarchy_path", None),
         }
         if r.ashtakavarga
         else None,
@@ -800,6 +807,24 @@ def predict(req: PredictionRequest):
         "rules_source": "graph" if (_GRAPH_AVAILABLE and graph_rules_enabled()) else "hardcoded",
         "graph_enhancements": _graph_enhance(r, req) if _GRAPH_AVAILABLE else None,
     }
+
+
+def _enhancer_graph_stats() -> dict | None:
+    """Return graph stats from PredictionEnhancer (GraphRAG or raw dict fallback)."""
+    if not _GRAPH_AVAILABLE or _enhancer is None:
+        return None
+    graph = getattr(_enhancer, "graph", None)
+    if graph is None:
+        return None
+    stats = getattr(graph, "stats", None)
+    if stats is not None:
+        return stats
+    if isinstance(graph, dict):
+        return {
+            "nodes": len(graph.get("nodes", [])),
+            "links": len(graph.get("links", [])),
+        }
+    return None
 
 
 @app.get("/predict/health")
@@ -824,7 +849,7 @@ def predict_health():
             "available": _GRAPH_AVAILABLE,
             "rules_source": "graph" if graph_rules else "hardcoded",
             "graph_as_rules_env": graph_rules_enabled(),
-            "stats": _enhancer.graph.stats if _GRAPH_AVAILABLE else None,
+            "stats": _enhancer_graph_stats(),
         },
         "graph_rag_grok": grok_stats,
         "graph_rag_gemini": gemini_stats,
