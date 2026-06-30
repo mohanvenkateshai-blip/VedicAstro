@@ -166,6 +166,28 @@ export async function loadBook(
     properties: { nodeCount: val.nodes.length },
   }));
 
+  // Sort chapters into logical book order.
+  // Previous behavior used Map insertion order after lexical .order("source_location"),
+  // which put "Chapter 12" / "Chapter 14" before "Chapter 3" (string sort).
+  // Now we sort by the first number we can find in the title or sourceLocation.
+  const getChapterNum = (c: Chapter): number => {
+    const t = `${c.title} ${c.sourceLocation || ''}`;
+    const m = t.match(/\b(\d+)\b/);
+    if (m) return parseInt(m[1], 10);
+    if (/frontmatter|preface|intro|dedication|main/i.test(t)) return -100;
+    return 100000;
+  };
+
+  chapters.sort((a, b) => {
+    const na = getChapterNum(a);
+    const nb = getChapterNum(b);
+    if (na !== nb) return na - nb;
+    return a.title.localeCompare(b.title, undefined, { numeric: true });
+  });
+
+  // Re-assign order indices after numeric sort so UI and consumers have a clean sequence
+  chapters.forEach((c, i) => { c.order = i; });
+
   const metadata: BookMetadata = {
     id: bookId,
     canonicalName: source.canonical_name,
