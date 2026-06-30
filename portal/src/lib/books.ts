@@ -52,34 +52,32 @@ export type ChapterContent = {
 export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<BookMetadata[]> {
   const sources = await listCorpusSources();
 
-  // Compute accurate node counts per source using the same key as searchGraphNodes/loadBook.
-  // We query per source (head:true count) so we are not limited by default row caps and always match the filter used elsewhere.
+  // Compute accurate node counts.
+  // IMPORTANT: graph_nodes.source_file is usually the raw md filename (without .md),
+  // while corpus_sources.canonical_name may be similar or slightly different.
+  // We prefer the filename-derived key because that's how nodes were tagged during ingest.
   const results = await Promise.all(
     sources.map(async (src) => {
       const canonical = src.canonical_name;
       const fileKey = src.storage_path?.split("/").pop()?.replace(/\.md$/, "") ?? null;
 
-      // Primary: use canonical_name as source_file (consistent with loadBook + searchGraphNodes)
-      let { count } = await supabase
-        .from("graph_nodes")
-        .select("*", { count: "exact", head: true })
-        .eq("graph_version", graphVersion)
-        .eq("source_file", canonical);
+      const candidates = [
+        fileKey,                    // most likely for source_file in nodes (e.g. "Brihat_Parashara_Hora_Sastra_Vol_2")
+        canonical,
+        canonical?.replace(/\s+/g, "_"),
+        canonical?.replace(/ /g, "_"),
+      ].filter((k, i, arr) => k && arr.indexOf(k) === i) as string[];
 
-      // Fallbacks for possible ingest variations (underscores, filename without ext, etc.)
-      if (!count || count === 0) {
-        const candidates = [fileKey, canonical?.replace(/\s+/g, "_"), canonical?.replace(/ /g, "_")].filter(Boolean) as string[];
-        for (const key of candidates) {
-          if (key === canonical) continue;
-          const { count: c2 } = await supabase
-            .from("graph_nodes")
-            .select("*", { count: "exact", head: true })
-            .eq("graph_version", graphVersion)
-            .eq("source_file", key);
-          if (c2 && c2 > 0) {
-            count = c2;
-            break;
-          }
+      let count = 0;
+      for (const key of candidates) {
+        const { count: c } = await supabase
+          .from("graph_nodes")
+          .select("*", { count: "exact", head: true })
+          .eq("graph_version", graphVersion)
+          .eq("source_file", key);
+        if (c && c > 0) {
+          count = c;
+          break;
         }
       }
 
@@ -116,12 +114,28 @@ export async function loadBook(
     throw new Error(`Book not found: ${bookId}`);
   }
 
-  // Fetch all nodes for this source
-  const nodes = await searchGraphNodes({
-    graphVersion,
-    sourceFile: source.canonical_name,
-    limit: 500,
-  });
+  const fileKey = source.storage_path?.split("/").pop()?.replace(/\.md$/, "") ?? null;
+
+  // Try the most likely source_file values. Nodes are usually tagged with the md filename stem.
+  const candidates = [
+    fileKey,
+    source.canonical_name,
+    bookId,
+    source.canonical_name?.replace(/\s+/g, "_"),
+  ].filter((k, i, arr) => k && arr.indexOf(k) === i) as string[];
+
+  let nodes: GraphNodeRow[] = [];
+  for (const key of candidates) {
+    const fetched = await searchGraphNodes({
+      graphVersion,
+      sourceFile: key,
+      limit: 500,
+    });
+    if (fetched.length > 0) {
+      nodes = fetched;
+      break;
+    }
+  }
 
   // Group into chapters by source_location prefix or label patterns
   const chapterMap = new Map<string, { title: string; nodes: GraphNodeRow[]; order: number }>();
