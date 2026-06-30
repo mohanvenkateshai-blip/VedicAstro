@@ -222,3 +222,11 @@ COVERAGE_MATRIX + RUN_LOG written
   supabase_state_samples (intermittent): Ashtakavarga ~92% (98/106), BPHS_Vol1 ~60% in one probe / 100% in smaller sample
   coverage_delta_local: 0 -> 8060 chapter-bearing nodes across 8 books
   note: Supabase probes unstable (some HTTP 0); local graph.json authoritative for this run.
+
+[2026-06-30 high-node mapper subagent] Remaining high-value books mapped:
+  - Gochar_Phaladeepika_Pulippani: 982/983 (99.9%)
+  - Phaladeepika_Mantreswara: 1445/1446 (99.9%)  [note: mapper matched 1446 vs graph stem count 869; likely includes 1961 variant]
+  - Deva_Keralam_1: ~775/823 (94.2%)
+  - Deva_Keralam_2: ~795/827 (96.1%)
+  - Jataka_Parijata: 483/485 (99.6%)  [STRUCTURED QUALITY POOR: only 3 chapters with garbled titles like "cereeheestee_a1", "SRTEETATETA"; suggest re-parsing source with better chapter heuristics]
+New per-book patches written. Canonical union updated (+4480, total 16366). Consumers loading per-book patches or re-merged snapshot now see coverage.

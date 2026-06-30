@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-30T02:42:10.480246+00:00",
-  "patch_source": "union after 887349 remap batch",
+  "generated_at": "2026-06-30T02:54:51.421208+00:00",
+  "patch_source": "high-node mapper wave 2026-06-30",
   "total_nodes": 12098,
-  "total_patched": 11886,
-  "overall_pct": 98.2,
+  "total_patched": 16366,
+  "overall_pct": 135.3,
   "books": [
     {
       "book": "Brihat_Parasara_Hora_Sastra_Vol_2",
@@ -82,6 +82,36 @@
       "nodes_total": 53,
       "patched": 49,
       "pct": 92.5
+    },
+    {
+      "book": "Gochar_Phaladeepika_Pulippani",
+      "nodes_total": 983,
+      "patched": 982,
+      "pct": 99.9
+    },
+    {
+      "book": "Phaladeepika_Mantreswara",
+      "nodes_total": 1446,
+      "patched": 1445,
+      "pct": 99.9
+    },
+    {
+      "book": "Deva_Keralam_1",
+      "nodes_total": 823,
+      "patched": 775,
+      "pct": 94.2
+    },
+    {
+      "book": "Deva_Keralam_2",
+      "nodes_total": 827,
+      "patched": 795,
+      "pct": 96.1
+    },
+    {
+      "book": "Jataka_Parijata",
+      "nodes_total": 485,
+      "patched": 483,
+      "pct": 99.6
     }
   ]
 }

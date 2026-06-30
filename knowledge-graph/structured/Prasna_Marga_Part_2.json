@@ -3,27 +3,48 @@
   "canonical_name": "Prasna Marga Part 2",
   "source_file": "Prasna_Marga_Part_2.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": ", Stanzas 7 to 11 (Part 1) which we shall recapitulate briefly here.",
+      "id": "ch-sat_r",
+      "number": null,
+      "title": "Sat. (R)",
       "level": 1,
-      "start_line": 767,
-      "end_line": 1122,
+      "start_line": 889,
+      "end_line": 1145,
       "sections": [],
-      "content_preview": "Chapter 2, Stanzas 7 to 11 (Part 1) which we shall recapitulate briefly here. \"Arudha is a very important factor in Prasna or Horary Astrology...\" The 12 signs are  assigned to the 8 directions and according to the direction which the querent faces at the time of  consultation, t"
+      "content_preview": "Sat. (R) 10-30 Moon 25-17 Lagna 18-31 Here (Chart 2) the 8th house is occupied by malefic Mars, though in own sign. Saturn  exalted  aspects  him.  When  the  question  was  put  whether  the  proposed  alliance  would  materialize, it was indicated it would not be successful. Al"
     },
     {
-      "id": "ch-9",
-      "number": "9",
-      "title": "Divide the product by 200. The quotient represents the Chandravela longitude.",
+      "id": "ch-rahu_mars",
+      "number": null,
+      "title": "Rahu Mars",
       "level": 1,
-      "start_line": 1123,
-      "end_line": 2743,
+      "start_line": 1146,
+      "end_line": 1147,
+      "sections": [],
+      "content_preview": "Rahu Mars Lagna Chart 3 RASI Venus NAVAMSA Moon Mercury Lagna 7-03 "
+    },
+    {
+      "id": "ch-chart_3_rasi",
+      "number": null,
+      "title": "Chart 3 RASI",
+      "level": 1,
+      "start_line": 1148,
+      "end_line": 1492,
+      "sections": [],
+      "content_preview": "Chart 3 RASI Venus NAVAMSA Moon Mercury Lagna 7-03  Jupit.(R) 19-52"
+    },
+    {
+      "id": "ch-chart_3_rasi-2",
+      "number": null,
+      "title": "Chart 3 RASI",
+      "level": 1,
+      "start_line": 1493,
+      "end_line": 2492,
       "sections": [
         {
-          "id": "ch-9-sec-x_108_26136_degrees_expunging_multiples_of_360_we_get_936_de",
+          "id": "ch-chart_3_rasi-sec-x_108_26136_degrees_expunging_multiples_of_360_we_get_936_de",
           "title": "x 108 = 2613.6 degrees. Expunging multiples of 360, we get 93.6 degrees or Cancer 3.6",
           "level": 2,
           "start_line": 2129,
@@ -31,650 +52,198 @@
           "content_preview": ""
         },
         {
-          "id": "ch-9-sec-x_12_-_19032_which_counted_from_the_first_point_of_aries_giv",
+          "id": "ch-chart_3_rasi-sec-x_12_-_19032_which_counted_from_the_first_point_of_aries_giv",
           "title": "x 12 - 190.32 which counted from the first point of Aries gives Swati (2).",
           "level": 2,
           "start_line": 2154,
-          "end_line": 2742,
+          "end_line": 2491,
           "content_preview": ""
         }
       ],
-      "content_preview": "9. Divide the product by 200. The quotient represents the Chandravela longitude. NOTES Chandrabhilasha sign and Chandravela sign are two different factors. Example: Chart 3: 8-30 p.m. on 24-5-1984 at Bangalore. Moon = 332° 01' in Rasi. When the Moon transits Pisces (Dwadasamsa) R"
+      "content_preview": "Chart 3 RASI Sun NAVAMSA Moon Moon Mercury Venus Merc."
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "If the Ascendant lord, 5th lord, Jupiter and 7th lord are all weak.",
+      "id": "ch-mercury_sun",
+      "number": null,
+      "title": "Mercury Sun",
       "level": 1,
-      "start_line": 2744,
-      "end_line": 2744,
+      "start_line": 2493,
+      "end_line": 7266,
       "sections": [],
-      "content_preview": "1. If the Ascendant lord, 5th lord, Jupiter and 7th lord are all weak. 2. If the respective 5th lords from the Ascendant, the Moon and Jupiter receive no benefic  aspects. 3. The 5th house has no benefic aspects but is afflicted malefics. 4. The 5th house is tenanted by malefics."
+      "content_preview": "Mercury Sun  Mars  Jupiter vargas do not figure at all. Therefore the requisite of Jupiter controlling the three  vargas in the Santana yoga sphuta does not apply here. If the vargas of Jupiter exceed three, then there will be more than 6 sons. Stanza 149. Take the Drekkana lord "
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "If the respective 5th lords from the Ascendant, the Moon and Jupiter receive no benefic",
+      "id": "ch-moola_and_bhoga",
+      "number": null,
+      "title": "Moola and Bhoga",
       "level": 1,
-      "start_line": 2745,
-      "end_line": 2746,
+      "start_line": 7267,
+      "end_line": 7268,
       "sections": [],
-      "content_preview": "2. If the respective 5th lords from the Ascendant, the Moon and Jupiter receive no benefic  aspects. 3. The 5th house has no benefic aspects but is afflicted malefics. 4. The 5th house is tenanted by malefics. 5. The 5th lord is debilitated and is not aspected by any benefics. 6."
+      "content_preview": "Moola and Bhoga Virgo Jeeva and Nasa Libra Dhatu and Karma Scorpio Moola and Bhoga Sagittarius"
     },
     {
-      "id": "ch-3",
-      "number": "3",
-      "title": "The 5th house has no benefic aspects but is afflicted malefics.",
+      "id": "ch-jeeva_and_nasa",
+      "number": null,
+      "title": "Jeeva and Nasa",
       "level": 1,
-      "start_line": 2747,
-      "end_line": 2747,
-      "sections": [],
-      "content_preview": "3. The 5th house has no benefic aspects but is afflicted malefics. 4. The 5th house is tenanted by malefics. 5. The 5th lord is debilitated and is not aspected by any benefics. 6. Mars is in the 7th. 7. The Moon and Venus are together (this combination seems ambiguous). 8. The wa"
-    },
-    {
-      "id": "ch-4",
-      "number": "4",
-      "title": "The 5th house is tenanted by malefics.",
-      "level": 1,
-      "start_line": 2748,
-      "end_line": 2748,
-      "sections": [],
-      "content_preview": "4. The 5th house is tenanted by malefics. 5. The 5th lord is debilitated and is not aspected by any benefics. 6. Mars is in the 7th. 7. The Moon and Venus are together (this combination seems ambiguous). 8. The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12t"
-    },
-    {
-      "id": "ch-5",
-      "number": "5",
-      "title": "The 5th lord is debilitated and is not aspected by any benefics.",
-      "level": 1,
-      "start_line": 2749,
-      "end_line": 2749,
-      "sections": [],
-      "content_preview": "5. The 5th lord is debilitated and is not aspected by any benefics. 6. Mars is in the 7th. 7. The Moon and Venus are together (this combination seems ambiguous). 8. The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This  combination not only rules out is"
-    },
-    {
-      "id": "ch-6",
-      "number": "6",
-      "title": "Mars is in the 7th.",
-      "level": 1,
-      "start_line": 2750,
-      "end_line": 2750,
-      "sections": [],
-      "content_preview": "6. Mars is in the 7th. 7. The Moon and Venus are together (this combination seems ambiguous). 8. The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This  combination not only rules out issues but also a wife. 9. The Ascendant lord, the Moon-sign lord, Jup"
-    },
-    {
-      "id": "ch-7",
-      "number": "7",
-      "title": "The Moon and Venus are together (this combination seems ambiguous).",
-      "level": 1,
-      "start_line": 2751,
-      "end_line": 2751,
-      "sections": [],
-      "content_preview": "7. The Moon and Venus are together (this combination seems ambiguous). 8. The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This  combination not only rules out issues but also a wife. 9. The Ascendant lord, the Moon-sign lord, Jupiter, the 5th and 7th h"
-    },
-    {
-      "id": "ch-8",
-      "number": "8",
-      "title": "The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This",
-      "level": 1,
-      "start_line": 2752,
-      "end_line": 2753,
-      "sections": [],
-      "content_preview": "8. The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This  combination not only rules out issues but also a wife. 9. The Ascendant lord, the Moon-sign lord, Jupiter, the 5th and 7th houses are extremely  weak. 10. The factors given in (9) plus Yamakantak"
-    },
-    {
-      "id": "ch-9",
-      "number": "9",
-      "title": "The Ascendant lord, the Moon-sign lord, Jupiter, the 5th and 7th houses are extremely",
-      "level": 1,
-      "start_line": 2754,
-      "end_line": 2755,
-      "sections": [],
-      "content_preview": "9. The Ascendant lord, the Moon-sign lord, Jupiter, the 5th and 7th houses are extremely  weak. 10. The factors given in (9) plus Yamakantaka occupy the 6th, 8th or 12th. 11. The 5th house is aspected by or associated with malefics. 12. Eunuch combinations are present. Readers ar"
-    },
-    {
-      "id": "ch-10",
-      "number": "10",
-      "title": "The factors given in (9) plus Yamakantaka occupy the 6th, 8th or 12th.",
-      "level": 1,
-      "start_line": 2756,
-      "end_line": 2756,
-      "sections": [],
-      "content_preview": "10. The factors given in (9) plus Yamakantaka occupy the 6th, 8th or 12th. 11. The 5th house is aspected by or associated with malefics. 12. Eunuch combinations are present. Readers are referred to the Notes under Chapter XVIII stanza 146. 13. Santana Tithi falls after the 8th da"
-    },
-    {
-      "id": "ch-11",
-      "number": "11",
-      "title": "The 5th house is aspected by or associated with malefics.",
-      "level": 1,
-      "start_line": 2757,
-      "end_line": 2757,
-      "sections": [],
-      "content_preview": "11. The 5th house is aspected by or associated with malefics. 12. Eunuch combinations are present. Readers are referred to the Notes under Chapter XVIII stanza 146. 13. Santana Tithi falls after the 8th day of the dark half of the fortnight. 14: The 5th house from Jupiter in Jupi"
-    },
-    {
-      "id": "ch-12",
-      "number": "12",
-      "title": "Eunuch combinations are present.",
-      "level": 1,
-      "start_line": 2758,
-      "end_line": 2759,
-      "sections": [],
-      "content_preview": "12. Eunuch combinations are present. Readers are referred to the Notes under Chapter XVIII stanza 146. 13. Santana Tithi falls after the 8th day of the dark half of the fortnight. 14: The 5th house from Jupiter in Jupiter Ashtakavarga has a small number of bindus. In combinations"
-    },
-    {
-      "id": "ch-13",
-      "number": "13",
-      "title": "Santana Tithi falls after the 8th day of the dark half of the fortnight.",
-      "level": 1,
-      "start_line": 2760,
-      "end_line": 4325,
-      "sections": [],
-      "content_preview": "13. Santana Tithi falls after the 8th day of the dark half of the fortnight. 14: The 5th house from Jupiter in Jupiter Ashtakavarga has a small number of bindus. In combinations 9 to 14, even an adopted child is ruled out. At least a few of these combinations are bound to appear "
-    },
-    {
-      "id": "ch-12",
-      "number": "12",
-      "title": "For Jupiter 2-12, 5-4, 9-10, 7-3 and 11-8.",
-      "level": 1,
-      "start_line": 4326,
-      "end_line": 4913,
-      "sections": [],
-      "content_preview": "12. For Jupiter 2-12, 5-4, 9-10, 7-3 and 11-8. Stanza 50. For Venus the Vedhya and Vedha signs are 2-7, 3-1, 4-10, 5-9, 8-5, 9-4, 11-  ## Page 114  12 and 12-6. Stanza 51. The Vedhya positions for Rahu and Ketu are 3, 6, and 11 as for Saturn  and the Vedha positions are 12, 9, 5."
-    },
-    {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Under the following circumstances, the enemy will not invade or even if the march has",
-      "level": 1,
-      "start_line": 4914,
-      "end_line": 4932,
-      "sections": [],
-      "content_preview": "2. Under the following circumstances, the enemy will not invade or even if the march has  begun, will abandon it: (a) The Moon is in a moveable sign and the Ascendant is in a fixed sign and a fixed  Navamsa — an invasion by the enemy need not be feared. (b) The Ascendant is a fix"
-    },
-    {
-      "id": "ch-3",
-      "number": "3",
-      "title": "When the enemy marches on against the querent, the outcome is decided in the",
-      "level": 1,
-      "start_line": 4933,
-      "end_line": 6052,
-      "sections": [],
-      "content_preview": "3. When the enemy marches on against the querent, the outcome is decided in the  following manner: (a) The Ascendant is a fixed sign or the Moon is in a common sign and the 6th house is  occupied by Mercury, Jupiter or Venus — the invading army will be defeated. (b) The Ascendant"
-    },
-    {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Carrying of eggs by ants from place to place",
-      "level": 1,
-      "start_line": 6053,
-      "end_line": 6053,
-      "sections": [],
-      "content_preview": "1. Carrying of eggs by ants from place to place- 2. Snakes climbing trees and having sexual intercourse. 3. Cows rushing home to meet their offspring. 4. Cats scratching the ground. 5. Young children building dams mud banks. 6. Hills at a distance appearing to have a blue colouri"
-    },
-    {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Snakes climbing trees and having sexual intercourse.",
-      "level": 1,
-      "start_line": 6054,
-      "end_line": 6054,
-      "sections": [],
-      "content_preview": "2. Snakes climbing trees and having sexual intercourse. 3. Cows rushing home to meet their offspring. 4. Cats scratching the ground. 5. Young children building dams mud banks. 6. Hills at a distance appearing to have a blue colouring. 7. Thick mist covering caves. 8. The Moon's d"
-    },
-    {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Cows rushing home to meet their offspring.",
-      "level": 1,
-      "start_line": 6055,
-      "end_line": 6055,
-      "sections": [],
-      "content_preview": "3. Cows rushing home to meet their offspring. 4. Cats scratching the ground. 5. Young children building dams mud banks. 6. Hills at a distance appearing to have a blue colouring. 7. Thick mist covering caves. 8. The Moon's disc having a circular red line. 9. Chameleons climbing t"
-    },
-    {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Cats scratching the ground.",
-      "level": 1,
-      "start_line": 6056,
-      "end_line": 6056,
-      "sections": [],
-      "content_preview": "4. Cats scratching the ground. 5. Young children building dams mud banks. 6. Hills at a distance appearing to have a blue colouring. 7. Thick mist covering caves. 8. The Moon's disc having a circular red line. 9. Chameleons climbing trees and staring at the sky. 10. Cows looking "
-    },
-    {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Young children building dams mud banks.",
-      "level": 1,
-      "start_line": 6057,
-      "end_line": 6057,
-      "sections": [],
-      "content_preview": "5. Young children building dams mud banks. 6. Hills at a distance appearing to have a blue colouring. 7. Thick mist covering caves. 8. The Moon's disc having a circular red line. 9. Chameleons climbing trees and staring at the sky. 10. Cows looking up at the sky. 11. Cocks crowin"
-    },
-    {
-      "id": "ch-6",
-      "number": "6",
-      "title": "Hills at a distance appearing to have a blue colouring.",
-      "level": 1,
-      "start_line": 6058,
-      "end_line": 6058,
-      "sections": [],
-      "content_preview": "6. Hills at a distance appearing to have a blue colouring. 7. Thick mist covering caves. 8. The Moon's disc having a circular red line. 9. Chameleons climbing trees and staring at the sky. 10. Cows looking up at the sky. 11. Cocks crowing in the day. 12. Flashes of lightning appe"
-    },
-    {
-      "id": "ch-7",
-      "number": "7",
-      "title": "Thick mist covering caves.",
-      "level": 1,
-      "start_line": 6059,
-      "end_line": 6059,
-      "sections": [],
-      "content_preview": "7. Thick mist covering caves. 8. The Moon's disc having a circular red line. 9. Chameleons climbing trees and staring at the sky. 10. Cows looking up at the sky. 11. Cocks crowing in the day. 12. Flashes of lightning appearing in the north-east. 13. The Moon's colour appearing to"
-    },
-    {
-      "id": "ch-8",
-      "number": "8",
-      "title": "The Moon's disc having a circular red line.",
-      "level": 1,
-      "start_line": 6060,
-      "end_line": 6060,
-      "sections": [],
-      "content_preview": "8. The Moon's disc having a circular red line. 9. Chameleons climbing trees and staring at the sky. 10. Cows looking up at the sky. 11. Cocks crowing in the day. 12. Flashes of lightning appearing in the north-east. 13. The Moon's colour appearing to be that of honey or the eyes "
-    },
-    {
-      "id": "ch-9",
-      "number": "9",
-      "title": "Chameleons climbing trees and staring at the sky.",
-      "level": 1,
-      "start_line": 6061,
-      "end_line": 6061,
-      "sections": [],
-      "content_preview": "9. Chameleons climbing trees and staring at the sky. 10. Cows looking up at the sky. 11. Cocks crowing in the day. 12. Flashes of lightning appearing in the north-east. 13. The Moon's colour appearing to be that of honey or the eyes of parrots. 14. The appearance of mock-moon or "
-    },
-    {
-      "id": "ch-10",
-      "number": "10",
-      "title": "Cows looking up at the sky.",
-      "level": 1,
-      "start_line": 6062,
-      "end_line": 6062,
-      "sections": [],
-      "content_preview": "10. Cows looking up at the sky. 11. Cocks crowing in the day. 12. Flashes of lightning appearing in the north-east. 13. The Moon's colour appearing to be that of honey or the eyes of parrots. 14. The appearance of mock-moon or pratichandra. It is clear from the list of indicative"
-    },
-    {
-      "id": "ch-11",
-      "number": "11",
-      "title": "Cocks crowing in the day.",
-      "level": 1,
-      "start_line": 6063,
-      "end_line": 6063,
-      "sections": [],
-      "content_preview": "11. Cocks crowing in the day. 12. Flashes of lightning appearing in the north-east. 13. The Moon's colour appearing to be that of honey or the eyes of parrots. 14. The appearance of mock-moon or pratichandra. It is clear from the list of indicative signs given above how deep were"
-    },
-    {
-      "id": "ch-12",
-      "number": "12",
-      "title": "Flashes of lightning appearing in the north-east.",
-      "level": 1,
-      "start_line": 6064,
-      "end_line": 6064,
-      "sections": [],
-      "content_preview": "12. Flashes of lightning appearing in the north-east. 13. The Moon's colour appearing to be that of honey or the eyes of parrots. 14. The appearance of mock-moon or pratichandra. It is clear from the list of indicative signs given above how deep were the observations of  nature m"
-    },
-    {
-      "id": "ch-13",
-      "number": "13",
-      "title": "The Moon's colour appearing to be that of honey or the eyes of parrots.",
-      "level": 1,
-      "start_line": 6065,
-      "end_line": 6065,
-      "sections": [],
-      "content_preview": "13. The Moon's colour appearing to be that of honey or the eyes of parrots. 14. The appearance of mock-moon or pratichandra. It is clear from the list of indicative signs given above how deep were the observations of  nature made by our ancient sages and how superficial has been "
-    },
-    {
-      "id": "ch-14",
-      "number": "14",
-      "title": "The appearance of mock-moon or pratichandra.",
-      "level": 1,
-      "start_line": 6066,
-      "end_line": 6405,
-      "sections": [],
-      "content_preview": "14. The appearance of mock-moon or pratichandra. It is clear from the list of indicative signs given above how deep were the observations of  nature made by our ancient sages and how superficial has been our own understanding of not  only nature but also the nimittas embodied in "
-    },
-    {
-      "id": "ch-14",
-      "number": "14",
-      "title": "Indications of having an old well are also given.",
-      "level": 1,
-      "start_line": 6406,
-      "end_line": 6501,
-      "sections": [],
-      "content_preview": "14. Indications of having an old well are also given. Stanza 15. There will be no water in the well dug, if the Moon is in Taurus and Rahu  is in Scorpio. Stanza 16. From the above yogas, indications and other sources of information, if  you come to conclude that water is availab"
-    },
-    {
-      "id": "ch-8",
-      "number": "8",
-      "title": "Counting from udaya nakshatra (square 8) to the Moon's Nakshatra in the order of the diagram",
-      "level": 1,
-      "start_line": 6502,
-      "end_line": 7603,
-      "sections": [],
-      "content_preview": "8. Counting from udaya nakshatra (square 8) to the Moon's Nakshatra in the order of the diagram  we get Mrigasira No. 16 in the square. This particular square, which is in the S.E., indicates the  spot where water will be available. This diagram may be considered as a plan or a b"
-    },
-    {
-      "id": "ch-7",
-      "number": "7",
-      "title": "The base or Kuta number is 49.",
-      "level": 1,
-      "start_line": 7604,
-      "end_line": 7769,
+      "start_line": 7269,
+      "end_line": 8245,
       "sections": [
         {
-          "id": "ch-7-sec-x_9_648_27_plus_108",
+          "id": "ch-jeeva_and_nasa-sec-x_9_648_27_plus_108",
           "title": "x 9 = 64.8 / 27 plus 10.8",
           "level": 2,
           "start_line": 7687,
-          "end_line": 7768,
+          "end_line": 8244,
           "content_preview": ""
         }
       ],
-      "content_preview": "7. The base or Kuta number is 49. Example: (a) Arudha Lagna = Scorpio. (b) The number assigned to it is 11. (c) Deducting 11 from the base number 49, we get 49 — 11 = 38. (d) Multiplying the balance by 7, we get 38 x 7 = 266. (e) Dividing the product by 27, we get 266 / 27 = 9 pl"
+      "content_preview": "Jeeva and Nasa Libra Dhatu and Karma Scorpio Moola and Bhoga Sagittarius Jeeva and Nasa Capricorn"
     },
     {
-      "id": "ch-27",
-      "number": "27",
-      "title": "The remainder counted from Aswini or Makha or Moola, according as the ascendant",
+      "id": "ch-virgo_venus",
+      "number": null,
+      "title": "Virgo Venus",
       "level": 1,
-      "start_line": 7770,
-      "end_line": 7837,
+      "start_line": 8246,
+      "end_line": 8837,
       "sections": [],
-      "content_preview": "27. The remainder counted from Aswini or Makha or Moola, according as the ascendant  fat the time of query) is a moveable, fixed or common sign gives the birth star. NOTES Suppose the number of persons present at the time of query (including the astrologer and  the consultor) is "
+      "content_preview": "Virgo Venus Sun  Libra Mercury  Scorpio Mars  Sagittarius  Capricorn  Ascendant  Aquarius Moon "
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "The birth Lagna is the Navamsa sign of the query Lagna.",
+      "id": "ch-this_difference_will_be_noted_carefully",
+      "number": null,
+      "title": "This difference will be noted carefully.",
       "level": 1,
-      "start_line": 7838,
-      "end_line": 7840,
+      "start_line": 8838,
+      "end_line": 8953,
       "sections": [],
-      "content_preview": "1. The birth Lagna is the Navamsa sign of the query Lagna. For instance if in the query chart the Navamsa Lagna is Leo, then in the birth chart the  Lagna will be Leo. 2. Take the Drekkana of the ascendant in the query chart. Count from it till the Drekkana  occupied by the Sun. "
+      "content_preview": "This difference will be noted carefully.  ## Page 230  Stanza 111. Multiply the bindus in the 9th house (in Jupiter's Ashtakavarga) by  Jupiter's Sodya Pinda. This gives the number of sons. By multiplying the Suddha Pinda by  the bindus in the 5th, we get daughters. The number of"
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Take the Drekkana of the ascendant in the query chart. Count from it till the Drekkana",
+      "id": "ch-index_of_technical_terms",
+      "number": null,
+      "title": "Index of Technical Terms",
       "level": 1,
-      "start_line": 7841,
-      "end_line": 8874,
+      "start_line": 8954,
+      "end_line": 9178,
       "sections": [],
-      "content_preview": "2. Take the Drekkana of the ascendant in the query chart. Count from it till the Drekkana  occupied by the Sun. Note the number of Drekkanas, expunge multiples of 12. The remainder  counted from the query ascendant gives the birth ascendant. Example: The 2nd Drekkana of Taurus ri"
+      "content_preview": "Index of Technical Terms A Abhichara: Incantation by a foe for evil purposes Abhisheka: Pouring holy water on the idol with Vedic chanting Adhaka: Vessel of 20\" diameter, and 8\" deep"
     },
     {
-      "id": "ch-12",
-      "number": "12",
-      "title": "When the Sun transits the sign represented by the remainder, death will take place.",
+      "id": "ch-south_node_of_the_moon",
+      "number": null,
+      "title": "South node of the Moon",
       "level": 1,
-      "start_line": 8875,
+      "start_line": 9179,
+      "end_line": 9198,
+      "sections": [],
+      "content_preview": "South node of the Moon Khara Letters ka, cha, ta, tha, pa Kimsthugna One of the Karanas Kola The first decanates of Cancer and Capricorn and last one of Scorpio"
+    },
+    {
+      "id": "ch-sacred_grass",
+      "number": null,
+      "title": "Sacred grass",
+      "level": 1,
+      "start_line": 9199,
       "end_line": 9464,
       "sections": [],
-      "content_preview": "12. When the Sun transits the sign represented by the remainder, death will take place. Stanza 119. When the signs containing less bindus in Saturn's Ashtakavarga rise  ## Page 231  every day, there will be some mishap. When the Sun transits such signs, there will be  greater mis"
+      "content_preview": "Sacred grass L Lakshana: Omens: indicative signs Luminaries: The Sun and the Moon M Mahodara:"
     }
   ],
   "toc": [
     {
-      "id": "ch-2",
-      "title": ", Stanzas 7 to 11 (Part 1) which we shall recapitulate briefly here.",
-      "chapter": ", Stanzas 7 to 11 (Part 1) which we shall recapitulate briefly here.",
-      "chapter_id": "ch-2"
+      "id": "ch-sat_r",
+      "title": "Sat. (R)",
+      "chapter": "Sat. (R)",
+      "chapter_id": "ch-sat_r"
     },
     {
-      "id": "ch-9-sec-x_108_26136_degrees_expunging_multiples_of_360_we_get_936_de",
+      "id": "ch-rahu_mars",
+      "title": "Rahu Mars",
+      "chapter": "Rahu Mars",
+      "chapter_id": "ch-rahu_mars"
+    },
+    {
+      "id": "ch-chart_3_rasi",
+      "title": "Chart 3 RASI",
+      "chapter": "Chart 3 RASI",
+      "chapter_id": "ch-chart_3_rasi"
+    },
+    {
+      "id": "ch-chart_3_rasi-sec-x_108_26136_degrees_expunging_multiples_of_360_we_get_936_de",
       "title": "x 108 = 2613.6 degrees. Expunging multiples of 360, we get 93.6 degrees or Cancer 3.6",
-      "chapter": "Divide the product by 200. The quotient represents the Chandravela longitude.",
-      "chapter_id": "ch-9"
+      "chapter": "Chart 3 RASI",
+      "chapter_id": "ch-chart_3_rasi-2"
     },
     {
-      "id": "ch-9-sec-x_12_-_19032_which_counted_from_the_first_point_of_aries_giv",
+      "id": "ch-chart_3_rasi-sec-x_12_-_19032_which_counted_from_the_first_point_of_aries_giv",
       "title": "x 12 - 190.32 which counted from the first point of Aries gives Swati (2).",
-      "chapter": "Divide the product by 200. The quotient represents the Chandravela longitude.",
-      "chapter_id": "ch-9"
+      "chapter": "Chart 3 RASI",
+      "chapter_id": "ch-chart_3_rasi-2"
     },
     {
-      "id": "ch-9",
-      "title": "Divide the product by 200. The quotient represents the Chandravela longitude.",
-      "chapter": "Divide the product by 200. The quotient represents the Chandravela longitude.",
-      "chapter_id": "ch-9"
+      "id": "ch-chart_3_rasi-2",
+      "title": "Chart 3 RASI",
+      "chapter": "Chart 3 RASI",
+      "chapter_id": "ch-chart_3_rasi-2"
     },
     {
-      "id": "ch-1",
-      "title": "If the Ascendant lord, 5th lord, Jupiter and 7th lord are all weak.",
-      "chapter": "If the Ascendant lord, 5th lord, Jupiter and 7th lord are all weak.",
-      "chapter_id": "ch-1"
+      "id": "ch-mercury_sun",
+      "title": "Mercury Sun",
+      "chapter": "Mercury Sun",
+      "chapter_id": "ch-mercury_sun"
     },
     {
-      "id": "ch-2",
-      "title": "If the respective 5th lords from the Ascendant, the Moon and Jupiter receive no benefic",
-      "chapter": "If the respective 5th lords from the Ascendant, the Moon and Jupiter receive no benefic",
-      "chapter_id": "ch-2"
+      "id": "ch-moola_and_bhoga",
+      "title": "Moola and Bhoga",
+      "chapter": "Moola and Bhoga",
+      "chapter_id": "ch-moola_and_bhoga"
     },
     {
-      "id": "ch-3",
-      "title": "The 5th house has no benefic aspects but is afflicted malefics.",
-      "chapter": "The 5th house has no benefic aspects but is afflicted malefics.",
-      "chapter_id": "ch-3"
-    },
-    {
-      "id": "ch-4",
-      "title": "The 5th house is tenanted by malefics.",
-      "chapter": "The 5th house is tenanted by malefics.",
-      "chapter_id": "ch-4"
-    },
-    {
-      "id": "ch-5",
-      "title": "The 5th lord is debilitated and is not aspected by any benefics.",
-      "chapter": "The 5th lord is debilitated and is not aspected by any benefics.",
-      "chapter_id": "ch-5"
-    },
-    {
-      "id": "ch-6",
-      "title": "Mars is in the 7th.",
-      "chapter": "Mars is in the 7th.",
-      "chapter_id": "ch-6"
-    },
-    {
-      "id": "ch-7",
-      "title": "The Moon and Venus are together (this combination seems ambiguous).",
-      "chapter": "The Moon and Venus are together (this combination seems ambiguous).",
-      "chapter_id": "ch-7"
-    },
-    {
-      "id": "ch-8",
-      "title": "The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This",
-      "chapter": "The waning Moon occupies the 5th and malefics are in the 1st, 7th and 12th. This",
-      "chapter_id": "ch-8"
-    },
-    {
-      "id": "ch-9",
-      "title": "The Ascendant lord, the Moon-sign lord, Jupiter, the 5th and 7th houses are extremely",
-      "chapter": "The Ascendant lord, the Moon-sign lord, Jupiter, the 5th and 7th houses are extremely",
-      "chapter_id": "ch-9"
-    },
-    {
-      "id": "ch-10",
-      "title": "The factors given in (9) plus Yamakantaka occupy the 6th, 8th or 12th.",
-      "chapter": "The factors given in (9) plus Yamakantaka occupy the 6th, 8th or 12th.",
-      "chapter_id": "ch-10"
-    },
-    {
-      "id": "ch-11",
-      "title": "The 5th house is aspected by or associated with malefics.",
-      "chapter": "The 5th house is aspected by or associated with malefics.",
-      "chapter_id": "ch-11"
-    },
-    {
-      "id": "ch-12",
-      "title": "Eunuch combinations are present.",
-      "chapter": "Eunuch combinations are present.",
-      "chapter_id": "ch-12"
-    },
-    {
-      "id": "ch-13",
-      "title": "Santana Tithi falls after the 8th day of the dark half of the fortnight.",
-      "chapter": "Santana Tithi falls after the 8th day of the dark half of the fortnight.",
-      "chapter_id": "ch-13"
-    },
-    {
-      "id": "ch-12",
-      "title": "For Jupiter 2-12, 5-4, 9-10, 7-3 and 11-8.",
-      "chapter": "For Jupiter 2-12, 5-4, 9-10, 7-3 and 11-8.",
-      "chapter_id": "ch-12"
-    },
-    {
-      "id": "ch-2",
-      "title": "Under the following circumstances, the enemy will not invade or even if the march has",
-      "chapter": "Under the following circumstances, the enemy will not invade or even if the march has",
-      "chapter_id": "ch-2"
-    },
-    {
-      "id": "ch-3",
-      "title": "When the enemy marches on against the querent, the outcome is decided in the",
-      "chapter": "When the enemy marches on against the querent, the outcome is decided in the",
-      "chapter_id": "ch-3"
-    },
-    {
-      "id": "ch-1",
-      "title": "Carrying of eggs by ants from place to place",
-      "chapter": "Carrying of eggs by ants from place to place",
-      "chapter_id": "ch-1"
-    },
-    {
-      "id": "ch-2",
-      "title": "Snakes climbing trees and having sexual intercourse.",
-      "chapter": "Snakes climbing trees and having sexual intercourse.",
-      "chapter_id": "ch-2"
-    },
-    {
-      "id": "ch-3",
-      "title": "Cows rushing home to meet their offspring.",
-      "chapter": "Cows rushing home to meet their offspring.",
-      "chapter_id": "ch-3"
-    },
-    {
-      "id": "ch-4",
-      "title": "Cats scratching the ground.",
-      "chapter": "Cats scratching the ground.",
-      "chapter_id": "ch-4"
-    },
-    {
-      "id": "ch-5",
-      "title": "Young children building dams mud banks.",
-      "chapter": "Young children building dams mud banks.",
-      "chapter_id": "ch-5"
-    },
-    {
-      "id": "ch-6",
-      "title": "Hills at a distance appearing to have a blue colouring.",
-      "chapter": "Hills at a distance appearing to have a blue colouring.",
-      "chapter_id": "ch-6"
-    },
-    {
-      "id": "ch-7",
-      "title": "Thick mist covering caves.",
-      "chapter": "Thick mist covering caves.",
-      "chapter_id": "ch-7"
-    },
-    {
-      "id": "ch-8",
-      "title": "The Moon's disc having a circular red line.",
-      "chapter": "The Moon's disc having a circular red line.",
-      "chapter_id": "ch-8"
-    },
-    {
-      "id": "ch-9",
-      "title": "Chameleons climbing trees and staring at the sky.",
-      "chapter": "Chameleons climbing trees and staring at the sky.",
-      "chapter_id": "ch-9"
-    },
-    {
-      "id": "ch-10",
-      "title": "Cows looking up at the sky.",
-      "chapter": "Cows looking up at the sky.",
-      "chapter_id": "ch-10"
-    },
-    {
-      "id": "ch-11",
-      "title": "Cocks crowing in the day.",
-      "chapter": "Cocks crowing in the day.",
-      "chapter_id": "ch-11"
-    },
-    {
-      "id": "ch-12",
-      "title": "Flashes of lightning appearing in the north-east.",
-      "chapter": "Flashes of lightning appearing in the north-east.",
-      "chapter_id": "ch-12"
-    },
-    {
-      "id": "ch-13",
-      "title": "The Moon's colour appearing to be that of honey or the eyes of parrots.",
-      "chapter": "The Moon's colour appearing to be that of honey or the eyes of parrots.",
-      "chapter_id": "ch-13"
-    },
-    {
-      "id": "ch-14",
-      "title": "The appearance of mock-moon or pratichandra.",
-      "chapter": "The appearance of mock-moon or pratichandra.",
-      "chapter_id": "ch-14"
-    },
-    {
-      "id": "ch-14",
-      "title": "Indications of having an old well are also given.",
-      "chapter": "Indications of having an old well are also given.",
-      "chapter_id": "ch-14"
-    },
-    {
-      "id": "ch-8",
-      "title": "Counting from udaya nakshatra (square 8) to the Moon's Nakshatra in the order of the diagram",
-      "chapter": "Counting from udaya nakshatra (square 8) to the Moon's Nakshatra in the order of the diagram",
-      "chapter_id": "ch-8"
-    },
-    {
-      "id": "ch-7-sec-x_9_648_27_plus_108",
+      "id": "ch-jeeva_and_nasa-sec-x_9_648_27_plus_108",
       "title": "x 9 = 64.8 / 27 plus 10.8",
-      "chapter": "The base or Kuta number is 49.",
-      "chapter_id": "ch-7"
+      "chapter": "Jeeva and Nasa",
+      "chapter_id": "ch-jeeva_and_nasa"
     },
     {
-      "id": "ch-7",
-      "title": "The base or Kuta number is 49.",
-      "chapter": "The base or Kuta number is 49.",
-      "chapter_id": "ch-7"
+      "id": "ch-jeeva_and_nasa",
+      "title": "Jeeva and Nasa",
+      "chapter": "Jeeva and Nasa",
+      "chapter_id": "ch-jeeva_and_nasa"
     },
     {
-      "id": "ch-27",
-      "title": "The remainder counted from Aswini or Makha or Moola, according as the ascendant",
-      "chapter": "The remainder counted from Aswini or Makha or Moola, according as the ascendant",
-      "chapter_id": "ch-27"
+      "id": "ch-virgo_venus",
+      "title": "Virgo Venus",
+      "chapter": "Virgo Venus",
+      "chapter_id": "ch-virgo_venus"
     },
     {
-      "id": "ch-1",
-      "title": "The birth Lagna is the Navamsa sign of the query Lagna.",
-      "chapter": "The birth Lagna is the Navamsa sign of the query Lagna.",
-      "chapter_id": "ch-1"
+      "id": "ch-this_difference_will_be_noted_carefully",
+      "title": "This difference will be noted carefully.",
+      "chapter": "This difference will be noted carefully.",
+      "chapter_id": "ch-this_difference_will_be_noted_carefully"
     },
     {
-      "id": "ch-2",
-      "title": "Take the Drekkana of the ascendant in the query chart. Count from it till the Drekkana",
-      "chapter": "Take the Drekkana of the ascendant in the query chart. Count from it till the Drekkana",
-      "chapter_id": "ch-2"
+      "id": "ch-index_of_technical_terms",
+      "title": "Index of Technical Terms",
+      "chapter": "Index of Technical Terms",
+      "chapter_id": "ch-index_of_technical_terms"
     },
     {
-      "id": "ch-12",
-      "title": "When the Sun transits the sign represented by the remainder, death will take place.",
-      "chapter": "When the Sun transits the sign represented by the remainder, death will take place.",
-      "chapter_id": "ch-12"
+      "id": "ch-south_node_of_the_moon",
+      "title": "South node of the Moon",
+      "chapter": "South node of the Moon",
+      "chapter_id": "ch-south_node_of_the_moon"
+    },
+    {
+      "id": "ch-sacred_grass",
+      "title": "Sacred grass",
+      "chapter": "Sacred grass",
+      "chapter_id": "ch-sacred_grass"
     }
   ],
-  "total_chapters": 39,
+  "total_chapters": 12,
   "total_sections": 3
 }
