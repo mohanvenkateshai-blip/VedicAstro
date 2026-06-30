@@ -5,6 +5,17 @@ import fs from "fs";
 import path from "path";
 
 const STRUCTURED_DIR = path.join(process.cwd(), "..", "knowledge-graph", "structured"); // from portal/ to root
+const PATCHES_DIR = path.join(process.cwd(), "..", "knowledge-graph", "patches");
+const PATCH_PATH = path.join(PATCHES_DIR, "node-chapter-map.json");
+
+export type StructuredSection = {
+  id: string;
+  title: string;
+  level: number;
+  start_line?: number;
+  end_line?: number;
+  content_preview?: string;
+};
 
 export type StructuredChapter = {
   id: string;
@@ -13,7 +24,7 @@ export type StructuredChapter = {
   level: number;
   start_line?: number;
   end_line?: number;
-  sections?: Array<{ id: string; title: string; level: number; start_line?: number; end_line?: number }>;
+  sections?: StructuredSection[];
   content_preview?: string;
 };
 
@@ -118,6 +129,9 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
         }
       }
 
+      const structured = loadStructuredBook(fileKey || "") || loadStructuredBook(canonical || "");
+      const chapterCount = structured?.chapters?.length || structured?.total_chapters || 0;
+
       return {
         id: fileKey ?? canonical,
         canonicalName: canonical,
@@ -126,6 +140,7 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
         sha256: src.sha256,
         bytes: src.bytes,
         nodeCount: count || 0,
+        chapterCount: chapterCount || undefined,
       };
     })
   );
@@ -305,15 +320,137 @@ export function loadStructuredBook(bookId: string): StructuredBook | null {
 
 /**
  * Convert structured chapters into the internal Chapter shape used by the reader.
+ * Emits chapters at their level, and appends nested sections as subsequent entries
+ * with incremented level so the sidebar can render visual hierarchy (indent) while
+ * staying compatible with the flat Chapter[] prop.
  */
 export function chaptersFromStructured(sb: StructuredBook): Chapter[] {
-  return (sb.chapters || []).map((ch, i) => ({
-    id: ch.id,
-    title: ch.title,
-    order: i,
-    sourceLocation: ch.number ? `Chapter ${ch.number}` : undefined,
-    nodeIds: [], // nodes are secondary enrichment now
-    properties: { level: ch.level, structured: true },
+  const out: Chapter[] = [];
+  (sb.chapters || []).forEach((ch) => {
+    out.push({
+      id: ch.id,
+      title: ch.title,
+      order: out.length,
+      sourceLocation: ch.number ? `Chapter ${ch.number}` : undefined,
+      nodeIds: [],
+      properties: { level: ch.level ?? 1, structured: true, hasSections: !!(ch.sections && ch.sections.length), start_line: ch.start_line, end_line: ch.end_line },
+    });
+    (ch.sections || []).forEach((sec) => {
+      out.push({
+        id: sec.id,
+        title: sec.title,
+        order: out.length,
+        sourceLocation: undefined,
+        nodeIds: [],
+        properties: { level: sec.level ?? 2, structured: true, parentChapter: ch.id, start_line: (sec as any).start_line, end_line: (sec as any).end_line },
+      });
+    });
+  });
+  return out;
+}
+
+export type NodeProvenance = {
+  chapter_id?: string;
+  section_id?: string | null;
+  hierarchy_path?: string;
+  method?: string;
+  confidence?: number;
+  matched_on?: string;
+};
+
+/**
+ * Load the KE-owned node→chapter mapping patch (non-destructive sidecar produced by map_nodes_to_structured.py).
+ * Returns the full patch so callers can both enrich nodeIds and display provenance.
+ * If bookId provided, prefers per-book patch-*.json when present (e.g. for Ashtakavarga).
+ */
+export function loadNodeChapterPatch(bookId?: string): { patches?: Array<{ node_id: string; chapter_id: string; section_id?: string | null; book_id?: string; hierarchy_path?: string; method?: string; confidence?: number; matched_on?: string }> } | null {
+  try {
+    if (bookId) {
+      const variants = [
+        bookId,
+        bookId.replace(/\s+/g, "_"),
+        bookId.replace(/ /g, "_"),
+      ].filter((v, i, a) => v && a.indexOf(v) === i);
+      for (const v of variants) {
+        const perBookPath = path.join(PATCHES_DIR, `patch-${v}.json`);
+        if (fs.existsSync(perBookPath)) {
+          const raw = fs.readFileSync(perBookPath, "utf8");
+          return JSON.parse(raw);
+        }
+      }
+      // fuzzy scan for per-book patches by content
+      if (fs.existsSync(PATCHES_DIR)) {
+        const files = fs.readdirSync(PATCHES_DIR).filter((f) => f.startsWith("patch-") && f.endsWith(".json"));
+        for (const f of files) {
+          const full = path.join(PATCHES_DIR, f);
+          try {
+            const data = JSON.parse(fs.readFileSync(full, "utf8"));
+            const bks = (data.books || []) as string[];
+            const bid = (data as any).book_id || "";
+            if (bks.includes(bookId) || bid === bookId || bks.some((b) => b.toLowerCase().includes(bookId.toLowerCase())) || bid.toLowerCase().includes(bookId.toLowerCase())) {
+              return data;
+            }
+          } catch {}
+        }
+      }
+    }
+    if (fs.existsSync(PATCH_PATH)) {
+      const raw = fs.readFileSync(PATCH_PATH, "utf8");
+      return JSON.parse(raw);
+    }
+  } catch {}
+  return null;
+}
+
+/**
+ * Build a lookup from node_id → provenance details for a specific book (or all if no bookId).
+ * Used to render "Sourced from: <hierarchy_path> (method: X, conf: Y)" on nodes.
+ */
+export function buildNodeProvenanceMap(
+  patch: ReturnType<typeof loadNodeChapterPatch> | null,
+  bookId?: string
+): Record<string, NodeProvenance> {
+  const map: Record<string, NodeProvenance> = {};
+  if (!patch?.patches?.length) return map;
+  const norm = (s: string) => (s || "").toLowerCase().replace(/\s+/g, "_");
+  const bookKey = bookId ? norm(bookId) : null;
+  for (const p of patch.patches) {
+    if (!p.node_id) continue;
+    if (bookKey) {
+      const bid = norm(p.book_id || "");
+      if (bid && !bid.includes(bookKey) && bookKey !== bid) continue;
+    }
+    map[p.node_id] = {
+      chapter_id: p.chapter_id,
+      section_id: p.section_id ?? null,
+      hierarchy_path: p.hierarchy_path,
+      method: p.method,
+      confidence: p.confidence,
+      matched_on: p.matched_on,
+    };
+  }
+  return map;
+}
+
+/**
+ * Given chapters derived from structured + the patch, attach the real nodeIds.
+ * This is how the Learn reader receives "clean chapter tree + the KE nodes that belong to each chapter".
+ */
+export function enrichChaptersWithNodeIds(chapters: Chapter[], bookId: string, patch: ReturnType<typeof loadNodeChapterPatch>): Chapter[] {
+  if (!patch || !patch.patches || patch.patches.length === 0) return chapters;
+  const byChapter = new Map<string, string[]>();
+  const norm = (s: string) => (s || "").toLowerCase().replace(/\s+/g, "_");
+  const bookKey = norm(bookId);
+  for (const p of patch.patches) {
+    const bid = norm(p.book_id || "");
+    if (!bid || (!bid.includes(bookKey) && bookKey !== bid)) continue;
+    const arr = byChapter.get(p.chapter_id) || [];
+    if (p.node_id) arr.push(p.node_id);
+    byChapter.set(p.chapter_id, arr);
+  }
+  return chapters.map((ch) => ({
+    ...ch,
+    nodeIds: byChapter.get(ch.id) || ch.nodeIds || [],
   }));
 }
 
@@ -348,6 +485,42 @@ export async function getBookNodes(bookId: string, graphVersion = DEFAULT_GRAPH_
   const source = sources.find((s) => s.canonical_name.includes(bookId));
   if (!source) return [];
   return searchGraphNodes({ graphVersion, sourceFile: source.canonical_name, limit: 1000 });
+}
+
+/**
+ * Optional: fetch the KE-owned structured book (chapter tree + per-chapter nodes)
+ * via the CVCE proxy. Falls back to null if the endpoint is not reachable.
+ * Use this when you want the server component to ask the authoritative KnowledgeEngine
+ * instead of (or in addition to) reading the JSON files on disk.
+ */
+export async function fetchStructuredBookFromKE(bookId: string): Promise<any | null> {
+  try {
+    const res = await fetch(`/api/cvce/knowledge/structured/${encodeURIComponent(bookId)}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Convert a response from KnowledgeEngine.get_structured_book (or /knowledge/structured/{id})
+ * into the (Chapter[], nodesByChapterMap) shape the reader expects.
+ */
+export function chaptersAndNodesFromKeStructured(keBook: any): { chapters: Chapter[]; nodesByChapter: Record<string, any[]> } {
+  const rawChapters = keBook?.chapters || [];
+  const chapters: Chapter[] = rawChapters.map((ch: any, i: number) => ({
+    id: ch.id,
+    title: ch.title,
+    order: i,
+    sourceLocation: ch.number ? `Chapter ${ch.number}` : undefined,
+    nodeIds: (keBook?.chapter_node_ids?.[ch.id] || []) as string[],
+    properties: { level: ch.level, structured: true, source: "ke" },
+  }));
+  const nodesByChapter: Record<string, any[]> = keBook?.nodes_by_chapter || {};
+  return { chapters, nodesByChapter };
 }
 
 export type MarkdownSection = {
@@ -423,4 +596,52 @@ export function parseMarkdownToSections(md: string): { chapters: Chapter[]; sect
   chapters = filtered.map((c, i) => ({ ...c, order: i }));
 
   return { chapters, sections };
+}
+
+/**
+ * Build clean, sliceable content blocks for the reader right pane using the
+ * authoritative structured chapters (with start_line/end_line from the build script).
+ * Emits chapter-level blocks and, when present, nested section blocks using the
+ * precise line ranges. This gives stable ids for deep-link jumps and hierarchical nav.
+ */
+export function sectionsFromStructured(
+  sb: StructuredBook,
+  fullMarkdown: string
+): { id: string; title: string; content: string }[] {
+  if (!sb?.chapters?.length || !fullMarkdown || typeof fullMarkdown !== "string") return [];
+  const lines = fullMarkdown.split(/\r?\n/);
+  const blocks: { id: string; title: string; content: string }[] = [];
+
+  for (const ch of sb.chapters) {
+    const hasSections = !!(ch.sections && ch.sections.length > 0);
+    const chStart = typeof ch.start_line === "number" ? ch.start_line : 0;
+    const chEndEx = typeof ch.end_line === "number" ? ch.end_line + 1 : lines.length;
+
+    if (hasSections && ch.sections) {
+      // Lightweight chapter header block (title + short lead) so the chapter id is targetable.
+      const lead = lines.slice(Math.max(0, chStart), Math.min(lines.length, chEndEx)).join("\n").trim();
+      // Use a compact header so the main readable content lives in the section slices.
+      const headerContent = lead.split("\n").slice(0, 3).join("\n").trim() || ch.title;
+      blocks.push({ id: ch.id, title: ch.title || `Chapter ${ch.number || ""}`.trim(), content: headerContent });
+
+      for (const sec of ch.sections) {
+        const sStart = typeof sec.start_line === "number" ? sec.start_line : chStart;
+        const sEndEx = typeof sec.end_line === "number" ? sec.end_line + 1 : chEndEx;
+        const content = lines.slice(Math.max(0, sStart), Math.min(lines.length, sEndEx)).join("\n").trim();
+        if (content) {
+          blocks.push({ id: sec.id, title: sec.title, content });
+        }
+      }
+    } else {
+      const content = lines.slice(Math.max(0, chStart), Math.min(lines.length, chEndEx)).join("\n").trim();
+      if (content) {
+        blocks.push({
+          id: ch.id,
+          title: ch.title || `Chapter ${ch.number || ""}`.trim(),
+          content,
+        });
+      }
+    }
+  }
+  return blocks;
 }

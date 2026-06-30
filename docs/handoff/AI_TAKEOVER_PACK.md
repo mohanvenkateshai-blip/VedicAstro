@@ -8,6 +8,15 @@
 
 ---
 
+**🚨 MANDATORY MULTI-AGENT PROTOCOL — ALWAYS START WITH 5+ AGENTS**  
+**Never begin substantial work (code, data, docs, audits, ingest, etc.) with fewer than 5 parallel sub-agents.**  
+Use the `Task` tool multiple times **in the same first response**. One of the first 5 **must** be a Multi-Agent Reminder/Compliance/Orchestrator.  
+**Rule source (immutable):** `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true)  
+See: `docs/MULTI_AGENT_MANDATORY_RULE.md` and `docs/agents-launched.log`.  
+Scale to 8–12 normally; 15–30+ for "FAAASSTTT" / large work. This is non-negotiable.
+
+---
+
 ## 1. One-Sentence Summary
 VedicAstro is a FastAPI (CVCE) + Next.js (Portal) system with a central **KnowledgeEngine** that owns the Vedic Knowledge Graph (Supabase + graph.json) and cascades refreshes to all registered prediction engines.
 
@@ -46,7 +55,7 @@ python scripts/handoff/maintain_context.py --update-all
 4. Background revival cron (every 6–12h)
 
 ## 6. Critical Files for Any New AI
-- `knowledge-graph/KNOWLEDGE_CATALOG.md` — **what texts are actually in the KG + honest history of the mess**
+- `knowledge-graph/KNOWLEDGE_CATALOG.md` — **what texts are actually in the KG + honest history of the mess (see Multi-Agent Health + .cursor/rules above)**
 - `CONTEXT.md` (root) — immutable guardrails + topology
 - `docs/knowledge-engine-status.md` — full status report
 - `docs/knowledge-engine-architecture.md` — mermaid diagrams + flow

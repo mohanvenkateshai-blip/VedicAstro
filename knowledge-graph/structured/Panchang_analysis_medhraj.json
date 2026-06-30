@@ -3,8 +3,155 @@
   "canonical_name": "Panchang analysis medhraj",
   "source_file": "Panchang_analysis_medhraj.md",
   "graph_version": "newbooks-v1",
-  "chapters": [],
-  "toc": [],
-  "total_chapters": 0,
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-tithischa_shriyamapnoti_vaaraat_ayushya_vardhanam",
+      "number": null,
+      "title": "Tithischa Shriyamapnoti, Vaaraat Ayushya Vardhanam |",
+      "level": 1,
+      "start_line": 8,
+      "end_line": 8,
+      "sections": [],
+      "content_preview": "Tithischa Shriyamapnoti, Vaaraat Ayushya Vardhanam |"
+    },
+    {
+      "id": "ch-nakshatram_harate_paapam_yogad_roga_nivaaranam",
+      "number": null,
+      "title": "Nakshatram Harate Paapam, Yogad Roga Nivaaranam [|",
+      "level": 1,
+      "start_line": 9,
+      "end_line": 9,
+      "sections": [],
+      "content_preview": "Nakshatram Harate Paapam, Yogad Roga Nivaaranam [|"
+    },
+    {
+      "id": "ch-karanam_kaarya_siddhisha_panchanga_phalam_uttamam_1",
+      "number": null,
+      "title": "Karanam Kaarya Siddhisha Panchanga Phalam Uttamam // [1]",
+      "level": 1,
+      "start_line": 10,
+      "end_line": 26,
+      "sections": [],
+      "content_preview": "Karanam Kaarya Siddhisha Panchanga Phalam Uttamam // [1]"
+    },
+    {
+      "id": "ch-bhadra_jaya_rikta_purna",
+      "number": null,
+      "title": "Bhadra, Jaya, Rikta, Purna",
+      "level": 1,
+      "start_line": 27,
+      "end_line": 47,
+      "sections": [],
+      "content_preview": "Bhadra, Jaya, Rikta, Purna"
+    },
+    {
+      "id": "ch-nakshatra_11202119_table",
+      "number": null,
+      "title": "Nakshatra 11202119 ' table",
+      "level": 1,
+      "start_line": 48,
+      "end_line": 63,
+      "sections": [],
+      "content_preview": "Nakshatra 11202119 ' table"
+    },
+    {
+      "id": "ch-nakshatra_-nakshatram_harate_paapam_knowing_the_nakshatra_st",
+      "number": null,
+      "title": "Nakshatra -Nakshatram Harate Paapam: Knowing the Nakshatra (star/",
+      "level": 1,
+      "start_line": 64,
+      "end_line": 90,
+      "sections": [],
+      "content_preview": "Nakshatra -Nakshatram Harate Paapam: Knowing the Nakshatra (star/"
+    },
+    {
+      "id": "ch-karana",
+      "number": null,
+      "title": "Karana",
+      "level": 1,
+      "start_line": 91,
+      "end_line": 92,
+      "sections": [],
+      "content_preview": "Karana -"
+    },
+    {
+      "id": "ch-status_allowed_activities",
+      "number": null,
+      "title": "Status, & Allowed Activities",
+      "level": 1,
+      "start_line": 93,
+      "end_line": 94,
+      "sections": [],
+      "content_preview": "Status, & Allowed Activities"
+    },
+    {
+      "id": "ch-ravi_yoga_-_ravi_yoga_vedic_astrology_guidedocx",
+      "number": null,
+      "title": "Ravi Yoga - Ravi_Yoga_Vedic_Astrology_Guide.docx",
+      "level": 1,
+      "start_line": 95,
+      "end_line": 108,
+      "sections": [],
+      "content_preview": "Ravi Yoga - Ravi_Yoga_Vedic_Astrology_Guide.docx"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-tithischa_shriyamapnoti_vaaraat_ayushya_vardhanam",
+      "title": "Tithischa Shriyamapnoti, Vaaraat Ayushya Vardhanam |",
+      "chapter": "Tithischa Shriyamapnoti, Vaaraat Ayushya Vardhanam |",
+      "chapter_id": "ch-tithischa_shriyamapnoti_vaaraat_ayushya_vardhanam"
+    },
+    {
+      "id": "ch-nakshatram_harate_paapam_yogad_roga_nivaaranam",
+      "title": "Nakshatram Harate Paapam, Yogad Roga Nivaaranam [|",
+      "chapter": "Nakshatram Harate Paapam, Yogad Roga Nivaaranam [|",
+      "chapter_id": "ch-nakshatram_harate_paapam_yogad_roga_nivaaranam"
+    },
+    {
+      "id": "ch-karanam_kaarya_siddhisha_panchanga_phalam_uttamam_1",
+      "title": "Karanam Kaarya Siddhisha Panchanga Phalam Uttamam // [1]",
+      "chapter": "Karanam Kaarya Siddhisha Panchanga Phalam Uttamam // [1]",
+      "chapter_id": "ch-karanam_kaarya_siddhisha_panchanga_phalam_uttamam_1"
+    },
+    {
+      "id": "ch-bhadra_jaya_rikta_purna",
+      "title": "Bhadra, Jaya, Rikta, Purna",
+      "chapter": "Bhadra, Jaya, Rikta, Purna",
+      "chapter_id": "ch-bhadra_jaya_rikta_purna"
+    },
+    {
+      "id": "ch-nakshatra_11202119_table",
+      "title": "Nakshatra 11202119 ' table",
+      "chapter": "Nakshatra 11202119 ' table",
+      "chapter_id": "ch-nakshatra_11202119_table"
+    },
+    {
+      "id": "ch-nakshatra_-nakshatram_harate_paapam_knowing_the_nakshatra_st",
+      "title": "Nakshatra -Nakshatram Harate Paapam: Knowing the Nakshatra (star/",
+      "chapter": "Nakshatra -Nakshatram Harate Paapam: Knowing the Nakshatra (star/",
+      "chapter_id": "ch-nakshatra_-nakshatram_harate_paapam_knowing_the_nakshatra_st"
+    },
+    {
+      "id": "ch-karana",
+      "title": "Karana",
+      "chapter": "Karana",
+      "chapter_id": "ch-karana"
+    },
+    {
+      "id": "ch-status_allowed_activities",
+      "title": "Status, & Allowed Activities",
+      "chapter": "Status, & Allowed Activities",
+      "chapter_id": "ch-status_allowed_activities"
+    },
+    {
+      "id": "ch-ravi_yoga_-_ravi_yoga_vedic_astrology_guidedocx",
+      "title": "Ravi Yoga - Ravi_Yoga_Vedic_Astrology_Guide.docx",
+      "chapter": "Ravi Yoga - Ravi_Yoga_Vedic_Astrology_Guide.docx",
+      "chapter_id": "ch-ravi_yoga_-_ravi_yoga_vedic_astrology_guidedocx"
+    }
+  ],
+  "total_chapters": 9,
   "total_sections": 0
 }

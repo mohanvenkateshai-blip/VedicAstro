@@ -3,6 +3,7 @@
   "canonical_name": "Do Ghati Muhurta Comprehensive Handbook",
   "source_file": "Do_Ghati_Muhurta_Comprehensive_Handbook.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
       "id": "ch-1",
@@ -12,7 +13,7 @@
       "start_line": 16,
       "end_line": 17,
       "sections": [],
-      "content_preview": "1. What Do-Ghati Muhurta means  2. Source basis and authenticity notes  3. Calculation method used in this handbook  4. Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose "
+      "content_preview": "1. What Do-Ghati Muhurta means"
     },
     {
       "id": "ch-2",
@@ -22,7 +23,7 @@
       "start_line": 18,
       "end_line": 19,
       "sections": [],
-      "content_preview": "2. Source basis and authenticity notes  3. Calculation method used in this handbook  4. Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose  5. Calculated table: Mysuru, 22-Apr-1975 "
+      "content_preview": "2. Source basis and authenticity notes"
     },
     {
       "id": "ch-3",
@@ -32,7 +33,7 @@
       "start_line": 20,
       "end_line": 21,
       "sections": [],
-      "content_preview": "3. Calculation method used in this handbook  4. Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose  5. Calculated table: Mysuru, 22-Apr-1975  6. Calculated table: Athlone, 30-May-2026 "
+      "content_preview": "3. Calculation method used in this handbook"
     },
     {
       "id": "ch-4",
@@ -42,7 +43,7 @@
       "start_line": 22,
       "end_line": 23,
       "sections": [],
-      "content_preview": "4. Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose  5. Calculated table: Mysuru, 22-Apr-1975  6. Calculated table: Athlone, 30-May-2026  7. Practical election checklist "
+      "content_preview": "4. Master table: 30 Do-Ghati Muhurtas with Nakshatra mapping and purpose"
     },
     {
       "id": "ch-5",
@@ -52,7 +53,7 @@
       "start_line": 24,
       "end_line": 25,
       "sections": [],
-      "content_preview": "5. Calculated table: Mysuru, 22-Apr-1975  6. Calculated table: Athlone, 30-May-2026  7. Practical election checklist  8. Glossary and references "
+      "content_preview": "5. Calculated table: Mysuru, 22-Apr-1975"
     },
     {
       "id": "ch-6",
@@ -62,7 +63,7 @@
       "start_line": 26,
       "end_line": 27,
       "sections": [],
-      "content_preview": "6. Calculated table: Athlone, 30-May-2026  7. Practical election checklist  8. Glossary and references  1. What Do-Ghati Muhurta Means "
+      "content_preview": "6. Calculated table: Athlone, 30-May-2026"
     },
     {
       "id": "ch-7",
@@ -72,7 +73,7 @@
       "start_line": 28,
       "end_line": 29,
       "sections": [],
-      "content_preview": "7. Practical election checklist  8. Glossary and references  1. What Do-Ghati Muhurta Means  Do-Ghati Muhurta literally means a two-ghati time block. In the traditional Panchang model, a civil day is reckoned from local sunrise to the next sunrise. The daytime from sunrise to sun"
+      "content_preview": "7. Practical election checklist"
     },
     {
       "id": "ch-8",
@@ -82,7 +83,7 @@
       "start_line": 30,
       "end_line": 31,
       "sections": [],
-      "content_preview": "8. Glossary and references  1. What Do-Ghati Muhurta Means  Do-Ghati Muhurta literally means a two-ghati time block. In the traditional Panchang model, a civil day is reckoned from local sunrise to the next sunrise. The daytime from sunrise to sunset is divided into 30 ghatis, an"
+      "content_preview": "8. Glossary and references"
     },
     {
       "id": "ch-1",
@@ -92,7 +93,7 @@
       "start_line": 32,
       "end_line": 69,
       "sections": [],
-      "content_preview": "1. What Do-Ghati Muhurta Means  Do-Ghati Muhurta literally means a two-ghati time block. In the traditional Panchang model, a civil day is reckoned from local sunrise to the next sunrise. The daytime from sunrise to sunset is divided into 30 ghatis, and the nighttime from sunset "
+      "content_preview": "1. What Do-Ghati Muhurta Means"
     },
     {
       "id": "ch-2",
@@ -102,7 +103,7 @@
       "start_line": 70,
       "end_line": 103,
       "sections": [],
-      "content_preview": "2. Source Basis and Authenticity Notes  Layer  What it contributes  Used for "
+      "content_preview": "2. Source Basis and Authenticity Notes"
     },
     {
       "id": "ch-3",
@@ -112,7 +113,7 @@
       "start_line": 104,
       "end_line": 145,
       "sections": [],
-      "content_preview": "3. Calculation Method Used  Step  Action  Note "
+      "content_preview": "3. Calculation Method Used"
     },
     {
       "id": "ch-4",
@@ -122,7 +123,7 @@
       "start_line": 146,
       "end_line": 1975,
       "sections": [],
-      "content_preview": "4. Master Table: 30 Do-Ghati Muhurtas, Nakshatra Mapping and Use Guide  No.  Phase  Segment "
+      "content_preview": "4. Master Table: 30 Do-Ghati Muhurtas, Nakshatra Mapping and Use Guide"
     },
     {
       "id": "ch-7",
@@ -130,19 +131,9 @@
       "title": "Practical Election Checklist",
       "level": 1,
       "start_line": 1976,
-      "end_line": 2063,
-      "sections": [],
-      "content_preview": "7. Practical Election Checklist  #  Filter  What to do "
-    },
-    {
-      "id": "ch-8",
-      "number": "8",
-      "title": "Glossary",
-      "level": 1,
-      "start_line": 2064,
       "end_line": 2112,
       "sections": [],
-      "content_preview": "8. Glossary  Term  Meaning  Ghati "
+      "content_preview": "7. Practical Election Checklist"
     }
   ],
   "toc": [
@@ -223,14 +214,8 @@
       "title": "Practical Election Checklist",
       "chapter": "Practical Election Checklist",
       "chapter_id": "ch-7"
-    },
-    {
-      "id": "ch-8",
-      "title": "Glossary",
-      "chapter": "Glossary",
-      "chapter_id": "ch-8"
     }
   ],
-  "total_chapters": 14,
+  "total_chapters": 13,
   "total_sections": 0
 }

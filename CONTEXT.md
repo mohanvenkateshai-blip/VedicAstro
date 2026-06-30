@@ -7,10 +7,31 @@ Working tree is clean. KnowledgeEngine is the central owner. Graph = newbooks-v1
 2. `STATUS.md`
 3. `docs/knowledge-engine-status.md`
 4. `knowledge-graph/KNOWLEDGE_CATALOG.md` — the actual list of texts + honest explanation of why it looks disorganized
-5. This file (CONTEXT.md) for guardrails.
+5. `.cursor/rules/multi-agent-mandatory-protocol.mdc` + `docs/MULTI_AGENT_MANDATORY_RULE.md` — **MANDATORY RULE: Always launch minimum 5 agents in parallel at the start of any work and scale up. This is now permanent project law.**
+6. This file (CONTEXT.md) for guardrails.
+
+**🚨 MANDATORY MULTI-AGENT PROTOCOL (ALWAYS APPLY — project law)**  
+**NEVER start substantial work sequentially or with <5 agents.** At the first sign of any task, immediately call `Task` **multiple times in one response** to launch ≥5 specialized sub-agents in parallel. One of the first wave **MUST** be a Multi-Agent Compliance/Reminder/Orchestrator. Scale to 8–12 (normal) or 15–30+ (large/"FAAASSTTT"). See `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true), `docs/MULTI_AGENT_MANDATORY_RULE.md`, and `docs/agents-launched.log`.
+
+**Execution Model:** Minimum 5 parallel agents + dedicated orchestrator at task start (multiple `Task` calls in first response). See `.cursor/rules/multi-agent-mandatory-protocol.mdc`.
 
 **Read this file before writing any code or making any architectural decision.**
 It is the single source of truth for system topology, immutable constraints, and hard-won lessons.
+
+---
+
+## 0. Multi-Agent Health
+
+| Aspect                    | Status                  | Evidence / Notes |
+|---------------------------|-------------------------|------------------|
+| Protocol Rule             | Active & Enforced       | `.cursor/rules/multi-agent-mandatory-protocol.mdc` (`alwaysApply: true`) |
+| Minimum Launch            | 5+ parallel via `Task`  | Required at start of every substantial task (refactors, ingest, audits, docs, fixes, analysis) |
+| Reminder/Orchestrator     | Mandatory in wave 1     | Dedicated agent monitors adherence, detects sequential drift, forces more agents |
+| Last Session Launch       | 6+ agents               | See `docs/agents-launched.log` (2026-06-30 scaling wave) |
+| Handoff Snapshots         | Reference rule          | `AI_TAKEOVER_PACK.md`, maintainer script, CONTEXT/STATUS all declare it |
+| Violation Policy          | Direct breach           | "Sequential one-at-a-time" is forbidden except trivial one-line fixes |
+
+**Future handoff snapshots and the maintainer (`scripts/handoff/maintain_context.py`) are required to surface `.cursor/rules/multi-agent-mandatory-protocol.mdc`.**
 
 ---
 

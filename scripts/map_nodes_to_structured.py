@@ -195,7 +195,7 @@ def explicit_chapter_from_location(loc: str | None, chapters: list[dict]) -> dic
     if not m:
         return None
     num = m.group(1)
-    # find chapter(s) with matching number
+    # find chapter(s) with matching number (also tolerate devanagari normalized in structured)
     cands = [c for c in chapters if str(c.get("number") or "") == str(num)]
     if not cands:
         # fallback: number appears in id
@@ -204,6 +204,9 @@ def explicit_chapter_from_location(loc: str | None, chapters: list[dict]) -> dic
         def _is_junk_title(t: str) -> bool:
             t = t.strip()
             if not t:
+                return True
+            tu = t.upper()
+            if tu in {"JAIMINISUTRAS", "JATMINISUTRAS", "CREATION", "THE CREATION"}:
                 return True
             # body-text like fragments that the structured parser accidentally made into chapters
             if re.match(r"^[a-z]", t):
@@ -288,10 +291,13 @@ def phrase_lookup(node: dict, structured: dict, slices: dict[str, str]) -> tuple
     label = node.get("label") or node.get("norm_label") or ""
     rule = node.get("rule_text") or node.get("description") or ""
     phrases = [label, rule]
-    # also split label on common delimiters for sub-phrases
+    # also split label on common delimiters for sub-phrases; filter noise
     for sep in "—:-–—()[]:;,. ":
         if sep in label:
             phrases.extend([x.strip() for x in label.split(sep) if len(x.strip()) > 8])
+    # Drop very common short tokens to reduce false chapter hits
+    stop = {"the", "and", "for", "with", "from", "into", "this", "that", "are", "was", "were"}
+    phrases = [p for p in phrases if len(p) > 8 or (len(p.split()) >= 2 and not any(w in stop for w in p.lower().split()))]
     for ch_id, txt in slices.items():
         sc = 0.0
         for ph in phrases:
@@ -362,6 +368,14 @@ def enrich_node(node: dict, structured: dict, raw_lines: list[str]) -> dict | No
     sec_title = sec.get("title") if sec else None
     hierarchy = f"{ch_title} > {sec_title}" if sec_title else ch_title
 
+    # Review flag for consumers: low confidence, junk-looking chapter title, or upstream parse was weak
+    def _ch_is_junky(c: dict) -> bool:
+        t = (c.get("title") or "").strip().upper()
+        return t in {"JAIMINISUTRAS", "JATMINISUTRAS", "CREATION", "THE CREATION"} or len(t) < 4
+
+    sq = (structured.get("parse_quality") or "medium")
+    review_needed = (conf < 0.55) or _ch_is_junky(ch) or (sq == "needs_review")
+
     patch = {
         "node_id": node.get("id"),
         "chapter_id": ch["id"],
@@ -371,6 +385,7 @@ def enrich_node(node: dict, structured: dict, raw_lines: list[str]) -> dict | No
         "confidence": round(conf, 3),
         "source_location": loc,
         "matched_on": (label[:80] or rule[:80]).strip(),
+        "review_needed": review_needed,
     }
     return patch
 
@@ -490,6 +505,8 @@ def main():
             print(f"  → section_id: {s['section_id']}")
         print(f"  → hierarchy_path: {s['hierarchy_path']}")
         print(f"  method: {s['method']}  conf: {s['confidence']}")
+        if s.get("review_needed"):
+            print(f"  review_needed: true")
         shown += 1
 
     if args.dry_run:

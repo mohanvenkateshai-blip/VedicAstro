@@ -2473,6 +2473,48 @@ def knowledge_embeddings_updated(chunk_count: int = 0):
     return result
 
 
+# ------------------------------------------------------------------ #
+# KnowledgeEngine — Structured literature (chapter tree + node linkage)
+# The KE is now the owner of the organised structured data for the Learn reader.
+# ------------------------------------------------------------------
+
+
+@app.get("/knowledge/structured/{book_id}")
+def knowledge_structured_book(book_id: str):
+    """Return the clean chapter tree + KE nodes mapped to each chapter.
+
+    This is what the Learn portal (and any CVCE consumer) should use to render
+    a book with its authoritative TOC and the classical knowledge nodes that
+    belong under each chapter/section.
+    """
+    if _knowledge_engine is None:
+        raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
+    data = _knowledge_engine.get_structured_book(book_id)
+    if not data:
+        raise HTTPException(status_code=404, detail=f"Structured book not found: {book_id}")
+    return data
+
+
+@app.get("/knowledge/chapter/{book_id}/{chapter_id}/nodes")
+def knowledge_chapter_nodes(book_id: str, chapter_id: str):
+    """Nodes that the KnowledgeEngine has mapped to one specific chapter."""
+    if _knowledge_engine is None:
+        raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
+    nodes = _knowledge_engine.get_nodes_for_chapter(book_id, chapter_id)
+    return {"book_id": book_id, "chapter_id": chapter_id, "count": len(nodes), "nodes": nodes}
+
+
+@app.get("/knowledge/node/{node_id}/hierarchy")
+def knowledge_node_hierarchy(node_id: str):
+    """Where a given KE node sits inside the source book's chapter hierarchy."""
+    if _knowledge_engine is None:
+        raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
+    h = _knowledge_engine.get_hierarchy_for_node(node_id)
+    if not h:
+        raise HTTPException(status_code=404, detail=f"No chapter mapping for node: {node_id}")
+    return h
+
+
 if __name__ == "__main__":
     import uvicorn
 

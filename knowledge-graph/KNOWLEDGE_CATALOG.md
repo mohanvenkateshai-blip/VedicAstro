@@ -9,6 +9,32 @@
 - **Last updated:** 2026-06-29 (deterministic layer)
 - **Authority:** This file + `knowledge-graph/graph-version.json` + Supabase `corpus_sources` + `graph_nodes` (newbooks-v1)
 
+---
+
+**🚨 MANDATORY MULTI-AGENT PROTOCOL (ALWAYS APPLY — project law)**  
+**At the first indication of any substantial task, immediately launch ≥5 agents in parallel via multiple `Task` tool calls.**  
+Include a compliance/reminder/orchestrator agent in the opening wave. Never work sequentially on real work.  
+**Source of truth:** `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true).  
+See `docs/MULTI_AGENT_MANDATORY_RULE.md` and `docs/agents-launched.log`. Scale aggressively.
+
+**Execution Model:** Minimum 5 parallel agents + dedicated orchestrator at task start (multiple `Task` calls in first response). See `.cursor/rules/multi-agent-mandatory-protocol.mdc`.
+
+---
+
+## 0. Multi-Agent Health
+
+| Item                      | Requirement / Status               | Notes |
+|---------------------------|------------------------------------|-------|
+| Minimum Parallel Launch   | 5+ agents via `Task` (first action) | Non-negotiable for any code, data, docs, audit, or analysis work |
+| Orchestrator in Wave 1    | Required                           | Scans for single-threaded drift and spawns more agents |
+| Rule File Reference       | Must appear in status & handoffs   | `.cursor/rules/multi-agent-mandatory-protocol.mdc` |
+| Handoff Snapshots         | Maintainer must include            | Future runs of `scripts/handoff/maintain_context.py` and `AI_TAKEOVER_PACK.md` cite the rule |
+| Session Record            | `docs/agents-launched.log`         | Records launches (this session: 6+ agents for handoff propagation) |
+
+**All future generated handoff snapshots are required to reference the multi-agent mandatory protocol rule.**
+
+---
+
 **How to read this:**
 - "Core Classical" = the traditional foundational works (mostly from CoreJyothisha PDFs).
 - "Additional / Newbooks" = later loose .md files added from Panchang/Gyan/newbooks (12 ingested, 2 skipped as duplicates).

@@ -3,8 +3,3339 @@
   "canonical_name": "Tithi Astrology Master Reference Guide",
   "source_file": "Tithi Astrology Master Reference Guide.md",
   "graph_version": "newbooks-v1",
-  "chapters": [],
-  "toc": [],
-  "total_chapters": 0,
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-tithi_astrology_master_reference_guide",
+      "number": null,
+      "title": "Tithi Astrology Master Reference Guide",
+      "level": 1,
+      "start_line": 2,
+      "end_line": 3,
+      "sections": [],
+      "content_preview": "Tithi Astrology Master Reference Guide  The 5 Tithi Groups and Their Details  The 30 lunar days (15 in Shukla Paksha / waxing and 15 in Krishna Paksha / waning) repeat sequentially across these 5 groups. Each group corresponds to a specific Pancha Mahabhuta (element) and planetar"
+    },
+    {
+      "id": "ch-the_5_tithi_groups_and_their_details",
+      "number": null,
+      "title": "The 5 Tithi Groups and Their Details",
+      "level": 1,
+      "start_line": 4,
+      "end_line": 7,
+      "sections": [],
+      "content_preview": "The 5 Tithi Groups and Their Details  The 30 lunar days (15 in Shukla Paksha / waxing and 15 in Krishna Paksha / waning) repeat sequentially across these 5 groups. Each group corresponds to a specific Pancha Mahabhuta (element) and planetary energy:   Tithi Group   Associated Lun"
+    },
+    {
+      "id": "ch-tithi_group",
+      "number": null,
+      "title": "Tithi Group",
+      "level": 1,
+      "start_line": 8,
+      "end_line": 9,
+      "sections": [],
+      "content_preview": "Tithi Group   Associated Lunar Days (Tithis)  Ruling Planet  Element (Bhuta) "
+    },
+    {
+      "id": "ch-associated_lunar_days_tithis",
+      "number": null,
+      "title": "Associated Lunar Days (Tithis)",
+      "level": 1,
+      "start_line": 10,
+      "end_line": 11,
+      "sections": [],
+      "content_preview": "Associated Lunar Days (Tithis)  Ruling Planet  Element (Bhuta)  Inherent Nature & \"Fruits\" Given "
+    },
+    {
+      "id": "ch-ruling_planet",
+      "number": null,
+      "title": "Ruling Planet",
+      "level": 1,
+      "start_line": 12,
+      "end_line": 13,
+      "sections": [],
+      "content_preview": "Ruling Planet  Element (Bhuta)  Inherent Nature & \"Fruits\" Given  Nanda(Prosperity/Joy) "
+    },
+    {
+      "id": "ch-element_bhuta",
+      "number": null,
+      "title": "Element (Bhuta)",
+      "level": 1,
+      "start_line": 14,
+      "end_line": 15,
+      "sections": [],
+      "content_preview": "Element (Bhuta)  Inherent Nature & \"Fruits\" Given  Nanda(Prosperity/Joy)  1st (Pratipada), 6th (Shashti), 11th (Ekadashi) "
+    },
+    {
+      "id": "ch-inherent_nature_fruits_given",
+      "number": null,
+      "title": "Inherent Nature & \"Fruits\" Given",
+      "level": 1,
+      "start_line": 16,
+      "end_line": 23,
+      "sections": [],
+      "content_preview": "Inherent Nature & \"Fruits\" Given  Nanda(Prosperity/Joy)  1st (Pratipada), 6th (Shashti), 11th (Ekadashi)  Venus(Shukra) "
+    },
+    {
+      "id": "ch-fire_agni",
+      "number": null,
+      "title": "Fire (Agni)",
+      "level": 1,
+      "start_line": 24,
+      "end_line": 33,
+      "sections": [],
+      "content_preview": "Fire (Agni)  Gives pleasure and growth. Ideal for festivals, fine arts, farming, wearing new clothes, and music.  Bhadra(Auspicious/Good)  2nd (Dwitiya), 7th (Saptami), 12th (Dwadashi) "
+    },
+    {
+      "id": "ch-earth_prithvi",
+      "number": null,
+      "title": "Earth (Prithvi)",
+      "level": 1,
+      "start_line": 34,
+      "end_line": 43,
+      "sections": [],
+      "content_preview": "Earth (Prithvi)  Gives community and stability. Ideal for education, charitable works, starting business, or making peace.  Jaya(Victory/Conquest)  3rd (Tritiya), 8th (Ashtami), 13th (Trayodashi) "
+    },
+    {
+      "id": "ch-space_akash",
+      "number": null,
+      "title": "Space (Akash)",
+      "level": 1,
+      "start_line": 44,
+      "end_line": 53,
+      "sections": [],
+      "content_preview": "Space (Akash)  Gives victory and power. Ideal for litigation, battles, sports, legal arguments, and overcoming enemies.  Rikta(Empty/Void)  4th (Chaturthi), 9th (Navami), 14th (Chaturdashi) "
+    },
+    {
+      "id": "ch-water_apas",
+      "number": null,
+      "title": "Water (Apas)",
+      "level": 1,
+      "start_line": 54,
+      "end_line": 63,
+      "sections": [],
+      "content_preview": "Water (Apas)  Gives destruction or release. Inauspicious for major beginnings. Best for surgical operations, demolitions, or ending bad habits.  Poorna(Full/Complete)  5th (Panchami), 10th (Dashami), 15th/30th (Purnima/Amavasya) "
+    },
+    {
+      "id": "ch-air_vayu",
+      "number": null,
+      "title": "Air (Vayu)",
+      "level": 1,
+      "start_line": 64,
+      "end_line": 67,
+      "sections": [],
+      "content_preview": "Air (Vayu)  Gives fulfillment and abundance. Ideal for marriages, religious ceremonies, travel, or finalizing contracts.  Siddha Yoga: Matching Tithis and Weekdays  When a specific Tithi group falls on its corresponding planetary weekday, it manifests as Siddha Yoga (a day of hig"
+    },
+    {
+      "id": "ch-siddha_yoga_matching_tithis_and_weekdays",
+      "number": null,
+      "title": "Siddha Yoga: Matching Tithis and Weekdays",
+      "level": 1,
+      "start_line": 68,
+      "end_line": 81,
+      "sections": [],
+      "content_preview": "Siddha Yoga: Matching Tithis and Weekdays  When a specific Tithi group falls on its corresponding planetary weekday, it manifests as Siddha Yoga (a day of highly successful outcomes). Conversely, some days create a clash:  Nanda Tithis falling on a Friday (ruled by Venus) \\(\\righ"
+    },
+    {
+      "id": "ch-complete_30-day_chronological_matrix",
+      "number": null,
+      "title": "Complete 30-Day Chronological Matrix",
+      "level": 1,
+      "start_line": 82,
+      "end_line": 87,
+      "sections": [],
+      "content_preview": "Complete 30-Day Chronological Matrix  This index traces both the waxing (Shukla Paksha) and waning (Krishna Paksha) cycles consecutively so you can look up any specific day.  Day #  Thithi Name "
+    },
+    {
+      "id": "ch-thithi_name",
+      "number": null,
+      "title": "Thithi Name",
+      "level": 1,
+      "start_line": 88,
+      "end_line": 89,
+      "sections": [],
+      "content_preview": "Thithi Name  Tithi Group  Ruling Planet  Element "
+    },
+    {
+      "id": "ch-tithi_group",
+      "number": null,
+      "title": "Tithi Group",
+      "level": 1,
+      "start_line": 90,
+      "end_line": 91,
+      "sections": [],
+      "content_preview": "Tithi Group  Ruling Planet  Element  Actionable Fruits & Best Activities "
+    },
+    {
+      "id": "ch-ruling_planet",
+      "number": null,
+      "title": "Ruling Planet",
+      "level": 1,
+      "start_line": 92,
+      "end_line": 95,
+      "sections": [],
+      "content_preview": "Ruling Planet  Element  Actionable Fruits & Best Activities  1 "
+    },
+    {
+      "id": "ch-actionable_fruits_best_activities",
+      "number": null,
+      "title": "Actionable Fruits & Best Activities",
+      "level": 1,
+      "start_line": 96,
+      "end_line": 99,
+      "sections": [],
+      "content_preview": "Actionable Fruits & Best Activities  1  Pratipada (1st Waxing)  Nanda "
+    },
+    {
+      "id": "ch-pratipada_1st_waxing",
+      "number": null,
+      "title": "Pratipada (1st Waxing)",
+      "level": 1,
+      "start_line": 100,
+      "end_line": 107,
+      "sections": [],
+      "content_preview": "Pratipada (1st Waxing)  Nanda  Venus  Fire "
+    },
+    {
+      "id": "ch-joy_arts_farming_starting_small_projects",
+      "number": null,
+      "title": "Joy, arts, farming, starting small projects",
+      "level": 1,
+      "start_line": 108,
+      "end_line": 111,
+      "sections": [],
+      "content_preview": "Joy, arts, farming, starting small projects  2  Dwitiya (2nd Waxing)  Bhadra "
+    },
+    {
+      "id": "ch-dwitiya_2nd_waxing",
+      "number": null,
+      "title": "Dwitiya (2nd Waxing)",
+      "level": 1,
+      "start_line": 112,
+      "end_line": 119,
+      "sections": [],
+      "content_preview": "Dwitiya (2nd Waxing)  Bhadra  Mercury  Earth "
+    },
+    {
+      "id": "ch-stability_commerce_starting_education_partnerships",
+      "number": null,
+      "title": "Stability, commerce, starting education, partnerships",
+      "level": 1,
+      "start_line": 120,
+      "end_line": 123,
+      "sections": [],
+      "content_preview": "Stability, commerce, starting education, partnerships  3  Tritiya (3rd Waxing)  Jaya "
+    },
+    {
+      "id": "ch-tritiya_3rd_waxing",
+      "number": null,
+      "title": "Tritiya (3rd Waxing)",
+      "level": 1,
+      "start_line": 124,
+      "end_line": 131,
+      "sections": [],
+      "content_preview": "Tritiya (3rd Waxing)  Jaya  Mars  Space "
+    },
+    {
+      "id": "ch-victory_physical_efforts_solving_legal_disputes",
+      "number": null,
+      "title": "Victory, physical efforts, solving legal disputes",
+      "level": 1,
+      "start_line": 132,
+      "end_line": 135,
+      "sections": [],
+      "content_preview": "Victory, physical efforts, solving legal disputes  4  Chaturthi (4th Waxing)  Rikta "
+    },
+    {
+      "id": "ch-chaturthi_4th_waxing",
+      "number": null,
+      "title": "Chaturthi (4th Waxing)",
+      "level": 1,
+      "start_line": 136,
+      "end_line": 143,
+      "sections": [],
+      "content_preview": "Chaturthi (4th Waxing)  Rikta  Saturn  Water "
+    },
+    {
+      "id": "ch-release_routine_maintenance_overcoming_bad_habits",
+      "number": null,
+      "title": "Release, routine maintenance, overcoming bad habits",
+      "level": 1,
+      "start_line": 144,
+      "end_line": 147,
+      "sections": [],
+      "content_preview": "Release, routine maintenance, overcoming bad habits  5  Panchami (5th Waxing)  Poorna "
+    },
+    {
+      "id": "ch-panchami_5th_waxing",
+      "number": null,
+      "title": "Panchami (5th Waxing)",
+      "level": 1,
+      "start_line": 148,
+      "end_line": 155,
+      "sections": [],
+      "content_preview": "Panchami (5th Waxing)  Poorna  Jupiter  Air "
+    },
+    {
+      "id": "ch-high_abundance_marriages_religious_ceremonies",
+      "number": null,
+      "title": "High abundance, marriages, religious ceremonies",
+      "level": 1,
+      "start_line": 156,
+      "end_line": 159,
+      "sections": [],
+      "content_preview": "High abundance, marriages, religious ceremonies  6  Shashti (6th Waxing)  Nanda "
+    },
+    {
+      "id": "ch-shashti_6th_waxing",
+      "number": null,
+      "title": "Shashti (6th Waxing)",
+      "level": 1,
+      "start_line": 160,
+      "end_line": 167,
+      "sections": [],
+      "content_preview": "Shashti (6th Waxing)  Nanda  Venus  Fire "
+    },
+    {
+      "id": "ch-growth_property_renovations_creative_arts",
+      "number": null,
+      "title": "Growth, property renovations, creative arts",
+      "level": 1,
+      "start_line": 168,
+      "end_line": 171,
+      "sections": [],
+      "content_preview": "Growth, property renovations, creative arts  7  Saptami (7th Waxing)  Bhadra "
+    },
+    {
+      "id": "ch-saptami_7th_waxing",
+      "number": null,
+      "title": "Saptami (7th Waxing)",
+      "level": 1,
+      "start_line": 172,
+      "end_line": 179,
+      "sections": [],
+      "content_preview": "Saptami (7th Waxing)  Bhadra  Mercury  Earth "
+    },
+    {
+      "id": "ch-community_buying_vehicles_formal_training",
+      "number": null,
+      "title": "Community, buying vehicles, formal training",
+      "level": 1,
+      "start_line": 180,
+      "end_line": 183,
+      "sections": [],
+      "content_preview": "Community, buying vehicles, formal training  8  Ashtami (8th Waxing)  Jaya "
+    },
+    {
+      "id": "ch-ashtami_8th_waxing",
+      "number": null,
+      "title": "Ashtami (8th Waxing)",
+      "level": 1,
+      "start_line": 184,
+      "end_line": 191,
+      "sections": [],
+      "content_preview": "Ashtami (8th Waxing)  Jaya  Mars  Space "
+    },
+    {
+      "id": "ch-courage_handling_difficult_confrontations_competition",
+      "number": null,
+      "title": "Courage, handling difficult confrontations, competition",
+      "level": 1,
+      "start_line": 192,
+      "end_line": 195,
+      "sections": [],
+      "content_preview": "Courage, handling difficult confrontations, competition  9  Navami (9th Waxing)  Rikta "
+    },
+    {
+      "id": "ch-navami_9th_waxing",
+      "number": null,
+      "title": "Navami (9th Waxing)",
+      "level": 1,
+      "start_line": 196,
+      "end_line": 203,
+      "sections": [],
+      "content_preview": "Navami (9th Waxing)  Rikta  Saturn  Water "
+    },
+    {
+      "id": "ch-elimination_clearing_old_debts_weapon_handling",
+      "number": null,
+      "title": "Elimination, clearing old debts, weapon handling",
+      "level": 1,
+      "start_line": 204,
+      "end_line": 207,
+      "sections": [],
+      "content_preview": "Elimination, clearing old debts, weapon handling  10  Dashami (10th Waxing)  Poorna "
+    },
+    {
+      "id": "ch-dashami_10th_waxing",
+      "number": null,
+      "title": "Dashami (10th Waxing)",
+      "level": 1,
+      "start_line": 208,
+      "end_line": 215,
+      "sections": [],
+      "content_preview": "Dashami (10th Waxing)  Poorna  Jupiter  Air "
+    },
+    {
+      "id": "ch-fulfillment_government_works_large_celebrations",
+      "number": null,
+      "title": "Fulfillment, government works, large celebrations",
+      "level": 1,
+      "start_line": 216,
+      "end_line": 219,
+      "sections": [],
+      "content_preview": "Fulfillment, government works, large celebrations  11  Ekadashi (11th Waxing)  Nanda "
+    },
+    {
+      "id": "ch-ekadashi_11th_waxing",
+      "number": null,
+      "title": "Ekadashi (11th Waxing)",
+      "level": 1,
+      "start_line": 220,
+      "end_line": 227,
+      "sections": [],
+      "content_preview": "Ekadashi (11th Waxing)  Nanda  Venus  Fire "
+    },
+    {
+      "id": "ch-spiritual_expansion_fasting_charity_meditation",
+      "number": null,
+      "title": "Spiritual expansion, fasting, charity, meditation",
+      "level": 1,
+      "start_line": 228,
+      "end_line": 231,
+      "sections": [],
+      "content_preview": "Spiritual expansion, fasting, charity, meditation  12  Dwadashi (12th Waxing)  Bhadra "
+    },
+    {
+      "id": "ch-dwadashi_12th_waxing",
+      "number": null,
+      "title": "Dwadashi (12th Waxing)",
+      "level": 1,
+      "start_line": 232,
+      "end_line": 239,
+      "sections": [],
+      "content_preview": "Dwadashi (12th Waxing)  Bhadra  Mercury  Earth "
+    },
+    {
+      "id": "ch-business_infrastructure_expansion_building_structures",
+      "number": null,
+      "title": "Business infrastructure expansion, building structures",
+      "level": 1,
+      "start_line": 240,
+      "end_line": 243,
+      "sections": [],
+      "content_preview": "Business infrastructure expansion, building structures  13  Trayodashi (13th Waxing)  Jaya "
+    },
+    {
+      "id": "ch-trayodashi_13th_waxing",
+      "number": null,
+      "title": "Trayodashi (13th Waxing)",
+      "level": 1,
+      "start_line": 244,
+      "end_line": 251,
+      "sections": [],
+      "content_preview": "Trayodashi (13th Waxing)  Jaya  Mars  Space "
+    },
+    {
+      "id": "ch-victory_physical_endurance_negotiating_disputes",
+      "number": null,
+      "title": "Victory, physical endurance, negotiating disputes",
+      "level": 1,
+      "start_line": 252,
+      "end_line": 255,
+      "sections": [],
+      "content_preview": "Victory, physical endurance, negotiating disputes  14  Chaturdashi (14th Waxing)  Rikta "
+    },
+    {
+      "id": "ch-chaturdashi_14th_waxing",
+      "number": null,
+      "title": "Chaturdashi (14th Waxing)",
+      "level": 1,
+      "start_line": 256,
+      "end_line": 263,
+      "sections": [],
+      "content_preview": "Chaturdashi (14th Waxing)  Rikta  Saturn  Water "
+    },
+    {
+      "id": "ch-banishing_negatives_deep_cleansing_closures",
+      "number": null,
+      "title": "Banishing negatives, deep cleansing, closures",
+      "level": 1,
+      "start_line": 264,
+      "end_line": 267,
+      "sections": [],
+      "content_preview": "Banishing negatives, deep cleansing, closures  15  Purnima (Full Moon)  Poorna "
+    },
+    {
+      "id": "ch-purnima_full_moon",
+      "number": null,
+      "title": "Purnima (Full Moon)",
+      "level": 1,
+      "start_line": 268,
+      "end_line": 275,
+      "sections": [],
+      "content_preview": "Purnima (Full Moon)  Poorna  Jupiter  Air "
+    },
+    {
+      "id": "ch-peak_fulfillment_core_spiritual_work_major_life_milestones",
+      "number": null,
+      "title": "Peak fulfillment, core spiritual work, major life milestones",
+      "level": 1,
+      "start_line": 276,
+      "end_line": 279,
+      "sections": [],
+      "content_preview": "Peak fulfillment, core spiritual work, major life milestones  16  Pratipada (1st Waning)  Nanda "
+    },
+    {
+      "id": "ch-pratipada_1st_waning",
+      "number": null,
+      "title": "Pratipada (1st Waning)",
+      "level": 1,
+      "start_line": 280,
+      "end_line": 287,
+      "sections": [],
+      "content_preview": "Pratipada (1st Waning)  Nanda  Venus  Fire "
+    },
+    {
+      "id": "ch-social_events_creative_design_personal_styling",
+      "number": null,
+      "title": "Social events, creative design, personal styling",
+      "level": 1,
+      "start_line": 288,
+      "end_line": 291,
+      "sections": [],
+      "content_preview": "Social events, creative design, personal styling  17  Dwitiya (2nd Waning)  Bhadra "
+    },
+    {
+      "id": "ch-dwitiya_2nd_waning",
+      "number": null,
+      "title": "Dwitiya (2nd Waning)",
+      "level": 1,
+      "start_line": 292,
+      "end_line": 299,
+      "sections": [],
+      "content_preview": "Dwitiya (2nd Waning)  Bhadra  Mercury  Earth "
+    },
+    {
+      "id": "ch-financial_audits_routine_trade_negotiations",
+      "number": null,
+      "title": "Financial audits, routine trade negotiations",
+      "level": 1,
+      "start_line": 300,
+      "end_line": 303,
+      "sections": [],
+      "content_preview": "Financial audits, routine trade negotiations  18  Tritiya (3rd Waning)  Jaya "
+    },
+    {
+      "id": "ch-tritiya_3rd_waning",
+      "number": null,
+      "title": "Tritiya (3rd Waning)",
+      "level": 1,
+      "start_line": 304,
+      "end_line": 311,
+      "sections": [],
+      "content_preview": "Tritiya (3rd Waning)  Jaya  Mars  Space "
+    },
+    {
+      "id": "ch-sports_strategies_tackling_structural_roadblocks",
+      "number": null,
+      "title": "Sports strategies, tackling structural roadblocks",
+      "level": 1,
+      "start_line": 312,
+      "end_line": 315,
+      "sections": [],
+      "content_preview": "Sports strategies, tackling structural roadblocks  19  Chaturthi (4th Waning)  Rikta "
+    },
+    {
+      "id": "ch-chaturthi_4th_waning",
+      "number": null,
+      "title": "Chaturthi (4th Waning)",
+      "level": 1,
+      "start_line": 316,
+      "end_line": 323,
+      "sections": [],
+      "content_preview": "Chaturthi (4th Waning)  Rikta  Saturn  Water "
+    },
+    {
+      "id": "ch-minor_surgeries_ending_commitments_clearing_waste",
+      "number": null,
+      "title": "Minor surgeries, ending commitments, clearing waste",
+      "level": 1,
+      "start_line": 324,
+      "end_line": 327,
+      "sections": [],
+      "content_preview": "Minor surgeries, ending commitments, clearing waste  20  Panchami (5th Waning)  Poorna "
+    },
+    {
+      "id": "ch-panchami_5th_waning",
+      "number": null,
+      "title": "Panchami (5th Waning)",
+      "level": 1,
+      "start_line": 328,
+      "end_line": 335,
+      "sections": [],
+      "content_preview": "Panchami (5th Waning)  Poorna  Jupiter  Air "
+    },
+    {
+      "id": "ch-contentment_writing_contracts_signing_local_deeds",
+      "number": null,
+      "title": "Contentment, writing contracts, signing local deeds",
+      "level": 1,
+      "start_line": 336,
+      "end_line": 339,
+      "sections": [],
+      "content_preview": "Contentment, writing contracts, signing local deeds  21  Shashti (6th Waning)  Nanda "
+    },
+    {
+      "id": "ch-shashti_6th_waning",
+      "number": null,
+      "title": "Shashti (6th Waning)",
+      "level": 1,
+      "start_line": 340,
+      "end_line": 347,
+      "sections": [],
+      "content_preview": "Shashti (6th Waning)  Nanda  Venus  Fire "
+    },
+    {
+      "id": "ch-designing_landscaping_internal_artistic_exploration",
+      "number": null,
+      "title": "Designing, landscaping, internal artistic exploration",
+      "level": 1,
+      "start_line": 348,
+      "end_line": 351,
+      "sections": [],
+      "content_preview": "Designing, landscaping, internal artistic exploration  22  Saptami (7th Waning)  Bhadra "
+    },
+    {
+      "id": "ch-saptami_7th_waning",
+      "number": null,
+      "title": "Saptami (7th Waning)",
+      "level": 1,
+      "start_line": 352,
+      "end_line": 359,
+      "sections": [],
+      "content_preview": "Saptami (7th Waning)  Bhadra  Mercury  Earth "
+    },
+    {
+      "id": "ch-archiving_documentation_deep_knowledge_processing",
+      "number": null,
+      "title": "Archiving documentation, deep knowledge processing",
+      "level": 1,
+      "start_line": 360,
+      "end_line": 363,
+      "sections": [],
+      "content_preview": "Archiving documentation, deep knowledge processing  23  Ashtami (8th Waning)  Jaya "
+    },
+    {
+      "id": "ch-ashtami_8th_waning",
+      "number": null,
+      "title": "Ashtami (8th Waning)",
+      "level": 1,
+      "start_line": 364,
+      "end_line": 371,
+      "sections": [],
+      "content_preview": "Ashtami (8th Waning)  Jaya  Mars  Space "
+    },
+    {
+      "id": "ch-legal_preparations_competitive_training_modules",
+      "number": null,
+      "title": "Legal preparations, competitive training modules",
+      "level": 1,
+      "start_line": 372,
+      "end_line": 375,
+      "sections": [],
+      "content_preview": "Legal preparations, competitive training modules  24  Navami (9th Waning)  Rikta "
+    },
+    {
+      "id": "ch-navami_9th_waning",
+      "number": null,
+      "title": "Navami (9th Waning)",
+      "level": 1,
+      "start_line": 376,
+      "end_line": 383,
+      "sections": [],
+      "content_preview": "Navami (9th Waning)  Rikta  Saturn  Water "
+    },
+    {
+      "id": "ch-cleaning_records_removing_obstacles_structural_checks",
+      "number": null,
+      "title": "Cleaning records, removing obstacles, structural checks",
+      "level": 1,
+      "start_line": 384,
+      "end_line": 387,
+      "sections": [],
+      "content_preview": "Cleaning records, removing obstacles, structural checks  25  Dashami (10th Waning)  Poorna "
+    },
+    {
+      "id": "ch-dashami_10th_waning",
+      "number": null,
+      "title": "Dashami (10th Waning)",
+      "level": 1,
+      "start_line": 388,
+      "end_line": 395,
+      "sections": [],
+      "content_preview": "Dashami (10th Waning)  Poorna  Jupiter  Air "
+    },
+    {
+      "id": "ch-family_transitions_travel_preparation_checking_assets",
+      "number": null,
+      "title": "Family transitions, travel preparation, checking assets",
+      "level": 1,
+      "start_line": 396,
+      "end_line": 399,
+      "sections": [],
+      "content_preview": "Family transitions, travel preparation, checking assets  26  Ekadashi (11th Waning)  Nanda "
+    },
+    {
+      "id": "ch-ekadashi_11th_waning",
+      "number": null,
+      "title": "Ekadashi (11th Waning)",
+      "level": 1,
+      "start_line": 400,
+      "end_line": 407,
+      "sections": [],
+      "content_preview": "Ekadashi (11th Waning)  Nanda  Venus  Fire "
+    },
+    {
+      "id": "ch-detoxing_spiritual_cleansing_prayer_groups",
+      "number": null,
+      "title": "Detoxing, spiritual cleansing, prayer groups",
+      "level": 1,
+      "start_line": 408,
+      "end_line": 411,
+      "sections": [],
+      "content_preview": "Detoxing, spiritual cleansing, prayer groups  27  Dwadashi (12th Waning)  Bhadra "
+    },
+    {
+      "id": "ch-dwadashi_12th_waning",
+      "number": null,
+      "title": "Dwadashi (12th Waning)",
+      "level": 1,
+      "start_line": 412,
+      "end_line": 419,
+      "sections": [],
+      "content_preview": "Dwadashi (12th Waning)  Bhadra  Mercury  Earth "
+    },
+    {
+      "id": "ch-settling_long-standing_merchant_books_or_accounts",
+      "number": null,
+      "title": "Settling long-standing merchant books or accounts",
+      "level": 1,
+      "start_line": 420,
+      "end_line": 423,
+      "sections": [],
+      "content_preview": "Settling long-standing merchant books or accounts  28  Trayodashi (13th Waning)  Jaya "
+    },
+    {
+      "id": "ch-trayodashi_13th_waning",
+      "number": null,
+      "title": "Trayodashi (13th Waning)",
+      "level": 1,
+      "start_line": 424,
+      "end_line": 431,
+      "sections": [],
+      "content_preview": "Trayodashi (13th Waning)  Jaya  Mars  Space "
+    },
+    {
+      "id": "ch-physical_training_processing_heavy_workload_demands",
+      "number": null,
+      "title": "Physical training, processing heavy workload demands",
+      "level": 1,
+      "start_line": 432,
+      "end_line": 435,
+      "sections": [],
+      "content_preview": "Physical training, processing heavy workload demands  29  Chaturdashi (14th Waning)  Rikta "
+    },
+    {
+      "id": "ch-chaturdashi_14th_waning",
+      "number": null,
+      "title": "Chaturdashi (14th Waning)",
+      "level": 1,
+      "start_line": 436,
+      "end_line": 443,
+      "sections": [],
+      "content_preview": "Chaturdashi (14th Waning)  Rikta  Saturn  Water "
+    },
+    {
+      "id": "ch-completing_major_clean-outs_strict_closures",
+      "number": null,
+      "title": "Completing major clean-outs, strict closures",
+      "level": 1,
+      "start_line": 444,
+      "end_line": 447,
+      "sections": [],
+      "content_preview": "Completing major clean-outs, strict closures  30  Amavasya (New Moon)  Poorna "
+    },
+    {
+      "id": "ch-amavasya_new_moon",
+      "number": null,
+      "title": "Amavasya (New Moon)",
+      "level": 1,
+      "start_line": 448,
+      "end_line": 455,
+      "sections": [],
+      "content_preview": "Amavasya (New Moon)  Poorna  Jupiter  Air "
+    },
+    {
+      "id": "ch-deep_rest_internal_psychological_reflection_ancestral_honors",
+      "number": null,
+      "title": "Deep rest, internal psychological reflection, ancestral honors",
+      "level": 1,
+      "start_line": 456,
+      "end_line": 457,
+      "sections": [],
+      "content_preview": "Deep rest, internal psychological reflection, ancestral honors  Important Distinction: Category Lords vs. Individual Day Lords  Vedic astrology tracks two types of planetary associations for Tithis. Do not confuse the general Tithi Group Lord (detailed above) with the individual "
+    },
+    {
+      "id": "ch-important_distinction_category_lords_vs_individual_day_lords",
+      "number": null,
+      "title": "Important Distinction: Category Lords vs. Individual Day Lords",
+      "level": 1,
+      "start_line": 458,
+      "end_line": 463,
+      "sections": [],
+      "content_preview": "Important Distinction: Category Lords vs. Individual Day Lords  Vedic astrology tracks two types of planetary associations for Tithis. Do not confuse the general Tithi Group Lord (detailed above) with the individual Daily Tithi Lord.  Individual lunar day lords follow a chronolog"
+    },
+    {
+      "id": "ch-sun_1st_9th_tithis",
+      "number": null,
+      "title": "Sun: 1st & 9th Tithis",
+      "level": 1,
+      "start_line": 464,
+      "end_line": 465,
+      "sections": [],
+      "content_preview": "Sun: 1st & 9th Tithis  Moon: 2nd & 10th Tithis  Mars: 3rd & 11th Tithis  Mercury: 4th & 12th Tithis "
+    },
+    {
+      "id": "ch-moon_2nd_10th_tithis",
+      "number": null,
+      "title": "Moon: 2nd & 10th Tithis",
+      "level": 1,
+      "start_line": 466,
+      "end_line": 467,
+      "sections": [],
+      "content_preview": "Moon: 2nd & 10th Tithis  Mars: 3rd & 11th Tithis  Mercury: 4th & 12th Tithis  Jupiter: 5th & 13th Tithis "
+    },
+    {
+      "id": "ch-mars_3rd_11th_tithis",
+      "number": null,
+      "title": "Mars: 3rd & 11th Tithis",
+      "level": 1,
+      "start_line": 468,
+      "end_line": 469,
+      "sections": [],
+      "content_preview": "Mars: 3rd & 11th Tithis  Mercury: 4th & 12th Tithis  Jupiter: 5th & 13th Tithis  Venus: 6th & 14th Tithis "
+    },
+    {
+      "id": "ch-mercury_4th_12th_tithis",
+      "number": null,
+      "title": "Mercury: 4th & 12th Tithis",
+      "level": 1,
+      "start_line": 470,
+      "end_line": 471,
+      "sections": [],
+      "content_preview": "Mercury: 4th & 12th Tithis  Jupiter: 5th & 13th Tithis  Venus: 6th & 14th Tithis  Saturn: 7th & 15th (Purnima) "
+    },
+    {
+      "id": "ch-jupiter_5th_13th_tithis",
+      "number": null,
+      "title": "Jupiter: 5th & 13th Tithis",
+      "level": 1,
+      "start_line": 472,
+      "end_line": 473,
+      "sections": [],
+      "content_preview": "Jupiter: 5th & 13th Tithis  Venus: 6th & 14th Tithis  Saturn: 7th & 15th (Purnima)  Rahu: 8th & 30th (Amavasya) "
+    },
+    {
+      "id": "ch-venus_6th_14th_tithis",
+      "number": null,
+      "title": "Venus: 6th & 14th Tithis",
+      "level": 1,
+      "start_line": 474,
+      "end_line": 475,
+      "sections": [],
+      "content_preview": "Venus: 6th & 14th Tithis  Saturn: 7th & 15th (Purnima)  Rahu: 8th & 30th (Amavasya)  Vaar / Weekday to Auspicious & Inauspicious Nakshatra Mapping "
+    },
+    {
+      "id": "ch-saturn_7th_15th_purnima",
+      "number": null,
+      "title": "Saturn: 7th & 15th (Purnima)",
+      "level": 1,
+      "start_line": 476,
+      "end_line": 477,
+      "sections": [],
+      "content_preview": "Saturn: 7th & 15th (Purnima)  Rahu: 8th & 30th (Amavasya)  Vaar / Weekday to Auspicious & Inauspicious Nakshatra Mapping  Weekday  "
+    },
+    {
+      "id": "ch-rahu_8th_30th_amavasya",
+      "number": null,
+      "title": "Rahu: 8th & 30th (Amavasya)",
+      "level": 1,
+      "start_line": 478,
+      "end_line": 483,
+      "sections": [],
+      "content_preview": "Rahu: 8th & 30th (Amavasya)  Vaar / Weekday to Auspicious & Inauspicious Nakshatra Mapping  Weekday   Dagdha Yoga (Burnt Energy) "
+    },
+    {
+      "id": "ch-dagdha_yoga_burnt_energy",
+      "number": null,
+      "title": "Dagdha Yoga (Burnt Energy)",
+      "level": 1,
+      "start_line": 484,
+      "end_line": 485,
+      "sections": [],
+      "content_preview": "Dagdha Yoga (Burnt Energy)  Mrityu Yoga (Destructive)  Utpata / Kana (Calamity)  Amrit Siddhi Yoga (Nectar/Highest Success) "
+    },
+    {
+      "id": "ch-mrityu_yoga_destructive",
+      "number": null,
+      "title": "Mrityu Yoga (Destructive)",
+      "level": 1,
+      "start_line": 486,
+      "end_line": 487,
+      "sections": [],
+      "content_preview": "Mrityu Yoga (Destructive)  Utpata / Kana (Calamity)  Amrit Siddhi Yoga (Nectar/Highest Success)  Sarvartha Siddhi Yoga (All Desires Fulfilled) "
+    },
+    {
+      "id": "ch-utpata_kana_calamity",
+      "number": null,
+      "title": "Utpata / Kana (Calamity)",
+      "level": 1,
+      "start_line": 488,
+      "end_line": 489,
+      "sections": [],
+      "content_preview": "Utpata / Kana (Calamity)  Amrit Siddhi Yoga (Nectar/Highest Success)  Sarvartha Siddhi Yoga (All Desires Fulfilled)  Sunday (Ravi) "
+    },
+    {
+      "id": "ch-amrit_siddhi_yoga_nectarhighest_success",
+      "number": null,
+      "title": "Amrit Siddhi Yoga (Nectar/Highest Success)",
+      "level": 1,
+      "start_line": 490,
+      "end_line": 491,
+      "sections": [],
+      "content_preview": "Amrit Siddhi Yoga (Nectar/Highest Success)  Sarvartha Siddhi Yoga (All Desires Fulfilled)  Sunday (Ravi)  Bharani "
+    },
+    {
+      "id": "ch-sarvartha_siddhi_yoga_all_desires_fulfilled",
+      "number": null,
+      "title": "Sarvartha Siddhi Yoga (All Desires Fulfilled)",
+      "level": 1,
+      "start_line": 492,
+      "end_line": 493,
+      "sections": [],
+      "content_preview": "Sarvartha Siddhi Yoga (All Desires Fulfilled)  Sunday (Ravi)  Bharani  Anuradha "
+    },
+    {
+      "id": "ch-sunday_ravi",
+      "number": null,
+      "title": "Sunday (Ravi)",
+      "level": 1,
+      "start_line": 494,
+      "end_line": 509,
+      "sections": [],
+      "content_preview": "Sunday (Ravi)  Bharani  Anuradha  Jyeshtha "
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "number": null,
+      "title": "Uttara Ashadha",
+      "level": 1,
+      "start_line": 510,
+      "end_line": 515,
+      "sections": [],
+      "content_preview": "Uttara Ashadha  Shravana  Mrigashira  Shravana, Rohini, Mrigashira, Pushya, Anuradha "
+    },
+    {
+      "id": "ch-shravana_rohini_mrigashira_pushya_anuradha",
+      "number": null,
+      "title": "Shravana, Rohini, Mrigashira, Pushya, Anuradha",
+      "level": 1,
+      "start_line": 516,
+      "end_line": 519,
+      "sections": [],
+      "content_preview": "Shravana, Rohini, Mrigashira, Pushya, Anuradha  Tuesday(Mangala)  Uttara Ashadha  Shatabhisha "
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "number": null,
+      "title": "Uttara Ashadha",
+      "level": 1,
+      "start_line": 520,
+      "end_line": 523,
+      "sections": [],
+      "content_preview": "Uttara Ashadha  Shatabhisha  Purva Bhadrapada  Ashwini "
+    },
+    {
+      "id": "ch-purva_bhadrapada",
+      "number": null,
+      "title": "Purva Bhadrapada",
+      "level": 1,
+      "start_line": 524,
+      "end_line": 527,
+      "sections": [],
+      "content_preview": "Purva Bhadrapada  Ashwini  Ashwini, Uttara Bhadrapada, Krittika, Ashlesha  Wednesday(Budha) "
+    },
+    {
+      "id": "ch-ashwini_uttara_bhadrapada_krittika_ashlesha",
+      "number": null,
+      "title": "Ashwini, Uttara Bhadrapada, Krittika, Ashlesha",
+      "level": 1,
+      "start_line": 528,
+      "end_line": 539,
+      "sections": [],
+      "content_preview": "Ashwini, Uttara Bhadrapada, Krittika, Ashlesha  Wednesday(Budha)  Dhanishta  Ashwini "
+    },
+    {
+      "id": "ch-rohini_anuradha_hasta_krittika_mrigashira",
+      "number": null,
+      "title": "Rohini, Anuradha, Hasta, Krittika, Mrigashira",
+      "level": 1,
+      "start_line": 540,
+      "end_line": 543,
+      "sections": [],
+      "content_preview": "Rohini, Anuradha, Hasta, Krittika, Mrigashira  Thursday(Guru)  Uttara Phalguni  Mrigashira "
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "number": null,
+      "title": "Uttara Phalguni",
+      "level": 1,
+      "start_line": 544,
+      "end_line": 549,
+      "sections": [],
+      "content_preview": "Uttara Phalguni  Mrigashira  Ardra  Pushya (Guru Pushya) "
+    },
+    {
+      "id": "ch-pushya_guru_pushya",
+      "number": null,
+      "title": "Pushya (Guru Pushya)",
+      "level": 1,
+      "start_line": 550,
+      "end_line": 551,
+      "sections": [],
+      "content_preview": "Pushya (Guru Pushya)  Revati, Anuradha, Ashwini, Punarvasu, Pushya  Friday(Shukra)  Jyeshtha "
+    },
+    {
+      "id": "ch-revati_anuradha_ashwini_punarvasu_pushya",
+      "number": null,
+      "title": "Revati, Anuradha, Ashwini, Punarvasu, Pushya",
+      "level": 1,
+      "start_line": 552,
+      "end_line": 559,
+      "sections": [],
+      "content_preview": "Revati, Anuradha, Ashwini, Punarvasu, Pushya  Friday(Shukra)  Jyeshtha  Ashlesha "
+    },
+    {
+      "id": "ch-magha_pushya",
+      "number": null,
+      "title": "Magha / Pushya",
+      "level": 1,
+      "start_line": 560,
+      "end_line": 563,
+      "sections": [],
+      "content_preview": "Magha / Pushya  Revati  Revati, Anuradha, Ashwini, Punarvasu, Shravana  Saturday(Shani) "
+    },
+    {
+      "id": "ch-revati_anuradha_ashwini_punarvasu_shravana",
+      "number": null,
+      "title": "Revati, Anuradha, Ashwini, Punarvasu, Shravana",
+      "level": 1,
+      "start_line": 564,
+      "end_line": 575,
+      "sections": [],
+      "content_preview": "Revati, Anuradha, Ashwini, Punarvasu, Shravana  Saturday(Shani)  Revati  Hasta "
+    },
+    {
+      "id": "ch-shravana_rohini_swati",
+      "number": null,
+      "title": "Shravana, Rohini, Swati",
+      "level": 1,
+      "start_line": 576,
+      "end_line": 581,
+      "sections": [],
+      "content_preview": "Shravana, Rohini, Swati  The Unified Master Reference Table: Nitya Yogas & Stellar Mapping  No.  Nitya Yoga Name "
+    },
+    {
+      "id": "ch-nitya_yoga_name",
+      "number": null,
+      "title": "Nitya Yoga Name",
+      "level": 1,
+      "start_line": 582,
+      "end_line": 583,
+      "sections": [],
+      "content_preview": "Nitya Yoga Name  Yoga Nature  Planet Lord (Vimshottari Order)  Correct Yogi Nakshatra "
+    },
+    {
+      "id": "ch-yoga_nature",
+      "number": null,
+      "title": "Yoga Nature",
+      "level": 1,
+      "start_line": 584,
+      "end_line": 585,
+      "sections": [],
+      "content_preview": "Yoga Nature  Planet Lord (Vimshottari Order)  Correct Yogi Nakshatra  Authentic Yoga Deity "
+    },
+    {
+      "id": "ch-planet_lord_vimshottari_order",
+      "number": null,
+      "title": "Planet Lord (Vimshottari Order)",
+      "level": 1,
+      "start_line": 586,
+      "end_line": 587,
+      "sections": [],
+      "content_preview": "Planet Lord (Vimshottari Order)  Correct Yogi Nakshatra  Authentic Yoga Deity  1 "
+    },
+    {
+      "id": "ch-correct_yogi_nakshatra",
+      "number": null,
+      "title": "Correct Yogi Nakshatra",
+      "level": 1,
+      "start_line": 588,
+      "end_line": 589,
+      "sections": [],
+      "content_preview": "Correct Yogi Nakshatra  Authentic Yoga Deity  1  Vishkumbha "
+    },
+    {
+      "id": "ch-authentic_yoga_deity",
+      "number": null,
+      "title": "Authentic Yoga Deity",
+      "level": 1,
+      "start_line": 590,
+      "end_line": 635,
+      "sections": [],
+      "content_preview": "Authentic Yoga Deity  1  Vishkumbha  Inauspicious "
+    },
+    {
+      "id": "ch-purva_phalguni",
+      "number": null,
+      "title": "Purva Phalguni",
+      "level": 1,
+      "start_line": 636,
+      "end_line": 647,
+      "sections": [],
+      "content_preview": "Purva Phalguni  Brahma  5  Shobhana "
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "number": null,
+      "title": "Uttara Phalguni",
+      "level": 1,
+      "start_line": 648,
+      "end_line": 697,
+      "sections": [],
+      "content_preview": "Uttara Phalguni  Brihaspati  6  Atiganda "
+    },
+    {
+      "id": "ch-naga_deva",
+      "number": null,
+      "title": "Naga Deva",
+      "level": 1,
+      "start_line": 698,
+      "end_line": 733,
+      "sections": [],
+      "content_preview": "Naga Deva  10  Ganda  Inauspicious "
+    },
+    {
+      "id": "ch-bhoomi_deva",
+      "number": null,
+      "title": "Bhoomi Deva",
+      "level": 1,
+      "start_line": 734,
+      "end_line": 743,
+      "sections": [],
+      "content_preview": "Bhoomi Deva  13  Vyaghata  Inauspicious "
+    },
+    {
+      "id": "ch-purva_ashadha",
+      "number": null,
+      "title": "Purva Ashadha",
+      "level": 1,
+      "start_line": 744,
+      "end_line": 745,
+      "sections": [],
+      "content_preview": "Purva Ashadha  Pavana Deva  14  Harshana "
+    },
+    {
+      "id": "ch-pavana_deva",
+      "number": null,
+      "title": "Pavana Deva",
+      "level": 1,
+      "start_line": 746,
+      "end_line": 755,
+      "sections": [],
+      "content_preview": "Pavana Deva  14  Harshana  Auspicious "
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "number": null,
+      "title": "Uttara Ashadha",
+      "level": 1,
+      "start_line": 756,
+      "end_line": 803,
+      "sections": [],
+      "content_preview": "Uttara Ashadha  Bhaga  15  Vajra "
+    },
+    {
+      "id": "ch-purva_bhadrapada",
+      "number": null,
+      "title": "Purva Bhadrapada",
+      "level": 1,
+      "start_line": 804,
+      "end_line": 815,
+      "sections": [],
+      "content_preview": "Purva Bhadrapada  Kubera  19  Parigha "
+    },
+    {
+      "id": "ch-uttara_bhadrapada",
+      "number": null,
+      "title": "Uttara Bhadrapada",
+      "level": 1,
+      "start_line": 816,
+      "end_line": 829,
+      "sections": [],
+      "content_preview": "Uttara Bhadrapada  Vishvakarma  20  Shiva "
+    },
+    {
+      "id": "ch-mitra_deva",
+      "number": null,
+      "title": "Mitra Deva",
+      "level": 1,
+      "start_line": 830,
+      "end_line": 889,
+      "sections": [],
+      "content_preview": "Mitra Deva  21  Siddha  Auspicious "
+    },
+    {
+      "id": "ch-ashvini_kumara",
+      "number": null,
+      "title": "Ashvini Kumara",
+      "level": 1,
+      "start_line": 890,
+      "end_line": 915,
+      "sections": [],
+      "content_preview": "Ashvini Kumara  26  Indra  Auspicious "
+    },
+    {
+      "id": "ch-latta_and_latta_dosha_disgrace",
+      "number": null,
+      "title": "Latta and Latta Dosha (Disgrace)",
+      "level": 1,
+      "start_line": 916,
+      "end_line": 925,
+      "sections": [],
+      "content_preview": "Latta and Latta Dosha (Disgrace)  Latta (Sanskrit: लत्ता), which literally means \"kick\", is a critical concept in Vedic astrology used primarily to analyze transits (Gocharas) and elect auspicious timings (Muhurtas). It refers to the special malefic mathematical aspect where a tr"
+    },
+    {
+      "id": "ch-the_mathematical_rules_of_latta",
+      "number": null,
+      "title": "The Mathematical Rules of Latta",
+      "level": 1,
+      "start_line": 926,
+      "end_line": 933,
+      "sections": [],
+      "content_preview": "The Mathematical Rules of Latta  Planets are divided into two categories based on the direction of their \"kick\": [1, 2]  Puro-Latta (Forward Kick): Malefic planets kick Nakshatras located ahead of them in regular zodiacal sequence.  Prashchat-Latta (Backward Kick): Benefic planet"
+    },
+    {
+      "id": "ch-transiting_planet",
+      "number": null,
+      "title": "Transiting Planet",
+      "level": 1,
+      "start_line": 934,
+      "end_line": 935,
+      "sections": [],
+      "content_preview": "Transiting Planet   Latta Classification  Target Nakshatra (Counted from Current Position)  Specific Impact of the \"Kick\" "
+    },
+    {
+      "id": "ch-latta_classification",
+      "number": null,
+      "title": "Latta Classification",
+      "level": 1,
+      "start_line": 936,
+      "end_line": 937,
+      "sections": [],
+      "content_preview": "Latta Classification  Target Nakshatra (Counted from Current Position)  Specific Impact of the \"Kick\"  Sun "
+    },
+    {
+      "id": "ch-target_nakshatra_counted_from_current_position",
+      "number": null,
+      "title": "Target Nakshatra (Counted from Current Position)",
+      "level": 1,
+      "start_line": 938,
+      "end_line": 939,
+      "sections": [],
+      "content_preview": "Target Nakshatra (Counted from Current Position)  Specific Impact of the \"Kick\"  Sun  Puro-Latta (Forward) "
+    },
+    {
+      "id": "ch-specific_impact_of_the_kick",
+      "number": null,
+      "title": "Specific Impact of the \"Kick\"",
+      "level": 1,
+      "start_line": 940,
+      "end_line": 943,
+      "sections": [],
+      "content_preview": "Specific Impact of the \"Kick\"  Sun  Puro-Latta (Forward)  12th Nakshatra ahead "
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "number": null,
+      "title": "Puro-Latta (Forward)",
+      "level": 1,
+      "start_line": 944,
+      "end_line": 951,
+      "sections": [],
+      "content_preview": "Puro-Latta (Forward)  12th Nakshatra ahead  Ruin of ventures, legal troubles, friction with father or authority.  Mars "
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "number": null,
+      "title": "Puro-Latta (Forward)",
+      "level": 1,
+      "start_line": 952,
+      "end_line": 959,
+      "sections": [],
+      "content_preview": "Puro-Latta (Forward)  3rd Nakshatra ahead  Utter ruination, physical injuries, accidents, and severe conflict with siblings.  Jupiter "
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "number": null,
+      "title": "Puro-Latta (Forward)",
+      "level": 1,
+      "start_line": 960,
+      "end_line": 967,
+      "sections": [],
+      "content_preview": "Puro-Latta (Forward)  6th Nakshatra ahead  Ultimate ruin, financial losses, separation from family, and insecurity.  Saturn "
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "number": null,
+      "title": "Puro-Latta (Forward)",
+      "level": 1,
+      "start_line": 968,
+      "end_line": 971,
+      "sections": [],
+      "content_preview": "Puro-Latta (Forward)  8th Nakshatra ahead  Bodily discomfort, long-term illness, and depression.  Full Moon "
+    },
+    {
+      "id": "ch-bodily_discomfort_long-term_illness_and_depression",
+      "number": null,
+      "title": "Bodily discomfort, long-term illness, and depression.",
+      "level": 1,
+      "start_line": 972,
+      "end_line": 973,
+      "sections": [],
+      "content_preview": "Bodily discomfort, long-term illness, and depression.  Full Moon  Prashchat-Latta (Backward)  22nd Nakshatra behind "
+    },
+    {
+      "id": "ch-full_moon",
+      "number": null,
+      "title": "Full Moon",
+      "level": 1,
+      "start_line": 974,
+      "end_line": 975,
+      "sections": [],
+      "content_preview": "Full Moon  Prashchat-Latta (Backward)  22nd Nakshatra behind  Intense mental anxiety and significant financial losses. "
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "number": null,
+      "title": "Prashchat-Latta (Backward)",
+      "level": 1,
+      "start_line": 976,
+      "end_line": 979,
+      "sections": [],
+      "content_preview": "Prashchat-Latta (Backward)  22nd Nakshatra behind  Intense mental anxiety and significant financial losses.  Mercury "
+    },
+    {
+      "id": "ch-intense_mental_anxiety_and_significant_financial_losses",
+      "number": null,
+      "title": "Intense mental anxiety and significant financial losses.",
+      "level": 1,
+      "start_line": 980,
+      "end_line": 983,
+      "sections": [],
+      "content_preview": "Intense mental anxiety and significant financial losses.  Mercury  Prashchat-Latta (Backward)  7th Nakshatra behind "
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "number": null,
+      "title": "Prashchat-Latta (Backward)",
+      "level": 1,
+      "start_line": 984,
+      "end_line": 987,
+      "sections": [],
+      "content_preview": "Prashchat-Latta (Backward)  7th Nakshatra behind  Failures in communication, career downfalls, and business disasters.  Venus "
+    },
+    {
+      "id": "ch-failures_in_communication_career_downfalls_and_business_disa",
+      "number": null,
+      "title": "Failures in communication, career downfalls, and business disasters.",
+      "level": 1,
+      "start_line": 988,
+      "end_line": 991,
+      "sections": [],
+      "content_preview": "Failures in communication, career downfalls, and business disasters.  Venus  Prashchat-Latta (Backward)  5th Nakshatra behind "
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "number": null,
+      "title": "Prashchat-Latta (Backward)",
+      "level": 1,
+      "start_line": 992,
+      "end_line": 999,
+      "sections": [],
+      "content_preview": "Prashchat-Latta (Backward)  5th Nakshatra behind  Marital disharmony, illness or trouble to the spouse, and relationship strain.  Rahu "
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "number": null,
+      "title": "Prashchat-Latta (Backward)",
+      "level": 1,
+      "start_line": 1000,
+      "end_line": 1005,
+      "sections": [],
+      "content_preview": "Prashchat-Latta (Backward)  9th Nakshatra behind  Deception, sudden miseries, and illness to elders or grandparents.  Authority and References from Authentic Texts & Scholars "
+    },
+    {
+      "id": "ch-authority_and_references_from_authentic_texts_scholars",
+      "number": null,
+      "title": "Authority and References from Authentic Texts & Scholars",
+      "level": 1,
+      "start_line": 1006,
+      "end_line": 1011,
+      "sections": [],
+      "content_preview": "Authority and References from Authentic Texts & Scholars  To trace how this principle is applied, classical treatises and modern authoritative scholars outline the rules of Latta as follows:  Text / Scholar Source [1, 2, 3, 4, 5, 6, 7]  Scope of Application & Classical Commentary"
+    },
+    {
+      "id": "ch-scope_of_application_classical_commentary",
+      "number": null,
+      "title": "Scope of Application & Classical Commentary",
+      "level": 1,
+      "start_line": 1012,
+      "end_line": 1013,
+      "sections": [],
+      "content_preview": "Scope of Application & Classical Commentary  Phaladeepika by Mantreswara (13th Century C.E.)  Transit Analysis (Gochara): Chapter 26 deals extensively with Nakshatra transits. Mantreswara highlights Latta as a primary hidden affliction that neutralizes otherwise positive planetar"
+    },
+    {
+      "id": "ch-phaladeepika_by_mantreswara_13th_century_ce",
+      "number": null,
+      "title": "Phaladeepika by Mantreswara (13th Century C.E.)",
+      "level": 1,
+      "start_line": 1014,
+      "end_line": 1017,
+      "sections": [],
+      "content_preview": "Phaladeepika by Mantreswara (13th Century C.E.)  Transit Analysis (Gochara): Chapter 26 deals extensively with Nakshatra transits. Mantreswara highlights Latta as a primary hidden affliction that neutralizes otherwise positive planetary transits. If multiple planets kick the same"
+    },
+    {
+      "id": "ch-muhurta_chintamani_by_ramacharya_16th_century_ce",
+      "number": null,
+      "title": "Muhurta Chintamani by Ramacharya (16th Century C.E.)",
+      "level": 1,
+      "start_line": 1018,
+      "end_line": 1021,
+      "sections": [],
+      "content_preview": "Muhurta Chintamani by Ramacharya (16th Century C.E.)  Electional Astrology (Muhurta): Dedicated chapters on marriage and travel note that a Muhurta Nakshatra must be completely free from Latta Dosha. A marriage or venture initiated on a \"kicked\" star will experience early decay. "
+    },
+    {
+      "id": "ch-kalamrita_by_kalidasa",
+      "number": null,
+      "title": "Kalamrita by Kalidasa",
+      "level": 1,
+      "start_line": 1022,
+      "end_line": 1025,
+      "sections": [],
+      "content_preview": "Kalamrita by Kalidasa  General Transit Neutralization: This text describes exceptions to the rule. For example, it explains that if a planet causing Latta is retrograde, or if the ruling lord of the birth star is exceptionally strong, the severity of the \"kick\" is significantly d"
+    },
+    {
+      "id": "ch-dr_bv_ramanrenowned_20th-century_astrologer_author",
+      "number": null,
+      "title": "Dr. B.V. Raman(Renowned 20th-century Astrologer & Author)",
+      "level": 1,
+      "start_line": 1026,
+      "end_line": 1033,
+      "sections": [],
+      "content_preview": "Dr. B.V. Raman(Renowned 20th-century Astrologer & Author)  Practical Application: In works such as Muhurta or Electional Astrology, Dr. Raman emphasizes that while common planetary strengths (like exaltation) are visible, subtle energetic blemishes like Latta can quietly derail p"
+    },
+    {
+      "id": "ch-karana_name",
+      "number": null,
+      "title": "Karana Name",
+      "level": 1,
+      "start_line": 1034,
+      "end_line": 1035,
+      "sections": [],
+      "content_preview": "Karana Name  Type / Classification  Ruling Planet  Ruling Deity "
+    },
+    {
+      "id": "ch-type_classification",
+      "number": null,
+      "title": "Type / Classification",
+      "level": 1,
+      "start_line": 1036,
+      "end_line": 1037,
+      "sections": [],
+      "content_preview": "Type / Classification  Ruling Planet  Ruling Deity  Inherent Quality "
+    },
+    {
+      "id": "ch-ruling_planet",
+      "number": null,
+      "title": "Ruling Planet",
+      "level": 1,
+      "start_line": 1038,
+      "end_line": 1039,
+      "sections": [],
+      "content_preview": "Ruling Planet  Ruling Deity  Inherent Quality  Classical Activities Allowed / Recommended "
+    },
+    {
+      "id": "ch-ruling_deity",
+      "number": null,
+      "title": "Ruling Deity",
+      "level": 1,
+      "start_line": 1040,
+      "end_line": 1041,
+      "sections": [],
+      "content_preview": "Ruling Deity  Inherent Quality  Classical Activities Allowed / Recommended  1 "
+    },
+    {
+      "id": "ch-inherent_quality",
+      "number": null,
+      "title": "Inherent Quality",
+      "level": 1,
+      "start_line": 1042,
+      "end_line": 1043,
+      "sections": [],
+      "content_preview": "Inherent Quality  Classical Activities Allowed / Recommended  1  Bava "
+    },
+    {
+      "id": "ch-classical_activities_allowed_recommended",
+      "number": null,
+      "title": "Classical Activities Allowed / Recommended",
+      "level": 1,
+      "start_line": 1044,
+      "end_line": 1049,
+      "sections": [],
+      "content_preview": "Classical Activities Allowed / Recommended  1  Bava  Movable (Chara) "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1050,
+      "end_line": 1063,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Sun  Indra  Benefic "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1064,
+      "end_line": 1077,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Moon  Brahma  Benefic "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1078,
+      "end_line": 1081,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Mars  Surya / Mitra  Benefic "
+    },
+    {
+      "id": "ch-surya_mitra",
+      "number": null,
+      "title": "Surya / Mitra",
+      "level": 1,
+      "start_line": 1082,
+      "end_line": 1091,
+      "sections": [],
+      "content_preview": "Surya / Mitra  Benefic  Strengthening friendships, setting up partnerships, purchasing or caring for animals, agriculture, and love/marriage affairs.  4 "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1092,
+      "end_line": 1105,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Mercury  Vishvakarma  Benefic "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1106,
+      "end_line": 1119,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Jupiter  Prithvi  Benefic "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1120,
+      "end_line": 1131,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Venus  Lakshmi  Benefic "
+    },
+    {
+      "id": "ch-vishti_bhadra",
+      "number": null,
+      "title": "Vishti (Bhadra)",
+      "level": 1,
+      "start_line": 1132,
+      "end_line": 1133,
+      "sections": [],
+      "content_preview": "Vishti (Bhadra)  Movable (Chara)  Saturn  Yama "
+    },
+    {
+      "id": "ch-movable_chara",
+      "number": null,
+      "title": "Movable (Chara)",
+      "level": 1,
+      "start_line": 1134,
+      "end_line": 1139,
+      "sections": [],
+      "content_preview": "Movable (Chara)  Saturn  Yama  Severe Malefic "
+    },
+    {
+      "id": "ch-severe_malefic",
+      "number": null,
+      "title": "Severe Malefic",
+      "level": 1,
+      "start_line": 1140,
+      "end_line": 1147,
+      "sections": [],
+      "content_preview": "Severe Malefic  Strictly avoid auspicious beginnings. Recommended only for legal actions, fighting court battles, surgery, destroying old buildings, and defensive activities.  8  Shakuni "
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "number": null,
+      "title": "Fixed (Sthira)",
+      "level": 1,
+      "start_line": 1148,
+      "end_line": 1151,
+      "sections": [],
+      "content_preview": "Fixed (Sthira)  Rahu  Kaliyuga Deva  Mild Malefic "
+    },
+    {
+      "id": "ch-kaliyuga_deva",
+      "number": null,
+      "title": "Kaliyuga Deva",
+      "level": 1,
+      "start_line": 1152,
+      "end_line": 1153,
+      "sections": [],
+      "content_preview": "Kaliyuga Deva  Mild Malefic  Curing long-term diseases, administering medicine, handling herbs, architectural repairs, and settling ongoing disputes.  9 "
+    },
+    {
+      "id": "ch-mild_malefic",
+      "number": null,
+      "title": "Mild Malefic",
+      "level": 1,
+      "start_line": 1154,
+      "end_line": 1161,
+      "sections": [],
+      "content_preview": "Mild Malefic  Curing long-term diseases, administering medicine, handling herbs, architectural repairs, and settling ongoing disputes.  9  Chatuspada "
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "number": null,
+      "title": "Fixed (Sthira)",
+      "level": 1,
+      "start_line": 1162,
+      "end_line": 1167,
+      "sections": [],
+      "content_preview": "Fixed (Sthira)  Ketu  Rudra  Mild Malefic "
+    },
+    {
+      "id": "ch-mild_malefic",
+      "number": null,
+      "title": "Mild Malefic",
+      "level": 1,
+      "start_line": 1168,
+      "end_line": 1175,
+      "sections": [],
+      "content_preview": "Mild Malefic  Governance, political activities, interactions with cattle/livestock, ancestral rites (Shraddha), and internal structural demolition.  10  Naga "
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "number": null,
+      "title": "Fixed (Sthira)",
+      "level": 1,
+      "start_line": 1176,
+      "end_line": 1179,
+      "sections": [],
+      "content_preview": "Fixed (Sthira)  Rahu  Naga Deva  Malefic "
+    },
+    {
+      "id": "ch-naga_deva",
+      "number": null,
+      "title": "Naga Deva",
+      "level": 1,
+      "start_line": 1180,
+      "end_line": 1189,
+      "sections": [],
+      "content_preview": "Naga Deva  Malefic  Direct operations related to mining, mineral extraction, land clearings, and forceful actions aimed at neutralizing an opposition.  11 "
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "number": null,
+      "title": "Fixed (Sthira)",
+      "level": 1,
+      "start_line": 1190,
+      "end_line": 1199,
+      "sections": [],
+      "content_preview": "Fixed (Sthira)  Ketu  Vayu  Benefic "
+    },
+    {
+      "id": "ch-ghaat_घत",
+      "number": null,
+      "title": "Ghaat (घात)",
+      "level": 1,
+      "start_line": 1200,
+      "end_line": 1207,
+      "sections": [],
+      "content_preview": "Ghaat (घात)  The term Ghaat (घात) means \"injury,\" \"harm,\" or \"trauma.\" This matrix outlines the specific, highly inauspicious astronomical elements that act as energetic blind spots for an individual based entirely on their Janma Rashi (Birth Moon Sign).  📊 The Ghaat Chakra Maste"
+    },
+    {
+      "id": "ch-birth_moon_sign_janma_rashi",
+      "number": null,
+      "title": "Birth Moon Sign (Janma Rashi)",
+      "level": 1,
+      "start_line": 1208,
+      "end_line": 1209,
+      "sections": [],
+      "content_preview": "Birth Moon Sign (Janma Rashi)  Ghaat Moon Sign & Position  Ghaat Tithi Class (Lunar Days)  Ghaat Weekday (Vaar) "
+    },
+    {
+      "id": "ch-ghaat_moon_sign_position",
+      "number": null,
+      "title": "Ghaat Moon Sign & Position",
+      "level": 1,
+      "start_line": 1210,
+      "end_line": 1211,
+      "sections": [],
+      "content_preview": "Ghaat Moon Sign & Position  Ghaat Tithi Class (Lunar Days)  Ghaat Weekday (Vaar)  Ghaat Constellation (Nakshatra) "
+    },
+    {
+      "id": "ch-ghaat_tithi_class_lunar_days",
+      "number": null,
+      "title": "Ghaat Tithi Class (Lunar Days)",
+      "level": 1,
+      "start_line": 1212,
+      "end_line": 1213,
+      "sections": [],
+      "content_preview": "Ghaat Tithi Class (Lunar Days)  Ghaat Weekday (Vaar)  Ghaat Constellation (Nakshatra)  Ghaat Lunar Month (Maah) "
+    },
+    {
+      "id": "ch-ghaat_weekday_vaar",
+      "number": null,
+      "title": "Ghaat Weekday (Vaar)",
+      "level": 1,
+      "start_line": 1214,
+      "end_line": 1215,
+      "sections": [],
+      "content_preview": "Ghaat Weekday (Vaar)  Ghaat Constellation (Nakshatra)  Ghaat Lunar Month (Maah)  Ghaat Sun Sign (Surya Rashi) "
+    },
+    {
+      "id": "ch-ghaat_constellation_nakshatra",
+      "number": null,
+      "title": "Ghaat Constellation (Nakshatra)",
+      "level": 1,
+      "start_line": 1216,
+      "end_line": 1217,
+      "sections": [],
+      "content_preview": "Ghaat Constellation (Nakshatra)  Ghaat Lunar Month (Maah)  Ghaat Sun Sign (Surya Rashi)  Lord / Ruler "
+    },
+    {
+      "id": "ch-ghaat_lunar_month_maah",
+      "number": null,
+      "title": "Ghaat Lunar Month (Maah)",
+      "level": 1,
+      "start_line": 1218,
+      "end_line": 1219,
+      "sections": [],
+      "content_preview": "Ghaat Lunar Month (Maah)  Ghaat Sun Sign (Surya Rashi)  Lord / Ruler  Ghaat Lagna (Samaan / Same) "
+    },
+    {
+      "id": "ch-ghaat_sun_sign_surya_rashi",
+      "number": null,
+      "title": "Ghaat Sun Sign (Surya Rashi)",
+      "level": 1,
+      "start_line": 1220,
+      "end_line": 1221,
+      "sections": [],
+      "content_preview": "Ghaat Sun Sign (Surya Rashi)  Lord / Ruler  Ghaat Lagna (Samaan / Same)  Ghaat Lagna (Vipareet / Opposite) "
+    },
+    {
+      "id": "ch-lord_ruler",
+      "number": null,
+      "title": "Lord / Ruler",
+      "level": 1,
+      "start_line": 1222,
+      "end_line": 1223,
+      "sections": [],
+      "content_preview": "Lord / Ruler  Ghaat Lagna (Samaan / Same)  Ghaat Lagna (Vipareet / Opposite)  Aries(Mesha) "
+    },
+    {
+      "id": "ch-ghaat_lagna_samaan_same",
+      "number": null,
+      "title": "Ghaat Lagna (Samaan / Same)",
+      "level": 1,
+      "start_line": 1224,
+      "end_line": 1225,
+      "sections": [],
+      "content_preview": "Ghaat Lagna (Samaan / Same)  Ghaat Lagna (Vipareet / Opposite)  Aries(Mesha)  Aries (1st) "
+    },
+    {
+      "id": "ch-ghaat_lagna_vipareet_opposite",
+      "number": null,
+      "title": "Ghaat Lagna (Vipareet / Opposite)",
+      "level": 1,
+      "start_line": 1226,
+      "end_line": 1229,
+      "sections": [],
+      "content_preview": "Ghaat Lagna (Vipareet / Opposite)  Aries(Mesha)  Aries (1st)  Nanda (1, 6, 11) "
+    },
+    {
+      "id": "ch-aries_1st",
+      "number": null,
+      "title": "Aries (1st)",
+      "level": 1,
+      "start_line": 1230,
+      "end_line": 1231,
+      "sections": [],
+      "content_preview": "Aries (1st)  Nanda (1, 6, 11)  Sunday  Magha "
+    },
+    {
+      "id": "ch-nanda_1_6_11",
+      "number": null,
+      "title": "Nanda (1, 6, 11)",
+      "level": 1,
+      "start_line": 1232,
+      "end_line": 1249,
+      "sections": [],
+      "content_preview": "Nanda (1, 6, 11)  Sunday  Magha  Kartik "
+    },
+    {
+      "id": "ch-virgo_5th",
+      "number": null,
+      "title": "Virgo (5th)",
+      "level": 1,
+      "start_line": 1250,
+      "end_line": 1251,
+      "sections": [],
+      "content_preview": "Virgo (5th)  Purna (5, 10, 15, 30)  Saturday  Hasta "
+    },
+    {
+      "id": "ch-purna_5_10_15_30",
+      "number": null,
+      "title": "Purna (5, 10, 15, 30)",
+      "level": 1,
+      "start_line": 1252,
+      "end_line": 1269,
+      "sections": [],
+      "content_preview": "Purna (5, 10, 15, 30)  Saturday  Hasta  Margashirsha "
+    },
+    {
+      "id": "ch-aquarius_9th",
+      "number": null,
+      "title": "Aquarius (9th)",
+      "level": 1,
+      "start_line": 1270,
+      "end_line": 1271,
+      "sections": [],
+      "content_preview": "Aquarius (9th)  Bhadra (2, 7, 12)  Monday  Swati "
+    },
+    {
+      "id": "ch-bhadra_2_7_12",
+      "number": null,
+      "title": "Bhadra (2, 7, 12)",
+      "level": 1,
+      "start_line": 1272,
+      "end_line": 1289,
+      "sections": [],
+      "content_preview": "Bhadra (2, 7, 12)  Monday  Swati  Ashadha "
+    },
+    {
+      "id": "ch-leo_2nd",
+      "number": null,
+      "title": "Leo (2nd)",
+      "level": 1,
+      "start_line": 1290,
+      "end_line": 1291,
+      "sections": [],
+      "content_preview": "Leo (2nd)  Bhadra (2, 7, 12)  Wednesday  Anuradha "
+    },
+    {
+      "id": "ch-bhadra_2_7_12",
+      "number": null,
+      "title": "Bhadra (2, 7, 12)",
+      "level": 1,
+      "start_line": 1292,
+      "end_line": 1307,
+      "sections": [],
+      "content_preview": "Bhadra (2, 7, 12)  Wednesday  Anuradha  Pausha "
+    },
+    {
+      "id": "ch-leo_simha",
+      "number": null,
+      "title": "Leo (Simha)",
+      "level": 1,
+      "start_line": 1308,
+      "end_line": 1309,
+      "sections": [],
+      "content_preview": "Leo (Simha)  Capricorn (6th)  Jaya (3, 8, 13)  Saturday "
+    },
+    {
+      "id": "ch-capricorn_6th",
+      "number": null,
+      "title": "Capricorn (6th)",
+      "level": 1,
+      "start_line": 1310,
+      "end_line": 1311,
+      "sections": [],
+      "content_preview": "Capricorn (6th)  Jaya (3, 8, 13)  Saturday  Mula "
+    },
+    {
+      "id": "ch-jaya_3_8_13",
+      "number": null,
+      "title": "Jaya (3, 8, 13)",
+      "level": 1,
+      "start_line": 1312,
+      "end_line": 1321,
+      "sections": [],
+      "content_preview": "Jaya (3, 8, 13)  Saturday  Mula  Jyeshtha "
+    },
+    {
+      "id": "ch-mars_sun",
+      "number": null,
+      "title": "Mars / Sun",
+      "level": 1,
+      "start_line": 1322,
+      "end_line": 1329,
+      "sections": [],
+      "content_preview": "Mars / Sun  Capricorn  Cancer  Virgo(Kanya) "
+    },
+    {
+      "id": "ch-gemini_10th",
+      "number": null,
+      "title": "Gemini (10th)",
+      "level": 1,
+      "start_line": 1330,
+      "end_line": 1331,
+      "sections": [],
+      "content_preview": "Gemini (10th)  Purna (5, 10, 15, 30)  Saturday  Shravana "
+    },
+    {
+      "id": "ch-purna_5_10_15_30",
+      "number": null,
+      "title": "Purna (5, 10, 15, 30)",
+      "level": 1,
+      "start_line": 1332,
+      "end_line": 1347,
+      "sections": [],
+      "content_preview": "Purna (5, 10, 15, 30)  Saturday  Shravana  Bhadrapada "
+    },
+    {
+      "id": "ch-libra_tula",
+      "number": null,
+      "title": "Libra (Tula)",
+      "level": 1,
+      "start_line": 1348,
+      "end_line": 1349,
+      "sections": [],
+      "content_preview": "Libra (Tula)  Sagittarius (3rd)  Rikta (4, 9, 14)  Thursday "
+    },
+    {
+      "id": "ch-sagittarius_3rd",
+      "number": null,
+      "title": "Sagittarius (3rd)",
+      "level": 1,
+      "start_line": 1350,
+      "end_line": 1351,
+      "sections": [],
+      "content_preview": "Sagittarius (3rd)  Rikta (4, 9, 14)  Thursday  Shatabhisha "
+    },
+    {
+      "id": "ch-rikta_4_9_14",
+      "number": null,
+      "title": "Rikta (4, 9, 14)",
+      "level": 1,
+      "start_line": 1352,
+      "end_line": 1369,
+      "sections": [],
+      "content_preview": "Rikta (4, 9, 14)  Thursday  Shatabhisha  Magha "
+    },
+    {
+      "id": "ch-taurus_7th",
+      "number": null,
+      "title": "Taurus (7th)",
+      "level": 1,
+      "start_line": 1370,
+      "end_line": 1371,
+      "sections": [],
+      "content_preview": "Taurus (7th)  Nanda (1, 6, 11)  Friday  Revati "
+    },
+    {
+      "id": "ch-nanda_1_6_11",
+      "number": null,
+      "title": "Nanda (1, 6, 11)",
+      "level": 1,
+      "start_line": 1372,
+      "end_line": 1389,
+      "sections": [],
+      "content_preview": "Nanda (1, 6, 11)  Friday  Revati  Ashwin "
+    },
+    {
+      "id": "ch-pisces_4th",
+      "number": null,
+      "title": "Pisces (4th)",
+      "level": 1,
+      "start_line": 1390,
+      "end_line": 1391,
+      "sections": [],
+      "content_preview": "Pisces (4th)  Jaya (3, 8, 13)  Friday  Bharani "
+    },
+    {
+      "id": "ch-jaya_3_8_13",
+      "number": null,
+      "title": "Jaya (3, 8, 13)",
+      "level": 1,
+      "start_line": 1392,
+      "end_line": 1409,
+      "sections": [],
+      "content_preview": "Jaya (3, 8, 13)  Friday  Bharani  Shravan "
+    },
+    {
+      "id": "ch-leo_8th",
+      "number": null,
+      "title": "Leo (8th)",
+      "level": 1,
+      "start_line": 1410,
+      "end_line": 1411,
+      "sections": [],
+      "content_preview": "Leo (8th)  Rikta (4, 9, 14)  Tuesday  Rohini "
+    },
+    {
+      "id": "ch-rikta_4_9_14",
+      "number": null,
+      "title": "Rikta (4, 9, 14)",
+      "level": 1,
+      "start_line": 1412,
+      "end_line": 1421,
+      "sections": [],
+      "content_preview": "Rikta (4, 9, 14)  Tuesday  Rohini  Vaishakha "
+    },
+    {
+      "id": "ch-mars_sun",
+      "number": null,
+      "title": "Mars / Sun",
+      "level": 1,
+      "start_line": 1422,
+      "end_line": 1429,
+      "sections": [],
+      "content_preview": "Mars / Sun  Aquarius  Leo  Aquarius(Kumbha) "
+    },
+    {
+      "id": "ch-sagittarius_11th",
+      "number": null,
+      "title": "Sagittarius (11th)",
+      "level": 1,
+      "start_line": 1430,
+      "end_line": 1431,
+      "sections": [],
+      "content_preview": "Sagittarius (11th)  Jaya (3, 8, 13)  Thursday  Ardra "
+    },
+    {
+      "id": "ch-jaya_3_8_13",
+      "number": null,
+      "title": "Jaya (3, 8, 13)",
+      "level": 1,
+      "start_line": 1432,
+      "end_line": 1449,
+      "sections": [],
+      "content_preview": "Jaya (3, 8, 13)  Thursday  Ardra  Chaitra "
+    },
+    {
+      "id": "ch-aquarius_12th",
+      "number": null,
+      "title": "Aquarius (12th)",
+      "level": 1,
+      "start_line": 1450,
+      "end_line": 1451,
+      "sections": [],
+      "content_preview": "Aquarius (12th)  Purna (5, 10, 15, 30)  Friday  Ashlesha "
+    },
+    {
+      "id": "ch-purna_5_10_15_30",
+      "number": null,
+      "title": "Purna (5, 10, 15, 30)",
+      "level": 1,
+      "start_line": 1452,
+      "end_line": 1482,
+      "sections": [],
+      "content_preview": "Purna (5, 10, 15, 30)  Friday  Ashlesha  Phalguni "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-tithi_astrology_master_reference_guide",
+      "title": "Tithi Astrology Master Reference Guide",
+      "chapter": "Tithi Astrology Master Reference Guide",
+      "chapter_id": "ch-tithi_astrology_master_reference_guide"
+    },
+    {
+      "id": "ch-the_5_tithi_groups_and_their_details",
+      "title": "The 5 Tithi Groups and Their Details",
+      "chapter": "The 5 Tithi Groups and Their Details",
+      "chapter_id": "ch-the_5_tithi_groups_and_their_details"
+    },
+    {
+      "id": "ch-tithi_group",
+      "title": "Tithi Group",
+      "chapter": "Tithi Group",
+      "chapter_id": "ch-tithi_group"
+    },
+    {
+      "id": "ch-associated_lunar_days_tithis",
+      "title": "Associated Lunar Days (Tithis)",
+      "chapter": "Associated Lunar Days (Tithis)",
+      "chapter_id": "ch-associated_lunar_days_tithis"
+    },
+    {
+      "id": "ch-ruling_planet",
+      "title": "Ruling Planet",
+      "chapter": "Ruling Planet",
+      "chapter_id": "ch-ruling_planet"
+    },
+    {
+      "id": "ch-element_bhuta",
+      "title": "Element (Bhuta)",
+      "chapter": "Element (Bhuta)",
+      "chapter_id": "ch-element_bhuta"
+    },
+    {
+      "id": "ch-inherent_nature_fruits_given",
+      "title": "Inherent Nature & \"Fruits\" Given",
+      "chapter": "Inherent Nature & \"Fruits\" Given",
+      "chapter_id": "ch-inherent_nature_fruits_given"
+    },
+    {
+      "id": "ch-fire_agni",
+      "title": "Fire (Agni)",
+      "chapter": "Fire (Agni)",
+      "chapter_id": "ch-fire_agni"
+    },
+    {
+      "id": "ch-earth_prithvi",
+      "title": "Earth (Prithvi)",
+      "chapter": "Earth (Prithvi)",
+      "chapter_id": "ch-earth_prithvi"
+    },
+    {
+      "id": "ch-space_akash",
+      "title": "Space (Akash)",
+      "chapter": "Space (Akash)",
+      "chapter_id": "ch-space_akash"
+    },
+    {
+      "id": "ch-water_apas",
+      "title": "Water (Apas)",
+      "chapter": "Water (Apas)",
+      "chapter_id": "ch-water_apas"
+    },
+    {
+      "id": "ch-air_vayu",
+      "title": "Air (Vayu)",
+      "chapter": "Air (Vayu)",
+      "chapter_id": "ch-air_vayu"
+    },
+    {
+      "id": "ch-siddha_yoga_matching_tithis_and_weekdays",
+      "title": "Siddha Yoga: Matching Tithis and Weekdays",
+      "chapter": "Siddha Yoga: Matching Tithis and Weekdays",
+      "chapter_id": "ch-siddha_yoga_matching_tithis_and_weekdays"
+    },
+    {
+      "id": "ch-complete_30-day_chronological_matrix",
+      "title": "Complete 30-Day Chronological Matrix",
+      "chapter": "Complete 30-Day Chronological Matrix",
+      "chapter_id": "ch-complete_30-day_chronological_matrix"
+    },
+    {
+      "id": "ch-thithi_name",
+      "title": "Thithi Name",
+      "chapter": "Thithi Name",
+      "chapter_id": "ch-thithi_name"
+    },
+    {
+      "id": "ch-tithi_group",
+      "title": "Tithi Group",
+      "chapter": "Tithi Group",
+      "chapter_id": "ch-tithi_group"
+    },
+    {
+      "id": "ch-ruling_planet",
+      "title": "Ruling Planet",
+      "chapter": "Ruling Planet",
+      "chapter_id": "ch-ruling_planet"
+    },
+    {
+      "id": "ch-actionable_fruits_best_activities",
+      "title": "Actionable Fruits & Best Activities",
+      "chapter": "Actionable Fruits & Best Activities",
+      "chapter_id": "ch-actionable_fruits_best_activities"
+    },
+    {
+      "id": "ch-pratipada_1st_waxing",
+      "title": "Pratipada (1st Waxing)",
+      "chapter": "Pratipada (1st Waxing)",
+      "chapter_id": "ch-pratipada_1st_waxing"
+    },
+    {
+      "id": "ch-joy_arts_farming_starting_small_projects",
+      "title": "Joy, arts, farming, starting small projects",
+      "chapter": "Joy, arts, farming, starting small projects",
+      "chapter_id": "ch-joy_arts_farming_starting_small_projects"
+    },
+    {
+      "id": "ch-dwitiya_2nd_waxing",
+      "title": "Dwitiya (2nd Waxing)",
+      "chapter": "Dwitiya (2nd Waxing)",
+      "chapter_id": "ch-dwitiya_2nd_waxing"
+    },
+    {
+      "id": "ch-stability_commerce_starting_education_partnerships",
+      "title": "Stability, commerce, starting education, partnerships",
+      "chapter": "Stability, commerce, starting education, partnerships",
+      "chapter_id": "ch-stability_commerce_starting_education_partnerships"
+    },
+    {
+      "id": "ch-tritiya_3rd_waxing",
+      "title": "Tritiya (3rd Waxing)",
+      "chapter": "Tritiya (3rd Waxing)",
+      "chapter_id": "ch-tritiya_3rd_waxing"
+    },
+    {
+      "id": "ch-victory_physical_efforts_solving_legal_disputes",
+      "title": "Victory, physical efforts, solving legal disputes",
+      "chapter": "Victory, physical efforts, solving legal disputes",
+      "chapter_id": "ch-victory_physical_efforts_solving_legal_disputes"
+    },
+    {
+      "id": "ch-chaturthi_4th_waxing",
+      "title": "Chaturthi (4th Waxing)",
+      "chapter": "Chaturthi (4th Waxing)",
+      "chapter_id": "ch-chaturthi_4th_waxing"
+    },
+    {
+      "id": "ch-release_routine_maintenance_overcoming_bad_habits",
+      "title": "Release, routine maintenance, overcoming bad habits",
+      "chapter": "Release, routine maintenance, overcoming bad habits",
+      "chapter_id": "ch-release_routine_maintenance_overcoming_bad_habits"
+    },
+    {
+      "id": "ch-panchami_5th_waxing",
+      "title": "Panchami (5th Waxing)",
+      "chapter": "Panchami (5th Waxing)",
+      "chapter_id": "ch-panchami_5th_waxing"
+    },
+    {
+      "id": "ch-high_abundance_marriages_religious_ceremonies",
+      "title": "High abundance, marriages, religious ceremonies",
+      "chapter": "High abundance, marriages, religious ceremonies",
+      "chapter_id": "ch-high_abundance_marriages_religious_ceremonies"
+    },
+    {
+      "id": "ch-shashti_6th_waxing",
+      "title": "Shashti (6th Waxing)",
+      "chapter": "Shashti (6th Waxing)",
+      "chapter_id": "ch-shashti_6th_waxing"
+    },
+    {
+      "id": "ch-growth_property_renovations_creative_arts",
+      "title": "Growth, property renovations, creative arts",
+      "chapter": "Growth, property renovations, creative arts",
+      "chapter_id": "ch-growth_property_renovations_creative_arts"
+    },
+    {
+      "id": "ch-saptami_7th_waxing",
+      "title": "Saptami (7th Waxing)",
+      "chapter": "Saptami (7th Waxing)",
+      "chapter_id": "ch-saptami_7th_waxing"
+    },
+    {
+      "id": "ch-community_buying_vehicles_formal_training",
+      "title": "Community, buying vehicles, formal training",
+      "chapter": "Community, buying vehicles, formal training",
+      "chapter_id": "ch-community_buying_vehicles_formal_training"
+    },
+    {
+      "id": "ch-ashtami_8th_waxing",
+      "title": "Ashtami (8th Waxing)",
+      "chapter": "Ashtami (8th Waxing)",
+      "chapter_id": "ch-ashtami_8th_waxing"
+    },
+    {
+      "id": "ch-courage_handling_difficult_confrontations_competition",
+      "title": "Courage, handling difficult confrontations, competition",
+      "chapter": "Courage, handling difficult confrontations, competition",
+      "chapter_id": "ch-courage_handling_difficult_confrontations_competition"
+    },
+    {
+      "id": "ch-navami_9th_waxing",
+      "title": "Navami (9th Waxing)",
+      "chapter": "Navami (9th Waxing)",
+      "chapter_id": "ch-navami_9th_waxing"
+    },
+    {
+      "id": "ch-elimination_clearing_old_debts_weapon_handling",
+      "title": "Elimination, clearing old debts, weapon handling",
+      "chapter": "Elimination, clearing old debts, weapon handling",
+      "chapter_id": "ch-elimination_clearing_old_debts_weapon_handling"
+    },
+    {
+      "id": "ch-dashami_10th_waxing",
+      "title": "Dashami (10th Waxing)",
+      "chapter": "Dashami (10th Waxing)",
+      "chapter_id": "ch-dashami_10th_waxing"
+    },
+    {
+      "id": "ch-fulfillment_government_works_large_celebrations",
+      "title": "Fulfillment, government works, large celebrations",
+      "chapter": "Fulfillment, government works, large celebrations",
+      "chapter_id": "ch-fulfillment_government_works_large_celebrations"
+    },
+    {
+      "id": "ch-ekadashi_11th_waxing",
+      "title": "Ekadashi (11th Waxing)",
+      "chapter": "Ekadashi (11th Waxing)",
+      "chapter_id": "ch-ekadashi_11th_waxing"
+    },
+    {
+      "id": "ch-spiritual_expansion_fasting_charity_meditation",
+      "title": "Spiritual expansion, fasting, charity, meditation",
+      "chapter": "Spiritual expansion, fasting, charity, meditation",
+      "chapter_id": "ch-spiritual_expansion_fasting_charity_meditation"
+    },
+    {
+      "id": "ch-dwadashi_12th_waxing",
+      "title": "Dwadashi (12th Waxing)",
+      "chapter": "Dwadashi (12th Waxing)",
+      "chapter_id": "ch-dwadashi_12th_waxing"
+    },
+    {
+      "id": "ch-business_infrastructure_expansion_building_structures",
+      "title": "Business infrastructure expansion, building structures",
+      "chapter": "Business infrastructure expansion, building structures",
+      "chapter_id": "ch-business_infrastructure_expansion_building_structures"
+    },
+    {
+      "id": "ch-trayodashi_13th_waxing",
+      "title": "Trayodashi (13th Waxing)",
+      "chapter": "Trayodashi (13th Waxing)",
+      "chapter_id": "ch-trayodashi_13th_waxing"
+    },
+    {
+      "id": "ch-victory_physical_endurance_negotiating_disputes",
+      "title": "Victory, physical endurance, negotiating disputes",
+      "chapter": "Victory, physical endurance, negotiating disputes",
+      "chapter_id": "ch-victory_physical_endurance_negotiating_disputes"
+    },
+    {
+      "id": "ch-chaturdashi_14th_waxing",
+      "title": "Chaturdashi (14th Waxing)",
+      "chapter": "Chaturdashi (14th Waxing)",
+      "chapter_id": "ch-chaturdashi_14th_waxing"
+    },
+    {
+      "id": "ch-banishing_negatives_deep_cleansing_closures",
+      "title": "Banishing negatives, deep cleansing, closures",
+      "chapter": "Banishing negatives, deep cleansing, closures",
+      "chapter_id": "ch-banishing_negatives_deep_cleansing_closures"
+    },
+    {
+      "id": "ch-purnima_full_moon",
+      "title": "Purnima (Full Moon)",
+      "chapter": "Purnima (Full Moon)",
+      "chapter_id": "ch-purnima_full_moon"
+    },
+    {
+      "id": "ch-peak_fulfillment_core_spiritual_work_major_life_milestones",
+      "title": "Peak fulfillment, core spiritual work, major life milestones",
+      "chapter": "Peak fulfillment, core spiritual work, major life milestones",
+      "chapter_id": "ch-peak_fulfillment_core_spiritual_work_major_life_milestones"
+    },
+    {
+      "id": "ch-pratipada_1st_waning",
+      "title": "Pratipada (1st Waning)",
+      "chapter": "Pratipada (1st Waning)",
+      "chapter_id": "ch-pratipada_1st_waning"
+    },
+    {
+      "id": "ch-social_events_creative_design_personal_styling",
+      "title": "Social events, creative design, personal styling",
+      "chapter": "Social events, creative design, personal styling",
+      "chapter_id": "ch-social_events_creative_design_personal_styling"
+    },
+    {
+      "id": "ch-dwitiya_2nd_waning",
+      "title": "Dwitiya (2nd Waning)",
+      "chapter": "Dwitiya (2nd Waning)",
+      "chapter_id": "ch-dwitiya_2nd_waning"
+    },
+    {
+      "id": "ch-financial_audits_routine_trade_negotiations",
+      "title": "Financial audits, routine trade negotiations",
+      "chapter": "Financial audits, routine trade negotiations",
+      "chapter_id": "ch-financial_audits_routine_trade_negotiations"
+    },
+    {
+      "id": "ch-tritiya_3rd_waning",
+      "title": "Tritiya (3rd Waning)",
+      "chapter": "Tritiya (3rd Waning)",
+      "chapter_id": "ch-tritiya_3rd_waning"
+    },
+    {
+      "id": "ch-sports_strategies_tackling_structural_roadblocks",
+      "title": "Sports strategies, tackling structural roadblocks",
+      "chapter": "Sports strategies, tackling structural roadblocks",
+      "chapter_id": "ch-sports_strategies_tackling_structural_roadblocks"
+    },
+    {
+      "id": "ch-chaturthi_4th_waning",
+      "title": "Chaturthi (4th Waning)",
+      "chapter": "Chaturthi (4th Waning)",
+      "chapter_id": "ch-chaturthi_4th_waning"
+    },
+    {
+      "id": "ch-minor_surgeries_ending_commitments_clearing_waste",
+      "title": "Minor surgeries, ending commitments, clearing waste",
+      "chapter": "Minor surgeries, ending commitments, clearing waste",
+      "chapter_id": "ch-minor_surgeries_ending_commitments_clearing_waste"
+    },
+    {
+      "id": "ch-panchami_5th_waning",
+      "title": "Panchami (5th Waning)",
+      "chapter": "Panchami (5th Waning)",
+      "chapter_id": "ch-panchami_5th_waning"
+    },
+    {
+      "id": "ch-contentment_writing_contracts_signing_local_deeds",
+      "title": "Contentment, writing contracts, signing local deeds",
+      "chapter": "Contentment, writing contracts, signing local deeds",
+      "chapter_id": "ch-contentment_writing_contracts_signing_local_deeds"
+    },
+    {
+      "id": "ch-shashti_6th_waning",
+      "title": "Shashti (6th Waning)",
+      "chapter": "Shashti (6th Waning)",
+      "chapter_id": "ch-shashti_6th_waning"
+    },
+    {
+      "id": "ch-designing_landscaping_internal_artistic_exploration",
+      "title": "Designing, landscaping, internal artistic exploration",
+      "chapter": "Designing, landscaping, internal artistic exploration",
+      "chapter_id": "ch-designing_landscaping_internal_artistic_exploration"
+    },
+    {
+      "id": "ch-saptami_7th_waning",
+      "title": "Saptami (7th Waning)",
+      "chapter": "Saptami (7th Waning)",
+      "chapter_id": "ch-saptami_7th_waning"
+    },
+    {
+      "id": "ch-archiving_documentation_deep_knowledge_processing",
+      "title": "Archiving documentation, deep knowledge processing",
+      "chapter": "Archiving documentation, deep knowledge processing",
+      "chapter_id": "ch-archiving_documentation_deep_knowledge_processing"
+    },
+    {
+      "id": "ch-ashtami_8th_waning",
+      "title": "Ashtami (8th Waning)",
+      "chapter": "Ashtami (8th Waning)",
+      "chapter_id": "ch-ashtami_8th_waning"
+    },
+    {
+      "id": "ch-legal_preparations_competitive_training_modules",
+      "title": "Legal preparations, competitive training modules",
+      "chapter": "Legal preparations, competitive training modules",
+      "chapter_id": "ch-legal_preparations_competitive_training_modules"
+    },
+    {
+      "id": "ch-navami_9th_waning",
+      "title": "Navami (9th Waning)",
+      "chapter": "Navami (9th Waning)",
+      "chapter_id": "ch-navami_9th_waning"
+    },
+    {
+      "id": "ch-cleaning_records_removing_obstacles_structural_checks",
+      "title": "Cleaning records, removing obstacles, structural checks",
+      "chapter": "Cleaning records, removing obstacles, structural checks",
+      "chapter_id": "ch-cleaning_records_removing_obstacles_structural_checks"
+    },
+    {
+      "id": "ch-dashami_10th_waning",
+      "title": "Dashami (10th Waning)",
+      "chapter": "Dashami (10th Waning)",
+      "chapter_id": "ch-dashami_10th_waning"
+    },
+    {
+      "id": "ch-family_transitions_travel_preparation_checking_assets",
+      "title": "Family transitions, travel preparation, checking assets",
+      "chapter": "Family transitions, travel preparation, checking assets",
+      "chapter_id": "ch-family_transitions_travel_preparation_checking_assets"
+    },
+    {
+      "id": "ch-ekadashi_11th_waning",
+      "title": "Ekadashi (11th Waning)",
+      "chapter": "Ekadashi (11th Waning)",
+      "chapter_id": "ch-ekadashi_11th_waning"
+    },
+    {
+      "id": "ch-detoxing_spiritual_cleansing_prayer_groups",
+      "title": "Detoxing, spiritual cleansing, prayer groups",
+      "chapter": "Detoxing, spiritual cleansing, prayer groups",
+      "chapter_id": "ch-detoxing_spiritual_cleansing_prayer_groups"
+    },
+    {
+      "id": "ch-dwadashi_12th_waning",
+      "title": "Dwadashi (12th Waning)",
+      "chapter": "Dwadashi (12th Waning)",
+      "chapter_id": "ch-dwadashi_12th_waning"
+    },
+    {
+      "id": "ch-settling_long-standing_merchant_books_or_accounts",
+      "title": "Settling long-standing merchant books or accounts",
+      "chapter": "Settling long-standing merchant books or accounts",
+      "chapter_id": "ch-settling_long-standing_merchant_books_or_accounts"
+    },
+    {
+      "id": "ch-trayodashi_13th_waning",
+      "title": "Trayodashi (13th Waning)",
+      "chapter": "Trayodashi (13th Waning)",
+      "chapter_id": "ch-trayodashi_13th_waning"
+    },
+    {
+      "id": "ch-physical_training_processing_heavy_workload_demands",
+      "title": "Physical training, processing heavy workload demands",
+      "chapter": "Physical training, processing heavy workload demands",
+      "chapter_id": "ch-physical_training_processing_heavy_workload_demands"
+    },
+    {
+      "id": "ch-chaturdashi_14th_waning",
+      "title": "Chaturdashi (14th Waning)",
+      "chapter": "Chaturdashi (14th Waning)",
+      "chapter_id": "ch-chaturdashi_14th_waning"
+    },
+    {
+      "id": "ch-completing_major_clean-outs_strict_closures",
+      "title": "Completing major clean-outs, strict closures",
+      "chapter": "Completing major clean-outs, strict closures",
+      "chapter_id": "ch-completing_major_clean-outs_strict_closures"
+    },
+    {
+      "id": "ch-amavasya_new_moon",
+      "title": "Amavasya (New Moon)",
+      "chapter": "Amavasya (New Moon)",
+      "chapter_id": "ch-amavasya_new_moon"
+    },
+    {
+      "id": "ch-deep_rest_internal_psychological_reflection_ancestral_honors",
+      "title": "Deep rest, internal psychological reflection, ancestral honors",
+      "chapter": "Deep rest, internal psychological reflection, ancestral honors",
+      "chapter_id": "ch-deep_rest_internal_psychological_reflection_ancestral_honors"
+    },
+    {
+      "id": "ch-important_distinction_category_lords_vs_individual_day_lords",
+      "title": "Important Distinction: Category Lords vs. Individual Day Lords",
+      "chapter": "Important Distinction: Category Lords vs. Individual Day Lords",
+      "chapter_id": "ch-important_distinction_category_lords_vs_individual_day_lords"
+    },
+    {
+      "id": "ch-sun_1st_9th_tithis",
+      "title": "Sun: 1st & 9th Tithis",
+      "chapter": "Sun: 1st & 9th Tithis",
+      "chapter_id": "ch-sun_1st_9th_tithis"
+    },
+    {
+      "id": "ch-moon_2nd_10th_tithis",
+      "title": "Moon: 2nd & 10th Tithis",
+      "chapter": "Moon: 2nd & 10th Tithis",
+      "chapter_id": "ch-moon_2nd_10th_tithis"
+    },
+    {
+      "id": "ch-mars_3rd_11th_tithis",
+      "title": "Mars: 3rd & 11th Tithis",
+      "chapter": "Mars: 3rd & 11th Tithis",
+      "chapter_id": "ch-mars_3rd_11th_tithis"
+    },
+    {
+      "id": "ch-mercury_4th_12th_tithis",
+      "title": "Mercury: 4th & 12th Tithis",
+      "chapter": "Mercury: 4th & 12th Tithis",
+      "chapter_id": "ch-mercury_4th_12th_tithis"
+    },
+    {
+      "id": "ch-jupiter_5th_13th_tithis",
+      "title": "Jupiter: 5th & 13th Tithis",
+      "chapter": "Jupiter: 5th & 13th Tithis",
+      "chapter_id": "ch-jupiter_5th_13th_tithis"
+    },
+    {
+      "id": "ch-venus_6th_14th_tithis",
+      "title": "Venus: 6th & 14th Tithis",
+      "chapter": "Venus: 6th & 14th Tithis",
+      "chapter_id": "ch-venus_6th_14th_tithis"
+    },
+    {
+      "id": "ch-saturn_7th_15th_purnima",
+      "title": "Saturn: 7th & 15th (Purnima)",
+      "chapter": "Saturn: 7th & 15th (Purnima)",
+      "chapter_id": "ch-saturn_7th_15th_purnima"
+    },
+    {
+      "id": "ch-rahu_8th_30th_amavasya",
+      "title": "Rahu: 8th & 30th (Amavasya)",
+      "chapter": "Rahu: 8th & 30th (Amavasya)",
+      "chapter_id": "ch-rahu_8th_30th_amavasya"
+    },
+    {
+      "id": "ch-dagdha_yoga_burnt_energy",
+      "title": "Dagdha Yoga (Burnt Energy)",
+      "chapter": "Dagdha Yoga (Burnt Energy)",
+      "chapter_id": "ch-dagdha_yoga_burnt_energy"
+    },
+    {
+      "id": "ch-mrityu_yoga_destructive",
+      "title": "Mrityu Yoga (Destructive)",
+      "chapter": "Mrityu Yoga (Destructive)",
+      "chapter_id": "ch-mrityu_yoga_destructive"
+    },
+    {
+      "id": "ch-utpata_kana_calamity",
+      "title": "Utpata / Kana (Calamity)",
+      "chapter": "Utpata / Kana (Calamity)",
+      "chapter_id": "ch-utpata_kana_calamity"
+    },
+    {
+      "id": "ch-amrit_siddhi_yoga_nectarhighest_success",
+      "title": "Amrit Siddhi Yoga (Nectar/Highest Success)",
+      "chapter": "Amrit Siddhi Yoga (Nectar/Highest Success)",
+      "chapter_id": "ch-amrit_siddhi_yoga_nectarhighest_success"
+    },
+    {
+      "id": "ch-sarvartha_siddhi_yoga_all_desires_fulfilled",
+      "title": "Sarvartha Siddhi Yoga (All Desires Fulfilled)",
+      "chapter": "Sarvartha Siddhi Yoga (All Desires Fulfilled)",
+      "chapter_id": "ch-sarvartha_siddhi_yoga_all_desires_fulfilled"
+    },
+    {
+      "id": "ch-sunday_ravi",
+      "title": "Sunday (Ravi)",
+      "chapter": "Sunday (Ravi)",
+      "chapter_id": "ch-sunday_ravi"
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "title": "Uttara Ashadha",
+      "chapter": "Uttara Ashadha",
+      "chapter_id": "ch-uttara_ashadha"
+    },
+    {
+      "id": "ch-shravana_rohini_mrigashira_pushya_anuradha",
+      "title": "Shravana, Rohini, Mrigashira, Pushya, Anuradha",
+      "chapter": "Shravana, Rohini, Mrigashira, Pushya, Anuradha",
+      "chapter_id": "ch-shravana_rohini_mrigashira_pushya_anuradha"
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "title": "Uttara Ashadha",
+      "chapter": "Uttara Ashadha",
+      "chapter_id": "ch-uttara_ashadha"
+    },
+    {
+      "id": "ch-purva_bhadrapada",
+      "title": "Purva Bhadrapada",
+      "chapter": "Purva Bhadrapada",
+      "chapter_id": "ch-purva_bhadrapada"
+    },
+    {
+      "id": "ch-ashwini_uttara_bhadrapada_krittika_ashlesha",
+      "title": "Ashwini, Uttara Bhadrapada, Krittika, Ashlesha",
+      "chapter": "Ashwini, Uttara Bhadrapada, Krittika, Ashlesha",
+      "chapter_id": "ch-ashwini_uttara_bhadrapada_krittika_ashlesha"
+    },
+    {
+      "id": "ch-rohini_anuradha_hasta_krittika_mrigashira",
+      "title": "Rohini, Anuradha, Hasta, Krittika, Mrigashira",
+      "chapter": "Rohini, Anuradha, Hasta, Krittika, Mrigashira",
+      "chapter_id": "ch-rohini_anuradha_hasta_krittika_mrigashira"
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "title": "Uttara Phalguni",
+      "chapter": "Uttara Phalguni",
+      "chapter_id": "ch-uttara_phalguni"
+    },
+    {
+      "id": "ch-pushya_guru_pushya",
+      "title": "Pushya (Guru Pushya)",
+      "chapter": "Pushya (Guru Pushya)",
+      "chapter_id": "ch-pushya_guru_pushya"
+    },
+    {
+      "id": "ch-revati_anuradha_ashwini_punarvasu_pushya",
+      "title": "Revati, Anuradha, Ashwini, Punarvasu, Pushya",
+      "chapter": "Revati, Anuradha, Ashwini, Punarvasu, Pushya",
+      "chapter_id": "ch-revati_anuradha_ashwini_punarvasu_pushya"
+    },
+    {
+      "id": "ch-magha_pushya",
+      "title": "Magha / Pushya",
+      "chapter": "Magha / Pushya",
+      "chapter_id": "ch-magha_pushya"
+    },
+    {
+      "id": "ch-revati_anuradha_ashwini_punarvasu_shravana",
+      "title": "Revati, Anuradha, Ashwini, Punarvasu, Shravana",
+      "chapter": "Revati, Anuradha, Ashwini, Punarvasu, Shravana",
+      "chapter_id": "ch-revati_anuradha_ashwini_punarvasu_shravana"
+    },
+    {
+      "id": "ch-shravana_rohini_swati",
+      "title": "Shravana, Rohini, Swati",
+      "chapter": "Shravana, Rohini, Swati",
+      "chapter_id": "ch-shravana_rohini_swati"
+    },
+    {
+      "id": "ch-nitya_yoga_name",
+      "title": "Nitya Yoga Name",
+      "chapter": "Nitya Yoga Name",
+      "chapter_id": "ch-nitya_yoga_name"
+    },
+    {
+      "id": "ch-yoga_nature",
+      "title": "Yoga Nature",
+      "chapter": "Yoga Nature",
+      "chapter_id": "ch-yoga_nature"
+    },
+    {
+      "id": "ch-planet_lord_vimshottari_order",
+      "title": "Planet Lord (Vimshottari Order)",
+      "chapter": "Planet Lord (Vimshottari Order)",
+      "chapter_id": "ch-planet_lord_vimshottari_order"
+    },
+    {
+      "id": "ch-correct_yogi_nakshatra",
+      "title": "Correct Yogi Nakshatra",
+      "chapter": "Correct Yogi Nakshatra",
+      "chapter_id": "ch-correct_yogi_nakshatra"
+    },
+    {
+      "id": "ch-authentic_yoga_deity",
+      "title": "Authentic Yoga Deity",
+      "chapter": "Authentic Yoga Deity",
+      "chapter_id": "ch-authentic_yoga_deity"
+    },
+    {
+      "id": "ch-purva_phalguni",
+      "title": "Purva Phalguni",
+      "chapter": "Purva Phalguni",
+      "chapter_id": "ch-purva_phalguni"
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "title": "Uttara Phalguni",
+      "chapter": "Uttara Phalguni",
+      "chapter_id": "ch-uttara_phalguni"
+    },
+    {
+      "id": "ch-naga_deva",
+      "title": "Naga Deva",
+      "chapter": "Naga Deva",
+      "chapter_id": "ch-naga_deva"
+    },
+    {
+      "id": "ch-bhoomi_deva",
+      "title": "Bhoomi Deva",
+      "chapter": "Bhoomi Deva",
+      "chapter_id": "ch-bhoomi_deva"
+    },
+    {
+      "id": "ch-purva_ashadha",
+      "title": "Purva Ashadha",
+      "chapter": "Purva Ashadha",
+      "chapter_id": "ch-purva_ashadha"
+    },
+    {
+      "id": "ch-pavana_deva",
+      "title": "Pavana Deva",
+      "chapter": "Pavana Deva",
+      "chapter_id": "ch-pavana_deva"
+    },
+    {
+      "id": "ch-uttara_ashadha",
+      "title": "Uttara Ashadha",
+      "chapter": "Uttara Ashadha",
+      "chapter_id": "ch-uttara_ashadha"
+    },
+    {
+      "id": "ch-purva_bhadrapada",
+      "title": "Purva Bhadrapada",
+      "chapter": "Purva Bhadrapada",
+      "chapter_id": "ch-purva_bhadrapada"
+    },
+    {
+      "id": "ch-uttara_bhadrapada",
+      "title": "Uttara Bhadrapada",
+      "chapter": "Uttara Bhadrapada",
+      "chapter_id": "ch-uttara_bhadrapada"
+    },
+    {
+      "id": "ch-mitra_deva",
+      "title": "Mitra Deva",
+      "chapter": "Mitra Deva",
+      "chapter_id": "ch-mitra_deva"
+    },
+    {
+      "id": "ch-ashvini_kumara",
+      "title": "Ashvini Kumara",
+      "chapter": "Ashvini Kumara",
+      "chapter_id": "ch-ashvini_kumara"
+    },
+    {
+      "id": "ch-latta_and_latta_dosha_disgrace",
+      "title": "Latta and Latta Dosha (Disgrace)",
+      "chapter": "Latta and Latta Dosha (Disgrace)",
+      "chapter_id": "ch-latta_and_latta_dosha_disgrace"
+    },
+    {
+      "id": "ch-the_mathematical_rules_of_latta",
+      "title": "The Mathematical Rules of Latta",
+      "chapter": "The Mathematical Rules of Latta",
+      "chapter_id": "ch-the_mathematical_rules_of_latta"
+    },
+    {
+      "id": "ch-transiting_planet",
+      "title": "Transiting Planet",
+      "chapter": "Transiting Planet",
+      "chapter_id": "ch-transiting_planet"
+    },
+    {
+      "id": "ch-latta_classification",
+      "title": "Latta Classification",
+      "chapter": "Latta Classification",
+      "chapter_id": "ch-latta_classification"
+    },
+    {
+      "id": "ch-target_nakshatra_counted_from_current_position",
+      "title": "Target Nakshatra (Counted from Current Position)",
+      "chapter": "Target Nakshatra (Counted from Current Position)",
+      "chapter_id": "ch-target_nakshatra_counted_from_current_position"
+    },
+    {
+      "id": "ch-specific_impact_of_the_kick",
+      "title": "Specific Impact of the \"Kick\"",
+      "chapter": "Specific Impact of the \"Kick\"",
+      "chapter_id": "ch-specific_impact_of_the_kick"
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "title": "Puro-Latta (Forward)",
+      "chapter": "Puro-Latta (Forward)",
+      "chapter_id": "ch-puro-latta_forward"
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "title": "Puro-Latta (Forward)",
+      "chapter": "Puro-Latta (Forward)",
+      "chapter_id": "ch-puro-latta_forward"
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "title": "Puro-Latta (Forward)",
+      "chapter": "Puro-Latta (Forward)",
+      "chapter_id": "ch-puro-latta_forward"
+    },
+    {
+      "id": "ch-puro-latta_forward",
+      "title": "Puro-Latta (Forward)",
+      "chapter": "Puro-Latta (Forward)",
+      "chapter_id": "ch-puro-latta_forward"
+    },
+    {
+      "id": "ch-bodily_discomfort_long-term_illness_and_depression",
+      "title": "Bodily discomfort, long-term illness, and depression.",
+      "chapter": "Bodily discomfort, long-term illness, and depression.",
+      "chapter_id": "ch-bodily_discomfort_long-term_illness_and_depression"
+    },
+    {
+      "id": "ch-full_moon",
+      "title": "Full Moon",
+      "chapter": "Full Moon",
+      "chapter_id": "ch-full_moon"
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "title": "Prashchat-Latta (Backward)",
+      "chapter": "Prashchat-Latta (Backward)",
+      "chapter_id": "ch-prashchat-latta_backward"
+    },
+    {
+      "id": "ch-intense_mental_anxiety_and_significant_financial_losses",
+      "title": "Intense mental anxiety and significant financial losses.",
+      "chapter": "Intense mental anxiety and significant financial losses.",
+      "chapter_id": "ch-intense_mental_anxiety_and_significant_financial_losses"
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "title": "Prashchat-Latta (Backward)",
+      "chapter": "Prashchat-Latta (Backward)",
+      "chapter_id": "ch-prashchat-latta_backward"
+    },
+    {
+      "id": "ch-failures_in_communication_career_downfalls_and_business_disa",
+      "title": "Failures in communication, career downfalls, and business disasters.",
+      "chapter": "Failures in communication, career downfalls, and business disasters.",
+      "chapter_id": "ch-failures_in_communication_career_downfalls_and_business_disa"
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "title": "Prashchat-Latta (Backward)",
+      "chapter": "Prashchat-Latta (Backward)",
+      "chapter_id": "ch-prashchat-latta_backward"
+    },
+    {
+      "id": "ch-prashchat-latta_backward",
+      "title": "Prashchat-Latta (Backward)",
+      "chapter": "Prashchat-Latta (Backward)",
+      "chapter_id": "ch-prashchat-latta_backward"
+    },
+    {
+      "id": "ch-authority_and_references_from_authentic_texts_scholars",
+      "title": "Authority and References from Authentic Texts & Scholars",
+      "chapter": "Authority and References from Authentic Texts & Scholars",
+      "chapter_id": "ch-authority_and_references_from_authentic_texts_scholars"
+    },
+    {
+      "id": "ch-scope_of_application_classical_commentary",
+      "title": "Scope of Application & Classical Commentary",
+      "chapter": "Scope of Application & Classical Commentary",
+      "chapter_id": "ch-scope_of_application_classical_commentary"
+    },
+    {
+      "id": "ch-phaladeepika_by_mantreswara_13th_century_ce",
+      "title": "Phaladeepika by Mantreswara (13th Century C.E.)",
+      "chapter": "Phaladeepika by Mantreswara (13th Century C.E.)",
+      "chapter_id": "ch-phaladeepika_by_mantreswara_13th_century_ce"
+    },
+    {
+      "id": "ch-muhurta_chintamani_by_ramacharya_16th_century_ce",
+      "title": "Muhurta Chintamani by Ramacharya (16th Century C.E.)",
+      "chapter": "Muhurta Chintamani by Ramacharya (16th Century C.E.)",
+      "chapter_id": "ch-muhurta_chintamani_by_ramacharya_16th_century_ce"
+    },
+    {
+      "id": "ch-kalamrita_by_kalidasa",
+      "title": "Kalamrita by Kalidasa",
+      "chapter": "Kalamrita by Kalidasa",
+      "chapter_id": "ch-kalamrita_by_kalidasa"
+    },
+    {
+      "id": "ch-dr_bv_ramanrenowned_20th-century_astrologer_author",
+      "title": "Dr. B.V. Raman(Renowned 20th-century Astrologer & Author)",
+      "chapter": "Dr. B.V. Raman(Renowned 20th-century Astrologer & Author)",
+      "chapter_id": "ch-dr_bv_ramanrenowned_20th-century_astrologer_author"
+    },
+    {
+      "id": "ch-karana_name",
+      "title": "Karana Name",
+      "chapter": "Karana Name",
+      "chapter_id": "ch-karana_name"
+    },
+    {
+      "id": "ch-type_classification",
+      "title": "Type / Classification",
+      "chapter": "Type / Classification",
+      "chapter_id": "ch-type_classification"
+    },
+    {
+      "id": "ch-ruling_planet",
+      "title": "Ruling Planet",
+      "chapter": "Ruling Planet",
+      "chapter_id": "ch-ruling_planet"
+    },
+    {
+      "id": "ch-ruling_deity",
+      "title": "Ruling Deity",
+      "chapter": "Ruling Deity",
+      "chapter_id": "ch-ruling_deity"
+    },
+    {
+      "id": "ch-inherent_quality",
+      "title": "Inherent Quality",
+      "chapter": "Inherent Quality",
+      "chapter_id": "ch-inherent_quality"
+    },
+    {
+      "id": "ch-classical_activities_allowed_recommended",
+      "title": "Classical Activities Allowed / Recommended",
+      "chapter": "Classical Activities Allowed / Recommended",
+      "chapter_id": "ch-classical_activities_allowed_recommended"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-surya_mitra",
+      "title": "Surya / Mitra",
+      "chapter": "Surya / Mitra",
+      "chapter_id": "ch-surya_mitra"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-vishti_bhadra",
+      "title": "Vishti (Bhadra)",
+      "chapter": "Vishti (Bhadra)",
+      "chapter_id": "ch-vishti_bhadra"
+    },
+    {
+      "id": "ch-movable_chara",
+      "title": "Movable (Chara)",
+      "chapter": "Movable (Chara)",
+      "chapter_id": "ch-movable_chara"
+    },
+    {
+      "id": "ch-severe_malefic",
+      "title": "Severe Malefic",
+      "chapter": "Severe Malefic",
+      "chapter_id": "ch-severe_malefic"
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "title": "Fixed (Sthira)",
+      "chapter": "Fixed (Sthira)",
+      "chapter_id": "ch-fixed_sthira"
+    },
+    {
+      "id": "ch-kaliyuga_deva",
+      "title": "Kaliyuga Deva",
+      "chapter": "Kaliyuga Deva",
+      "chapter_id": "ch-kaliyuga_deva"
+    },
+    {
+      "id": "ch-mild_malefic",
+      "title": "Mild Malefic",
+      "chapter": "Mild Malefic",
+      "chapter_id": "ch-mild_malefic"
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "title": "Fixed (Sthira)",
+      "chapter": "Fixed (Sthira)",
+      "chapter_id": "ch-fixed_sthira"
+    },
+    {
+      "id": "ch-mild_malefic",
+      "title": "Mild Malefic",
+      "chapter": "Mild Malefic",
+      "chapter_id": "ch-mild_malefic"
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "title": "Fixed (Sthira)",
+      "chapter": "Fixed (Sthira)",
+      "chapter_id": "ch-fixed_sthira"
+    },
+    {
+      "id": "ch-naga_deva",
+      "title": "Naga Deva",
+      "chapter": "Naga Deva",
+      "chapter_id": "ch-naga_deva"
+    },
+    {
+      "id": "ch-fixed_sthira",
+      "title": "Fixed (Sthira)",
+      "chapter": "Fixed (Sthira)",
+      "chapter_id": "ch-fixed_sthira"
+    },
+    {
+      "id": "ch-ghaat_घत",
+      "title": "Ghaat (घात)",
+      "chapter": "Ghaat (घात)",
+      "chapter_id": "ch-ghaat_घत"
+    },
+    {
+      "id": "ch-birth_moon_sign_janma_rashi",
+      "title": "Birth Moon Sign (Janma Rashi)",
+      "chapter": "Birth Moon Sign (Janma Rashi)",
+      "chapter_id": "ch-birth_moon_sign_janma_rashi"
+    },
+    {
+      "id": "ch-ghaat_moon_sign_position",
+      "title": "Ghaat Moon Sign & Position",
+      "chapter": "Ghaat Moon Sign & Position",
+      "chapter_id": "ch-ghaat_moon_sign_position"
+    },
+    {
+      "id": "ch-ghaat_tithi_class_lunar_days",
+      "title": "Ghaat Tithi Class (Lunar Days)",
+      "chapter": "Ghaat Tithi Class (Lunar Days)",
+      "chapter_id": "ch-ghaat_tithi_class_lunar_days"
+    },
+    {
+      "id": "ch-ghaat_weekday_vaar",
+      "title": "Ghaat Weekday (Vaar)",
+      "chapter": "Ghaat Weekday (Vaar)",
+      "chapter_id": "ch-ghaat_weekday_vaar"
+    },
+    {
+      "id": "ch-ghaat_constellation_nakshatra",
+      "title": "Ghaat Constellation (Nakshatra)",
+      "chapter": "Ghaat Constellation (Nakshatra)",
+      "chapter_id": "ch-ghaat_constellation_nakshatra"
+    },
+    {
+      "id": "ch-ghaat_lunar_month_maah",
+      "title": "Ghaat Lunar Month (Maah)",
+      "chapter": "Ghaat Lunar Month (Maah)",
+      "chapter_id": "ch-ghaat_lunar_month_maah"
+    },
+    {
+      "id": "ch-ghaat_sun_sign_surya_rashi",
+      "title": "Ghaat Sun Sign (Surya Rashi)",
+      "chapter": "Ghaat Sun Sign (Surya Rashi)",
+      "chapter_id": "ch-ghaat_sun_sign_surya_rashi"
+    },
+    {
+      "id": "ch-lord_ruler",
+      "title": "Lord / Ruler",
+      "chapter": "Lord / Ruler",
+      "chapter_id": "ch-lord_ruler"
+    },
+    {
+      "id": "ch-ghaat_lagna_samaan_same",
+      "title": "Ghaat Lagna (Samaan / Same)",
+      "chapter": "Ghaat Lagna (Samaan / Same)",
+      "chapter_id": "ch-ghaat_lagna_samaan_same"
+    },
+    {
+      "id": "ch-ghaat_lagna_vipareet_opposite",
+      "title": "Ghaat Lagna (Vipareet / Opposite)",
+      "chapter": "Ghaat Lagna (Vipareet / Opposite)",
+      "chapter_id": "ch-ghaat_lagna_vipareet_opposite"
+    },
+    {
+      "id": "ch-aries_1st",
+      "title": "Aries (1st)",
+      "chapter": "Aries (1st)",
+      "chapter_id": "ch-aries_1st"
+    },
+    {
+      "id": "ch-nanda_1_6_11",
+      "title": "Nanda (1, 6, 11)",
+      "chapter": "Nanda (1, 6, 11)",
+      "chapter_id": "ch-nanda_1_6_11"
+    },
+    {
+      "id": "ch-virgo_5th",
+      "title": "Virgo (5th)",
+      "chapter": "Virgo (5th)",
+      "chapter_id": "ch-virgo_5th"
+    },
+    {
+      "id": "ch-purna_5_10_15_30",
+      "title": "Purna (5, 10, 15, 30)",
+      "chapter": "Purna (5, 10, 15, 30)",
+      "chapter_id": "ch-purna_5_10_15_30"
+    },
+    {
+      "id": "ch-aquarius_9th",
+      "title": "Aquarius (9th)",
+      "chapter": "Aquarius (9th)",
+      "chapter_id": "ch-aquarius_9th"
+    },
+    {
+      "id": "ch-bhadra_2_7_12",
+      "title": "Bhadra (2, 7, 12)",
+      "chapter": "Bhadra (2, 7, 12)",
+      "chapter_id": "ch-bhadra_2_7_12"
+    },
+    {
+      "id": "ch-leo_2nd",
+      "title": "Leo (2nd)",
+      "chapter": "Leo (2nd)",
+      "chapter_id": "ch-leo_2nd"
+    },
+    {
+      "id": "ch-bhadra_2_7_12",
+      "title": "Bhadra (2, 7, 12)",
+      "chapter": "Bhadra (2, 7, 12)",
+      "chapter_id": "ch-bhadra_2_7_12"
+    },
+    {
+      "id": "ch-leo_simha",
+      "title": "Leo (Simha)",
+      "chapter": "Leo (Simha)",
+      "chapter_id": "ch-leo_simha"
+    },
+    {
+      "id": "ch-capricorn_6th",
+      "title": "Capricorn (6th)",
+      "chapter": "Capricorn (6th)",
+      "chapter_id": "ch-capricorn_6th"
+    },
+    {
+      "id": "ch-jaya_3_8_13",
+      "title": "Jaya (3, 8, 13)",
+      "chapter": "Jaya (3, 8, 13)",
+      "chapter_id": "ch-jaya_3_8_13"
+    },
+    {
+      "id": "ch-mars_sun",
+      "title": "Mars / Sun",
+      "chapter": "Mars / Sun",
+      "chapter_id": "ch-mars_sun"
+    },
+    {
+      "id": "ch-gemini_10th",
+      "title": "Gemini (10th)",
+      "chapter": "Gemini (10th)",
+      "chapter_id": "ch-gemini_10th"
+    },
+    {
+      "id": "ch-purna_5_10_15_30",
+      "title": "Purna (5, 10, 15, 30)",
+      "chapter": "Purna (5, 10, 15, 30)",
+      "chapter_id": "ch-purna_5_10_15_30"
+    },
+    {
+      "id": "ch-libra_tula",
+      "title": "Libra (Tula)",
+      "chapter": "Libra (Tula)",
+      "chapter_id": "ch-libra_tula"
+    },
+    {
+      "id": "ch-sagittarius_3rd",
+      "title": "Sagittarius (3rd)",
+      "chapter": "Sagittarius (3rd)",
+      "chapter_id": "ch-sagittarius_3rd"
+    },
+    {
+      "id": "ch-rikta_4_9_14",
+      "title": "Rikta (4, 9, 14)",
+      "chapter": "Rikta (4, 9, 14)",
+      "chapter_id": "ch-rikta_4_9_14"
+    },
+    {
+      "id": "ch-taurus_7th",
+      "title": "Taurus (7th)",
+      "chapter": "Taurus (7th)",
+      "chapter_id": "ch-taurus_7th"
+    },
+    {
+      "id": "ch-nanda_1_6_11",
+      "title": "Nanda (1, 6, 11)",
+      "chapter": "Nanda (1, 6, 11)",
+      "chapter_id": "ch-nanda_1_6_11"
+    },
+    {
+      "id": "ch-pisces_4th",
+      "title": "Pisces (4th)",
+      "chapter": "Pisces (4th)",
+      "chapter_id": "ch-pisces_4th"
+    },
+    {
+      "id": "ch-jaya_3_8_13",
+      "title": "Jaya (3, 8, 13)",
+      "chapter": "Jaya (3, 8, 13)",
+      "chapter_id": "ch-jaya_3_8_13"
+    },
+    {
+      "id": "ch-leo_8th",
+      "title": "Leo (8th)",
+      "chapter": "Leo (8th)",
+      "chapter_id": "ch-leo_8th"
+    },
+    {
+      "id": "ch-rikta_4_9_14",
+      "title": "Rikta (4, 9, 14)",
+      "chapter": "Rikta (4, 9, 14)",
+      "chapter_id": "ch-rikta_4_9_14"
+    },
+    {
+      "id": "ch-mars_sun",
+      "title": "Mars / Sun",
+      "chapter": "Mars / Sun",
+      "chapter_id": "ch-mars_sun"
+    },
+    {
+      "id": "ch-sagittarius_11th",
+      "title": "Sagittarius (11th)",
+      "chapter": "Sagittarius (11th)",
+      "chapter_id": "ch-sagittarius_11th"
+    },
+    {
+      "id": "ch-jaya_3_8_13",
+      "title": "Jaya (3, 8, 13)",
+      "chapter": "Jaya (3, 8, 13)",
+      "chapter_id": "ch-jaya_3_8_13"
+    },
+    {
+      "id": "ch-aquarius_12th",
+      "title": "Aquarius (12th)",
+      "chapter": "Aquarius (12th)",
+      "chapter_id": "ch-aquarius_12th"
+    },
+    {
+      "id": "ch-purna_5_10_15_30",
+      "title": "Purna (5, 10, 15, 30)",
+      "chapter": "Purna (5, 10, 15, 30)",
+      "chapter_id": "ch-purna_5_10_15_30"
+    }
+  ],
+  "total_chapters": 208,
   "total_sections": 0
 }

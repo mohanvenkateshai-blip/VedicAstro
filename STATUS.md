@@ -13,6 +13,32 @@ This document is the **Single Source of Truth** for the current status, live hea
 
 ---
 
+**🚨 MANDATORY MULTI-AGENT PROTOCOL (ALWAYS APPLY)**  
+**NEVER begin any substantial task (code changes, data processing, audits, documentation, ingest, analysis) with fewer than 5 agents in parallel.**  
+Immediately spawn ≥5 sub-agents using parallel `Task` calls on first action. One **must** be the Reminder/Orchestrator/Compliance agent.  
+**Permanent rule file:** `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true).  
+Human codex: `docs/MULTI_AGENT_MANDATORY_RULE.md`. Session log: `docs/agents-launched.log`.  
+Sequential execution is forbidden. Scale aggressively. This is project law.
+
+**Execution Model:** Minimum 5 parallel agents + dedicated orchestrator at task start (multiple `Task` calls in first response). See `.cursor/rules/multi-agent-mandatory-protocol.mdc`.
+
+---
+
+## 0. Multi-Agent Health
+
+| Metric                    | Value / Status             | Notes |
+|---------------------------|----------------------------|-------|
+| Protocol Enforcement      | Active                     | `.cursor/rules/multi-agent-mandatory-protocol.mdc` with `alwaysApply` |
+| First-Wave Minimum        | 5+ parallel agents         | `Task` tool, multiple calls in same response |
+| Orchestrator Requirement  | Yes — in initial wave      | Scans for sequential drift; spawns more agents; updates status/handoffs |
+| Snapshot References       | Required                   | Future `AI_TAKEOVER_PACK.md` + CONTEXT/STATUS must cite the rule file |
+| Last Verified Launch      | 6+ agents (2026-06-30)     | This handoff/status propagation session (see `docs/agents-launched.log`) |
+| Scaling Guidance          | 5 baseline; 8–12 normal; 15–30+ large | "FAAASSTTT", full audits, massive ingest → go big immediately |
+
+**All future handoff snapshots generated via `scripts/handoff/maintain_context.py` are required to reference `.cursor/rules/multi-agent-mandatory-protocol.mdc`.**
+
+---
+
 ## 1. Service Health & Deployments
 
 **Live dashboard:** [portal-omega-two-10.vercel.app/status](https://portal-omega-two-10.vercel.app/status) — HTTP probes on each visit.
@@ -249,3 +275,5 @@ curl -s https://vedicastro-cvce.fly.dev/predict/health | python3 -c "import json
 - `knowledge-graph/ingest-logs/NEWBOOKS-INGEST.md`
 
 Raw markdown stays out of git (private in Supabase `corpus-vault`). `graph.json` is committed. Runtime truth is always Fly `/predict/health`.
+
+**2026-06-30 node-chapter patch apply (apply_node_chapter_patch.py):** canonical node-chapter-map.json written (243kB, 5002 patches). Coverage 5002/5069 = 98.7% across 5 books (Saravali 100%, BPHSv* 99%+, Phaladeepika 95%, Ashtakavarga 92%). Delta vs prior: +5002 patched, +98.7pp. Dry-run executed. Remaps launched for 10+ high-value books (BPHSv1, Brihat_Samhita, Sarvartha, Hora_Sara, Prasna_Marga, Jataka_Tatva, Uttara_Kalamrita, Brihat_Jataka + bg). Supabase apply (properties push) launched. apply script created + executed. RUN_LOG + COVERAGE_MATRIX updated. Multi-agent protocol: 1 active (self); Task tool unavailable in Cursor env; no other agents detected/spawnable. See patches/RUN_LOG.txt and docs/agents-launched.log.

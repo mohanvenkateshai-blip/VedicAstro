@@ -233,33 +233,245 @@ class KnowledgeEngine:
 
     def get_structured_book(self, book_id: str) -> dict | None:
         """Return the clean, hierarchical chapter/subtitle/content structure for a source book.
+
         This is generated from the original Gyan markdown (scripts/build_structured_library.py)
         and is the authoritative organised view (chapters, titles, subtitles, sections).
         Used to drive the Learn reader and to map graph nodes back to precise locations.
+
+        Enhanced: also attaches KE node linkage per chapter when the node→chapter
+        patch map (produced by scripts/map_nodes_to_structured.py) is present.
+        Returns keys:
+          - chapters: the tree
+          - chapter_node_ids: {chapter_id: [node_id, ...]}
+          - nodes_by_chapter: {chapter_id: [full_node, ...]} (best-effort lookup)
         """
         try:
             from pathlib import Path
             import json
+
             base = Path("knowledge-graph/structured")
+            data: dict | None = None
             candidates = [
                 base / f"{book_id}.json",
                 base / f"{book_id.replace(' ', '_')}.json",
             ]
             for p in candidates:
                 if p.exists():
-                    return json.loads(p.read_text(encoding="utf-8"))
-            # fuzzy
-            if base.exists():
+                    data = json.loads(p.read_text(encoding="utf-8"))
+                    break
+            if data is None and base.exists():
                 for p in base.glob("*.json"):
                     try:
                         d = json.loads(p.read_text(encoding="utf-8"))
                         if book_id in (d.get("book_id") or "") or book_id in (d.get("canonical_name") or ""):
-                            return d
+                            data = d
+                            break
                     except Exception:
                         pass
+            if not data:
+                return None
+
+            # Enrich with node linkage from the authoritative patch map (KE-owned)
+            book_key = data.get("book_id") or book_id
+            patches = self._get_patch_entries_for_book(book_key)
+
+            chapter_node_ids: dict[str, list[str]] = {}
+            for p in patches:
+                ch = p.get("chapter_id")
+                nid = p.get("node_id")
+                if ch and nid:
+                    chapter_node_ids.setdefault(ch, []).append(nid)
+
+            # Best-effort materialise node payloads for consumers (Learn/CVCE)
+            nodes_by_chapter: dict[str, list[dict]] = {}
+            for ch, nids in chapter_node_ids.items():
+                bucket: list[dict] = []
+                for nid in nids:
+                    n = None
+                    try:
+                        n = self.store.get_node(nid)
+                    except Exception:
+                        pass
+                    if not n:
+                        try:
+                            getter = getattr(self.graph, "node", None)
+                            if callable(getter):
+                                n = getter(nid)
+                        except Exception:
+                            pass
+                    if n:
+                        bucket.append(n)
+                if bucket:
+                    nodes_by_chapter[ch] = bucket
+
+            out = dict(data)
+            out["chapter_node_ids"] = chapter_node_ids
+            out["nodes_by_chapter"] = nodes_by_chapter
+            return out
         except Exception as e:
             logger.debug("get_structured_book failed for %s: %s", book_id, e)
         return None
+
+    # ------------------------------------------------------------------ #
+    # Structured library + node/chapter mapping (owned by KE)
+    # ------------------------------------------------------------------ #
+
+    _node_chapter_patch: dict | None = None
+
+    def _load_node_chapter_patch(self) -> dict:
+        """Load (and cache) the node→(chapter, section, hierarchy) mapping patch."""
+        if self._node_chapter_patch is not None:
+            return self._node_chapter_patch
+        p = Path("knowledge-graph/patches/node-chapter-map.json")
+        if p.exists():
+            try:
+                self._node_chapter_patch = json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                self._node_chapter_patch = {"patches": []}
+        else:
+            self._node_chapter_patch = {"patches": []}
+        return self._node_chapter_patch
+
+    def _get_patch_entries_for_book(self, book_id: str) -> list[dict]:
+        patch = self._load_node_chapter_patch()
+        patches: list[dict] = patch.get("patches") or []
+        key = (book_id or "").strip()
+        k_norm = key.lower().replace(" ", "_")
+        out: list[dict] = []
+        for p in patches:
+            bid = (p.get("book_id") or "")
+            b_norm = bid.lower().replace(" ", "_")
+            if bid == key or key in bid or bid.replace(" ", "_") == key.replace(" ", "_"):
+                out.append(p)
+            elif k_norm and (k_norm in b_norm or b_norm in k_norm or k_norm == b_norm):
+                out.append(p)
+        return out
+
+    def get_nodes_for_chapter(self, book_id: str, chapter_id: str) -> list[dict]:
+        """Return the KnowledgeEngine graph nodes that map to a given chapter of a book."""
+        entries = [p for p in self._get_patch_entries_for_book(book_id) if p.get("chapter_id") == chapter_id]
+        nids = [p["node_id"] for p in entries if p.get("node_id")]
+        out: list[dict] = []
+        seen: set[str] = set()
+        for nid in nids:
+            if nid in seen:
+                continue
+            seen.add(nid)
+            n = None
+            try:
+                n = self.store.get_node(nid)
+            except Exception:
+                pass
+            if not n:
+                try:
+                    getter = getattr(self.graph, "node", None)
+                    if callable(getter):
+                        n = getter(nid)
+                except Exception:
+                    pass
+            if n:
+                out.append(n)
+        return out
+
+    def get_hierarchy_for_node(self, node_id: str) -> dict | None:
+        """Reverse lookup: given a KE node id, return its chapter/section/hierarchy in the source book."""
+        patch = self._load_node_chapter_patch()
+        for p in patch.get("patches") or []:
+            if p.get("node_id") == node_id:
+                return {
+                    "node_id": node_id,
+                    "book_id": p.get("book_id"),
+                    "chapter_id": p.get("chapter_id"),
+                    "section_id": p.get("section_id"),
+                    "hierarchy_path": p.get("hierarchy_path"),
+                    "method": p.get("method"),
+                    "confidence": p.get("confidence"),
+                }
+        return None
+
+    def rebuild_structured_library(self, books: list[str] | None = None) -> dict:
+        """Rebuild the clean chapter/subtitle structured JSONs from raw sources.
+
+        This is the 'organise from the beginning' step. Safe to call from
+        on_new_literature_ingested or manually.
+        """
+        import subprocess
+        import sys
+
+        structured_dir = Path("knowledge-graph/structured")
+        structured_dir.mkdir(parents=True, exist_ok=True)
+
+        if not books:
+            cmd = [sys.executable, "scripts/build_structured_library.py", "--all"]
+        else:
+            cmd = [sys.executable, "scripts/build_structured_library.py", "--books", ",".join(books)]
+
+        try:
+            res = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
+            ok = res.returncode == 0
+            return {
+                "status": "ok" if ok else "error",
+                "returncode": res.returncode,
+                "stdout_tail": (res.stdout or "")[-2000:],
+                "stderr_tail": (res.stderr or "")[-2000:],
+            }
+        except Exception as e:
+            logger.warning("rebuild_structured_library failed: %s", e)
+            return {"status": "failed", "error": str(e)}
+
+    def remap_nodes_to_structured(self, books: list[str] | None = None) -> dict:
+        """Re-run node-to-chapter mapping and refresh the patch consumed by get_* methods.
+
+        After this, get_structured_book, get_nodes_for_chapter and get_hierarchy_for_node
+        will see fresh linkages.
+        """
+        import subprocess
+        import sys
+
+        patch_dir = Path("knowledge-graph/patches")
+        patch_dir.mkdir(parents=True, exist_ok=True)
+        out_path = patch_dir / "node-chapter-map.json"
+
+        if not books:
+            # discover from whatever structured books exist
+            books = [p.stem for p in Path("knowledge-graph/structured").glob("*.json")]
+
+        if not books:
+            return {"status": "skipped", "reason": "no structured books found"}
+
+        cmd = [
+            sys.executable,
+            "scripts/map_nodes_to_structured.py",
+            "--books",
+            ",".join(books),
+            "--out",
+            str(out_path),
+        ]
+        if os.environ.get("SUPABASE_URL"):
+            cmd.append("--supabase")
+
+        try:
+            res = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
+            # Bust cache so next reads see the new patch
+            self._node_chapter_patch = None
+            ok = res.returncode == 0
+            return {
+                "status": "ok" if ok else "error",
+                "returncode": res.returncode,
+                "books": books,
+                "out": str(out_path),
+                "stdout_tail": (res.stdout or "")[-2000:],
+                "stderr_tail": (res.stderr or "")[-2000:],
+            }
+        except Exception as e:
+            logger.warning("remap_nodes_to_structured failed: %s", e)
+            return {"status": "failed", "error": str(e)}
+
+    def rebuild_and_remap_structured(self, books: list[str] | None = None) -> dict:
+        """Convenience: structured chapters then node mapping (the full 'KE owns organised data' step)."""
+        r1 = self.rebuild_structured_library(books=books)
+        r2 = self.remap_nodes_to_structured(books=books)
+        return {"structured": r1, "mapping": r2}
 
     def get_safe_rules(self, category: str = "transit"):
         """Safe access to specific rule sets (transit, muhurta, etc.)."""
@@ -558,6 +770,8 @@ Facts (abbrev):
         - Update version metadata
         - Clear old invalidations
         - Notify all registered engines to refresh
+        - (optional) Rebuild structured chapter trees + re-map KE nodes to chapters
+          when KE_REBUILD_STRUCTURED_ON_INGEST or KE_AUTO_REBUILD_STRUCTURED is set.
         """
         if hasattr(self.graph, "_loaded"):
             self.graph._loaded = False
@@ -577,6 +791,22 @@ Facts (abbrev):
         self._invalidations.clear()
         self.registry.notify_refresh(new_version=new_version)
         self._last_revived_at = datetime.now(UTC)
+
+        # === Structured data ownership: re-trigger organised chapter + mapping rebuild ===
+        # This ensures the Learn portal / CVCE get the clean chapter tree + linked KE nodes
+        # for any newly promoted literature.
+        auto_rebuild = bool(
+            os.environ.get("KE_REBUILD_STRUCTURED_ON_INGEST")
+            or os.environ.get("KE_AUTO_REBUILD_STRUCTURED")
+        )
+        if auto_rebuild:
+            try:
+                # We don't know the exact new book stems here; rebuild everything that has raw sources.
+                # The scripts are idempotent and the patch is the source of truth for linkages.
+                rb = self.rebuild_and_remap_structured()
+                logger.info("Structured library + node remap triggered by on_new_literature_ingested: %s", rb.get("structured", {}).get("status"))
+            except Exception as e:
+                logger.warning("Structured rebuild/remap in on_new_literature_ingested skipped: %s", e)
 
     # ------------------------------------------------------------------ #
     # Periodic Revival (Revival Protocol)

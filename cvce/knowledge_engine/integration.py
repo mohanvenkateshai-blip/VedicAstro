@@ -147,3 +147,38 @@ def get_llm_narration(facts: dict, birth: dict) -> dict | None:
     """Generate optional LLM narration via the central KnowledgeEngine."""
     ke = get_knowledge_engine()
     return ke.get_llm_narration(facts, birth)
+
+
+# ------------------------------------------------------------------ #
+# Structured data access (KnowledgeEngine owns the organised chapter trees + node mappings)
+# ------------------------------------------------------------------
+
+
+def get_structured_book(book_id: str) -> dict | None:
+    """Clean chapter/subtitle tree + linked KE nodes for a source book (authoritative)."""
+    ke = get_knowledge_engine()
+    return ke.get_structured_book(book_id)
+
+
+def get_nodes_for_chapter(book_id: str, chapter_id: str) -> list[dict]:
+    """KE graph nodes that belong to one chapter inside a structured book."""
+    ke = get_knowledge_engine()
+    return ke.get_nodes_for_chapter(book_id, chapter_id)
+
+
+def get_hierarchy_for_node(node_id: str) -> dict | None:
+    """Reverse map: which book/chapter/section a given KE node was mapped into."""
+    ke = get_knowledge_engine()
+    return ke.get_hierarchy_for_node(node_id)
+
+
+def rebuild_structured_library(books: list[str] | None = None) -> dict:
+    """Force rebuild of the organised chapter JSONs (scripts/build_structured_library.py)."""
+    ke = get_knowledge_engine()
+    return ke.rebuild_structured_library(books=books)
+
+
+def remap_nodes_to_structured(books: list[str] | None = None) -> dict:
+    """Recompute node→chapter linkages (scripts/map_nodes_to_structured.py)."""
+    ke = get_knowledge_engine()
+    return ke.remap_nodes_to_structured(books=books)

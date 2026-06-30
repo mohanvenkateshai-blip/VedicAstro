@@ -3,16 +3,37 @@
   "canonical_name": "Laghu Parashari",
   "source_file": "Laghu_Parashari.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
   "chapters": [
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Prayer.",
+      "id": "ch-op_verma",
+      "number": null,
+      "title": "O.P. VERMA",
       "level": 1,
-      "start_line": 98,
+      "start_line": 11,
+      "end_line": 12,
+      "sections": [],
+      "content_preview": "O.P. VERMA"
+    },
+    {
+      "id": "ch-ranjan_publigations",
+      "number": null,
+      "title": "RANJAN PUBLIGATIONS",
+      "level": 1,
+      "start_line": 13,
+      "end_line": 14,
+      "sections": [],
+      "content_preview": "RANJAN PUBLIGATIONS"
+    },
+    {
+      "id": "ch-new_delh_-_110002",
+      "number": null,
+      "title": "NEW DELH| - 110002",
+      "level": 1,
+      "start_line": 15,
       "end_line": 98,
       "sections": [],
-      "content_preview": "1. Prayer. 2. Subject matter of the work. 3. Importance of Naksatra Dasa. 4. About general know how. 5. Aspects of planets. 6. About Trikona and Trishadaya lords 7. About lords of Kendras. 8. About 2nd and 12th house lords."
+      "content_preview": "NEW DELH| - 110002"
     },
     {
       "id": "ch-2",
@@ -22,7 +43,7 @@
       "start_line": 99,
       "end_line": 99,
       "sections": [],
-      "content_preview": "2. Subject matter of the work. 3. Importance of Naksatra Dasa. 4. About general know how. 5. Aspects of planets. 6. About Trikona and Trishadaya lords 7. About lords of Kendras. 8. About 2nd and 12th house lords. 9. Rule about 8,h house lord."
+      "content_preview": "2. Subject matter of the work."
     },
     {
       "id": "ch-3",
@@ -32,7 +53,7 @@
       "start_line": 100,
       "end_line": 100,
       "sections": [],
-      "content_preview": "3. Importance of Naksatra Dasa. 4. About general know how. 5. Aspects of planets. 6. About Trikona and Trishadaya lords 7. About lords of Kendras. 8. About 2nd and 12th house lords. 9. Rule about 8,h house lord. 10. KendradhipatyaDosha"
+      "content_preview": "3. Importance of Naksatra Dasa."
     },
     {
       "id": "ch-4",
@@ -42,7 +63,7 @@
       "start_line": 101,
       "end_line": 101,
       "sections": [],
-      "content_preview": "4. About general know how. 5. Aspects of planets. 6. About Trikona and Trishadaya lords 7. About lords of Kendras. 8. About 2nd and 12th house lords. 9. Rule about 8,h house lord. 10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords."
+      "content_preview": "4. About general know how."
     },
     {
       "id": "ch-5",
@@ -52,7 +73,7 @@
       "start_line": 102,
       "end_line": 102,
       "sections": [],
-      "content_preview": "5. Aspects of planets. 6. About Trikona and Trishadaya lords 7. About lords of Kendras. 8. About 2nd and 12th house lords. 9. Rule about 8,h house lord. 10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets"
+      "content_preview": "5. Aspects of planets."
     },
     {
       "id": "ch-6",
@@ -62,7 +83,7 @@
       "start_line": 103,
       "end_line": 103,
       "sections": [],
-      "content_preview": "6. About Trikona and Trishadaya lords 7. About lords of Kendras. 8. About 2nd and 12th house lords. 9. Rule about 8,h house lord. 10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets 13. Characteristics of Rahu and Ketu."
+      "content_preview": "6. About Trikona and Trishadaya lords"
     },
     {
       "id": "ch-7",
@@ -72,7 +93,7 @@
       "start_line": 104,
       "end_line": 104,
       "sections": [],
-      "content_preview": "7. About lords of Kendras. 8. About 2nd and 12th house lords. 9. Rule about 8,h house lord. 10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets 13. Characteristics of Rahu and Ketu. zilrneqrq: "
+      "content_preview": "7. About lords of Kendras."
     },
     {
       "id": "ch-8",
@@ -82,7 +103,7 @@
       "start_line": 105,
       "end_line": 105,
       "sections": [],
-      "content_preview": "8. About 2nd and 12th house lords. 9. Rule about 8,h house lord. 10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets 13. Characteristics of Rahu and Ketu. zilrneqrq:  S4-g7"
+      "content_preview": "8. About 2nd and 12th house lords."
     },
     {
       "id": "ch-9",
@@ -90,19 +111,9 @@
       "title": "Rule about 8,h house lord.",
       "level": 1,
       "start_line": 106,
-      "end_line": 106,
-      "sections": [],
-      "content_preview": "9. Rule about 8,h house lord. 10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets 13. Characteristics of Rahu and Ketu. zilrneqrq:  S4-g7 Combinations of Planets"
-    },
-    {
-      "id": "ch-10",
-      "number": "10",
-      "title": "KendradhipatyaDosha",
-      "level": 1,
-      "start_line": 107,
       "end_line": 107,
       "sections": [],
-      "content_preview": "10. KendradhipatyaDosha 11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets 13. Characteristics of Rahu and Ketu. zilrneqrq:  S4-g7 Combinations of Planets 14. Auspicious combinations."
+      "content_preview": "9. Rule about 8,h house lord."
     },
     {
       "id": "ch-11",
@@ -112,7 +123,7 @@
       "start_line": 108,
       "end_line": 109,
       "sections": [],
-      "content_preview": "11. Sun and Moon as.8th house lords. \"/-2. Yogakarakatwa of planets 13. Characteristics of Rahu and Ketu. zilrneqrq:  S4-g7 Combinations of Planets 14. Auspicious combinations. 15. Blemished Kendra & Trikona lords."
+      "content_preview": "11. Sun and Moon as.8th house lords."
     },
     {
       "id": "ch-13",
@@ -122,7 +133,7 @@
       "start_line": 110,
       "end_line": 113,
       "sections": [],
-      "content_preview": "13. Characteristics of Rahu and Ketu. zilrneqrq:  S4-g7 Combinations of Planets 14. Auspicious combinations. 15. Blemished Kendra & Trikona lords. 16. More about Yogakarakatwa. 17. Rajayoga par excellence."
+      "content_preview": "13. Characteristics of Rahu and Ketu."
     },
     {
       "id": "ch-14",
@@ -132,7 +143,7 @@
       "start_line": 114,
       "end_line": 114,
       "sections": [],
-      "content_preview": "14. Auspicious combinations. 15. Blemished Kendra & Trikona lords. 16. More about Yogakarakatwa. 17. Rajayoga par excellence.  ## Page 5  18. Dasas of Yogakarakas."
+      "content_preview": "14. Auspicious combinations."
     },
     {
       "id": "ch-15",
@@ -142,7 +153,7 @@
       "start_line": 115,
       "end_line": 115,
       "sections": [],
-      "content_preview": "15. Blemished Kendra & Trikona lords. 16. More about Yogakarakatwa. 17. Rajayoga par excellence.  ## Page 5  18. Dasas of Yogakarakas. 'i.9. Bhuktis of related inauspicious lords."
+      "content_preview": "15. Blemished Kendra & Trikona lords."
     },
     {
       "id": "ch-16",
@@ -152,7 +163,7 @@
       "start_line": 116,
       "end_line": 116,
       "sections": [],
-      "content_preview": "16. More about Yogakarakatwa. 17. Rajayoga par excellence.  ## Page 5  18. Dasas of Yogakarakas. 'i.9. Bhuktis of related inauspicious lords. 20. Other auspicious Yogas."
+      "content_preview": "16. More about Yogakarakatwa."
     },
     {
       "id": "ch-17",
@@ -162,7 +173,7 @@
       "start_line": 117,
       "end_line": 120,
       "sections": [],
-      "content_preview": "17. Rajayoga par excellence.  ## Page 5  18. Dasas of Yogakarakas. 'i.9. Bhuktis of related inauspicious lords. 20. Other auspicious Yogas. 21. lRahu-Ketu as Yogakarakas."
+      "content_preview": "17. Rajayoga par excellence."
     },
     {
       "id": "ch-18",
@@ -172,7 +183,7 @@
       "start_line": 121,
       "end_line": 122,
       "sections": [],
-      "content_preview": "18. Dasas of Yogakarakas. 'i.9. Bhuktis of related inauspicious lords. 20. Other auspicious Yogas. 21. lRahu-Ketu as Yogakarakas. 22. Extinction of Raiayoga. 88-102 On Longevity 23. Determination of Maraka houses."
+      "content_preview": "18. Dasas of Yogakarakas."
     },
     {
       "id": "ch-20",
@@ -180,9 +191,19 @@
       "title": "Other auspicious Yogas.",
       "level": 1,
       "start_line": 123,
+      "end_line": 123,
+      "sections": [],
+      "content_preview": "20. Other auspicious Yogas."
+    },
+    {
+      "id": "ch-21",
+      "number": "21",
+      "title": "lRahu-Ketu as Yogakarakas.",
+      "level": 1,
+      "start_line": 124,
       "end_line": 124,
       "sections": [],
-      "content_preview": "20. Other auspicious Yogas. 21. lRahu-Ketu as Yogakarakas. 22. Extinction of Raiayoga. 88-102 On Longevity 23. Determination of Maraka houses. 24. Determination of Maraka Planc'ts. 25. "
+      "content_preview": "21. lRahu-Ketu as Yogakarakas."
     },
     {
       "id": "ch-22",
@@ -192,7 +213,7 @@
       "start_line": 125,
       "end_line": 127,
       "sections": [],
-      "content_preview": "22. Extinction of Raiayoga. 88-102 On Longevity 23. Determination of Maraka houses. 24. Determination of Maraka Planc'ts. 25.  r!  rr "
+      "content_preview": "22. Extinction of Raiayoga."
     },
     {
       "id": "ch-23",
@@ -202,7 +223,7 @@
       "start_line": 128,
       "end_line": 128,
       "sections": [],
-      "content_preview": "23. Determination of Maraka houses. 24. Determination of Maraka Planc'ts. 25.  r!  rr  rr  rl 26. Other Maraka Planets."
+      "content_preview": "23. Determination of Maraka houses."
     },
     {
       "id": "ch-24",
@@ -212,7 +233,7 @@
       "start_line": 129,
       "end_line": 134,
       "sections": [],
-      "content_preview": "24. Determination of Maraka Planc'ts. 25.  r!  rr  rr  rl 26. Other Maraka Planets. 27. "
+      "content_preview": "24. Determination of Maraka Planc'ts."
     },
     {
       "id": "ch-26",
@@ -222,7 +243,7 @@
       "start_line": 135,
       "end_line": 139,
       "sections": [],
-      "content_preview": "26. Other Maraka Planets. 27.  il  il  rl 28. Speciality of Saturn as Maraka. EVTITFrEIFI:  103-l3t"
+      "content_preview": "26. Other Maraka Planets."
     },
     {
       "id": "ch-28",
@@ -232,7 +253,7 @@
       "start_line": 140,
       "end_line": 143,
       "sections": [],
-      "content_preview": "28. Speciality of Saturn as Maraka. EVTITFrEIFI:  103-l3t Dasas and Bhuktis of plarrets 29. Special rulgs for Dasa results. 30.  il  rl "
+      "content_preview": "28. Speciality of Saturn as Maraka."
     },
     {
       "id": "ch-29",
@@ -242,7 +263,7 @@
       "start_line": 144,
       "end_line": 150,
       "sections": [],
-      "content_preview": "29. Special rulgs for Dasa results. 30.  il  rl  rr  rr  rl 31. Neutral Bhukti lord to Dasa lord."
+      "content_preview": "29. Special rulgs for Dasa results."
     },
     {
       "id": "ch-31",
@@ -252,7 +273,7 @@
       "start_line": 151,
       "end_line": 151,
       "sections": [],
-      "content_preview": "31. Neutral Bhukti lord to Dasa lord. 32. Dasas of Kendra and Tiikona lords. 33. Yogakaraka and Maraka Dasa-Bhuktis. 3 4 . i l i l i l l l l l 35. Auspicious Dasa and Bhukti of Yogakaraka. 36. Dasa-Bhuktis of Rahu-Ketu. 37. Dasas of inauspicious planets. 38. "
+      "content_preview": "31. Neutral Bhukti lord to Dasa lord."
     },
     {
       "id": "ch-32",
@@ -262,7 +283,7 @@
       "start_line": 152,
       "end_line": 152,
       "sections": [],
-      "content_preview": "32. Dasas of Kendra and Tiikona lords. 33. Yogakaraka and Maraka Dasa-Bhuktis. 3 4 . i l i l i l l l l l 35. Auspicious Dasa and Bhukti of Yogakaraka. 36. Dasa-Bhuktis of Rahu-Ketu. 37. Dasas of inauspicious planets. 38.  il "
+      "content_preview": "32. Dasas of Kendra and Tiikona lords."
     },
     {
       "id": "ch-33",
@@ -272,7 +293,7 @@
       "start_line": 153,
       "end_line": 154,
       "sections": [],
-      "content_preview": "33. Yogakaraka and Maraka Dasa-Bhuktis. 3 4 . i l i l i l l l l l 35. Auspicious Dasa and Bhukti of Yogakaraka. 36. Dasa-Bhuktis of Rahu-Ketu. 37. Dasas of inauspicious planets. 38.  il  lr "
+      "content_preview": "33. Yogakaraka and Maraka Dasa-Bhuktis."
     },
     {
       "id": "ch-35",
@@ -282,7 +303,7 @@
       "start_line": 155,
       "end_line": 155,
       "sections": [],
-      "content_preview": "35. Auspicious Dasa and Bhukti of Yogakaraka. 36. Dasa-Bhuktis of Rahu-Ketu. 37. Dasas of inauspicious planets. 38.  il  lr  rr  ll"
+      "content_preview": "35. Auspicious Dasa and Bhukti of Yogakaraka."
     },
     {
       "id": "ch-36",
@@ -292,7 +313,7 @@
       "start_line": 156,
       "end_line": 156,
       "sections": [],
-      "content_preview": "36. Dasa-Bhuktis of Rahu-Ketu. 37. Dasas of inauspicious planets. 38.  il  lr  rr  ll 39. Rule about Maraka Dasas. "
+      "content_preview": "36. Dasa-Bhuktis of Rahu-Ketu."
     },
     {
       "id": "ch-37",
@@ -302,7 +323,7 @@
       "start_line": 157,
       "end_line": 162,
       "sections": [],
-      "content_preview": "37. Dasas of inauspicious planets. 38.  il  lr  rr  ll 39. Rule about Maraka Dasas.  t"
+      "content_preview": "37. Dasas of inauspicious planets."
     },
     {
       "id": "ch-39",
@@ -312,7 +333,7 @@
       "start_line": 163,
       "end_line": 164,
       "sections": [],
-      "content_preview": "39. Rule about Maraka Dasas.  t 40. Rule for Dasa-Bhukti of Venus and Saturn 41.. Specific Rajayogas. 42.  r  rl W: "
+      "content_preview": "39. Rule about Maraka Dasas. "
     },
     {
       "id": "ch-40",
@@ -322,7 +343,7 @@
       "start_line": 165,
       "end_line": 172,
       "sections": [],
-      "content_preview": "40. Rule for Dasa-Bhukti of Venus and Saturn 41.. Specific Rajayogas. 42.  r  rl W:  132-170 Auspicious and Inauspicious Planets"
+      "content_preview": "40. Rule for Dasa-Bhukti of Venus and Saturn"
     },
     {
       "id": "ch-43",
@@ -332,7 +353,7 @@
       "start_line": 173,
       "end_line": 173,
       "sections": [],
-      "content_preview": "43. Aries Lagna 47. Taurus Lagna . l,  ## Page 6  49. Gemini Lagta"
+      "content_preview": "43. Aries Lagna"
     },
     {
       "id": "ch-47",
@@ -342,7 +363,7 @@
       "start_line": 174,
       "end_line": 179,
       "sections": [],
-      "content_preview": "47. Taurus Lagna . l,  ## Page 6  49. Gemini Lagta 51. Cancerlagna"
+      "content_preview": "47. Taurus Lagna"
     },
     {
       "id": "ch-49",
@@ -350,19 +371,9 @@
       "title": "Gemini Lagta",
       "level": 1,
       "start_line": 180,
-      "end_line": 180,
-      "sections": [],
-      "content_preview": "49. Gemini Lagta 51. Cancerlagna il.  Leo Lagna 57. Virgo t gn 59. Libra l-agna 62. Scorpio Lagna &. Sagittarius Lagna"
-    },
-    {
-      "id": "ch-51",
-      "number": "51",
-      "title": "Cancerlagna",
-      "level": 1,
-      "start_line": 181,
       "end_line": 183,
       "sections": [],
-      "content_preview": "51. Cancerlagna il.  Leo Lagna 57. Virgo t gn 59. Libra l-agna 62. Scorpio Lagna &. Sagittarius Lagna ffi. Capricorn Lagna"
+      "content_preview": "49. Gemini Lagta"
     },
     {
       "id": "ch-57",
@@ -372,7 +383,7 @@
       "start_line": 184,
       "end_line": 184,
       "sections": [],
-      "content_preview": "57. Virgo t gn 59. Libra l-agna 62. Scorpio Lagna &. Sagittarius Lagna ffi. Capricorn Lagna 69. Aquarius Lagna 77. Pisces Lagna 73. Concluding Slokas"
+      "content_preview": "57. Virgo t gn"
     },
     {
       "id": "ch-59",
@@ -382,7 +393,7 @@
       "start_line": 185,
       "end_line": 185,
       "sections": [],
-      "content_preview": "59. Libra l-agna 62. Scorpio Lagna &. Sagittarius Lagna ffi. Capricorn Lagna 69. Aquarius Lagna 77. Pisces Lagna 73. Concluding Slokas frrmezlrq:"
+      "content_preview": "59. Libra l-agna"
     },
     {
       "id": "ch-62",
@@ -392,7 +403,7 @@
       "start_line": 186,
       "end_line": 188,
       "sections": [],
-      "content_preview": "62. Scorpio Lagna &. Sagittarius Lagna ffi. Capricorn Lagna 69. Aquarius Lagna 77. Pisces Lagna 73. Concluding Slokas frrmezlrq: Miscellaneous"
+      "content_preview": "62. Scorpio Lagna"
     },
     {
       "id": "ch-69",
@@ -402,7 +413,7 @@
       "start_line": 189,
       "end_line": 189,
       "sections": [],
-      "content_preview": "69. Aquarius Lagna 77. Pisces Lagna 73. Concluding Slokas frrmezlrq: Miscellaneous 75. General Slokas 76. Dasa Calculations n. "
+      "content_preview": "69. Aquarius Lagna"
     },
     {
       "id": "ch-77",
@@ -412,7 +423,7 @@
       "start_line": 190,
       "end_line": 190,
       "sections": [],
-      "content_preview": "77. Pisces Lagna 73. Concluding Slokas frrmezlrq: Miscellaneous 75. General Slokas 76. Dasa Calculations n.  Index to Technical Terms"
+      "content_preview": "77. Pisces Lagna"
     },
     {
       "id": "ch-73",
@@ -422,7 +433,7 @@
       "start_line": 191,
       "end_line": 193,
       "sections": [],
-      "content_preview": "73. Concluding Slokas frrmezlrq: Miscellaneous 75. General Slokas 76. Dasa Calculations n.  Index to Technical Terms t7t-t72"
+      "content_preview": "73. Concluding Slokas"
     },
     {
       "id": "ch-75",
@@ -432,7 +443,7 @@
       "start_line": 194,
       "end_line": 194,
       "sections": [],
-      "content_preview": "75. General Slokas 76. Dasa Calculations n.  Index to Technical Terms t7t-t72 t73-183 tE4-189 "
+      "content_preview": "75. General Slokas"
     },
     {
       "id": "ch-76",
@@ -442,7 +453,7 @@
       "start_line": 195,
       "end_line": 421,
       "sections": [],
-      "content_preview": "76. Dasa Calculations n.  Index to Technical Terms t7t-t72 t73-183 tE4-189  ## Page 7"
+      "content_preview": "76. Dasa Calculations"
     },
     {
       "id": "ch-1",
@@ -452,7 +463,7 @@
       "start_line": 422,
       "end_line": 422,
       "sections": [],
-      "content_preview": "1. Skanda Hora,2. Saunaka Hora,3. Brihat Prajapatya Hora, 4. Manittha Hora, 5. Kaushika Hora,6. Satya Samhita, T. Brihat Parasara Hora, 8. Garga Hora etc. The existence of these Floras is mentioned in the commentaries of Bhattotpala and other commentators. Parasara Hora was held "
+      "content_preview": "1. Skanda Hora,2. Saunaka Hora,3. Brihat Prajapatya Hora,"
     },
     {
       "id": "ch-4",
@@ -460,9 +471,19 @@
       "title": "Manittha Hora, 5. Kaushika Hora,6. Satya Samhita, T. Brihat",
       "level": 1,
       "start_line": 423,
+      "end_line": 561,
+      "sections": [],
+      "content_preview": "4. Manittha Hora, 5. Kaushika Hora,6. Satya Samhita, T. Brihat"
+    },
+    {
+      "id": "ch-70_-20_m0",
+      "number": null,
+      "title": "=70 -20' = M0'",
+      "level": 1,
+      "start_line": 562,
       "end_line": 650,
       "sections": [],
-      "content_preview": "4. Manittha Hora, 5. Kaushika Hora,6. Satya Samhita, T. Brihat Parasara Hora, 8. Garga Hora etc. The existence of these Floras is mentioned in the commentaries of Bhattotpala and other commentators. Parasara Hora was held inhigh esteem in ancient times and some recensions of this"
+      "content_preview": "=70 -20' = M0'"
     },
     {
       "id": "ch-2",
@@ -472,7 +493,7 @@
       "start_line": 651,
       "end_line": 652,
       "sections": [],
-      "content_preview": "2. Nature of the signs, 3. Planets and their nature,4. Vargas like Navamsa, Drekkana, Hora, Trimsamsa etc., 5. Chandra Yogas, 6. Rajayogas, 7. Stri Jataka or Female Horoscopy, 8. Ayurdaya or longevity etc. Some general indications of various houses are: 1. The 1't house represent"
+      "content_preview": "2. Nature of the signs, 3. Planets and their nature,4. Vargas like"
     },
     {
       "id": "ch-6",
@@ -482,7 +503,7 @@
       "start_line": 653,
       "end_line": 654,
       "sections": [],
-      "content_preview": "6. Rajayogas, 7. Stri Jataka or Female Horoscopy, 8. Ayurdaya or longevity etc. Some general indications of various houses are: 1. The 1't house represents physical body and strength, happiness and sorrows, contours, complexion, character etc. 19  ## Page 18"
+      "content_preview": "6. Rajayogas, 7. Stri Jataka or Female Horoscopy, 8. Ayurdaya or"
     },
     {
       "id": "ch-1",
@@ -492,7 +513,7 @@
       "start_line": 655,
       "end_line": 663,
       "sections": [],
-      "content_preview": "1. The 1't house represents physical body and strength, happiness and sorrows, contours, complexion, character etc. 19  ## Page 18  20 "
+      "content_preview": "1. The 1't house represents physical body and strength,"
     },
     {
       "id": "ch-2",
@@ -502,7 +523,7 @@
       "start_line": 664,
       "end_line": 666,
       "sections": [],
-      "content_preview": "2. The 2\"d house represents face, speech, wealth and possessions,  right eye, Maraka effects etc. 3. The 3'd house represents courage, mental inclinations, coborns, short journeys, ear etc. 4. The 4ft house represents mother, happiness, conveyanges, house, landed properties etc. "
+      "content_preview": "2. The 2\"d house represents face, speech, wealth and"
     },
     {
       "id": "ch-3",
@@ -512,7 +533,7 @@
       "start_line": 667,
       "end_line": 668,
       "sections": [],
-      "content_preview": "3. The 3'd house represents courage, mental inclinations, coborns, short journeys, ear etc. 4. The 4ft house represents mother, happiness, conveyanges, house, landed properties etc. 5. The 5th house represents intelligence, Atman and subconcious motivation, children, merits etc. "
+      "content_preview": "3. The 3'd house represents courage, mental inclinations,"
     },
     {
       "id": "ch-4",
@@ -522,7 +543,7 @@
       "start_line": 669,
       "end_line": 670,
       "sections": [],
-      "content_preview": "4. The 4ft house represents mother, happiness, conveyanges, house, landed properties etc. 5. The 5th house represents intelligence, Atman and subconcious motivation, children, merits etc. 6. The 5h house rePresents enemies, theft, debts, diseases, cuts and wounds, miseries, disap"
+      "content_preview": "4. The 4ft house represents mother, happiness, conveyanges,"
     },
     {
       "id": "ch-5",
@@ -532,7 +553,7 @@
       "start_line": 671,
       "end_line": 672,
       "sections": [],
-      "content_preview": "5. The 5th house represents intelligence, Atman and subconcious motivation, children, merits etc. 6. The 5h house rePresents enemies, theft, debts, diseases, cuts and wounds, miseries, disappointment etc. 7. The 7ft house represents sPouse, marriage, trade, travel, blame, impedim"
+      "content_preview": "5. The 5th house represents intelligence, Atman and"
     },
     {
       "id": "ch-6",
@@ -542,7 +563,7 @@
       "start_line": 673,
       "end_line": 674,
       "sections": [],
-      "content_preview": "6. The 5h house rePresents enemies, theft, debts, diseases, cuts and wounds, miseries, disappointment etc. 7. The 7ft house represents sPouse, marriage, trade, travel, blame, impediments, Maraka effects etc. 8. The 8ft house represents longevity, death and its cause, insult, sorr"
+      "content_preview": "6. The 5h house rePresents enemies, theft, debts, diseases, cuts"
     },
     {
       "id": "ch-7",
@@ -552,7 +573,7 @@
       "start_line": 675,
       "end_line": 676,
       "sections": [],
-      "content_preview": "7. The 7ft house represents sPouse, marriage, trade, travel, blame, impediments, Maraka effects etc. 8. The 8ft house represents longevity, death and its cause, insult, sorrows, impediments, chronic illnesses, legacies, wills, goods of the dead etc. 9. The 9ft house indicates cha"
+      "content_preview": "7. The 7ft house represents sPouse, marriage, trade, travel,"
     },
     {
       "id": "ch-8",
@@ -562,7 +583,7 @@
       "start_line": 677,
       "end_line": 679,
       "sections": [],
-      "content_preview": "8. The 8ft house represents longevity, death and its cause, insult, sorrows, impediments, chronic illnesses, legacies, wills, goods of the dead etc. 9. The 9ft house indicates charities, goodliness, righteousness, preceptor, grand childrery religion, father, long journeys etc. L0"
+      "content_preview": "8. The 8ft house represents longevity, death and its cause,"
     },
     {
       "id": "ch-9",
@@ -572,7 +593,7 @@
       "start_line": 680,
       "end_line": 684,
       "sections": [],
-      "content_preview": "9. The 9ft house indicates charities, goodliness, righteousness, preceptor, grand childrery religion, father, long journeys etc. L0. The L0th house indicates profession, rank, honour' success, means of livelihood, day to day activities etc. 11. The L1h house indicates gains, elde"
+      "content_preview": "9. The 9ft house indicates charities, goodliness, righteousness,"
     },
     {
       "id": "ch-11",
@@ -582,7 +603,7 @@
       "start_line": 685,
       "end_line": 837,
       "sections": [],
-      "content_preview": "11. The L1h house indicates gains, elder brother, friends, Soup associates etc. L2. The 12th house indicates expenditures, misery,loss, waste etc. Similarly, an astrologer should be well versed in the knowledge of ownership of the signs, quadruplicity and triplicity of signs, mas"
+      "content_preview": "11. The L1h house indicates gains, elder brother, friends, Soup"
     },
     {
       "id": "ch-1",
@@ -590,68 +611,19 @@
       "title": "Conjunction : When two planets are at the same longitude'",
       "level": 1,
       "start_line": 838,
-      "end_line": 866,
+      "end_line": 2138,
       "sections": [],
-      "content_preview": "1. Conjunction : When two planets are at the same longitude' When two planets are 180o aPart. 11.\"  two planct'\":\" jlt\" apart. Equal declinatio\"' trT;\"\"ts  fro.r', the celestial equator, either north or south. It has the sarne effect as a conjunction has."
+      "content_preview": "1. Conjunction : When two planets are at the same longitude'"
     },
     {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Opposition",
+      "id": "ch-315_am",
+      "number": null,
+      "title": "3.15 A.M.",
       "level": 1,
-      "start_line": 867,
-      "end_line": 867,
-      "sections": [],
-      "content_preview": "2. Opposition 3. Trine 4. Square 5. Sextile 6. Parallel  ## Page 23 "
-    },
-    {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Trine",
-      "level": 1,
-      "start_line": 868,
-      "end_line": 868,
-      "sections": [],
-      "content_preview": "3. Trine 4. Square 5. Sextile 6. Parallel  ## Page 23  Lag h u Parasari'J ataka C h an d ri ka"
-    },
-    {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Square",
-      "level": 1,
-      "start_line": 869,
-      "end_line": 869,
-      "sections": [],
-      "content_preview": "4. Square 5. Sextile 6. Parallel  ## Page 23  Lag h u Parasari'J ataka C h an d ri ka 25"
-    },
-    {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Sextile",
-      "level": 1,
-      "start_line": 870,
-      "end_line": 870,
-      "sections": [],
-      "content_preview": "5. Sextile 6. Parallel  ## Page 23  Lag h u Parasari'J ataka C h an d ri ka 25 Auspiciousness of Trikona lords and inauspiciousness of"
-    },
-    {
-      "id": "ch-6",
-      "number": "6",
-      "title": "Parallel",
-      "level": 1,
-      "start_line": 871,
+      "start_line": 2139,
       "end_line": 2224,
-      "sections": [
-        {
-          "id": "ch-6-sec-am",
-          "title": "A.M.",
-          "level": 2,
-          "start_line": 2139,
-          "end_line": 2223,
-          "content_preview": ""
-        }
-      ],
-      "content_preview": "6. Parallel  ## Page 23  Lag h u Parasari'J ataka C h an d ri ka 25 Auspiciousness of Trikona lords and inauspiciousness of Trishadaya lords-"
+      "sections": [],
+      "content_preview": "3.15 A.M."
     },
     {
       "id": "ch-1",
@@ -661,7 +633,7 @@
       "start_line": 2225,
       "end_line": 2255,
       "sections": [],
-      "content_preview": "1. To be in the same house ( wtrq*cr|=t )- When two planets are in the same house. In the chart below Mercury and Saturn are placed in the same sign- Thus they are related' Sun 4 12 /s \\ "
+      "content_preview": "1. To be in the same house ( wtrq*cr|=t )- When two planets"
     },
     {
       "id": "ch-2",
@@ -671,7 +643,7 @@
       "start_line": 2256,
       "end_line": 2261,
       "sections": [],
-      "content_preview": "2. To be in mutual exchange of houses ( de qqq )- Here the Sun and the Moon as lords of the 4th and 5th have exchanged houses. This is also called q{gR T{TFI Wq  or mutual exchange of houses. 3. A planet being aspected by his dispositor ( srrrdrterrr{fte t2"
+      "content_preview": "2. To be in mutual exchange of houses ( de qqq )- Here"
     },
     {
       "id": "ch-3",
@@ -681,7 +653,7 @@
       "start_line": 2262,
       "end_line": 2291,
       "sections": [],
-      "content_preview": "3. A planet being aspected by his dispositor ( srrrdrterrr{fte t2 11 4 Sun 10 5\\ Moon"
+      "content_preview": "3. A planet being aspected by his dispositor ( srrrdrterrr{fte"
     },
     {
       "id": "ch-4",
@@ -691,7 +663,7 @@
       "start_line": 2292,
       "end_line": 2510,
       "sections": [],
-      "content_preview": "4. The planets being in mutual aspects ( Efu TIcr;eT )-Here Mars and Jupiter mutually aspect each other. The Lagna lord Mars and the 9th lord Jupiter are in mutual aspects. In these relationships mutual exchange of houses is the most powerful, next is mutual aspects but one of th"
+      "content_preview": "4. The planets being in mutual aspects ( Efu TIcr;eT )-Here"
     },
     {
       "id": "ch-1",
@@ -701,7 +673,7 @@
       "start_line": 2511,
       "end_line": 2511,
       "sections": [],
-      "content_preview": "1. All the Tiikona lords are auspicious. 2. All benefic Kendra lords do not produce good' 3. All malefic Kendra lords do not produce evil' 4. All Tiishadaya lords are evil or inauspicious'  ## Page 60  62 "
+      "content_preview": "1. All the Tiikona lords are auspicious."
     },
     {
       "id": "ch-2",
@@ -711,7 +683,7 @@
       "start_line": 2512,
       "end_line": 2512,
       "sections": [],
-      "content_preview": "2. All benefic Kendra lords do not produce good' 3. All malefic Kendra lords do not produce evil' 4. All Tiishadaya lords are evil or inauspicious'  ## Page 60  62  Laghu Parasari-Jataka Chandrika"
+      "content_preview": "2. All benefic Kendra lords do not produce good'"
     },
     {
       "id": "ch-3",
@@ -721,7 +693,7 @@
       "start_line": 2513,
       "end_line": 2513,
       "sections": [],
-      "content_preview": "3. All malefic Kendra lords do not produce evil' 4. All Tiishadaya lords are evil or inauspicious'  ## Page 60  62  Laghu Parasari-Jataka Chandrika 9. The 8th lord is deadly evil."
+      "content_preview": "3. All malefic Kendra lords do not produce evil'"
     },
     {
       "id": "ch-4",
@@ -731,7 +703,7 @@
       "start_line": 2514,
       "end_line": 2519,
       "sections": [],
-      "content_preview": "4. All Tiishadaya lords are evil or inauspicious'  ## Page 60  62  Laghu Parasari-Jataka Chandrika 9. The 8th lord is deadly evil. 10. The 2\"d and L2th lords are neutral and behave according to"
+      "content_preview": "4. All Tiishadaya lords are evil or inauspicious'"
     },
     {
       "id": "ch-9",
@@ -741,7 +713,7 @@
       "start_line": 2520,
       "end_line": 2520,
       "sections": [],
-      "content_preview": "9. The 8th lord is deadly evil. 10. The 2\"d and L2th lords are neutral and behave according to their conjunctions with other ltouse lords and dispositions or placements in auspicious ancl inauspicious houses. Sloka 14 says that the Kendra and Trikona lords whose other signs do no"
+      "content_preview": "9. The 8th lord is deadly evil."
     },
     {
       "id": "ch-10",
@@ -749,18 +721,19 @@
       "title": "The 2\"d and L2th lords are neutral and behave according to",
       "level": 1,
       "start_line": 2521,
+      "end_line": 2617,
+      "sections": [],
+      "content_preview": "10. The 2\"d and L2th lords are neutral and behave according to"
+    },
+    {
+      "id": "ch-1000_am",
+      "number": null,
+      "title": "10.00 A.M.",
+      "level": 1,
+      "start_line": 2618,
       "end_line": 4762,
-      "sections": [
-        {
-          "id": "ch-10-sec-am",
-          "title": "A.M.",
-          "level": 2,
-          "start_line": 2618,
-          "end_line": 4761,
-          "content_preview": ""
-        }
-      ],
-      "content_preview": "10. The 2\"d and L2th lords are neutral and behave according to their conjunctions with other ltouse lords and dispositions or placements in auspicious ancl inauspicious houses. Sloka 14 says that the Kendra and Trikona lords whose other signs do not fall in houses other than thes"
+      "sections": [],
+      "content_preview": "10.00 A.M."
     },
     {
       "id": "ch-2",
@@ -768,19 +741,9 @@
       "title": "Inauspicious or the 8th, Trishadaya and Maraka lords.",
       "level": 1,
       "start_line": 4763,
-      "end_line": 4763,
-      "sections": [],
-      "content_preview": "2. Inauspicious or the 8th, Trishadaya and Maraka lords. 3. Neutral  or the 2\"d and 12'h lords. A planet can be Karaka and Maraka at the same time. Then in this planet's Dasa initially in the Bhuktis of auspicious planetsYoga results are experienced and in the Maraka Bhukti later"
-    },
-    {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Neutral",
-      "level": 1,
-      "start_line": 4764,
       "end_line": 5875,
       "sections": [],
-      "content_preview": "3. Neutral  or the 2\"d and 12'h lords. A planet can be Karaka and Maraka at the same time. Then in this planet's Dasa initially in the Bhuktis of auspicious planetsYoga results are experienced and in the Maraka Bhukti later evil results occur. But in that Maraka Bhukti too initia"
+      "content_preview": "2. Inauspicious or the 8th, Trishadaya and Maraka lords."
     },
     {
       "id": "ch-1",
@@ -790,7 +753,7 @@
       "start_line": 5876,
       "end_line": 5876,
       "sections": [],
-      "content_preview": "1. Sun + Mars, 2. Sun + Moon, 3. Sun + Venus, here Venus is a Maraka and evil due to Kendradhipatya Dosha. But still the Yoga is functional as only Venus is spoilt while the Sun is purely auspicious. 4. Sun + Saturry only Saturn is spoilt. "
+      "content_preview": "1. Sun + Mars,"
     },
     {
       "id": "ch-2",
@@ -800,7 +763,7 @@
       "start_line": 5877,
       "end_line": 5877,
       "sections": [],
-      "content_preview": "2. Sun + Moon, 3. Sun + Venus, here Venus is a Maraka and evil due to Kendradhipatya Dosha. But still the Yoga is functional as only Venus is spoilt while the Sun is purely auspicious. 4. Sun + Saturry only Saturn is spoilt.  ## Page 134"
+      "content_preview": "2. Sun + Moon,"
     },
     {
       "id": "ch-3",
@@ -810,7 +773,7 @@
       "start_line": 5878,
       "end_line": 5881,
       "sections": [],
-      "content_preview": "3. Sun + Venus, here Venus is a Maraka and evil due to Kendradhipatya Dosha. But still the Yoga is functional as only Venus is spoilt while the Sun is purely auspicious. 4. Sun + Saturry only Saturn is spoilt.  ## Page 134 "
+      "content_preview": "3. Sun + Venus, here Venus is a Maraka and evil"
     },
     {
       "id": "ch-4",
@@ -820,7 +783,7 @@
       "start_line": 5882,
       "end_line": 5886,
       "sections": [],
-      "content_preview": "4. Sun + Saturry only Saturn is spoilt.  ## Page 134  136 5. Mars + Jupiter Lag h u Parasari-Jataka  C h an d ri ka"
+      "content_preview": "4. Sun + Saturry only Saturn is spoilt."
     },
     {
       "id": "ch-5",
@@ -830,7 +793,7 @@
       "start_line": 5887,
       "end_line": 5898,
       "sections": [],
-      "content_preview": "5. Mars + Jupiter Lag h u Parasari-Jataka  C h an d ri ka ,, 6. Jupiter + Moon, only if tl're Moon is weak, thus a malefic. A weak Moon becomes neutral being a malefic Kendra lord and does not let Jupiter as the 12th lord to turn inauspicious. If the Moon acquires strength, she w"
+      "content_preview": "5. Mars + Jupiter"
     },
     {
       "id": "ch-2",
@@ -838,19 +801,9 @@
       "title": "Jupiter + Venus, both spoilt, Jupiter due to conjurrction.",
       "level": 1,
       "start_line": 5899,
-      "end_line": 5927,
-      "sections": [],
-      "content_preview": "2. Jupiter + Venus, both spoilt, Jupiter due to conjurrction. In some texts, the first part of the Sloka 45, reads, tftil*q qt{q qTqsqtfu fifr-ffq, means Jupiter being tlependent on others, will definitely cause some evil results. This we have discussed  under Jupiter Saturn comb"
-    },
-    {
-      "id": "ch-4",
-      "number": "4",
-      "title": "mpion. Hamsa and Sasa Yogas of Pancha Mahapurusha Yogas",
-      "level": 1,
-      "start_line": 5928,
       "end_line": 6023,
       "sections": [],
-      "content_preview": "ch4mpion. Hamsa and Sasa Yogas of Pancha Mahapurusha Yogas are also present.  ## Page 135  Laghu Parasari-Jataka  Chandrika  137"
+      "content_preview": "2. Jupiter + Venus, both spoilt, Jupiter due to conjurrction."
     },
     {
       "id": "ch-1",
@@ -860,7 +813,7 @@
       "start_line": 6024,
       "end_line": 6024,
       "sections": [],
-      "content_preview": "1. Venus + Saturn, only Venus is blemished' 2. Sun + Mercury. 3. Sun + Saturn 4. Saturn + Mars, only Mars is blemished' 5. Saturn alone is Rajayogakaraka and greatly auspicious. 6. Saturn + Mercury, best Yoga for Taurus Lagna vide Sloka 20. SpoiltYogas:-"
+      "content_preview": "1. Venus + Saturn, only Venus is blemished'"
     },
     {
       "id": "ch-2",
@@ -870,7 +823,7 @@
       "start_line": 6025,
       "end_line": 6025,
       "sections": [],
-      "content_preview": "2. Sun + Mercury. 3. Sun + Saturn 4. Saturn + Mars, only Mars is blemished' 5. Saturn alone is Rajayogakaraka and greatly auspicious. 6. Saturn + Mercury, best Yoga for Taurus Lagna vide Sloka 20. SpoiltYogas:- 1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires"
+      "content_preview": "2. Sun + Mercury."
     },
     {
       "id": "ch-3",
@@ -880,7 +833,7 @@
       "start_line": 6026,
       "end_line": 6026,
       "sections": [],
-      "content_preview": "3. Sun + Saturn 4. Saturn + Mars, only Mars is blemished' 5. Saturn alone is Rajayogakaraka and greatly auspicious. 6. Saturn + Mercury, best Yoga for Taurus Lagna vide Sloka 20. SpoiltYogas:- 1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires the 6th lord's blemish of ve"
+      "content_preview": "3. Sun + Saturn"
     },
     {
       "id": "ch-4",
@@ -890,7 +843,7 @@
       "start_line": 6027,
       "end_line": 6027,
       "sections": [],
-      "content_preview": "4. Saturn + Mars, only Mars is blemished' 5. Saturn alone is Rajayogakaraka and greatly auspicious. 6. Saturn + Mercury, best Yoga for Taurus Lagna vide Sloka 20. SpoiltYogas:- 1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires the 6th lord's blemish of venus. Therefore t"
+      "content_preview": "4. Saturn + Mars, only Mars is blemished'"
     },
     {
       "id": "ch-5",
@@ -900,7 +853,7 @@
       "start_line": 6028,
       "end_line": 6028,
       "sections": [],
-      "content_preview": "5. Saturn alone is Rajayogakaraka and greatly auspicious. 6. Saturn + Mercury, best Yoga for Taurus Lagna vide Sloka 20. SpoiltYogas:- 1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires the 6th lord's blemish of venus. Therefore the Yoga is spoilt as both the planets are "
+      "content_preview": "5. Saturn alone is Rajayogakaraka and greatly auspicious."
     },
     {
       "id": "ch-6",
@@ -910,7 +863,7 @@
       "start_line": 6029,
       "end_line": 6031,
       "sections": [],
-      "content_preview": "6. Saturn + Mercury, best Yoga for Taurus Lagna vide Sloka 20. SpoiltYogas:- 1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires the 6th lord's blemish of venus. Therefore the Yoga is spoilt as both the planets are blemished' 2. Mars + Mercury, both Mercury and Mars acquir"
+      "content_preview": "6. Saturn + Mercury, best Yoga for Taurus Lagna vide"
     },
     {
       "id": "ch-1",
@@ -920,7 +873,7 @@
       "start_line": 6032,
       "end_line": 6034,
       "sections": [],
-      "content_preview": "1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires the 6th lord's blemish of venus. Therefore the Yoga is spoilt as both the planets are blemished' 2. Mars + Mercury, both Mercury and Mars acquires the Maraka blemistr,of each other. Therefore the Yoga is spoilt as both th"
+      "content_preview": "1. Venus + Mercury, Mercury as the 2\"d hOUse lord acquires"
     },
     {
       "id": "ch-2",
@@ -930,7 +883,7 @@
       "start_line": 6035,
       "end_line": 6174,
       "sections": [],
-      "content_preview": "2. Mars + Mercury, both Mercury and Mars acquires the Maraka blemistr,of each other. Therefore the Yoga is spoilt as both the Planets are sPoilt. Example - Here is the chart of famous singer Lata Mangeshkar. The sun + Mercury Y98a is cre-ated in the 5th hou#. This combination is "
+      "content_preview": "2. Mars + Mercury, both Mercury and Mars acquires the"
     },
     {
       "id": "ch-1",
@@ -940,7 +893,7 @@
       "start_line": 6175,
       "end_line": 6175,
       "sections": [],
-      "content_preview": "1. Venus + Mercury 2. Mercury + Saturry only Saturn spoilt. Spoilt Yogas :- 1. Jupiter + Venus, both spoilt. Venus by association with Jupiter as the 12th house lord. 2. Jupiter + Saturn, both spoilt  ..  ,i"
+      "content_preview": "1. Venus + Mercury"
     },
     {
       "id": "ch-2",
@@ -950,7 +903,7 @@
       "start_line": 6176,
       "end_line": 6177,
       "sections": [],
-      "content_preview": "2. Mercury + Saturry only Saturn spoilt. Spoilt Yogas :- 1. Jupiter + Venus, both spoilt. Venus by association with Jupiter as the 12th house lord. 2. Jupiter + Saturn, both spoilt  ..  ,i "
+      "content_preview": "2. Mercury + Saturry only Saturn spoilt."
     },
     {
       "id": "ch-1",
@@ -960,7 +913,7 @@
       "start_line": 6178,
       "end_line": 6179,
       "sections": [],
-      "content_preview": "1. Jupiter + Venus, both spoilt. Venus by association with Jupiter as the 12th house lord. 2. Jupiter + Saturn, both spoilt  ..  ,i  ## Page 141 "
+      "content_preview": "1. Jupiter + Venus, both spoilt. Venus by association with"
     },
     {
       "id": "ch-2",
@@ -970,7 +923,7 @@
       "start_line": 6180,
       "end_line": 6187,
       "sections": [],
-      "content_preview": "2. Jupiter + Saturn, both spoilt  ..  ,i  ## Page 141  Lagh u Parasa r i -Jataka C h and ri ka 143"
+      "content_preview": "2. Jupiter + Saturn, both spoilt "
     },
     {
       "id": "ch-3",
@@ -980,7 +933,7 @@
       "start_line": 6188,
       "end_line": 6308,
       "sections": [],
-      "content_preview": "3. Mercury + Saturn, if Yoga is formed by exchange of houses in 4th and 9il'houses or Ist and 9th houses. Jupitt'r + Saturn can cause feeble Yoga, if Saturn occupics the 1.0th house and Jupiter occupies the 9th house. Example-Gemini Lagna chart here under is of Sh. Pramod Mahajan"
+      "content_preview": "3. Mercury + Saturn, if Yoga is formed by exchange of houses"
     },
     {
       "id": "ch-1",
@@ -990,7 +943,7 @@
       "start_line": 6309,
       "end_line": 6309,
       "sections": [],
-      "content_preview": "1. Moon + Mars, a greatly auspicious combination. 2. Moon + )upiter, only Jupiter is blemished. 3. Mars + Venus, only Venus is blemished. 4. Mars + ]upiter, a greatly auspicious combination if Jupiter occupies the 10th house and Mars the 9th house for then the Jupiter will be mor"
+      "content_preview": "1. Moon + Mars, a greatly auspicious combination."
     },
     {
       "id": "ch-2",
@@ -1000,7 +953,7 @@
       "start_line": 6310,
       "end_line": 6310,
       "sections": [],
-      "content_preview": "2. Moon + )upiter, only Jupiter is blemished. 3. Mars + Venus, only Venus is blemished. 4. Mars + ]upiter, a greatly auspicious combination if Jupiter occupies the 10th house and Mars the 9th house for then the Jupiter will be more the 9th lord. 5. Mars + Saturn, a feeble and low"
+      "content_preview": "2. Moon + )upiter, only Jupiter is blemished."
     },
     {
       "id": "ch-3",
@@ -1010,7 +963,7 @@
       "start_line": 6311,
       "end_line": 6311,
       "sections": [],
-      "content_preview": "3. Mars + Venus, only Venus is blemished. 4. Mars + ]upiter, a greatly auspicious combination if Jupiter occupies the 10th house and Mars the 9th house for then the Jupiter will be more the 9th lord. 5. Mars + Saturn, a feeble and low quality Yoga, due to evil and Maraka characte"
+      "content_preview": "3. Mars + Venus, only Venus is blemished."
     },
     {
       "id": "ch-4",
@@ -1020,7 +973,7 @@
       "start_line": 6312,
       "end_line": 6314,
       "sections": [],
-      "content_preview": "4. Mars + ]upiter, a greatly auspicious combination if Jupiter occupies the 10th house and Mars the 9th house for then the Jupiter will be more the 9th lord. 5. Mars + Saturn, a feeble and low quality Yoga, due to evil and Maraka characteristics of Saturn. Spoilt Yogas :; 1. Jupi"
+      "content_preview": "4. Mars + ]upiter, a greatly auspicious combination if Jupiter"
     },
     {
       "id": "ch-5",
@@ -1030,7 +983,7 @@
       "start_line": 6315,
       "end_line": 6317,
       "sections": [],
-      "content_preview": "5. Mars + Saturn, a feeble and low quality Yoga, due to evil and Maraka characteristics of Saturn. Spoilt Yogas :; 1. Jupiter * Venus, both the planets are spoilt. 2. Jupiter + Saturn, both are spoilt.  ## Page 144 "
+      "content_preview": "5. Mars + Saturn, a feeble and low quality Yoga, due to evil"
     },
     {
       "id": "ch-1",
@@ -1040,7 +993,7 @@
       "start_line": 6318,
       "end_line": 6318,
       "sections": [],
-      "content_preview": "1. Jupiter * Venus, both the planets are spoilt. 2. Jupiter + Saturn, both are spoilt.  ## Page 144  146 Lagh u Pa rasa ri -J ataka Chan d ri ka Example-The chart hereunder is of a woman born in very"
+      "content_preview": "1. Jupiter * Venus, both the planets are spoilt."
     },
     {
       "id": "ch-2",
@@ -1050,7 +1003,7 @@
       "start_line": 6319,
       "end_line": 6471,
       "sections": [],
-      "content_preview": "2. Jupiter + Saturn, both are spoilt.  ## Page 144  146 Lagh u Pa rasa ri -J ataka Chan d ri ka Example-The chart hereunder is of a woman born in very humble circumstances. Due to potential of the chart the girl was"
+      "content_preview": "2. Jupiter + Saturn, both are spoilt."
     },
     {
       "id": "ch-1",
@@ -1060,7 +1013,7 @@
       "start_line": 6472,
       "end_line": 6472,
       "sections": [],
-      "content_preview": "1. Sun + Mars, best combination. 2. Sun + Jupiter, only Jupiter blemished, therefore auspicious. 3. Mars + Venus, only Venus Tiishadaya lord, hence godd. 4. Mars alone is Yogakaraka because he himself owns a Kendra as well as Trikona. The requirement of the yoga i.e., relation be"
+      "content_preview": "1. Sun + Mars, best combination."
     },
     {
       "id": "ch-2",
@@ -1070,7 +1023,7 @@
       "start_line": 6473,
       "end_line": 6473,
       "sections": [],
-      "content_preview": "2. Sun + Jupiter, only Jupiter blemished, therefore auspicious. 3. Mars + Venus, only Venus Tiishadaya lord, hence godd. 4. Mars alone is Yogakaraka because he himself owns a Kendra as well as Trikona. The requirement of the yoga i.e., relation between the Kendra and Trikona lord"
+      "content_preview": "2. Sun + Jupiter, only Jupiter blemished, therefore auspicious."
     },
     {
       "id": "ch-3",
@@ -1080,7 +1033,7 @@
       "start_line": 6474,
       "end_line": 6474,
       "sections": [],
-      "content_preview": "3. Mars + Venus, only Venus Tiishadaya lord, hence godd. 4. Mars alone is Yogakaraka because he himself owns a Kendra as well as Trikona. The requirement of the yoga i.e., relation between the Kendra and Trikona lord  -is established. 5. Mars + Jupiter, only Jupiter is blemished "
+      "content_preview": "3. Mars + Venus, only Venus Tiishadaya lord, hence godd."
     },
     {
       "id": "ch-4",
@@ -1090,7 +1043,7 @@
       "start_line": 6475,
       "end_line": 6479,
       "sections": [],
-      "content_preview": "4. Mars alone is Yogakaraka because he himself owns a Kendra as well as Trikona. The requirement of the yoga i.e., relation between the Kendra and Trikona lord  -is established. 5. Mars + Jupiter, only Jupiter is blemished as the gth lord. Spoilt Yogas :- 1. Mars + Saturn, Saturn"
+      "content_preview": "4. Mars alone is Yogakaraka because he himself owns a"
     },
     {
       "id": "ch-5",
@@ -1100,7 +1053,7 @@
       "start_line": 6480,
       "end_line": 6481,
       "sections": [],
-      "content_preview": "5. Mars + Jupiter, only Jupiter is blemished as the gth lord. Spoilt Yogas :- 1. Mars + Saturn, Saturn doubly afflicted and enemy of Mars. 2. Jupiter + Venus, both blemished therefore yoga is spoilt. 3. fupiter + Saturry both blemished, therefore yoga is spoilt. Example-The chart"
+      "content_preview": "5. Mars + Jupiter, only Jupiter is blemished as the gth lord."
     },
     {
       "id": "ch-1",
@@ -1110,7 +1063,7 @@
       "start_line": 6482,
       "end_line": 6482,
       "sections": [],
-      "content_preview": "1. Mars + Saturn, Saturn doubly afflicted and enemy of Mars. 2. Jupiter + Venus, both blemished therefore yoga is spoilt. 3. fupiter + Saturry both blemished, therefore yoga is spoilt. Example-The chart hereunder is of a very wise business man. The native was born in a well to do"
+      "content_preview": "1. Mars + Saturn, Saturn doubly afflicted and enemy of Mars."
     },
     {
       "id": "ch-2",
@@ -1118,9 +1071,19 @@
       "title": "Jupiter + Venus, both blemished therefore yoga is spoilt.",
       "level": 1,
       "start_line": 6483,
+      "end_line": 6483,
+      "sections": [],
+      "content_preview": "2. Jupiter + Venus, both blemished therefore yoga is spoilt."
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "fupiter + Saturry both blemished, therefore yoga is spoilt.",
+      "level": 1,
+      "start_line": 6484,
       "end_line": 6620,
       "sections": [],
-      "content_preview": "2. Jupiter + Venus, both blemished therefore yoga is spoilt. 3. fupiter + Saturry both blemished, therefore yoga is spoilt. Example-The chart hereunder is of a very wise business man. The native was born in a well to do familv. tr,\" native was 4 Rahu 7 \\ Venus"
+      "content_preview": "3. fupiter + Saturry both blemished, therefore yoga is spoilt."
     },
     {
       "id": "ch-1",
@@ -1130,7 +1093,7 @@
       "start_line": 6621,
       "end_line": 6621,
       "sections": [],
-      "content_preview": "1. Mercury + Venus, best Yoga. 2. Mercury * Saturn, Saturn only blemished. 3. Mercury + Jupiter can be productive of some good results, if Mercury occupies 4th and Jupiter the Lagna. Spoilt Yogas :- 1. Jupiter + Venus, both get spoilt. Jupiter is Maraka as well as blemished by Ke"
+      "content_preview": "1. Mercury + Venus, best Yoga."
     },
     {
       "id": "ch-2",
@@ -1140,7 +1103,7 @@
       "start_line": 6622,
       "end_line": 6622,
       "sections": [],
-      "content_preview": "2. Mercury * Saturn, Saturn only blemished. 3. Mercury + Jupiter can be productive of some good results, if Mercury occupies 4th and Jupiter the Lagna. Spoilt Yogas :- 1. Jupiter + Venus, both get spoilt. Jupiter is Maraka as well as blemished by Kendradhipatya Dosha. Venus as 2n"
+      "content_preview": "2. Mercury * Saturn, Saturn only blemished."
     },
     {
       "id": "ch-3",
@@ -1150,7 +1113,7 @@
       "start_line": 6623,
       "end_line": 6625,
       "sections": [],
-      "content_preview": "3. Mercury + Jupiter can be productive of some good results, if Mercury occupies 4th and Jupiter the Lagna. Spoilt Yogas :- 1. Jupiter + Venus, both get spoilt. Jupiter is Maraka as well as blemished by Kendradhipatya Dosha. Venus as 2nd house lord functions according to {T|6d or"
+      "content_preview": "3. Mercury + Jupiter can be productive of some good results,"
     },
     {
       "id": "ch-1",
@@ -1160,7 +1123,7 @@
       "start_line": 6626,
       "end_line": 6630,
       "sections": [],
-      "content_preview": "1. Jupiter + Venus, both get spoilt. Jupiter is Maraka as well as blemished by Kendradhipatya Dosha. Venus as 2nd house lord functions according to {T|6d or association. Thus acquires the blemish and evil of Jupiter. Venus in 4th and Jupiter in the 9th house can be of some good. "
+      "content_preview": "1. Jupiter + Venus, both get spoilt. Jupiter is Maraka as well"
     },
     {
       "id": "ch-2",
@@ -1170,7 +1133,7 @@
       "start_line": 6631,
       "end_line": 6754,
       "sections": [],
-      "content_preview": "2. Jupiter + Saturn, both the planets get spoilt. Jupiter in the 5th and Saturn in the 4th house can be very feebly good.  ## Page 151  8 \\ Moorr"
+      "content_preview": "2. Jupiter + Saturn, both the planets get spoilt. Jupiter in"
     },
     {
       "id": "ch-1",
@@ -1180,7 +1143,7 @@
       "start_line": 6755,
       "end_line": 6755,
       "sections": [],
-      "content_preview": "1. Venus + Saturn, Saturn is able to mend Venus' 2. Saturn alone is productive of Rajayoga in his Dasa' 3. Saturn + Mercury, best combination' 4. Saturn + Moon, better combination. 5. Moon + Mercury, a Rajayoga combination' 6, Venus + Mercury, Mercury capable of mending Venus' 7."
+      "content_preview": "1. Venus + Saturn, Saturn is able to mend Venus'"
     },
     {
       "id": "ch-2",
@@ -1190,7 +1153,7 @@
       "start_line": 6756,
       "end_line": 6756,
       "sections": [],
-      "content_preview": "2. Saturn alone is productive of Rajayoga in his Dasa' 3. Saturn + Mercury, best combination' 4. Saturn + Moon, better combination. 5. Moon + Mercury, a Rajayoga combination' 6, Venus + Mercury, Mercury capable of mending Venus' 7. Mars + Saturn, only Mars is spoilt. Spoilt Yogas"
+      "content_preview": "2. Saturn alone is productive of Rajayoga in his Dasa'"
     },
     {
       "id": "ch-3",
@@ -1200,7 +1163,7 @@
       "start_line": 6757,
       "end_line": 6757,
       "sections": [],
-      "content_preview": "3. Saturn + Mercury, best combination' 4. Saturn + Moon, better combination. 5. Moon + Mercury, a Rajayoga combination' 6, Venus + Mercury, Mercury capable of mending Venus' 7. Mars + Saturn, only Mars is spoilt. Spoilt Yogas :- '  1. Mars + Mercury, both spoilt"
+      "content_preview": "3. Saturn + Mercury, best combination'"
     },
     {
       "id": "ch-4",
@@ -1210,7 +1173,7 @@
       "start_line": 6758,
       "end_line": 6758,
       "sections": [],
-      "content_preview": "4. Saturn + Moon, better combination. 5. Moon + Mercury, a Rajayoga combination' 6, Venus + Mercury, Mercury capable of mending Venus' 7. Mars + Saturn, only Mars is spoilt. Spoilt Yogas :- '  1. Mars + Mercury, both spoilt 2. Mars + Venus, both spoilt"
+      "content_preview": "4. Saturn + Moon, better combination."
     },
     {
       "id": "ch-5",
@@ -1220,7 +1183,7 @@
       "start_line": 6759,
       "end_line": 6760,
       "sections": [],
-      "content_preview": "5. Moon + Mercury, a Rajayoga combination' 6, Venus + Mercury, Mercury capable of mending Venus' 7. Mars + Saturn, only Mars is spoilt. Spoilt Yogas :- '  1. Mars + Mercury, both spoilt 2. Mars + Venus, both spoilt "
+      "content_preview": "5. Moon + Mercury, a Rajayoga combination'"
     },
     {
       "id": "ch-7",
@@ -1230,7 +1193,7 @@
       "start_line": 6761,
       "end_line": 6763,
       "sections": [],
-      "content_preview": "7. Mars + Saturn, only Mars is spoilt. Spoilt Yogas :- '  1. Mars + Mercury, both spoilt 2. Mars + Venus, both spoilt  ## Page 154 "
+      "content_preview": "7. Mars + Saturn, only Mars is spoilt."
     },
     {
       "id": "ch-1",
@@ -1240,7 +1203,7 @@
       "start_line": 6764,
       "end_line": 6764,
       "sections": [],
-      "content_preview": "1. Mars + Mercury, both spoilt 2. Mars + Venus, both spoilt  ## Page 154  156 Lag h u Pa rasa ri -Jataka C h a n d ri ka Example-In Libra Lagna chart hereunder, Venus is the"
+      "content_preview": "1. Mars + Mercury, both spoilt"
     },
     {
       "id": "ch-2",
@@ -1250,7 +1213,7 @@
       "start_line": 6765,
       "end_line": 6865,
       "sections": [],
-      "content_preview": "2. Mars + Venus, both spoilt  ## Page 154  156 Lag h u Pa rasa ri -Jataka C h a n d ri ka Example-In Libra Lagna chart hereunder, Venus is the lugnu and 8th house lord. He is not auspicious being elsewhere"
+      "content_preview": "2. Mars + Venus, both spoilt"
     },
     {
       "id": "ch-1",
@@ -1260,7 +1223,7 @@
       "start_line": 6866,
       "end_line": 6866,
       "sections": [],
-      "content_preview": "1. Moon + Mars, only Mars spoilt. 2. Moon + Saturn, Saturn with a little blemish. 3. Moon + Sury a Rajayoga. 4. Moon + Venus, Venus is blemished. SpoiltYogas:- '1,. Mars + Jupiter, as 2nd house lord Jupiter acquires the evil of 6th lord Mars. Thus both get spoilt. 2. Jupiter + Ve"
+      "content_preview": "1. Moon + Mars, only Mars spoilt."
     },
     {
       "id": "ch-2",
@@ -1270,7 +1233,7 @@
       "start_line": 6867,
       "end_line": 6867,
       "sections": [],
-      "content_preview": "2. Moon + Saturn, Saturn with a little blemish. 3. Moon + Sury a Rajayoga. 4. Moon + Venus, Venus is blemished. SpoiltYogas:- '1,. Mars + Jupiter, as 2nd house lord Jupiter acquires the evil of 6th lord Mars. Thus both get spoilt. 2. Jupiter + Venus, both spoilt 3. Jupiter + Satu"
+      "content_preview": "2. Moon + Saturn, Saturn with a little blemish."
     },
     {
       "id": "ch-3",
@@ -1280,7 +1243,7 @@
       "start_line": 6868,
       "end_line": 6868,
       "sections": [],
-      "content_preview": "3. Moon + Sury a Rajayoga. 4. Moon + Venus, Venus is blemished. SpoiltYogas:- '1,. Mars + Jupiter, as 2nd house lord Jupiter acquires the evil of 6th lord Mars. Thus both get spoilt. 2. Jupiter + Venus, both spoilt 3. Jupiter + Saturn, both spoilt Example-The chart hereunder is o"
+      "content_preview": "3. Moon + Sury a Rajayoga."
     },
     {
       "id": "ch-4",
@@ -1290,7 +1253,7 @@
       "start_line": 6869,
       "end_line": 6872,
       "sections": [],
-      "content_preview": "4. Moon + Venus, Venus is blemished. SpoiltYogas:- '1,. Mars + Jupiter, as 2nd house lord Jupiter acquires the evil of 6th lord Mars. Thus both get spoilt. 2. Jupiter + Venus, both spoilt 3. Jupiter + Saturn, both spoilt Example-The chart hereunder is of Shri Arun Shourie a journ"
+      "content_preview": "4. Moon + Venus, Venus is blemished."
     },
     {
       "id": "ch-2",
@@ -1300,7 +1263,7 @@
       "start_line": 6873,
       "end_line": 6873,
       "sections": [],
-      "content_preview": "2. Jupiter + Venus, both spoilt 3. Jupiter + Saturn, both spoilt Example-The chart hereunder is of Shri Arun Shourie a journalist of piercing intellect and presently Minister for disinvestment in Atal Behari Vajpai government. 9 Venus 7"
+      "content_preview": "2. Jupiter + Venus, both spoilt"
     },
     {
       "id": "ch-3",
@@ -1310,7 +1273,7 @@
       "start_line": 6874,
       "end_line": 6981,
       "sections": [],
-      "content_preview": "3. Jupiter + Saturn, both spoilt Example-The chart hereunder is of Shri Arun Shourie a journalist of piercing intellect and presently Minister for disinvestment in Atal Behari Vajpai government. 9 Venus 7 lerr"
+      "content_preview": "3. Jupiter + Saturn, both spoilt"
     },
     {
       "id": "ch-2",
@@ -1320,7 +1283,7 @@
       "start_line": 6982,
       "end_line": 6982,
       "sections": [],
-      "content_preview": "2. Sun + Jupiter, greatly auspicious. 3. Sun + Mercury, only Mercury blemished' Spoilt Yogas:- 1. Mars + Mercury, Mercury already blemished, Mars gets blemished due to association. Thus Yoga is spoilt' ,\")  Example-The chart hereunder is of the chief Minister of Jammu and Kashmir"
+      "content_preview": "2. Sun + Jupiter, greatly auspicious."
     },
     {
       "id": "ch-3",
@@ -1330,7 +1293,7 @@
       "start_line": 6983,
       "end_line": 6984,
       "sections": [],
-      "content_preview": "3. Sun + Mercury, only Mercury blemished' Spoilt Yogas:- 1. Mars + Mercury, Mercury already blemished, Mars gets blemished due to association. Thus Yoga is spoilt' ,\")  Example-The chart hereunder is of the chief Minister of Jammu and Kashmir, Dr. Farookh Abdullah' He enjoyed sov"
+      "content_preview": "3. Sun + Mercury, only Mercury blemished'"
     },
     {
       "id": "ch-1",
@@ -1340,7 +1303,7 @@
       "start_line": 6985,
       "end_line": 7104,
       "sections": [],
-      "content_preview": "1. Mars + Mercury, Mercury already blemished, Mars gets blemished due to association. Thus Yoga is spoilt' ,\")  Example-The chart hereunder is of the chief Minister of Jammu and Kashmir, Dr. Farookh Abdullah' He enjoyed sovereignty in the state during Jupiter's Dasa which started"
+      "content_preview": "1. Mars + Mercury, Mercury already blemished, Mars gets"
     },
     {
       "id": "ch-1",
@@ -1350,7 +1313,7 @@
       "start_line": 7105,
       "end_line": 7105,
       "sections": [],
-      "content_preview": "1. Venus, alone is Rajayogakaraka. 2. Venus + Saturn, a great combination, if not in the 2nd house. 3. Venus + Mercury, greatly auspicious combination. 4. Mercury + Saturn, only Mercury spoilt. 5. Venus + Mars, only Mars spoilt. 6. Venus + Moory only the Moon spoilt. SpoiltYogas:"
+      "content_preview": "1. Venus, alone is Rajayogakaraka."
     },
     {
       "id": "ch-2",
@@ -1360,7 +1323,7 @@
       "start_line": 7106,
       "end_line": 7106,
       "sections": [],
-      "content_preview": "2. Venus + Saturn, a great combination, if not in the 2nd house. 3. Venus + Mercury, greatly auspicious combination. 4. Mercury + Saturn, only Mercury spoilt. 5. Venus + Mars, only Mars spoilt. 6. Venus + Moory only the Moon spoilt. SpoiltYogas:- L. Moon + Mercury, both the plane"
+      "content_preview": "2. Venus + Saturn, a great combination, if not in the 2nd house."
     },
     {
       "id": "ch-3",
@@ -1370,7 +1333,7 @@
       "start_line": 7107,
       "end_line": 7107,
       "sections": [],
-      "content_preview": "3. Venus + Mercury, greatly auspicious combination. 4. Mercury + Saturn, only Mercury spoilt. 5. Venus + Mars, only Mars spoilt. 6. Venus + Moory only the Moon spoilt. SpoiltYogas:- L. Moon + Mercury, both the planets are spoilt.  ## Page 162"
+      "content_preview": "3. Venus + Mercury, greatly auspicious combination."
     },
     {
       "id": "ch-4",
@@ -1380,7 +1343,7 @@
       "start_line": 7108,
       "end_line": 7108,
       "sections": [],
-      "content_preview": "4. Mercury + Saturn, only Mercury spoilt. 5. Venus + Mars, only Mars spoilt. 6. Venus + Moory only the Moon spoilt. SpoiltYogas:- L. Moon + Mercury, both the planets are spoilt.  ## Page 162 "
+      "content_preview": "4. Mercury + Saturn, only Mercury spoilt."
     },
     {
       "id": "ch-5",
@@ -1390,7 +1353,7 @@
       "start_line": 7109,
       "end_line": 7109,
       "sections": [],
-      "content_preview": "5. Venus + Mars, only Mars spoilt. 6. Venus + Moory only the Moon spoilt. SpoiltYogas:- L. Moon + Mercury, both the planets are spoilt.  ## Page 162  164 "
+      "content_preview": "5. Venus + Mars, only Mars spoilt."
     },
     {
       "id": "ch-6",
@@ -1400,7 +1363,7 @@
       "start_line": 7110,
       "end_line": 7117,
       "sections": [],
-      "content_preview": "6. Venus + Moory only the Moon spoilt. SpoiltYogas:- L. Moon + Mercury, both the planets are spoilt.  ## Page 162  164  Laghu Parasari-Jataka Chandrika"
+      "content_preview": "6. Venus + Moory only the Moon spoilt."
     },
     {
       "id": "ch-2",
@@ -1410,7 +1373,7 @@
       "start_line": 7118,
       "end_line": 7221,
       "sections": [],
-      "content_preview": "2. Mars + Mercury, both the planets are spoilt, Mars as 11th lord and Mercury as 6th house lord. Example-The chart here under is of celebrated social worker Medha Patekar, who is related to Save Narmada Movernent. The combintion of the Lagna lord Saturn and 10th lord Venus in the"
+      "content_preview": "2. Mars + Mercury, both the planets are spoilt, Mars as 11th"
     },
     {
       "id": "ch-2",
@@ -1420,7 +1383,7 @@
       "start_line": 7222,
       "end_line": 7222,
       "sections": [],
-      "content_preview": "2. Saturn + Venus, a great combination' 3. Venus + Mercury, only Mercury spoilt' 4. Venus + Mars, only Mars sPoilt. 5. Venus + Sun, only Sun sPoilt. 6. Saturn + Mercury, Mercury spoilt. This yoga should not occur in the L2th house. Spoilt Yogas :- 1. Sun + Mercury, both spoilt"
+      "content_preview": "2. Saturn + Venus, a great combination'"
     },
     {
       "id": "ch-3",
@@ -1430,7 +1393,7 @@
       "start_line": 7223,
       "end_line": 7223,
       "sections": [],
-      "content_preview": "3. Venus + Mercury, only Mercury spoilt' 4. Venus + Mars, only Mars sPoilt. 5. Venus + Sun, only Sun sPoilt. 6. Saturn + Mercury, Mercury spoilt. This yoga should not occur in the L2th house. Spoilt Yogas :- 1. Sun + Mercury, both spoilt 2. Mars + Mercury, both spoilt."
+      "content_preview": "3. Venus + Mercury, only Mercury spoilt'"
     },
     {
       "id": "ch-4",
@@ -1440,7 +1403,7 @@
       "start_line": 7224,
       "end_line": 7224,
       "sections": [],
-      "content_preview": "4. Venus + Mars, only Mars sPoilt. 5. Venus + Sun, only Sun sPoilt. 6. Saturn + Mercury, Mercury spoilt. This yoga should not occur in the L2th house. Spoilt Yogas :- 1. Sun + Mercury, both spoilt 2. Mars + Mercury, both spoilt. Example-In the chart of Dr. Murali Manohar Joshi, u"
+      "content_preview": "4. Venus + Mars, only Mars sPoilt."
     },
     {
       "id": "ch-5",
@@ -1450,7 +1413,7 @@
       "start_line": 7225,
       "end_line": 7225,
       "sections": [],
-      "content_preview": "5. Venus + Sun, only Sun sPoilt. 6. Saturn + Mercury, Mercury spoilt. This yoga should not occur in the L2th house. Spoilt Yogas :- 1. Sun + Mercury, both spoilt 2. Mars + Mercury, both spoilt. Example-In the chart of Dr. Murali Manohar Joshi, union minister ior human resource de"
+      "content_preview": "5. Venus + Sun, only Sun sPoilt."
     },
     {
       "id": "ch-6",
@@ -1460,7 +1423,7 @@
       "start_line": 7226,
       "end_line": 7228,
       "sections": [],
-      "content_preview": "6. Saturn + Mercury, Mercury spoilt. This yoga should not occur in the L2th house. Spoilt Yogas :- 1. Sun + Mercury, both spoilt 2. Mars + Mercury, both spoilt. Example-In the chart of Dr. Murali Manohar Joshi, union minister ior human resource development' Mars, Venus and Birth"
+      "content_preview": "6. Saturn + Mercury, Mercury spoilt. This yoga should not"
     },
     {
       "id": "ch-1",
@@ -1470,7 +1433,7 @@
       "start_line": 7229,
       "end_line": 7229,
       "sections": [],
-      "content_preview": "1. Sun + Mercury, both spoilt 2. Mars + Mercury, both spoilt. Example-In the chart of Dr. Murali Manohar Joshi, union minister ior human resource development' Mars, Venus and Birth 05-01-1934 jupiter "
+      "content_preview": "1. Sun + Mercury, both spoilt"
     },
     {
       "id": "ch-2",
@@ -1480,7 +1443,7 @@
       "start_line": 7230,
       "end_line": 7305,
       "sections": [],
-      "content_preview": "2. Mars + Mercury, both spoilt. Example-In the chart of Dr. Murali Manohar Joshi, union minister ior human resource development' Mars, Venus and Birth 05-01-1934 jupiter  ## Page 165"
+      "content_preview": "2. Mars + Mercury, both spoilt."
     },
     {
       "id": "ch-1",
@@ -1490,7 +1453,7 @@
       "start_line": 7306,
       "end_line": 7306,
       "sections": [],
-      "content_preview": "1. Jupiter + Moon. 2. Mars + Jupiter. 3. Moon + Mercury, only Mercury spoilt. Spoilt Yogas :- 1. Mars + Mercury, both the planets spoilt. 2. Mercury + |upiter, both blemished by Kendradhipatya Dosha.  ## Page 167"
+      "content_preview": "1. Jupiter + Moon."
     },
     {
       "id": "ch-2",
@@ -1500,7 +1463,7 @@
       "start_line": 7307,
       "end_line": 7307,
       "sections": [],
-      "content_preview": "2. Mars + Jupiter. 3. Moon + Mercury, only Mercury spoilt. Spoilt Yogas :- 1. Mars + Mercury, both the planets spoilt. 2. Mercury + |upiter, both blemished by Kendradhipatya Dosha.  ## Page 167 "
+      "content_preview": "2. Mars + Jupiter."
     },
     {
       "id": "ch-3",
@@ -1510,7 +1473,7 @@
       "start_line": 7308,
       "end_line": 7309,
       "sections": [],
-      "content_preview": "3. Moon + Mercury, only Mercury spoilt. Spoilt Yogas :- 1. Mars + Mercury, both the planets spoilt. 2. Mercury + |upiter, both blemished by Kendradhipatya Dosha.  ## Page 167  /12 \\"
+      "content_preview": "3. Moon + Mercury, only Mercury spoilt."
     },
     {
       "id": "ch-1",
@@ -1520,7 +1483,7 @@
       "start_line": 7310,
       "end_line": 7310,
       "sections": [],
-      "content_preview": "1. Mars + Mercury, both the planets spoilt. 2. Mercury + |upiter, both blemished by Kendradhipatya Dosha.  ## Page 167  /12 \\ )upiter Moon"
+      "content_preview": "1. Mars + Mercury, both the planets spoilt."
     },
     {
       "id": "ch-2",
@@ -1528,219 +1491,19 @@
       "title": "Mercury + |upiter, both blemished by Kendradhipatya Dosha.",
       "level": 1,
       "start_line": 7311,
-      "end_line": 7521,
+      "end_line": 7478,
       "sections": [],
-      "content_preview": "2. Mercury + |upiter, both blemished by Kendradhipatya Dosha.  ## Page 167  /12 \\ )upiter Moon Mars"
+      "content_preview": "2. Mercury + |upiter, both blemished by Kendradhipatya Dosha."
     },
     {
-      "id": "ch-1",
-      "number": "1",
-      "title": "Aswini",
+      "id": "ch-dasa_calculations",
+      "number": null,
+      "title": "DASA CALCULATIONS",
       "level": 1,
-      "start_line": 7522,
-      "end_line": 7525,
-      "sections": [],
-      "content_preview": "1. Aswini 01320 Ketu 7 2. Bharani 02640 Venus 20"
-    },
-    {
-      "id": "ch-2",
-      "number": "2",
-      "title": "Bharani",
-      "level": 1,
-      "start_line": 7526,
-      "end_line": 7529,
-      "sections": [],
-      "content_preview": "2. Bharani 02640 Venus 20 3. Krittika 11000 Sun 6"
-    },
-    {
-      "id": "ch-3",
-      "number": "3",
-      "title": "Krittika",
-      "level": 1,
-      "start_line": 7530,
-      "end_line": 7533,
-      "sections": [],
-      "content_preview": "3. Krittika 11000 Sun 6 4. Rohini 12320 Moon 10"
-    },
-    {
-      "id": "ch-4",
-      "number": "4",
-      "title": "Rohini",
-      "level": 1,
-      "start_line": 7534,
-      "end_line": 7537,
-      "sections": [],
-      "content_preview": "4. Rohini 12320 Moon 10 5. Mrigsira 2 6 40"
-    },
-    {
-      "id": "ch-5",
-      "number": "5",
-      "title": "Mrigsira",
-      "level": 1,
-      "start_line": 7538,
-      "end_line": 7543,
-      "sections": [],
-      "content_preview": "5. Mrigsira 2 6 40 Mars 7 6. Aridra 22000"
-    },
-    {
-      "id": "ch-6",
-      "number": "6",
-      "title": "Aridra",
-      "level": 1,
-      "start_line": 7544,
-      "end_line": 7547,
-      "sections": [],
-      "content_preview": "6. Aridra 22000 Rahu 18 7. Punarvasu J J 20"
-    },
-    {
-      "id": "ch-7",
-      "number": "7",
-      "title": "Punarvasu",
-      "level": 1,
-      "start_line": 7548,
-      "end_line": 7553,
-      "sections": [],
-      "content_preview": "7. Punarvasu J J 20 Iupiter t6 8. Pushya 31640"
-    },
-    {
-      "id": "ch-8",
-      "number": "8",
-      "title": "Pushya",
-      "level": 1,
-      "start_line": 7554,
-      "end_line": 7557,
-      "sections": [],
-      "content_preview": "8. Pushya 31640 Saturn 19 9. Aslesa 33000 Mercury T7"
-    },
-    {
-      "id": "ch-9",
-      "number": "9",
-      "title": "Aslesa",
-      "level": 1,
-      "start_line": 7558,
-      "end_line": 7561,
-      "sections": [],
-      "content_preview": "9. Aslesa 33000 Mercury T7 10. Magha 41320 Ketu 7"
-    },
-    {
-      "id": "ch-10",
-      "number": "10",
-      "title": "Magha",
-      "level": 1,
-      "start_line": 7562,
-      "end_line": 7569,
-      "sections": [],
-      "content_preview": "10. Magha 41320 Ketu 7 L1\". P.Phalguni 42640 Venus 20"
-    },
-    {
-      "id": "ch-12",
-      "number": "12",
-      "title": "U.Phalguni",
-      "level": 1,
-      "start_line": 7570,
-      "end_line": 7577,
-      "sections": [],
-      "content_preview": "12. U.Phalguni 51000 Sun 6 L3. Hasta 52320 Moon 10"
-    },
-    {
-      "id": "ch-14",
-      "number": "14",
-      "title": "Chitra",
-      "level": 1,
-      "start_line": 7578,
-      "end_line": 7583,
-      "sections": [],
-      "content_preview": "14. Chitra 6 6 40 Mars 7 15. Swati 62000"
-    },
-    {
-      "id": "ch-15",
-      "number": "15",
-      "title": "Swati",
-      "level": 1,
-      "start_line": 7584,
-      "end_line": 7587,
-      "sections": [],
-      "content_preview": "15. Swati 62000 Rahu 18 16. Visakha v 3 20"
-    },
-    {
-      "id": "ch-16",
-      "number": "16",
-      "title": "Visakha",
-      "level": 1,
-      "start_line": 7588,
-      "end_line": 7593,
-      "sections": [],
-      "content_preview": "16. Visakha v 3 20 Iupiter 1.6 1.7. Anuradha 7 "
-    },
-    {
-      "id": "ch-17",
-      "number": "1.7",
-      "title": "Anuradha",
-      "level": 1,
-      "start_line": 7594,
-      "end_line": 7603,
-      "sections": [],
-      "content_preview": "1.7. Anuradha 7  \"t6  40 Saturn 19 L8. Jyesta 73000"
-    },
-    {
-      "id": "ch-19",
-      "number": "19",
-      "title": "Moola",
-      "level": 1,
-      "start_line": 7604,
-      "end_line": 7607,
-      "sections": [],
-      "content_preview": "19. Moola 81320 Ketu 7 20. Poorvasadha 82640 Venus 20"
-    },
-    {
-      "id": "ch-20",
-      "number": "20",
-      "title": "Poorvasadha",
-      "level": 1,
-      "start_line": 7608,
-      "end_line": 7611,
-      "sections": [],
-      "content_preview": "20. Poorvasadha 82640 Venus 20 21. Uttarasadha 91000 Sun 6"
-    },
-    {
-      "id": "ch-21",
-      "number": "21",
-      "title": "Uttarasadha",
-      "level": 1,
-      "start_line": 7612,
-      "end_line": 7615,
-      "sections": [],
-      "content_preview": "21. Uttarasadha 91000 Sun 6 22. Sravana 92320 Moon 10"
-    },
-    {
-      "id": "ch-22",
-      "number": "22",
-      "title": "Sravana",
-      "level": 1,
-      "start_line": 7616,
-      "end_line": 7619,
-      "sections": [],
-      "content_preview": "22. Sravana 92320 Moon 10 23. Dhanista 10640 Mars 7"
-    },
-    {
-      "id": "ch-23",
-      "number": "23",
-      "title": "Dhanista",
-      "level": 1,
-      "start_line": 7620,
-      "end_line": 7623,
-      "sections": [],
-      "content_preview": "23. Dhanista 10640 Mars 7 24. Satabhisa 11  20  00"
-    },
-    {
-      "id": "ch-24",
-      "number": "24",
-      "title": "Satabhisa",
-      "level": 1,
-      "start_line": 7624,
+      "start_line": 7479,
       "end_line": 7629,
       "sections": [],
-      "content_preview": "24. Satabhisa 11  20  00 Rahu 18 25. P.Bhadrapada 11 3"
+      "content_preview": "DASA CALCULATIONS"
     },
     {
       "id": "ch-25",
@@ -1750,7 +1513,7 @@
       "start_line": 7630,
       "end_line": 7634,
       "sections": [],
-      "content_preview": "25. P.Bhadrapada 11 3 20 Jupiter 't6 26. U.Bhadrapada 1L '1.6 40"
+      "content_preview": "25. P.Bhadrapada 11"
     },
     {
       "id": "ch-26",
@@ -1758,78 +1521,69 @@
       "title": "U.Bhadrapada 1L",
       "level": 1,
       "start_line": 7635,
-      "end_line": 7639,
+      "end_line": 7975,
       "sections": [],
-      "content_preview": "26. U.Bhadrapada 1L '1.6 40 Saturn 19 27. Revati 11  30 "
+      "content_preview": "26. U.Bhadrapada 1L"
     },
     {
-      "id": "ch-27",
-      "number": "27",
-      "title": "Revati",
+      "id": "ch-9_l_0_2_4",
+      "number": null,
+      "title": "9 L 0 2 4",
       "level": 1,
-      "start_line": 7640,
-      "end_line": 7645,
+      "start_line": 7976,
+      "end_line": 8060,
       "sections": [],
-      "content_preview": "27. Revati 11  30  00 Mercurv t7 1. Aswini 01320"
+      "content_preview": "9 L 0  2 4"
+    },
+    {
+      "id": "ch-4_1_1_l_2",
+      "number": null,
+      "title": "4 1 1 L 2",
+      "level": 1,
+      "start_line": 8061,
+      "end_line": 8187,
+      "sections": [],
+      "content_preview": "4 1 1  L 2"
+    },
+    {
+      "id": "ch-l_4_4_2_4",
+      "number": null,
+      "title": "L 4 4 2 4",
+      "level": 1,
+      "start_line": 8188,
+      "end_line": 8570,
+      "sections": [],
+      "content_preview": "L 4  4 2 4"
     },
     {
       "id": "ch-1",
       "number": "1",
-      "title": "Aswini",
+      "title": "'l 24",
       "level": 1,
-      "start_line": 7646,
+      "start_line": 8571,
       "end_line": 9478,
-      "sections": [
-        {
-          "id": "ch-1-sec-7_24",
-          "title": "7 24",
-          "level": 2,
-          "start_line": 7906,
-          "end_line": 8617,
-          "content_preview": ""
-        },
-        {
-          "id": "ch-1-sec-24",
-          "title": "24",
-          "level": 2,
-          "start_line": 8618,
-          "end_line": 8712,
-          "content_preview": ""
-        },
-        {
-          "id": "ch-1-sec-6",
-          "title": "6",
-          "level": 2,
-          "start_line": 8713,
-          "end_line": 8814,
-          "content_preview": ""
-        },
-        {
-          "id": "ch-1-sec-2",
-          "title": "2",
-          "level": 2,
-          "start_line": 8815,
-          "end_line": 9135,
-          "content_preview": ""
-        },
-        {
-          "id": "ch-1-sec-months_918_days",
-          "title": "months = 918 days.",
-          "level": 2,
-          "start_line": 9136,
-          "end_line": 9477,
-          "content_preview": ""
-        }
-      ],
-      "content_preview": "1. Aswini 01320 Ketu 7  ## Page 173  Lag h u Pa rasa ri -J ataka C h and r i ka"
+      "sections": [],
+      "content_preview": "1. 'l 24"
     }
   ],
   "toc": [
     {
-      "id": "ch-1",
-      "title": "Prayer.",
-      "chapter": "Prayer.",
-      "chapter_id": "ch-1"
+      "id": "ch-op_verma",
+      "title": "O.P. VERMA",
+      "chapter": "O.P. VERMA",
+      "chapter_id": "ch-op_verma"
+    },
+    {
+      "id": "ch-ranjan_publigations",
+      "title": "RANJAN PUBLIGATIONS",
+      "chapter": "RANJAN PUBLIGATIONS",
+      "chapter_id": "ch-ranjan_publigations"
+    },
+    {
+      "id": "ch-new_delh_-_110002",
+      "title": "NEW DELH| - 110002",
+      "chapter": "NEW DELH| - 110002",
+      "chapter_id": "ch-new_delh_-_110002"
     },
     {
       "id": "ch-2",
@@ -1880,12 +1634,6 @@
       "chapter_id": "ch-9"
     },
     {
-      "id": "ch-10",
-      "title": "KendradhipatyaDosha",
-      "chapter": "KendradhipatyaDosha",
-      "chapter_id": "ch-10"
-    },
-    {
       "id": "ch-11",
       "title": "Sun and Moon as.8th house lords.",
       "chapter": "Sun and Moon as.8th house lords.",
@@ -1932,6 +1680,12 @@
       "title": "Other auspicious Yogas.",
       "chapter": "Other auspicious Yogas.",
       "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-21",
+      "title": "lRahu-Ketu as Yogakarakas.",
+      "chapter": "lRahu-Ketu as Yogakarakas.",
+      "chapter_id": "ch-21"
     },
     {
       "id": "ch-22",
@@ -2036,12 +1790,6 @@
       "chapter_id": "ch-49"
     },
     {
-      "id": "ch-51",
-      "title": "Cancerlagna",
-      "chapter": "Cancerlagna",
-      "chapter_id": "ch-51"
-    },
-    {
       "id": "ch-57",
       "title": "Virgo t gn",
       "chapter": "Virgo t gn",
@@ -2100,6 +1848,12 @@
       "title": "Manittha Hora, 5. Kaushika Hora,6. Satya Samhita, T. Brihat",
       "chapter": "Manittha Hora, 5. Kaushika Hora,6. Satya Samhita, T. Brihat",
       "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-70_-20_m0",
+      "title": "=70 -20' = M0'",
+      "chapter": "=70 -20' = M0'",
+      "chapter_id": "ch-70_-20_m0"
     },
     {
       "id": "ch-2",
@@ -2180,40 +1934,10 @@
       "chapter_id": "ch-1"
     },
     {
-      "id": "ch-2",
-      "title": "Opposition",
-      "chapter": "Opposition",
-      "chapter_id": "ch-2"
-    },
-    {
-      "id": "ch-3",
-      "title": "Trine",
-      "chapter": "Trine",
-      "chapter_id": "ch-3"
-    },
-    {
-      "id": "ch-4",
-      "title": "Square",
-      "chapter": "Square",
-      "chapter_id": "ch-4"
-    },
-    {
-      "id": "ch-5",
-      "title": "Sextile",
-      "chapter": "Sextile",
-      "chapter_id": "ch-5"
-    },
-    {
-      "id": "ch-6-sec-am",
-      "title": "A.M.",
-      "chapter": "Parallel",
-      "chapter_id": "ch-6"
-    },
-    {
-      "id": "ch-6",
-      "title": "Parallel",
-      "chapter": "Parallel",
-      "chapter_id": "ch-6"
+      "id": "ch-315_am",
+      "title": "3.15 A.M.",
+      "chapter": "3.15 A.M.",
+      "chapter_id": "ch-315_am"
     },
     {
       "id": "ch-1",
@@ -2270,28 +1994,22 @@
       "chapter_id": "ch-9"
     },
     {
-      "id": "ch-10-sec-am",
-      "title": "A.M.",
-      "chapter": "The 2\"d and L2th lords are neutral and behave according to",
-      "chapter_id": "ch-10"
-    },
-    {
       "id": "ch-10",
       "title": "The 2\"d and L2th lords are neutral and behave according to",
       "chapter": "The 2\"d and L2th lords are neutral and behave according to",
       "chapter_id": "ch-10"
     },
     {
+      "id": "ch-1000_am",
+      "title": "10.00 A.M.",
+      "chapter": "10.00 A.M.",
+      "chapter_id": "ch-1000_am"
+    },
+    {
       "id": "ch-2",
       "title": "Inauspicious or the 8th, Trishadaya and Maraka lords.",
       "chapter": "Inauspicious or the 8th, Trishadaya and Maraka lords.",
       "chapter_id": "ch-2"
-    },
-    {
-      "id": "ch-3",
-      "title": "Neutral",
-      "chapter": "Neutral",
-      "chapter_id": "ch-3"
     },
     {
       "id": "ch-1",
@@ -2328,12 +2046,6 @@
       "title": "Jupiter + Venus, both spoilt, Jupiter due to conjurrction.",
       "chapter": "Jupiter + Venus, both spoilt, Jupiter due to conjurrction.",
       "chapter_id": "ch-2"
-    },
-    {
-      "id": "ch-4",
-      "title": "mpion. Hamsa and Sasa Yogas of Pancha Mahapurusha Yogas",
-      "chapter": "mpion. Hamsa and Sasa Yogas of Pancha Mahapurusha Yogas",
-      "chapter_id": "ch-4"
     },
     {
       "id": "ch-1",
@@ -2496,6 +2208,12 @@
       "title": "Jupiter + Venus, both blemished therefore yoga is spoilt.",
       "chapter": "Jupiter + Venus, both blemished therefore yoga is spoilt.",
       "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "fupiter + Saturry both blemished, therefore yoga is spoilt.",
+      "chapter": "fupiter + Saturry both blemished, therefore yoga is spoilt.",
+      "chapter_id": "ch-3"
     },
     {
       "id": "ch-1",
@@ -2744,130 +2462,10 @@
       "chapter_id": "ch-2"
     },
     {
-      "id": "ch-1",
-      "title": "Aswini",
-      "chapter": "Aswini",
-      "chapter_id": "ch-1"
-    },
-    {
-      "id": "ch-2",
-      "title": "Bharani",
-      "chapter": "Bharani",
-      "chapter_id": "ch-2"
-    },
-    {
-      "id": "ch-3",
-      "title": "Krittika",
-      "chapter": "Krittika",
-      "chapter_id": "ch-3"
-    },
-    {
-      "id": "ch-4",
-      "title": "Rohini",
-      "chapter": "Rohini",
-      "chapter_id": "ch-4"
-    },
-    {
-      "id": "ch-5",
-      "title": "Mrigsira",
-      "chapter": "Mrigsira",
-      "chapter_id": "ch-5"
-    },
-    {
-      "id": "ch-6",
-      "title": "Aridra",
-      "chapter": "Aridra",
-      "chapter_id": "ch-6"
-    },
-    {
-      "id": "ch-7",
-      "title": "Punarvasu",
-      "chapter": "Punarvasu",
-      "chapter_id": "ch-7"
-    },
-    {
-      "id": "ch-8",
-      "title": "Pushya",
-      "chapter": "Pushya",
-      "chapter_id": "ch-8"
-    },
-    {
-      "id": "ch-9",
-      "title": "Aslesa",
-      "chapter": "Aslesa",
-      "chapter_id": "ch-9"
-    },
-    {
-      "id": "ch-10",
-      "title": "Magha",
-      "chapter": "Magha",
-      "chapter_id": "ch-10"
-    },
-    {
-      "id": "ch-12",
-      "title": "U.Phalguni",
-      "chapter": "U.Phalguni",
-      "chapter_id": "ch-12"
-    },
-    {
-      "id": "ch-14",
-      "title": "Chitra",
-      "chapter": "Chitra",
-      "chapter_id": "ch-14"
-    },
-    {
-      "id": "ch-15",
-      "title": "Swati",
-      "chapter": "Swati",
-      "chapter_id": "ch-15"
-    },
-    {
-      "id": "ch-16",
-      "title": "Visakha",
-      "chapter": "Visakha",
-      "chapter_id": "ch-16"
-    },
-    {
-      "id": "ch-17",
-      "title": "Anuradha",
-      "chapter": "Anuradha",
-      "chapter_id": "ch-17"
-    },
-    {
-      "id": "ch-19",
-      "title": "Moola",
-      "chapter": "Moola",
-      "chapter_id": "ch-19"
-    },
-    {
-      "id": "ch-20",
-      "title": "Poorvasadha",
-      "chapter": "Poorvasadha",
-      "chapter_id": "ch-20"
-    },
-    {
-      "id": "ch-21",
-      "title": "Uttarasadha",
-      "chapter": "Uttarasadha",
-      "chapter_id": "ch-21"
-    },
-    {
-      "id": "ch-22",
-      "title": "Sravana",
-      "chapter": "Sravana",
-      "chapter_id": "ch-22"
-    },
-    {
-      "id": "ch-23",
-      "title": "Dhanista",
-      "chapter": "Dhanista",
-      "chapter_id": "ch-23"
-    },
-    {
-      "id": "ch-24",
-      "title": "Satabhisa",
-      "chapter": "Satabhisa",
-      "chapter_id": "ch-24"
+      "id": "ch-dasa_calculations",
+      "title": "DASA CALCULATIONS",
+      "chapter": "DASA CALCULATIONS",
+      "chapter_id": "ch-dasa_calculations"
     },
     {
       "id": "ch-25",
@@ -2882,48 +2480,30 @@
       "chapter_id": "ch-26"
     },
     {
-      "id": "ch-27",
-      "title": "Revati",
-      "chapter": "Revati",
-      "chapter_id": "ch-27"
+      "id": "ch-9_l_0_2_4",
+      "title": "9 L 0 2 4",
+      "chapter": "9 L 0 2 4",
+      "chapter_id": "ch-9_l_0_2_4"
     },
     {
-      "id": "ch-1-sec-7_24",
-      "title": "7 24",
-      "chapter": "Aswini",
-      "chapter_id": "ch-1"
+      "id": "ch-4_1_1_l_2",
+      "title": "4 1 1 L 2",
+      "chapter": "4 1 1 L 2",
+      "chapter_id": "ch-4_1_1_l_2"
     },
     {
-      "id": "ch-1-sec-24",
-      "title": "24",
-      "chapter": "Aswini",
-      "chapter_id": "ch-1"
-    },
-    {
-      "id": "ch-1-sec-6",
-      "title": "6",
-      "chapter": "Aswini",
-      "chapter_id": "ch-1"
-    },
-    {
-      "id": "ch-1-sec-2",
-      "title": "2",
-      "chapter": "Aswini",
-      "chapter_id": "ch-1"
-    },
-    {
-      "id": "ch-1-sec-months_918_days",
-      "title": "months = 918 days.",
-      "chapter": "Aswini",
-      "chapter_id": "ch-1"
+      "id": "ch-l_4_4_2_4",
+      "title": "L 4 4 2 4",
+      "chapter": "L 4 4 2 4",
+      "chapter_id": "ch-l_4_4_2_4"
     },
     {
       "id": "ch-1",
-      "title": "Aswini",
-      "chapter": "Aswini",
+      "title": "'l 24",
+      "chapter": "'l 24",
       "chapter_id": "ch-1"
     }
   ],
-  "total_chapters": 176,
-  "total_sections": 7
+  "total_chapters": 156,
+  "total_sections": 0
 }

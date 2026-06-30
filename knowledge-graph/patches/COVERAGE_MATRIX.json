@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-06-30T02:42:10.480246+00:00",
+  "patch_source": "union after 887349 remap batch",
+  "total_nodes": 12098,
+  "total_patched": 11886,
+  "overall_pct": 98.2,
+  "books": [
+    {
+      "book": "Brihat_Parasara_Hora_Sastra_Vol_2",
+      "nodes_total": 1021,
+      "patched": 1021,
+      "pct": 100.0
+    },
+    {
+      "book": "Jataka_Tatva_Mahadeva",
+      "nodes_total": 642,
+      "patched": 642,
+      "pct": 100.0
+    },
+    {
+      "book": "Uttara_Kalamrita",
+      "nodes_total": 638,
+      "patched": 638,
+      "pct": 100.0
+    },
+    {
+      "book": "Brihat_Jataka",
+      "nodes_total": 527,
+      "patched": 527,
+      "pct": 100.0
+    },
+    {
+      "book": "Saravali",
+      "nodes_total": 843,
+      "patched": 843,
+      "pct": 100.0
+    },
+    {
+      "book": "Prasna_Marga_Part_1",
+      "nodes_total": 767,
+      "patched": 767,
+      "pct": 100.0
+    },
+    {
+      "book": "Brihat_Parasara_Hora_Sastra_Vol_1",
+      "nodes_total": 1890,
+      "patched": 1889,
+      "pct": 99.9
+    },
+    {
+      "book": "Jaimini_Sutras",
+      "nodes_total": 686,
+      "patched": 676,
+      "pct": 98.5
+    },
+    {
+      "book": "Hora_Sara",
+      "nodes_total": 1278,
+      "patched": 1252,
+      "pct": 98.0
+    },
+    {
+      "book": "Brihat_Samhita",
+      "nodes_total": 1238,
+      "patched": 1201,
+      "pct": 97.0
+    },
+    {
+      "book": "Phaladeepika_English_Translation",
+      "nodes_total": 1260,
+      "patched": 1200,
+      "pct": 95.2
+    },
+    {
+      "book": "Sarvartha_Chintamani",
+      "nodes_total": 1255,
+      "patched": 1181,
+      "pct": 94.1
+    },
+    {
+      "book": "Ashtakavarga_System_Comprehensive_Handbook",
+      "nodes_total": 53,
+      "patched": 49,
+      "pct": 92.5
+    }
+  ]
+}

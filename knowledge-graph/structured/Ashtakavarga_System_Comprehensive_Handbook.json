@@ -3,6 +3,7 @@
   "canonical_name": "Ashtakavarga System Comprehensive Handbook",
   "source_file": "Ashtakavarga_System_Comprehensive_Handbook.md",
   "graph_version": "newbooks-v1",
+  "parse_quality": "high",
   "chapters": [
     {
       "id": "ch-1",
