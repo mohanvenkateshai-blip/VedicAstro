@@ -179,10 +179,12 @@ export function BookReaderClient({
   };
 
   // Strip the leading raw heading line from a sliced block so we can show our clean structured title instead.
+  // Never strip a leading image line (we want to render media at the top of a chapter/section).
   const getDisplayBody = (content: string, title: string): string => {
     if (!content) return "";
     const lines = content.split("\n");
     const first = (lines[0] || "").trim();
+    if (/^!\[/.test(first)) return content; // preserve leading media
     const titleNorm = title.toLowerCase().replace(/[^\w]/g, "").slice(0, 40);
     const firstNorm = first.toLowerCase().replace(/[^\w]/g, "").slice(0, 40);
     const looksLikeHeading = /^(\d+[\.\)]?\s+|#{1,6}\s*)/.test(first) || first.length < 160;
@@ -199,6 +201,82 @@ export function BookReaderClient({
     const nid = rec.id as string | undefined;
     if (nid && nodeProvenance && nodeProvenance[nid]) return nodeProvenance[nid];
     return undefined;
+  };
+
+  // Resolve an image src from prose (or future structured media) to a fetchable URL.
+  // - Absolute http(s) and site-absolute "/" paths are used as-is.
+  // - Bare or relative paths (e.g. "images/foo.png", "corpus-vault:foo/bar.jpg") are routed
+  //   through the corpus asset proxy which returns short-lived signed URLs from corpus-vault.
+  const resolveImageSrc = (src: string): string => {
+    if (!src) return src;
+    if (/^https?:\/\//i.test(src) || src.startsWith("/") || src.startsWith("data:")) return src;
+    const clean = src.replace(/^corpus-vault:\/?/i, "").replace(/^\.\/?/, "");
+    return `/api/corpus/asset?path=${encodeURIComponent(clean)}`;
+  };
+
+  // Lightweight prose + image renderer.
+  // Supports standard markdown images: ![alt](src "optional title") inside chapter/section bodies.
+  // Text runs are preserved with basic paragraph splitting. No full markdown parser to stay minimal.
+  // On image error we show a graceful fallback card (still shows alt/caption + attempted src).
+  const renderContentWithMedia = (raw: string, keyPrefix: string): React.ReactNode => {
+    if (!raw) return null;
+    const imgRe = /!\[([^\]]*)\]\(([^)]+?)(?:\s+"([^"]+)")?\)/g;
+    const parts: Array<
+      | { type: "text"; text: string }
+      | { type: "image"; alt: string; src: string; title?: string }
+    > = [];
+    let last = 0;
+    let m: RegExpExecArray | null;
+    // eslint-disable-next-line no-cond-assign
+    while ((m = imgRe.exec(raw)) !== null) {
+      if (m.index > last) parts.push({ type: "text", text: raw.slice(last, m.index) });
+      parts.push({ type: "image", alt: m[1] || "", src: m[2], title: m[3] });
+      last = imgRe.lastIndex;
+    }
+    if (last < raw.length) parts.push({ type: "text", text: raw.slice(last) });
+
+    if (parts.length === 0) {
+      return <div className="whitespace-pre-wrap">{raw}</div>;
+    }
+
+    return parts.map((p, i) => {
+      if (p.type === "text") {
+        const t = (p.text || "").trim();
+        if (!t) return null;
+        return (
+          <div key={`${keyPrefix}-t-${i}`} className="whitespace-pre-wrap mb-4 last:mb-0">
+            {t}
+          </div>
+        );
+      }
+      const resolved = resolveImageSrc(p.src);
+      return (
+        <figure key={`${keyPrefix}-img-${i}`} className="my-6">
+          <img
+            src={resolved}
+            alt={p.alt}
+            className="rounded-xl border border-hairline max-w-full h-auto"
+            loading="lazy"
+            onError={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              img.style.display = "none";
+              const fb = img.nextElementSibling as HTMLElement | null;
+              if (fb) fb.style.display = "block";
+            }}
+          />
+          {/* Fallback card (shown via onError) */}
+          <div className="hidden mt-2 rounded-lg border border-hairline bg-surface/70 p-3 text-xs text-text-muted">
+            Image unavailable
+            <div className="mt-0.5 font-mono text-[10px] opacity-70 break-all">{p.src}</div>
+          </div>
+          {(p.alt || p.title) && (
+            <figcaption className="mt-1.5 text-[12px] text-text-muted text-center">
+              {p.title || p.alt}
+            </figcaption>
+          )}
+        </figure>
+      );
+    });
   };
 
   const renderChapterNodes = (nodes: unknown[], title: string) => {
@@ -294,8 +372,8 @@ export function BookReaderClient({
                   </div>
                   <div className="text-[10px] text-text-muted tabular-nums self-start mt-1">{i + 1}/{total}</div>
                 </div>
-                <div className="px-6 py-5 prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light">
-                  {body || sec.content}
+                <div className="px-6 py-5 prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 font-light">
+                  {renderContentWithMedia(body || sec.content, sec.id)}
                 </div>
               </div>
             );
@@ -351,8 +429,8 @@ export function BookReaderClient({
                       </div>
                       <div className="text-[10px] text-text-muted tabular-nums self-start mt-1">{i + 1}/{total}</div>
                     </div>
-                    <div className="px-6 py-5 prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light">
-                      {body || blk.content}
+                    <div className="px-6 py-5 prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 font-light">
+                      {renderContentWithMedia(body || blk.content, blk.id)}
                     </div>
                   </section>
                 );
@@ -362,8 +440,8 @@ export function BookReaderClient({
         }
       }
       return (
-        <div className="prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light">
-          {fullMarkdown}
+        <div className="prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 font-light">
+          {renderContentWithMedia(fullMarkdown, "raw-full")}
         </div>
       );
     }
@@ -477,12 +555,12 @@ export function BookReaderClient({
         </div>
         {selectedChapter && fullMarkdown && (
           <div className="mt-2 text-[10px] text-text-muted">
-            Full source text. The left list jumps inside this document.
+            Full source text (images supported). The left list jumps inside this document.
           </div>
         )}
         {sections && sections.length > 0 && (
           <div className="mt-2 text-[10px] text-text-muted">
-            Chapters are sliced directly from source using structured line ranges for exact jumps.
+            Full chapter content (via structured ranges) or focused sections. Images in prose render with corpus-vault / local fallbacks.
           </div>
         )}
       </div>

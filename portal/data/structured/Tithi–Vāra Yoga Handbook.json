@@ -1,0 +1,45 @@
+{
+  "book_id": "Tithi–Vāra Yoga Handbook",
+  "canonical_name": "Tithi–Vāra Yoga Handbook",
+  "source_file": "Tithi–Vāra Yoga Handbook.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-showing_all_7_weekdays",
+      "number": null,
+      "title": "Showing all 7 weekdays",
+      "level": 1,
+      "start_line": 58,
+      "end_line": 134,
+      "sections": [],
+      "content_preview": " Showing all 7 weekdays            Vāra / Weekday  Amrit Yog Tithis"
+    },
+    {
+      "id": "ch-combinationauspicious_labelinauspicious_labelpractical_handl",
+      "number": null,
+      "title": "CombinationAuspicious labelInauspicious labelPractical handling",
+      "level": 1,
+      "start_line": 135,
+      "end_line": 161,
+      "sections": [],
+      "content_preview": " CombinationAuspicious labelInauspicious labelPractical handling    Wednesday + DvitīyāSiddha YogDagdha + VishaDo not use blindly; examine the full muhurta.  Wednesday + TṛtīyāAmrit YogDagdhaMixed result; avoid for high-stakes benefic work unless other factors are strong.  Thursd"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-showing_all_7_weekdays",
+      "title": "Showing all 7 weekdays",
+      "chapter": "Showing all 7 weekdays",
+      "chapter_id": "ch-showing_all_7_weekdays"
+    },
+    {
+      "id": "ch-combinationauspicious_labelinauspicious_labelpractical_handl",
+      "title": "CombinationAuspicious labelInauspicious labelPractical handling",
+      "chapter": "CombinationAuspicious labelInauspicious labelPractical handling",
+      "chapter_id": "ch-combinationauspicious_labelinauspicious_labelpractical_handl"
+    }
+  ],
+  "total_chapters": 2,
+  "total_sections": 0
+}

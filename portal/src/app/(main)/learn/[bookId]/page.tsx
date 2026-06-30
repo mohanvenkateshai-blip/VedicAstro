@@ -188,7 +188,7 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
       />
 
       <div className="mt-4 text-[10px] text-text-muted max-w-3xl">
-        Left nav = authoritative structured chapters/sections (with stable ids). Right side = source-sliced blocks. Nodes (when shown) include chapter provenance from the patch: "Sourced from: … (method, conf)".
+        Left nav = structured chapters/sections (stable ids, deep links). Right side = full chapter content (chapter ranges) or section slices + embedded images (corpus-vault / local refs with fallbacks). Nodes carry patch provenance.
       </div>
     </div>
   );

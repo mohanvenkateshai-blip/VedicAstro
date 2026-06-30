@@ -1,0 +1,701 @@
+{
+  "book_id": "Brihat_Samhita",
+  "canonical_name": "Brihat Samhita",
+  "source_file": "Brihat_Samhita.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Introductory.",
+      "level": 1,
+      "start_line": 469,
+      "end_line": 974,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "On re Son.",
+      "level": 1,
+      "start_line": 975,
+      "end_line": 1211,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "Ox rae Moon,",
+      "level": 1,
+      "start_line": 1212,
+      "end_line": 1439,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "“Ow Ranv.* ©",
+      "level": 1,
+      "start_line": 1440,
+      "end_line": 2263,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Ow. Mags.",
+      "level": 1,
+      "start_line": 2264,
+      "end_line": 2361,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "On Marcuny.",
+      "level": 1,
+      "start_line": 2362,
+      "end_line": 2498,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "On Juprree.",
+      "level": 1,
+      "start_line": 2499,
+      "end_line": 2976,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "On Vunvs.",
+      "level": 1,
+      "start_line": 2977,
+      "end_line": 3281,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "Ow Sarory.",
+      "level": 1,
+      "start_line": 3282,
+      "end_line": 3429,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "Ow Comers AND THM LIKE.",
+      "level": 1,
+      "start_line": 3430,
+      "end_line": 3885,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "Ow Canorus-+",
+      "level": 1,
+      "start_line": 3886,
+      "end_line": 4068,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "Ow tHe Ursa Mason,",
+      "level": 1,
+      "start_line": 4069,
+      "end_line": 4179,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "On Korma Viszaca.*",
+      "level": 1,
+      "start_line": 4180,
+      "end_line": 4610,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "Ow THe Praners.",
+      "level": 1,
+      "start_line": 4611,
+      "end_line": 5665,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-18",
+      "number": "18",
+      "title": "On THe Moon’s Consuncrion wit THe Piangts.",
+      "level": 1,
+      "start_line": 5666,
+      "end_line": 5721,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-19",
+      "number": "19",
+      "title": "On Pranerany Years*",
+      "level": 1,
+      "start_line": 5722,
+      "end_line": 5880,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "Ow Pranerary Merrinas.*",
+      "level": 1,
+      "start_line": 5881,
+      "end_line": 5957,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXI",
+      "number": "XXI",
+      "title": "On tae Ramm Croupa.*",
+      "level": 1,
+      "start_line": 5958,
+      "end_line": 6254,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXII",
+      "number": "XXII",
+      "title": "Ow Duarana",
+      "level": 1,
+      "start_line": 6255,
+      "end_line": 6303,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXIII",
+      "number": "XXIII",
+      "title": "On Rain.",
+      "level": 1,
+      "start_line": 6304,
+      "end_line": 6396,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXIV",
+      "number": "XXIV",
+      "title": "Ow Romi Yoos.e",
+      "level": 1,
+      "start_line": 6397,
+      "end_line": 6689,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXV",
+      "number": "XXV",
+      "title": "Ow Swart Yooa-t",
+      "level": 1,
+      "start_line": 6690,
+      "end_line": 6862,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXVII",
+      "number": "XXVII",
+      "title": "On raz Winns.",
+      "level": 1,
+      "start_line": 6863,
+      "end_line": 6934,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXVIII",
+      "number": "XXVIII",
+      "title": "On Inweprate Rain.",
+      "level": 1,
+      "start_line": 6935,
+      "end_line": 7087,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXIX",
+      "number": "XXIX",
+      "title": "On Frowses anp Prants.",
+      "level": 1,
+      "start_line": 7088,
+      "end_line": 7345,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXX",
+      "number": "XXX",
+      "title": "Ow Twitiaer Hours.",
+      "level": 1,
+      "start_line": 7346,
+      "end_line": 7567,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXI",
+      "number": "XXXI",
+      "title": "On Drapaua-+",
+      "level": 1,
+      "start_line": 7568,
+      "end_line": 7605,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXII",
+      "number": "XXXII",
+      "title": "On Eartnquaxes.",
+      "level": 1,
+      "start_line": 7606,
+      "end_line": 8167,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXV",
+      "number": "XXXV",
+      "title": "Ow THe Rarnzow.",
+      "level": 1,
+      "start_line": 8168,
+      "end_line": 8220,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXVI",
+      "number": "XXXVI",
+      "title": "On Ganpwarvanacaras og Cioup Castries.",
+      "level": 1,
+      "start_line": 8221,
+      "end_line": 8257,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXVII",
+      "number": "XXXVII",
+      "title": "Ow PasHELion.",
+      "level": 1,
+      "start_line": 8258,
+      "end_line": 8323,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXIx",
+      "number": "XXXIx",
+      "title": "Ow THounpERBoLrs.",
+      "level": 1,
+      "start_line": 8324,
+      "end_line": 10830,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "On Parra on Crown Prarz.*",
+      "level": 1,
+      "start_line": 10831,
+      "end_line": 13647,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-1X",
+      "number": "1X",
+      "title": "ON tax BumLpinG oF TEMPLES.",
+      "level": 1,
+      "start_line": 13648,
+      "end_line": 14527,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "Os tHe Fearvrns or tax Dos.",
+      "level": 1,
+      "start_line": 14528,
+      "end_line": 14568,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-17",
+      "number": "17",
+      "title": "Ow rae Frarones or tax Tuntus.",
+      "level": 1,
+      "start_line": 14569,
+      "end_line": 14696,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XxX",
+      "number": "XxX",
+      "title": "Ow Tae FeaToRes oF THe Eversant.",
+      "level": 1,
+      "start_line": 14697,
+      "end_line": 16071,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXVI",
+      "number": "XXVI",
+      "title": "Ow Unprezzas.",
+      "level": 1,
+      "start_line": 16072,
+      "end_line": 17625,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXIII",
+      "number": "XXXIII",
+      "title": "On Diamonps.",
+      "level": 1,
+      "start_line": 17626,
+      "end_line": 17749,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXIV",
+      "number": "XXXIV",
+      "title": "On Prazts",
+      "level": 1,
+      "start_line": 17750,
+      "end_line": 17972,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXvV",
+      "number": "XXXvV",
+      "title": "On Rosigs.",
+      "level": 1,
+      "start_line": 17973,
+      "end_line": 18104,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXVIII",
+      "number": "XXXVIII",
+      "title": "Ow Toorn-navsa.",
+      "level": 1,
+      "start_line": 18105,
+      "end_line": 18183,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-XXXIX",
+      "number": "XXXIX",
+      "title": "Generat Roues.",
+      "level": 1,
+      "start_line": 18184,
+      "end_line": 21714,
+      "sections": [],
+      "content_preview": ""
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "Introductory.",
+      "chapter": "Introductory.",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-3",
+      "title": "On re Son.",
+      "chapter": "On re Son.",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "Ox rae Moon,",
+      "chapter": "Ox rae Moon,",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "“Ow Ranv.* ©",
+      "chapter": "“Ow Ranv.* ©",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Ow. Mags.",
+      "chapter": "Ow. Mags.",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "On Marcuny.",
+      "chapter": "On Marcuny.",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "On Juprree.",
+      "chapter": "On Juprree.",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "On Vunvs.",
+      "chapter": "On Vunvs.",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "Ow Sarory.",
+      "chapter": "Ow Sarory.",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "Ow Comers AND THM LIKE.",
+      "chapter": "Ow Comers AND THM LIKE.",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "Ow Canorus-+",
+      "chapter": "Ow Canorus-+",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-13",
+      "title": "Ow tHe Ursa Mason,",
+      "chapter": "Ow tHe Ursa Mason,",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "On Korma Viszaca.*",
+      "chapter": "On Korma Viszaca.*",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-16",
+      "title": "Ow THe Praners.",
+      "chapter": "Ow THe Praners.",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-18",
+      "title": "On THe Moon’s Consuncrion wit THe Piangts.",
+      "chapter": "On THe Moon’s Consuncrion wit THe Piangts.",
+      "chapter_id": "ch-18"
+    },
+    {
+      "id": "ch-19",
+      "title": "On Pranerany Years*",
+      "chapter": "On Pranerany Years*",
+      "chapter_id": "ch-19"
+    },
+    {
+      "id": "ch-20",
+      "title": "Ow Pranerary Merrinas.*",
+      "chapter": "Ow Pranerary Merrinas.*",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-XXI",
+      "title": "On tae Ramm Croupa.*",
+      "chapter": "On tae Ramm Croupa.*",
+      "chapter_id": "ch-XXI"
+    },
+    {
+      "id": "ch-XXII",
+      "title": "Ow Duarana",
+      "chapter": "Ow Duarana",
+      "chapter_id": "ch-XXII"
+    },
+    {
+      "id": "ch-XXIII",
+      "title": "On Rain.",
+      "chapter": "On Rain.",
+      "chapter_id": "ch-XXIII"
+    },
+    {
+      "id": "ch-XXIV",
+      "title": "Ow Romi Yoos.e",
+      "chapter": "Ow Romi Yoos.e",
+      "chapter_id": "ch-XXIV"
+    },
+    {
+      "id": "ch-XXV",
+      "title": "Ow Swart Yooa-t",
+      "chapter": "Ow Swart Yooa-t",
+      "chapter_id": "ch-XXV"
+    },
+    {
+      "id": "ch-XXVII",
+      "title": "On raz Winns.",
+      "chapter": "On raz Winns.",
+      "chapter_id": "ch-XXVII"
+    },
+    {
+      "id": "ch-XXVIII",
+      "title": "On Inweprate Rain.",
+      "chapter": "On Inweprate Rain.",
+      "chapter_id": "ch-XXVIII"
+    },
+    {
+      "id": "ch-XXIX",
+      "title": "On Frowses anp Prants.",
+      "chapter": "On Frowses anp Prants.",
+      "chapter_id": "ch-XXIX"
+    },
+    {
+      "id": "ch-XXX",
+      "title": "Ow Twitiaer Hours.",
+      "chapter": "Ow Twitiaer Hours.",
+      "chapter_id": "ch-XXX"
+    },
+    {
+      "id": "ch-XXXI",
+      "title": "On Drapaua-+",
+      "chapter": "On Drapaua-+",
+      "chapter_id": "ch-XXXI"
+    },
+    {
+      "id": "ch-XXXII",
+      "title": "On Eartnquaxes.",
+      "chapter": "On Eartnquaxes.",
+      "chapter_id": "ch-XXXII"
+    },
+    {
+      "id": "ch-XXXV",
+      "title": "Ow THe Rarnzow.",
+      "chapter": "Ow THe Rarnzow.",
+      "chapter_id": "ch-XXXV"
+    },
+    {
+      "id": "ch-XXXVI",
+      "title": "On Ganpwarvanacaras og Cioup Castries.",
+      "chapter": "On Ganpwarvanacaras og Cioup Castries.",
+      "chapter_id": "ch-XXXVI"
+    },
+    {
+      "id": "ch-XXXVII",
+      "title": "Ow PasHELion.",
+      "chapter": "Ow PasHELion.",
+      "chapter_id": "ch-XXXVII"
+    },
+    {
+      "id": "ch-XXXIx",
+      "title": "Ow THounpERBoLrs.",
+      "chapter": "Ow THounpERBoLrs.",
+      "chapter_id": "ch-XXXIx"
+    },
+    {
+      "id": "ch-2",
+      "title": "On Parra on Crown Prarz.*",
+      "chapter": "On Parra on Crown Prarz.*",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-1X",
+      "title": "ON tax BumLpinG oF TEMPLES.",
+      "chapter": "ON tax BumLpinG oF TEMPLES.",
+      "chapter_id": "ch-1X"
+    },
+    {
+      "id": "ch-15",
+      "title": "Os tHe Fearvrns or tax Dos.",
+      "chapter": "Os tHe Fearvrns or tax Dos.",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-17",
+      "title": "Ow rae Frarones or tax Tuntus.",
+      "chapter": "Ow rae Frarones or tax Tuntus.",
+      "chapter_id": "ch-17"
+    },
+    {
+      "id": "ch-XxX",
+      "title": "Ow Tae FeaToRes oF THe Eversant.",
+      "chapter": "Ow Tae FeaToRes oF THe Eversant.",
+      "chapter_id": "ch-XxX"
+    },
+    {
+      "id": "ch-XXVI",
+      "title": "Ow Unprezzas.",
+      "chapter": "Ow Unprezzas.",
+      "chapter_id": "ch-XXVI"
+    },
+    {
+      "id": "ch-XXXIII",
+      "title": "On Diamonps.",
+      "chapter": "On Diamonps.",
+      "chapter_id": "ch-XXXIII"
+    },
+    {
+      "id": "ch-XXXIV",
+      "title": "On Prazts",
+      "chapter": "On Prazts",
+      "chapter_id": "ch-XXXIV"
+    },
+    {
+      "id": "ch-XXXvV",
+      "title": "On Rosigs.",
+      "chapter": "On Rosigs.",
+      "chapter_id": "ch-XXXvV"
+    },
+    {
+      "id": "ch-XXXVIII",
+      "title": "Ow Toorn-navsa.",
+      "chapter": "Ow Toorn-navsa.",
+      "chapter_id": "ch-XXXVIII"
+    },
+    {
+      "id": "ch-XXXIX",
+      "title": "Generat Roues.",
+      "chapter": "Generat Roues.",
+      "chapter_id": "ch-XXXIX"
+    }
+  ],
+  "total_chapters": 43,
+  "total_sections": 0
+}

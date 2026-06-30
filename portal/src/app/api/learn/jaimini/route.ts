@@ -1,27 +1,34 @@
 import { NextResponse } from "next/server";
-import { getBookTextNodes } from "@/lib/corpus";
+import { supabase } from "@/lib/supabase";
+import { DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
 
 export const dynamic = "force-dynamic";
 
-// Only real core Jaimini sources (the actual sutra texts)
 const REAL_SOURCES = [
+  "Jaimini_Sutras",
   "Jaimini_Sutras.md",
+  "rath_s_jaimini_maharishis_upadesa_sutra",
   "rath_s_jaimini_maharishis_upadesa_sutra.md",
 ];
 
 export async function GET() {
-  for (const file of REAL_SOURCES) {
+  for (const key of REAL_SOURCES) {
     try {
-      const data = await getBookTextNodes(file, "newbooks-v1");
-      if (data && data.length > 0) {
-        const real = data.filter((n: any) => n.label && n.label.trim().length > 5);
-        if (real.length > 0) {
-          return NextResponse.json({
-            nodes: real,
-            source: file,
-            version: "newbooks-v1",
-          });
-        }
+      const { data, error } = await supabase
+        .from("graph_nodes")
+        .select("id, label, source_location, properties, file_type, source_file")
+        .eq("graph_version", DEFAULT_GRAPH_VERSION)
+        .ilike("source_file", `%${key.replace(/\.md$/, "")}%`)
+        .order("source_location", { ascending: true })
+        .limit(200);
+      if (error || !data?.length) continue;
+      const real = data.filter((n) => n.label && n.label.trim().length > 5);
+      if (real.length > 0) {
+        return NextResponse.json({
+          nodes: real,
+          source: data[0]?.source_file || key,
+          version: DEFAULT_GRAPH_VERSION,
+        });
       }
     } catch {
       // try next source
@@ -31,6 +38,7 @@ export async function GET() {
   return NextResponse.json({
     nodes: [],
     source: "no real Jaimini nodes in graph",
-    version: "newbooks-v1",
+    version: DEFAULT_GRAPH_VERSION,
+    hint: "Use /learn/Jaimini_Sutras for structured chapter reader with full source text.",
   });
 }

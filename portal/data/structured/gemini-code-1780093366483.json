@@ -1,0 +1,100 @@
+{
+  "book_id": "gemini-code-1780093366483",
+  "canonical_name": "gemini-code-1780093366483",
+  "source_file": "gemini-code-1780093366483.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code",
+      "number": null,
+      "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "level": 1,
+      "start_line": 4,
+      "end_line": 46,
+      "sections": [
+        {
+          "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-critical_step_1_the_design_spec_think_before_you_code",
+          "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+          "level": 3,
+          "start_line": 4,
+          "end_line": 11,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-tech_stack_constraints",
+          "title": "TECH STACK CONSTRAINTS",
+          "level": 3,
+          "start_line": 12,
+          "end_line": 20,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-visual_design_system_aesthetic",
+          "title": "VISUAL DESIGN SYSTEM & AESTHETIC",
+          "level": 3,
+          "start_line": 21,
+          "end_line": 29,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-layout_structure_components",
+          "title": "LAYOUT STRUCTURE & COMPONENTS",
+          "level": 3,
+          "start_line": 30,
+          "end_line": 40,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-micro-interactions_motion_requirements_framer_motion",
+          "title": "MICRO-INTERACTIONS & MOTION REQUIREMENTS (FRAMER MOTION)",
+          "level": 3,
+          "start_line": 41,
+          "end_line": 45,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "### 🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE) Before writing any code, output a brief 3-bullet design specification outlining your plan: 1. LAYOUT & HIERARCHY: Your structural strategy (e.g., Bento Grid proportions, asymmetry, or section transitions). 2. TYPOGRAP"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-critical_step_1_the_design_spec_think_before_you_code",
+      "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-tech_stack_constraints",
+      "title": "TECH STACK CONSTRAINTS",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-visual_design_system_aesthetic",
+      "title": "VISUAL DESIGN SYSTEM & AESTHETIC",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-layout_structure_components",
+      "title": "LAYOUT STRUCTURE & COMPONENTS",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code-sec-micro-interactions_motion_requirements_framer_motion",
+      "title": "MICRO-INTERACTIONS & MOTION REQUIREMENTS (FRAMER MOTION)",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    },
+    {
+      "id": "ch-critical_step_1_the_design_spec_think_before_you_code",
+      "title": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter": "🛑 CRITICAL STEP 1: THE DESIGN SPEC (THINK BEFORE YOU CODE)",
+      "chapter_id": "ch-critical_step_1_the_design_spec_think_before_you_code"
+    }
+  ],
+  "total_chapters": 1,
+  "total_sections": 5
+}

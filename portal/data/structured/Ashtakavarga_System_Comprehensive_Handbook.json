@@ -1,0 +1,330 @@
+{
+  "book_id": "Ashtakavarga_System_Comprehensive_Handbook",
+  "canonical_name": "Ashtakavarga System Comprehensive Handbook",
+  "source_file": "Ashtakavarga_System_Comprehensive_Handbook.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "high",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "Foundations and Philosophy of Ashtakavarga",
+      "level": 1,
+      "start_line": 8,
+      "end_line": 25,
+      "sections": [
+        {
+          "id": "ch-1-sec-authoritative_classical_source_documents",
+          "title": "Authoritative Classical Source Documents",
+          "level": 2,
+          "start_line": 14,
+          "end_line": 24,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "1. Foundations and Philosophy of Ashtakavarga  Ashtakavarga is an advanced, highly quantitative evaluation framework within Vedic Astrology (Jyotish) that abstracts qualitative complex variables into definitive, mathematical scores. Derived from the Sanskrit roots 'Ashta' (Eight)"
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "Core Mechanics: Bindus, Rekhas, and Regional Notation Deviations",
+      "level": 1,
+      "start_line": 26,
+      "end_line": 39,
+      "sections": [
+        {
+          "id": "ch-2-sec-the_auspicious_vs_inauspicious_unit",
+          "title": "The Auspicious vs. Inauspicious Unit",
+          "level": 2,
+          "start_line": 30,
+          "end_line": 38,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "2. Core Mechanics: Bindus, Rekhas, and Regional Notation Deviations  The fundamental unit of measurement in Ashtakavarga is a point allocated to a zodiacal sign based on structural harmonics between a planet and the eight reference points. However, a major point of confusion exis"
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "Mathematical Matrix Assembly: BAV to SAV",
+      "level": 1,
+      "start_line": 40,
+      "end_line": 109,
+      "sections": [
+        {
+          "id": "ch-3-sec-bhinnashtakavarga_bav",
+          "title": "Bhinnashtakavarga (BAV)",
+          "level": 2,
+          "start_line": 44,
+          "end_line": 97,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-3-sec-samudashtakavarga_sav",
+          "title": "Samudashtakavarga (SAV)",
+          "level": 2,
+          "start_line": 98,
+          "end_line": 108,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "3. Mathematical Matrix Assembly: BAV to SAV  The system progresses from individual planetary calculations to a unified, collective house strength score.  3.1 Bhinnashtakavarga (BAV)  Each of the seven primary planets possesses its own Bhinnashtakavarga (BAV)—an individual 12-hous"
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "The Mathematical Reductions: Shodhana Protocols",
+      "level": 1,
+      "start_line": 110,
+      "end_line": 175,
+      "sections": [
+        {
+          "id": "ch-4-sec-stage_1_trikona_shodhana_triad_reduction",
+          "title": "Stage 1: Trikona Shodhana (Triad Reduction)",
+          "level": 2,
+          "start_line": 114,
+          "end_line": 133,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-4-sec-stage_2_ekadhipatya_shodhana_dual_lordship_reduction",
+          "title": "Stage 2: Ekadhipatya Shodhana (Dual Lordship Reduction)",
+          "level": 2,
+          "start_line": 134,
+          "end_line": 174,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "4. The Mathematical Reductions: Shodhana Protocols  Raw SAV and BAV point totals contain structural background noise. To refine these points for advanced predictive applications, such as calculating the Shodhya Pinda or exact timing of death and marriage, the matrices must underg"
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "Derivation of the Shodhya Pinda",
+      "level": 1,
+      "start_line": 176,
+      "end_line": 205,
+      "sections": [
+        {
+          "id": "ch-5-sec-rasi_pinda_calculation",
+          "title": "Rasi Pinda Calculation",
+          "level": 2,
+          "start_line": 180,
+          "end_line": 193,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-5-sec-graha_pinda_calculation",
+          "title": "Graha Pinda Calculation",
+          "level": 2,
+          "start_line": 194,
+          "end_line": 204,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "5. Derivation of the Shodhya Pinda  The final mathematical reduction yields the Shodhya Pinda (Pure Composite Metric), which provides the baseline for advanced algorithmic timing functions. The Shodhya Pinda is calculated independently for each planet's BAV matrix by summing two "
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Advanced Gochara (Transit) Engineering: The Kaksha System",
+      "level": 1,
+      "start_line": 206,
+      "end_line": 275,
+      "sections": [
+        {
+          "id": "ch-6-sec-chronological_kaksha_sequence",
+          "title": "Chronological Kaksha Sequence",
+          "level": 2,
+          "start_line": 210,
+          "end_line": 267,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-6-sec-operational_transit_execution_law",
+          "title": "Operational Transit Execution Law",
+          "level": 2,
+          "start_line": 268,
+          "end_line": 274,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "6. Advanced Gochara (Transit) Engineering: The Kaksha System  Standard transit tracking typically assumes that a planet delivers uniform results throughout its transit across a 30-degree sign. Ashtakavarga deconstructs this assumption via the Kaksha system, dividing each zodiac s"
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "Personalizing Muhurat (Electional Astrology)",
+      "level": 1,
+      "start_line": 276,
+      "end_line": 285,
+      "sections": [],
+      "content_preview": "7. Personalizing Muhurat (Electional Astrology)  Standard Muhurat frameworks rely heavily on universal lunar phases (Tithi), general constellations (Nakshatra), and daily planetary hours (Hora). Ashtakavarga customizes these generic timelines to map precisely to an individual's u"
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "Special Cases, Anomalies, and Analytical Pitfalls",
+      "level": 1,
+      "start_line": 286,
+      "end_line": 302,
+      "sections": [
+        {
+          "id": "ch-8-sec-the_illusion_of_exaltation",
+          "title": "The Illusion of Exaltation",
+          "level": 2,
+          "start_line": 290,
+          "end_line": 293,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-8-sec-rahu_and_ketu_adaptations",
+          "title": "Rahu and Ketu Adaptations",
+          "level": 2,
+          "start_line": 294,
+          "end_line": 297,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-8-sec-algorithmic_execution_sequence",
+          "title": "Algorithmic Execution Sequence",
+          "level": 2,
+          "start_line": 298,
+          "end_line": 301,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": "8. Special Cases, Anomalies, and Analytical Pitfalls  When designing an automated astrological engine or performing an advanced manual synthesis, watch out for these critical edge cases and common analytic errors:  8.1 The Illusion of Exaltation  A planet in its sign of exaltatio"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1-sec-authoritative_classical_source_documents",
+      "title": "Authoritative Classical Source Documents",
+      "chapter": "Foundations and Philosophy of Ashtakavarga",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-1",
+      "title": "Foundations and Philosophy of Ashtakavarga",
+      "chapter": "Foundations and Philosophy of Ashtakavarga",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2-sec-the_auspicious_vs_inauspicious_unit",
+      "title": "The Auspicious vs. Inauspicious Unit",
+      "chapter": "Core Mechanics: Bindus, Rekhas, and Regional Notation Deviations",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-2",
+      "title": "Core Mechanics: Bindus, Rekhas, and Regional Notation Deviations",
+      "chapter": "Core Mechanics: Bindus, Rekhas, and Regional Notation Deviations",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3-sec-bhinnashtakavarga_bav",
+      "title": "Bhinnashtakavarga (BAV)",
+      "chapter": "Mathematical Matrix Assembly: BAV to SAV",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3-sec-samudashtakavarga_sav",
+      "title": "Samudashtakavarga (SAV)",
+      "chapter": "Mathematical Matrix Assembly: BAV to SAV",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-3",
+      "title": "Mathematical Matrix Assembly: BAV to SAV",
+      "chapter": "Mathematical Matrix Assembly: BAV to SAV",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4-sec-stage_1_trikona_shodhana_triad_reduction",
+      "title": "Stage 1: Trikona Shodhana (Triad Reduction)",
+      "chapter": "The Mathematical Reductions: Shodhana Protocols",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-4-sec-stage_2_ekadhipatya_shodhana_dual_lordship_reduction",
+      "title": "Stage 2: Ekadhipatya Shodhana (Dual Lordship Reduction)",
+      "chapter": "The Mathematical Reductions: Shodhana Protocols",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-4",
+      "title": "The Mathematical Reductions: Shodhana Protocols",
+      "chapter": "The Mathematical Reductions: Shodhana Protocols",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5-sec-rasi_pinda_calculation",
+      "title": "Rasi Pinda Calculation",
+      "chapter": "Derivation of the Shodhya Pinda",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-5-sec-graha_pinda_calculation",
+      "title": "Graha Pinda Calculation",
+      "chapter": "Derivation of the Shodhya Pinda",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-5",
+      "title": "Derivation of the Shodhya Pinda",
+      "chapter": "Derivation of the Shodhya Pinda",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6-sec-chronological_kaksha_sequence",
+      "title": "Chronological Kaksha Sequence",
+      "chapter": "Advanced Gochara (Transit) Engineering: The Kaksha System",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-6-sec-operational_transit_execution_law",
+      "title": "Operational Transit Execution Law",
+      "chapter": "Advanced Gochara (Transit) Engineering: The Kaksha System",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-6",
+      "title": "Advanced Gochara (Transit) Engineering: The Kaksha System",
+      "chapter": "Advanced Gochara (Transit) Engineering: The Kaksha System",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "Personalizing Muhurat (Electional Astrology)",
+      "chapter": "Personalizing Muhurat (Electional Astrology)",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8-sec-the_illusion_of_exaltation",
+      "title": "The Illusion of Exaltation",
+      "chapter": "Special Cases, Anomalies, and Analytical Pitfalls",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-8-sec-rahu_and_ketu_adaptations",
+      "title": "Rahu and Ketu Adaptations",
+      "chapter": "Special Cases, Anomalies, and Analytical Pitfalls",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-8-sec-algorithmic_execution_sequence",
+      "title": "Algorithmic Execution Sequence",
+      "chapter": "Special Cases, Anomalies, and Analytical Pitfalls",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-8",
+      "title": "Special Cases, Anomalies, and Analytical Pitfalls",
+      "chapter": "Special Cases, Anomalies, and Analytical Pitfalls",
+      "chapter_id": "ch-8"
+    }
+  ],
+  "total_chapters": 8,
+  "total_sections": 13
+}

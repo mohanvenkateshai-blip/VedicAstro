@@ -4,9 +4,39 @@ import { DEFAULT_GRAPH_VERSION, GraphNodeRow, searchGraphNodes, listCorpusSource
 import fs from "fs";
 import path from "path";
 
-const STRUCTURED_DIR = path.join(process.cwd(), "..", "knowledge-graph", "structured"); // from portal/ to root
-const PATCHES_DIR = path.join(process.cwd(), "..", "knowledge-graph", "patches");
-const PATCH_PATH = path.join(PATCHES_DIR, "node-chapter-map.json");
+/** Resolve data dirs: bundled portal/data/ (Vercel) then monorepo knowledge-graph/ (local dev). */
+function resolveDataDir(name: "structured" | "patches"): string {
+  const bundled = path.join(process.cwd(), "data", name);
+  if (fs.existsSync(bundled)) return bundled;
+  return path.join(process.cwd(), "..", "knowledge-graph", name);
+}
+
+function getStructuredDir(): string {
+  return resolveDataDir("structured");
+}
+
+function getPatchesDir(): string {
+  return resolveDataDir("patches");
+}
+
+/** Normalize URL slugs / canonical names into lookup keys (underscore stem is canonical on disk). */
+export function bookIdVariants(bookId: string): string[] {
+  const trimmed = (bookId || "").trim();
+  if (!trimmed) return [];
+  const spaced = trimmed.replace(/[-_]+/g, " ");
+  const underscored = trimmed.replace(/-/g, "_").replace(/\s+/g, "_");
+  return [...new Set([trimmed, spaced, underscored, trimmed.replace(/_/g, "-")].filter(Boolean))];
+}
+
+/** All id strings to try when locating a structured JSON on disk or via fuzzy scan. */
+function structuredLookupIds(...hints: (string | null | undefined)[]): string[] {
+  const out: string[] = [];
+  for (const hint of hints) {
+    if (!hint) continue;
+    for (const v of bookIdVariants(hint)) out.push(v);
+  }
+  return [...new Set(out)];
+}
 
 export type StructuredSection = {
   id: string;
@@ -153,14 +183,26 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
  * Chapters are inferred from nodes that have source_location or section-like labels.
  * This mirrors how KnowledgeEngine / gyan-corpus-extract.py structures books.
  */
+function findCorpusSource(sources: CorpusSource[], bookId: string): CorpusSource | undefined {
+  const variants = bookIdVariants(bookId);
+  return sources.find((s) => {
+    const stem = s.storage_path?.split("/").pop()?.replace(/\.md$/, "") ?? "";
+    return variants.some(
+      (v) =>
+        s.canonical_name === v ||
+        stem === v ||
+        stem.replace(/_/g, "-") === v.replace(/_/g, "-") ||
+        (s.storage_path && s.storage_path.includes(v.replace(/\s+/g, "_"))),
+    );
+  });
+}
+
 export async function loadBook(
   bookId: string,
   graphVersion = DEFAULT_GRAPH_VERSION,
 ): Promise<BookContent> {
   const sources = await listCorpusSources();
-  const source = sources.find(
-    (s) => s.canonical_name === bookId || s.storage_path?.includes(bookId),
-  );
+  const source = findCorpusSource(sources, bookId);
 
   if (!source) {
     throw new Error(`Book not found: ${bookId}`);
@@ -209,13 +251,12 @@ export async function loadBook(
   });
 
   // === AUTHORITATIVE STRUCTURED CHAPTERS (from build_structured_library.py) ===
-  // This is the primary, clean, "organised from the beginning" TOC.
-  // It comes from parsing the real Gyan source markdown with proper heading/numbered-section logic.
-  // We prefer this over the weak graph node source_location (which produced "frontmatter", "H1", bad order).
-  const structured = loadStructuredBook(bookId) || loadStructuredBook(source.canonical_name) || loadStructuredBook(fileKey || "");
+  // Always prefer structured JSON when present — never fall back to graph node source_location buckets
+  // (frontmatter / H1 / H2) if a structured file exists for any alias of this book.
+  const structured = resolveStructuredBookSync(bookId, source.canonical_name, fileKey);
   let chapters: Chapter[] = [];
 
-  if (structured && structured.chapters && structured.chapters.length > 0) {
+  if (structured?.chapters?.length) {
     chapters = chaptersFromStructured(structured);
   } else {
     // Legacy fallback: build from nodes (the old bad path)
@@ -289,9 +330,10 @@ export async function loadBook(
  */
 export function loadStructuredBook(bookId: string): StructuredBook | null {
   try {
+    const structuredDir = getStructuredDir();
     const candidates = [
-      path.join(STRUCTURED_DIR, `${bookId}.json`),
-      path.join(STRUCTURED_DIR, `${bookId.replace(/\s+/g, "_")}.json`),
+      path.join(structuredDir, `${bookId}.json`),
+      path.join(structuredDir, `${bookId.replace(/\s+/g, "_")}.json`),
     ];
     for (const p of candidates) {
       if (fs.existsSync(p)) {
@@ -300,10 +342,10 @@ export function loadStructuredBook(bookId: string): StructuredBook | null {
       }
     }
     // fuzzy scan
-    if (fs.existsSync(STRUCTURED_DIR)) {
-      const files = fs.readdirSync(STRUCTURED_DIR).filter(f => f.endsWith(".json"));
+    if (fs.existsSync(structuredDir)) {
+      const files = fs.readdirSync(structuredDir).filter(f => f.endsWith(".json"));
       for (const f of files) {
-        const full = path.join(STRUCTURED_DIR, f);
+        const full = path.join(structuredDir, f);
         const data = JSON.parse(fs.readFileSync(full, "utf8")) as StructuredBook;
         if (
           data.book_id === bookId ||
@@ -365,6 +407,8 @@ export type NodeProvenance = {
  */
 export function loadNodeChapterPatch(bookId?: string): { patches?: Array<{ node_id: string; chapter_id: string; section_id?: string | null; book_id?: string; hierarchy_path?: string; method?: string; confidence?: number; matched_on?: string }> } | null {
   try {
+    const patchesDir = getPatchesDir();
+    const patchPath = path.join(patchesDir, "node-chapter-map.json");
     if (bookId) {
       const variants = [
         bookId,
@@ -372,17 +416,17 @@ export function loadNodeChapterPatch(bookId?: string): { patches?: Array<{ node_
         bookId.replace(/ /g, "_"),
       ].filter((v, i, a) => v && a.indexOf(v) === i);
       for (const v of variants) {
-        const perBookPath = path.join(PATCHES_DIR, `patch-${v}.json`);
+        const perBookPath = path.join(patchesDir, `patch-${v}.json`);
         if (fs.existsSync(perBookPath)) {
           const raw = fs.readFileSync(perBookPath, "utf8");
           return JSON.parse(raw);
         }
       }
       // fuzzy scan for per-book patches by content
-      if (fs.existsSync(PATCHES_DIR)) {
-        const files = fs.readdirSync(PATCHES_DIR).filter((f) => f.startsWith("patch-") && f.endsWith(".json"));
+      if (fs.existsSync(patchesDir)) {
+        const files = fs.readdirSync(patchesDir).filter((f) => f.startsWith("patch-") && f.endsWith(".json"));
         for (const f of files) {
-          const full = path.join(PATCHES_DIR, f);
+          const full = path.join(patchesDir, f);
           try {
             const data = JSON.parse(fs.readFileSync(full, "utf8"));
             const bks = (data.books || []) as string[];
@@ -394,8 +438,8 @@ export function loadNodeChapterPatch(bookId?: string): { patches?: Array<{ node_
         }
       }
     }
-    if (fs.existsSync(PATCH_PATH)) {
-      const raw = fs.readFileSync(PATCH_PATH, "utf8");
+    if (fs.existsSync(patchPath)) {
+      const raw = fs.readFileSync(patchPath, "utf8");
       return JSON.parse(raw);
     }
   } catch {}
@@ -455,8 +499,22 @@ export function enrichChaptersWithNodeIds(chapters: Chapter[], bookId: string, p
 }
 
 /**
+ * Load the raw source markdown for a book when a storagePath is known.
+ * Used to serve full chapter text (not just graph nodes) and image-capable prose.
+ */
+async function loadRawMarkdownForSource(storagePath: string | null | undefined): Promise<string | null> {
+  if (!storagePath) return null;
+  try {
+    const { data: blob } = await supabase.storage.from("corpus-vault").download(storagePath);
+    if (blob) return await blob.text();
+  } catch {}
+  return null;
+}
+
+/**
  * Load full content + nodes for a specific chapter.
- * Uses the nodes already loaded in loadBook (robust source_file matching) and filters by chapter.
+ * Prefers structured line ranges over the source markdown (when available) to return
+ * the real full chapter text instead of a stub. Falls back to a minimal header if no source.
  */
 export async function getChapterContent(
   bookId: string,
@@ -469,10 +527,30 @@ export async function getChapterContent(
 
   const chapterNodes = book.nodes.filter((n) => chapter.nodeIds.includes(n.id));
 
+  // Best effort: real chapter body via structured ranges + original Gyan source
+  let chapterMarkdown = `# ${chapter.title}\n\n`;
+  const structured = loadStructuredBook(bookId) || loadStructuredBook(book.metadata.canonicalName) || loadStructuredBook((book.metadata as any).id || "");
+  const full = await loadRawMarkdownForSource(book.metadata.storagePath);
+  if (structured && full) {
+    // Locate the chapter (or section treated as chapter target) in the structured tree
+    const chEntry =
+      (structured.chapters || []).find((c: any) => c.id === chapterId) ||
+      (structured.chapters || []).flatMap((c: any) => c.sections || []).find((s: any) => s.id === chapterId);
+    const p = (chapter.properties || {}) as any;
+    const start = typeof chEntry?.start_line === "number" ? chEntry.start_line : (typeof p.start_line === "number" ? p.start_line : undefined);
+    const end = typeof chEntry?.end_line === "number" ? chEntry.end_line : (typeof p.end_line === "number" ? p.end_line : undefined);
+    if (typeof start === "number") {
+      const lines = full.split(/\r?\n/);
+      const endEx = typeof end === "number" ? end + 1 : lines.length;
+      const slice = lines.slice(Math.max(0, start), Math.min(lines.length, endEx)).join("\n").trim();
+      if (slice) chapterMarkdown = slice;
+    }
+  }
+
   return {
     chapterId,
     title: chapter.title,
-    markdown: `# ${chapter.title}\n\n(Full markdown content loaded from Gyan source or corpus_chunks on demand.)`,
+    markdown: chapterMarkdown,
     nodes: chapterNodes,
   };
 }
@@ -485,42 +563,6 @@ export async function getBookNodes(bookId: string, graphVersion = DEFAULT_GRAPH_
   const source = sources.find((s) => s.canonical_name.includes(bookId));
   if (!source) return [];
   return searchGraphNodes({ graphVersion, sourceFile: source.canonical_name, limit: 1000 });
-}
-
-/**
- * Optional: fetch the KE-owned structured book (chapter tree + per-chapter nodes)
- * via the CVCE proxy. Falls back to null if the endpoint is not reachable.
- * Use this when you want the server component to ask the authoritative KnowledgeEngine
- * instead of (or in addition to) reading the JSON files on disk.
- */
-export async function fetchStructuredBookFromKE(bookId: string): Promise<any | null> {
-  try {
-    const res = await fetch(`/api/cvce/knowledge/structured/${encodeURIComponent(bookId)}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Convert a response from KnowledgeEngine.get_structured_book (or /knowledge/structured/{id})
- * into the (Chapter[], nodesByChapterMap) shape the reader expects.
- */
-export function chaptersAndNodesFromKeStructured(keBook: any): { chapters: Chapter[]; nodesByChapter: Record<string, any[]> } {
-  const rawChapters = keBook?.chapters || [];
-  const chapters: Chapter[] = rawChapters.map((ch: any, i: number) => ({
-    id: ch.id,
-    title: ch.title,
-    order: i,
-    sourceLocation: ch.number ? `Chapter ${ch.number}` : undefined,
-    nodeIds: (keBook?.chapter_node_ids?.[ch.id] || []) as string[],
-    properties: { level: ch.level, structured: true, source: "ke" },
-  }));
-  const nodesByChapter: Record<string, any[]> = keBook?.nodes_by_chapter || {};
-  return { chapters, nodesByChapter };
 }
 
 export type MarkdownSection = {
@@ -618,11 +660,14 @@ export function sectionsFromStructured(
     const chEndEx = typeof ch.end_line === "number" ? ch.end_line + 1 : lines.length;
 
     if (hasSections && ch.sections) {
-      // Lightweight chapter header block (title + short lead) so the chapter id is targetable.
-      const lead = lines.slice(Math.max(0, chStart), Math.min(lines.length, chEndEx)).join("\n").trim();
-      // Use a compact header so the main readable content lives in the section slices.
-      const headerContent = lead.split("\n").slice(0, 3).join("\n").trim() || ch.title;
-      blocks.push({ id: ch.id, title: ch.title || `Chapter ${ch.number || ""}`.trim(), content: headerContent });
+      // Full chapter content (not a slice) so the chapter id renders the complete prose for that chapter.
+      // Section entries remain for precise deep links (?section=) and intra-chapter jumps.
+      const chapterFull = lines.slice(Math.max(0, chStart), Math.min(lines.length, chEndEx)).join("\n").trim();
+      blocks.push({
+        id: ch.id,
+        title: ch.title || `Chapter ${ch.number || ""}`.trim(),
+        content: chapterFull || ch.title,
+      });
 
       for (const sec of ch.sections) {
         const sStart = typeof sec.start_line === "number" ? sec.start_line : chStart;

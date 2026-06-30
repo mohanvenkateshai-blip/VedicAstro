@@ -30,8 +30,11 @@ export default async function LearnPage() {
         <div className="flex items-end justify-between mb-6">
           <div>
             <h2 id="library-heading" className="font-display text-3xl tracking-[-0.01em]">Book Library</h2>
-            <p className="text-sm text-text-muted mt-1">
+            <p className="text-sm text-text-muted mt-1 flex items-center gap-2">
               {books.length > 0 ? `${books.length} texts from Knowledge Graph • newbooks-v1` : "Loading texts from Knowledge Graph..."}
+              {books.length > 0 && (
+                <span className="inline-flex items-center rounded border border-hairline px-1.5 py-0.5 text-[10px] tracking-[0.5px] text-text-muted/80">61 books • chapter-precise</span>
+              )}
             </p>
           </div>
         </div>
@@ -61,6 +64,7 @@ export default async function LearnPage() {
                   <div className="mt-6 pt-5 border-t border-hairline flex items-center justify-between text-sm">
                     <span className="font-mono text-xs uppercase tracking-[0.08em] text-text-muted">
                       {(book.nodeCount ?? 0) > 0 ? `${book.nodeCount} nodes` : 'Full text available'}
+                      {book.chapterCount ? ` • ${book.chapterCount} chapters` : ""}
                     </span>
                     <Link
                       href={isJaimini ? "/learn/jaimini" : `/learn/${slug}`}
@@ -78,8 +82,8 @@ export default async function LearnPage() {
 
       {/* Note */}
       <div className="text-xs text-text-muted max-w-2xl">
-        Content is presented exactly as stored in the Knowledge Graph nodes. Some texts are extracted page-by-page or node-by-node.
-        Full continuous prose is available in the original sources synced to the corpus vault.
+        Structured books use the authoritative chapter/section TOC from the Gyan sources (with KE node provenance via patch).
+        Node-only books fall back gracefully. Click chapters to jump; deep links supported (?chapter=...&amp;section=...).
       </div>
     </div>
   );

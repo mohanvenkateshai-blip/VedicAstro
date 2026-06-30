@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/sync-structured-data.mjs",
+    "prebuild": "node scripts/sync-structured-data.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

@@ -1,0 +1,279 @@
+{
+  "book_id": "vedic_yoga_logic_engine",
+  "canonical_name": "vedic yoga logic engine",
+  "source_file": "vedic_yoga_logic_engine.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "high",
+  "chapters": [
+    {
+      "id": "ch-primitive_system_maps",
+      "number": null,
+      "title": "Primitive System Maps",
+      "level": 1,
+      "start_line": 22,
+      "end_line": 50,
+      "sections": [
+        {
+          "id": "ch-primitive_system_maps-sec-primitive_system_maps",
+          "title": "Primitive System Maps",
+          "level": 2,
+          "start_line": 22,
+          "end_line": 45,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-primitive_system_maps-sec-exaltation_debilitation_and_moolatrikona_boundaries",
+          "title": "Exaltation, Debilitation, and Moolatrikona Boundaries",
+          "level": 2,
+          "start_line": 46,
+          "end_line": 49,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " 1.1 Primitive System Maps  // Planet Primitives Mapping PLANETS = { 0: \"Sun\", 1: \"Moon\", 2: \"Mars\", 3: \"Mercury\", 4: \"Jupiter\", 5: \"Venus\", 6: \"Saturn\", 7: \"Rahu\", 8: \"Ketu\" };  // Rashi Primitives Mapping RASHIS = { 1: \"Aries\", 2: \"Taurus\", 3: \"Gemini\", 4: \"Cancer\", 5: \"Leo\", 6"
+    },
+    {
+      "id": "ch-planet_id",
+      "number": null,
+      "title": "Planet ID",
+      "level": 1,
+      "start_line": 51,
+      "end_line": 212,
+      "sections": [
+        {
+          "id": "ch-planet_id-sec-positional_aspect_graha_drishti_logic",
+          "title": "Positional Aspect (Graha Drishti) Logic",
+          "level": 2,
+          "start_line": 70,
+          "end_line": 87,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-planet_id-sec-combustion_astayana_orbs_matrix",
+          "title": "Combustion (Astayana) Orbs Matrix",
+          "level": 2,
+          "start_line": 88,
+          "end_line": 99,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-planet_id-sec-planetary_war_graha_yuddha_logic",
+          "title": "Planetary War (Graha Yuddha) Logic",
+          "level": 2,
+          "start_line": 100,
+          "end_line": 102,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-planet_id-sec-neechabhanga_debilitation_cancellation_validation_matrix",
+          "title": "Neechabhanga (Debilitation Cancellation) Validation Matrix",
+          "level": 2,
+          "start_line": 103,
+          "end_line": 135,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-planet_id-sec-pancha_mahapurusha_yogas",
+          "title": "Pancha Mahapurusha Yogas",
+          "level": 2,
+          "start_line": 136,
+          "end_line": 209,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-planet_id-sec-nabhasa_yogas_structural_formations",
+          "title": "Nabhasa Yogas (Structural Formations)",
+          "level": 2,
+          "start_line": 210,
+          "end_line": 211,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " Planet ID  Name  Exaltation Rashi  Deep Degree  Debilitation Rashi  Moolatrikona Rashi / Range    "
+    },
+    {
+      "id": "ch-a_asraya_yogas",
+      "number": null,
+      "title": "A. Asraya Yogas",
+      "level": 1,
+      "start_line": 213,
+      "end_line": 218,
+      "sections": [],
+      "content_preview": " A. Asraya Yogas    Musala Yoga: All planets restricted exclusively to Fixed Rashis (2, 5, 8, 11). System output: High stability, slow to pivot, unyielding architecture.  Nabla Yoga: All planets restricted exclusively to Dual Rashis (3, 6, 9, 12). System output: Versatile, dual-t"
+    },
+    {
+      "id": "ch-b_akriti_yogas_geometric_distribution",
+      "number": null,
+      "title": "B. Akriti Yogas (Geometric Distribution)",
+      "level": 1,
+      "start_line": 219,
+      "end_line": 255,
+      "sections": [
+        {
+          "id": "ch-b_akriti_yogas_geometric_distribution-sec-raja_yogas_and_structural_combinations",
+          "title": "Raja Yogas and Structural Combinations",
+          "level": 2,
+          "start_line": 229,
+          "end_line": 254,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " B. Akriti Yogas (Geometric Distribution)    Gada Yoga: All seven planets (Sun through Saturn) must be stationed in two adjacent Kendra houses (e.g., 1st and 4th houses).  Sakata Yoga: All planets must occupy exclusively the 1st and 7th houses. Yields structural disruptions balan"
+    },
+    {
+      "id": "ch-key_classic_combinations_from_jataka_tattva_saravali",
+      "number": null,
+      "title": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "level": 1,
+      "start_line": 256,
+      "end_line": 364,
+      "sections": [
+        {
+          "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-planetary_transit_vedha_obstruction_matrix",
+          "title": "Planetary Transit Vedha (Obstruction) Matrix",
+          "level": 2,
+          "start_line": 275,
+          "end_line": 297,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-the_ashtakavarga_dynamic_filter",
+          "title": "The Ashtakavarga Dynamic Filter",
+          "level": 2,
+          "start_line": 298,
+          "end_line": 329,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-complete_structural_json_data_schema",
+          "title": "Complete Structural JSON Data Schema",
+          "level": 2,
+          "start_line": 330,
+          "end_line": 352,
+          "content_preview": ""
+        },
+        {
+          "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-logic_core_pipeline",
+          "title": "Logic Core Pipeline",
+          "level": 2,
+          "start_line": 353,
+          "end_line": 363,
+          "content_preview": ""
+        }
+      ],
+      "content_preview": " Key Classic Combinations from Jataka Tattva & Saravali    Gaja Kesari Yoga: Jupiter positioned in a Kendra house (1st, 4th, 7th, 10th) measured relative to the Moon's placement.   Condition: $((House_{Jupiter} - House_{Moon} + 12) \\pmod{12} + 1) \\in \\{1, 4, 7, 10\\}$  Enhancement"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-primitive_system_maps-sec-primitive_system_maps",
+      "title": "Primitive System Maps",
+      "chapter": "Primitive System Maps",
+      "chapter_id": "ch-primitive_system_maps"
+    },
+    {
+      "id": "ch-primitive_system_maps-sec-exaltation_debilitation_and_moolatrikona_boundaries",
+      "title": "Exaltation, Debilitation, and Moolatrikona Boundaries",
+      "chapter": "Primitive System Maps",
+      "chapter_id": "ch-primitive_system_maps"
+    },
+    {
+      "id": "ch-primitive_system_maps",
+      "title": "Primitive System Maps",
+      "chapter": "Primitive System Maps",
+      "chapter_id": "ch-primitive_system_maps"
+    },
+    {
+      "id": "ch-planet_id-sec-positional_aspect_graha_drishti_logic",
+      "title": "Positional Aspect (Graha Drishti) Logic",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-planet_id-sec-combustion_astayana_orbs_matrix",
+      "title": "Combustion (Astayana) Orbs Matrix",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-planet_id-sec-planetary_war_graha_yuddha_logic",
+      "title": "Planetary War (Graha Yuddha) Logic",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-planet_id-sec-neechabhanga_debilitation_cancellation_validation_matrix",
+      "title": "Neechabhanga (Debilitation Cancellation) Validation Matrix",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-planet_id-sec-pancha_mahapurusha_yogas",
+      "title": "Pancha Mahapurusha Yogas",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-planet_id-sec-nabhasa_yogas_structural_formations",
+      "title": "Nabhasa Yogas (Structural Formations)",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-planet_id",
+      "title": "Planet ID",
+      "chapter": "Planet ID",
+      "chapter_id": "ch-planet_id"
+    },
+    {
+      "id": "ch-a_asraya_yogas",
+      "title": "A. Asraya Yogas",
+      "chapter": "A. Asraya Yogas",
+      "chapter_id": "ch-a_asraya_yogas"
+    },
+    {
+      "id": "ch-b_akriti_yogas_geometric_distribution-sec-raja_yogas_and_structural_combinations",
+      "title": "Raja Yogas and Structural Combinations",
+      "chapter": "B. Akriti Yogas (Geometric Distribution)",
+      "chapter_id": "ch-b_akriti_yogas_geometric_distribution"
+    },
+    {
+      "id": "ch-b_akriti_yogas_geometric_distribution",
+      "title": "B. Akriti Yogas (Geometric Distribution)",
+      "chapter": "B. Akriti Yogas (Geometric Distribution)",
+      "chapter_id": "ch-b_akriti_yogas_geometric_distribution"
+    },
+    {
+      "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-planetary_transit_vedha_obstruction_matrix",
+      "title": "Planetary Transit Vedha (Obstruction) Matrix",
+      "chapter": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "chapter_id": "ch-key_classic_combinations_from_jataka_tattva_saravali"
+    },
+    {
+      "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-the_ashtakavarga_dynamic_filter",
+      "title": "The Ashtakavarga Dynamic Filter",
+      "chapter": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "chapter_id": "ch-key_classic_combinations_from_jataka_tattva_saravali"
+    },
+    {
+      "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-complete_structural_json_data_schema",
+      "title": "Complete Structural JSON Data Schema",
+      "chapter": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "chapter_id": "ch-key_classic_combinations_from_jataka_tattva_saravali"
+    },
+    {
+      "id": "ch-key_classic_combinations_from_jataka_tattva_saravali-sec-logic_core_pipeline",
+      "title": "Logic Core Pipeline",
+      "chapter": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "chapter_id": "ch-key_classic_combinations_from_jataka_tattva_saravali"
+    },
+    {
+      "id": "ch-key_classic_combinations_from_jataka_tattva_saravali",
+      "title": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "chapter": "Key Classic Combinations from Jataka Tattva & Saravali",
+      "chapter_id": "ch-key_classic_combinations_from_jataka_tattva_saravali"
+    }
+  ],
+  "total_chapters": 5,
+  "total_sections": 13
+}
