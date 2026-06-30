@@ -405,3 +405,12 @@ def predict_yogini_antardasha(
             result["caution"].append(f"Antar Yogini ({antar_yogini}) caution: {antar_caution[0]}")
 
     return result
+
+
+# Light-touch registration wiring for dasha KE (revive path)
+try:
+    from vedic_engine.prediction import dasha as _dasha_core  # type: ignore
+
+    _dasha_core._ensure_dasha_registered()
+except Exception:
+    pass

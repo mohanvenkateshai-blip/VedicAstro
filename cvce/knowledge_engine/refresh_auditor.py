@@ -47,12 +47,33 @@ def _probe_gochar(ke: KnowledgeEngine) -> dict[str, Any]:
             rules_meta["source"] = "hardcoded"
         elif hasattr(rules, "_tables"):
             tables = rules._tables
+            st = getattr(rules, "stats", {}) or {}
+            # Capture enrichment + citation signals for impact scoring
+            eff_nodes = sum(1 for t in tables.values() if t.get("_effect_good") or t.get("_per_house_notes"))
+            cite_sample = 0
+            try:
+                if hasattr(rules, "get_citations"):
+                    for p in ["Sun", "Moon", "Jupiter"]:
+                        cite_sample += len(rules.get_citations(p, 3) or [])
+            except Exception:
+                pass
+            bid = getattr(rules, "_build_id", 0)
             rules_meta = {
                 "available": True,
                 "source": "graph",
                 "planet_count": len(tables),
                 "entry_count": sum(len(v) for v in tables.values()),
-                "content_hash": _fingerprint(tables),
+                "houses_enriched": st.get("houses_enriched", eff_nodes),
+                "citations_sample": cite_sample,
+                "build_id": bid,
+                "content_hash": _fingerprint(
+                    {
+                        "tables": tables,
+                        "enriched": st.get("houses_enriched", eff_nodes),
+                        "cites": cite_sample,
+                        "bid": bid,
+                    }
+                ),
             }
         else:
             rules_meta = {"available": True, "source": type(rules).__name__}
@@ -146,12 +167,92 @@ def _probe_generic(ke: KnowledgeEngine, engine_name: str) -> dict[str, Any]:
     return snapshot
 
 
+def _probe_ashtakavarga(ke: KnowledgeEngine) -> dict[str, Any]:
+    snapshot: dict[str, Any] = {"knowledge": _safe_knowledge_snapshot(ke, "ashtakavarga")}
+    try:
+        nodes = ke.query_nodes(pattern="*ashtakavarga*", limit=500)
+        books: list[str] = []
+        try:
+            # Best-effort: check if structured books are reachable via integration
+            from .integration import get_structured_book
+            for bid in ("BPHS", "Ashtakavarga_System_Comprehensive_Handbook"):
+                if get_structured_book(bid):
+                    books.append(bid)
+        except Exception:
+            pass
+        src = "graph" if nodes else ("mixed" if books else "hardcoded")
+        snapshot["domain"] = {
+            "pattern": "*ashtakavarga*",
+            "node_count": len(nodes),
+            "structured_books": books,
+            "source": src,
+        }
+    except Exception as exc:
+        snapshot["domain"] = {"error": str(exc), "source": "error"}
+    snapshot["fingerprint"] = _fingerprint(snapshot.get("domain", {}))
+    return snapshot
+
+
+def _probe_panchanga(ke: KnowledgeEngine) -> dict[str, Any]:
+    snapshot: dict[str, Any] = {"knowledge": _safe_knowledge_snapshot(ke, "panchanga")}
+    try:
+        nodes = ke.query_nodes(pattern="*panchanga*", limit=300)
+        # panchanga leans on astronomy math + some structured context
+        src = "graph" if len(nodes) > 5 else ("mixed" if nodes else "hardcoded")
+        snapshot["domain"] = {
+            "pattern": "*panchanga*",
+            "node_count": len(nodes),
+            "source": src,
+        }
+    except Exception as exc:
+        snapshot["domain"] = {"error": str(exc), "source": "error"}
+    snapshot["fingerprint"] = _fingerprint(snapshot.get("domain", {}))
+    return snapshot
+
+
+def _probe_kp(ke: KnowledgeEngine) -> dict[str, Any]:
+    snapshot: dict[str, Any] = {"knowledge": _safe_knowledge_snapshot(ke, "kp_system")}
+    try:
+        nodes = ke.query_nodes(pattern="*kp*", limit=500)
+        src = "graph" if nodes else "hardcoded"
+        snapshot["domain"] = {
+            "pattern": "*kp*",
+            "node_count": len(nodes),
+            "source": src,
+        }
+    except Exception as exc:
+        snapshot["domain"] = {"error": str(exc), "source": "error"}
+    snapshot["fingerprint"] = _fingerprint(snapshot.get("domain", {}))
+    return snapshot
+
+
+def _probe_prashna(ke: KnowledgeEngine) -> dict[str, Any]:
+    snapshot: dict[str, Any] = {"knowledge": _safe_knowledge_snapshot(ke, "prashna")}
+    try:
+        nodes = ke.query_nodes(pattern="*prashna*", limit=500)
+        src = "graph" if nodes else "hardcoded"
+        snapshot["domain"] = {
+            "pattern": "*prashna*",
+            "node_count": len(nodes),
+            "source": src,
+        }
+    except Exception as exc:
+        snapshot["domain"] = {"error": str(exc), "source": "error"}
+    snapshot["fingerprint"] = _fingerprint(snapshot.get("domain", {}))
+    return snapshot
+
+
 ENGINE_PROBES: dict[str, ProbeFn] = {
     "gochar": _probe_gochar,
     "muhurta": _probe_muhurta,
     "report": _probe_report,
     "dasha": _probe_dasha,
     "yoga": _probe_yoga,
+    "ashtakavarga": _probe_ashtakavarga,
+    "panchanga": _probe_panchanga,
+    "kp": _probe_kp,
+    "kp_system": _probe_kp,
+    "prashna": _probe_prashna,
 }
 
 
@@ -294,3 +395,37 @@ class KnowledgeRefreshAuditor:
         self.trigger_refresh(reason=reason)
         self.capture_post_refresh()
         return self.compare_and_score()
+
+
+def run_all_probes(ke: KnowledgeEngine | None = None) -> dict[str, Any]:
+    """Machine-readable snapshot of current probe state for all supported + registered engines.
+
+    Returns: {"probes_run": N, "results": {name: probe_dict, ...}, "supported": [...]}
+    Does not trigger refresh. Safe to call from CLI scripts.
+    """
+    if ke is None:
+        from .integration import get_knowledge_engine
+        ke = get_knowledge_engine()
+    results: dict[str, Any] = {}
+    supported = sorted(ENGINE_PROBES.keys())
+    registered = set(ke.registry.registered_names()) if ke and ke.registry else set()
+    targets = sorted(set(supported) | (registered & set(supported)))
+    # Also include registered names without dedicated probes via generic
+    for name in sorted(registered):
+        if name not in targets:
+            targets.append(name)
+    for name in targets:
+        probe = ENGINE_PROBES.get(name)
+        try:
+            if probe:
+                results[name] = probe(ke)
+            else:
+                results[name] = _probe_generic(ke, name)
+        except Exception as exc:
+            results[name] = {"error": str(exc), "source": "error"}
+    return {
+        "probes_run": len(results),
+        "supported": supported,
+        "registered": sorted(registered),
+        "results": results,
+    }

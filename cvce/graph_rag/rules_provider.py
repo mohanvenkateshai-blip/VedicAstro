@@ -44,6 +44,28 @@ from vedic_engine.rules.transit_rules import TRANSIT_HOUSES
 
 from .graph import GraphRAG
 
+# Safe graph accessor (preferred); falls back to direct GraphRAG inside provider only
+def _get_graph_for_rules():
+    try:
+        from knowledge_engine.integration import get_safe_graph
+
+        g = get_safe_graph()
+        # Some stores expose .graph; normalize to something with .nodes/.links
+        if hasattr(g, "nodes") and hasattr(g, "links"):
+            return g
+        # If store, try to surface nodes via thin access
+        if hasattr(g, "get_nodes") and hasattr(g, "get_links"):
+            class _StoreView:
+                def __init__(self, store):
+                    self._store = store
+                    self.nodes = store.get_nodes(limit=200000) or []
+                    self.links = store.get_links(limit=200000) or []
+
+            return _StoreView(g)
+    except Exception:
+        pass
+    return GraphRAG()
+
 # ── Relation type sets ────────────────────────────────────────────────────────
 
 # Explicit planet→house transit quality relations (GPD nodes only in graph.json)
@@ -153,13 +175,35 @@ class GraphTransitRules:
             cls._instance._built = False
         return cls._instance
 
+    @classmethod
+    def rebuild(cls) -> "GraphTransitRules":
+        """Force a fresh rules instance (used by refresh to drop stale graph data)."""
+        cls._instance = None
+        inst = cls()
+        inst._built = False
+        # Re-init path will rebuild
+        inst.__init__()
+        return inst
+
+    _build_seq: int = 0
+
     def __init__(self):
         if getattr(self, "_built", False):
             return
-        self.graph = GraphRAG()
-        self.graph._load()  # ensure loaded
+        self.graph = _get_graph_for_rules()
+        # Ensure load for direct GraphRAG; safe views are pre-populated
+        if hasattr(self.graph, "_load"):
+            try:
+                self.graph._load()
+            except Exception:
+                pass
         self._tables: dict[str, dict] = {}
+        self._effects: dict[str, dict] = {}
+        self._citations: dict[str, dict] = {}  # planet -> house -> list[dict node,text]
         self._build_tables()
+        self._load_richer_effects()
+        GraphTransitRules._build_seq += 1
+        self._build_id = GraphTransitRules._build_seq
         self._built = True
 
     # ── Private helpers ───────────────────────────────────────────────────────
@@ -326,6 +370,109 @@ class GraphTransitRules:
             # Round confidence values
             tbl["_confidence"] = {h: round(v, 2) for h, v in tbl["_confidence"].items()}
 
+    # ── Richer effects from graph node labels (GPD effect nodes) ─────────────
+    def _load_richer_effects(self):
+        """Load planet-level good/bad effect snippets and per-house exceptions.
+
+        Targets nodes like:
+          gochar_phaladeepika_pulippani_sun_good_effect
+          gochar_phaladeepika_pulippani_sun_bad_effect
+          gochar_phaladeepika_pulippani_sun_in_5_worst
+        Stores in self._effects[planet] and self._citations for provenance.
+        """
+        planets = list(self._tables.keys())
+        if not planets:
+            planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+        nmap = {n.get("id", ""): n for n in getattr(self.graph, "nodes", []) or []}
+
+        eff_map: dict[str, dict] = {p: {"good": None, "bad": None, "worst": None} for p in planets}
+        cites: dict[str, dict] = {p: {} for p in planets}
+
+        pat = re.compile(r"gochar_phaladeepika_pulippani_([a-z]+)_(good|bad|worst)_effect", re.I)
+        house_pat = re.compile(r"gochar_phaladeepika_pulippani_([a-z]+)_in_(\d+)_", re.I)
+
+        for nid, node in nmap.items():
+            if "gochar_phaladeepika_pulippani" not in nid:
+                continue
+            lab = node.get("label", "") or ""
+            m = pat.search(nid)
+            if m:
+                pkey = m.group(1).lower()
+                kind = m.group(2).lower()
+                planet = {
+                    "sun": "Sun",
+                    "moon": "Moon",
+                    "mars": "Mars",
+                    "mercury": "Mercury",
+                    "jupiter": "Jupiter",
+                    "venus": "Venus",
+                    "saturn": "Saturn",
+                    "rahu": "Rahu",
+                    "ketu": "Ketu",
+                }.get(pkey)
+                if planet:
+                    eff_map[planet][kind] = lab
+                    cites[planet].setdefault("_planet", []).append({"node": nid, "text": lab[:200]})
+                    continue
+            hm = house_pat.search(nid)
+            if hm:
+                pkey = hm.group(1).lower()
+                h = int(hm.group(2))
+                planet = {
+                    "sun": "Sun",
+                    "moon": "Moon",
+                    "mars": "Mars",
+                    "mercury": "Mercury",
+                    "jupiter": "Jupiter",
+                    "venus": "Venus",
+                    "saturn": "Saturn",
+                    "rahu": "Rahu",
+                    "ketu": "Ketu",
+                }.get(pkey)
+                if planet and 1 <= h <= 12:
+                    bucket = cites[planet].setdefault(h, [])
+                    bucket.append({"node": nid, "text": lab[:160]})
+                    # Also seed a house-specific note into effects for that house
+                    if "worst" in nid.lower():
+                        eff_map[planet].setdefault("per_house", {}).setdefault(h, []).append(lab[:140])
+                    elif "good" in nid.lower():
+                        eff_map[planet].setdefault("per_house", {}).setdefault(h, []).append(lab[:140])
+
+        # Also harvest from aggregate benefic/malefic labels for exceptions (e.g. "worst in 5th")
+        for nid, node in nmap.items():
+            if "gochar_phaladeepika_pulippani" not in nid or not nid.endswith(("_benefic_houses", "_malefic_houses")):
+                continue
+            lab = node.get("label", "") or ""
+            planet, _kind = self._planet_from_house_node(nid)
+            if not planet:
+                continue
+            # parenthetical worst notes
+            wm = re.search(r"worst in (\d+)[^\)]*\)", lab, re.I)
+            if wm:
+                wh = int(wm.group(1))
+                note = lab
+                eff_map[planet].setdefault("per_house", {}).setdefault(wh, []).append(note[:140])
+                cites[planet].setdefault(wh, []).append({"node": nid, "text": note[:160]})
+
+        self._effects = eff_map
+        self._citations = cites
+
+        # Attach effect snippets into per-planet tables for quick access
+        for p in planets:
+            tbl = self._tables.get(p)
+            if not tbl:
+                continue
+            eff = eff_map.get(p, {})
+            if eff.get("good"):
+                tbl["_effect_good"] = eff["good"]
+            if eff.get("bad"):
+                tbl["_effect_bad"] = eff["bad"]
+            if eff.get("worst"):
+                tbl["_effect_worst"] = eff["worst"]
+            ph = eff.get("per_house") or {}
+            if ph:
+                tbl["_per_house_notes"] = {h: notes[:2] for h, notes in ph.items()}
+
     # ── Public API ────────────────────────────────────────────────────────────
 
     def transit_houses(self, planet: str) -> dict:
@@ -364,28 +511,63 @@ class GraphTransitRules:
         return tbl.get("_confidence", {}).get(house, 0.5)
 
     def transit_effects(self, planet: str, house: int) -> list[str]:
-        """Short house verdict lines for gochar.py effect strings."""
+        """House verdict lines, preferring richer graph-derived effect text when present."""
         quality, verdict, _ = self.house_quality(planet, house)
         conf = self.confidence(planet, house)
+        tbl = self._tables.get(planet, {})
+        # Prefer planet-level or per-house note harvested from graph
+        note = None
+        ph = tbl.get("_per_house_notes") or {}
+        if house in ph and ph[house]:
+            note = ph[house][0]
+        elif quality == "good" and tbl.get("_effect_good"):
+            note = tbl["_effect_good"]
+        elif quality == "bad" and tbl.get("_effect_bad"):
+            note = tbl["_effect_bad"]
+        elif quality == "worst" and tbl.get("_effect_worst"):
+            note = tbl["_effect_worst"]
         sources = "GPD Ch.10 + Hora Sara Ch.17"
+        base = ""
         if quality == "good":
-            return [f"In {house}th from Janma Rasi — favourable ({sources}, confidence {conf:.0%})"]
-        if quality == "bad":
-            return [
-                f"In {house}th from Janma Rasi — unfavourable ({sources}, confidence {conf:.0%})"
-            ]
-        if quality == "worst":
-            return [f"In {house}th from Janma Rasi — worst position; caution advised ({sources})"]
-        return [f"In {house}th from Janma Rasi — neutral house for {planet}"]
+            base = f"In {house}th from Janma Rasi — favourable ({sources}, confidence {conf:.0%})"
+        elif quality == "bad":
+            base = f"In {house}th from Janma Rasi — unfavourable ({sources}, confidence {conf:.0%})"
+        elif quality == "worst":
+            base = f"In {house}th from Janma Rasi — worst position; caution advised ({sources})"
+        else:
+            base = f"In {house}th from Janma Rasi — neutral house for {planet}"
+        if note:
+            return [base, str(note)]
+        return [base]
+
+    def get_citations(self, planet: str, house: int | None = None) -> list[dict]:
+        """Return graph node citations backing the classification/effects for (planet[,house])."""
+        cites = self._citations.get(planet, {})
+        out: list[dict] = []
+        if house is not None and house in cites:
+            out.extend(cites[house])
+        if "_planet" in cites:
+            out.extend(cites["_planet"])
+        # dedup by node id
+        seen = set()
+        uniq = []
+        for c in out:
+            nid = c.get("node")
+            if nid and nid not in seen:
+                seen.add(nid)
+                uniq.append(c)
+        return uniq
 
     @property
     def stats(self) -> dict:
+        enriched = sum(1 for t in self._tables.values() if t.get("_effect_good") or t.get("_per_house_notes"))
         return {
             "planets": len(self._tables),
             "source": "graph.json",
             "enabled": graph_rules_enabled(),
+            "houses_enriched": enriched,
             "corpus_sources": [
-                "gochar_phaladeepika_pulippani (primary — explicit transit relations + label parsing)",
+                "gochar_phaladeepika_pulippani (primary — explicit transit relations + label parsing + effect nodes)",
                 "hora_sara (Prithuyasas — confidence reinforcement via graph references)",
                 "sarvartha_chintamani (semantic conflict note — uses different Gochar concept)",
             ],
@@ -398,5 +580,15 @@ def active_transit_rules():
         return None
     try:
         return GraphTransitRules()
+    except Exception:
+        return None
+
+
+def rebuild_transit_rules():
+    """Force rebuild of graph transit rules (called on gochar refresh)."""
+    if not graph_rules_enabled():
+        return None
+    try:
+        return GraphTransitRules.rebuild()
     except Exception:
         return None

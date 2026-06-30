@@ -36,6 +36,13 @@ except ImportError:
     def active_transit_rules():
         return None
 
+try:
+    from graph_rag.rules_provider import rebuild_transit_rules as _rebuild_transit_rules
+except ImportError:
+
+    def _rebuild_transit_rules():
+        return None
+
 
 PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
 
@@ -45,22 +52,22 @@ _gochar_registered = False
 
 def _clear_transit_rules_cache() -> None:
     """Drop cached graph transit rules so the next gochar run reloads from graph.
-    Now routes through KnowledgeEngine gateway (no direct GraphRAG bypass).
+    Uses provider rebuild + KE cache clear (no direct GraphRAG bypass).
     """
     try:
         from knowledge_engine.integration import clear_knowledge_engine_cache
 
         clear_knowledge_engine_cache()
     except Exception:
-        # Fallback to old direct if KE not importable in this context
+        pass
+    try:
+        _rebuild_transit_rules()
+    except Exception:
+        # Last resort: reset provider singleton
         try:
             from graph_rag.rules_provider import GraphTransitRules
+
             GraphTransitRules._instance = None
-        except Exception:
-            pass
-        try:
-            from graph_rag.graph import GraphRAG
-            GraphRAG()._loaded = False
         except Exception:
             pass
 
@@ -69,6 +76,11 @@ def _on_gochar_refresh(new_version: str) -> None:
     global _rules_version
     _rules_version = new_version
     _clear_transit_rules_cache()
+    # Force active rules object to be rebuilt from current graph
+    try:
+        _rebuild_transit_rules()
+    except Exception:
+        pass
     # Propagate structured signals
     try:
         get_structured_book("Gochar_Phaladeepika")
@@ -120,6 +132,7 @@ class TransitPrediction:
     # Lagna-based parallel scoring (same house-quality tables, different reference)
     house_from_lagna: int | None = None
     lagna_score: int = 0
+    citations: list = field(default_factory=list)  # graph node citations from GraphTransitRules
 
 
 @dataclass
@@ -208,6 +221,11 @@ def compute_gochar(
                     planet, house
                 )
                 rules = graph_rules.transit_houses(planet)
+                # Attach richer graph-derived citations for this planet/house
+                try:
+                    pred.citations = graph_rules.get_citations(planet, house)
+                except Exception:
+                    pred.citations = []
             else:
                 rules = TRANSIT_HOUSES.get(planet, {})
                 if house in rules.get("worst", []):
@@ -343,6 +361,11 @@ def compute_gochar(
             graph_rules = active_transit_rules()
             if graph_rules is not None:
                 _, _, pred.lagna_score = graph_rules.house_quality(planet, l_house)
+                if not getattr(pred, "citations", None):
+                    try:
+                        pred.citations = graph_rules.get_citations(planet, l_house)
+                    except Exception:
+                        pass
             else:
                 rules = TRANSIT_HOUSES.get(planet, {})
                 if l_house in rules.get("worst", []):

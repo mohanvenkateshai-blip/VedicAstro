@@ -2,14 +2,29 @@
 Prashna (Horary) engine — chart cast for the query moment with graph-backed insights.
 
 Registers with KnowledgeEngine so horary citation caches reload when the graph updates.
+
+Revive pulls from Prasna_Marga + Jaimini structured sources.
 """
 
 from __future__ import annotations
+
+from knowledge_engine.integration import get_structured_book
 
 _prashna_rules_version: str | None = None
 _prashna_registered = False
 _horary_insight_cache: dict[str, list] = {}
 _enhancer = None
+_prashna_structured_books: dict[str, dict] = {}
+
+# Primary structured sources for Prashna (horary) + related Jaimini
+_prashna_book_index: dict[str, str] = {
+    "PrasnaMarga1": "Prasna_Marga_Part_1",
+    "PrasnaMarga2": "Prasna_Marga_Part_2",
+    "JaiminiSutras": "Jaimini_Sutras",
+    "JaiminiPredicting": "Predicting_Through_Jaimini_Astrology",
+    "JaiminiUpadesa": "rath_s_jaimini_maharishis_upadesa_sutra",
+    "JaiminiMandook": "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress",
+}
 
 
 def _clear_prashna_knowledge_caches() -> None:
@@ -37,9 +52,18 @@ def _clear_prashna_knowledge_caches() -> None:
 
 
 def _on_prashna_refresh(new_version: str) -> None:
-    global _prashna_rules_version
+    global _prashna_rules_version, _prashna_structured_books
     _prashna_rules_version = new_version
     _clear_prashna_knowledge_caches()
+    _prashna_structured_books = {}
+    # Revive: load Prasna_Marga + Jaimini structured for horary context/citations
+    for key, book_id in _prashna_book_index.items():
+        try:
+            data = get_structured_book(book_id)
+            if data:
+                _prashna_structured_books[book_id] = data
+        except Exception:
+            pass
 
 
 def _register_prashna_engine() -> None:
@@ -82,6 +106,16 @@ def cached_horary_insights(cache_key: str, loader) -> list:
     result = loader()
     _horary_insight_cache[cache_key] = result
     return result
+
+
+def get_prashna_structured_context() -> dict:
+    """Return loaded structured books for Prashna (for audits + provenance)."""
+    _ensure_prashna_registered()
+    return {
+        "version": _prashna_rules_version,
+        "books_loaded": list(_prashna_structured_books.keys()),
+        "book_count": len(_prashna_structured_books),
+    }
 
 
 _register_prashna_engine()

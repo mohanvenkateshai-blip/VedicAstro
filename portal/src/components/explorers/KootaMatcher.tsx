@@ -29,6 +29,7 @@ interface KootaResult {
   kootas: KootaItem[];
   kuja_dosha_a: KujaDoshaStatus;
   kuja_dosha_b: KujaDoshaStatus;
+  ke_version?: string;
 }
 
 const KOOTA_LABELS: Record<string, string> = {
@@ -73,6 +74,7 @@ interface KootaApiResponse {
     groom: boolean;
     note?: string;
   };
+  ke_version?: string;
 }
 
 function mapKootaResponse(raw: KootaApiResponse): KootaResult {
@@ -98,6 +100,7 @@ function mapKootaResponse(raw: KootaApiResponse): KootaResult {
           ? raw.kujaDosha.note ?? "Both partners Manglik — dosha cancelled"
           : null,
     },
+    ke_version: raw.ke_version,
   };
 }
 
@@ -401,6 +404,12 @@ export function KootaMatcher() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {result?.ke_version && (
+        <div className="text-[10px] text-text-muted font-mono">
+          Knowledge source: traditional koota tables (static) • ke: {result.ke_version}
         </div>
       )}
     </div>

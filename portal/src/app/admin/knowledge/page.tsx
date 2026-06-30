@@ -27,6 +27,10 @@ export default async function AdminKnowledgePage() {
       </div>
 
       <KnowledgeExplorer />
+
+      <p className="text-[10px] text-text-muted font-mono mt-4">
+        Portal surfaces ke_version on cvce-backed responses (compatibility, varshaphala, kp, prashna, etc). Probe: /api/cvce/version
+      </p>
     </div>
   );
 }

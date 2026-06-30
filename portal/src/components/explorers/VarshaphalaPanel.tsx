@@ -23,6 +23,7 @@ interface VarshaphalaData {
     yearsElapsed: number;
     lord: string;
   };
+  ke_version?: string;
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
@@ -177,6 +178,7 @@ export function VarshaphalaPanel({ chart }: { chart?: ChartData }) {
   }
 
   return (
+    <>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* ── Natal Sun ─────────────────────────────────────────────────── */}
       <motion.div
@@ -369,5 +371,12 @@ export function VarshaphalaPanel({ chart }: { chart?: ChartData }) {
         )}
       </motion.div>
     </div>
+
+      {data?.ke_version && (
+        <div className="text-[10px] text-text-muted font-mono px-1">
+          Knowledge source: Tajika solar return • ke: {data.ke_version}
+        </div>
+      )}
+    </>
   );
 }

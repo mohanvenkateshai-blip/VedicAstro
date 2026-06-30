@@ -288,6 +288,12 @@ def health():
     }
 
 
+@app.get("/version")
+def version():
+    """Lightweight probe for KnowledgeEngine corpus version (used by portal proxy + clients)."""
+    return {"ke_version": _ke_version(), "service": "cvce"}
+
+
 @app.get("/favicon.ico")
 def favicon():
     return Response(status_code=204)
@@ -585,6 +591,25 @@ try:
 except Exception:
     _ORCH_AVAILABLE = False
     orchestrator = None
+
+
+def _ke_version() -> str:
+    """Return current KnowledgeEngine corpus version (for surfacing in responses)."""
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+
+        ke = get_knowledge_engine()
+        if getattr(ke, "current_version", None) and ke.current_version:
+            return ke.current_version.version
+        try:
+            st = ke.get_stats() or {}
+            if isinstance(st, dict) and "version" in st:
+                return st["version"]
+        except Exception:
+            pass
+        return "unknown"
+    except Exception:
+        return "unknown"
 
 
 @app.get("/")
@@ -1888,6 +1913,7 @@ def koota_match(req: KootaRequest):
             "groom": groom_manglik,
             "note": "Mars in 1,2,4,7,8,12 from Lagna indicates Kuja Dosha. Both partners having it cancels the affliction.",
         },
+        "ke_version": _ke_version(),
     }
 
 
@@ -2010,6 +2036,7 @@ def kp_system(req: BirthRequest):
         "cusps": houses,
         "planets": planets,
         "signification": significance,
+        "ke_version": _ke_version(),
     }
 
 
@@ -2261,7 +2288,7 @@ def prashna(req: PrashnaRequest):
     dt_str = req.birth_datetime
     if not dt_str:
         dt_str = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%S")
-    return chart(
+    res = chart(
         BirthRequest(
             birth_datetime=dt_str,
             birth_lat=req.birth_lat,
@@ -2271,6 +2298,9 @@ def prashna(req: PrashnaRequest):
             name=req.name or "Prashna",
         )
     )
+    if isinstance(res, dict):
+        res = {**res, "ke_version": _ke_version()}
+    return res
 
 
 VARSHA_MUNTHA_SIGNS = [
@@ -2347,6 +2377,7 @@ def varshaphala(req: BirthRequest):
             "yearsElapsed": years_elapsed,
             "note": "Muntha = progressed Lagna (1 sign per year). Its lord gives the annual theme.",
         },
+        "ke_version": _ke_version(),
     }
 
 

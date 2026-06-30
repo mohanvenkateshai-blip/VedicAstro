@@ -41,22 +41,29 @@ _muhurta_registered = False
 def _clear_muhurta_rules_cache() -> None:
     """Drop cached graph muhurta rules so the next predict() reloads yoga hits.
     Routes cache invalidation through KnowledgeEngine to avoid direct GraphRAG.
+    Explicitly revives the GraphMuhurtaRules provider data on refresh.
     """
     try:
         from knowledge_engine.integration import clear_knowledge_engine_cache
 
         clear_knowledge_engine_cache()
     except Exception:
-        try:
-            from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
-            GraphMuhurtaRules._instance = None
-        except Exception:
-            pass
-        try:
-            from graph_rag.graph import GraphRAG
-            GraphRAG()._loaded = False
-        except Exception:
-            pass
+        pass
+    # Force provider singleton rebuild on next access (reloads _yoga_nodes/_combo_nodes from current graph)
+    try:
+        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+
+        GraphMuhurtaRules._instance = None
+        # Touch to eagerly reload from (possibly refreshed) graph
+        _ = GraphMuhurtaRules()
+    except Exception:
+        pass
+    try:
+        from graph_rag.graph import GraphRAG
+
+        GraphRAG()._loaded = False
+    except Exception:
+        pass
 
 
 def _on_muhurta_refresh(new_version: str) -> None:
@@ -71,8 +78,13 @@ def _register_muhurta_engine() -> None:
         return
     try:
         from knowledge_engine.integration import get_knowledge_engine
+        from knowledge_engine.registry import RegisteredEngine
 
-        get_knowledge_engine().register_engine("muhurta", on_refresh=_on_muhurta_refresh)
+        ke = get_knowledge_engine()
+        ke.register_engine("muhurta", on_refresh=_on_muhurta_refresh)
+        # ensure lands even under import timing variance
+        if "muhurta" not in getattr(ke.registry, "_engines", {}):
+            ke.registry._engines["muhurta"] = RegisteredEngine(name="muhurta", on_refresh=_on_muhurta_refresh)
         _muhurta_registered = True
     except Exception:
         pass
@@ -572,3 +584,14 @@ def _generate_transit_summary(r: VedicPrediction) -> str:
         )
 
     return " ".join(parts)
+
+
+# Final ensure for "muhurta" registration (covers all import orders in this process)
+try:
+    from knowledge_engine.integration import get_knowledge_engine
+    from knowledge_engine.registry import RegisteredEngine
+    _ke = get_knowledge_engine()
+    if "muhurta" not in getattr(_ke.registry, "_engines", {}):
+        _ke.registry._engines["muhurta"] = RegisteredEngine(name="muhurta", on_refresh=_on_muhurta_refresh)
+except Exception:
+    pass

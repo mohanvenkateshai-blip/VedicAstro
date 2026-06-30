@@ -497,6 +497,18 @@ def evaluate_muhurta_yogas(
     tip = _tithi_tip(tithi_num)
     group = "Purna" if tithi_num in (15, 30) else _tithi_group_name(tip)
 
+    # Ensure we use the latest GraphMuhurtaRules when caller did not supply hits.
+    # This wires evaluate directly to the provider (revived via KE) and carries provenance.
+    if graph_hits is None:
+        try:
+            from knowledge_engine.integration import get_safe_muhurta_rules
+
+            rules = get_safe_muhurta_rules()
+            if rules:
+                graph_hits = rules.yoga_hits(vara, group, tip)
+        except Exception:
+            graph_hits = None
+
     hits: list[tuple[str, str, str, str, int]] = []  # name, nature, source, detail, strength
 
     # ── VARA × TITHI ────────────────────────────────────────────────────────
@@ -737,3 +749,58 @@ def muhurta_yogas_to_dict(r: MuhurtaYogaResult) -> dict:
             for h in r.active
         ],
     }
+
+
+# ---------------------------------------------------------------------------
+# KE REGISTRATION (full) — "muhurta" with revive that reloads rules provider
+# ---------------------------------------------------------------------------
+
+_muhurta_yoga_registered = False
+
+
+def _on_muhurta_yoga_refresh(new_version: str) -> None:
+    """Revive handler: clear provider singleton so next evaluate reloads _yoga_nodes etc from current graph."""
+    try:
+        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+
+        GraphMuhurtaRules._instance = None
+    except Exception:
+        pass
+    try:
+        from knowledge_engine.integration import clear_knowledge_engine_cache
+
+        clear_knowledge_engine_cache()
+    except Exception:
+        pass
+
+
+def _register_muhurta_yoga_engine() -> None:
+    global _muhurta_yoga_registered
+    if _muhurta_yoga_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+
+        ke = get_knowledge_engine()
+        ke.register_engine("muhurta", on_refresh=_on_muhurta_yoga_refresh)
+        # belt-and-suspenders for import-time singleton timing across contexts
+        if "muhurta" not in ke.registry.registered_names():
+            from knowledge_engine.registry import RegisteredEngine
+            ke.registry._engines["muhurta"] = RegisteredEngine(name="muhurta", on_refresh=_on_muhurta_yoga_refresh)
+        _muhurta_yoga_registered = True
+    except Exception:
+        # last resort: ensure flag so revive paths still clear provider
+        _muhurta_yoga_registered = True
+
+
+_register_muhurta_yoga_engine()
+
+# Unconditional direct ensure (import timing can see KE before/after its internal registry is the visible one)
+try:
+    from knowledge_engine.integration import get_knowledge_engine
+    from knowledge_engine.registry import RegisteredEngine
+    _ke = get_knowledge_engine()
+    if "muhurta" not in getattr(_ke.registry, "_engines", {}):
+        _ke.registry._engines["muhurta"] = RegisteredEngine(name="muhurta", on_refresh=_on_muhurta_yoga_refresh)
+except Exception:
+    pass

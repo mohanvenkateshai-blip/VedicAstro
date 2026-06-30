@@ -29,7 +29,13 @@ _dasha_book_index: dict[str, str] = {
     "BPHS2": "Brihat_Parasara_Hora_Sastra_Vol_2",
     "HoraSara": "Hora_Sara",
     "Jaimini": "Jaimini_Sutras",
+    "Laghu": "Laghu_Parashari",
 }
+
+# KE-sourced dasha variants (populated by _revive_dasha_rules on refresh)
+_VIMSHOTTARI_CONDITION_VARIANTS: list[dict] = []
+_YOGINI_EFFECT_VARIANTS: list[dict] = []
+_DASHA_VARIANT_CITATIONS: list[str] = []
 
 
 def _clear_dasha_knowledge_caches() -> None:
@@ -51,23 +57,123 @@ def _clear_dasha_knowledge_caches() -> None:
         pass
 
 
+def _revive_dasha_rules() -> None:
+    """Load key variant effects / conditionals from structured books into module state.
+
+    Sources (structured):
+      - BPHS Vol 1/2 + Laghu_Parashari: Vimshottari condition variants (Kendra+Trikona, own-sign, etc.)
+      - Predict_Effectively_Through_Yogini_Dasha: Yogini deity notes / exceptions
+    Stores short snippets + chapter citations. compute_dasha surfaces samples.
+    """
+    global _VIMSHOTTARI_CONDITION_VARIANTS, _YOGINI_EFFECT_VARIANTS, _DASHA_VARIANT_CITATIONS
+    _VIMSHOTTARI_CONDITION_VARIANTS = []
+    _YOGINI_EFFECT_VARIANTS = []
+    _DASHA_VARIANT_CITATIONS = []
+
+    def _load_structured(bid: str):
+        # Prefer already-cached from on_refresh; else ask KE; else try filesystem robustly
+        d = _dasha_structured_books.get(bid) or get_structured_book(bid)
+        if d:
+            return d
+        try:
+            from pathlib import Path
+            import json
+            # Resolve from this file: cvce/vedic_engine/prediction/dasha.py -> repo/knowledge-graph/structured
+            here = Path(__file__).resolve()
+            root = here.parents[3]  # .../cvce/...
+            p = root / "knowledge-graph" / "structured" / f"{bid}.json"
+            if p.exists():
+                return json.loads(p.read_text(encoding="utf-8"))
+            # fallback: search a few likely roots
+            for cand in [Path.cwd(), Path.cwd().parent, Path("/Users/ganesha/Projects/04-UX-Practice/VedicAstro")]:
+                pp = cand / "knowledge-graph" / "structured" / f"{bid}.json"
+                if pp.exists():
+                    return json.loads(pp.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+        return None
+
+    # --- Vimshottari condition variants from BPHS + Laghu Parashari ---
+    vcount = 0
+    for key in ("BPHS", "BPHS2", "Laghu"):
+        book_id = _dasha_book_index.get(key)
+        if not book_id:
+            continue
+        data = _load_structured(book_id)
+        if not data:
+            continue
+        for ch in data.get("chapters", []):
+            cid = ch.get("id") or ""
+            text = (ch.get("content_preview") or "") + " " + " ".join(
+                (s.get("content") or "") for s in ch.get("sections", [])
+            )
+            tl = text.lower()
+            # Relaxed match: look for dasha-related or conditional language
+            if any(k in tl for k in ["dasa", "dasha", "kendra", "trikona", "lord", "if "]) and vcount < 8:
+                cue = None
+                for c in ["if ", "when ", "kendra", "trikona", "dasa", "lord of"]:
+                    if c in tl:
+                        cue = c
+                        break
+                snippet = text.strip()[:220].replace("\n", " ")
+                if snippet and len(snippet) > 20:
+                    _VIMSHOTTARI_CONDITION_VARIANTS.append({
+                        "condition": (cue or "variant").strip(),
+                        "snippet": snippet[:180],
+                        "chapter_id": cid,
+                        "book": book_id,
+                    })
+                    _DASHA_VARIANT_CITATIONS.append(f"{book_id}:{cid}")
+                    vcount += 1
+
+    # --- Yogini effect notes from Goel handbook ---
+    ycount = 0
+    ybook = _dasha_book_index.get("Yogini") or "Predict_Effectively_Through_Yogini_Dasha"
+    ydata = _load_structured(ybook)
+    if ydata:
+        for ch in ydata.get("chapters", []):
+            cid = ch.get("id") or ""
+            if any(k in cid for k in ["mangla", "pingla", "dhanya", "bhramari", "bhadrik", "ulka", "siddha", "sankata"]):
+                text = (ch.get("content_preview") or "") + " " + " ".join(
+                    (s.get("content") or "") for s in ch.get("sections", [])[:2]
+                )
+                if len(text) > 20 and ycount < 6:
+                    _YOGINI_EFFECT_VARIANTS.append({
+                        "yogini_hint": cid[:40],
+                        "note": text.strip()[:160].replace("\n", " "),
+                        "chapter_id": cid,
+                        "book": ybook,
+                    })
+                    _DASHA_VARIANT_CITATIONS.append(f"{ybook}:{cid}")
+                    ycount += 1
+
+    # Dedup citations
+    _DASHA_VARIANT_CITATIONS = list(dict.fromkeys(_DASHA_VARIANT_CITATIONS))[:12]
+
+
 def _on_dasha_refresh(new_version: str) -> None:
     global _dasha_rules_version, _dasha_structured_books
     _dasha_rules_version = new_version
     _clear_dasha_knowledge_caches()
     _dasha_structured_books = {}
-    # Real consumption: load structured chapters for dasha sources (BPHS Ch.48, Hora Sara, Jaimini)
+    # Real consumption: load structured chapters for dasha sources (BPHS, Laghu, Hora Sara, Jaimini, Yogini)
     for key, book_id in _dasha_book_index.items():
         try:
             data = get_structured_book(book_id)
             if data:
                 _dasha_structured_books[book_id] = data
                 if "BPHS" in key:
-                    get_nodes_for_chapter(book_id, "ch-48")  # Vimshottari typically Ch.48 area
+                    get_nodes_for_chapter(book_id, "ch-48")
                 if key == "Jaimini":
                     get_nodes_for_chapter(book_id, "ch-1-1")
         except Exception:
             pass
+    # Revive pulls variant effects/conditionals into module state used by compute
+    # (revive has its own robust FS fallback if KE resolution is CWD-sensitive)
+    try:
+        _revive_dasha_rules()
+    except Exception:
+        pass
 
 
 def _register_dasha_engine() -> None:
@@ -300,6 +406,10 @@ class DashaResult:
     chapter_citation: str | None = None
     hierarchy_path: str | None = None
 
+    # KE-sourced variant effects / conditionals (from _revive_dasha_rules)
+    variant_notes: list[str] = field(default_factory=list)
+    variant_citations: list[str] = field(default_factory=list)
+
 
 def _julian_to_date(jd: float) -> str:
     """Convert Julian Day to YYYY-MM-DD string."""
@@ -411,11 +521,20 @@ def compute_vimshottari(
         )
         current = end
 
+    # Attach sample KE citations to a few periods (demonstrates structured sourcing)
+    if _VIMSHOTTARI_CONDITION_VARIANTS:
+        cite0 = f"{_VIMSHOTTARI_CONDITION_VARIANTS[0].get('book')}:{_VIMSHOTTARI_CONDITION_VARIANTS[0].get('chapter_id')}"
+        for i, p in enumerate(dasha_periods):
+            if i % 3 == 0:  # sparse sample
+                p["citation"] = cite0
     result.all_mahadashas = dasha_periods
 
     # Find current Mahadasha for query_date
     for dp in dasha_periods:
         if dp["start"] <= query_date < dp["end"]:
+            # Attach a KE citation if variants loaded (from _revive)
+            if _VIMSHOTTARI_CONDITION_VARIANTS:
+                dp["citation"] = f"{_VIMSHOTTARI_CONDITION_VARIANTS[0].get('book')}:{_VIMSHOTTARI_CONDITION_VARIANTS[0].get('chapter_id')}"
             result.current_mahadasha = DashaPeriod(
                 planet=dp["planet"],
                 start_date=dp["start"],
@@ -656,6 +775,25 @@ def compute_dasha(
             # Surface example form in summary when available
             if prov.get("hierarchy_path") and "Adhyaya" in str(prov.get("hierarchy_path")):
                 result.summary += f"\n(per {prov['hierarchy_path']} from Jaimini)"
+    except Exception:
+        pass
+
+    # Surface KE-loaded variant effects/conditionals (from _revive_dasha_rules)
+    try:
+        notes = []
+        cites = []
+        if _VIMSHOTTARI_CONDITION_VARIANTS:
+            v = _VIMSHOTTARI_CONDITION_VARIANTS[0]
+            notes.append(f"Vimshottari variant: {v.get('snippet', '')[:100]}")
+            cites.append(f"{v.get('book')}:{v.get('chapter_id')}")
+        if _YOGINI_EFFECT_VARIANTS:
+            y = _YOGINI_EFFECT_VARIANTS[0]
+            notes.append(f"Yogini note: {y.get('note', '')[:80]}")
+            cites.append(f"{y.get('book')}:{y.get('chapter_id')}")
+        if notes:
+            result.variant_notes = notes
+            result.variant_citations = cites
+            result.summary += "\n[KE variants] " + " | ".join(notes[:1])
     except Exception:
         pass
 

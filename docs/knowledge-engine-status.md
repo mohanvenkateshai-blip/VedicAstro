@@ -188,3 +188,47 @@ All core requested organization + mapping + reader + protocol work from the wave
 - Prod smoke gate: current deploy may be stale; must `git push` + `./scripts/smoke-learn-production.sh` (and re-run after Vercel) before marking Learn rollout complete.
 - No sequential drift observed; additional wave (harness) launched immediately.
 - See `ROLLOUT_NOTE.md` (root) for the living tracker and exact verification commands.
+
+---
+
+## KE Full Update Wave — Program Logic + Algorithms from KnowledgeGraph (2026-06-30)
+
+**Directive:** Thorough, supervised update from KE into *every* module/feature. Update calculations, rules, and algorithms (not just context). Full tracking, no cracks. Multi-agent execution.
+
+**Execution:** 6 specialized agents + supervision harness launched in parallel (non-overlapping scopes: Supervision/Integration/Auditor, Panchanga/Core, Dasha, Muhurta, Transit/Gochar/Dynamics, Special+Portal Surface).
+
+**Key artifacts:**
+- `docs/KE_FULL_UPDATE_WAVE_2026-06-30.md` — master tracker + matrix + "no cracks" checklist + commands.
+- `scripts/ke_wave_status.py` — narrow supervision CLI (9 engines, probes, cracks, fingerprints).
+- `cvce/knowledge_engine/refresh_auditor.py` extended to 10 probes (added ashtakavarga, panchanga, kp, prashna) + `run_all_probes()`.
+- `cvce/knowledge_engine/integration.py` + `get_registered_engines_with_status()`.
+- 6 agent reports in `docs/agent-reports/KE-wave-*.md`.
+
+**Results (counts + pass/fail only, from status script + agent proofs):**
+- Engines (source scan): **9** (ashtakavarga, dasha, gochar, kp_system, muhurta, panchanga, prashna, report, yoga).
+- Auditor probes: **10** (full required coverage).
+- Cracks (cache-clear-only): **0** (post-heuristic + wiring; all now classified with real reload).
+- Graph: 26,722 nodes / 38,881 links.
+- Structured (portal side): 60/61 structured-pass.
+
+**Per-domain concrete updates (algorithm/logic enrichment + registration + provenance):**
+- **Panchanga/Core (DONE):** 7 panch/tithi books. Loaded 28 tithi_lords + 28 effects + 13 yoga_attrs + 2 karana via get_structured_book in on_refresh. source_notes on PanchangaResult with chapter citations. Real clear+reload proven (0→28 attrs, fp diff). Compute uses enriched tables.
+- **Dasha (DONE):** 7 dasha structured. _revive_dasha_rules loads 8+ Vimshottari condition variants + Yogini notes from BPHS/Laghu. 3 periods carry `citation: Brihat_Parasara_Hora_Sastra_Vol_1:ch-8` etc. variant_notes + summary marker post refresh. Cascade PASS.
+- **Muhurta (core DONE):** 18 structured + 36 raw. Expanded to 283 yoga_nodes (from 128); 150+ hits with Celestial/Tithi-Vāra/Tara/DoGhati cites. evaluate self-fetches + provenance. Full reg + revive reloads provider. Portal iframe noted as external (uses KE indirectly).
+- **Transit/Gochar + Dynamics (DONE):** 1021 gochara nodes, 1900 links. 9/9 planets houses_enriched + 2 cites/planet. Richer effects harvested. on_refresh does rebuild_transit_rules (build_id++). transit_analyzer + compute_gochar + synthesis carry graph citations. No raw GraphRAG bypasses left in paths. Auditor: moderate impact on rebuild.
+- **Special Systems (DONE):** kp + prashna revive now loads **6/6** Jaimini+Prasna structured books. get_*_structured_context added. 4 special endpoints + /version emit ke_version. Varsha surface updated.
+- **Portal Surface (DONE):** cvce proxy enriches ke_version on passthrough. Compatibility (Koota), Varshaphala, admin/knowledge show "Knowledge source"/version notes. 3+ UI surfaces + 2 proxy paths touched.
+- **Graph/Integration (PARTIAL, supervision strong):** 9 engines audited, 10 probes, status script + helpers, cracks driven to 0. Safe wrappers enforced in updated paths.
+
+**Verification executed (script-first):**
+- `python3 scripts/ke_wave_status.py` → engines=9, probed=10, cracks=0 (final).
+- Agent per-scope before/after + cascade proofs (len/fp/hit/cite diffs).
+- Structured verify: 60 structured-pass.
+- Lints/typecheck clean on touched supervision + domain files.
+- "No cracks" checklist addressed per row (registration + real reload, safe access, provenance, auditor, corpus-driven logic, numbers reported, tracker+report).
+
+**Current state:** All critical calc paths (panchanga, dasha, muhurta, gochar, synthesis, kp/prashna) have on_refresh that reloads data/logic from KE and surface provenance or ke_version. Portal surfaces version for key features.
+
+See the wave tracker for the living matrix and exact next commands. Multi-agent protocol followed (parallel launch + non-overlapping + tracking).
+
+**Next (post-wave):** Force full runtime registration in more contexts (app startup), tighten any remaining probe source classification, optional deeper extraction of conditional rules from the loaded books, Supabase graph sync if targeting prod, golden test versioning by ke_version.

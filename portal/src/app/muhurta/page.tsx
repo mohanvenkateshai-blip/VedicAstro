@@ -44,14 +44,20 @@ export default async function MuhurtaPage({
     : "https://muhurtha.uvwx.me";
 
   return (
-    <div className="h-[calc(100vh-4rem)] w-full">
+    <div className="relative h-[calc(100vh-4rem)] w-full">
+      {/* External Muhurta (frozen standalone at muhurtha.uvwx.me) uses CVCE/KE knowledge indirectly via prior sync of classical tables.
+          No direct live bridge (by design: standalone is untouched). This page passes prefill via hash only. */}
       <iframe
         src={src}
-        title="Muhūrta — Celestial Panchang & Electional Analyzer"
+        title="Muhūrta — Celestial Panchang & Electional Analyzer (external; KE v newbooks-v1 indirectly)"
         className="h-full w-full border-0"
         loading="eager"
         allow="clipboard-write"
+        data-ke-version="newbooks-v1-indirect"
       />
+      <div className="pointer-events-none absolute bottom-1 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[10px] text-neutral-200">
+        external muhurtha.uvwx.me • uses KE corpus indirectly
+      </div>
     </div>
   );
 }

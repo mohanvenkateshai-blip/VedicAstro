@@ -317,3 +317,13 @@ def dasha_deep_payload(jd: float, place, max_level: int = 5) -> dict:
             deep_antar_path=deep_path,
         ),
     }
+
+
+# Light-touch registration wiring: ensure core dasha engine (with KE revive) is registered
+# when this PyJHora shim layer is imported.
+try:
+    from vedic_engine.prediction import dasha as _dasha_core  # type: ignore
+
+    _dasha_core._ensure_dasha_registered()
+except Exception:
+    pass

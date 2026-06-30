@@ -21,6 +21,14 @@ from ..rules.transit_rules import (
     reconcile_dasha_transit,
 )
 
+# Graph-backed transit rules (preferred when available)
+try:
+    from knowledge_engine.integration import get_safe_transit_rules as _active_transit_rules
+except ImportError:
+
+    def _active_transit_rules():
+        return None
+
 # Life-area themes by house from Janma Rasi (classical gochar framing)
 HOUSE_THEMES: dict[int, list[str]] = {
     1: ["self-image", "health", "vitality", "new personal initiatives"],
@@ -106,7 +114,18 @@ def _ordinal(house: int) -> str:
     return f"{house}th"
 
 
-def _house_quality_hardcoded(planet: str, house: int) -> tuple[str, str, int]:
+def _house_quality(planet: str, house: int) -> tuple[str, str, int]:
+    """Graph rules when present (with citations), else hardcoded fallback."""
+    gr = None
+    try:
+        gr = _active_transit_rules()
+    except Exception:
+        gr = None
+    if gr is not None:
+        try:
+            return gr.house_quality(planet, house)
+        except Exception:
+            pass
     rules = TRANSIT_HOUSES.get(planet, {})
     if house in rules.get("worst", []):
         return "worst", "ashubh", -10
@@ -317,7 +336,15 @@ class TransitImpactAnalyzer:
         score = 0
 
         if house is not None:
-            quality, base_verdict, base_score = _house_quality_hardcoded(pred.planet, house)
+            quality, base_verdict, base_score = _house_quality(pred.planet, house)
+            gr = None
+            try:
+                gr = _active_transit_rules()
+            except Exception:
+                gr = None
+            src = "GPD-Ch10-Table12"
+            if gr is not None:
+                src = "graph:GPD+HS"
             factors.append(
                 Factor(
                     role="contextual"
@@ -328,7 +355,7 @@ class TransitImpactAnalyzer:
                         f"{pred.planet} in {_ordinal(house)} from natal Moon — "
                         f"{quality} house (Table 12)"
                     ),
-                    source="GPD-Ch10-Table12",
+                    source=src,
                 )
             )
             score += base_score
@@ -582,6 +609,22 @@ class TransitImpactAnalyzer:
         aggravating = [f.summary for f in factors if f.role == "aggravating"]
         mitigating = [f.summary for f in factors if f.role == "mitigating"]
         basis = list({f.source for f in factors if f.source})
+        # Attach graph-derived citations when available on the prediction or rules
+        try:
+            if getattr(pred, "citations", None):
+                for c in pred.citations[:3]:
+                    nid = c.get("node") if isinstance(c, dict) else None
+                    if nid:
+                        basis.append(f"graph:{nid}")
+            else:
+                gr = _active_transit_rules()
+                if gr and hasattr(gr, "get_citations"):
+                    for c in gr.get_citations(pred.planet, house)[:3]:
+                        nid = c.get("node") if isinstance(c, dict) else None
+                        if nid:
+                            basis.append(f"graph:{nid}")
+        except Exception:
+            pass
 
         summary = (
             f"{pred.planet} in {pred.rashi}"

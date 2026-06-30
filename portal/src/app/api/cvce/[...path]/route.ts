@@ -25,12 +25,48 @@ const ALLOWED = new Set([
   "special-points",
 ]);
 
-const ALLOWED_GET = new Set(["places"]);
+const ALLOWED_GET = new Set(["places", "version"]);
 
 // KnowledgeEngine structured endpoints (Learn reader owns chapter tree + node linkage)
 const KNOWLEDGE_PREFIX = "knowledge/";
 
 const SERVER_TIMEOUT_MS = 120_000;
+
+// Module-level cache for KE version (populated from remote /version or payloads)
+let cachedKeVersion: string | null = null;
+
+async function getRemoteKeVersion(): Promise<string | null> {
+  if (cachedKeVersion) return cachedKeVersion;
+  try {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 8000);
+    const r = await fetch(`${CVCE_BASE_URL}/version`, { signal: controller.signal, cache: "no-store" });
+    clearTimeout(t);
+    if (r.ok) {
+      const j = await r.json().catch(() => ({} as any));
+      const v = (j && (j.ke_version || j.knowledge_version || j.version)) || null;
+      if (v) {
+        cachedKeVersion = v;
+        return v;
+      }
+    }
+  } catch {}
+  return null;
+}
+
+function ensureKeVersion<T>(payload: T): T {
+  if (payload && typeof payload === "object" && !Array.isArray(payload)) {
+    const p = payload as Record<string, unknown>;
+    if (!p.ke_version && !p.knowledge_version) {
+      if (cachedKeVersion) {
+        p.ke_version = cachedKeVersion;
+      }
+    } else if (p.ke_version && !cachedKeVersion) {
+      cachedKeVersion = String(p.ke_version);
+    }
+  }
+  return payload;
+}
 
 export async function POST(
   req: NextRequest,
@@ -74,7 +110,11 @@ export async function POST(
       );
     }
 
-    return NextResponse.json(payload, { status: res.status });
+    // Best-effort: ensure ke_version is present at top level for portal consumers
+    const enriched = ensureKeVersion(payload);
+    // Fire a non-blocking probe to warm the version cache for future calls
+    void getRemoteKeVersion();
+    return NextResponse.json(enriched, { status: res.status });
   } catch (e) {
     const message =
       e instanceof DOMException && e.name === "AbortError"
@@ -107,7 +147,15 @@ export async function GET(
     const url = `${CVCE_BASE_URL}/${cvcePath}${qs}`;
     const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
     const payload = await res.json();
-    return NextResponse.json(payload, { status: res.status });
+    const enriched = ensureKeVersion(payload);
+    if (cvcePath === "version") {
+      // ensure the version endpoint itself populates cache
+      if (payload && typeof payload === "object") {
+        const v = (payload as any).ke_version || (payload as any).knowledge_version;
+        if (v) cachedKeVersion = String(v);
+      }
+    }
+    return NextResponse.json(enriched, { status: res.status });
   } catch (e) {
     const message =
       e instanceof DOMException && e.name === "AbortError"

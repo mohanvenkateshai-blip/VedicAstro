@@ -376,6 +376,15 @@ def yogini_deep_payload(jd: float, place, dt) -> dict:
     }
 
 
+# Light-touch dasha KE registration (ensures on_refresh revive is wired)
+try:
+    from vedic_engine.prediction import dasha as _dasha_core  # type: ignore
+
+    _dasha_core._ensure_dasha_registered()
+except Exception:
+    pass
+
+
 # ── Ashtottari ────────────────────────────────────────────────────────────────
 
 

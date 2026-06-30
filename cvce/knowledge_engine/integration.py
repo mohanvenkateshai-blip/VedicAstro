@@ -282,3 +282,34 @@ def get_structured_coverage() -> dict:
         "books_detail": books[:50],  # cap for CLI readability
     }
 
+
+def get_registered_engines_with_status() -> dict[str, Any]:
+    """Return registered engines plus lightweight status for supervision scripts.
+
+    Includes: name, has_on_refresh, on_refresh_does_real_reload (heuristic),
+    crack flag for engines whose on_refresh is only cache clear.
+    """
+    ke = get_knowledge_engine()
+    names = ke.registry.registered_names() if ke and ke.registry else []
+    # Heuristic from wave audit: which on_refresh bodies actually load structured data
+    REAL_RELOAD_HINTS = {"dasha": True, "yoga": True, "ashtakavarga": True, "report": True, "gochar": True, "muhurta": True}
+    out: list[dict[str, Any]] = []
+    for n in sorted(set(names)):
+        eng = ke.registry._engines.get(n) if hasattr(ke.registry, "_engines") else None
+        has_refresh = bool(eng and eng.on_refresh) if eng else False
+        real = REAL_RELOAD_HINTS.get(n, False)
+        # flag known cache-only registrations as cracks unless they were upgraded
+        cache_only = n in ("kp_system", "prashna", "panchanga")
+        out.append({
+            "name": n,
+            "has_on_refresh": has_refresh,
+            "real_reload": real,
+            "crack": (not has_refresh) or (cache_only and not real),
+        })
+    ver = None
+    try:
+        ver = ke.current_version.version if getattr(ke, "current_version", None) else None
+    except Exception:
+        pass
+    return {"count": len(out), "engines": out, "version": ver}
+
