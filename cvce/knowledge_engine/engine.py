@@ -231,6 +231,36 @@ class KnowledgeEngine:
             return valid[:limit]
         return valid
 
+    def get_structured_book(self, book_id: str) -> dict | None:
+        """Return the clean, hierarchical chapter/subtitle/content structure for a source book.
+        This is generated from the original Gyan markdown (scripts/build_structured_library.py)
+        and is the authoritative organised view (chapters, titles, subtitles, sections).
+        Used to drive the Learn reader and to map graph nodes back to precise locations.
+        """
+        try:
+            from pathlib import Path
+            import json
+            base = Path("knowledge-graph/structured")
+            candidates = [
+                base / f"{book_id}.json",
+                base / f"{book_id.replace(' ', '_')}.json",
+            ]
+            for p in candidates:
+                if p.exists():
+                    return json.loads(p.read_text(encoding="utf-8"))
+            # fuzzy
+            if base.exists():
+                for p in base.glob("*.json"):
+                    try:
+                        d = json.loads(p.read_text(encoding="utf-8"))
+                        if book_id in (d.get("book_id") or "") or book_id in (d.get("canonical_name") or ""):
+                            return d
+                    except Exception:
+                        pass
+        except Exception as e:
+            logger.debug("get_structured_book failed for %s: %s", book_id, e)
+        return None
+
     def get_safe_rules(self, category: str = "transit"):
         """Safe access to specific rule sets (transit, muhurta, etc.)."""
         if not self.is_knowledge_healthy():
