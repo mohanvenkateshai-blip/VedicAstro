@@ -1,38 +1,50 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
-import { DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
+import { getBookTextNodes, getJaiminiNodes, DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
 
 export const dynamic = "force-dynamic";
 
-const REAL_SOURCES = [
+const REAL_JAIMINI_SOURCES = [
   "Jaimini_Sutras",
-  "Jaimini_Sutras.md",
   "rath_s_jaimini_maharishis_upadesa_sutra",
-  "rath_s_jaimini_maharishis_upadesa_sutra.md",
 ];
 
+function usableNodes(nodes: Array<{ label?: string | null; properties?: Record<string, unknown> }>) {
+  return nodes.filter((n) => {
+    const label = (n.label ?? "").trim();
+    if (label.length >= 1) return true;
+    return String(n.properties?.description ?? "").trim().length > 0;
+  });
+}
+
 export async function GET() {
-  for (const key of REAL_SOURCES) {
+  for (const stem of REAL_JAIMINI_SOURCES) {
     try {
-      const { data, error } = await supabase
-        .from("graph_nodes")
-        .select("id, label, source_location, properties, file_type, source_file")
-        .eq("graph_version", DEFAULT_GRAPH_VERSION)
-        .ilike("source_file", `%${key.replace(/\.md$/, "")}%`)
-        .order("source_location", { ascending: true })
-        .limit(200);
-      if (error || !data?.length) continue;
-      const real = data.filter((n) => n.label && n.label.trim().length > 5);
+      const data = await getBookTextNodes(stem, DEFAULT_GRAPH_VERSION);
+      const real = usableNodes(data ?? []);
       if (real.length > 0) {
         return NextResponse.json({
           nodes: real,
-          source: data[0]?.source_file || key,
+          source: stem,
           version: DEFAULT_GRAPH_VERSION,
         });
       }
     } catch {
       // try next source
     }
+  }
+
+  try {
+    const fuzzy = await getJaiminiNodes(DEFAULT_GRAPH_VERSION);
+    const real = usableNodes(fuzzy ?? []);
+    if (real.length > 0) {
+      return NextResponse.json({
+        nodes: real,
+        source: "fuzzy:jaimini",
+        version: DEFAULT_GRAPH_VERSION,
+      });
+    }
+  } catch {
+    // fall through
   }
 
   return NextResponse.json({

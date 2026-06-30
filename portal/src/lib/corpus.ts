@@ -162,13 +162,14 @@ export async function getBookTextNodes(
   sourceFile: string,
   graphVersion = DEFAULT_GRAPH_VERSION,
 ) {
+  const stem = sourceFile.replace(/^raw\//, "").replace(/\.md$/i, "");
   const { data, error } = await supabase
     .from("graph_nodes")
-    .select("id, label, source_location, properties, file_type")
+    .select("id, label, source_location, properties, file_type, source_file")
     .eq("graph_version", graphVersion)
-    .eq("source_file", sourceFile)
+    .ilike("source_file", `%${stem}%`)
     .order("source_location", { ascending: true })
-    .limit(200);
+    .limit(500);
   if (error) throw error;
   return (data ?? []) as Array<{
     id: string;
@@ -176,6 +177,7 @@ export async function getBookTextNodes(
     source_location: string | null;
     properties: Record<string, unknown>;
     file_type: string | null;
+    source_file?: string | null;
   }>;
 }
 
