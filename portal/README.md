@@ -34,9 +34,11 @@ src/
     SiteHeader.tsx, ThemeToggle.tsx, ui/{Button,Card}.tsx
   lib/
     cvce.ts               server-only client for the engine
+    cvce-client.ts        browser-safe CVCE proxy client (via /api/cvce/*)
     types.ts              ChartData TS mirror of the canonical contract
-    auth.ts               RBAC role model + session seam (real wiring later)
-  proxy.ts                Next 16 edge proxy — RBAC enforcement seam (matcher only)
+    auth/                 NextAuth v5 + Google OAuth, encryption, RLS schema
+    db.ts                 Neon Postgres (env-gated)
+  proxy.ts                Next 16 edge proxy — gates /dashboard and /admin when auth configured
 ```
 
 ## Develop
@@ -50,6 +52,13 @@ Optional env (defaults to the live engine if unset):
 
 ```bash
 CVCE_BASE_URL=https://vedicastro-cvce.fly.dev
+
+# Auth + database (anonymous mode when unset)
+AUTH_SECRET=...
+AUTH_GOOGLE_ID=...
+AUTH_GOOGLE_SECRET=...
+DATABASE_URL=postgresql://...
+ADMIN_EMAILS=you@example.com
 ```
 
 ## Deploy

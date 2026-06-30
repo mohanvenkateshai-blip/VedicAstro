@@ -348,16 +348,26 @@ def sync_chunks(env: dict[str, str]) -> int:
                     "chunk_index": i,
                     "content": ch[:4000],  # safety
                     "embedding": None,
-                    "metadata": {"len": len(ch)},
+                    "metadata": {
+                        "len": len(ch),
+                        # HARDEN: reserved for chapter/hierarchy provenance (populated in later pass)
+                        "chapter_id": None,
+                        "hierarchy_path": None,
+                    },
                 }
             )
             total += 1
 
         if rows:
-            # delete old for this source then insert (simple)
-            api_request(env, "DELETE", f"/rest/v1/corpus_chunks?source_id=eq.{md.stem}")
-            for r in rows:
-                api_request(env, "POST", "/rest/v1/corpus_chunks", json.dumps(r).encode())
+            # delete old for this source then bulk insert (robust batch)
+            import urllib.parse as _url
+            safe_stem = _url.quote(md.stem, safe="")
+            try:
+                api_request(env, "DELETE", f"/rest/v1/corpus_chunks?source_id=eq.{safe_stem}")
+                upsert_rows(env, "corpus_chunks", rows)
+            except Exception as exc:
+                print(f"  ! chunk sync failed for {md.stem}: {exc}")
+                # continue with other books
 
     return total
 

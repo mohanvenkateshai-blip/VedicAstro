@@ -19,6 +19,95 @@ function getPatchesDir(): string {
   return resolveDataDir("patches");
 }
 
+function getRawDir(): string {
+  // Bundled copy (portal/data/raw) wins when present. This is populated by
+  //   node scripts/sync-structured-data.mjs  (run via predev/prebuild)
+  // and/or committed into the repo for production Vercel bundles.
+  //
+  // For local dev WITHOUT a prior copy, we fall back to the monorepo sibling:
+  //   ../knowledge-graph/raw
+  // This is the preferred path during active development — no copy step needed,
+  // changes to source markdown are immediately visible, and it works even if
+  // portal/data/raw/ is absent.
+  //
+  // Cost note: copying ~61 files / ~21 MB is cheap; we still prefer sibling
+  // for dev to avoid staleness and unnecessary I/O on every `npm run dev`.
+  const candidates = [
+    path.join(process.cwd(), "data", "raw"),
+    path.join(process.cwd(), "..", "knowledge-graph", "raw"),
+    path.join(process.cwd(), "knowledge-graph", "raw"),
+    path.resolve(process.cwd(), "../../knowledge-graph/raw"),
+  ];
+  for (const d of candidates) {
+    if (fs.existsSync(d)) return d;
+  }
+  return candidates[1];
+}
+
+/**
+ * Load raw markdown from local filesystem (knowledge-graph/raw sources).
+ *
+ * DISCOVERY ORDER:
+ *   1) Exact: <rawDir>/<fileKey>.md
+ *   2) Bare:  <rawDir>/<fileKey>
+ *   3) Fuzzy scan (all *.md): normalize both sides (lower, strip spaces/underscores/dashes)
+ *      and match if one contains the other or they are equal after normalization.
+ *      This ensures oddly-named or historically-mismatched stems still resolve
+ *      (e.g. "FireShot Capture ...", names with en-dashes, "Tithi–Vāra", etc.).
+ *
+ * This function is what makes all 61+ raw .md files discoverable by the Learn
+ * reader without requiring an exact storage_path match.
+ */
+export function loadLocalRawMarkdown(fileKey: string | null | undefined, ...extraHints: (string | null | undefined)[]): string | null {
+  if (!fileKey && extraHints.length === 0) return null;
+  const rawDir = getRawDir();
+  if (!fs.existsSync(rawDir)) return null;
+
+  const allKeys = [fileKey, ...extraHints].filter((k): k is string => !!k);
+  const candidates: string[] = [];
+  for (const k of allKeys) {
+    candidates.push(k, `${k}.md`);
+    for (const v of bookIdVariants(k)) {
+      candidates.push(v, `${v}.md`);
+    }
+  }
+  // dedup while preserving order
+  const seen = new Set<string>();
+  const uniqCands = candidates.filter((c) => (seen.has(c) ? false : (seen.add(c), true)));
+  for (const c of uniqCands) {
+    const p = path.join(rawDir, c);
+    if (fs.existsSync(p)) {
+      try {
+        return fs.readFileSync(p, "utf8");
+      } catch {}
+    }
+  }
+
+  // Fuzzy discovery so that any of the 61+ raw files can be found even when
+  // the recorded storage_path stem doesn't exactly match the filename on disk.
+  // This is intentionally broad but cheap (single readdir + small string work).
+  try {
+    const files = fs.readdirSync(rawDir).filter((f) => f.toLowerCase().endsWith(".md"));
+    const norm = (s: string) =>
+      (s || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // strip diacritics (ā, etc)
+        .replace(/[-_\s–—\.·•[\](){}'"`~!@#$%^&*=+\\|;:<>,/?]+/g, "");
+    const wantNorms = allKeys.flatMap((k) => bookIdVariants(k).map(norm));
+    for (const f of files) {
+      const have = norm(f.replace(/\.md$/i, ""));
+      if (!have) continue;
+      if (wantNorms.some((w) => w === have || have.includes(w) || w.includes(have))) {
+        try {
+          return fs.readFileSync(path.join(rawDir, f), "utf8");
+        } catch {}
+      }
+    }
+  } catch {}
+  return null;
+}
+
 /** Normalize URL slugs / canonical names into lookup keys (underscore stem is canonical on disk). */
 export function bookIdVariants(bookId: string): string[] {
   const trimmed = (bookId || "").trim();
@@ -160,7 +249,16 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
       }
 
       const structured = resolveStructuredBookSync(fileKey, canonical);
-      const chapterCount = structured?.chapters?.length || structured?.total_chapters || 0;
+      let chapterCount = structured?.chapters?.length || structured?.total_chapters || 0;
+      if (!chapterCount) {
+        // Fallback: for books without structured JSON, count chapters from improved parse of raw markdown
+        // so /learn index shows realistic chapter counts for full-text books.
+        const raw = getFullBookMarkdown(fileKey ?? canonical ?? "");
+        if (raw) {
+          const p = parseMarkdownToSections(raw);
+          chapterCount = p.chapters.length;
+        }
+      }
 
       return {
         id: fileKey ?? canonical,
@@ -183,7 +281,7 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
  * Chapters are inferred from nodes that have source_location or section-like labels.
  * This mirrors how KnowledgeEngine / gyan-corpus-extract.py structures books.
  */
-function findCorpusSource(sources: CorpusSource[], bookId: string): CorpusSource | undefined {
+export function findCorpusSource(sources: CorpusSource[], bookId: string): CorpusSource | undefined {
   const variants = bookIdVariants(bookId);
   return sources.find((s) => {
     const stem = s.storage_path?.split("/").pop()?.replace(/\.md$/, "") ?? "";
@@ -522,14 +620,134 @@ export function enrichChaptersWithNodeIds(chapters: Chapter[], bookId: string, p
 /**
  * Load the raw source markdown for a book when a storagePath is known.
  * Used to serve full chapter text (not just graph nodes) and image-capable prose.
+ * Local filesystem is always preferred; Supabase is only attempted when no local copy exists.
  */
-async function loadRawMarkdownForSource(storagePath: string | null | undefined): Promise<string | null> {
+async function loadRawMarkdownForSource(storagePath: string | null | undefined, ...hints: (string | null | undefined)[]): Promise<string | null> {
+  const fileKey = storagePath?.split("/").pop()?.replace(/\.md$/, "") ?? null;
+
+  // Local first (for Graphify / no-Supabase development). Perfect for one book at a time.
+  // Pass hints so loadLocal can fuzzy/variant match even when fileKey alone is insufficient.
+  const local = loadLocalRawMarkdown(fileKey, ...hints);
+  if (local) return local;
+
   if (!storagePath) return null;
   try {
     const { data: blob } = await supabase.storage.from("corpus-vault").download(storagePath);
     if (blob) return await blob.text();
   } catch {}
   return null;
+}
+
+/**
+ * Resolve a usable fileKey from loose hints (bookId, canonical, storagePath, etc).
+ * Used to probe local raw markdown without requiring a full CorpusSource lookup.
+ */
+function resolveFileKeyFromHints(...hints: (string | null | undefined)[]): string | null {
+  for (const h of hints) {
+    if (!h) continue;
+    // If it looks like a storage path, take the basename without .md
+    if (h.includes("/")) {
+      const base = h.split("/").pop() || h;
+      return base.replace(/\.md$/i, "");
+    }
+    // Direct stem
+    if (/\.md$/i.test(h)) return h.replace(/\.md$/i, "");
+    // Otherwise treat the hint itself as a candidate stem (caller will expand variants via loadLocal)
+    if (h && h.length > 1) return h;
+  }
+  return null;
+}
+
+/**
+ * Load the full original markdown for reader use.
+ *
+ * Priority:
+ *  1. Local raw (knowledge-graph/raw or portal/data/raw) — no network, always preferred.
+ *  2. Supabase corpus-vault (only when no local file was found for any alias).
+ *
+ * Returns a tag so callers can avoid Supabase work entirely when source === 'local'.
+ */
+export async function loadFullMarkdownForBook(...hints: (string | null | undefined)[]): Promise<{
+  markdown: string | null;
+  source: "local" | "supabase" | "none";
+  fileKey: string | null;
+}> {
+  // Fast local probe using all hints (and their common variants) without listing corpus sources.
+  const directKeys = Array.from(
+    new Set(
+      hints
+        .filter(Boolean)
+        .flatMap((h) => {
+          const k = resolveFileKeyFromHints(h);
+          if (!k) return [] as string[];
+          return bookIdVariants(k);
+        })
+    )
+  );
+
+  for (const key of directKeys) {
+    const local = loadLocalRawMarkdown(key);
+    if (local) {
+      return { markdown: local, source: "local", fileKey: key };
+    }
+  }
+
+  // If we still have no local, resolve via corpus sources to obtain a storagePath for Supabase fallback.
+  try {
+    const sources = await listCorpusSources();
+    for (const hint of hints) {
+      if (!hint) continue;
+      const src = findCorpusSource(sources, hint);
+      if (src?.storage_path) {
+        const md = await loadRawMarkdownForSource(src.storage_path, hint, src.canonical_name, src.storage_path);
+        if (md) {
+          const fk = src.storage_path.split("/").pop()?.replace(/\.md$/i, "") ?? null;
+          // If loadRawMarkdownForSource found it locally under the resolved key, tag accordingly.
+          // (loadRawMarkdownForSource already prefers local, so if we reach here with md it could be either.)
+          // To be precise, re-probe local with the resolved key.
+          const reLocal = fk ? loadLocalRawMarkdown(fk, hint) : null;
+          return {
+            markdown: md,
+            source: reLocal ? "local" : "supabase",
+            fileKey: fk,
+          };
+        }
+      }
+    }
+  } catch {
+    // ignore; fall through to none
+  }
+
+  return { markdown: null, source: "none", fileKey: null };
+}
+
+/**
+ * Small convenience helper for readers: synchronously return full markdown preferring
+ * local raw (knowledge-graph/raw) for any bookId / stem. Does not touch Supabase.
+ * For the async version that falls back to remote, use loadFullMarkdownForBook.
+ */
+export function getFullBookMarkdown(bookId: string): string | null {
+  if (!bookId) return null;
+  const sb = resolveStructuredBookSync(bookId);
+  const hints = [
+    bookId,
+    sb?.book_id,
+    sb?.canonical_name,
+    sb?.source_file,
+  ].filter(Boolean) as string[];
+  const keys = Array.from(
+    new Set(
+      hints.flatMap((h) => {
+        const k = resolveFileKeyFromHints(h);
+        return k ? bookIdVariants(k) : [];
+      })
+    )
+  );
+  for (const k of keys) {
+    const m = loadLocalRawMarkdown(k);
+    if (m) return m;
+  }
+  return loadLocalRawMarkdown(bookId);
 }
 
 /**
@@ -552,7 +770,7 @@ export async function getChapterContent(
   let chapterMarkdown = `# ${chapter.title}\n\n`;
   const fileKey = book.metadata.storagePath?.split("/").pop()?.replace(/\.md$/, "") ?? null;
   const structured = resolveStructuredBookSync(bookId, book.metadata.canonicalName, fileKey, book.metadata.id);
-  const full = await loadRawMarkdownForSource(book.metadata.storagePath);
+  const full = await loadRawMarkdownForSource(book.metadata.storagePath, bookId, book.metadata.canonicalName, fileKey, book.metadata.id);
   if (structured && full) {
     // Locate the chapter (or section treated as chapter target) in the structured tree
     const chEntry =
@@ -619,23 +837,58 @@ export function parseMarkdownToSections(md: string): { chapters: Chapter[]; sect
     const num = !h && /^\s*(\d+[\.\)])\s+(.+?)\s*$/.exec(line);
 
     if (h || num) {
-      flush();
       const headingText = h ? h[2] : (num ? num[2] : "");
-      currTitle = (headingText || "").trim();
-      curr = [line]; // keep the heading line inside the section
+      const t = (headingText || "").trim();
+      const isPageJunk = /^(frontmatter|front matter|page\s*\d+|p\s*\d+|contents?|index|chapter|introduction|preface)$/i.test(t) || /^\s*[IVXLCDM]+\s*$/i.test(t);
+      // Skip spurious headings from OCR (e.g. lone "# and foo..." or very long sentence-like after #, or lowercase fragments).
+      const looksSpurious = t.length > 70 || (t.length > 35 && !/^[A-Z0-9]/.test(t)) || /^and |^the |^of |^to /i.test(t) || (h && !/^#{1,2}\s/.test(line) && t.split(/\s+/).length > 6);
+      if (isPageJunk || looksSpurious) {
+        // Do not split sections on page markers or frontmatter; accumulate under prior real heading.
+        // This keeps full prose together while still embedding the page markers in content.
+        curr.push(line);
+        continue;
+      }
+      flush();
+      currTitle = t;
+      curr = [line];
       continue;
     }
     curr.push(line);
   }
   flush();
 
-  const sections: MarkdownSection[] = raw
+  let sections: MarkdownSection[] = raw
     .map((r, i) => ({
       id: `sec-${i}`,
       title: r.title || `Section ${i + 1}`,
       content: r.lines.join("\n"),
     }))
     .filter((s) => s.content.trim().length > 0);
+
+  // Remove junk "Frontmatter"/page/codey titles (prefer real headings). Keep content in prior sections.
+  const junk = /^(frontmatter|front matter|h1|main|start|untitled|unknown|page\s*\d*|p\s*\d+|contents?|index|chapter|chapters|introduction|preface|appendix)$/i;
+  const codey = /^\d{4}\.\S+|[\w.-]{10,}\.md$|^\d+[\._-]\d{3,}/i;
+  sections = sections.filter((s) => {
+    const t = (s.title || "").trim();
+    if (junk.test(t)) return false;
+    if (t.length > 55 && codey.test(t)) return false;
+    const letters = t.replace(/[^\p{L}]/gu, "");
+    if (letters.length < 2) return false; // ocr noise like "^" or "Ri"
+    if (t.length < 3) return false;
+    // Additional OCR gibberish guard for titles (require vowel + reasonable ascii words; drop fragments).
+    if (!/[aeiouy]/i.test(t) || !/[a-zA-Z]{2,}/.test(t)) return false;
+    if (/^[a-z]/.test(t) && !/^\d/.test(t)) return false;
+    return true;
+  });
+
+  // Body-quality filter for raw/OCR fallbacks: drop micro-sections with almost no prose.
+  // Keeps only sections that have real content (prevents "Page 123" or lone "I" from becoming chapters).
+  sections = sections.filter((s) => {
+    const body = s.content.replace(/^\s*#{1,6}\s*.+$/m, "").trim();
+    const nonEmpty = body.split(/\r?\n/).filter((l) => l.trim().length > 0).length;
+    const chars = body.replace(/[^\p{L}\p{N}]/gu, "").length;
+    return nonEmpty >= 2 && chars >= 60;
+  });
 
   let chapters: Chapter[] = sections.map((s, i) => ({
     id: s.id,
@@ -645,19 +898,28 @@ export function parseMarkdownToSections(md: string): { chapters: Chapter[]; sect
     nodeIds: [],
   }));
 
-  // Remove junky single-token titles that sometimes get parsed from bad first lines
-  const junk = /^(frontmatter|h1|main|start|untitled|unknown|page\s*\d*)$/i;
-  let filtered = chapters.filter((c) => !junk.test(c.title.trim()));
-
-  // If the first remaining item looks like an overall book title (very long), drop it from the clickable TOC
-  // so the first clickable is the first real section (e.g. "1. Foundations...")
-  if (filtered.length > 1 && filtered[0].title.length > 55) {
-    filtered = filtered.slice(1).map((c, i) => ({ ...c, order: i }));
+  // Drop a leading long/code title (e.g. the ocr filename heading) so real content starts the TOC.
+  if (chapters.length > 0 && (chapters[0].title.length > 55 || codey.test(chapters[0].title))) {
+    chapters = chapters.slice(1).map((c, i) => ({ ...c, order: i }));
+    sections = sections.slice(1);
   }
 
-  if (filtered.length === 0) filtered = chapters;
+  if (chapters.length === 0) {
+    // Fallback for raws without usable headings (e.g. page-scanned only): expose full as one chapter.
+    const full = md.trim();
+    sections = [{ id: "full", title: "Full Text", content: full }];
+    chapters = [{ id: "full", title: "Full Text", order: 0, sourceLocation: undefined, nodeIds: [] }];
+  }
 
-  chapters = filtered.map((c, i) => ({ ...c, order: i }));
+  // Final quality gate: if remaining chapters are all gibberish (OCR noise titles with no real words), fall back to single clean "Full Text".
+  const isGibberishTitle = (tt: string) => !tt || tt.length < 4 || !/[a-zA-Z]{4,}/.test(tt) || /[*{}|<>]/.test(tt) || tt.replace(/[a-zA-Z0-9\s:.,'-]/g, "").length > 1;
+  if (chapters.length > 0 && chapters.every((c) => isGibberishTitle(c.title))) {
+    const full = md.trim();
+    sections = [{ id: "full", title: "Full Text", content: full }];
+    chapters = [{ id: "full", title: "Full Text", order: 0, sourceLocation: undefined, nodeIds: [] }];
+  }
+
+  chapters = chapters.map((c, i) => ({ ...c, order: i }));
 
   return { chapters, sections };
 }

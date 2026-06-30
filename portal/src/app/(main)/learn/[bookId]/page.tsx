@@ -10,8 +10,9 @@ import {
   loadNodeChapterPatch,
   enrichChaptersWithNodeIds,
   buildNodeProvenanceMap,
+  loadFullMarkdownForBook,
+  getFullBookMarkdown,
 } from "@/lib/books";
-import { supabase } from "@/lib/supabase";
 import { BookReaderClient } from "@/components/BookReaderClient";
 
 type SP = Record<string, string | string[] | undefined>;
@@ -29,21 +30,12 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
     notFound();
   }
 
-  // Always attempt to load the full original markdown from the corpus-vault if we have a storagePath.
-  // This ensures useful learning content even when graph_nodes extraction produced 0 rows for the source.
-  let fullMarkdown: string | null = null;
-  if (book.metadata.storagePath) {
-    try {
-      const { data: blob } = await supabase.storage
-        .from('corpus-vault')
-        .download(book.metadata.storagePath);
-      if (blob) {
-        fullMarkdown = await blob.text();
-      }
-    } catch {
-      // fall back to nodes or message
-    }
-  }
+  // Load full original markdown for the reader.
+  // Centralized loader guarantees: local raw is preferred and Supabase is only touched
+  // when no local file exists for any alias of this book.
+  const fileKey = book.metadata.storagePath?.split("/").pop()?.replace(/\.md$/, "") ?? book.metadata.id ?? null;
+  const { markdown: fullMarkdown, source: mdSource } =
+    await loadFullMarkdownForBook(bookId, book.metadata.canonicalName, fileKey, book.metadata.id, book.metadata.storagePath);
 
   // Default nodes view (rare) — will be replaced after provenance is known for richer cards.
   let allNodesView: React.ReactNode = (
@@ -55,8 +47,6 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
       </p>
     </div>
   );
-
-  const fileKey = book.metadata.storagePath?.split("/").pop()?.replace(/\.md$/, "") ?? null;
 
   // === USE THE STRUCTURED BOOK AS THE PRIMARY AUTHORITATIVE TOC ===
   let chaptersForReader = book.chapters;
@@ -174,8 +164,21 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
         <p className="text-xs text-text-muted mt-1">
           {usingStructured
             ? `${chaptersForReader.filter((c) => ((c.properties?.level as number) || 1) === 1).length} chapters (structured) • ${book.metadata.nodeCount} nodes`
-            : `${book.metadata.nodeCount} nodes`} • Source: {book.metadata.storagePath?.split("/").pop() || "Knowledge Graph"} • newbooks-v1
-          {usingStructured && <span className="ml-2 rounded border border-hairline px-1.5 py-0.5 text-[10px] tracking-[0.5px]">chapter-precise</span>}
+            : `${chaptersForReader.length} chapters • ${book.metadata.nodeCount} nodes`} • {book.metadata.storagePath?.split("/").pop() || "Knowledge Graph"} • newbooks-v1
+          {usingStructured ? (
+            <span className="ml-2 inline-flex items-center rounded border border-accent/40 bg-accent/5 px-1.5 py-0.5 text-[10px] tracking-[0.5px] text-accent">
+              chapter-precise
+            </span>
+          ) : (
+            <span className="ml-2 inline-flex items-center rounded border border-hairline/70 px-1.5 py-0.5 text-[10px] tracking-[0.5px] text-text-muted">
+              Full text from source
+            </span>
+          )}
+          {fullMarkdown && (
+            <span className="ml-1.5 inline-flex items-center rounded border border-hairline/70 px-1.5 py-0.5 text-[10px] tracking-[0.5px]">
+              full text{mdSource === "local" ? " (local)" : mdSource === "supabase" ? " (remote)" : ""}
+            </span>
+          )}
         </p>
       </div>
 
@@ -191,7 +194,7 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
       />
 
       <div className="mt-4 text-[10px] text-text-muted max-w-3xl">
-        Left nav = structured chapters/sections (stable ids, deep links). Right side = full chapter content (chapter ranges) or section slices + embedded images (corpus-vault / local refs with fallbacks). Nodes carry patch provenance.
+        Left: structured chapters/sections (authoritative TOC, stable ids, deep links). Right: sliced chapter content from original markdown using line ranges (or parsed headings fallback). Images via corpus-vault/local. Nodes show patch provenance.
       </div>
     </div>
   );

@@ -30,8 +30,17 @@ dist/
 knowledge-graph/raw/graphify-out/
 
 # Corpus IP — raw markdown stays out of git; graph is committed (canonical artifact)
+# Source files under knowledge-graph/raw/ are intentionally excluded from the
+# primary history. They are the ingest working tree / local-only corpus.
 knowledge-graph/raw/*.md
 knowledge-graph/gcp-ocr-staging/
+
+# IMPORTANT: Bundled copies for the portal are tracked so that Vercel (root=portal/)
+# can serve full raw markdown without a sibling checkout or Supabase round-trip.
+# These are produced by:  cd portal && npm run data:sync
+# and committed under portal/data/raw/ to guarantee availability for all books.
+!portal/data/raw/*.md
+!portal/data/raw/
 knowledge-graph/graphify-out/*.bak*
 knowledge-graph/graphify-out/graph.json.bak*
 

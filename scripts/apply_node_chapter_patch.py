@@ -112,6 +112,71 @@ def fetch_nodes_via_supabase(stems, graph_version="newbooks-v1"):
     return uniq
 
 
+def fetch_nodes_by_ids_via_supabase(node_ids: list[str], graph_version: str = "newbooks-v1", batch: int = 50) -> list[dict]:
+    """Fetch full rows for specific node ids using id=in.(...) batches (small batches to keep URL safe).
+    Falls back to per-id GETs if a batch fails.
+    """
+    env = load_env()
+    url = env.get("SUPABASE_URL")
+    key = env.get("SUPABASE_SERVICE_ROLE_KEY")
+    if not url or not key or not node_ids:
+        return []
+    try:
+        import requests
+    except Exception:
+        return []
+    headers = {
+        "apikey": key,
+        "Authorization": "Bearer " + key,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    out = []
+    seen = set()
+    for i in range(0, len(node_ids), batch):
+        chunk = [nid for nid in node_ids[i : i + batch] if nid]
+        if not chunk:
+            continue
+        ids_literal = ",".join(chunk)
+        got_any = False
+        try:
+            params = {
+                "select": "id,label,source_file,source_location,properties,community,norm_label,description,rule_text",
+                "graph_version": "eq." + graph_version,
+                "id": "in.(" + ids_literal + ")",
+                "limit": str(len(chunk) + 10),
+            }
+            r = requests.get(url + "/rest/v1/graph_nodes", headers=headers, params=params, timeout=60)
+            if r.ok:
+                for n in (r.json() or []):
+                    nid = n.get("id")
+                    if nid and nid not in seen:
+                        seen.add(nid)
+                        out.append(n)
+                got_any = True
+        except Exception:
+            pass
+        if not got_any:
+            # per-id fallback (slower but reliable)
+            for nid in chunk:
+                if nid in seen:
+                    continue
+                try:
+                    r = requests.get(
+                        url + f"/rest/v1/graph_nodes?id=eq.{nid}&graph_version=eq.{graph_version}&limit=1",
+                        headers=headers,
+                        timeout=20,
+                    )
+                    if r.ok:
+                        for n in (r.json() or []):
+                            if n.get("id") and n["id"] not in seen:
+                                seen.add(n["id"])
+                                out.append(n)
+                except Exception:
+                    pass
+    return out
+
+
 def load_graph_data(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -180,23 +245,178 @@ def merge_into_node(node, p):
     meth = p.get("method")
     if meth is not None:
         props["match_method"] = meth
+        props["patch_method"] = meth
         injected["match_method"] = meth
+        injected["patch_method"] = meth
         node["match_method"] = meth
+        node["patch_method"] = meth
     conf = p.get("confidence")
     if conf is not None:
         props["confidence"] = conf
+        props["patch_conf"] = conf
         injected["confidence"] = conf
+        injected["patch_conf"] = conf
         node["confidence"] = conf
+        node["patch_conf"] = conf
     if p.get("book_id"):
         props["book_id"] = p["book_id"]
         node["book_id"] = p["book_id"]
     if p.get("matched_on") is not None:
         props["matched_on"] = p["matched_on"]
+    if p.get("review_needed") is not None:
+        props["review_needed"] = p.get("review_needed")
+        injected["review_needed"] = p.get("review_needed")
     node["properties"] = props
     for fk in ("chapter_id", "section_id", "hierarchy_path"):
         if fk in props:
             node[fk] = props[fk]
     return injected
+
+
+def _load_supabase_env():
+    env = load_env()
+    url = env.get("SUPABASE_URL")
+    key = env.get("SUPABASE_SERVICE_ROLE_KEY")
+    return url, key
+
+
+def _supabase_patch_properties(node_id: str, props_update: dict, graph_version: str = "newbooks-v1") -> tuple[int, str]:
+    """PATCH a subset of properties for a graph node. Returns (code, body_text)."""
+    url, key = _load_supabase_env()
+    if not url or not key:
+        return (0, "no-supabase-env")
+    try:
+        import requests
+    except Exception:
+        return (0, "no-requests")
+    headers = {
+        "apikey": key,
+        "Authorization": "Bearer " + key,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal",
+    }
+    # Merge strategy: send the full properties object we want (caller should pass merged)
+    # We PATCH only properties + updated_at to avoid clobbering other columns.
+    body = {
+        "properties": props_update,
+        "updated_at": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+    }
+    try:
+        r = requests.patch(
+            f"{url.rstrip('/')}/rest/v1/graph_nodes?id=eq.{node_id}&graph_version=eq.{graph_version}",
+            headers=headers,
+            json=body,
+            timeout=30,
+        )
+        return (r.status_code, r.text[:500] if r.text else "")
+    except Exception as e:
+        return (0, str(e)[:300])
+
+
+def _api_request(env_url: str, env_key: str, method: str, path: str, body: bytes | None = None, *, timeout: int = 120, extra_headers: dict | None = None) -> tuple[int, bytes]:
+    import subprocess, time
+    url = env_url.rstrip("/") + path
+    h = {
+        "apikey": env_key,
+        "Authorization": f"Bearer {env_key}",
+    }
+    if extra_headers:
+        h.update(extra_headers)
+    if body is not None and "Content-Type" not in h:
+        h["Content-Type"] = "application/json"
+    last_err = ""
+    for attempt in range(5):
+        cmd = ["curl", "-sS", "-w", "\n%{http_code}", "-X", method, url]
+        for k, v in h.items():
+            cmd.extend(["-H", f"{k}: {v}"])
+        if body is not None:
+            cmd.extend(["--data-binary", "@-"])
+            proc = subprocess.run(cmd, input=body, capture_output=True, timeout=timeout)
+        else:
+            proc = subprocess.run(cmd, capture_output=True, timeout=timeout)
+        if proc.returncode == 0:
+            raw = proc.stdout
+            if b"\n" not in raw:
+                return 0, raw
+            *body_lines, code_line = raw.rsplit(b"\n", 1)
+            try:
+                code = int(code_line.decode().strip())
+            except ValueError:
+                return 0, raw
+            if code >= 500 and attempt < 4:
+                time.sleep(2**attempt)
+                continue
+            return code, b"\n".join(body_lines)
+        last_err = proc.stderr.decode(errors="replace")[:400]
+        if attempt < 4:
+            time.sleep(2**attempt)
+    raise RuntimeError(f"curl failed after retries: {last_err}")
+
+
+def apply_supabase_patches_fast(id_to_node: dict, filtered_patches: list[dict], batch_size: int = 200) -> dict:
+    """Fast batch upsert of patched nodes to Supabase graph_nodes using on_conflict merge.
+    Re-uses the sync pattern for speed (hundreds per roundtrip instead of 1-per-PATCH).
+    """
+    url, key = _load_supabase_env()
+    if not url or not key:
+        return {"status": "skipped", "reason": "no SUPABASE_URL/KEY"}
+    from datetime import datetime, timezone as _tz
+    # Build targets: only nodes we have post-merge with chapter
+    # IMPORTANT: every row MUST have exactly the same keys for postgrest bulk upsert.
+    FIXED_KEYS = ("id", "graph_version", "label", "file_type", "source_file", "source_location", "community", "properties", "updated_at")
+    targets = []
+    now_iso = datetime.now(_tz.utc).isoformat()
+    for p in filtered_patches:
+        nid = p.get("node_id")
+        n = id_to_node.get(nid) if nid else None
+        if not n:
+            continue
+        props = dict(n.get("properties") or {})
+        if not props.get("chapter_id"):
+            continue
+        row = {
+            "id": nid,
+            "graph_version": "newbooks-v1",
+            "label": n.get("label"),
+            "file_type": n.get("file_type"),
+            "source_file": n.get("source_file"),
+            "source_location": n.get("source_location"),
+            "community": n.get("community"),
+            "properties": props,
+            "updated_at": now_iso,
+        }
+        targets.append(row)
+    if not targets:
+        return {"status": "done", "wrote": 0, "attempted": 0, "reason": "no targets with chapter_id after merge"}
+    wrote = 0
+    errors = 0
+    sample_errs = []
+    for i in range(0, len(targets), batch_size):
+        chunk = targets[i : i + batch_size]
+        body = json.dumps(chunk).encode()
+        try:
+            code, resp = _api_request(
+                url,
+                key,
+                "POST",
+                "/rest/v1/graph_nodes?on_conflict=id,graph_version",
+                body,
+                timeout=180,
+                extra_headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
+            )
+            # Supabase returns 201/200 on success with Prefer resolution
+            if code in (200, 201, 204):
+                wrote += len(chunk)
+            else:
+                errors += len(chunk)
+                if len(sample_errs) < 2:
+                    sample_errs.append({"batch_start": i, "code": code, "body": resp[:400].decode(errors="replace") if resp else ""})
+        except Exception as e:
+            errors += len(chunk)
+            if len(sample_errs) < 2:
+                sample_errs.append({"batch_start": i, "error": str(e)[:300]})
+        print(f"  supabase upsert progress: {min(i+batch_size, len(targets))}/{len(targets)} wrote={wrote} errs={errors}")
+    return {"status": "done", "wrote": wrote, "errors": errors, "attempted": len(targets), "samples": sample_errs}
 
 
 def main():
@@ -229,8 +449,47 @@ def main():
     gdata = None
     nodes = []
     if args.supabase:
-        nodes = fetch_nodes_via_supabase(book_stems)
-        print("Loaded", len(nodes), "nodes via Supabase (filtered to books)")
+        # Fast path for patch apply: bulk load graph for the version then filter locally by needed ids
+        # This is O(total) once instead of O(patches) roundtrips.
+        env = load_env()
+        u = env.get("SUPABASE_URL")
+        k = env.get("SUPABASE_SERVICE_ROLE_KEY")
+        if u and k:
+            try:
+                import requests as _rq
+                hh = {"apikey": k, "Authorization": "Bearer " + k, "Accept": "application/json"}
+                # page in 1000s
+                bulk = []
+                offset = 0
+                page = 1000
+                while True:
+                    r = _rq.get(u + f"/rest/v1/graph_nodes?graph_version=eq.newbooks-v1&select=id,label,source_file,source_location,properties,community,norm_label,description,rule_text&limit={page}&offset={offset}", headers=hh, timeout=120)
+                    if not r.ok:
+                        break
+                    batch = r.json() or []
+                    bulk.extend(batch)
+                    if len(batch) < page:
+                        break
+                    offset += page
+                    if offset % 5000 == 0:
+                        print("  bulk fetched so far:", len(bulk))
+                if bulk:
+                    nodes = bulk
+                    print("Loaded", len(nodes), "nodes via bulk Supabase scan for newbooks-v1")
+            except Exception as e:
+                print("bulk scan failed, falling back:", e)
+        if not nodes:
+            nodes = fetch_nodes_via_supabase(book_stems)
+            print("Loaded", len(nodes), "nodes via Supabase (filtered to books by source_file)")
+        # Augment with any still-missing needed ids (small fallback)
+        needed = [p.get("node_id") for p in filtered_patches if p.get("node_id")]
+        have_ids = {n.get("id") for n in nodes if n.get("id")}
+        missing = [nid for nid in needed if nid and nid not in have_ids]
+        if missing:
+            by_id = fetch_nodes_by_ids_via_supabase(missing, batch=40)
+            addl = [n for n in by_id if n.get("id") and n["id"] not in have_ids]
+            nodes.extend(addl)
+            print("  +", len(addl), "by-id for any stragglers")
     if not nodes:
         gpath = Path(args.graph)
         if not gpath.exists():
@@ -265,7 +524,15 @@ def main():
         if bid:
             books_touched.add(bid)
         if node_has_equivalent(node, p):
-            skipped += 1
+            props = node.get("properties") or {}
+            if not props.get("patch_method"):
+                # stamp patch provenance markers even if chapter+method+conf already match
+                injected = merge_into_node(node, p)
+                applied += 1
+                if len(sample_changes) < args.limit_samples:
+                    sample_changes.append({"node_id": nid, "injected": injected, "patch": {"chapter_id": p.get("chapter_id"), "method": p.get("method"), "confidence": p.get("confidence")}})
+            else:
+                skipped += 1
             continue
         injected = merge_into_node(node, p)
         applied += 1
@@ -278,6 +545,13 @@ def main():
 
     do_write = bool(args.write and not args.dry_run)
     would_write_count = applied
+    supabase_targets = 0
+    if args.supabase:
+        for p in filtered_patches:
+            n = id_to_node.get(p.get("node_id") or "")
+            if n and ((n.get("properties") or {}).get("chapter_id")):
+                supabase_targets += 1
+        would_write_count = supabase_targets
 
     if sample_changes:
         print("\n=== SAMPLE CHANGES ===")
@@ -287,11 +561,11 @@ def main():
 
     if do_write:
         if args.supabase:
-            print("\n[supabase] Write requested - emitting intended updates (no remote mutation):")
-            for s in sample_changes[: min(3, len(sample_changes))]:
-                nid = s["node_id"]
-                print("  REST: PATCH /rest/v1/graph_nodes?id=eq." + nid)
-                print("        body example: {\"properties\": <existing merged with", s["injected"], "> }")
+            print("\n[supabase] Executing fast batch upserts (on_conflict=id,graph_version).")
+            print("  This will send", supabase_targets, "rows; properties merged for chapter provenance.")
+            print("  Safety: no local .bak (Supabase change history / prior graph export is your restore point).")
+            supa_res = apply_supabase_patches_fast(id_to_node, filtered_patches)
+            print("[supabase] result:", supa_res)
         elif gdata is not None and args.apply_to_graph:
             gpath = Path(args.graph)
             ts = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
@@ -340,6 +614,8 @@ def main():
     print("skipped:", skipped)
     print("books touched:", len(books_touched), sorted(books_touched))
     print("would-write count:", would_write_count)
+    if args.supabase:
+        print("supabase_upsert_targets:", supabase_targets)
     print("post-apply equivalent count (for filtered patches):", post_equiv)
 
 

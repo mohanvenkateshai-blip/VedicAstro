@@ -353,6 +353,8 @@ export function BookReaderClient({
           {sections.map((sec, i) => {
             const body = getDisplayBody(sec.content, sec.title);
             const isActive = visibleChapterId === sec.id || activeIdx === i;
+            const isSection = /-sec-/.test(sec.id) || /^sec-/.test(sec.id);
+            const kind = isSection ? "Section" : "Chapter";
             return (
               <div
                 key={sec.id}
@@ -365,7 +367,7 @@ export function BookReaderClient({
               >
                 <div className="px-6 pt-5 pb-2 border-b border-hairline/50 flex items-center justify-between">
                   <div>
-                    <div className="text-[10px] uppercase tracking-[2.5px] text-accent">Chapter {i + 1} of {total}</div>
+                    <div className="text-[10px] uppercase tracking-[2.5px] text-accent">{kind} {i + 1} of {total}</div>
                     <div className="font-display text-xl tracking-[-0.3px] leading-tight text-text-main mt-1">
                       {sec.title}
                     </div>
@@ -408,6 +410,8 @@ export function BookReaderClient({
                 const body = getDisplayBody(blk.content, blk.title);
                 const isActive = visibleChapterId === blk.id || activeIdx === i;
                 const chProv = Object.values(nodeProvenance || {}).find((p) => p.chapter_id === blk.id);
+                const isSection = /-sec-/.test(blk.id) || /^sec-/.test(blk.id);
+                const kind = isSection ? "Section" : "Chapter";
                 return (
                   <section
                     key={blk.id}
@@ -420,7 +424,7 @@ export function BookReaderClient({
                   >
                     <div className="px-6 pt-5 pb-2 border-b border-hairline/50 flex items-center justify-between">
                       <div>
-                        <div className="text-[10px] uppercase tracking-[2.5px] text-accent">Chapter {i + 1} of {total}</div>
+                        <div className="text-[10px] uppercase tracking-[2.5px] text-accent">{kind} {i + 1} of {total}</div>
                         <div className="font-display text-xl tracking-[-0.3px] leading-tight text-text-main mt-1">{blk.title}</div>
                         {chProv?.hierarchy_path && <div className="text-[10px] text-text-muted mt-0.5">From: {chProv.hierarchy_path}</div>}
                         {chProv?.method && (
@@ -457,7 +461,7 @@ export function BookReaderClient({
         <div className="sticky top-6 rounded-2xl border border-hairline bg-surface p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="text-xs uppercase tracking-widest text-text-muted">
-              {fullMarkdown || sections ? "Contents" : "Chapters (from graph)"}
+              {sections ? "Structured contents" : fullMarkdown ? "Contents" : "Chapters (from graph)"}
             </div>
             {selectedChapterId && (
               <button
@@ -489,7 +493,12 @@ export function BookReaderClient({
                     }`}
                     style={{ paddingLeft: indent ? `${12 + indent}px` : undefined }}
                   >
-                    <div className={`font-medium ${isSection ? "text-[13px]" : ""}`}>{ch.title}</div>
+                    <div className={`font-medium flex items-center gap-1.5 ${isSection ? "text-[13px]" : ""}`}>
+                      {Boolean((ch.properties as Record<string, unknown> | undefined)?.structured) && (
+                        <span className="inline-block h-1 w-1 rounded-full bg-accent" aria-hidden="true" />
+                      )}
+                      {ch.title}
+                    </div>
                     <div className="text-[10px] text-text-muted">
                       {ch.properties?.structured ? "Structured • " : ""}
                       {ch.nodeIds && ch.nodeIds.length > 0 ? `${ch.nodeIds.length} nodes` : null}
@@ -529,12 +538,14 @@ export function BookReaderClient({
                   const idx = activeIdx != null ? activeIdx : (visibleChapterId ? chapters.findIndex(c => c.id === visibleChapterId) : -1);
                   const ch = idx >= 0 ? chapters[idx] : null;
                   if (ch) {
+                    const isSec = /-sec-/.test(ch.id) || /^sec-/.test(ch.id) || ((ch.properties?.level as number) || 1) > 1;
+                    const kind = isSec ? "Section" : "Chapter";
                     const bp = Object.values(nodeProvenance || {}).find((p: any) => p?.chapter_id === ch.id);
                     const mapNote = bp?.method ? ` (mapped via ${bp.method}${typeof bp.confidence === "number" ? ` conf ${bp.confidence}` : ""})` : "";
                     return (
                       <>
                         <span className="text-accent font-medium truncate max-w-[28ch]">{ch.title}{mapNote}</span>
-                        <span className="tabular-nums text-text-muted/70">· {idx + 1} / {chapters.length}</span>
+                        <span className="tabular-nums text-text-muted/70">· {kind.toLowerCase()} {idx + 1} / {chapters.length}</span>
                       </>
                     );
                   }

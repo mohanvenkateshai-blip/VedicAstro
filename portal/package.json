@@ -5,6 +5,7 @@
   "scripts": {
     "predev": "node scripts/sync-structured-data.mjs",
     "prebuild": "node scripts/sync-structured-data.mjs",
+    "data:sync": "node scripts/sync-structured-data.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

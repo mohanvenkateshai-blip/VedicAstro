@@ -1,14 +1,20 @@
 # VedicAstro — AI Context Constitution
 
-**🚨 HANDOFF SNAPSHOT — 2026-06-29 (user switching AI tool/model)**  
-Working tree is clean. KnowledgeEngine is the central owner. Graph = newbooks-v1 (26,722 nodes).  
+**🚨 HANDOFF SNAPSHOT — 2026-06-30 (user switching AI tool / software update)**  
+Working tree is **dirty** (Learn rollout + auth fix + KG data uncommitted). Graph = newbooks-v1 (~26,722 nodes).  
+**Learn:** 60/61 books serve clean chapters from local Graphify raw + structured; prod deploy **stale** (smoke 3/7 until push).  
+**Embeddings:** STOP — Gemini quota exhausted; do not run paid API calls.  
+**Auth:** NextAuth conditional — Learn works without AUTH_SECRET placeholders.  
+
 **Start here, then read in order:**
-1. `docs/handoff/AI_TAKEOVER_PACK.md` (this handoff)
-2. `STATUS.md`
-3. `docs/knowledge-engine-status.md`
-4. `knowledge-graph/KNOWLEDGE_CATALOG.md` — the actual list of texts + honest explanation of why it looks disorganized
-5. `.cursor/rules/multi-agent-mandatory-protocol.mdc` + `docs/MULTI_AGENT_MANDATORY_RULE.md` — **MANDATORY RULE: Always launch minimum 5 agents in parallel at the start of any work and scale up. This is now permanent project law.**
-6. This file (CONTEXT.md) for guardrails.
+1. `docs/handoff/context.md` — **latest session handoff (2026-06-30)**
+2. `docs/handoff/AI_TAKEOVER_PACK.md`
+3. `STATUS.md`
+4. `docs/knowledge-engine-status.md`
+5. `LEARN_ROLLOUT.md` + `LEARN_FULL_CHAPTERS_STATUS.md`
+6. `knowledge-graph/KNOWLEDGE_CATALOG.md`
+7. `.cursor/rules/token-discipline.mdc` + `.cursor/rules/multi-agent-mandatory-protocol.mdc`
+8. This file (CONTEXT.md) for guardrails.
 
 **🚨 MANDATORY MULTI-AGENT PROTOCOL (ALWAYS APPLY — project law)**  
 **NEVER start substantial work sequentially or with <5 agents.** At the first sign of any task, immediately call `Task` **multiple times in one response** to launch ≥5 specialized sub-agents in parallel. One of the first wave **MUST** be a Multi-Agent Compliance/Reminder/Orchestrator. Scale to 8–12 (normal) or 15–30+ (large/"FAAASSTTT"). See `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true), `docs/MULTI_AGENT_MANDATORY_RULE.md`, and `docs/agents-launched.log`.

@@ -86,7 +86,7 @@ export default async function LearnPage() {
       {/* Note */}
       <div className="text-xs text-text-muted max-w-2xl">
         Structured books use the authoritative chapter/section TOC from the Gyan sources (with KE node provenance via patch).
-        Node-only books fall back gracefully. Click chapters to jump; deep links supported (?chapter=...&amp;section=...).
+        Full-text books without structured data use parsed headings from the source markdown. Click chapters to jump; deep links supported (?chapter=...&amp;section=...).
       </div>
     </div>
   );

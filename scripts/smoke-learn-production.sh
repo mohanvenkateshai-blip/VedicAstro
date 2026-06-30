@@ -47,7 +47,7 @@ else
 fi
 
 # 3) Hora should load structured content (not pure node-bucket sidebar)
-HORA=$(curl -sL "$BASE/learn/Hora_Shastra_Varahamihira" | head -c 120000)
+HORA=$(curl_safe -L "$BASE/learn/Hora_Shastra_Varahamihira" | head -c 120000 || true)
 if echo "$HORA" | grep -qi "structured\|chapter-precise\|Contents"; then
   ok "Hora shows structured reader signals"
 else
@@ -55,12 +55,40 @@ else
 fi
 
 # 4) Jaimini API should return nodes when graph has data (optional — API may be unused after redirect)
-API=$(curl -s "$BASE/api/learn/jaimini")
+API=$(curl_safe "$BASE/api/learn/jaimini" || echo '{"nodes":[]}')
 NODES=$(echo "$API" | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d.get('nodes',[])))" 2>/dev/null || echo "0")
 if [[ "$NODES" -gt 0 ]]; then
   ok "api/learn/jaimini returns $NODES nodes"
 else
   echo "  WARN: api/learn/jaimini returned 0 nodes (OK if redirect is primary UX; check ilike fix deployed)"
+fi
+
+
+# 5) Library scale — shallow HTML signals (no deep scrape)
+LIB=$(curl_safe -L "$BASE/learn" | head -c 600000 || true)
+BOOK_LINKS=$(echo "$LIB" | grep -oE 'href="/learn/[^"]+"' | sort -u | wc -l | tr -d ' ')
+if [[ "$BOOK_LINKS" -ge 58 && "$BOOK_LINKS" -le 65 ]]; then
+  ok "learn library lists ~$BOOK_LINKS book links (expect ~61)"
+else
+  bad "learn library book link count $BOOK_LINKS (expect ~61, range 58-65)"
+fi
+CHAPTER_LABELS=$(echo "$LIB" | grep -oE '[0-9]+ chapters' | wc -l | tr -d ' ')
+MIN_CHAPTER_LABELS="${MIN_CHAPTER_LABELS:-58}"
+if [[ "$CHAPTER_LABELS" -ge "$MIN_CHAPTER_LABELS" ]]; then
+  ok "learn library shows $CHAPTER_LABELS books with chapterCount labels (min $MIN_CHAPTER_LABELS)"
+else
+  bad "learn library only $CHAPTER_LABELS chapter labels (min $MIN_CHAPTER_LABELS; Jataka_Tatva may lack chapters)"
+fi
+
+# Optional local corpus harness (when run from repo checkout — no network AI)
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+if [[ -x "$REPO_ROOT/portal/scripts/verify-all-learn-books.mjs" ]] || [[ -f "$REPO_ROOT/portal/scripts/verify-all-learn-books.mjs" ]]; then
+  if (cd "$REPO_ROOT/portal" && node scripts/verify-all-learn-books.mjs >/tmp/verify-all-learn-books.out 2>&1); then
+    LOCAL_PASS=$(grep -E 'structured-pass:' /tmp/verify-all-learn-books.out | sed -E 's/.*structured-pass:[[:space:]]*([0-9]+).*/\1/' || echo "0")
+    ok "local verify-all-learn-books structured-pass=$LOCAL_PASS (manifest ~61)"
+  else
+    echo "  WARN: local verify-all-learn-books.mjs failed (run: cd portal && node scripts/verify-all-learn-books.mjs)"
+  fi
 fi
 
 echo

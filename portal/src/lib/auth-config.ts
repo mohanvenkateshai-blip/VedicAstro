@@ -1,9 +1,17 @@
+/** Trim env var; reject empty strings and obvious placeholders. */
+function envVar(name: string, minLen = 1): string | undefined {
+  const v = process.env[name]?.trim();
+  if (!v || v.length < minLen) return undefined;
+  if (v === '""' || v === "''" || v === "-" || v === "xx") return undefined;
+  return v;
+}
+
 /** True when NextAuth can issue real sessions (all three vars required). */
 export function isAuthConfigured(): boolean {
   return !!(
-    process.env.AUTH_SECRET &&
-    process.env.AUTH_GOOGLE_ID &&
-    process.env.AUTH_GOOGLE_SECRET
+    envVar("AUTH_SECRET", 32) &&
+    envVar("AUTH_GOOGLE_ID", 10) &&
+    envVar("AUTH_GOOGLE_SECRET", 10)
   );
 }
 
