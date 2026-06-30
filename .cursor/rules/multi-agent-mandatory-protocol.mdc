@@ -1,17 +1,18 @@
 ---
-description: MANDATORY Multi-Agent Protocol — Always start with minimum 5 agents in parallel and scale up. This rule is always active.
+description: Parallel execution when warranted — tiered agent budget (see token-discipline.mdc). Always apply.
 alwaysApply: true
 ---
 
-# MANDATORY: MULTI-AGENT EXECUTION PROTOCOL (ALWAYS APPLY)
+# PARALLEL EXECUTION PROTOCOL (ALWAYS APPLY)
 
-**This is a hard, non-negotiable rule for all work in this project.**
+**Works with `.cursor/rules/token-discipline.mdc` — agent counts below win over old "always 5+" behavior.**
 
-## Core Rule
-- **NEVER start a substantial task sequentially or with fewer than 5 agents.**
-- **ALWAYS launch a minimum of 5 specialized sub-agents in parallel at the very beginning of any significant work** using the `Task` tool.
-- **Scale aggressively**: For any non-trivial task (refactors, audits, ingest, library building, documentation, fixes, analysis), start with 5–10+ agents. Go to 20+ when the user demands speed ("FAAASSTTT", "lightning speeds", "do everything").
-- One of the initial agents **MUST** be a "Multi-Agent Compliance / Reminder / Orchestrator" agent whose job is to monitor adherence, remind about parallel execution, detect sequential patterns, and force more agents if the work is being done too linearly.
+## Core Rule (tiered — do not over-spawn)
+- **Trivial fix (1–3 files):** direct tools only, **0 subagents**.
+- **Normal feature / bug:** **1–2** focused subagents max, or direct work if faster.
+- **Large task** (library rebuild, full audit, ingest wave): **3–5** parallel subagents with **non-overlapping** scopes.
+- **User demands max speed** ("FAAASSTTT", "do everything"): **5–8** agents — not 20+ unless explicitly requested.
+- **No compliance-only orchestrator agents** — they burn tokens without shipping code.
 
 ## How to Execute
 1. At the first sign of a task (user query, bug, feature, audit, etc.):
@@ -27,21 +28,15 @@ alwaysApply: true
 - Even "small" cleanups become substantial if they touch multiple files or the knowledge base.
 
 ## Forbidden
-- Sequential "one thing at a time" execution for anything beyond a trivial one-line fix.
-- Asking the user clarifying questions before launching the first wave of 5+ agents.
-- Letting "reminder" or "orchestrator" agents go to sleep — they must be re-spawned at the start of every session/task.
-
-## Reminder Agent Responsibility (one of the first 5)
-The dedicated reminder/compliance agent should:
-- Scan recent actions for signs of sequential execution.
-- Propose additional parallel agents.
-- Update status files or handoff notes with multi-agent progress.
-- Enforce the "minimum 5" rule in its output.
+- Spawning 5+ agents for a single-file or single-root-cause bug (wastes tokens — see token-discipline).
+- Marking work DONE without production smoke (`scripts/smoke-learn-production.sh`) when Learn/portal changed.
+- Duplicate subagent summaries in the parent reply.
 
 ## Scaling Guidance
-- 5 = baseline for any real work
-- 8–12 = normal for feature work or fixes
-- 15–30+ = when user is frustrated with speed or the task is large (full library re-org, massive mapping, full audits)
+- 0–1 = bugs and targeted fixes
+- 2–3 = multi-file features
+- 3–5 = structured library / patch / ingest waves
+- 5–8 = only when user explicitly wants maximum parallel speed
 
 **This rule exists because the user has repeatedly demanded lightning-speed, autonomous, parallel multi-agent execution and has expressed extreme frustration when agents "go to sleep" or work is done one-at-a-time.**
 

@@ -1,0 +1,59 @@
+---
+description: Token discipline — minimize context burn, deploy gates, script-first verification. Always apply.
+alwaysApply: true
+---
+
+# TOKEN DISCIPLINE (ALWAYS APPLY)
+
+**Goal:** Fast, high-quality output with minimal token waste. Supersedes agent fan-out when the two conflict.
+
+## Before declaring DONE (deploy gate — mandatory)
+
+Run `scripts/smoke-learn-production.sh` (or equivalent curl checks) **after push**.
+Do **not** mark Learn/portal work complete until production passes or you state deploy is pending.
+
+Minimum checks:
+- `/learn/jaimini` → redirect (not 200 empty page)
+- `/learn/Jaimini_Sutras` → structured sidebar (no Frontmatter/H1/H2-only nav)
+- `/learn/Hora_Shastra_Varahamihira` → structured chapters load
+
+**Local fix ≠ user-visible fix.**
+
+## Agent budget (replaces blind 5+ fan-out)
+
+| Task size | Agents | Approach |
+|-----------|--------|----------|
+| Single bug, 1–3 files | **0–1** | Direct tools (grep, read, shell). No Task tool. |
+| Feature / multi-file fix | **1–2** | One implementer + optional shell verifier |
+| Large refactor / full library | **3–5 max** | Non-overlapping scopes only |
+| User says "FAAASSTTT" / full audit | **5–8** | Still cap; use cheap/fast subagents for bulk |
+
+**Forbidden:** Spawning a "compliance/orchestrator" agent whose only job is reminding about agents.
+
+## Context hygiene
+
+- **Never** paste full JSON corpora, `graph.json`, or `node-chapter-map.json` into chat.
+- Use scripts; report **counts + pass/fail** only (e.g. "62 structured, 4/4 PASS").
+- Read **narrow slices** (grep + ≤80 lines), not whole modules repeatedly.
+- **No duplicate summaries** of subagent output unless the user asks.
+- **Do not** update STATUS/CONTEXT/handoff docs on every micro-change — milestone only.
+- **Commit + push** portal fixes in the same turn when production is the target.
+
+## Script-first verification (prefer over LLM audit)
+
+| Check | Script |
+|-------|--------|
+| Structured path / TOC | `node portal/scripts/verify-structured-path.mjs` |
+| Structured books suite | `python3 scripts/verify_structured_books.py` |
+| Production Learn smoke | `scripts/smoke-learn-production.sh` |
+| Typecheck | `cd portal && npm run typecheck` |
+
+## Model routing (when choosing subagent model)
+
+- **Bulk data** (remap, parse 62 books): fast/cheap models
+- **Integration** (portal + KE + deploy): strong model on **one** owner agent
+- Do not run 5 strong-model agents on the same root cause
+
+## Push discipline
+
+If the user cares about production: **push before end of turn**. Uncommitted "done" triggers expensive rework loops.
