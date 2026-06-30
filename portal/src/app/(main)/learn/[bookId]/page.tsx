@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
-import { loadBook } from "@/lib/books";
+import { loadBook, parseMarkdownToSections } from "@/lib/books";
 import { supabase } from "@/lib/supabase";
 import { BookReaderClient } from "@/components/BookReaderClient";
 
@@ -33,14 +33,13 @@ async function BookReader({ bookId }: BookReaderProps) {
     }
   }
 
-  // Build per-chapter node content map so that clicking a chapter in the left nav
-  // actually shows the nodes that belong to that specific chapter (the user's expectation).
+  // Build per-chapter node content map (for the rare case we want to show raw graph nodes for a section)
   const chapterNodesMap: Record<string, any[]> = {};
   book.chapters.forEach((ch) => {
     chapterNodesMap[ch.id] = book.nodes.filter((n: any) => ch.nodeIds.includes(n.id));
   });
 
-  // Default "all nodes" view (used when no specific chapter is selected or no full text)
+  // Default "all nodes" view (used when no full text at all)
   const allNodesView = book.nodes.length > 0 ? (
     <div className="space-y-8">
       {book.nodes.map((node: any, i: number) => (
@@ -73,6 +72,20 @@ async function BookReader({ bookId }: BookReaderProps) {
     </div>
   );
 
+  // When we have the original full markdown, parse its headings to produce a real table of contents.
+  // This is what fixes "Frontmatter" / "H1" garbage in handbooks like Ashtakavarga.
+  // The source document's own structure ( # , ## , "1. Foo" ) becomes the left nav.
+  let chaptersForReader = book.chapters;
+  let mdSections: { id: string; title: string; content: string }[] | null = null;
+
+  if (fullMarkdown) {
+    const parsed = parseMarkdownToSections(fullMarkdown);
+    if (parsed.chapters.length > 0) {
+      chaptersForReader = parsed.chapters;
+      mdSections = parsed.sections;
+    }
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <div className="mb-8">
@@ -90,14 +103,15 @@ async function BookReader({ bookId }: BookReaderProps) {
       </div>
 
       <BookReaderClient
-        chapters={book.chapters}
+        chapters={chaptersForReader}
         fullMarkdown={fullMarkdown}
         defaultNodesContent={allNodesView}
         chapterNodes={chapterNodesMap}
+        sections={mdSections}
       />
 
       <div className="mt-4 text-[10px] text-text-muted max-w-3xl">
-        Left navigation lists chapters grouped from the Knowledge Graph. Click a chapter to view its extracted nodes on the right.
+        Left navigation is a table of contents derived from the source text (or Knowledge Graph groupings when no full text). Click to jump to that part.
       </div>
     </div>
   );

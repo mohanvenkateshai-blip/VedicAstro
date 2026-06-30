@@ -14,13 +14,13 @@ interface BookReaderClientProps {
   fullMarkdown: string | null;
   defaultNodesContent: React.ReactNode; // shown when no chapter selected or no full text
   chapterNodes?: Record<string, any[]>; // chapterId -> nodes for that chapter
+  sections?: { id: string; title: string; content: string }[] | null; // structured full-text sections for reliable jump nav
 }
 
-export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, chapterNodes = {} }: BookReaderClientProps) {
+export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, chapterNodes = {}, sections = null }: BookReaderClientProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [selectedChapterId, setSelectedChapterId] = useState<string | null>(null);
-  const [showFullText, setShowFullText] = useState(true);
 
   const selectedChapter = selectedChapterId ? chapters.find(c => c.id === selectedChapterId) : null;
   const selectedNodes = selectedChapterId ? (chapterNodes[selectedChapterId] || []) : [];
@@ -28,42 +28,60 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
   const handleChapterClick = (ch: Chapter, idx: number) => {
     setActiveIdx(idx);
     setSelectedChapterId(ch.id);
-    // When user explicitly picks a chapter, prefer showing the KG chapter content
-    setShowFullText(false);
 
-    // Also attempt scroll in case full text is visible
-    scrollToChapterInFullText(ch.title, idx);
-  };
-
-  const scrollToChapterInFullText = (title: string, idx: number) => {
-    if (!contentRef.current || !fullMarkdown) return;
-
-    const container = contentRef.current;
-    const lowerTitle = title.toLowerCase().trim();
-
-    // Build multiple search patterns
-    const patterns: string[] = [lowerTitle];
-    const nums = title.match(/\d+/g) || [];
-    nums.forEach(n => patterns.push(n));
-    if (nums.length >= 2) patterns.push(`${nums[0]}-${nums[1]}`);
-    const romanMap: Record<string, string> = { '1':'i','2':'ii','3':'iii','4':'iv','5':'v','6':'vi','7':'vii','8':'viii','9':'ix','10':'x','11':'xi','12':'xii','13':'xiii','14':'xiv','15':'xv' };
-    nums.forEach(n => { if (romanMap[n]) patterns.push(`chapter ${romanMap[n]}`); });
-
-    const allElements = Array.from(container.querySelectorAll('p, div, pre, h1, h2, h3, h4, span, li'));
-    for (const pat of patterns) {
-      const match = allElements.find(el => (el.textContent || '').toLowerCase().includes(pat));
-      if (match) {
-        match.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        match.classList.add('!bg-accent/20', 'transition-colors');
-        setTimeout(() => match.classList.remove('!bg-accent/20'), 1600);
+    // Primary behavior: scroll inside the readable full text to the matching section.
+    // We use stable element ids when we have parsed sections (best case).
+    if (contentRef.current) {
+      const byId = document.getElementById(ch.id);
+      if (byId) {
+        byId.scrollIntoView({ behavior: "smooth", block: "start" });
+        byId.classList.add("!bg-accent/10", "transition-colors", "rounded-md");
+        setTimeout(() => byId.classList.remove("!bg-accent/10", "rounded-md"), 1600);
         return;
       }
     }
 
+    // Fallback for raw full text or node-only books
+    scrollToChapterInFullText(ch.title, idx);
+  };
+
+  const scrollToChapterInFullText = (title: string, idx: number) => {
+    if (!contentRef.current) return;
+
+    const container = contentRef.current;
+    const lowerTitle = title.toLowerCase().trim();
+
+    // Multiple patterns, including the raw title, numbers, and "1. Foo" style
+    const patterns: string[] = [lowerTitle];
+    const nums = title.match(/\d+/g) || [];
+    nums.forEach((n) => patterns.push(n));
+    if (nums.length >= 2) patterns.push(`${nums[0]}-${nums[1]}`);
+    // Try to match leading "1." or the whole "1. Foundations..."
+    const firstNum = nums[0];
+    if (firstNum) patterns.push(`${firstNum}.`);
+
+    // Walk all text nodes directly (works even when content is one big pre-wrap blob)
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+    let node: Node | null;
+    while ((node = walker.nextNode())) {
+      const txt = (node.textContent || "").toLowerCase();
+      for (const p of patterns) {
+        if (p && txt.includes(p)) {
+          const el = node.parentElement;
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+            el.classList.add("!bg-accent/20", "transition-colors");
+            setTimeout(() => el.classList.remove("!bg-accent/20"), 1500);
+            return;
+          }
+        }
+      }
+    }
+
+    // Last resort: visible movement so it never feels completely dead
     const total = Math.max(1, chapters.length - 1);
-    const roughFraction = Math.min(0.95, Math.max(0.05, idx / total));
-    const target = roughFraction * (container.scrollHeight - container.clientHeight);
-    container.scrollTo({ top: target, behavior: 'smooth' });
+    const frac = Math.min(0.92, Math.max(0.04, idx / total));
+    container.scrollTo({ top: frac * (container.scrollHeight - container.clientHeight), behavior: "smooth" });
   };
 
   const renderChapterNodes = (nodes: any[], title: string) => {
@@ -72,29 +90,14 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
         <div>
           <div className="font-serif text-xl mb-2">{title}</div>
           <p className="text-text-muted">No structured nodes were extracted for this chapter grouping in the Knowledge Graph.</p>
-          {fullMarkdown && (
-            <button onClick={() => setShowFullText(true)} className="mt-4 text-sm underline text-accent">
-              View full original text instead
-            </button>
-          )}
         </div>
       );
     }
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-[10px] uppercase tracking-[3px] text-text-muted">Chapter from Knowledge Graph</div>
-            <div className="font-medium text-lg">{title}</div>
-          </div>
-          {fullMarkdown && (
-            <button
-              onClick={() => setShowFullText(true)}
-              className="text-xs px-3 py-1 rounded border border-hairline hover:bg-surface/60"
-            >
-              View full source text
-            </button>
-          )}
+        <div>
+          <div className="text-[10px] uppercase tracking-[3px] text-text-muted">Chapter from Knowledge Graph</div>
+          <div className="font-medium text-lg">{title}</div>
         </div>
         {nodes.map((node: any, i: number) => (
           <div key={node.id || i} className="border-l-2 border-accent/40 pl-4">
@@ -120,12 +123,31 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
   };
 
   const mainContent = () => {
-    // If user selected a specific chapter, show its KG nodes (unless they explicitly want full text)
-    if (selectedChapter && !showFullText) {
+    // If the user explicitly wants the graph nodes for the selected chapter (rare, via the old path)
+    // we still support it, but default experience for full-text books is the readable prose.
+    if (selectedChapter && !fullMarkdown) {
       return renderChapterNodes(selectedNodes, selectedChapter.title);
     }
 
-    // Default: prefer full original text when available (rich prose)
+    // Best case: we have parsed sections with stable ids → render blocks that are directly targetable by id.
+    // This is what makes "click the chapter name on the left" actually land on the right content.
+    if (sections && sections.length > 0) {
+      return (
+        <>
+          {sections.map((sec) => (
+            <div
+              key={sec.id}
+              id={sec.id}
+              className="mb-6 prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light"
+            >
+              {sec.content}
+            </div>
+          ))}
+        </>
+      );
+    }
+
+    // Fallback: raw full markdown as one blob (still searchable by the tree walker)
     if (fullMarkdown) {
       return (
         <div className="prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light">
@@ -134,7 +156,7 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
       );
     }
 
-    // Fallback to the default (all) nodes view passed from server
+    // Pure node-extracted book with no source text
     return defaultNodesContent;
   };
 
@@ -144,13 +166,15 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
       <div className="lg:col-span-2">
         <div className="sticky top-6 rounded-2xl border border-hairline bg-surface p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="text-xs uppercase tracking-widest text-text-muted">Chapters (from graph)</div>
+            <div className="text-xs uppercase tracking-widest text-text-muted">
+              {fullMarkdown || sections ? "Contents" : "Chapters (from graph)"}
+            </div>
             {selectedChapterId && (
               <button
-                onClick={() => { setSelectedChapterId(null); setActiveIdx(null); setShowFullText(true); }}
+                onClick={() => { setSelectedChapterId(null); setActiveIdx(null); }}
                 className="text-[10px] px-2 py-0.5 rounded border border-hairline hover:bg-surface/60"
               >
-                Show all
+                Top
               </button>
             )}
           </div>
@@ -172,7 +196,9 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
                 >
                   <div className="font-medium">{ch.title}</div>
                   <div className="text-[10px] text-text-muted">
-                    {ch.nodeIds.length} nodes • {ch.sourceLocation}
+                    {ch.nodeIds.length > 0 ? `${ch.nodeIds.length} nodes` : null}
+                    {ch.nodeIds.length > 0 && ch.sourceLocation ? " • " : null}
+                    {ch.sourceLocation}
                   </div>
                 </a>
               ))
@@ -181,7 +207,7 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
             )}
           </div>
           <div className="mt-3 text-[10px] text-text-muted">
-            Click any chapter to view its Knowledge Graph nodes.
+            Click a section to jump to it in the text.
           </div>
         </div>
       </div>
@@ -194,9 +220,9 @@ export function BookReaderClient({ chapters, fullMarkdown, defaultNodesContent, 
         >
           {mainContent()}
         </div>
-        {selectedChapter && showFullText && (
+        {selectedChapter && fullMarkdown && (
           <div className="mt-2 text-[10px] text-text-muted">
-            Full source shown. Click a chapter again to see only that chapter&apos;s extracted nodes.
+            Full source text. The left list jumps inside this document.
           </div>
         )}
       </div>

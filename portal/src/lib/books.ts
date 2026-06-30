@@ -174,7 +174,7 @@ export async function loadBook(
     const t = `${c.title} ${c.sourceLocation || ''}`;
     const m = t.match(/\b(\d+)\b/);
     if (m) return parseInt(m[1], 10);
-    if (/frontmatter|preface|intro|dedication|main/i.test(t)) return -100;
+    if (/frontmatter|preface|intro|dedication|main|h1/i.test(t)) return -100;
     return 100000;
   };
 
@@ -187,6 +187,19 @@ export async function loadBook(
 
   // Re-assign order indices after numeric sort so UI and consumers have a clean sequence
   chapters.forEach((c, i) => { c.order = i; });
+
+  // Drop pure junk labels that the graph extractor sometimes emits for handbooks
+  // (e.g. "Frontmatter", "H1") when there are other real sections.
+  const junkExact = /^(frontmatter|h1|main|untitled|unknown)$/i;
+  const cleaned = chapters.filter((c) => {
+    const t = (c.title || '').trim();
+    if (junkExact.test(t)) return false;
+    return true;
+  });
+  if (cleaned.length > 0) {
+    chapters.splice(0, chapters.length, ...cleaned);
+    chapters.forEach((c, i) => { c.order = i; });
+  }
 
   const metadata: BookMetadata = {
     id: bookId,
@@ -233,4 +246,79 @@ export async function getBookNodes(bookId: string, graphVersion = DEFAULT_GRAPH_
   const source = sources.find((s) => s.canonical_name.includes(bookId));
   if (!source) return [];
   return searchGraphNodes({ graphVersion, sourceFile: source.canonical_name, limit: 1000 });
+}
+
+export type MarkdownSection = {
+  id: string;
+  title: string;
+  content: string;
+};
+
+/**
+ * Parse a full markdown document into a usable table of contents + section blocks.
+ * This is used to drive a real reader experience (nice headings, reliable jumps)
+ * instead of whatever the graph node source_location decided to call "frontmatter".
+ */
+export function parseMarkdownToSections(md: string): { chapters: Chapter[]; sections: MarkdownSection[] } {
+  if (!md || typeof md !== "string") return { chapters: [], sections: [] };
+
+  const lines = md.split(/\r?\n/);
+  const raw: Array<{ title: string; lines: string[] }> = [];
+
+  let currTitle = "Start";
+  let curr: string[] = [];
+
+  const flush = () => {
+    if (curr.length > 0 || raw.length === 0) {
+      raw.push({ title: currTitle, lines: [...curr] });
+    }
+    curr = [];
+  };
+
+  for (const line of lines) {
+    const h = line.match(/^(#{1,6})\s+(.+?)\s*$/);
+    const num = !h && /^\s*(\d+[\.\)])\s+(.+?)\s*$/.exec(line);
+
+    if (h || num) {
+      flush();
+      const headingText = h ? h[2] : (num ? num[2] : "");
+      currTitle = (headingText || "").trim();
+      curr = [line]; // keep the heading line inside the section
+      continue;
+    }
+    curr.push(line);
+  }
+  flush();
+
+  const sections: MarkdownSection[] = raw
+    .map((r, i) => ({
+      id: `sec-${i}`,
+      title: r.title || `Section ${i + 1}`,
+      content: r.lines.join("\n"),
+    }))
+    .filter((s) => s.content.trim().length > 0);
+
+  let chapters: Chapter[] = sections.map((s, i) => ({
+    id: s.id,
+    title: s.title,
+    order: i,
+    sourceLocation: undefined,
+    nodeIds: [],
+  }));
+
+  // Remove junky single-token titles that sometimes get parsed from bad first lines
+  const junk = /^(frontmatter|h1|main|start|untitled|unknown|page\s*\d*)$/i;
+  let filtered = chapters.filter((c) => !junk.test(c.title.trim()));
+
+  // If the first remaining item looks like an overall book title (very long), drop it from the clickable TOC
+  // so the first clickable is the first real section (e.g. "1. Foundations...")
+  if (filtered.length > 1 && filtered[0].title.length > 55) {
+    filtered = filtered.slice(1).map((c, i) => ({ ...c, order: i }));
+  }
+
+  if (filtered.length === 0) filtered = chapters;
+
+  chapters = filtered.map((c, i) => ({ ...c, order: i }));
+
+  return { chapters, sections };
 }
