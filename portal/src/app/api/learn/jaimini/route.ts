@@ -1,54 +1,36 @@
 import { NextResponse } from "next/server";
-import { getBookTextNodes, getJaiminiNodes, DEFAULT_GRAPH_VERSION } from "@/lib/corpus";
+import { getBookTextNodes } from "@/lib/corpus";
 
 export const dynamic = "force-dynamic";
 
+// Only real core Jaimini sources (the actual sutra texts)
+const REAL_SOURCES = [
+  "Jaimini_Sutras.md",
+  "rath_s_jaimini_maharishis_upadesa_sutra.md",
+];
+
 export async function GET() {
-  try {
-    // Try fuzzy first
-    const fuzzy = await getJaiminiNodes();
-    if (fuzzy && fuzzy.length > 0) {
-      return NextResponse.json({
-        nodes: fuzzy,
-        source: fuzzy[0]?.source_file || "fuzzy:jaimini*",
-        version: DEFAULT_GRAPH_VERSION,
-      });
-    }
-
-    const candidates = [
-      "Jaimini_Sutras.md",
-      "rath_s_jaimini_maharishis_upadesa_sutra.md",
-      "jaimini_astrology_calculation_of_mandook_dasha_with_a_case_study_compress.md",
-      "Predicting_Through_Jaimini_Astrology.md",
-    ];
-
-    for (const candidate of candidates) {
-      try {
-        const data = await getBookTextNodes(candidate);
-        if (data && data.length > 0) {
+  for (const file of REAL_SOURCES) {
+    try {
+      const data = await getBookTextNodes(file, "newbooks-v1");
+      if (data && data.length > 0) {
+        const real = data.filter((n: any) => n.label && n.label.trim().length > 5);
+        if (real.length > 0) {
           return NextResponse.json({
-            nodes: data,
-            source: candidate,
-            version: DEFAULT_GRAPH_VERSION,
+            nodes: real,
+            source: file,
+            version: "newbooks-v1",
           });
         }
-      } catch {
-        // try next
       }
+    } catch {
+      // try next source
     }
-
-    // No real data found — signal to client to use fallback
-    return NextResponse.json({
-      nodes: [],
-      source: "Jaimini_Sutras.md (corpus excerpt)",
-      version: DEFAULT_GRAPH_VERSION,
-    });
-  } catch (e) {
-    return NextResponse.json({
-      nodes: [],
-      source: "Jaimini_Sutras.md (corpus excerpt)",
-      version: DEFAULT_GRAPH_VERSION,
-      error: "lookup failed",
-    }, { status: 200 }); // still 200 so client shows nice fallback
   }
+
+  return NextResponse.json({
+    nodes: [],
+    source: "no real Jaimini nodes in graph",
+    version: "newbooks-v1",
+  });
 }
