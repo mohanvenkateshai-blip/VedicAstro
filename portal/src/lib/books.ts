@@ -70,11 +70,12 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
 
       let count = 0;
       for (const key of candidates) {
+        // Use ilike to be robust to minor differences in how source_file was recorded during extraction
         const { count: c } = await supabase
           .from("graph_nodes")
           .select("*", { count: "exact", head: true })
           .eq("graph_version", graphVersion)
-          .eq("source_file", key);
+          .ilike("source_file", `%${key}%`);
         if (c && c > 0) {
           count = c;
           break;
@@ -126,13 +127,16 @@ export async function loadBook(
 
   let nodes: GraphNodeRow[] = [];
   for (const key of candidates) {
-    const fetched = await searchGraphNodes({
-      graphVersion,
-      sourceFile: key,
-      limit: 500,
-    });
-    if (fetched.length > 0) {
-      nodes = fetched;
+    // Use ilike for robustness against small differences in recorded source_file values
+    const { data, error } = await supabase
+      .from("graph_nodes")
+      .select("id, graph_version, label, file_type, source_file, source_location, community, properties")
+      .eq("graph_version", graphVersion)
+      .ilike("source_file", `%${key}%`)
+      .order("source_location")
+      .limit(500);
+    if (!error && data && data.length > 0) {
+      nodes = data as GraphNodeRow[];
       break;
     }
   }

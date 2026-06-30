@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
 import { loadBook, getChapterContent } from "@/lib/books";
+import { supabase } from "@/lib/supabase";
 
 interface BookReaderProps {
   bookId: string;
@@ -24,6 +25,21 @@ async function BookReader({ bookId }: BookReaderProps) {
   }
 
   const nodesToShow = chapterContent?.nodes ?? [];
+
+  // If no structured nodes, load the full original markdown from the corpus-vault for useful content.
+  let fullMarkdown: string | null = null;
+  if (nodesToShow.length === 0 && book.metadata.storagePath) {
+    try {
+      const { data: blob } = await supabase.storage
+        .from('corpus-vault')
+        .download(book.metadata.storagePath);
+      if (blob) {
+        fullMarkdown = await blob.text();
+      }
+    } catch {
+      // will fall back to the "no nodes" message
+    }
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
@@ -64,7 +80,11 @@ async function BookReader({ bookId }: BookReaderProps) {
         {/* Main content area: show nodes from first chapter (or all if none) */}
         <div className="lg:col-span-3">
           <div className="rounded-3xl border border-hairline bg-surface p-8 min-h-[420px]">
-            {nodesToShow.length > 0 ? (
+            {fullMarkdown ? (
+              <div className="prose prose-invert max-w-none text-[15px] leading-relaxed text-text-main/90 whitespace-pre-wrap font-light">
+                {fullMarkdown}
+              </div>
+            ) : nodesToShow.length > 0 ? (
               <div className="space-y-8">
                 {nodesToShow.map((node: any, i: number) => (
                   <div key={node.id || i} className="border-l-2 border-accent/40 pl-4">
@@ -99,8 +119,7 @@ async function BookReader({ bookId }: BookReaderProps) {
           </div>
 
           <div className="mt-4 text-[10px] text-text-muted">
-            All content shown is pulled live from the Knowledge Graph (graph_nodes) for this source. 
-            It reflects the current state of extraction — some texts are rich, others are chapter/page oriented.
+            Content is served from the Knowledge Graph when structured nodes exist. When extraction is minimal, the full original source markdown from the corpus vault is shown instead.
           </div>
         </div>
       </div>

@@ -60,7 +60,7 @@ export default async function LearnPage() {
 
                   <div className="mt-6 pt-5 border-t border-hairline flex items-center justify-between text-sm">
                     <span className="font-mono text-xs uppercase tracking-[0.08em] text-text-muted">
-                      {book.nodeCount || 0} nodes
+                      {(book.nodeCount ?? 0) > 0 ? `${book.nodeCount} nodes` : 'Full text source'}
                     </span>
                     <Link
                       href={isJaimini ? "/learn/jaimini" : `/learn/${slug}`}
