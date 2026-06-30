@@ -43,11 +43,15 @@ The old `cvce/requirements*.txt` files are deprecated. All dependencies are now 
 
 - `cvce/` — FastAPI calculation engine (deployed on Fly.io)
 - `portal/` — Next.js frontend (deployed on Vercel)
-- `knowledge-graph/` — Knowledge Graph data and tools
+- `knowledge-graph/` — Knowledge Graph data and tools (open `knowledge-graph/README.md` + `KNOWLEDGE_CATALOG.md` first — this is where the real library inventory + explanations live)
 - `scripts/` — Ingestion, sync, and analysis scripts
 
 ## KnowledgeEngine
 
 The central owner of the Vedic Knowledge Graph. All engines must go through it for knowledge access.
 
-See `docs/knowledge-engine-architecture.md` and `docs/knowledge-engine-mapping-audit.md`.
+See:
+- `knowledge-graph/KNOWLEDGE_CATALOG.md` (the texts, the history, the current reality)
+- `docs/knowledge-engine-architecture.md`
+- `docs/knowledge-engine-mapping-audit.md`
+- `cvce/knowledge_engine/` (implementation + safe access)

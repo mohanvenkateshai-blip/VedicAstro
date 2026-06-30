@@ -48,14 +48,26 @@ export type ChapterContent = {
 /**
  * List all available books from corpus_sources, enriched with graph stats.
  * Compatible with KnowledgeEngine's corpus_sources table.
+ *
+ * WHY THIS CODE LOOKS "HACKY":
+ * The Knowledge Graph was built in waves (CoreJyothisha PDFs via OCR + LLM, then loose newbooks MDs).
+ * During extraction, nodes were tagged with whatever `source_file` the script saw at the time
+ * (often the basename of the file on disk during that run).
+ * Later, corpus_sources got "canonical_name" from the nicer titles or storage paths.
+ *
+ * Result: for many books, source_file != canonical_name.
+ * This caused months of "0 nodes" in the Learn library.
+ *
+ * We now do multi-candidate + ilike fallback here so the UI is reliable.
+ * Long-term fix belongs in the ingest pipeline (normalize source_file at promotion time).
+ *
+ * See also: knowledge-graph/KNOWLEDGE_CATALOG.md for the human view of the library.
  */
 export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<BookMetadata[]> {
   const sources = await listCorpusSources();
 
   // Compute accurate node counts.
-  // IMPORTANT: graph_nodes.source_file is usually the raw md filename (without .md),
-  // while corpus_sources.canonical_name may be similar or slightly different.
-  // We prefer the filename-derived key because that's how nodes were tagged during ingest.
+  // See the big comment above for why we need this resilience.
   const results = await Promise.all(
     sources.map(async (src) => {
       const canonical = src.canonical_name;

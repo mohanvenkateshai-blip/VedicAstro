@@ -6,7 +6,8 @@ Working tree is clean. KnowledgeEngine is the central owner. Graph = newbooks-v1
 1. `docs/handoff/AI_TAKEOVER_PACK.md` (this handoff)
 2. `STATUS.md`
 3. `docs/knowledge-engine-status.md`
-4. This file (CONTEXT.md) for guardrails.
+4. `knowledge-graph/KNOWLEDGE_CATALOG.md` — the actual list of texts + honest explanation of why it looks disorganized
+5. This file (CONTEXT.md) for guardrails.
 
 **Read this file before writing any code or making any architectural decision.**
 It is the single source of truth for system topology, immutable constraints, and hard-won lessons.

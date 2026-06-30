@@ -46,6 +46,7 @@ python scripts/handoff/maintain_context.py --update-all
 4. Background revival cron (every 6–12h)
 
 ## 6. Critical Files for Any New AI
+- `knowledge-graph/KNOWLEDGE_CATALOG.md` — **what texts are actually in the KG + honest history of the mess**
 - `CONTEXT.md` (root) — immutable guardrails + topology
 - `docs/knowledge-engine-status.md` — full status report
 - `docs/knowledge-engine-architecture.md` — mermaid diagrams + flow

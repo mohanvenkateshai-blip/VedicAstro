@@ -4,6 +4,9 @@
 Working tree clean. Full takeover pack generated at `docs/handoff/AI_TAKEOVER_PACK.md`.  
 Start there + CONTEXT.md + STATUS.md.
 
+**To understand what is actually inside the Knowledge Graph (the texts, not just the node count):**
+→ Read `knowledge-graph/KNOWLEDGE_CATALOG.md` first. It is the human-readable inventory + explanation of the current mess and how we access it.
+
 **Date:** 2026-06-29  
 **Version:** `newbooks-v1` (26,722 nodes / 38,881 links)
 
