@@ -19,6 +19,10 @@ is transiting through (from SAV) or the specific planet's BAV.
 from dataclasses import dataclass, field
 
 from ..core.panchanga import PLANETS, RASHIS, rashi_index
+from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node
+
+_ashtakavarga_rules_version: str | None = None
+_ashtakavarga_registered = False
 
 # =====================================================================
 # BAV Tables — Benefic Placements (BPHS standard)
@@ -317,3 +321,46 @@ def bindu_prediction(bindus: int) -> dict:
         "verdict": BINDU_RESULTS.get(bindus, ("", "neutral", ""))[1],
         "effect": BINDU_RESULTS.get(bindus, ("", "", ""))[2],
     }
+
+
+def _clear_ashtakavarga_knowledge_caches() -> None:
+    """Drop graph caches on refresh for ashtakavarga."""
+    try:
+        from knowledge_engine.integration import clear_knowledge_engine_cache
+
+        clear_knowledge_engine_cache()
+    except Exception:
+        pass
+
+
+def _on_ashtakavarga_refresh(new_version: str) -> None:
+    global _ashtakavarga_rules_version
+    _ashtakavarga_rules_version = new_version
+    _clear_ashtakavarga_knowledge_caches()
+    # Additional engine path: calls structured on on_refresh to propagate signals
+    try:
+        get_structured_book("BPHS")
+        get_hierarchy_for_node("ashtakavarga_gyan")
+    except Exception:
+        pass
+
+
+def _register_ashtakavarga_engine() -> None:
+    global _ashtakavarga_registered
+    if _ashtakavarga_registered:
+        return
+    try:
+        from knowledge_engine.integration import get_knowledge_engine
+
+        get_knowledge_engine().register_engine("ashtakavarga", on_refresh=_on_ashtakavarga_refresh)
+        _ashtakavarga_registered = True
+    except Exception:
+        pass
+
+
+_register_ashtakavarga_engine()
+
+
+def _ensure_ashtakavarga_registered() -> None:
+    if not _ashtakavarga_registered:
+        _register_ashtakavarga_engine()

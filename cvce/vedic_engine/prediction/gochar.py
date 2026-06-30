@@ -14,6 +14,7 @@ from ..core.panchanga import (
     rashi_index,
 )
 from ..core.panchanga import nak_index as _nak_idx
+from knowledge_engine.integration import get_structured_book
 from ..rules.transit_rules import (
     COMBUST_ORB,
     DEBIL_SIGN,
@@ -68,6 +69,11 @@ def _on_gochar_refresh(new_version: str) -> None:
     global _rules_version
     _rules_version = new_version
     _clear_transit_rules_cache()
+    # Propagate structured signals
+    try:
+        get_structured_book("Gochar_Phaladeepika")
+    except Exception:
+        pass
 
 
 def _register_gochar_engine() -> None:

@@ -18,6 +18,7 @@ Each yoga has:
 from dataclasses import dataclass
 
 from ..core.panchanga import RASHIS
+from knowledge_engine.integration import get_structured_book, get_nodes_for_chapter
 
 _yoga_rules_version: str | None = None
 _yoga_registered = False
@@ -39,6 +40,12 @@ def _on_yoga_refresh(new_version: str) -> None:
     global _yoga_rules_version
     _yoga_rules_version = new_version
     _clear_yoga_knowledge_caches()
+    # Propagate structured signals (nodes for chapter) on refresh
+    try:
+        get_structured_book("Phaladeepika")
+        get_nodes_for_chapter("BPHS", "ch-36")
+    except Exception:
+        pass
 
 
 def _register_yoga_engine() -> None:

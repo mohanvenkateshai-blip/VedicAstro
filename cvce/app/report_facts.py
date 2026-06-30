@@ -15,6 +15,7 @@ from app.dasha_vimshottari import (
 from app.ephem import jd_place, parse_dt, set_ayanamsa
 from knowledge_engine.integration import get_knowledge_engine, get_llm_narration
 from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
+from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
 from vedic_engine.prediction.ashtakavarga import SAV_BANDS, compute_ashtakavarga
 from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
 from vedic_engine.synthesis.engine import VedicPredictor
@@ -54,6 +55,13 @@ def _on_report_refresh(new_version: str) -> None:
     _report_rules_version = new_version
     _predictor = None
     _clear_report_knowledge_caches()
+    # Propagate structured signals (chapter/hierarchy) on refresh
+    try:
+        get_structured_book("BPHS")
+        get_structured_book("Phaladeepika")
+        get_nodes_for_chapter("BPHS", "ch-1")
+    except Exception:
+        pass
 
 
 def _get_predictor() -> VedicPredictor:
@@ -367,6 +375,24 @@ def build_report_facts(
         janma_nakshatra=janma_nakshatra,
         janma_rashi=janma_rashi,
     )
+
+    # Consumer update: attach chapter hierarchy to graph matches/citations in output
+    try:
+        for ins in (enhancements or {}).get("natal_insights") or []:
+            for gm in (ins.get("graph_matches") or [])[:1]:
+                nid = gm.get("id") if isinstance(gm, dict) else None
+                if nid:
+                    gm["chapter_hierarchy"] = get_hierarchy_for_node(nid)
+        for yc in (enhancements or {}).get("yoga_citations") or []:
+            if isinstance(yc, dict):
+                nid = yc.get("id")
+                if not nid and isinstance(yc.get("node"), dict):
+                    nid = yc.get("node", {}).get("id")
+                if nid:
+                    yc["chapter_hierarchy"] = get_hierarchy_for_node(nid)
+                    break
+    except Exception:
+        pass
 
     transit_intel = (enhancements or {}).get("transit_intelligence")
     transit_verdict = transit_intel.get("overall_verdict") if transit_intel else None

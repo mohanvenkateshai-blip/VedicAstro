@@ -319,17 +319,49 @@ class KnowledgeEngine:
     _node_chapter_patch: dict | None = None
 
     def _load_node_chapter_patch(self) -> dict:
-        """Load (and cache) the node→(chapter, section, hierarchy) mapping patch."""
+        """Load (and cache) the node→(chapter, section, hierarchy) mapping patch.
+
+        Enhanced: also incorporates any per-book patch-*.json files (preferred by
+        the portal and produced by map_nodes_to_structured.py per book). This makes
+        get_structured_book / get_nodes_for_chapter see the latest per-book provenance.
+        """
         if self._node_chapter_patch is not None:
             return self._node_chapter_patch
+        merged: dict = {"patches": [], "books": []}
+        # 1. consolidated
         p = Path("knowledge-graph/patches/node-chapter-map.json")
         if p.exists():
             try:
-                self._node_chapter_patch = json.loads(p.read_text(encoding="utf-8"))
+                base = json.loads(p.read_text(encoding="utf-8"))
+                merged["patches"].extend(base.get("patches") or [])
+                merged["books"] = base.get("books") or []
             except Exception:
-                self._node_chapter_patch = {"patches": []}
-        else:
-            self._node_chapter_patch = {"patches": []}
+                pass
+        # 2. per-book patches (patch-{name}.json) — prefer/merge like portal loadNodeChapterPatch
+        patches_dir = Path("knowledge-graph/patches")
+        if patches_dir.exists():
+            try:
+                for pf in sorted(patches_dir.glob("patch-*.json")):
+                    try:
+                        extra = json.loads(pf.read_text(encoding="utf-8"))
+                        extras = extra.get("patches") or (extra if isinstance(extra, list) else [])
+                        for e in extras:
+                            # tag book if missing
+                            if not e.get("book_id") and extra.get("book_id"):
+                                e = dict(e)
+                                e["book_id"] = extra.get("book_id")
+                            merged["patches"].append(e)
+                        bks = extra.get("books") or ([extra.get("book_id")] if extra.get("book_id") else [])
+                        for b in bks:
+                            if b and b not in merged.get("books", []):
+                                merged.setdefault("books", []).append(b)
+                    except Exception:
+                        continue
+            except Exception:
+                pass
+        if not merged.get("patches"):
+            merged = {"patches": []}
+        self._node_chapter_patch = merged
         return self._node_chapter_patch
 
     def _get_patch_entries_for_book(self, book_id: str) -> list[dict]:
@@ -345,7 +377,15 @@ class KnowledgeEngine:
                 out.append(p)
             elif k_norm and (k_norm in b_norm or b_norm in k_norm or k_norm == b_norm):
                 out.append(p)
-        return out
+        # de-dup by node_id
+        seen = set()
+        uniq = []
+        for p in out:
+            nid = p.get("node_id")
+            if nid and nid not in seen:
+                seen.add(nid)
+                uniq.append(p)
+        return uniq
 
     def get_nodes_for_chapter(self, book_id: str, chapter_id: str) -> list[dict]:
         """Return the KnowledgeEngine graph nodes that map to a given chapter of a book."""

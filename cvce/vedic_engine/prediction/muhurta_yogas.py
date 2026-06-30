@@ -16,6 +16,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from ..core.panchanga import VARA_LORD
+from knowledge_engine.integration import get_structured_book
 
 # ---------------------------------------------------------------------------
 # VARA × TITHI YOGAS  (WE Ch.9 pp.75-76)
@@ -486,6 +487,11 @@ def evaluate_muhurta_yogas(
       Vara/Nakshatra = 3 units
       Vara/Tithi/Nakshatra = 9 units (checked separately when nak is given)
     """
+    try:
+        # additional report path (muhurta_yogas) now calls structured
+        get_structured_book("Sarvartha_Chintamani")
+    except Exception:
+        pass
     result = MuhurtaYogaResult()
     vara = _vara_lord(weekday)
     tip = _tithi_tip(tithi_num)

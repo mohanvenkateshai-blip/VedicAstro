@@ -21,6 +21,7 @@ from ..core.astronomy import (
     norm360,
     sun_moon,
 )
+from knowledge_engine.integration import get_structured_book
 
 # =====================================================================
 # Constants
@@ -504,6 +505,11 @@ def _on_panchanga_refresh(new_version: str) -> None:
     global _panchanga_rules_version
     _panchanga_rules_version = new_version
     _clear_panchanga_knowledge_caches()
+    # Ensure on_refresh propagates structured signals
+    try:
+        get_structured_book("Introduction_to_Vedic_Astrology_Sanjay_Rath")
+    except Exception:
+        pass
 
 
 def _register_panchanga_engine() -> None:

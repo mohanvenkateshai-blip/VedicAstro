@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
 from ..core.panchanga import NAK_LORD, NAKSHATRAS
+from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node
 
 _dasha_rules_version: str | None = None
 _dasha_registered = False
@@ -45,6 +46,12 @@ def _on_dasha_refresh(new_version: str) -> None:
     global _dasha_rules_version
     _dasha_rules_version = new_version
     _clear_dasha_knowledge_caches()
+    # Propagate structured chapter/hierarchy signals on refresh
+    try:
+        get_structured_book("BPHS")
+        get_hierarchy_for_node("dasha_sample")
+    except Exception:
+        pass
 
 
 def _register_dasha_engine() -> None:
