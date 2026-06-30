@@ -213,3 +213,12 @@ COVERAGE_MATRIX + RUN_LOG written
 [2026-06-30T03:42:31+01:00] task-887349 complete: remapped 6 key books (Sarvartha+Hora+Prasna_M1 + Jataka_Tatva+Uttara+Brihat_Jataka) → +5007 new/merged patches. Canonical now 11886 patches / 13 books. Covered-set coverage 98.2%. Files: patch-Sarvartha_Chintamani.json (3200), patch-Jataka_Tatva.json (1807).
 [2026-06-30T02:44:55.108434+00:00] apply merged=5002 cov=98.7% delta={'prev': 0, 'new': 5002, 'd_patched': 5002, 'd_pct': 98.7} acts=['canonical', 'coverage', 'supabase:873']
 [2026-06-30T03:46:01+01:00] task-362192 FINISHED: early --apply --supabase run (5 sources → 5002 patches @ 98.7%, +5002 delta). Supabase properties written for 873 nodes. Note: later remaps grew canonical to 11886/13 books; a follow-up broader push was executed separately.
+
+[2026-06-30T02:49:04.225716+00:00] node-chapter apply wave (subagent)
+  source: node-chapter-map.json (11886 patches)
+  targets: Ashtakavarga, BPHS_Vol1, BPHS_Vol2, Jaimini_Sutras, Phaladeepika, Brihat_Samhita, Saravali, Sarvartha_Chintamani
+  local_graph: applied=8060 matched=8060 skipped=0 (backup graph.json.bak-20260630-024602)
+  supabase_attempt: background task launched, aborted after ~91s (no final metrics emitted; fetch+PATCH loop started)
+  supabase_state_samples (intermittent): Ashtakavarga ~92% (98/106), BPHS_Vol1 ~60% in one probe / 100% in smaller sample
+  coverage_delta_local: 0 -> 8060 chapter-bearing nodes across 8 books
+  note: Supabase probes unstable (some HTTP 0); local graph.json authoritative for this run.
