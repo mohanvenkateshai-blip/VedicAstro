@@ -174,6 +174,10 @@ export type BookMetadata = {
   chapterCount?: number;
   nodeCount?: number;
   properties?: Record<string, unknown>;
+  // Nice display fields for cards
+  displayTitle?: string;
+  author?: string | null;
+  year?: string | null;
 };
 
 export type Chapter = {
@@ -184,6 +188,108 @@ export type Chapter = {
   nodeIds: string[]; // associated graph nodes
   properties?: Record<string, unknown>;
 };
+
+/** Turn ugly slugs/filenames into reasonable titles. */
+function humanizeTitle(input: string): string {
+  let t = (input || "")
+    .replace(/[_-]/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\.(md|txt|pdf)$/i, "")
+    .trim();
+
+  // Remove common scan/ocr junk
+  t = t.replace(/\b(compress|compressed|scan|ocr|text|full|vol\s*\d+|edition)\b/gi, "");
+  t = t.replace(/\s{2,}/g, " ").trim();
+
+  // Basic title casing
+  t = t.replace(/\b\w/g, (c) => c.toUpperCase());
+
+  // Special known cleanups
+  const known: Record<string, string> = {
+    "Gochar Phaladeepika Pulippani": "Gochar Phaladeepika",
+    "Jaimini Sutras": "Jaimini Sutras",
+    "Brihat Parasara Hora Sastra": "Brihat Parashara Hora Shastra",
+  };
+  if (known[t]) return known[t];
+
+  return t || input;
+}
+
+/** Best effort extraction of title / author / year from raw markdown front-matter. */
+export function extractDisplayMeta(raw: string | null, fallback: string): { displayTitle: string; author: string | null; year: string | null } {
+  const fallbackTitle = humanizeTitle(fallback);
+
+  if (!raw) {
+    return { displayTitle: fallbackTitle, author: null, year: null };
+  }
+
+  const head = raw.slice(0, 6000);
+  const lines = head.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+  let title = fallbackTitle;
+  let author: string | null = null;
+  let year: string | null = null;
+
+  // 1) Try to find a good title from first real heading
+  for (const line of lines.slice(0, 25)) {
+    if (/^#{1,3}\s+/.test(line)) {
+      let t = line.replace(/^#{1,3}\s+/, "").trim();
+      if (/^page\s*\d+$/i.test(t)) continue;
+      if (t.length > 3 && t.length < 90 && !/^[0-9\s.,;:!?]+$/.test(t)) {
+        t = humanizeTitle(t);
+        if (t.length > 3) {
+          title = t;
+          break;
+        }
+      }
+    }
+  }
+
+  // 2) Look for author patterns in the head
+  const authorPatterns = [
+    /(?:by|author|dr\.|prof\.|pandit|shri|sh\.|sri)\s+([A-Z][A-Za-z.\s\-']{3,50})/i,
+    /([A-Z][A-Za-z.\s\-']{3,40})\s*(?:\(|\s*-\s*|$)/,  // loose name
+  ];
+  for (const line of lines.slice(0, 30)) {
+    if (/foreword|introduction|contents|copyright|price|edition/i.test(line)) continue;
+    for (const re of authorPatterns) {
+      const m = line.match(re);
+      if (m && m[1]) {
+        let cand = m[1].replace(/[\s,.;:]+$/,'').trim();
+        if (cand.length > 3 && !/^(the|and|with|from|by)$/i.test(cand)) {
+          author = cand;
+          break;
+        }
+      }
+    }
+    if (author) break;
+  }
+
+  // 3) Year: look for plausible publication years
+  const yearMatch = head.match(/\b(1[89]\d{2}|20[0-2]\d)\b/);
+  if (yearMatch) year = yearMatch[1];
+
+  // Special known good titles override for ugly cases
+  const overrides: Record<string, {title?: string, author?: string, year?: string}> = {
+    "Gochar_Phaladeepika_Pulippani": { title: "Gochar Phaladeepika", author: "Dr. U.S. Pulippani" },
+    "Jaimini_Sutras": { title: "Jaimini Sutras", author: "Prof. B. Suryanarain Rao (rev. B.V. Raman)", year: "1949" },
+    "Graha_Laghava": { title: "Graha Laghava" },
+    "Hora_Sara": { title: "Hora Sara" },
+    "Hora_Shastra_Varahamihira": { title: "Hora Shastra", author: "Varahamihira" },
+    "Brihat_Parasara_Hora_Sastra_Vol_1": { title: "Brihat Parashara Hora Shastra (Vol 1)" },
+    "Saravali": { title: "Saravali", author: "Kalyana Varma" },
+  };
+  const key = fallback.replace(/\s+/g, "_");
+  if (overrides[key]) {
+    const o = overrides[key];
+    if (o.title) title = o.title;
+    if (o.author) author = o.author;
+    if (o.year) year = o.year;
+  }
+
+  return { displayTitle: title || fallbackTitle, author, year };
+}
+
 
 export type BookContent = {
   metadata: BookMetadata;
@@ -250,15 +356,33 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
 
       const structured = resolveStructuredBookSync(fileKey, canonical);
       let chapterCount = structured?.chapters?.length || structured?.total_chapters || 0;
+
+      // Load a small preview for better titles + author/year (local first)
+      let rawPreview: string | null = null;
+      try {
+        rawPreview = loadLocalRawMarkdown(fileKey, canonical) || null;
+        if (!rawPreview && fileKey) {
+          // try a quick prefix load if full loader available
+          const full = getFullBookMarkdown(fileKey ?? canonical ?? "");
+          if (full) rawPreview = full.slice(0, 8000);
+        }
+      } catch {}
+
       if (!chapterCount) {
         // Fallback: for books without structured JSON, count chapters from improved parse of raw markdown
-        // so /learn index shows realistic chapter counts for full-text books.
-        const raw = getFullBookMarkdown(fileKey ?? canonical ?? "");
-        if (raw) {
-          const p = parseMarkdownToSections(raw);
+        if (rawPreview) {
+          const p = parseMarkdownToSections(rawPreview);
           chapterCount = p.chapters.length;
+        } else {
+          const raw = getFullBookMarkdown(fileKey ?? canonical ?? "");
+          if (raw) {
+            const p = parseMarkdownToSections(raw);
+            chapterCount = p.chapters.length;
+          }
         }
       }
+
+      const meta = extractDisplayMeta(rawPreview, canonical || fileKey || "");
 
       return {
         id: fileKey ?? canonical,
@@ -269,6 +393,9 @@ export async function listBooks(graphVersion = DEFAULT_GRAPH_VERSION): Promise<B
         bytes: src.bytes,
         nodeCount: count || 0,
         chapterCount: chapterCount || undefined,
+        displayTitle: meta.displayTitle,
+        author: meta.author,
+        year: meta.year,
       };
     })
   );
@@ -477,6 +604,30 @@ export async function resolveStructuredBook(...hints: (string | null | undefined
     } catch {}
   }
   return null;
+}
+
+/**
+ * Load ALL structured books (for global search / indexing).
+ * Returns only those that have chapters.
+ */
+export function getAllStructuredBooksSync(): StructuredBook[] {
+  try {
+    const structuredDir = getStructuredDir();
+    if (!fs.existsSync(structuredDir)) return [];
+    const files = fs.readdirSync(structuredDir).filter((f) => f.endsWith(".json"));
+    const out: StructuredBook[] = [];
+    for (const f of files) {
+      try {
+        const data = JSON.parse(fs.readFileSync(path.join(structuredDir, f), "utf8")) as StructuredBook;
+        if (data && Array.isArray(data.chapters) && data.chapters.length > 0) {
+          out.push(data);
+        }
+      } catch {}
+    }
+    return out;
+  } catch {
+    return [];
+  }
 }
 
 /**
@@ -818,6 +969,17 @@ export type MarkdownSection = {
  */
 export function parseMarkdownToSections(md: string): { chapters: Chapter[]; sections: MarkdownSection[] } {
   if (!md || typeof md !== "string") return { chapters: [], sections: [] };
+
+  // Heavy page-scanned OCR books (hundreds of "## Page N" markers) have no reliable
+  // chapter structure. Collapse early to a single clean "Full Text" experience.
+  const pageMarkers = (md.match(/##\s*Page\s+\d+/gi) || []).length;
+  if (pageMarkers > 30) {
+    const full = md.trim();
+    return {
+      chapters: [{ id: "full", title: "Full Text", order: 0, sourceLocation: undefined, nodeIds: [] }],
+      sections: [{ id: "full", title: "Full Text", content: full }],
+    };
+  }
 
   const lines = md.split(/\r?\n/);
   const raw: Array<{ title: string; lines: string[] }> = [];

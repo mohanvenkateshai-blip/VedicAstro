@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { listBooks } from "@/lib/books";
+import { LearnGlobalSearch } from "@/components/LearnGlobalSearch";
 
-export default async function LearnPage() {
+export default async function LearnPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = (await searchParams) || {};
+  const initialQ = typeof sp.q === "string" ? sp.q : "";
+
   let books: Awaited<ReturnType<typeof listBooks>> = [];
   try {
     books = await listBooks("newbooks-v1");
@@ -22,6 +30,14 @@ export default async function LearnPage() {
         </h1>
         <p className="text-lg text-text-muted max-w-2xl">
           All texts loaded directly from the Knowledge Graph (newbooks-v1). Real nodes, real content.
+        </p>
+      </div>
+
+      {/* Global cross-book search */}
+      <div className="mb-10">
+        <LearnGlobalSearch initialQuery={initialQ} />
+        <p className="mt-2 text-xs text-text-muted">
+          Search titles, chapters and sections across the entire library. Results link directly to the location.
         </p>
       </div>
 
@@ -54,14 +70,30 @@ export default async function LearnPage() {
               return (
                 <article
                   key={book.id}
-                  className="group flex flex-col rounded-2xl border border-hairline bg-card p-7 transition-colors hover:border-accent/40"
+                  className="group flex flex-col rounded-2xl border border-hairline bg-card p-7 transition-colors hover:border-accent/40 overflow-hidden"
                 >
-                  <div className="flex-1">
-                    <h3 className="font-display text-2xl tracking-[-0.01em] leading-tight pr-2">{book.canonicalName}</h3>
-                    {book.bookFamily && <div className="mt-1.5 text-sm text-accent font-medium">{book.bookFamily}</div>}
-                    <p className="mt-4 text-[15px] leading-relaxed text-text-muted line-clamp-3">
-                      {book.storagePath ? `Source: ${book.storagePath.split("/").pop()}` : "Classical text from the Vedic corpus."}
-                    </p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display text-2xl tracking-[-0.01em] leading-tight pr-2 break-words line-clamp-2">
+                      {book.displayTitle || book.canonicalName}
+                    </h3>
+
+                    {(book.author || book.year) && (
+                      <div className="mt-1 text-sm text-accent/90">
+                        {book.author ? book.author : ""}
+                        {book.author && book.year ? " · " : ""}
+                        {book.year ? book.year : ""}
+                      </div>
+                    )}
+
+                    {book.bookFamily && !book.author && (
+                      <div className="mt-1.5 text-sm text-accent font-medium">{book.bookFamily}</div>
+                    )}
+
+                    {!book.author && (
+                      <p className="mt-3 text-[12px] leading-relaxed text-text-muted/80 line-clamp-1 break-all">
+                        {book.storagePath ? book.storagePath.split("/").pop() : ""}
+                      </p>
+                    )}
                   </div>
 
                   <div className="mt-6 pt-5 border-t border-hairline flex items-center justify-between text-sm">

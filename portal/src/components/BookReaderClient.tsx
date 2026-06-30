@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { ArrowUp } from "lucide-react";
 
 interface Chapter {
   id: string;
@@ -45,6 +46,7 @@ export function BookReaderClient({
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [selectedChapterId, setSelectedChapterId] = useState<string | null>(null);
   const [visibleChapterId, setVisibleChapterId] = useState<string | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const selectedChapter = selectedChapterId ? chapters.find(c => c.id === selectedChapterId) : null;
   const selectedNodes = (selectedChapterId ? (chapterNodes[selectedChapterId] || []) : []) as unknown[];
@@ -156,6 +158,26 @@ export function BookReaderClient({
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialChapter, initialSection]);
+
+  // FAB: show "scroll to top" button when user has scrolled down the page or the internal reader pane
+  useEffect(() => {
+    const check = () => {
+      const winScrolled = window.scrollY > 400;
+      const pane = contentRef.current;
+      const paneScrolled = pane ? pane.scrollTop > 300 : false;
+      setShowScrollTop(winScrolled || paneScrolled);
+    };
+    window.addEventListener("scroll", check, { passive: true });
+    // also watch the content pane (some books scroll inside this container)
+    const pane = contentRef.current;
+    if (pane) pane.addEventListener("scroll", check, { passive: true });
+    // initial
+    check();
+    return () => {
+      window.removeEventListener("scroll", check);
+      if (pane) pane.removeEventListener("scroll", check);
+    };
+  }, []);
 
   const handleChapterClick = (ch: Chapter, idx: number) => {
     setActiveIdx(idx);
@@ -455,7 +477,8 @@ export function BookReaderClient({
   };
 
   return (
-    <div className="grid lg:grid-cols-5 gap-6">
+    <>
+      <div className="grid lg:grid-cols-5 gap-6">
       {/* Chapters sidebar */}
       <div className="lg:col-span-2">
         <div className="sticky top-6 rounded-2xl border border-hairline bg-surface p-4">
@@ -575,6 +598,25 @@ export function BookReaderClient({
           </div>
         )}
       </div>
-    </div>
+      </div>
+
+      {/* Floating Action Button: scroll to top of page */}
+      {showScrollTop && (
+        <button
+          onClick={() => {
+            // Scroll the internal content container if present (used by the reader)
+            if (contentRef.current) {
+              contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
+            }
+            // Also scroll the window (for full page scroll cases)
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="fixed bottom-6 right-6 z-[60] flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-card text-accent transition-all hover:bg-accent hover:text-white focus:outline-none focus:ring-2 focus:ring-accent/60"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
+    </>
   );
 }

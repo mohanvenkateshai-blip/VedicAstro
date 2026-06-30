@@ -1,24 +1,33 @@
 {
-  "passed": 5,
-  "total": 6,
+  "passed": 1,
+  "total": 2,
   "strict": false,
   "strict_enforced": false,
-  "would_strict_fail": [
-    {
-      "book_id": "Jaimini_Sutras",
-      "overlap": 2,
-      "patch_ch_count": 86,
-      "overlap_pct": 0.023255813953488372
-    },
-    {
-      "book_id": "Brihat_Parasara_Hora_Sastra_Vol_1",
-      "overlap": 41,
-      "patch_ch_count": 259,
-      "overlap_pct": 0.1583011583011583
-    }
-  ],
-  "timestamp": "2026-06-30T11:30:23.395375",
+  "would_strict_fail": [],
+  "timestamp": "2026-06-30T14:27:10.669341",
   "results": [
+    {
+      "book_id": "Jataka_Tatva_Mahadeva",
+      "passed": false,
+      "chapters": 0,
+      "patched": 642,
+      "provenance_ok": true,
+      "deep_ok": true,
+      "ke_smoke_ok": false,
+      "overlap": 0,
+      "patch_ch_count": 0,
+      "overlap_pct": null,
+      "gaps": [
+        "0 chapters after parse",
+        "KE get_structured_book returned 0 or mismatched chapters vs direct"
+      ],
+      "details": [
+        "chapters=0",
+        "patched=642",
+        "provenance=OK",
+        "ke_chapters=0:parity=True:linkage=True"
+      ]
+    },
     {
       "book_id": "Ashtakavarga_System_Comprehensive_Handbook",
       "passed": true,
@@ -26,7 +35,7 @@
       "patched": 49,
       "provenance_ok": true,
       "deep_ok": true,
-      "ke_smoke_ok": true,
+      "ke_smoke_ok": null,
       "overlap": 7,
       "patch_ch_count": 7,
       "overlap_pct": 1.0,
@@ -37,111 +46,7 @@
         "provenance=OK",
         "ch_id_overlap=7/7 pct=100.00%",
         "deep_ch=ch-1:found=True:range=True:ambig=False",
-        "deep_sec=ch-1-sec-authoritative_classical_source_documents:found=True:range=True:ambig=False",
-        "ke_chapters=8:parity=True:linkage=True"
-      ]
-    },
-    {
-      "book_id": "Jaimini_Sutras",
-      "passed": true,
-      "chapters": 10,
-      "patched": 676,
-      "provenance_ok": true,
-      "deep_ok": true,
-      "ke_smoke_ok": null,
-      "overlap": 2,
-      "patch_ch_count": 86,
-      "overlap_pct": 0.023255813953488372,
-      "gaps": [],
-      "details": [
-        "chapters=10",
-        "patched=676",
-        "provenance=OK",
-        "ch_id_overlap=2/86 pct=2.33%",
-        "deep_ch=ch-1-1:found=True:range=True:ambig=False",
-        "deep_sec=ch-1-1-sec-\u0967_\u0909\u092a\u0926\u0936_\u0935\u092f\u0916\u092f\u0916\u092e:found=True:range=True:ambig=False"
-      ]
-    },
-    {
-      "book_id": "Brihat_Parasara_Hora_Sastra_Vol_1",
-      "passed": true,
-      "chapters": 55,
-      "patched": 1881,
-      "provenance_ok": true,
-      "deep_ok": true,
-      "ke_smoke_ok": null,
-      "overlap": 41,
-      "patch_ch_count": 259,
-      "overlap_pct": 0.1583011583011583,
-      "gaps": [],
-      "details": [
-        "chapters=55",
-        "patched=1881",
-        "provenance=OK",
-        "ch_id_overlap=41/259 pct=15.83%",
-        "deep_ch=ch-8:found=True:range=True:ambig=False",
-        "deep_sec=ch-31-sec-hours_at_latitude_29-0_longitude_77_-_45:found=True:range=True:ambig=False"
-      ]
-    },
-    {
-      "book_id": "Saravali",
-      "passed": true,
-      "chapters": 24,
-      "patched": 836,
-      "provenance_ok": true,
-      "deep_ok": true,
-      "ke_smoke_ok": null,
-      "overlap": 23,
-      "patch_ch_count": 28,
-      "overlap_pct": 0.8214285714285714,
-      "gaps": [],
-      "details": [
-        "chapters=24",
-        "patched=836",
-        "provenance=OK",
-        "ch_id_overlap=23/28 pct=82.14%",
-        "deep_ch=ch-1:found=True:range=True:ambig=False"
-      ]
-    },
-    {
-      "book_id": "Phaladeepika_Mantreswara",
-      "passed": true,
-      "chapters": 157,
-      "patched": 1445,
-      "provenance_ok": true,
-      "deep_ok": true,
-      "ke_smoke_ok": null,
-      "overlap": 116,
-      "patch_ch_count": 116,
-      "overlap_pct": 1.0,
-      "gaps": [],
-      "details": [
-        "chapters=157",
-        "patched=1445",
-        "provenance=OK",
-        "ch_id_overlap=116/116 pct=100.00%",
-        "deep_ch=ch-english_translation_commentary:found=True:range=True:ambig=False",
-        "deep_sec=ch-chapter_4-sec-in_the_dwadasamsa_of_his_adhimitra_15_in_the_dwadasamsa_of_a:found=True:range=True:ambig=False"
-      ]
-    },
-    {
-      "book_id": "Jataka_Tatva_Mahadeva",
-      "passed": false,
-      "chapters": 0,
-      "patched": 642,
-      "provenance_ok": true,
-      "deep_ok": true,
-      "ke_smoke_ok": null,
-      "overlap": 0,
-      "patch_ch_count": 0,
-      "overlap_pct": null,
-      "gaps": [
-        "0 chapters after parse"
-      ],
-      "details": [
-        "chapters=0",
-        "patched=642",
-        "provenance=OK"
+        "deep_sec=ch-1-sec-authoritative_classical_source_documents:found=True:range=True:ambig=False"
       ]
     }
   ],

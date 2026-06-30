@@ -150,10 +150,23 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
     </div>
   );
 
+  const q = typeof searchParams?.q === "string" ? searchParams.q : null;
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <div className="mb-8">
-        <Link href="/learn" className="text-sm text-text-muted hover:text-text-main">← Back to library</Link>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+          <Link href="/learn" className="text-text-muted hover:text-text-main">← Back to library</Link>
+          {q && (
+            <Link
+              href={`/learn?q=${encodeURIComponent(q)}`}
+              className="inline-flex items-center rounded border border-accent/30 bg-accent/5 px-2 py-0.5 text-accent hover:bg-accent/10"
+            >
+              ← Back to search results for “{q}”
+            </Link>
+          )}
+        </div>
+
         <div className="mt-3 flex items-center gap-3">
           <BookOpen className="h-6 w-6 text-accent" />
           <h1 className="font-display text-4xl tracking-tight">{book.metadata.canonicalName}</h1>

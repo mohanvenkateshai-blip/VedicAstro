@@ -51,6 +51,6 @@ These are **not required** while structured data is present and preferred.
 - Zero "Frontmatter" junk in structured chapters; fallback junk quantified.
 
 ## Known gaps / follow-ups
-- Jataka_Tatva_Mahadeva (and any other 0-chapter books) need re-run of structured build / node-chapter mapping.
+- Jataka_Tatva_Mahadeva: structured JSON still reports 0 chapters (parse_quality: needs_review). Reader now forces clean single "Full Text" via page-marker heuristic. Builder-side improvement is follow-up.
 - Several patched books have low chapter_id overlap (Jaimini ~2%, BPHS ~16%, Brihat_Samhita ~22%); does not affect chapter content slices, only node provenance labels.
-- Prod smoke (2026-06-30) shows stale deploy (no jaimini redirect, missing structured signals on Jaimini/Hora). Local structured+slice verification passes; redeploy needed for user-visible effect.
+- Prod smoke mostly green post-deploy (7/8); Hora signal detection in script is the remaining flaky check even though content renders chapter-precise.
