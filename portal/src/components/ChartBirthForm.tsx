@@ -95,6 +95,7 @@ function SaveChartButton({ defaults }: { defaults: ReturnType<typeof parseBirthD
 }
 
 export function ChartBirthForm() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const chartLoaded = hasChartParams(searchParams);

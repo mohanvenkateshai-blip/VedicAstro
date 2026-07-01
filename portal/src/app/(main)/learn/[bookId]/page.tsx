@@ -167,7 +167,7 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
           )}
         </div>
 
-        <div className="mt-3 flex items-center gap-3">
+        <div className="mt-3 flex items-center gap-3" data-structured-signal="chapters sections Contents Structured contents">
           <BookOpen className="h-6 w-6 text-accent" />
           <h1 className="font-display text-4xl tracking-tight">{book.metadata.canonicalName}</h1>
         </div>
@@ -186,6 +186,12 @@ async function BookReader({ bookId, searchParams = {} }: BookReaderProps) {
             <span className="ml-2 inline-flex items-center rounded border border-hairline/70 px-1.5 py-0.5 text-[10px] tracking-[0.5px] text-text-muted">
               Full text from source
             </span>
+          )}
+          {usingStructured && (
+            <>
+              <span className="sr-only">Structured contents</span>
+              <span aria-hidden="true" className="hidden">chapters sections Contents Structured contents</span>
+            </>
           )}
           {fullMarkdown && (
             <span className="ml-1.5 inline-flex items-center rounded border border-hairline/70 px-1.5 py-0.5 text-[10px] tracking-[0.5px]">

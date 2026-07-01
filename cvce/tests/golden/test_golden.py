@@ -41,7 +41,9 @@ def schema():
 def _chart(birth):
     resp = client.post("/chart", json=birth)
     assert resp.status_code == 200, resp.text
-    return resp.json()
+    data = resp.json()
+    assert "ke_version" in data, "ke_version missing from response"
+    return data
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -50,6 +52,7 @@ def test_chart_matches_schema(ref, schema):
 
     data = _chart(ref["birth"])
     jsonschema.validate(instance=data, schema=schema)
+    assert "ke_version" in data, "ke_version missing from response"
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -60,6 +63,7 @@ def test_lagna(ref):
     assert lagna["rashi"] == exp["rashi"]
     assert lagna["nakshatra"] == exp["nakshatra"]
     assert lagna["pada"] == exp["pada"]
+    assert "ke_version" in data, "ke_version missing from response"
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -73,6 +77,7 @@ def test_planet_placements(ref):
         assert got["pada"] == exp["pada"], f"{planet} pada"
         if "dignity" in exp:
             assert got["dignity"] == exp["dignity"], f"{planet} dignity"
+    assert "ke_version" in data, "ke_version missing from response"
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -81,6 +86,7 @@ def test_nodes_by_sign(ref):
     bodies = {p["planet"]: p for p in data["planets"]}
     for node, sign in ref["expect"]["nodes"].items():
         assert bodies[node]["rashi"] == sign, f"{node} sign"
+    assert "ke_version" in data, "ke_version missing from response"
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -89,6 +95,7 @@ def test_sarvashtakavarga_total(ref):
     sav = data["ashtakavarga"]["sav"]
     assert len(sav) == 12
     assert sum(sav) == ref["expect"]["savTotal"]
+    assert "ke_version" in data, "ke_version missing from response"
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -99,6 +106,7 @@ def test_current_mahadasha(ref):
     # The reference birth's running mahadasha lord must appear as a maha lord.
     maha_lords = {p["maha"] for p in periods}
     assert ref["expect"]["currentMahadasha"] in maha_lords
+    assert "ke_version" in data, "ke_version missing from response"
 
 
 @pytest.mark.parametrize("ref", REFERENCE, ids=CHART_IDS)
@@ -120,3 +128,4 @@ def test_cross_validate_longitudes(ref):
     if body.get("jyotishganitError"):
         pytest.skip(f"jyotishganit unavailable: {body['jyotishganitError']}")
     assert body["flagged"] == [], f"longitude divergence beyond 0.1deg: {body['flagged']}"
+    assert "ke_version" in body, "ke_version missing from response"

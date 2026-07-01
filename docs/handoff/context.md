@@ -48,7 +48,7 @@ cd portal && npm run dev
 | **Scroll-to-top FAB** | `BookReaderClient.tsx` | Fixed bottom-right FAB after scroll (window + reader pane); smooth scroll to top |
 
 ### C. KE Full Update Wave (major — merged to `main`)
-**Goal:** Every module/feature pulls latest program logic, calculations, and algorithms from the Knowledge Graph with supervision — not just "context for LLM."
+**Goal:** Every module/feature pulls latest program logic, calculations, and algorithms from the Knowledge Graph with supervision — not just "context for LLM".
 
 **PR (merged locally):** https://github.com/mohanvenkateshai-blip/VedicAstro/pull/3  
 **Branch was:** `feat/ke-full-update-wave-2026-06-30` → fast-forward merged into `main` at `c3dc745`.
@@ -67,6 +67,14 @@ cd portal && npm run dev
 **Agent reports:** `docs/agent-reports/KE-wave-*.md` (6 files)
 
 **Official KE access (never bypass):** `cvce/knowledge_engine/integration.py`
+
+### D. Registration Fix
+- **Runtime registration:** Fixed runtime registration for all 9 engines. `runtime=9` now reflects accurate engine registration status.
+- **Golden versioning:** Implemented golden versioning for tests, ensuring consistency and reliability across different versions of the Knowledge Engine.
+
+**Before/After Orchestrator:**
+- **Before:** Orchestrator did not properly handle engine registration, leading to incomplete engine status reporting.
+- **After:** Orchestrator now correctly registers all engines, ensuring accurate status reporting and proper supervision of the Knowledge Engine.
 
 ---
 

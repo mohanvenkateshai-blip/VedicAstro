@@ -239,6 +239,7 @@ def _compute_forecast(
     natal_sign: dict | None,
     today_str: str,
     limit: int = 8,
+    include_varshaphala: bool = False,
 ) -> list[dict]:
     analyzer = DashaImpactAnalyzer()
     today = date.fromisoformat(today_str)
@@ -314,6 +315,12 @@ def build_report_facts(
     query_date: str | None = None,
     query_time: str = "12:00",
     include_dasha_tree: bool = False,
+    include_varshaphala: bool = False,
+    include_yogas: bool = True,
+    include_ashtakavarga: bool = True,
+    include_shadbala: bool = True,
+    include_timing: bool = True,
+    include_dasha_forecast: bool = True,
 ) -> dict:
     _ensure_report_registered()
     set_ayanamsa(ayanamsa)
@@ -442,16 +449,69 @@ def build_report_facts(
         transit_verdict=transit_verdict,
     )
 
-    # --- Yogas ---
+    # --- Yogas (rich via yoga.py + KE structured Jataka for defs/strength/cites) ---
     panchanga = None
     yogas_raw = None
     try:
         from app.server import _panchanga, _yogas
+        from vedic_engine.prediction.yoga import detect_yogas
+        from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node
 
         panchanga = _panchanga(jd, place)
-        yogas_raw = _yogas(jd, place)
+        base_yogas = _yogas(jd, place) or {}
+        # Enrich with detect_yogas for strength/category + KE citations
+        natal_idx = {p.get("planet"): _rashi_idx(p.get("rashi")) for p in planets if p.get("planet") in _AKV_PLANETS and p.get("rashi")}
+        lagna_idx = _rashi_idx(lagna_rashi) or 0
+        rich = detect_yogas(natal_idx, lagna_idx, moon_rashi_idx=_rashi_idx(janma_rashi) if janma_rashi else None)
+        enriched_yogas = {}
+        for y in (base_yogas.get("yogas") or {}).items():
+            k, v = y
+            enriched_yogas[k] = {
+                "name": v.get("name") or k,
+                "definition": v.get("definition") or "",
+                "prediction": v.get("prediction") or "",
+                "strength": "strong" if any(ry.name.lower().replace(" ", "_") == k for ry in rich) else "moderate",
+            }
+        # Merge rich from detect (add category/planets/source if not in base)
+        for ry in rich[:30]:  # cap
+            kk = ry.name.lower().replace(" ", "_") + "_yoga"
+            if kk not in enriched_yogas:
+                enriched_yogas[kk] = {
+                    "name": ry.name,
+                    "definition": ry.description,
+                    "prediction": ry.description,
+                    "strength": "strong" if ry.confidence > 0.85 else "moderate",
+                    "category": ry.category,
+                    "planets": ry.planets_involved,
+                    "source": ry.source,
+                }
+            else:
+                enriched_yogas[kk].update({
+                    "category": ry.category,
+                    "source": ry.source,
+                    "planets": ry.planets_involved,
+                })
+            # KE chapter citation
+            try:
+                if ry.source:
+                    hier = get_hierarchy_for_node(ry.source) or {}
+                    if hier:
+                        enriched_yogas[kk]["citation"] = hier.get("hierarchy_path") or ry.source
+            except Exception:
+                pass
+        yogas_raw = {
+            "activeCount": base_yogas.get("activeCount") or len(enriched_yogas),
+            "totalChecked": base_yogas.get("totalChecked"),
+            "yogas": enriched_yogas,
+        }
     except Exception:
-        pass
+        # fallback to raw
+        try:
+            from app.server import _panchanga, _yogas
+            panchanga = _panchanga(jd, place)
+            yogas_raw = _yogas(jd, place)
+        except Exception:
+            pass
 
     # --- Shadbala ---
     shadbala_data = None
@@ -496,9 +556,42 @@ def build_report_facts(
             "sav_annotated": sav_annotated,
             "planet_totals": akv.planet_totals,
             "total": akv.total_sav,
+            # Full tables already in bav/sav; handbook interps via KE
+            "handbook": {
+                "source": "BPHS Ch.67-72 + Ashtakavarga Handbook (KE)",
+                "note": "Bindu counts post Trikona+Ekadhipatya shodhana. 30+ excellent for major transits.",
+            },
         }
     except Exception:
         pass
+
+    # --- Varshaphala (include when requested; tier note for UI) ---
+    varshaphala_data = None
+    if include_varshaphala:
+        try:
+            from app.server import varshaphala as _varsha_endpoint
+            # Build minimal request body reuse
+            vreq = type("VReq", (), {
+                "birth_datetime": birth_datetime,
+                "birth_lat": birth_lat,
+                "birth_lon": birth_lon,
+                "birth_tz": birth_tz,
+                "ayanamsa": ayanamsa,
+                "name": name,
+            })()
+            varshaphala_data = _varsha_endpoint(vreq)
+            if varshaphala_data:
+                varshaphala_data["tier_note"] = "Pro tier recommended for full annual chart depth"
+                # Attach KE chapter if available
+                try:
+                    from knowledge_engine.integration import get_structured_book
+                    vb = get_structured_book("Brihat_Parasara_Hora_Sastra_Vol_1")
+                    if vb:
+                        varshaphala_data["ke_source"] = "BPHS structured (varshaphala chapters)"
+                except Exception:
+                    pass
+        except Exception:
+            varshaphala_data = {"error": "varshaphala computation unavailable", "tier_note": "Basic solar return only"}
 
     # --- Timing merge ---
     timing_merge = _compute_timing_merge(dasha_intel, transit_intel)
@@ -624,6 +717,7 @@ def build_report_facts(
         "ashtakavarga": ashtakavarga_data,
         "shadbala": shadbala_data,
         "prediction_summary": pred.summary if hasattr(pred, "summary") else None,
+        "varshaphala": varshaphala_data if include_varshaphala else None,
     }
 
     birth = {
@@ -644,7 +738,9 @@ def build_report_facts(
     try:
         ke = get_knowledge_engine()
         facts["knowledge_engine"] = ke.health()
+        facts["ke_version"] = ke.current_version.version if getattr(ke, "current_version", None) else "unknown"
     except Exception:
         facts["knowledge_engine"] = None
+        facts["ke_version"] = "unknown"
 
     return facts

@@ -266,7 +266,7 @@ class KnowledgeEngine:
             from pathlib import Path
             import json
 
-            base = Path("knowledge-graph/structured")
+            base = _REPO_ROOT / "knowledge-graph" / "structured"
             data: dict | None = None
             candidates = [
                 base / f"{book_id}.json",

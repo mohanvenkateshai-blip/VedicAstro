@@ -157,10 +157,20 @@ def get_structured_book(book_id: str) -> dict | None:
     return ke.get_structured_book(book_id)
 
 
+def get_safe_structured_book(book_id: str) -> dict | None:
+    """Safe alias for get_structured_book (preferred for revive paths)."""
+    return get_structured_book(book_id)
+
+
 def get_nodes_for_chapter(book_id: str, chapter_id: str) -> list[dict]:
     """KE graph nodes that belong to one chapter inside a structured book."""
     ke = get_knowledge_engine()
     return ke.get_nodes_for_chapter(book_id, chapter_id)
+
+
+def get_safe_nodes_for_chapter(book_id: str, chapter_id: str) -> list[dict]:
+    """Safe alias."""
+    return get_nodes_for_chapter(book_id, chapter_id)
 
 
 def get_hierarchy_for_node(node_id: str) -> dict | None:
@@ -312,4 +322,10 @@ def get_registered_engines_with_status() -> dict[str, Any]:
     except Exception:
         pass
     return {"count": len(out), "engines": out, "version": ver}
+
+
+def ensure_engine_registration(engine_name: str, on_refresh: Callable | None = None, on_invalidation: Callable | None = None) -> RegisteredEngine:
+    """Ensure an engine is registered with the registry."""
+    ke = get_knowledge_engine()
+    return ke.registry.ensure_registration(engine_name, on_refresh, on_invalidation)
 

@@ -12,6 +12,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "ci": "npm run lint && npm run typecheck && npm run build",
+    "verify:gate": "bash ../scripts/verification_gate.sh",
     "db:schema": "node scripts/apply-schema.mjs",
     "db:schema:remote": "node scripts/migrate-remote.mjs",
     "db:corpus-schema": "bash ../scripts/apply-supabase-corpus-schema.sh"

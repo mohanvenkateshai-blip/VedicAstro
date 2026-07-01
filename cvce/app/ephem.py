@@ -178,7 +178,7 @@ def positions(jd: float, place: Place) -> list[dict]:
     bodies = {}
     for row in raw:
         pid, deg_in_sign, sign = row[0], row[1], row[2]
-        if pid < 0 or pid >= len(PLANET_NAMES):
+        if pid < 0 or pid >= len(const.PLANET_LIST):
             continue
         name = PLANET_NAMES[pid]
         lon = sign * 30 + deg_in_sign

@@ -29,6 +29,73 @@ _KAKSHA_CONTRIB_IDX = {
 }
 _KAKSHA_SPAN = 30.0 / 8.0  # 3°45′ per kaksha
 
+
+def _kaksha_lord_degrees(jd, place):
+    """
+    Calculate degrees for each Kaksha lord.
+    
+    Args:
+        jd: Julian Day
+        place: Birth place
+    
+    Returns:
+        dict: Degrees for each Kaksha lord
+    """
+    from app.ephem import positions
+    
+    pos = positions(jd, place)
+    return {lord: pos.get(lord, {}).get('degInSign', 0) for lord in KAKSHA_LORDS}
+
+
+def _calculate_kaksha_periods(jd, place, dob, tob):
+    """
+    Calculate Kaksha periods based on degrees of Kaksha lords.
+    
+    Args:
+        jd: Julian Day
+        place: Birth place
+        dob: Date of birth
+        tob: Time of birth
+    
+    Returns:
+        list[dict]: List of Kaksha periods
+    """
+    from jhora.horoscope.chart import charts
+    from datetime import datetime
+
+    kaksha_degrees = _kaksha_lord_degrees(jd, place)
+    max_degree = max(kaksha_degrees.values())
+    starting_lord = next(lord for lord, degree in kaksha_degrees.items() if degree == max_degree)
+
+    lagna_sign = None
+    try:
+        pp = charts.rasi_chart(jd, place)
+        for item in pp:
+            if isinstance(item[0], str):
+                lagna_sign = RASHIS[int(item[1][0]) % 12]
+                break
+    except Exception:
+        pass
+
+    periods = []
+    current_date = dob.to_jd()
+    for lord in KAKSHA_LORDS:
+        periods.append({
+            'lord': lord,
+            'start': current_date,
+            'end': current_date + _KAKSHA_SPAN / 360.0,
+            'house': _house_from_lagna(lord, lagna_sign) if lagna_sign else None,
+            'isCurrent': False
+        })
+        current_date += _KAKSHA_SPAN / 360.0
+
+    today = datetime.now().timestamp() / 86400 + 2440587.5
+    for period in periods:
+        if period['start'] <= today <= period['end']:
+            period['isCurrent'] = True
+
+    return periods
+
 _CHARA_KARAKA_PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
 _CHARA_KARAKA_ROLES = [
     "Atmakaraka",
@@ -308,7 +375,7 @@ def chara_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
 
     today = date.today()
     q_jd = query_jd or jd
-    current = _running_sign_dasha(chara, q_jd, place, method_kw={"chara_method": 1})
+    current = _running_sign_dasha(chara, q_jd, place, method_kw={"chara_method": 1}, dob=dob, tob=tob)
     try:
         rows = chara.get_dhasa_antardhasa(
             dob,
@@ -359,6 +426,109 @@ def chara_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
 
 
 def kalachakra_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
+    """
+    Kalachakra dasha via PyJHora (PVR / Moon nakshatra pada wheel).
+    
+    Args:
+        jd: Julian Day
+        place: Birth place
+        dob: Date of birth
+        tob: Time of birth
+        query_jd: Optional Julian Day for query date
+    
+    Returns:
+        dict: Kalachakra dasha payload
+    """
+    from jhora import const
+    from jhora.horoscope.chart import charts
+
+    today = date.today()
+    q_jd = query_jd or jd
+    current = _running_sign_dasha(kalachakra, q_jd, place, method_kw={"dhasa_method": 1}, dob=dob, tob=tob)
+    try:
+        rows = kalachakra.get_dhasa_bhukthi(
+            dob,
+            tob,
+            place,
+            dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA,
+            dhasa_method=1,
+        )
+        periods = _upcoming_sign_periods(rows, today)
+    except Exception:
+        periods = []
+
+    lagna_sign = None
+    try:
+        pp = charts.rasi_chart(jd, place)
+        for item in pp:
+            if isinstance(item[0], str):
+                lagna_sign = RASHIS[int(item[1][0]) % 12]
+                break
+    except Exception:
+        pass
+
+    payload = {
+        "status": "active",
+        "method": "Kalachakra (BPHS / PVR method)",
+        "applicable": True,
+        "periods": periods,
+        "graph_citations": _graph_dasha_citations(_GRAPH_KALA_IDS),
+    }
+    if current:
+        payload.update(current)
+        payload["ladder"] = [
+            {
+                "levelLabel": "Mahadasha",
+                "lord": current.get("maha"),
+                "start": current.get("mahaStart"),
+                "end": current.get("mahaEnd"),
+            },
+            {
+                "levelLabel": "Antardasha",
+                "lord": current.get("antara"),
+                "start": current.get("antaraStart"),
+                "end": current.get("antaraEnd"),
+            },
+        ]
+    return _enrich_sign_dasha(payload, lagna_sign=lagna_sign, today=today)
+
+
+def kaksha_dasha_payload(jd, place, dob, tob, query_jd=None) -> dict:
+    """
+    Compute Kaksha dasha periods.
+    
+    Args:
+        jd: Julian Day
+        place: Birth place
+        dob: Date of birth
+        tob: Time of birth
+        query_jd: Optional Julian Day for query date
+    
+    Returns:
+        dict: Kaksha dasha payload
+    """
+    from jhora.horoscope.chart import charts
+    from datetime import datetime
+
+    periods = _calculate_kaksha_periods(jd, place, dob, tob)
+    lagna_sign = None
+    try:
+        pp = charts.rasi_chart(jd, place)
+        for item in pp:
+            if isinstance(item[0], str):
+                lagna_sign = RASHIS[int(item[1][0]) % 12]
+                break
+    except Exception:
+        pass
+
+    payload = {
+        "status": "active",
+        "method": "Kaksha Dasha",
+        "applicable": True,
+        "periods": periods,
+        "graph_citations": _graph_dasha_citations(_GRAPH_KAKSHA_IDS),
+    }
+    return _enrich_sign_dasha(payload, lagna_sign=lagna_sign, today=date.today())
     """Kalachakra dasha via PyJHora (PVR / Moon nakshatra pada wheel)."""
     from jhora import const
     from jhora.horoscope.chart import charts

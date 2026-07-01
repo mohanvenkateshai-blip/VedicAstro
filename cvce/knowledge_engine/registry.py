@@ -32,6 +32,11 @@ class EngineRegistry:
                 except Exception:
                     pass  # engines should be resilient
 
+    def ensure_registration(self, engine_name: str, on_refresh: Callable | None = None, on_invalidation: Callable | None = None) -> RegisteredEngine:
+        if engine_name not in self._engines:
+            return self.register(engine_name, on_refresh, on_invalidation)
+        return self._engines[engine_name]
+
     def notify_invalidation(self, node_ids: list[str], reason: InvalidationReason, details: str):
         for eng in self._engines.values():
             if eng.on_invalidation:

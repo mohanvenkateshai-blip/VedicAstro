@@ -1,8 +1,10 @@
 # EMBEDDINGS_RUN_PREP.md
 
 **Date:** 2026-06-30  
+**Status:** PAUSED — Gemini quota exhausted (per CONTEXT.md). Stop all paid calls.  
 **Purpose:** Quantitative prep and exact command sequence for first embeddings activation run (post schema+sync).  
-**Constraints:** Do not touch Supabase, do not run the real generator yet, do not edit chunking strategy. Minimal changes.
+**Constraints:** Do not touch Supabase, do not run the real generator yet, do not edit chunking strategy. Minimal changes.  
+**Resume note:** Resume embeddings when Gemini quota resets (monitor quota dashboard; re-enable via run-embeddings.sh). No paid calls until then.
 
 ---
 

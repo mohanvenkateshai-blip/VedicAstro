@@ -33,6 +33,10 @@ from pydantic import BaseModel, Field
 from .chart import build_chart_geometry
 from .chart_svg import chart_svg
 from .config import get_settings
+# Dedicated dasha systems (Kaksha/Chara/Kalachakra) — self-register with KE on import
+from . import kaksha as kaksha_mod
+from . import chara_dasha as chara_mod
+from . import kalachakra as kala_mod
 from .ephem import (
     NAKSHATRAS,
     PLANET_NAMES,
@@ -413,6 +417,7 @@ def chart(req: BirthRequest):
         },
         **geometry,
     }
+    out = {**out, "ke_version": _ke_version()}
 
     dasha, derr = _guard(lambda: _dasha(jd, place))
     out["dashas"] = dasha
@@ -430,6 +435,7 @@ def chart(req: BirthRequest):
     out["panchanga"] = pan
     if perr:
         out.setdefault("errors", {})["panchanga"] = perr
+    out["ke_version"] = _ke_version()
     return out
 
 
@@ -495,6 +501,7 @@ def cross_validate(req: TransitRequest):
             "lunar node, jyotishganit the true node (~1-2deg difference is expected)."
         ),
         "jyotishganitError": jg_error,
+        "ke_version": _ke_version(),
     }
 
 
@@ -550,16 +557,26 @@ try:
 except Exception:
     _knowledge_engine = None
 
-# KnowledgeEngine consumer registration (panchanga registers via vedic_engine import)
+# KnowledgeEngine consumer registration (all 9 engines register via side-effect on import)
 try:
     from vedic_engine.prediction import kp_system as _kp_engine  # noqa: F401
     from vedic_engine.prediction import prashna as _prashna_engine  # noqa: F401
-    # Ensure the rest register for on_refresh cascade on startup
     from vedic_engine.core import panchanga as _panchanga_engine  # noqa: F401
     from vedic_engine.prediction import dasha as _dasha_engine  # noqa: F401
     from vedic_engine.prediction import gochar as _gochar_engine  # noqa: F401
     from vedic_engine.prediction import yoga as _yoga_engine  # noqa: F401
     from vedic_engine.synthesis import engine as _synthesis_engine  # registers muhurta  # noqa: F401
+    from vedic_engine.prediction import ashtakavarga as _ashtakavarga_engine  # noqa: F401
+    import app.report_facts as _report_engine  # noqa: F401  # registers "report"
+except Exception:
+    pass
+
+# Explicit registration at startup to guarantee all 9 (side-effect + explicit)
+try:
+    ke = get_knowledge_engine()
+    for name in ("kp_system", "prashna", "panchanga", "dasha", "gochar", "yoga", "muhurta", "ashtakavarga", "report"):
+        if name not in ke.registry.registered_names():
+            ke.register_engine(name)
 except Exception:
     pass
 
@@ -1627,6 +1644,7 @@ def report_facts(req: ReportFactsRequest):
             query_date=req.query_date,
             query_time=req.query_time,
             include_dasha_tree=req.include_dasha_tree,
+            include_varshaphala=True,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Report facts failed: {e}") from e
@@ -2255,9 +2273,33 @@ def all_dashas(req: BirthRequest):
         dob = DrikDate(dt.year, dt.month, dt.day)
         tob = (dt.hour, dt.minute, dt.second)
 
-        result["chara"] = chara_dasha_payload(jd, place, dob, tob, query_jd=_now_jd())
-        result["kalachakra"] = kalachakra_dasha_payload(jd, place, dob, tob, query_jd=_now_jd())
-        result["kaksha"] = kaksha_payload(jd, place, query_jd=_now_jd())
+        # Prefer dedicated KE-integrated modules (chara_dasha, kalachakra, kaksha) which self-register
+        try:
+            from app.chara_dasha import compute_chara_dasha
+            from app.kalachakra import compute_kalachakra_dasha
+            from app.kaksha import kaksha_calendar_full, get_current_kaksha
+
+            result["chara"] = compute_chara_dasha(req.birth_datetime, req.birth_lat, req.birth_lon, req.birth_tz)
+            result["kalachakra"] = compute_kalachakra_dasha(req.birth_datetime, req.birth_lat, req.birth_lon, req.birth_tz)
+            # Kaksha calendar + current (use natal jd for prastara context + current transits)
+            kk_cal = kaksha_calendar_full()
+            # compute current for transiting planets using same jd for demo (in prod use query time)
+            trans = positions(jd, place)  # reuse natal for baseline; caller can POST query
+            cur_kak = []
+            for p in trans[:7]:
+                cur_kak.append(get_current_kaksha(p["planet"], p.get("longitude",0), p.get("signIndex",0)))
+            result["kaksha"] = {
+                "status": "active",
+                "calendar": kk_cal,
+                "current": cur_kak,
+                "ke_version": kk_cal.get("ke_version"),
+                "source_notes": kk_cal.get("source_notes", []),
+            }
+        except Exception:
+            # fallback to extras (still emits graph_cites)
+            result["chara"] = chara_dasha_payload(jd, place, dob, tob, query_jd=_now_jd())
+            result["kalachakra"] = kalachakra_dasha_payload(jd, place, dob, tob, query_jd=_now_jd())
+            result["kaksha"] = kaksha_payload(jd, place, query_jd=_now_jd())
     except Exception as e:
         print(f"[all_dashas] chara/kala/kaksha failed: {type(e).__name__}: {e}", flush=True)
         result["chara"] = {"status": "active", "error": str(e)[:100]}
@@ -2379,6 +2421,17 @@ def varshaphala(req: BirthRequest):
         },
         "ke_version": _ke_version(),
     }
+
+
+# ── Kalachakra Dasha (exposed endpoint) ─────────────────────────────────────
+
+@app.post("/kalachakra-dasha")
+def kalachakra_dasha(req: BirthRequest):
+    """Kalachakra Dasha (86y, deha/jeeva, Moon nak-pada wheel) — full periods + current."""
+    from app.kalachakra import compute_kalachakra_dasha
+    return compute_kalachakra_dasha(
+        req.birth_datetime, req.birth_lat, req.birth_lon, req.birth_tz
+    )
 
 
 # ── Place search — backed by PyJHora's GeoNames dataset ─────────────────────

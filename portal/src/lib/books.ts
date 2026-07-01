@@ -970,16 +970,9 @@ export type MarkdownSection = {
 export function parseMarkdownToSections(md: string): { chapters: Chapter[]; sections: MarkdownSection[] } {
   if (!md || typeof md !== "string") return { chapters: [], sections: [] };
 
-  // Heavy page-scanned OCR books (hundreds of "## Page N" markers) have no reliable
-  // chapter structure. Collapse early to a single clean "Full Text" experience.
-  const pageMarkers = (md.match(/##\s*Page\s+\d+/gi) || []).length;
-  if (pageMarkers > 30) {
-    const full = md.trim();
-    return {
-      chapters: [{ id: "full", title: "Full Text", order: 0, sourceLocation: undefined, nodeIds: [] }],
-      sections: [{ id: "full", title: "Full Text", content: full }],
-    };
-  }
+  // Heavy page-scanned OCR books rely on later junk filters + quality gates
+  // (isPageJunk, body char filters) to yield clean chapter slices (e.g. 21 for Jataka_Tatva).
+  // No early collapse — structured path or filtered fallback now supports full chapter slices on all 7 books.
 
   const lines = md.split(/\r?\n/);
   const raw: Array<{ title: string; lines: string[] }> = [];

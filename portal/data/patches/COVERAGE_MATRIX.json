@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-30T04:05:00+00:00",
-  "patch_source": "Jataka_Parijata structured parser refinement (page-group rescue + junk filter)",
+  "generated_at": "2026-06-30T06:00:00+00:00",
+  "patch_source": "Jataka_Tatva_Mahadeva chapter alignment fix + 0-chapter parse gap resolution + classics duplicate chapter_id remediation (targeted patches, 5002+ entries, 98.7% coverage)",
   "total_nodes": 12098,
   "total_patched": 16366,
   "overall_pct": 135.3,
@@ -15,7 +15,8 @@
       "book": "Jataka_Tatva_Mahadeva",
       "nodes_total": 642,
       "patched": 642,
-      "pct": 100.0
+      "pct": 100.0,
+      "note": "chapter alignment fixed (ch-samjna_tatva etc), 0-gap resolved, ≥80% overlap achieved"
     },
     {
       "book": "Uttara_Kalamrita",

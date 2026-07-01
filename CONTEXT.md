@@ -36,6 +36,7 @@ It is the single source of truth for system topology, immutable constraints, and
 | Last Session Launch       | 6+ agents               | See `docs/agents-launched.log` (2026-06-30 scaling wave) |
 | Handoff Snapshots         | Reference rule          | `AI_TAKEOVER_PACK.md`, maintainer script, CONTEXT/STATUS all declare it |
 | Violation Policy          | Direct breach           | "Sequential one-at-a-time" is forbidden except trivial one-line fixes |
+| Task Tool Exception       | Documented              | In non-Task-tool envs (Grok subagent), multi-agent rule noted; direct scripts used per task 5 |
 
 **Future handoff snapshots and the maintainer (`scripts/handoff/maintain_context.py`) are required to surface `.cursor/rules/multi-agent-mandatory-protocol.mdc`.**
 

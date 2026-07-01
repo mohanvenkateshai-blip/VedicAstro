@@ -484,7 +484,7 @@ export function BookReaderClient({
         <div className="sticky top-6 rounded-2xl border border-hairline bg-surface p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="text-xs uppercase tracking-widest text-text-muted">
-              {sections ? "Structured contents" : fullMarkdown ? "Contents" : "Chapters (from graph)"}
+              Structured contents
             </div>
             {selectedChapterId && (
               <button

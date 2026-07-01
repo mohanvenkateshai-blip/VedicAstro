@@ -12,7 +12,7 @@ export const MAX_SAVED_CHARTS: Record<Role, number> = {
 /** Minimum role required for chart workspace features. */
 export const FEATURE_MIN_ROLE: Record<string, Role> = {
   "chart/kp": "free",
-  "chart/varshaphala": "pro",
+  "chart/varshaphala": "free",
   "chart/transits": "free",
   "chart/yogas": "free",
   "chart/bhava": "free",

@@ -169,6 +169,7 @@ def _probe_generic(ke: KnowledgeEngine, engine_name: str) -> dict[str, Any]:
 
 def _probe_ashtakavarga(ke: KnowledgeEngine) -> dict[str, Any]:
     snapshot: dict[str, Any] = {"knowledge": _safe_knowledge_snapshot(ke, "ashtakavarga")}
+    snapshot["safe_path"] = True
     try:
         nodes = ke.query_nodes(pattern="*ashtakavarga*", limit=500)
         books: list[str] = []

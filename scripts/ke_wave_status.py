@@ -58,11 +58,13 @@ def _classify_on_refresh_real(names: list[str]) -> dict[str, bool]:
 def _load_runtime_registered() -> list[str]:
     """Best-effort runtime registered names. May be empty if heavy deps block import."""
     try:
-        # Ensure package path
-        if str(ROOT / "cvce") not in sys.path:
-            sys.path.insert(0, str(ROOT / "cvce"))
+        cv = ROOT / "cvce"
+        if str(cv) not in sys.path:
+            sys.path.insert(0, str(cv))
+        v = cv / ".venv" / "lib"
+        for p in v.glob("python*/site-packages"):
+            if str(p) not in sys.path: sys.path.insert(0, str(p))
         from knowledge_engine.integration import get_knowledge_engine  # type: ignore
-
         ke = get_knowledge_engine()
         if ke and ke.registry:
             return sorted(ke.registry.registered_names())
@@ -74,15 +76,29 @@ def _load_runtime_registered() -> list[str]:
 def _run_probes() -> dict[str, Any]:
     """Run auditor probes where possible. Returns machine-readable dict."""
     try:
-        if str(ROOT / "cvce") not in sys.path:
-            sys.path.insert(0, str(ROOT / "cvce"))
+        cvce = ROOT / "cvce"
+        if str(cvce) not in sys.path:
+            sys.path.insert(0, str(cvce))
+        v = cvce / ".venv" / "lib"
+        for p in v.glob("python*/site-packages"):
+            if str(p) not in sys.path:
+                sys.path.insert(0, str(p))
+        # also direct site for venv python context
         from knowledge_engine.refresh_auditor import run_all_probes  # type: ignore
         from knowledge_engine.integration import get_knowledge_engine  # type: ignore
-
         ke = get_knowledge_engine()
-        return run_all_probes(ke=ke)
+        res = run_all_probes(ke=ke)
+        return res
     except Exception as exc:
-        return {"error": str(exc), "probes_run": 0, "results": {}}
+        # fallback direct exec under venv to get probes
+        try:
+            import subprocess, json
+            vpy = str(cvce / ".venv" / "bin" / "python")
+            code = 'import sys; sys.path.insert(0,"."); from knowledge_engine.refresh_auditor import run_all_probes; from knowledge_engine.integration import get_knowledge_engine; print(json.dumps(run_all_probes(ke=get_knowledge_engine())))'
+            out = subprocess.check_output([vpy, "-c", code], cwd=str(cvce), text=True, timeout=30)
+            return json.loads(out.strip())
+        except Exception as e2:
+            return {"error": f"{exc}|{e2}", "probes_run": 0, "results": {}}
 
 
 def _crack_flags(names: list[str], runtime_names: list[str]) -> dict[str, str]:
@@ -154,7 +170,8 @@ def main() -> int:
     # Summary
     crack_count = sum(1 for r in rows if r["crack"])
     probed = probes.get("probes_run", 0) if isinstance(probes, dict) else 0
-    print(f"SUMMARY: engines={len(names)}  probed={probed}  cracks={crack_count}")
+    runtime_count = len(rt_names) if rt_names else len(names)
+    print(f"SUMMARY: engines={len(names)}  runtime={runtime_count} probed={probed} cracks={crack_count}")
     if probes.get("error"):
         print("probe_error:", probes["error"])
     print("probe_supported:", probes.get("supported", []) if isinstance(probes, dict) else [])

@@ -7,28 +7,31 @@ const CVCE_BASE_URL =
   process.env.CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
 /** Endpoints the portal may proxy — keep this list tight. */
-const ALLOWED = new Set([
-  "dasha-deep",
-  "dasha-deep-yogini",
-  "dasha-deep-ashtottari",
-  "dasha-series",
-  "dasha-predict",
-  "dasha-predict-yogini",
-  "fructification",
-  "dashas",
-  "gochar",
-  "kp-system",
-  "varshaphala",
-  "koota-match",
-  "positions",
-  "yogas",
-  "special-points",
-]);
+  const ALLOWED = new Set([
+    "dasha-deep",
+    "dasha-deep-yogini",
+    "dasha-deep-ashtottari",
+    "dasha-series",
+    "dasha-predict",
+    "dasha-predict-yogini",
+    "fructification",
+    "dashas",
+    "gochar",
+    "kp-system",
+    "varshaphala",
+    "koota-match",
+    "positions",
+    "yogas",
+    "special-points",
+    "report/facts",
+  ]);
 
-const ALLOWED_GET = new Set(["places", "version"]);
+const ALLOWED_GET = new Set(["places", "version", "report/facts"]);
 
 // KnowledgeEngine structured endpoints (Learn reader owns chapter tree + node linkage)
 const KNOWLEDGE_PREFIX = "knowledge/";
+
+const REPORT_FACTS_PREFIX = "report/facts";
 
 const SERVER_TIMEOUT_MS = 120_000;
 

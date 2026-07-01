@@ -19,7 +19,7 @@ is transiting through (from SAV) or the specific planet's BAV.
 from dataclasses import dataclass, field
 
 from ..core.panchanga import PLANETS, RASHIS, rashi_index
-from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
+from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter, get_safe_structured_book, get_safe_nodes_for_chapter
 
 _ashtakavarga_rules_version: str | None = None
 _ashtakavarga_registered = False
@@ -364,11 +364,11 @@ def _on_ashtakavarga_refresh(new_version: str) -> None:
     # Real consumption: load structured chapters for ashtakavarga (BPHS Ch.67-72, handbook)
     for key, book_id in _akv_book_index.items():
         try:
-            data = get_structured_book(book_id)
+            data = get_safe_structured_book(book_id) or get_structured_book(book_id)
             if data:
                 _akv_structured_books[book_id] = data
                 if "BPHS" in key:
-                    get_nodes_for_chapter(book_id, "ch-67")
+                    get_safe_nodes_for_chapter(book_id, "ch-67")
         except Exception:
             pass
 

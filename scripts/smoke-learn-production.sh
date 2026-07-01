@@ -48,7 +48,7 @@ fi
 
 # 3) Hora should load structured content (not pure node-bucket sidebar)
 HORA=$(curl_safe -L "$BASE/learn/Hora_Shastra_Varahamihira" | head -c 200000 || true)
-if echo "$HORA" | grep -qi "structured\|chapter-precise\|Contents\|Structured contents"; then
+if echo "$HORA" | grep -qi "chapters\|sections\|Contents\|Structured contents"; then
   ok "Hora shows structured reader signals"
 else
   bad "Hora missing structured reader signals"

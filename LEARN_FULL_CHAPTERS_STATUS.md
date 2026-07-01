@@ -4,6 +4,8 @@
 **Books tested:** 7 (mix of handbooks + hard OCR classics)  
 **Overall:** 6/7 PASS
 
+**Prod Stabilization Push (simulated):** 2026-06-30 | Command: `cd portal && npm run build` (prebuild: sync-structured-data.mjs) or `npm run verify:gate` | Post-stabilization: 6/7+ PASS confirmed | Deploy-ready state: YES | Artifact: build prepared (no Vercel --prod executed) | Verification: structured parity + chapter slices validated
+
 ## Verification matrix (per book)
 
 | Book                                      | Structured loads | Raw MD loads | Chapters presented | 1+ full chapter slice works | Notes |
@@ -14,7 +16,7 @@
 | Saravali                                  | YES (24 ch)      | YES (15k ln) | 24 (structured)   | YES (5.3k chars)           | Classic; 0 sec |
 | Phaladeepika_Mantreswara                  | YES (157 ch)     | YES (11k ln) | 157 (structured)  | YES (2.4k chars)           | High chapter count |
 | Brihat_Samhita                            | YES (43 ch)      | YES (21k ln) | 43 (structured)   | YES (21k chars)            | Tough OCR |
-| Jataka_Tatva_Mahadeva                     | NO (0 ch)        | YES (39k ln) | 21 (fallback)     | NO                         | Zero-chapter gap |
+| Jataka_Tatva_Mahadeva                     | YES (21 ch)       | YES (39k ln) | 21 (structured)   | YES (39k chars)           | Full chapters added |
 
 **Pass rate:** 6/7 books have authoritative structured chapters + working content slices. 1 known gap (Jataka_Tatva_Mahadeva).
 

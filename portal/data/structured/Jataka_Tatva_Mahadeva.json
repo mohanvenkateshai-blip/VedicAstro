@@ -3,9 +3,181 @@
   "canonical_name": "Jataka Tatva Mahadeva",
   "source_file": "Jataka_Tatva_Mahadeva.md",
   "graph_version": "newbooks-v1",
-  "parse_quality": "needs_review",
-  "chapters": [],
-  "toc": [],
-  "total_chapters": 0,
-  "total_sections": 0
+  "parse_quality": "good",
+  "chapters": [
+    {
+      "id": "ch-samjna-tatva",
+      "number": 1,
+      "title": "Samjna Tatva",
+      "level": 1,
+      "start_line": 727,
+      "end_line": 2029,
+      "sections": [],
+      "content_preview": "Samjna Tatva — nomenclature of signs, planets, body parts, and introductory principles."
+    },
+    {
+      "id": "ch-sutika-tatva",
+      "number": 2,
+      "title": "Sutika Tatva",
+      "level": 1,
+      "start_line": 2033,
+      "end_line": 10206,
+      "sections": [],
+      "content_preview": "Sutika Tatva — circumstances of birth, longevity, early life indicators."
+    },
+    {
+      "id": "ch-prakirna-tatva",
+      "number": 3,
+      "title": "Prakirna Tatva",
+      "level": 1,
+      "start_line": 10216,
+      "end_line": 27363,
+      "sections": [
+        {
+          "id": "sec-sahaja-viveka",
+          "number": "E",
+          "title": "Sahaja Viveka",
+          "level": 2,
+          "start_line": 10216,
+          "end_line": 11227,
+          "content_preview": "Third house matters — brothers, courage."
+        },
+        {
+          "id": "sec-chaturtha-viveka",
+          "number": "F",
+          "title": "Chaturtha Viveka",
+          "level": 2,
+          "start_line": 11228,
+          "end_line": 13058,
+          "content_preview": "Fourth house — property, mother, happiness."
+        },
+        {
+          "id": "sec-panchama-viveka",
+          "number": "G",
+          "title": "Panchama Viveka",
+          "level": 2,
+          "start_line": 13059,
+          "end_line": 15648,
+          "content_preview": "Fifth house — children, intelligence, purva punya."
+        },
+        {
+          "id": "sec-shashta-viveka",
+          "number": "H",
+          "title": "Shashta Viveka",
+          "level": 2,
+          "start_line": 15649,
+          "end_line": 17785,
+          "content_preview": "Sixth house — enemies, disease, service."
+        },
+        {
+          "id": "sec-sapthama-viveka",
+          "number": "K",
+          "title": "Sapthama Viveka",
+          "level": 2,
+          "start_line": 17786,
+          "end_line": 19760,
+          "content_preview": "Seventh house — marriage, spouse, partnerships."
+        },
+        {
+          "id": "sec-ashtama-viveka",
+          "number": "L",
+          "title": "Ashtama Viveka",
+          "level": 2,
+          "start_line": 19761,
+          "end_line": 21569,
+          "content_preview": "Eighth house — longevity, obstacles, sudden events."
+        },
+        {
+          "id": "sec-navama-viveka",
+          "number": "M",
+          "title": "Navama Viveka",
+          "level": 2,
+          "start_line": 21570,
+          "end_line": 22830,
+          "content_preview": "Ninth house — fortune, dharma, father, guru."
+        },
+        {
+          "id": "sec-dasama-viveka",
+          "number": "N",
+          "title": "Dasama Viveka",
+          "level": 2,
+          "start_line": 22831,
+          "end_line": 25336,
+          "content_preview": "Tenth house — career, status, karma."
+        },
+        {
+          "id": "sec-eleventh-viveka",
+          "number": "P",
+          "title": "Eleventh Viveka",
+          "level": 2,
+          "start_line": 25337,
+          "end_line": 25640,
+          "content_preview": "Eleventh house — gains, friends, desires."
+        },
+        {
+          "id": "sec-twelfth-viveka",
+          "number": "Q",
+          "title": "Twelfth Viveka",
+          "level": 2,
+          "start_line": 25641,
+          "end_line": 26195,
+          "content_preview": "Twelfth house — losses, moksha, foreign."
+        },
+        {
+          "id": "sec-misra-viveka",
+          "number": "R",
+          "title": "Misra (miscellaneous) Viveka",
+          "level": 2,
+          "start_line": 26196,
+          "end_line": 27363,
+          "content_preview": "Mixed topics and additional rules."
+        }
+      ],
+      "content_preview": "Prakirna Tatva — twelve Vivekas covering all twelve houses and miscellaneous matters."
+    },
+    {
+      "id": "ch-strijataka-tatva",
+      "number": 4,
+      "title": "Strijataka Tatva",
+      "level": 1,
+      "start_line": 27370,
+      "end_line": 28302,
+      "sections": [],
+      "content_preview": "Strijataka Tatva — principles specific to female horoscopes."
+    },
+    {
+      "id": "ch-dasa-tatva",
+      "number": 5,
+      "title": "Dasa Tatva",
+      "level": 1,
+      "start_line": 28303,
+      "end_line": 28977,
+      "sections": [],
+      "content_preview": "Dasa Tatva — planetary periods, effects of dashas and antardashas."
+    }
+  ],
+  "toc": [
+    {
+      "title": "Samjna Tatva",
+      "id": "ch-samjna-tatva"
+    },
+    {
+      "title": "Sutika Tatva",
+      "id": "ch-sutika-tatva"
+    },
+    {
+      "title": "Prakirna Tatva",
+      "id": "ch-prakirna-tatva"
+    },
+    {
+      "title": "Strijataka Tatva",
+      "id": "ch-strijataka-tatva"
+    },
+    {
+      "title": "Dasa Tatva",
+      "id": "ch-dasa-tatva"
+    }
+  ],
+  "total_chapters": 5,
+  "total_sections": 11
 }

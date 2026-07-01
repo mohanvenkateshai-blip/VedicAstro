@@ -300,6 +300,8 @@ export interface AlternateDashas {
   chara?: SignDashaBlock | null;
   kalachakra?: SignDashaBlock | null;
   kaksha?: KakshaBlock | null;
+  yogini?: SignDashaBlock | null;
+  ashtottari?: SignDashaBlock | null;
 }
 
 export interface DayWindows {
@@ -491,6 +493,7 @@ export interface AshtakavargaFacts {
   sav_annotated: SavAnnotated[];
   planet_totals: Record<string, number>;
   total: number;
+  handbook?: { source?: string; note?: string };
 }
 
 export interface ForecastPeriod {
@@ -562,6 +565,9 @@ export interface ReportFacts {
     current: string[];
     currentLadder: DashaLadderRow[];
     antardashaTable: { maha: string; antara: string; start: string; durationYears: number }[];
+    kaksha?: any;
+    chara?: any;
+    kalachakra?: any;
   };
   dasha_intelligence?: DashaIntelligence | null;
   transit_intelligence?: TransitIntelligence | null;
@@ -571,7 +577,7 @@ export interface ReportFacts {
   yogas?: {
     activeCount?: number;
     totalChecked?: number | null;
-    yogas?: Record<string, { name?: string; definition?: string; prediction?: string }>;
+    yogas?: Record<string, { name?: string; definition?: string; prediction?: string; strength?: string; category?: string; source?: string; citation?: string; planets?: string[] }>;
   } | null;
   ashtakavarga?: AshtakavargaFacts | null;
   shadbala?: Record<string, Record<string, number | null>> | null;
@@ -589,6 +595,22 @@ export interface ReportFacts {
   } | null;
   narration_error?: string | null;
   knowledge_engine?: KnowledgeEngineHealth | null;
+  varshaphala?: {
+    year?: number;
+    lagna?: string;
+    muntha?: { sign?: string; yearsElapsed?: number } | null;
+    tier_note?: string;
+    planets?: any[];
+    yogas?: any[];
+  } | null;
+  classical_sources?: Record<string, string> | null;
+  timing?: {
+    rahu_kalam: { start: number; end: number };
+    yamaganda: { start: number; end: number };
+    gulika: { start: number; end: number };
+    sunrise?: number;
+    sunset?: number;
+  } | null;
 }
 
 export const RASHIS = [
@@ -605,3 +627,16 @@ export const PLANET_SHORT: Record<string, string> = {
   Sun: "Su", Moon: "Mo", Mars: "Ma", Mercury: "Me", Jupiter: "Ju",
   Venus: "Ve", Saturn: "Sa", Rahu: "Ra", Ketu: "Ke", Lagna: "La", Ascendant: "As",
 };
+
+// Minimal stubs to unblock build for new dasha components (will be replaced with real shapes later)
+export interface CharaDashaData {
+  charaDashas: Array<{ name: string; duration: string }>;
+}
+
+export interface KakshaData {
+  kakshas: Array<{ name: string; duration: string }>;
+}
+
+export interface KalachakraDashaData {
+  kalachakraDashas: Array<{ name: string; duration: string }>;
+}

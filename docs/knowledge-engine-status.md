@@ -105,7 +105,7 @@ All previously floating "loose ends" related to the knowledge graph have been co
 
 | Item                                   | Status                              | Notes |
 |----------------------------------------|-------------------------------------|-------|
-| **Vector embeddings on `corpus_chunks`** | Infrastructure + ownership complete | Generator exists, embeddings not yet populated in Supabase |
+| **Vector embeddings on `corpus_chunks`** | PAUSED | Generator exists; Gemini quota exhausted per CONTEXT.md — all paid embedding calls STOPPED. Resume when quota resets. See EMBEDDINGS_RUN_PREP.md. |
 | **LLM narration (`CVCE_LLM_NARRATION=1`)** | Fully operational under KnowledgeEngine | Gated + per-source blocking implemented |
 | **Kaksha + Chara/Kalachakra dashas**   | Tangible data returned in `/dashas` | Real periods + Kaksha checks via PyJHora + graph |
 | **Deeper Hiranya-quality report UI**   | Two new meaningful sections added   | Jaimini & Kaksha timing + Classical sources (GraphRAG) |
