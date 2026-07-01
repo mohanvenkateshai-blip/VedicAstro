@@ -29,11 +29,14 @@ export async function getSession(): Promise<Session | null> {
   return authSession();
 }
 
-/** Require signed-in session; optionally enforce minimum role tier. */
-export async function requireSession(minRole: Role = "free"): Promise<Session> {
+/** Require signed-in session; optionally enforce minimum role tier.
+ *  @param returnPath - where to send user back after signin / on tier error (defaults to "/")
+ */
+export async function requireSession(minRole: Role = "free", returnPath: string = "/"): Promise<Session> {
   const session = await getSession();
-  if (!session) redirect("/auth/signin?callbackUrl=/dashboard");
-  if (!hasAtLeast(session.role, minRole)) redirect("/dashboard?error=tier");
+  const cb = encodeURIComponent(returnPath);
+  if (!session) redirect(`/auth/signin?callbackUrl=${cb}`);
+  if (!hasAtLeast(session.role, minRole)) redirect(`${returnPath}?error=tier`);
   return session;
 }
 
