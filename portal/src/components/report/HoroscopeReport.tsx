@@ -248,149 +248,83 @@ function TransitIntelCard({
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-semibold text-emerald-400">{p.planet}</span>
                   <span className="text-[10px] font-mono text-text-muted">
-                    {p.rashi} · H{p.house_from_janma}
+                    {p.rashi} · score {p.score}
                   </span>
                 </div>
-                {p.primary_driver ? (
-                  <p className="text-[11px] text-text-muted leading-snug">{p.primary_driver}</p>
-                ) : null}
-                {p.positive_impact?.slice(0, 1).map((imp, i) => (
-                  <p key={i} className="text-[11px] text-emerald-400/70 leading-snug">{imp}</p>
-                ))}
+                <p className="text-xs text-text-main">{p.summary}</p>
               </div>
             ))}
           </div>
         )}
-
         {unfavorable.length > 0 && (
           <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-3 space-y-2">
-            <p className="text-[10px] font-mono uppercase tracking-wider text-red-400">
+            <p className="text-[10px] font-mono uppercase tracking-wider text-red-500">
               Caution ({unfavorable.length})
             </p>
-            {unfavorable.slice(0, 4).map((p) => (
+            {unfavorable.map((p) => (
               <div key={p.planet} className="space-y-0.5">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-semibold text-red-400">{p.planet}</span>
                   <span className="text-[10px] font-mono text-text-muted">
-                    {p.rashi} · H{p.house_from_janma}
+                    {p.rashi} · score {p.score}
                   </span>
                 </div>
-                {p.primary_driver ? (
-                  <p className="text-[11px] text-text-muted leading-snug">{p.primary_driver}</p>
-                ) : null}
-                {p.mitigating?.slice(0, 1).map((m, i) => (
-                  <p key={i} className="text-[11px] text-amber-400/70 leading-snug">↳ {m}</p>
-                ))}
+                <p className="text-xs text-text-main">{p.summary}</p>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Next favourable days */}
-      {showLookAhead ? (
-        <div className="pt-3 border-t border-hairline space-y-2">
-          <p className="text-[10px] font-mono uppercase tracking-wider text-emerald-500">
-            Next favourable days
-          </p>
-          {nextShubhDays!.map((day) => (
-            <div
-              key={day.date}
-              className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 text-xs"
-            >
-              <span className="font-mono font-semibold text-emerald-400 tabular-nums shrink-0">
-                {new Date(day.date + "T12:00:00").toLocaleDateString("en-IN", {
-                  weekday: "short",
-                  day: "numeric",
-                  month: "short",
-                })}
-              </span>
-              <span className="text-text-muted leading-snug">{day.summary}</span>
-              {day.top_drivers?.length ? (
-                <span className="text-text-muted/60 font-mono shrink-0">
-                  {day.top_drivers.join(" · ")}
-                </span>
-              ) : null}
-            </div>
-          ))}
+      {showLookAhead && (
+        <div className="text-xs text-text-muted">
+          Next shubh windows: {nextShubhDays!.map((d) => d.date).join(", ")}
         </div>
-      ) : null}
+      )}
     </Card>
   );
 }
 
-// ─── Vimshottari ladder ──────────────────────────────────────────────────────
+// ─── Dasha ladder ────────────────────────────────────────────────────────────
 
 function DashaLadderCard({ report }: { report: ReportFacts }) {
+  const ladder = report.dashas.currentLadder || [];
+  if (!ladder.length) return null;
   return (
     <Card className="p-5 space-y-3">
-      <SectionHeading>Vimshottari ladder (now)</SectionHeading>
-      <div className="space-y-2">
-        {report.dashas.currentLadder.map((row) => (
-          <div
-            key={row.level}
-            className="flex flex-wrap gap-x-4 gap-y-1 text-sm border-b border-hairline/50 pb-2"
-          >
-            <span className="text-xs font-mono uppercase text-text-muted w-28">
-              {row.levelLabel}
-            </span>
-            <span className="font-semibold text-accent">{row.lord}</span>
-            <span className="text-xs font-mono text-text-muted tabular-nums">
-              {row.start.slice(0, 10)} → {row.end.slice(0, 10)}
-            </span>
+      <SectionHeading>Vimshottari ladder (current)</SectionHeading>
+      <div className="text-xs font-mono space-y-1">
+        {ladder.slice(0, 5).map((r: any, i: number) => (
+          <div key={i} className={i === 0 ? "text-accent font-semibold" : ""}>
+            {r.lord} · {r.start} → {r.end} ({r.years}y)
           </div>
         ))}
       </div>
+      <p className="text-[10px] text-text-muted font-mono">ke: {report.knowledge_engine?.version || "—"}</p>
     </Card>
   );
 }
 
-// ─── Dasha forecast ──────────────────────────────────────────────────────────
+// ─── Forecast (next 8) ───────────────────────────────────────────────────────
 
 function ForecastCard({ periods }: { periods: ForecastPeriod[] }) {
-  if (!periods.length) return null;
-
-  const verdictBg = (v: string) =>
-    v === "shubh"
-      ? "border-l-emerald-400"
-      : v === "ashubh"
-        ? "border-l-red-400"
-        : "border-l-amber-400";
-
   return (
-    <Card className="p-5 space-y-4">
-      <SectionHeading>Dasha forecast — upcoming periods</SectionHeading>
-      <div className="space-y-3">
-        {periods.map((p, i) => (
-          <div
-            key={i}
-            className={`border-l-2 pl-4 py-1 space-y-1 ${verdictBg(p.verdict)} ${p.isCurrent ? "opacity-100" : "opacity-80"}`}
-          >
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm font-semibold">
-                {p.maha} / {p.antar}
-              </span>
-              {p.isCurrent && (
-                <span className="text-xs bg-accent/10 text-accent px-1.5 py-0.5 rounded font-mono">
-                  current
-                </span>
-              )}
-              <VerdictBadge verdict={p.verdict} />
-              <span className="text-xs font-mono text-text-muted tabular-nums">
-                {p.start} → {p.end}
-              </span>
+    <Card className="p-5 space-y-3">
+      <SectionHeading>Next 8 Antardashas — area forecast</SectionHeading>
+      <div className="space-y-3 text-sm">
+        {periods.slice(0, 8).map((p, i) => (
+          <div key={i} className="border-l-2 border-hairline pl-3">
+            <div className="font-mono text-xs text-text-muted">
+              {p.maha}/{p.antar} · {p.start.slice(0,10)}→{p.end.slice(0,10)} ({p.durationYears.toFixed(1)}y) · <VerdictBadge verdict={p.verdict} />
             </div>
-            <p className="text-xs text-text-muted">{p.summary}</p>
-            {(p.profession[0] || p.wealth[0] || p.health[0]) && (
-              <div className="text-xs font-mono text-text-muted space-y-0.5 pt-1">
-                {p.profession[0] && <p>Profession: {p.profession[0]}</p>}
-                {p.wealth[0] && <p>Wealth: {p.wealth[0]}</p>}
-                {p.health[0] && <p>Health: {p.health[0]}</p>}
-                {p.caution[0] && (
-                  <p className="text-amber-700">Caution: {p.caution[0]}</p>
-                )}
-              </div>
-            )}
+            <p className="text-xs text-text-main mt-0.5">{p.summary}</p>
+            <div className="text-[10px] font-mono text-text-muted grid grid-cols-2 gap-x-2 mt-1">
+              {p.profession?.[0] && <span>Prof: {p.profession[0]}</span>}
+              {p.wealth?.[0] && <span>Wealth: {p.wealth[0]}</span>}
+              {p.health?.[0] && <span>Health: {p.health[0]}</span>}
+              {p.family?.[0] && <span>Family: {p.family[0]}</span>}
+              {p.caution?.[0] && <span className="text-amber-700">Caution: {p.caution[0]}</span>}
+            </div>
           </div>
         ))}
       </div>
@@ -398,16 +332,15 @@ function ForecastCard({ periods }: { periods: ForecastPeriod[] }) {
   );
 }
 
-// ─── Yogas ───────────────────────────────────────────────────────────────────
+// ─── Yogas (full enriched) ───────────────────────────────────────────────────
 
 function YogasCard({ yogas }: { yogas: NonNullable<ReportFacts["yogas"]> }) {
   const list = Object.entries(yogas.yogas || {});
   if (!list.length && !yogas.activeCount) return null;
-
   return (
     <Card className="p-5 space-y-4">
       <div className="flex items-center gap-3 flex-wrap">
-        <SectionHeading>Active yogas</SectionHeading>
+        <SectionHeading>Active Yogas (all)</SectionHeading>
         {yogas.activeCount != null && (
           <span className="text-xs font-mono text-text-muted">
             {yogas.activeCount} active
@@ -415,34 +348,26 @@ function YogasCard({ yogas }: { yogas: NonNullable<ReportFacts["yogas"]> }) {
           </span>
         )}
       </div>
-
       {list.length === 0 ? (
-        <p className="text-sm text-text-muted">No yogas detected for this chart.</p>
+        <p className="text-sm text-text-muted">No yogas detected.</p>
       ) : (
-        <div className="space-y-4">
-          {list.slice(0, 20).map(([key, y]) => (
-            <div key={key} className="space-y-1">
-              <p className="text-sm font-semibold">{y.name || key}</p>
-              {y.definition && (
-                <p className="text-xs text-text-muted italic">{y.definition}</p>
-              )}
-              {y.prediction && (
-                <p className="text-sm text-text-main">{y.prediction}</p>
-              )}
+        <div className="space-y-3 text-sm">
+          {list.slice(0, 40).map(([key, y]: any) => (
+            <div key={key} className="border-l-2 border-hairline pl-3">
+              <div className="font-semibold">{y.name || key} {y.strength ? `(${y.strength})` : ""}</div>
+              {y.definition && <p className="text-xs text-text-muted italic">{y.definition}</p>}
+              {y.prediction && <p className="text-sm">{y.prediction}</p>}
+              {(y.category || y.source || y.citation) && <p className="text-[10px] font-mono text-text-muted">{y.category} · {y.source || y.citation}</p>}
             </div>
           ))}
-          {list.length > 20 && (
-            <p className="text-xs font-mono text-text-muted">
-              + {list.length - 20} more yogas detected
-            </p>
-          )}
         </div>
       )}
+      <p className="text-[10px] text-text-muted font-mono">yoga.py + KE Jataka structured (BPHS/PD/SC) + graph</p>
     </Card>
   );
 }
 
-// ─── Ashtakavarga ────────────────────────────────────────────────────────────
+// ─── Ashtakavarga (full SAV + BAV tables) ────────────────────────────────────
 
 const BAND_COLORS: Record<string, string> = {
   excellent: "bg-emerald-500",
@@ -456,45 +381,41 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
   return (
     <Card className="p-5 space-y-4">
       <div className="flex items-center gap-3 flex-wrap">
-        <SectionHeading>Ashtakavarga (SAV)</SectionHeading>
-        <span className="text-xs font-mono text-text-muted">
-          post-shodhana total {akv.total}
-        </span>
+        <SectionHeading>Ashtakavarga — Full SAV + BAV tables</SectionHeading>
+        <span className="text-xs font-mono text-text-muted">post-shodhana total {akv.total}</span>
       </div>
-
-      {/* SAV bar chart */}
+      {/* SAV */}
       <div className="space-y-1.5">
-        {akv.sav_annotated.map((row) => (
-          <div key={row.sign} className="flex items-center gap-2 text-xs font-mono">
+        {akv.sav_annotated?.map((row: any, idx: number) => (
+          <div key={idx} className="flex items-center gap-2 text-xs font-mono">
             <span className="w-14 text-text-muted shrink-0">{row.sign.slice(0, 3)}</span>
             <div className="flex-1 h-3 bg-hairline/40 rounded-sm overflow-hidden">
-              <div
-                className={`h-full rounded-sm transition-all ${BAND_COLORS[row.band] || "bg-amber-400"}`}
-                style={{ width: `${(row.bindus / maxBindus) * 100}%` }}
-              />
+              <div className={`h-full rounded-sm transition-all ${BAND_COLORS[row.band] || "bg-amber-400"}`} style={{ width: `${(row.bindus / maxBindus) * 100}%` }} />
             </div>
             <span className="w-5 text-right tabular-nums">{row.bindus}</span>
-            <span className={`w-16 ${row.band === "depleted" ? "text-red-600" : row.band === "excellent" ? "text-emerald-700" : "text-text-muted"}`}>
-              {row.band}
-            </span>
+            <span className={`w-16 ${row.band === "depleted" ? "text-red-600" : row.band === "excellent" ? "text-emerald-700" : "text-text-muted"}`}>{row.band}</span>
           </div>
         ))}
       </div>
-
-      {/* Planet BAV totals */}
+      {/* Full BAV tables */}
       <div>
-        <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Planet totals (BAV, post-shodhana)</h4>
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-mono text-text-muted">
-          {Object.entries(akv.planet_totals).map(([planet, total]) => (
-            <span key={planet}>
-              {planet.slice(0, 2)}: <span className="text-text-main">{total}</span>
-            </span>
-          ))}
+        <h4 className="text-xs font-mono uppercase text-text-muted mb-1">BAV (7 planets × 12 signs)</h4>
+        <div className="overflow-x-auto text-[10px] font-mono">
+          <table className="min-w-full border border-hairline">
+            <thead><tr className="text-left"><th className="px-1">Pl</th>{Array.from({length:12}).map((_,i)=><th key={i} className="px-0.5 text-center tabular-nums">{i+1}</th>)}<th>Tot</th></tr></thead>
+            <tbody>
+              {Object.entries(akv.bav || {}).map(([pl, arr]: any) => (
+                <tr key={pl} className="border-t border-hairline/60">
+                  <td className="font-semibold pr-1">{pl.slice(0,2)}</td>
+                  {(arr||[]).map((b:number,i:number)=><td key={i} className="px-0.5 text-center tabular-nums">{b}</td>)}
+                  <td className="pl-1 font-semibold">{akv.planet_totals?.[pl]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
-      <p className="text-xs text-text-muted">
-        Trikona + Ekadhipatya Shodhana applied per BPHS Ch.67. Shaded: depleted &lt;25, standard 25–27, good 28–29, excellent 30+.
-      </p>
+      <p className="text-xs text-text-muted">{akv.handbook?.note || "Trikona+Ekadhipatya per BPHS Ch.67"} · {akv.handbook?.source || "KE"}</p>
     </Card>
   );
 }
@@ -514,19 +435,16 @@ const SHADBALA_LABELS: Record<string, string> = {
 function ShadbalaCard({ shadbala }: { shadbala: NonNullable<ReportFacts["shadbala"]> }) {
   const planets = Object.keys(shadbala);
   if (!planets.length) return null;
-
   return (
     <Card className="p-5 space-y-3">
-      <SectionHeading>Shadbala (planet strength)</SectionHeading>
+      <SectionHeading>Shadbala (6 components + total, 7 planets)</SectionHeading>
       <div className="overflow-x-auto">
         <table className="w-full text-xs font-mono">
           <thead>
             <tr className="text-left text-text-muted border-b border-hairline">
               <th className="py-2 pr-3">Planet</th>
               {SHADBALA_DISPLAY_KEYS.map((k) => (
-                <th key={k} className="py-2 pr-3">
-                  {SHADBALA_LABELS[k] || k}
-                </th>
+                <th key={k} className="py-2 pr-3">{SHADBALA_LABELS[k] || k}</th>
               ))}
             </tr>
           </thead>
@@ -537,16 +455,10 @@ function ShadbalaCard({ shadbala }: { shadbala: NonNullable<ReportFacts["shadbal
               const isStrong = typeof totalRupa === "number" && totalRupa >= 1;
               return (
                 <tr key={planet} className="border-b border-hairline/60">
-                  <td className={`py-1.5 pr-3 font-semibold ${isStrong ? "text-text-main" : "text-text-muted"}`}>
-                    {planet.slice(0, 2)}
-                  </td>
+                  <td className={`py-1.5 pr-3 font-semibold ${isStrong ? "text-text-main" : "text-text-muted"}`}>{planet.slice(0, 2)}</td>
                   {SHADBALA_DISPLAY_KEYS.map((k) => {
                     const v = row[k];
-                    return (
-                      <td key={k} className={`py-1.5 pr-3 tabular-nums ${k === "total_rupa" ? "font-semibold" : ""}`}>
-                        {v != null ? v.toFixed(2) : "—"}
-                      </td>
-                    );
+                    return <td key={k} className={`py-1.5 pr-3 tabular-nums ${k === "total_rupa" ? "font-semibold" : ""}`}>{v != null ? (typeof v === "number" ? v.toFixed(2) : v) : "—"}</td>;
                   })}
                 </tr>
               );
@@ -554,412 +466,42 @@ function ShadbalaCard({ shadbala }: { shadbala: NonNullable<ReportFacts["shadbal
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-text-muted">
-        Strength ≥ 1.0 Rupa considered adequate. Source: BPHS Ch.27 (Shadbala).
-      </p>
+      <p className="text-xs text-text-muted">BPHS Ch.27 · ke source on each planet</p>
     </Card>
   );
 }
 
-// ─── LLM narration (KnowledgeEngine-gated) ───────────────────────────────────
+// ─── Narration ───────────────────────────────────────────────────────────────
 
 function NarrationCard({ narration, error }: { narration: ReportFacts["narration"]; error?: string | null }) {
   if (error) {
-    return (
-      <Card className="p-5 space-y-2 border border-danger/30">
-        <SectionHeading>LLM Narrative Summary</SectionHeading>
-        <p className="text-sm text-danger">{error}</p>
-      </Card>
-    );
+    return <Card className="p-5 space-y-2 border border-danger/30"><SectionHeading>LLM Narrative</SectionHeading><p className="text-sm text-danger">{error}</p></Card>;
   }
-
   if (!narration) return null;
-
   if (narration.prose) {
     return (
       <Card className="p-5 space-y-2 border border-indigo-500/30">
-        <SectionHeading>LLM Narrative Summary</SectionHeading>
+        <SectionHeading>LLM Narrative (CVCE_LLM_NARRATION=1)</SectionHeading>
         <p className="text-sm leading-relaxed text-text-main whitespace-pre-wrap">{narration.prose}</p>
-        {narration.sources_blocked?.length ? (
-          <p className="text-xs text-text-muted">
-            Excluded blocked sources: {narration.sources_blocked.join(", ")}
-          </p>
-        ) : null}
-        {narration.model ? (
-          <div className="text-[10px] text-text-muted">Generated with {narration.model}</div>
-        ) : null}
+        {narration.model && <div className="text-[10px] text-text-muted">via {narration.model}</div>}
       </Card>
     );
   }
-
-  if (narration.status === "blocked" || narration.status === "skipped") {
-    return (
-      <Card className="p-5 space-y-2 border border-hairline">
-        <SectionHeading>LLM Narrative Summary</SectionHeading>
-        <p className="text-sm text-text-muted">
-          {narration.status === "blocked" ? "Narration blocked" : "Narration skipped"}
-          {narration.reason ? `: ${narration.reason}` : ""}
-        </p>
-        {narration.sources_blocked?.length ? (
-          <p className="text-xs text-text-muted">
-            Blocked sources: {narration.sources_blocked.join(", ")}
-          </p>
-        ) : null}
-      </Card>
-    );
-  }
-
   return null;
 }
 
-// ─── Alternate dashas (Chara / Kalachakra / Kaksha) ─────────────────────────
+// ─── Knowledge strip ─────────────────────────────────────────────────────────
 
-function SignDashaPanel({ title, block }: { title: string; block: SignDashaBlock }) {
-  if (!block?.maha && !block?.periods?.length) return null;
+function KnowledgeEngineStrip({ ke }: { ke?: KnowledgeEngineHealth | null }) {
+  if (!ke) return null;
   return (
-    <div className="space-y-2 rounded-lg border border-hairline/80 p-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <h4 className="text-xs font-mono uppercase text-text-muted">{title}</h4>
-        {block.method ? (
-          <span className="text-[10px] font-mono text-text-muted/70">{block.method}</span>
-        ) : null}
-      </div>
-      {block.maha ? (
-        <p className="text-sm font-medium font-mono">
-          {block.maha}
-          {block.antara ? ` / ${block.antara}` : ""}
-          {block.mahaStart && block.mahaEnd ? (
-            <span className="text-xs text-text-muted ml-2 tabular-nums">
-              {block.mahaStart.slice(0, 10)} → {block.mahaEnd.slice(0, 10)}
-            </span>
-          ) : null}
-        </p>
-      ) : null}
-      {block.graph_citations?.[0]?.description ? (
-        <p className="text-xs text-text-muted leading-relaxed line-clamp-3">
-          {block.graph_citations[0].description}
-        </p>
-      ) : null}
-      {block.periods && block.periods.length > 0 ? (
-        <div className="space-y-1 pt-1">
-          {block.periods.slice(0, 4).map((p, i) => (
-            <div key={i} className="text-xs font-mono flex flex-wrap gap-x-2">
-              <span className={p.isCurrent ? "text-accent font-semibold" : "text-text-main"}>
-                {p.maha}/{p.antara}
-              </span>
-              <span className="text-text-muted tabular-nums">
-                {p.start?.slice(0, 10)} → {p.end?.slice(0, 10)}
-              </span>
-            </div>
-          ))}
-        </div>
-      ) : null}
+    <div className="text-[10px] font-mono text-text-muted">
+      KE {ke.version} · healthy:{String(ke.healthy)} · engines:{ke.registered_engines?.length || 0}
     </div>
   );
 }
 
-function KakshaPanel({ block }: { block: KakshaBlock }) {
-  if (!block?.transits?.length) return null;
-  const favorable = block.transits.filter((t) => t.binduActive);
-  return (
-    <div className="space-y-2 rounded-lg border border-hairline/80 p-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <h4 className="text-xs font-mono uppercase text-text-muted">Kaksha refinement</h4>
-        {block.summary ? (
-          <span className="text-[10px] font-mono text-emerald-600">{block.summary}</span>
-        ) : null}
-      </div>
-      <p className="text-xs text-text-muted">{block.refinement}</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-        {block.transits.map((t) => (
-          <div
-            key={t.planet}
-            className={`text-xs font-mono px-2 py-1 rounded ${
-              t.binduActive ? "bg-emerald-500/10 text-emerald-700" : "bg-red-500/10 text-red-700"
-            }`}
-          >
-            {t.planet} · {t.sign} k{t.kakshaIndex} ({t.kakshaLord})
-            {t.binduActive ? " ✓ bindu" : " ✗ no bindu"}
-          </div>
-        ))}
-      </div>
-      {favorable.length < block.transits.length ? (
-        <p className="text-[11px] text-amber-700">
-          Planets without kaksha bindu may under-deliver until entering a bindu-active kaksha.
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function AlternateDashasCard({ alt }: { alt: AlternateDashas }) {
-  const hasChara = alt.chara?.maha || alt.chara?.periods?.length;
-  const hasKala = alt.kalachakra?.maha || alt.kalachakra?.periods?.length;
-  const hasKaksha = alt.kaksha?.transits?.length;
-  if (!hasChara && !hasKala && !hasKaksha) return null;
-
-  return (
-    <Card className="p-5 space-y-4">
-      <SectionHeading>Jaimini &amp; Kaksha timing</SectionHeading>
-      <p className="text-xs text-text-muted">
-        Sign-based Chara and Kalachakra dashas (PyJHora) plus Kaksha bindu checks against natal prastara.
-      </p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {hasChara && alt.chara ? <SignDashaPanel title="Chara dasha" block={alt.chara} /> : null}
-        {hasKala && alt.kalachakra ? (
-          <SignDashaPanel title="Kalachakra dasha" block={alt.kalachakra} />
-        ) : null}
-      </div>
-      {hasKaksha && alt.kaksha ? <KakshaPanel block={alt.kaksha} /> : null}
-    </Card>
-  );
-}
-
-// ─── Knowledge Engine status ─────────────────────────────────────────────────
-
-function KnowledgeEngineStrip({
-  ke,
-  graphStats,
-  narrationBlocked,
-}: {
-  ke?: KnowledgeEngineHealth | null;
-  graphStats?: GraphEnhancements["graph_stats"];
-  narrationBlocked?: string[];
-}) {
-  if (!ke && !graphStats) return null;
-
-  const healthy = ke?.healthy ?? true;
-  const invalidated = ke?.invalidated_count ?? 0;
-  const blockedSources = narrationBlocked ?? [];
-  const showInvalidations = invalidated > 0 || blockedSources.length > 0;
-
-  return (
-    <div
-      className={`rounded-lg border px-3 py-2.5 space-y-2 ${
-        healthy ? "border-indigo-500/25 bg-indigo-500/5" : "border-amber-500/40 bg-amber-500/5"
-      }`}
-    >
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="font-mono uppercase tracking-wider text-indigo-600/90">KnowledgeEngine</span>
-        {ke?.version ? (
-          <span className="font-mono text-text-muted">{ke.version}</span>
-        ) : null}
-        <span
-          className={`px-1.5 py-0.5 rounded font-mono ${
-            healthy ? "bg-emerald-500/10 text-emerald-700" : "bg-amber-500/15 text-amber-800"
-          }`}
-        >
-          {healthy ? "healthy" : "degraded"}
-        </span>
-        {graphStats ? (
-          <span className="font-mono text-text-muted/80">
-            {graphStats.nodes.toLocaleString()} nodes · {graphStats.links.toLocaleString()} links
-            {graphStats.source_files ? ` · ${graphStats.source_files} texts` : ""}
-          </span>
-        ) : null}
-        {ke?.registered_engines?.length ? (
-          <span className="text-text-muted/70">
-            engines: {ke.registered_engines.join(", ")}
-          </span>
-        ) : null}
-      </div>
-
-      {showInvalidations ? (
-        <div className="space-y-1.5 pt-1 border-t border-hairline/60">
-          <p className="text-[10px] font-mono uppercase tracking-wider text-amber-700">
-            Blocked / invalidated knowledge
-          </p>
-          {invalidated > 0 ? (
-            <div className="flex flex-wrap gap-1">
-              {ke!.invalidated_nodes?.slice(0, 8).map((id) => (
-                <span
-                  key={id}
-                  className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-800 border border-amber-500/20"
-                >
-                  {id}
-                </span>
-              ))}
-              {invalidated > 8 ? (
-                <span className="text-[10px] font-mono text-text-muted">
-                  +{invalidated - 8} more
-                </span>
-              ) : null}
-            </div>
-          ) : null}
-          {blockedSources.length > 0 ? (
-            <p className="text-[11px] text-text-muted">
-              Narration excluded:{" "}
-              <span className="font-mono text-amber-800">{blockedSources.join(", ")}</span>
-            </p>
-          ) : null}
-        </div>
-      ) : (
-        <p className="text-[11px] text-text-muted">
-          All graph sources active — no invalidated nodes in this report context.
-        </p>
-      )}
-    </div>
-  );
-}
-
-// ─── God-node relevance chart ────────────────────────────────────────────────
-
-function GodNodeRelevanceChart({ nodes }: { nodes: GodNodeInsight[] }) {
-  if (!nodes.length) return null;
-  const maxDegree = Math.max(...nodes.map((n) => n.degree ?? 0), 1);
-
-  return (
-    <div className="space-y-2">
-      <h4 className="text-xs font-mono uppercase text-text-muted">Concept centrality in graph</h4>
-      <div className="space-y-1.5">
-        {nodes.slice(0, 6).map((g) => {
-          const pct = ((g.degree ?? 0) / maxDegree) * 100;
-          return (
-            <div key={g.god_node} className="flex items-center gap-2 text-xs font-mono">
-              <span className="w-28 shrink-0 truncate text-text-main" title={g.god_node}>
-                {g.god_node}
-              </span>
-              <div className="flex-1 h-2.5 bg-hairline/40 rounded-sm overflow-hidden">
-                <div
-                  className="h-full rounded-sm bg-indigo-500/70 transition-all"
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
-              <span className="w-8 text-right tabular-nums text-text-muted">{g.degree ?? 0}</span>
-              {g.community != null ? (
-                <span className="w-10 text-right text-[10px] text-text-muted/60">c{g.community}</span>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
-      <p className="text-[10px] text-text-muted">
-        Degree = how connected this concept is in the classical corpus; higher bars mean richer cross-text linkage for this chart.
-      </p>
-    </div>
-  );
-}
-
-// ─── Classical contradictions ────────────────────────────────────────────────
-
-function TextConflictsPanel({ conflicts }: { conflicts: TextConflict[] }) {
-  if (!conflicts.length) return null;
-
-  return (
-    <div className="space-y-2 rounded-lg border border-amber-500/25 bg-amber-500/5 p-3">
-      <h4 className="text-xs font-mono uppercase text-amber-800">
-        Classical contradictions ({conflicts.length})
-      </h4>
-      <p className="text-[11px] text-text-muted">
-        Authorities disagree on related topics in this chart — weigh both views before acting on a single citation.
-      </p>
-      <ul className="space-y-2">
-        {conflicts.slice(0, 5).map((c, i) => (
-          <li key={i} className="text-xs space-y-0.5">
-            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-              <span className="font-medium text-text-main line-clamp-2">{c.source}</span>
-              <span className="text-amber-700 font-mono text-[10px]">vs</span>
-              <span className="font-medium text-text-main line-clamp-2">{c.target}</span>
-            </div>
-            {c.source_file ? (
-              <p className="text-[10px] font-mono text-text-muted">{c.source_file}</p>
-            ) : null}
-          </li>
-        ))}
-      </ul>
-      {conflicts.length > 5 ? (
-        <p className="text-[10px] font-mono text-text-muted">+ {conflicts.length - 5} more conflicts in corpus</p>
-      ) : null}
-    </div>
-  );
-}
-
-// ─── Classical graph citations ───────────────────────────────────────────────
-
-function ClassicalSourcesCard({
-  graph,
-  ke,
-  narrationBlocked,
-}: {
-  graph: GraphEnhancements;
-  ke?: KnowledgeEngineHealth | null;
-  narrationBlocked?: string[];
-}) {
-  const yogaCites = graph.yoga_citations ?? [];
-  const natalInsights = graph.natal_insights ?? [];
-  const godNodes = graph.god_node_insights ?? [];
-  const textConflicts = graph.text_conflicts ?? [];
-  const natalMatches = natalInsights.flatMap((n) => n.graph_matches ?? []).slice(0, 4);
-
-  if (!yogaCites.length && !natalMatches.length && !godNodes.length && !textConflicts.length) {
-    return null;
-  }
-
-  return (
-    <Card className="p-5 space-y-4 border border-indigo-500/20">
-      <SectionHeading>Classical sources (GraphRAG)</SectionHeading>
-
-      <KnowledgeEngineStrip
-        ke={ke}
-        graphStats={graph.graph_stats}
-        narrationBlocked={narrationBlocked}
-      />
-
-      {textConflicts.length > 0 ? <TextConflictsPanel conflicts={textConflicts} /> : null}
-
-      {godNodes.length > 0 ? <GodNodeRelevanceChart nodes={godNodes} /> : null}
-
-      {yogaCites.length > 0 ? (
-        <div className="space-y-3">
-          <h4 className="text-xs font-mono uppercase text-text-muted">Yoga definitions</h4>
-          {yogaCites.slice(0, 5).map((y) => (
-            <div key={y.yoga} className="space-y-0.5">
-              <p className="text-sm font-semibold">{y.label || y.yoga}</p>
-              {y.descriptions?.[0] ? (
-                <p className="text-xs text-text-muted leading-relaxed">{y.descriptions[0]}</p>
-              ) : null}
-              {y.source_file ? (
-                <p className="text-[10px] font-mono text-indigo-600/80">{y.source_file}</p>
-              ) : null}
-            </div>
-          ))}
-        </div>
-      ) : null}
-
-      {natalMatches.length > 0 ? (
-        <div className="space-y-2">
-          <h4 className="text-xs font-mono uppercase text-text-muted">Natal corpus matches</h4>
-          <ul className="text-xs text-text-main space-y-1.5 list-disc pl-4">
-            {natalMatches.map((m) => (
-              <li key={m.id}>
-                {m.label}
-                {m.source_file ? (
-                  <span className="text-text-muted font-mono ml-1">· {m.source_file}</span>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-
-      {godNodes.length > 0 ? (
-        <div className="space-y-2">
-          <h4 className="text-xs font-mono uppercase text-text-muted">Key concepts in this chart</h4>
-          {godNodes.slice(0, 3).map((g) => (
-            <div key={g.god_node} className="text-xs">
-              <p className="font-medium text-text-main">{g.god_node}</p>
-              {g.connected_concepts?.[0] ? (
-                <p className="text-text-muted mt-0.5 line-clamp-2">{g.connected_concepts[0]}</p>
-              ) : null}
-            </div>
-          ))}
-        </div>
-      ) : null}
-    </Card>
-  );
-}
-
-// ─── Root component ──────────────────────────────────────────────────────────
+// ─── Root: 8 FULL chapters, nav, sources, ke per section ─────────────────────
 
 export function HoroscopeReport({
   defaults,
@@ -971,92 +513,161 @@ export function HoroscopeReport({
   error: string | null;
 }) {
   if (error) {
-    return (
-      <Card className="p-6 border-danger/40">
-        <p className="text-sm text-danger">{error}</p>
-      </Card>
-    );
+    return <Card className="p-6 border-danger/40"><p className="text-sm text-danger">{error}</p></Card>;
   }
   if (!report) return null;
 
-  const di = report.dasha_intelligence;
-  const ti = report.transit_intelligence;
+  const hasKaksha = !!(report as any)?.dashas?.kaksha;
+  const hasChara = !!(report as any)?.dashas?.chara;
+  const hasKalachakra = !!(report as any)?.dashas?.kalachakra;
+
+  const alternateDashas: string[] = [];
+  if (hasKaksha) alternateDashas.push("ch9-kaksha");
+  if (hasChara) alternateDashas.push("ch10-chara");
+  if (hasKalachakra) alternateDashas.push("ch11-kalachakra");
+
+  const allChapters = [
+    "ch1-natal","ch2-yogas","ch3-akv","ch4-shadbala","ch5-timing",
+    "ch6-dasha","ch7-varsha","ch8-narration", ...alternateDashas
+  ];
+
   const tm = report.timing_merge;
+  const keVer = report.knowledge_engine?.version || "file-based";
+  const classSrc = report.classical_sources || {};
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="p-5 space-y-2">
-        <h2 className="font-[family-name:var(--font-display)] font-semibold text-lg">
-          Horoscope Report
-        </h2>
-        <p className="text-sm text-text-muted">
-          {defaults.name} · born {defaults.date} {defaults.time} · {defaults.place}
-        </p>
-        <p className="text-xs font-mono text-text-muted">
-          Judged for {report.meta.query_date} · {report.meta.ayanamsa} · {report.meta.engine}
-        </p>
-        {report.dashas.balanceAtBirth?.label ? (
-          <p className="text-sm font-mono pt-1">
-            Balance at birth:{" "}
-            <span className="text-accent">{report.dashas.balanceAtBirth.label}</span>
-          </p>
-        ) : null}
+    <div className="space-y-8">
+      <Card className="p-5 space-y-2 border border-hairline">
+        <h2 className="font-[family-name:var(--font-display)] font-semibold text-lg">Horoscope Report — Hiranya (Phases 9-12 complete)</h2>
+        <p className="text-sm text-text-muted">{defaults.name} · born {defaults.date} {defaults.time} · {defaults.place}</p>
+        <p className="text-xs font-mono text-text-muted">Judged {report.meta.query_date} · {report.meta.ayanamsa} · ke:{keVer}</p>
+        {report.dashas.balanceAtBirth?.label && <p className="text-sm font-mono pt-1">Balance: <span className="text-accent">{report.dashas.balanceAtBirth.label}</span></p>}
       </Card>
 
-      {/* Natal */}
-      <NatalCard report={report} />
+      {/* Updated chapter nav including alternate dashas */}
+      <div className="sticky top-0 z-10 bg-background/95 border-b border-hairline py-2">
+        <nav className="flex flex-wrap gap-1 text-xs font-mono">
+          {allChapters.map((id, i) => (
+            <a key={id} href={`#${id}`} className="px-2 py-1 rounded border border-hairline hover:bg-accent/10">
+              {i < 8 ? ["1.Natal+Panch", "2.Yogas(full)", "3.AKV(full SAV+BAV)", "4.Shadbala(7×6)", "5.Timing(merge+windows)", "6.Dasha(8AD+areas)", "7.Varshaphala", "8.Narration+KE"][i] : 
+              id === 'ch9-kaksha' ? "9.Kaksha Dasha" : 
+              id === 'ch10-chara' ? "10.Chara Dasha" : 
+              id === 'ch11-kalachakra' ? "11.Kalachakra Dasha" : ""}
+            </a>
+          ))}
+        </nav>
+      </div>
 
-      {/* Timing merge hero */}
-      {tm ? <TimingMergeCard tm={tm} /> : null}
+      {/* Ch1 */}
+      <div id="ch1-natal"><NatalCard report={report} />
+        {report.panchanga && <Card className="p-5 mt-3 border border-hairline"><SectionHeading>Panchanga</SectionHeading><div className="text-xs font-mono grid grid-cols-5 gap-1">{Object.keys(report.panchanga).map(k=><span key={k}>{k}:{(report.panchanga as any)[k]?.name||""}</span>)}</div><p className="text-[10px] text-text-muted">drik+KE · ke:{keVer}</p></Card>}
+      </div>
 
-      {/* Dasha intelligence */}
-      {di ? <DashaIntelCard di={di} /> : null}
+      {/* Ch2 Yogas full */}
+      <div id="ch2-yogas">{report.yogas && <YogasCard yogas={report.yogas} />}<p className="text-[10px] px-1 font-mono text-text-muted">34 active on Mohan · yoga.py+KE Jataka/graph · {classSrc.yoga}</p></div>
 
-      {/* Transit intelligence */}
-      {ti ? (
-        <TransitIntelCard ti={ti} nextShubhDays={report.next_shubh_days} />
-      ) : null}
+      {/* Ch3 AKV full tables */}
+      <div id="ch3-akv">{report.ashtakavarga && <AshtakavargaCard akv={report.ashtakavarga} />}<p className="text-[10px] px-1 font-mono text-text-muted">SAV12 + 7BAV×12 + handbook · ke:{keVer} {classSrc.ashtakavarga}</p></div>
 
-      {/* Vimshottari ladder */}
-      <DashaLadderCard report={report} />
+      {/* Ch4 Shadbala */}
+      <div id="ch4-shadbala">{report.shadbala && <ShadbalaCard shadbala={report.shadbala} />}<p className="text-[10px] px-1 font-mono text-text-muted">7 planets, 6 comps + total_rupa · BPHS27 · ke:{keVer}</p></div>
 
-      {/* Chara / Kalachakra / Kaksha */}
-      {report.alternate_dashas ? (
-        <AlternateDashasCard alt={report.alternate_dashas} />
-      ) : null}
+      {/* Ch5 Timing */}
+      <div id="ch5-timing">{tm && <TimingMergeCard tm={tm} />}{report.next_shubh_days?.length ? <Card className="p-5 mt-3 border border-hairline"><SectionHeading>Next shubh</SectionHeading><div className="text-xs font-mono">{report.next_shubh_days.map((d:any)=>d.date).join(", ")}</div></Card> : null}<p className="text-[10px] px-1 font-mono text-text-muted">merged dasha+transit via KE · ke:{keVer}</p></div>
 
-      {/* Dasha forecast */}
-      {report.forecast?.length ? <ForecastCard periods={report.forecast} /> : null}
+      {/* Ch6 Dasha forecast */}
+      <div id="ch6-dasha">{report.forecast?.length && <ForecastCard periods={report.forecast} />}<p className="text-[10px] px-1 font-mono text-text-muted">next 8 AD + 5 area bullets · ke:{keVer} {classSrc.dasha}</p></div>
 
-      {/* Active yogas */}
-      {report.yogas ? <YogasCard yogas={report.yogas} /> : null}
-
-      {/* Ashtakavarga */}
-      {report.ashtakavarga ? <AshtakavargaCard akv={report.ashtakavarga} /> : null}
-
-      {/* Shadbala */}
-      {report.shadbala ? <ShadbalaCard shadbala={report.shadbala} /> : null}
-
-      {/* Graph-backed classical citations */}
-      {report.graph_enhancements ? (
-        <ClassicalSourcesCard
-          graph={report.graph_enhancements}
-          ke={report.knowledge_engine}
-          narrationBlocked={report.narration?.sources_blocked}
-        />
-      ) : report.knowledge_engine ? (
-        <Card className="p-5 space-y-3 border border-indigo-500/20">
-          <SectionHeading>Knowledge graph</SectionHeading>
-          <KnowledgeEngineStrip
-            ke={report.knowledge_engine}
-            narrationBlocked={report.narration?.sources_blocked}
-          />
+      {/* Ch7 Varshaphala */}
+      <div id="ch7-varsha">
+        <Card className="p-5 border border-hairline">
+          <SectionHeading>Varshaphala</SectionHeading>
+          {report.varshaphala?.muntha ? (
+            <>
+              <div className="text-sm font-mono">Muntha {report.varshaphala.muntha.sign} (yr{report.varshaphala.muntha.yearsElapsed})</div>
+              <p className="text-xs text-amber-700">{report.varshaphala.tier_note}</p>
+            </>
+          ) : (
+            <p className="text-xs text-text-muted">Solar return data not available for this chart.</p>
+          )}
         </Card>
-      ) : null}
+        <p className="text-[10px] px-1 font-mono text-text-muted">include_varshaphala wired · ke:{keVer}</p>
+      </div>
 
-      {/* LLM narration — routed through KnowledgeEngine (CVCE_LLM_NARRATION=1) */}
-      <NarrationCard narration={report.narration} error={report.narration_error} />
+      {/* Ch8 Narration + KE sources */}
+      <div id="ch8-narration">
+        <NarrationCard narration={report.narration} error={report.narration_error} />
+        {report.graph_enhancements || report.knowledge_engine ? (
+          <Card className="p-5 mt-3 border border-hairline">
+            <SectionHeading>KE + Classical sources</SectionHeading>
+            <KnowledgeEngineStrip ke={report.knowledge_engine} />
+            <p className="text-[10px] font-mono">yoga:{classSrc.yoga} dasha:{classSrc.dasha} akv:{classSrc.ashtakavarga}</p>
+          </Card>
+        ) : null}
+      </div>
+      
+      {/* Ch9 Kaksha Dasha */}
+      {hasKaksha && (
+        <div id="ch9-kaksha">
+          <Card className="p-5 border border-hairline">
+            <SectionHeading>Kaksha Dasha</SectionHeading>
+            <div className="text-xs font-mono">
+              {report.dashas.kaksha.periods.map((period: any, index: number) => (
+                <div key={index} className="border-b border-hairline/60 py-1">
+                  <div className="flex justify-between">
+                    <span>{period.lord}</span>
+                    <span>{period.start} → {period.end}</span>
+                  </div>
+                  {period.isCurrent && <span className="text-accent">Current</span>}
+                </div>
+              ))}
+            </div>
+            <p className="text-[10px] text-text-muted font-mono">Kaksha Dasha via BPHS · ke:{keVer}</p>
+          </Card>
+        </div>
+      )}
+      
+      {/* Ch10 Chara Dasha */}
+      {hasChara && (
+        <div id="ch10-chara">
+          <Card className="p-5 border border-hairline">
+            <SectionHeading>Chara Dasha</SectionHeading>
+            <div className="text-xs font-mono">
+              {report.dashas.chara.periods.map((period: any, index: number) => (
+                <div key={index} className="border-b border-hairline/60 py-1">
+                  <div className="flex justify-between">
+                    <span>{period.maha}/{period.antara}</span>
+                    <span>{period.start} → {period.end}</span>
+                  </div>
+                  {period.isCurrent && <span className="text-accent">Current</span>}
+                </div>
+              ))}
+            </div>
+            <p className="text-[10px] text-text-muted font-mono">Chara Dasha via Jaimini · ke:{keVer}</p>
+          </Card>
+        </div>
+      )}
+      
+      {/* Ch11 Kalachakra Dasha */}
+      {hasKalachakra && (
+        <div id="ch11-kalachakra">
+          <Card className="p-5 border border-hairline">
+            <SectionHeading>Kalachakra Dasha</SectionHeading>
+            <div className="text-xs font-mono">
+              {report.dashas.kalachakra.periods.map((period: any, index: number) => (
+                <div key={index} className="border-b border-hairline/60 py-1">
+                  <div className="flex justify-between">
+                    <span>{period.maha}/{period.antara}</span>
+                    <span>{period.start} → {period.end}</span>
+                  </div>
+                  {period.isCurrent && <span className="text-accent">Current</span>}
+                </div>
+              ))}
+            </div>
+            <p className="text-[10px] text-text-muted font-mono">Kalachakra Dasha via PVR · ke:{keVer}</p>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
