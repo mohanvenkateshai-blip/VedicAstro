@@ -29,7 +29,7 @@ const BOTTOM_TABS = [
 export function ChartSidebar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const qs = searchParams.toString();
+  const qs = searchParams?.toString() ?? "";
 
   return (
     <nav className="flex flex-col gap-0.5 w-56" aria-label="Chart analysis sections">
