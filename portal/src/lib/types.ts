@@ -461,6 +461,11 @@ export interface KalachakraLeapInfo {
   label: string;
   direction: "forward" | "backward";
   step: number;
+  /** false when this Gati's Frog/Lion/Monkey label isn't classically verified
+   * for the dhasa_method that produced it (e.g. Raghavacharya's navamsa
+   * method) — the geometric detection still applies, but BPHS Vol.2 Ch.46's
+   * naming is only established for the PVR/book method. */
+  verified?: boolean;
 }
 
 export interface KalachakraBirthNakshatra {
@@ -524,6 +529,16 @@ export interface KalachakraTimelineEntry {
   when: "past" | "current" | "future";
 }
 
+export interface KalachakraAlternateMethod {
+  method: string;
+  methodLabel: string;
+  gatisVerified: boolean;
+  currentLadder: KalachakraLadderRow[];
+  activeLeap: KalachakraLeapInfo | null;
+  dashaTree: KalachakraNode[];
+  leapTimeline: KalachakraTimelineEntry[];
+}
+
 export interface KalachakraDeepData {
   status: string;
   system: string;
@@ -536,6 +551,9 @@ export interface KalachakraDeepData {
   activeLeap?: KalachakraLeapInfo | null;
   dashaTree?: KalachakraNode[];
   leapTimeline?: KalachakraTimelineEntry[];
+  /** Raghavacharya (navamsa-based) method, computed alongside the primary
+   * PVR/book method for side-by-side comparison. */
+  alternateMethod?: KalachakraAlternateMethod | null;
   ke_version?: string | null;
   source_notes?: DashaGraphCitation[];
   graph_citations?: DashaGraphCitation[];

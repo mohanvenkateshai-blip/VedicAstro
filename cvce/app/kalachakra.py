@@ -212,7 +212,9 @@ def _query_jd_now() -> float:
     return query_jd_now()
 
 
-def running_ladder(jd: float, place, query_jd: float | None = None, depth: int = 3) -> list[dict]:
+def running_ladder(
+    jd: float, place, query_jd: float | None = None, depth: int = 3, dhasa_method: int = 1
+) -> list[dict]:
     """Running Kalachakra periods from Maha down to requested depth.
 
     get_running_dhasa_for_given_date(current_jd, jd_at_dob, place, ...) returns
@@ -235,7 +237,7 @@ def running_ladder(jd: float, place, query_jd: float | None = None, depth: int =
     }[depth]
 
     run = kala_mod.get_running_dhasa_for_given_date(
-        q_jd, jd, place, dhasa_level_index=depth_enum, dhasa_method=1
+        q_jd, jd, place, dhasa_level_index=depth_enum, dhasa_method=dhasa_method
     )
     rows = []
     for row in run or []:
@@ -280,6 +282,7 @@ def _subtree_from_flat(
     max_level: int,
     is_savya: bool,
     parent_sign: int | None,
+    gatis_verified: bool = True,
 ) -> list[dict]:
     """Build nested nodes, chronologically ordered, with leaps computed
     sibling-to-sibling within each parent group (not parent-to-child): the
@@ -289,6 +292,13 @@ def _subtree_from_flat(
     against the parent's own sign (PyJHora's AD/PD cycles are rotated to start
     at the parent's sign — a Deha/self-period), matching the classical
     "antardasha of the Mahadasha lord itself" convention.
+
+    gatis_verified=False marks leaps whose Frog/Lion/Monkey classification is
+    not backed by a classical citation for the dhasa_method in use — BPHS Vol.2
+    Ch.46 v.94-100 describes these three Gatis specifically for the PVR/book
+    nakshatra-pada model (dhasa_method=1); the geometric "non-adjacent
+    transition" detection is method-agnostic, but the *names* are not verified
+    for other methods (e.g. Raghavacharya's navamsa-based method=3).
     """
     if child_level > max_level:
         return []
@@ -317,6 +327,8 @@ def _subtree_from_flat(
         if prev_sign is not None:
             step = _signed_circular_step(prev_sign, sign)
             leap = _classify_transition(step, is_savya)
+            if leap is not None:
+                leap["verified"] = gatis_verified
         prev_sign = sign
         nodes.append(
             {
@@ -328,15 +340,30 @@ def _subtree_from_flat(
                 "durationYears": round(float(dur), 4),
                 "leapFromPrevious": leap,
                 "subPeriods": _subtree_from_flat(
-                    flat_periods, lords[:child_level], child_level + 1, max_level, is_savya, parent_sign=sign
+                    flat_periods,
+                    lords[:child_level],
+                    child_level + 1,
+                    max_level,
+                    is_savya,
+                    parent_sign=sign,
+                    gatis_verified=gatis_verified,
                 ),
             }
         )
     return nodes
 
 
-def kalachakra_tree(jd: float, place, dob, tob, is_savya: bool, max_level: int = 3) -> list[dict]:
-    """3-level MD -> AD -> PD nested tree, leap-flagged."""
+def kalachakra_tree(
+    jd: float, place, dob, tob, is_savya: bool, max_level: int = 3, dhasa_method: int = 1
+) -> list[dict]:
+    """3-level MD -> AD -> PD nested tree, leap-flagged.
+
+    dhasa_method=1 (PVR/book, default) matches BPHS Vol.2 Ch.46's Gati
+    definitions exactly. dhasa_method=3 (Raghavacharya, navamsa-based) is
+    computed identically but its Frog/Lion/Monkey labels are marked
+    unverified (see _subtree_from_flat) since that classical mapping isn't
+    established for this method.
+    """
     from jhora import const
     from jhora.horoscope.dhasa.raasi import kalachakra as kala_mod
 
@@ -347,8 +374,10 @@ def kalachakra_tree(jd: float, place, dob, tob, is_savya: bool, max_level: int =
         3: const.MAHA_DHASA_DEPTH.PRATYANTARA,
     }[max_level]
 
-    rows = kala_mod.get_dhasa_bhukthi(dob, tob, place, dhasa_level_index=depth_enum, dhasa_method=1)
-    return _subtree_from_flat(rows or [], (), 1, max_level, is_savya, parent_sign=None)
+    rows = kala_mod.get_dhasa_bhukthi(dob, tob, place, dhasa_level_index=depth_enum, dhasa_method=dhasa_method)
+    return _subtree_from_flat(
+        rows or [], (), 1, max_level, is_savya, parent_sign=None, gatis_verified=(dhasa_method == 1)
+    )
 
 
 def leap_timeline(tree: list[dict]) -> list[dict]:
@@ -441,11 +470,13 @@ def _active_leap_from_tree(tree: list[dict], today: str) -> dict | None:
     return None
 
 
-def current_state_payload(jd: float, place, tree: list[dict], query_jd: float | None = None) -> dict:
+def current_state_payload(
+    jd: float, place, tree: list[dict], query_jd: float | None = None, dhasa_method: int = 1
+) -> dict:
     q_jd = query_jd if query_jd is not None else _query_jd_now()
     birth_info = birth_nakshatra_info(jd, place)
     cycle = kalachakra_cycle(birth_info["kcIndex"], birth_info["padaIndex"])
-    ladder = running_ladder(jd, place, query_jd=q_jd, depth=3)
+    ladder = running_ladder(jd, place, query_jd=q_jd, depth=3, dhasa_method=dhasa_method)
     active_leap = _active_leap_from_tree(tree, date.today().isoformat())
 
     return {
@@ -456,28 +487,61 @@ def current_state_payload(jd: float, place, tree: list[dict], query_jd: float | 
     }
 
 
+def _method_block(jd, place, dob, tob, is_savya: bool, dhasa_method: int, query_jd: float) -> dict:
+    tree = kalachakra_tree(jd, place, dob, tob, is_savya=is_savya, max_level=3, dhasa_method=dhasa_method)
+    state = current_state_payload(jd, place, tree, query_jd=query_jd, dhasa_method=dhasa_method)
+    timeline = leap_timeline(tree)
+    return {
+        "currentLadder": state["currentLadder"],
+        "activeLeap": state["activeLeap"],
+        "dashaTree": tree,
+        "leapTimeline": timeline,
+    }
+
+
 def kalachakra_deep_payload(jd: float, place, dob, tob, query_jd: float | None = None) -> dict:
-    """Canonical /kalachakra-deep response."""
+    """Canonical /kalachakra-deep response.
+
+    Computes both dhasa_method=1 (PVR/book — matches BPHS Vol.2 Ch.46's Gati
+    definitions, the primary result) and dhasa_method=3 (Raghavacharya,
+    navamsa-based) as `alternateMethod`, so the two can be compared. The
+    primary method's Deha/Jeeva/cycle wheel (nakshatra-pada derived) is shared
+    by both, since that concept is defined independently of which method
+    computes the Antardasha/Pratyantardasha sequence.
+    """
     try:
         q_jd = query_jd if query_jd is not None else _query_jd_now()
         birth_info = birth_nakshatra_info(jd, place)
         is_savya = birth_info["isSavya"]
-        tree = kalachakra_tree(jd, place, dob, tob, is_savya=is_savya, max_level=3)
-        state = current_state_payload(jd, place, tree, query_jd=q_jd)
-        timeline = leap_timeline(tree)
+        cycle = kalachakra_cycle(birth_info["kcIndex"], birth_info["padaIndex"])
+
+        primary = _method_block(jd, place, dob, tob, is_savya, dhasa_method=1, query_jd=q_jd)
         balance = _balance_of_first_dasha(jd, place)
+
+        alternate = None
+        try:
+            alt = _method_block(jd, place, dob, tob, is_savya, dhasa_method=3, query_jd=q_jd)
+            alternate = {
+                "method": "raghavacharya",
+                "methodLabel": "Raghavacharya (navamsa-based, JHora)",
+                "gatisVerified": False,
+                **alt,
+            }
+        except Exception:
+            alternate = None
 
         return {
             "status": "active",
             "system": "kalachakra",
-            "method": "Kalachakra Dasha — 86y nakshatra-pada wheel (BPHS Vol.2 Ch.46/49)",
-            "birthNakshatra": state["birthNakshatra"],
-            "cycle": state["cycle"],
+            "method": "Kalachakra Dasha — 86y nakshatra-pada wheel (BPHS Vol.2 Ch.46/49) — PVR/book method",
+            "birthNakshatra": birth_info,
+            "cycle": cycle,
             "balanceOfFirstDasha": balance,
-            "currentLadder": state["currentLadder"],
-            "activeLeap": state["activeLeap"],
-            "dashaTree": tree,
-            "leapTimeline": timeline,
+            "currentLadder": primary["currentLadder"],
+            "activeLeap": primary["activeLeap"],
+            "dashaTree": primary["dashaTree"],
+            "leapTimeline": primary["leapTimeline"],
+            "alternateMethod": alternate,
             "ke_version": _kala_cache.get("ke_version"),
             "source_notes": _kala_cache.get("source_notes", []),
             "graph_citations": _kala_cache.get("source_notes", []),
