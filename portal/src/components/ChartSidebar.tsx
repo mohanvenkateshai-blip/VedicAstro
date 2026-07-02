@@ -18,6 +18,7 @@ const TABS = [
   { id: "graha", label: "Graha Explorer", icon: CircleDot, href: "/chart/graha", engine: "Graha Phala" },
   { id: "special", label: "Special Points", icon: Target, href: "/chart/special", engine: "Special Points" },
   { id: "kp", label: "KP System", icon: Crosshair, href: "/chart/kp", engine: "KP Engine" },
+  { id: "kalachakra", label: "Kalachakra Dasha", icon: Target, href: "/chart/kalachakra", engine: "Kalachakra" },
   { id: "varshaphala", label: "Solar Return", icon: Sun, href: "/chart/varshaphala", engine: "Varshaphala" },
 ];
 
