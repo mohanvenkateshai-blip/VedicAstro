@@ -581,7 +581,6 @@ def build_report_facts(
             })()
             varshaphala_data = _varsha_endpoint(vreq)
             if varshaphala_data:
-                varshaphala_data["tier_note"] = "Pro tier recommended for full annual chart depth"
                 # Attach KE chapter if available
                 try:
                     from knowledge_engine.integration import get_structured_book
@@ -591,7 +590,7 @@ def build_report_facts(
                 except Exception:
                     pass
         except Exception:
-            varshaphala_data = {"error": "varshaphala computation unavailable", "tier_note": "Basic solar return only"}
+            varshaphala_data = {"error": "varshaphala computation unavailable"}
 
     # --- Timing merge ---
     timing_merge = _compute_timing_merge(dasha_intel, transit_intel)

@@ -583,10 +583,7 @@ export function HoroscopeReport({
         <Card className="p-5 border border-hairline">
           <SectionHeading>Varshaphala</SectionHeading>
           {report.varshaphala?.muntha ? (
-            <>
-              <div className="text-sm font-mono">Muntha {report.varshaphala.muntha.sign} (yr{report.varshaphala.muntha.yearsElapsed})</div>
-              <p className="text-xs text-amber-700">{report.varshaphala.tier_note}</p>
-            </>
+            <div className="text-sm font-mono">Muntha {report.varshaphala.muntha.sign} (yr{report.varshaphala.muntha.yearsElapsed})</div>
           ) : (
             <p className="text-xs text-text-muted">Solar return data not available for this chart.</p>
           )}

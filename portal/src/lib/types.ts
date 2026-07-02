@@ -599,7 +599,6 @@ export interface ReportFacts {
     year?: number;
     lagna?: string;
     muntha?: { sign?: string; yearsElapsed?: number } | null;
-    tier_note?: string;
     planets?: any[];
     yogas?: any[];
   } | null;
