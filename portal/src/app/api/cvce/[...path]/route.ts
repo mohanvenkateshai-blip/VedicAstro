@@ -34,7 +34,9 @@ const KNOWLEDGE_PREFIX = "knowledge/";
 
 const REPORT_FACTS_PREFIX = "report/facts";
 
-const SERVER_TIMEOUT_MS = 120_000;
+// Must stay comfortably under `maxDuration` (60s) — Vercel kills the function
+// outright (raw 502, bypassing our catch block) if we let fetch run past that.
+const SERVER_TIMEOUT_MS = 50_000;
 
 // Module-level cache for KE version (populated from remote /version or payloads)
 let cachedKeVersion: string | null = null;
