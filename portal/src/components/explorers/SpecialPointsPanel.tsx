@@ -13,9 +13,11 @@ interface SpecialPoint {
 }
 
 interface SpecialPointsResponse {
-  mandi?: SpecialPoint;
-  gulika?: SpecialPoint;
-  bhrigu_bindu?: SpecialPoint;
+  points?: {
+    mandi?: SpecialPoint;
+    gulika?: SpecialPoint;
+    bhriguBindu?: SpecialPoint;
+  };
 }
 
 const DESCRIPTIONS: Record<string, string> = {
@@ -69,9 +71,9 @@ export function SpecialPointsPanel({ chart }: { chart: ChartData | undefined }) 
   }, [chart?.meta?.birth_datetime, chart?.meta?.birth_lat, chart?.meta?.birth_lon, chart?.meta?.birth_tz]);
 
   const points: { key: string; point: SpecialPoint | undefined }[] = [
-    { key: "Mandi", point: data?.mandi },
-    { key: "Gulika", point: data?.gulika },
-    { key: "Bhrigu Bindu", point: data?.bhrigu_bindu },
+    { key: "Mandi", point: data?.points?.mandi },
+    { key: "Gulika", point: data?.points?.gulika },
+    { key: "Bhrigu Bindu", point: data?.points?.bhriguBindu },
   ];
 
   if (state === "idle") {
