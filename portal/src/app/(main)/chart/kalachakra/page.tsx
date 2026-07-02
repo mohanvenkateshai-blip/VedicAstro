@@ -1,7 +1,7 @@
 import { loadChartFromSearchParams } from "@/lib/load-chart";
 import { Card } from "@/components/ui/Card";
 import { KalachakraDasha } from "@/components/dashas/KalachakraDasha";
-import { postCvce } from "@/lib/cvce-client";
+import { getKalachakraDasha } from "@/lib/cvce";
 import type { SignDashaBlock } from "@/lib/types";
 
 type SP = Record<string, string | string[] | undefined>;
@@ -18,12 +18,7 @@ export default async function KalachakraDashaPage({
 
   if (chart && birth) {
     try {
-      const json = await postCvce<any>("kalachakra-dasha", {
-        birth_datetime: birth.birth_datetime,
-        birth_lat: birth.birth_lat,
-        birth_lon: birth.birth_lon,
-        birth_tz: birth.birth_tz,
-      });
+      const json = (await getKalachakraDasha(birth)) as any;
       if (json && json.periods) {
         kalaData = {
           maha: json.maha,

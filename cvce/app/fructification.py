@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from vedic_engine.core.astronomy import all_positions, ascendant, julian_day, lahiri_ayanamsha
+from vedic_engine.core.astronomy import all_positions, ascendant, julian_day_ut, lahiri_ayanamsha
 from vedic_engine.rules.transit_rules import GOCHARA_VEDHA, TRANSIT_HOUSES, VEDHA_EXEMPT_PAIRS
 
 # ── Constants ────────────────────────────────────────────────────────────────
@@ -221,7 +221,7 @@ def _sweep_months(
     end_m = date(end.year, end.month, 1)
 
     while cur <= end_m:
-        jd = julian_day(cur.year, cur.month, cur.day, 12.0 - tz)
+        jd = julian_day_ut(cur.year, cur.month, cur.day, 12.0 - tz)
         all_pos = all_positions(jd)
         planet_signs: dict[str, int] = {p: _sign(lon_) for p, lon_ in all_pos.items()}
 
@@ -425,7 +425,7 @@ def fructify(
     birth_date_obj = birth_dt.date()
     birth_hour = birth_dt.hour + birth_dt.minute / 60.0 + birth_dt.second / 3600.0
 
-    jd = julian_day(birth_dt.year, birth_dt.month, birth_dt.day, birth_hour - birth_tz)
+    jd = julian_day_ut(birth_dt.year, birth_dt.month, birth_dt.day, birth_hour - birth_tz)
 
     # Natal positions
     natal_pos = all_positions(jd)

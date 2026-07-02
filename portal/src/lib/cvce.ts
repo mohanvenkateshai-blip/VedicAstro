@@ -216,6 +216,20 @@ export async function getMuhurta(
   return { chart, prediction, windows, query };
 }
 
+/** Kalachakra Dasha — 86-year sign-based cycle with deha/jeeva and citations. */
+export async function getKalachakraDasha(birth: BirthInput): Promise<unknown> {
+  return post<unknown>(
+    "/kalachakra-dasha",
+    {
+      birth_datetime: birth.birth_datetime,
+      birth_lat: birth.birth_lat,
+      birth_lon: birth.birth_lon,
+      birth_tz: birth.birth_tz,
+    },
+    60 * 60 * 24,
+  );
+}
+
 export async function getHealth(): Promise<{ status: string; engine: string } | null> {
   try {
     const res = await fetch(`${CVCE_BASE_URL}/health`, {
