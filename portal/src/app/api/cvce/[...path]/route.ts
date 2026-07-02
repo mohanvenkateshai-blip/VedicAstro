@@ -19,6 +19,7 @@ const CVCE_BASE_URL =
     "gochar",
     "kp-system",
     "varshaphala",
+    "kalachakra-dasha",
     "koota-match",
     "positions",
     "yogas",
