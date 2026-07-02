@@ -108,6 +108,7 @@ def compute_kalachakra_dasha(birth_datetime: str, birth_lat: float, birth_lon: f
         pass
 
     periods: list[dict] = []
+    calc_error = None
     try:
         rows = kala_mod.get_dhasa_bhukthi(
             dob, tob, place, dhasa_level_index=const.MAHA_DHASA_DEPTH.ANTARA, dhasa_method=1
@@ -128,8 +129,8 @@ def compute_kalachakra_dasha(birth_datetime: str, birth_lat: float, birth_lon: f
                 )
             except Exception:
                 continue
-    except Exception:
-        pass
+    except Exception as e:
+        calc_error = str(e)[:200]
 
     lagna_sign = None
     try:
@@ -150,6 +151,17 @@ def compute_kalachakra_dasha(birth_datetime: str, birth_lat: float, birth_lon: f
             deha_jeeva = {"note": "Deha/Jeeva from Moon nakshatra-pada wheel (BPHS Vol2)"}
     except Exception:
         pass
+
+    if not periods and calc_error:
+        # Graceful fallback so UI never shows a hard error for edge-case charts
+        return {
+            "status": "error",
+            "system": "kalachakra",
+            "error": calc_error,
+            "method": "Kalachakra Dasha 86y cycle (BPHS Vol.2 / Phaladeepika / Deva Keralam)",
+            "periods": [],
+            "ke_version": _kala_cache.get("ke_version"),
+        }
 
     payload = {
         "status": "active",

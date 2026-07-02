@@ -67,6 +67,11 @@ export default async function KalachakraDashaPage({
             No birth data in the URL. Go to <strong>Chart Overview</strong>, enter birth details and Compute, then switch to the Kalachakra Dasha tab.
           </p>
         </Card>
+      ) : kalaData && (kalaData as any).status === "error" ? (
+        <Card className="p-6 border border-amber-500/40">
+          <p className="text-sm text-amber-600">Kalachakra calculation unavailable for this chart.</p>
+          <p className="text-xs text-text-muted mt-1 font-mono">{(kalaData as any).error}</p>
+        </Card>
       ) : (
         <KalachakraDasha data={kalaData} />
       )}
