@@ -1658,6 +1658,8 @@ class SpecialPointsResponse(BaseModel):
 @app.post("/special-points")
 def special_points(req: BirthRequest):
     """Compute Mandi, Gulika, Bhrigu Bindu, and other special lagna points."""
+    from jhora.panchanga.drik import Date, maandi_longitude, gulika_longitude
+
     set_ayanamsa(req.ayanamsa)
     dt = parse_dt(req.birth_datetime)
     jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
@@ -1679,23 +1681,21 @@ def special_points(req: BirthRequest):
             "degLabel": f"{dd}°{mm:02d}′",
         }
 
-    # Mandi (Maandi / Gulika's son — computed from weekday-based Saturn portion)
-    try:
-        from jhora.panchanga.drik import mandi_kaalam
+    # Maandi and Gulika — Upagraha longitudes (Saturn's portion of the day),
+    # not the *_kaalam time-window helpers (those return start/end times, not
+    # a zodiacal longitude).
+    dob = Date(dt.year, dt.month, dt.day)
+    tob = (dt.hour, dt.minute, dt.second + dt.microsecond / 1e6)
 
-        md = mandi_kaalam(jd, place)
-        if md and isinstance(md, (list, tuple)):
-            results["mandi"] = split_lon("Mandi (Maandi)", float(md[0]))
+    try:
+        sign_idx, deg_in_sign = maandi_longitude(dob, tob, place)
+        results["mandi"] = split_lon("Mandi (Maandi)", sign_idx * 30 + deg_in_sign)
     except Exception:
         results["mandi"] = None
 
-    # Gulika
     try:
-        from jhora.panchanga.drik import gulikai_kaalam
-
-        gk = gulikai_kaalam(jd, place)
-        if gk and isinstance(gk, (list, tuple)):
-            results["gulika"] = split_lon("Gulika", float(gk[0]))
+        sign_idx, deg_in_sign = gulika_longitude(dob, tob, place)
+        results["gulika"] = split_lon("Gulika", sign_idx * 30 + deg_in_sign)
     except Exception:
         results["gulika"] = None
 
