@@ -14,6 +14,7 @@ import type {
   DashaPredictions,
   DayWindows,
   GraphEnhancements,
+  KalachakraDeepData,
   MuhurtaResult,
   ReportFacts,
 } from "./types";
@@ -228,6 +229,37 @@ export async function getKalachakraDasha(birth: BirthInput): Promise<unknown> {
     },
     60 * 60 * 24,
   );
+}
+
+/**
+ * Kalachakra Dasha — rich view: Deha/Jeeva Rasi, the 9-sign cycle with Gati
+ * (leap) flags, current MD/AD/PD ladder, the active leap (if any), a 3-level
+ * MD->AD->PD tree, and a chronological leap timeline (past/current/future).
+ */
+export async function getKalachakraDeep(birth: BirthInput): Promise<KalachakraDeepData> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20_000);
+  try {
+    const res = await fetch(`${CVCE_BASE_URL}/kalachakra-deep`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        birth_datetime: birth.birth_datetime,
+        birth_lat: birth.birth_lat,
+        birth_lon: birth.birth_lon,
+        birth_tz: birth.birth_tz,
+      }),
+      signal: controller.signal,
+      cache: "no-store",
+    });
+    if (!res.ok) throw new CvceError(`Engine error for /kalachakra-deep`);
+    return (await res.json()) as KalachakraDeepData;
+  } catch (e) {
+    if (e instanceof CvceError) throw e;
+    throw new CvceError("Kalachakra engine unavailable");
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export async function getHealth(): Promise<{ status: string; engine: string } | null> {

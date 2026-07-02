@@ -453,6 +453,94 @@ export interface DashaDeepData {
   dashaTree: DashaNode[];
 }
 
+// ── Kalachakra Dasha (86y nakshatra-pada wheel; BPHS Vol.2 Ch.46/49) ────────
+
+export interface KalachakraLeapInfo {
+  isLeap: true;
+  type: "frog_leap" | "lions_leap" | "monkey_leap";
+  label: string;
+  direction: "forward" | "backward";
+  step: number;
+}
+
+export interface KalachakraBirthNakshatra {
+  moonLongitude: number;
+  nakshatra: string;
+  nakshatraIndex: number;
+  pada: number;
+  padaIndex: number;
+  remainderDeg: number;
+  kcIndex: number;
+  kcGroupName: string;
+  direction: string;
+  isSavya: boolean;
+}
+
+export interface KalachakraCycleSign {
+  index: number;
+  sign: string;
+  signIndex: number;
+  years: number;
+  leapFromPrevious: KalachakraLeapInfo | null;
+}
+
+export interface KalachakraCycle {
+  kcIndex: number;
+  padaIndex: number;
+  signs: KalachakraCycleSign[];
+  totalYears: number;
+  dehaRasi: string;
+  jeevaRasi: string;
+  hasActiveLeap: boolean;
+}
+
+export interface KalachakraLadderRow {
+  level: number;
+  levelLabel: string;
+  sign: string;
+  signIndex: number;
+  signs: string[];
+  start: string;
+  end: string;
+}
+
+export interface KalachakraNode {
+  level: number;
+  sign: string;
+  signIndex: number;
+  start: string;
+  end?: string;
+  durationYears: number;
+  leapFromPrevious: KalachakraLeapInfo | null;
+  subPeriods: KalachakraNode[];
+}
+
+export interface KalachakraTimelineEntry {
+  level: number;
+  sign: string;
+  start: string;
+  end: string;
+  leap: KalachakraLeapInfo;
+  when: "past" | "current" | "future";
+}
+
+export interface KalachakraDeepData {
+  status: string;
+  system: string;
+  method: string;
+  error?: string;
+  birthNakshatra?: KalachakraBirthNakshatra;
+  cycle?: KalachakraCycle;
+  balanceOfFirstDasha?: { actual: number | null; simplifiedEstimate: number | null };
+  currentLadder?: KalachakraLadderRow[];
+  activeLeap?: KalachakraLeapInfo | null;
+  dashaTree?: KalachakraNode[];
+  leapTimeline?: KalachakraTimelineEntry[];
+  ke_version?: string | null;
+  source_notes?: DashaGraphCitation[];
+  graph_citations?: DashaGraphCitation[];
+}
+
 export interface DashaIntelligence {
   maha_lord: string;
   antar_lord: string;

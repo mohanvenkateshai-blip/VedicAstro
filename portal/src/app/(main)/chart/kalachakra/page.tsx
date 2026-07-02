@@ -1,8 +1,8 @@
 import { loadChartFromSearchParams } from "@/lib/load-chart";
 import { Card } from "@/components/ui/Card";
-import { KalachakraDasha } from "@/components/dashas/KalachakraDasha";
-import { getKalachakraDasha } from "@/lib/cvce";
-import type { SignDashaBlock } from "@/lib/types";
+import { KalachakraDashboard } from "@/components/dashas/kalachakra/KalachakraDashboard";
+import { getKalachakraDeep } from "@/lib/cvce";
+import type { KalachakraDeepData } from "@/lib/types";
 
 type SP = Record<string, string | string[] | undefined>;
 
@@ -14,23 +14,11 @@ export default async function KalachakraDashaPage({
   const sp = await searchParams;
   const { chart, birth, error } = await loadChartFromSearchParams(sp);
 
-  let kalaData: SignDashaBlock | null = null;
+  let kalaData: KalachakraDeepData | null = null;
 
   if (chart && birth) {
     try {
-      const json = (await getKalachakraDasha(birth)) as any;
-      if (json && json.periods) {
-        kalaData = {
-          maha: json.maha,
-          antara: json.antara,
-          mahaStart: json.mahaStart,
-          mahaEnd: json.mahaEnd,
-          periods: json.periods,
-          dehaJeeva: json.dehaJeeva,
-          graph_citations: json.graph_citations,
-          ke_version: json.ke_version,
-        } as any;
-      }
+      kalaData = await getKalachakraDeep(birth);
     } catch {
       kalaData = null;
     }
@@ -43,10 +31,10 @@ export default async function KalachakraDashaPage({
           Kalachakra Dasha
         </h2>
         <p className="text-sm text-text-muted mt-1">
-          86-year sign-based cycle (BPHS Vol.2 / Phaladeepika / Deva Keralam) — Moon nakshatra-pada wheel with Deha/Jeeva.
+          86-year sign-based cycle (BPHS Vol.2 Ch.46/49) — Moon nakshatra-pada wheel with Deha/Jeeva and the three Gatis.
         </p>
         <p className="text-xs text-amber-400 mt-1">
-          Includes current maha/antara, full period list, Deha/Jeeva notes, and classical graph citations.
+          Includes the current Mahadasha → Antardasha → Pratyantardasha ladder, the full leap-flagged tree, and a past/future leap timeline.
         </p>
       </Card>
 
@@ -62,13 +50,12 @@ export default async function KalachakraDashaPage({
             No birth data in the URL. Go to <strong>Chart Overview</strong>, enter birth details and Compute, then switch to the Kalachakra Dasha tab.
           </p>
         </Card>
-      ) : kalaData && (kalaData as any).status === "error" ? (
+      ) : kalaData ? (
+        <KalachakraDashboard data={kalaData} />
+      ) : (
         <Card className="p-6 border border-amber-500/40">
           <p className="text-sm text-amber-600">Kalachakra calculation unavailable for this chart.</p>
-          <p className="text-xs text-text-muted mt-1 font-mono">{(kalaData as any).error}</p>
         </Card>
-      ) : (
-        <KalachakraDasha data={kalaData} />
       )}
     </div>
   );

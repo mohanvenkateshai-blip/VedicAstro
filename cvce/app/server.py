@@ -667,6 +667,7 @@ def index():
             "prashna": "POST /prashna",
             "yogas": "POST /yogas",
             "dasha_deep": "POST /dasha-deep",
+            "kalachakra_deep": "POST /kalachakra-deep",
             "kp_system": "POST /kp-system",
             "varshaphala": "POST /varshaphala",
             "orchestrate": "POST /orchestrate",
@@ -2432,6 +2433,24 @@ def kalachakra_dasha(req: BirthRequest):
     return compute_kalachakra_dasha(
         req.birth_datetime, req.birth_lat, req.birth_lon, req.birth_tz
     )
+
+
+@app.post("/kalachakra-deep")
+def kalachakra_deep(req: BirthRequest):
+    """Kalachakra Dasha — rich view: birth nakshatra/pada, Deha/Jeeva Rasi, the
+    9-sign cycle with Gati (leap) flags, current MD/AD/PD ladder, the active
+    leap (if any), a 3-level MD->AD->PD tree, and a chronological leap timeline
+    (past/current/future). Per BPHS Vol.2 Ch.46/49."""
+    from jhora.panchanga.drik import Date as DrikDate
+
+    from app.kalachakra import kalachakra_deep_payload
+
+    set_ayanamsa(req.ayanamsa)
+    dt = parse_dt(req.birth_datetime)
+    jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
+    dob = DrikDate(dt.year, dt.month, dt.day)
+    tob = (dt.hour, dt.minute, dt.second)
+    return kalachakra_deep_payload(jd, place, dob, tob)
 
 
 # ── Place search — backed by PyJHora's GeoNames dataset ─────────────────────

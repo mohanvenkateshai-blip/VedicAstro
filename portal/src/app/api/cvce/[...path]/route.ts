@@ -20,6 +20,7 @@ const CVCE_BASE_URL =
     "kp-system",
     "varshaphala",
     "kalachakra-dasha",
+    "kalachakra-deep",
     "koota-match",
     "positions",
     "yogas",
