@@ -6,7 +6,8 @@
 FROM python:3.12-slim
 
 ENV PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    FASTEMBED_CACHE_PATH=/srv/.fastembed_cache
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc g++ libc6-dev make \
@@ -21,6 +22,11 @@ COPY . .
 
 # Apply PyJHora compatibility patches (idempotent; runs a smoke test).
 RUN python patch_pyjhora.py
+
+# Pre-bake the bge-small ONNX embedding model into the image so Fly's
+# ephemeral filesystem never re-downloads it on cold start (the model is
+# ~130MB; baking it makes semantic-search cold starts instant + offline).
+RUN python -c "from knowledge_engine.local_embedder import embed_documents; embed_documents(['warm the model cache'])"
 
 # CORS origins, port and ayanamsa are injected at runtime via env (see .env.example).
 EXPOSE 8400

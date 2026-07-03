@@ -129,12 +129,17 @@ class SupabaseKnowledgeStore(KnowledgeStore):
         return present
 
     def _embed_query(self, query: str) -> list[float] | None:
-        from knowledge_engine.embeddings import embed_text, get_genai_client
+        # Local ONNX embedder (bge-small, 384-dim) — MUST be the same model
+        # the corpus was indexed with, or cosine similarity is noise. Replaced
+        # a Gemini call that lived in a different vector space than the stored
+        # (local-model) document vectors, which is why prod search was dormant.
+        from knowledge_engine.local_embedder import embed_query
 
-        client = get_genai_client()
-        if not client:
+        try:
+            return embed_query(query)
+        except Exception as exc:
+            logger.warning("local query embedding failed: %s", exc)
             return None
-        return embed_text(client, query)
 
     def _chunk_key(self, row: dict) -> str:
         if row.get("id"):
