@@ -31,7 +31,7 @@ export default async function KalachakraDashaPage({
           Kalachakra Dasha
         </h2>
         <p className="text-sm text-text-muted mt-1">
-          86-year sign-based cycle (BPHS Vol.2 Ch.46/49) — Moon nakshatra-pada wheel with Deha/Jeeva and the three Gatis.
+          83–100 year sign-based cycle (length set by birth pada, BPHS Vol.2 Ch.46/49) — Moon nakshatra-pada wheel with Deha/Jeeva and the three Gatis.
         </p>
         <p className="text-xs text-amber-400 mt-1">
           Includes the current Mahadasha → Antardasha → Pratyantardasha ladder, the full leap-flagged tree, and a past/future leap timeline.
