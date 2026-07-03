@@ -1,7 +1,81 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-06-30 (end of session — Learn polish + KE Full Update Wave merged to `main`)  
-**Purpose:** Preserve working context across Cursor/software updates or when switching to another AI tool. **Read this file first.**
+**Snapshot:** 2026-07-03 15:11 IST (mid-session checkpoint — Kalachakra rebuild + report redesign backend + rectification engine; Claude Code / Fable 5)  
+**Purpose:** Preserve working context across tool/model switches. **Read this file first.**
+
+---
+
+## -1. LATEST SNAPSHOT — 2026-07-03 (Claude Code session, Sonnet 5 → Fable 5)
+
+### Product vision (durable, overrides feature-level defaults)
+The app is a "superintelligent portal": predictions must be **prioritized, timed,
+actionable** — never generic yoga listicles. Realistic remedies, not textbook
+mantra boilerplate. Timing ambition is day/time precision via **multi-dasha
+confluence** (guru's principle: Vimshottari + Yogini together, not one system
+alone), which requires **birth-time rectification first** (~3 months dasha
+shift per 1 minute birth-time error). Saved as persistent memory
+(`vision_actionable_predictions.md` in the Claude memory dir).
+
+### Shipped this session (15 commits on main, all deployed to Fly + Vercel)
+- **Kalachakra Dasha**: full classical rebuild (`cvce/app/kalachakra.py`, ~900
+  lines; `portal/src/components/dashas/kalachakra/`) — Deha/Jeeva, 3 Gatis,
+  MD/AD/PD tree, SVG wheel, leap timeline/quick-nav, Argala/Yogakaraka/travel-
+  direction/Moon's-Navamsa interpretive layer, storytelling narratives.
+  Validated against BPHS Vol.2 Ch.46, PVR Rao tutorial, Cosmic Insights
+  (which caught + fixed a real MD/AD duration bug, commit `761c997`).
+- **Ashtakavarga**: 3 computation bugs fixed (`05cc3fa`) — now delegates to
+  PyJHora, SAV 337-invariant restored. New Divisional Charts + Ashtakavarga tabs.
+- **UI**: Navagraha/elemental color system (`portal/src/lib/astroColors.ts`)
+  cascaded app-wide (`e456aa9`); bigger charts + per-chart North/South toggle;
+  degree-on-hover; rotating Vedic loading phrases (`LoadingPhrase.tsx`).
+- **Ops**: recovered full backend outage (single Fly machine saturation —
+  restart fixed; stayed at 1 machine per free-tier constraint; bill $2.18→$0
+  under Fly's $5 waiver).
+- **Validation milestone**: user's real marriage date (2007-02-28) landed
+  exactly on Venus Pratyantardasha — deep-dasha engine confirmed accurate.
+  User then provided 6 precisely-dated life events as calibration data.
+
+### In flight (uncommitted at snapshot time; being committed + deployed now)
+1. **Report redesign backend** (`cvce/app/report_facts.py` + new
+   `cvce/app/remedies.py` + `cvce/tests/test_report_priority.py`):
+   `priority_predictions` — ≤6 yogas ranked by real chart strength
+   (SAV+Shadbala+dignity of planets_involved), timed to Mahadasha windows,
+   selectively remedied (hand-curated themes; remedies only where a genuine
+   affliction or negative classical text warrants). 45/45 tests pass.
+   **Frontend half NOT started**: PriorityInsightsCard, collapse YogasCard,
+   wire in already-built-but-unrendered DashaIntelCard/TransitIntelCard
+   (`HoroscopeReport.tsx:141-288`).
+2. **Birth-time rectification engine** (new `cvce/app/rectification.py`):
+   multi-dasha confluence scoring (Vimshottari depth-5 + Yogini MD/AD),
+   house-lordship-aware per candidate lagna, ±30 min sweep at 1-min steps.
+   **Live validation run against user's 6 events was interrupted — re-run
+   pending.** No HTTP endpoint yet (deferred until validated).
+
+### User's calibration events (for rectification; birth 1975-04-22 ~19:15, Mysuru 12.2979/76.6393/+5.5)
+| Event | Date/time | Domain |
+|---|---|---|
+| Marriage (1st) | 2007-02-28 | marriage |
+| Second marriage | 2014-01-19 09:15 | marriage |
+| Birth of son | 2015-07-21 21:15 | children |
+| Job loss | 2016-04-29 | career_obstacle |
+| Job start | 2018-11-28 | career_status |
+| Mother's demise | 2021-07-17 15:20 | mother |
+
+### Standing session rules (user-granted, still in force)
+- KnowledgeGraph/KE authoritative over secondary/AI-summarized sources.
+- Fix any bug encountered immediately, no per-bug confirmation needed.
+- Free tier only — no cost-increasing infra without asking.
+- Deploy verification discipline: curl prod endpoints + Vercel `Ready` check.
+- The legacy "≥5 parallel agents mandatory" protocol (Cursor/Kilo era, §below)
+  is NOT in force in Claude Code sessions; use subagents where they help.
+
+### Next steps (in order)
+1. Re-run rectification validation vs 6 events → report ranked candidates.
+2. Finish report-redesign frontend (types.ts, PriorityInsightsCard, collapse
+   yoga list, wire intel cards) → typecheck/build → deploy.
+3. Rectification fast-follows: `POST /rectify-birth-time` endpoint + UI;
+   add Ashtottari/Chara/Kalachakra as confluence systems.
+4. Roadmap: day/time-precision prediction engine on rectified birth times.
 
 ---
 

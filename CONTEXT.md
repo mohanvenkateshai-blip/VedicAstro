@@ -1,10 +1,11 @@
 # VedicAstro — AI Context Constitution
 
-**🚨 HANDOFF SNAPSHOT — 2026-06-30 (user switching AI tool / software update)**  
-Working tree is **dirty** (Learn rollout + auth fix + KG data uncommitted). Graph = newbooks-v1 (~26,722 nodes).  
-**Learn:** 60/61 books serve clean chapters from local Graphify raw + structured; prod deploy **stale** (smoke 3/7 until push).  
+**🚨 HANDOFF SNAPSHOT — 2026-07-03 15:11 IST (Claude Code / Fable 5 session checkpoint)**  
+**Latest session handoff: `docs/handoff/context.md` §-1** — Kalachakra full rebuild, Ashtakavarga fixes, app-wide Navagraha color system (all deployed); report-redesign backend (`priority_predictions`) + birth-time rectification engine (`cvce/app/rectification.py`) committed this checkpoint.  
+**Product vision (durable):** prioritized/timed/actionable predictions, multi-dasha confluence timing, birth-time rectification as precision prerequisite.  
 **Embeddings:** STOP — Gemini quota exhausted; do not run paid API calls.  
 **Auth:** NextAuth conditional — Learn works without AUTH_SECRET placeholders.  
+**Note:** the "≥5 parallel agents mandatory" protocol below is legacy (Cursor/Kilo era) — not in force in Claude Code sessions.  
 
 **Start here, then read in order:**
 1. `docs/handoff/context.md` — **latest session handoff (2026-06-30)**
