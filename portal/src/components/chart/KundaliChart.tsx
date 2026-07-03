@@ -20,6 +20,10 @@ interface Props {
   signs: Record<string, SignIndex>;
   variant?: Variant;
   sav?: number[]; // optional Sarvashtakavarga bindus per sign (overlay)
+  /** Optional formatted degree-in-sign label per planet/"Lagna" (e.g. "12°34'"),
+   * shown when its house is hovered or focused — keeps the default grid
+   * compact while still surfacing exact degree on demand. */
+  degrees?: Record<string, string>;
   size?: number;
   className?: string;
 }
@@ -28,12 +32,17 @@ const PLANET_ORDER = [
   "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu",
 ];
 
-function occupantsBySign(signs: Record<string, SignIndex>) {
-  const map: Record<number, string[]> = {};
+interface Occupant {
+  short: string;
+  deg?: string;
+}
+
+function occupantsBySign(signs: Record<string, SignIndex>, degrees?: Record<string, string>) {
+  const map: Record<number, Occupant[]> = {};
   for (const p of PLANET_ORDER) {
     const s = signs[p];
     if (s == null) continue;
-    (map[s] ??= []).push(PLANET_SHORT[p] ?? p.slice(0, 2));
+    (map[s] ??= []).push({ short: PLANET_SHORT[p] ?? p.slice(0, 2), deg: degrees?.[p] });
   }
   return map;
 }
@@ -50,16 +59,18 @@ export function KundaliChart({
   signs,
   variant = "south",
   sav,
+  degrees,
   size = 340,
   className,
 }: Props) {
   const lagnaSign = signs.Lagna ?? signs.Ascendant ?? 0;
-  const occ = useMemo(() => occupantsBySign(signs), [signs]);
+  const occ = useMemo(() => occupantsBySign(signs, degrees), [signs, degrees]);
+  const lagnaDeg = degrees?.Lagna ?? degrees?.Ascendant;
   const [hover, setHover] = useState<number | null>(null);
   const [focus, setFocus] = useState<number | null>(null);
 
   const props: InnerProps = {
-    size, occ, lagnaSign, sav, hover, setHover, focus, setFocus, className,
+    size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focus, setFocus, className,
   };
 
   return variant === "south" ? <SouthChart {...props} /> : <NorthChart {...props} />;
@@ -67,8 +78,9 @@ export function KundaliChart({
 
 interface InnerProps {
   size: number;
-  occ: Record<number, string[]>;
+  occ: Record<number, Occupant[]>;
   lagnaSign: number;
+  lagnaDeg?: string;
   sav?: number[];
   hover: number | null;
   setHover: (n: number | null) => void;
@@ -80,12 +92,39 @@ interface InnerProps {
 const GRID = "var(--color-hairline)";
 
 function PlanetStack({
-  planets, x, y, w, fontSize,
-}: { planets: string[]; x: number; y: number; w: number; fontSize: number }) {
+  planets, expanded, x, y, w, fontSize,
+}: { planets: Occupant[]; expanded?: boolean; x: number; y: number; w: number; fontSize: number }) {
   if (!planets.length) return null;
+
+  // Expanded (hovered/focused) — one line per planet with its exact degree,
+  // e.g. "Su 12°34'". Only ever one house expanded at a time, so there's
+  // room for this even in the smaller multi-chart grid sizes.
+  if (expanded && planets.some((p) => p.deg)) {
+    return (
+      <>
+        {planets.map((p, i) => (
+          <text
+            key={i}
+            x={x}
+            y={y + i * (fontSize + 3)}
+            textAnchor="middle"
+            fontSize={fontSize * 0.95}
+            fontWeight={700}
+            fill="var(--color-accent)"
+            className="font-mono"
+          >
+            {p.short}
+            {p.deg ? ` ${p.deg}` : ""}
+          </text>
+        ))}
+      </>
+    );
+  }
+
+  const shorts = planets.map((p) => p.short);
   const perRow = Math.max(2, Math.floor(w / (fontSize * 1.6)));
   const rows: string[][] = [];
-  for (let i = 0; i < planets.length; i += perRow) rows.push(planets.slice(i, i + perRow));
+  for (let i = 0; i < shorts.length; i += perRow) rows.push(shorts.slice(i, i + perRow));
   return (
     <>
       {rows.map((row, ri) => (
@@ -106,7 +145,7 @@ function PlanetStack({
   );
 }
 
-function SouthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocus, className }: InnerProps) {
+function SouthChart({ size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focus, setFocus, className }: InnerProps) {
   const CS = size / 4;
   const layout = [
     [11, 0, 1, 2],
@@ -124,8 +163,8 @@ function SouthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocu
         </g>
       ))}
       <rect x={CS} y={CS} width={CS * 2} height={CS * 2} fill="var(--color-background)" opacity={0.5} />
-      <text x={CS * 2} y={CS * 2 - 6} textAnchor="middle" fontSize={CS * 0.16} fill="var(--color-text-muted)" className="font-mono" opacity={0.7}>RĀŚI</text>
-      <text x={CS * 2} y={CS * 2 + CS * 0.18} textAnchor="middle" fontSize={CS * 0.12} fill="var(--color-text-muted)" className="font-mono" opacity={0.5}>D1</text>
+      <text x={CS * 2} y={CS * 2 - 6} textAnchor="middle" fontSize={CS * 0.16} fill="var(--color-text-muted)" className="font-mono" opacity={0.8}>RĀŚI</text>
+      <text x={CS * 2} y={CS * 2 + CS * 0.18} textAnchor="middle" fontSize={CS * 0.12} fill="var(--color-text-muted)" className="font-mono" opacity={0.65}>D1</text>
       {layout.flatMap((row, ri) =>
         row.map((si, ci) => {
           if (si < 0) return null;
@@ -135,12 +174,13 @@ function SouthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocu
           const planets = occ[si] ?? [];
           const house = ((si - lagnaSign + 12) % 12) + 1;
           const bindu = sav?.[si];
+          const expanded = hover === si || focus === si;
           return (
             <g
               key={si}
               tabIndex={0}
               role="button"
-              aria-label={`${RASHI_SHORT[si]}, house ${house}${isLagna ? ", Lagna" : ""}${planets.length ? ", " + planets.join(" ") : ""}${bindu != null ? ", " + bindu + " bindus" : ""}`}
+              aria-label={`${RASHI_SHORT[si]}, house ${house}${isLagna ? ", Lagna" + (lagnaDeg ? " " + lagnaDeg : "") : ""}${planets.length ? ", " + planets.map((p) => p.short + (p.deg ? " " + p.deg : "")).join(", ") : ""}${bindu != null ? ", " + bindu + " bindus" : ""}`}
               onMouseEnter={() => setHover(si)}
               onMouseLeave={() => setHover(null)}
               onFocus={() => setFocus(si)}
@@ -149,17 +189,20 @@ function SouthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocu
             >
               <rect
                 x={x + 1} y={y + 1} width={CS - 2} height={CS - 2} rx={4}
-                fill={(hover === si || focus === si) ? "color-mix(in srgb, var(--color-accent) 12%, transparent)" : isLagna ? "color-mix(in srgb, var(--color-accent) 7%, transparent)" : "transparent"}
-                stroke={isLagna ? "var(--color-accent)" : "transparent"}
-                strokeWidth={isLagna ? 1.5 : 0}
+                fill={expanded ? "color-mix(in srgb, var(--color-accent) 16%, transparent)" : isLagna ? "color-mix(in srgb, var(--color-accent) 9%, transparent)" : "transparent"}
+                stroke={isLagna ? "var(--color-accent)" : expanded ? "color-mix(in srgb, var(--color-accent) 50%, transparent)" : "transparent"}
+                strokeWidth={isLagna ? 1.5 : expanded ? 1 : 0}
               />
-              <text x={x + 6} y={y + CS * 0.2} fontSize={CS * 0.15} fill={isLagna ? "var(--color-accent)" : "var(--color-text-muted)"} className="font-mono" fontWeight={isLagna ? 700 : 400}>
+              <text x={x + 6} y={y + CS * 0.2} fontSize={CS * 0.16} fill={isLagna ? "var(--color-accent)" : "var(--color-text-main)"} className="font-mono" fontWeight={isLagna ? 700 : 500}>
                 {RASHI_SHORT[si]}
               </text>
-              <text x={x + CS - 5} y={y + CS * 0.2} textAnchor="end" fontSize={CS * 0.12} fill="var(--color-text-muted)" opacity={0.5} className="font-mono">{house}</text>
-              <PlanetStack planets={planets} x={x + CS / 2} y={y + CS * 0.55} w={CS - 8} fontSize={CS * 0.155} />
-              {isLagna && (
+              <text x={x + CS - 5} y={y + CS * 0.2} textAnchor="end" fontSize={CS * 0.135} fill="var(--color-text-muted)" className="font-mono">{house}</text>
+              <PlanetStack planets={planets} expanded={expanded} x={x + CS / 2} y={y + CS * 0.55} w={CS - 8} fontSize={CS * 0.155} />
+              {isLagna && !expanded && (
                 <text x={x + CS / 2} y={y + CS - 7} textAnchor="middle" fontSize={CS * 0.12} fill="var(--color-accent)" className="font-mono" letterSpacing="0.06em">LAGNA</text>
+              )}
+              {isLagna && expanded && lagnaDeg && (
+                <text x={x + CS / 2} y={y + CS - 7} textAnchor="middle" fontSize={CS * 0.11} fill="var(--color-accent)" className="font-mono" letterSpacing="0.03em">ASC {lagnaDeg}</text>
               )}
               {bindu != null && (
                 <text x={x + 6} y={y + CS - 7} fontSize={CS * 0.13} fill={savColor(bindu)} className="font-mono" fontWeight={700}>{bindu}</text>
@@ -173,7 +216,7 @@ function SouthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocu
   );
 }
 
-function NorthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocus, className }: InnerProps) {
+function NorthChart({ size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focus, setFocus, className }: InnerProps) {
   const S = size;
   const q = S / 4;
   const h = S / 2;
@@ -221,12 +264,13 @@ function NorthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocu
         const kendra = isKendra(hn);
         const fSign = S * (kendra ? 0.05 : 0.042);
         const fPl = S * (kendra ? 0.052 : 0.044);
+        const expanded = hover === si || focus === si;
         return (
           <g
             key={hn}
             tabIndex={0}
             role="button"
-            aria-label={`House ${hn}, ${RASHI_SHORT[si]}${isLagna ? ", Lagna" : ""}${planets.length ? ", " + planets.join(" ") : ""}${bindu != null ? ", " + bindu + " bindus" : ""}`}
+            aria-label={`House ${hn}, ${RASHI_SHORT[si]}${isLagna ? ", Lagna" + (lagnaDeg ? " " + lagnaDeg : "") : ""}${planets.length ? ", " + planets.map((p) => p.short + (p.deg ? " " + p.deg : "")).join(", ") : ""}${bindu != null ? ", " + bindu + " bindus" : ""}`}
             onMouseEnter={() => setHover(si)}
             onMouseLeave={() => setHover(null)}
             onFocus={() => setFocus(si)}
@@ -235,13 +279,16 @@ function NorthChart({ size, occ, lagnaSign, sav, hover, setHover, focus, setFocu
           >
             <polygon
               points={pts.map((p) => p.join(",")).join(" ")}
-              fill={(hover === si || focus === si) ? "color-mix(in srgb, var(--color-accent) 12%, transparent)" : isLagna ? "color-mix(in srgb, var(--color-accent) 7%, transparent)" : "transparent"}
-              stroke={isLagna ? "var(--color-accent)" : "transparent"}
-              strokeWidth={isLagna ? 1.5 : 0}
+              fill={expanded ? "color-mix(in srgb, var(--color-accent) 16%, transparent)" : isLagna ? "color-mix(in srgb, var(--color-accent) 9%, transparent)" : "transparent"}
+              stroke={isLagna ? "var(--color-accent)" : expanded ? "color-mix(in srgb, var(--color-accent) 50%, transparent)" : "transparent"}
+              strokeWidth={isLagna ? 1.5 : expanded ? 1 : 0}
             />
-            <text x={cx} y={cy - fPl * 1.1} textAnchor="middle" fontSize={S * 0.032} fill="var(--color-text-muted)" opacity={0.6} className="font-mono">{hn}</text>
-            <text x={cx} y={cy - fPl * 0.1} textAnchor="middle" fontSize={fSign} fill={isLagna ? "var(--color-accent)" : "var(--color-text-muted)"} className="font-mono" fontWeight={isLagna ? 700 : 400}>{RASHI_SHORT[si]}</text>
-            <PlanetStack planets={planets} x={cx} y={cy + fPl + 2} w={kendra ? S * 0.34 : S * 0.22} fontSize={fPl} />
+            <text x={cx} y={cy - fPl * 1.1} textAnchor="middle" fontSize={S * 0.036} fill="var(--color-text-muted)" fontWeight={600} className="font-mono">{hn}</text>
+            <text x={cx} y={cy - fPl * 0.1} textAnchor="middle" fontSize={fSign} fill={isLagna ? "var(--color-accent)" : "var(--color-text-main)"} className="font-mono" fontWeight={isLagna ? 700 : 500}>{RASHI_SHORT[si]}</text>
+            <PlanetStack planets={planets} expanded={expanded} x={cx} y={cy + fPl + 2} w={kendra ? S * 0.34 : S * 0.22} fontSize={fPl} />
+            {isLagna && expanded && lagnaDeg && (
+              <text x={cx} y={cy + fPl * 2.6} textAnchor="middle" fontSize={S * 0.028} fill="var(--color-accent)" className="font-mono" letterSpacing="0.03em">ASC {lagnaDeg}</text>
+            )}
             {bindu != null && (
               <text x={cx} y={cy + fPl * 2.6} textAnchor="middle" fontSize={S * 0.03} fill={savColor(bindu)} className="font-mono" fontWeight={700}>{bindu}b</text>
             )}

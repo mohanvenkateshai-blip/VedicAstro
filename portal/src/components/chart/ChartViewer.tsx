@@ -22,6 +22,15 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
   const varga = chart.vargas?.[vargaKey] ?? chart.vargas?.D1;
   const signs = varga?.signs ?? {};
   const sav = chart.ashtakavarga?.sav;
+  // Degree-in-sign is only meaningful for the D1 rasi chart itself (a
+  // planet's ecliptic degree, not a per-varga concept) — shown on hover/focus.
+  const degrees =
+    vargaKey === "D1"
+      ? {
+          ...(chart.lagna.degLabel ? { Lagna: chart.lagna.degLabel } : {}),
+          ...Object.fromEntries(chart.planets.filter((p) => p.degLabel).map((p) => [p.planet, p.degLabel as string])),
+        }
+      : undefined;
 
   return (
     <div className="grid gap-6 lg:grid-cols-[auto_1fr]">
@@ -57,9 +66,13 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
             signs={signs}
             variant={variant}
             sav={showSav && vargaKey === "D1" ? sav : undefined}
+            degrees={degrees}
             size={340}
           />
         </motion.div>
+        {degrees && (
+          <p className="text-[11px] text-text-muted -mt-1">Tap or hover a house for exact degree.</p>
+        )}
 
         <div className="flex flex-wrap gap-1.5">
           {vargaKeys.map((k) => (
