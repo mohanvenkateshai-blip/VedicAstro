@@ -10,7 +10,9 @@ Sources:
 Ashtakavarga (literally "eight-fold") is the most refined transit prediction
 system in Vedic astrology. Each planet contributes bindus (benefic dots) to
 12 signs, creating the Bhinnashtakavarga (BAV). The sum of all 7 planets'
-bindus gives the Sarvashtakavarga (SAV), which always totals 337.
+bindus always totals 337 (the raw/unreduced invariant) — this is the board
+compute_ashtakavarga() below returns, matching every other Ashtakavarga
+display in this app and this module's own SAV_BANDS thresholds (30+/28+/25+).
 
 Transit results are predicted by the number of bindus in the sign a planet
 is transiting through (from SAV) or the specific planet's BAV.
@@ -33,85 +35,11 @@ _akv_book_index: dict[str, str] = {
     "AshtakavargaHandbook": "Ashtakavarga_System_Comprehensive_Handbook",
 }
 
-# =====================================================================
-# BAV Tables — Benefic Placements (BPHS standard)
-# =====================================================================
-# Each planet gives bindus to signs at specific house-distances from
-# each contributor (7 planets + Lagna). Per-planet totals: 48/49/39/54/56/52/39.
-# Grand total SAV = 337 (mathematical invariant).
-
-BAV_TABLE = {
-    "Sun": {
-        "Sun": [1, 2, 4, 7, 8, 9, 10, 11],
-        "Moon": [3, 6, 10, 11],
-        "Mars": [1, 2, 4, 7, 8, 9, 10, 11],
-        "Mercury": [3, 5, 6, 9, 10, 11, 12],
-        "Jupiter": [5, 6, 9, 11],
-        "Venus": [6, 7, 12],
-        "Saturn": [1, 2, 4, 7, 8, 9, 10, 11],
-        "Lagna": [3, 4, 6, 10, 11, 12],
-    },
-    "Moon": {
-        "Sun": [3, 6, 7, 8, 10, 11],
-        "Moon": [1, 3, 6, 7, 10, 11],
-        "Mars": [2, 3, 5, 6, 9, 10, 11],
-        "Mercury": [1, 3, 4, 5, 7, 8, 10, 11],
-        "Jupiter": [1, 4, 7, 8, 10, 11, 12],
-        "Venus": [3, 4, 5, 7, 9, 10, 11],
-        "Saturn": [3, 5, 6, 11],
-        "Lagna": [3, 6, 10, 11],
-    },
-    "Mars": {
-        "Sun": [3, 5, 6, 10, 11],
-        "Moon": [3, 6, 11],
-        "Mars": [1, 2, 4, 7, 8, 10, 11],
-        "Mercury": [3, 5, 6, 11],
-        "Jupiter": [6, 10, 11, 12],
-        "Venus": [6, 8, 11, 12],
-        "Saturn": [1, 4, 7, 8, 9, 10, 11],
-        "Lagna": [1, 3, 6, 10, 11],
-    },
-    "Mercury": {
-        "Sun": [5, 6, 9, 11, 12],
-        "Moon": [2, 4, 6, 8, 10, 11],
-        "Mars": [1, 2, 4, 7, 8, 9, 10, 11],
-        "Mercury": [1, 3, 5, 6, 9, 10, 11, 12],
-        "Jupiter": [6, 8, 11, 12],
-        "Venus": [1, 2, 3, 4, 5, 8, 9, 11],
-        "Saturn": [1, 2, 4, 7, 8, 9, 10, 11],
-        "Lagna": [1, 2, 4, 6, 8, 10, 11],
-    },
-    "Jupiter": {
-        "Sun": [1, 2, 3, 4, 7, 8, 9, 10, 11],
-        "Moon": [2, 5, 7, 9, 11],
-        "Mars": [1, 2, 4, 7, 8, 10, 11],
-        "Mercury": [1, 2, 4, 5, 6, 9, 10, 11],
-        "Jupiter": [1, 2, 3, 4, 7, 8, 10, 11],
-        "Venus": [2, 5, 6, 9, 10, 11],
-        "Saturn": [3, 5, 6, 12],
-        "Lagna": [1, 2, 4, 5, 6, 7, 9, 10, 11],
-    },
-    "Venus": {
-        "Sun": [8, 11, 12],
-        "Moon": [1, 2, 3, 4, 5, 8, 9, 11, 12],
-        "Mars": [3, 5, 6, 9, 11, 12],
-        "Mercury": [3, 5, 6, 9, 11],
-        "Jupiter": [5, 8, 9, 10, 11],
-        "Venus": [1, 2, 3, 4, 5, 8, 9, 10, 11],
-        "Saturn": [3, 4, 5, 8, 9, 10, 11],
-        "Lagna": [1, 2, 3, 4, 5, 8, 9, 11],
-    },
-    "Saturn": {
-        "Sun": [1, 2, 4, 7, 8, 10, 11],
-        "Moon": [3, 6, 11],
-        "Mars": [3, 5, 6, 10, 11, 12],
-        "Mercury": [6, 8, 9, 10, 11, 12],
-        "Jupiter": [5, 6, 11, 12],
-        "Venus": [6, 11, 12],
-        "Saturn": [3, 5, 6, 11],
-        "Lagna": [1, 3, 4, 6, 10, 11],
-    },
-}
+# NOTE: this module used to hand-transcribe BAV_TABLE (per-contributor bindu
+# distances) here. It's gone — compute_ashtakavarga() below delegates raw BAV
+# construction to jhora.horoscope.chart.ashtakavarga.get_ashtaka_varga after a
+# transcription bug was found in this table's Moon row (see compute_ashtakavarga's
+# docstring). Interpretation tables (bindu bands, verdicts) remain below.
 
 # Bindu interpretation (Gochar Phaladeepika Ch.27)
 BINDU_RESULTS = {
@@ -146,58 +74,15 @@ SAV_BANDS = {
     "depleted": (0, 24, "ashubh", "Depleted — thin support, avoid major initiatives"),
 }
 
-# Trikona Shodhana (reduction) — BPHS Ch.67
-# Signs grouped into 4 trikonas: (1,5,9), (2,6,10), (3,7,11), (4,8,12)
-# For each trikona where all 3 signs have bindus > 0, reduce the two
-# higher bindus to match the lowest. Apply to each BAV first, then to SAV.
-
-TRIKONA_GROUPS = [(0, 4, 8), (1, 5, 9), (2, 6, 10), (3, 7, 11)]  # 0-indexed signs
-
-
-def _trikona_shodhana(arr: list) -> list:
-    """Apply Trikona Shodhana to a 12-element bindu array. Returns new array."""
-    result = arr[:]
-    for g1, g2, g3 in TRIKONA_GROUPS:
-        b1, b2, b3 = result[g1], result[g2], result[g3]
-        if b1 > 0 and b2 > 0 and b3 > 0:
-            min_b = min(b1, b2, b3)
-            reduced = b1 + b2 + b3 - 3 * min_b
-            result[g1] = result[g2] = result[g3] = min_b
-    return result
-
-
-def _ekadhipatya_shodhana(bav: dict, sav: list) -> list:
-    """Apply Ekadhipatya Shodhana to SAV. Signs with same planetary lord
-    (Cancer-Leo, Scorpio-Aries, Capricorn-Aquarius, Pisces-Sagittarius,
-    Taurus-Libra, Gemini-Virgo) — if one sign has higher SAV, reduce to match.
-    Only applied if SAV > 0 in both signs. Skip if BAV of lord is equal in both."""
-    result = sav[:]
-    pairs = [(3, 4), (7, 0), (9, 10), (11, 8), (1, 6), (2, 5)]  # 0-indexed
-    lords = {
-        "Moon": [3, 4],
-        "Sun": [4],
-        "Mars": [0, 7],
-        "Venus": [1, 6],
-        "Mercury": [2, 5],
-        "Jupiter": [8, 11],
-        "Saturn": [9, 10],
-    }
-    for s1, s2 in pairs:
-        if result[s1] > 0 and result[s2] > 0:
-            if result[s1] != result[s2]:
-                min_b = min(result[s1], result[s2])
-                result[s1] = result[s2] = min_b
-    return result
-
 
 @dataclass
 class AshtakavargaResult:
     """Complete Ashtakavarga computation."""
 
-    bav: dict  # {planet: [12 bindus per sign]}
-    sav: list  # [12 total bindus]
+    bav: dict  # {planet: [12 bindus per sign]}, post Trikona+Ekadhipatya Shodhana
+    sav: list  # [12 total bindus], post Shodhana ("Sodhita Ashtakavarga")
     planet_totals: dict  # {planet: total bindus}
-    total_sav: int  # always 337
+    total_sav: int  # < 337 after correct Shodhana (337 is only the raw/unreduced invariant)
     lagna_sign_idx: int = 0
 
     # Transit bindus
@@ -214,37 +99,72 @@ class AshtakavargaResult:
     hierarchy_path: str | None = None
 
 
+_PLANET_NAME_TO_ID = {"Sun": 0, "Moon": 1, "Mars": 2, "Mercury": 3, "Jupiter": 4, "Venus": 5, "Saturn": 6}
+_PLANET_ID_TO_NAME = {v: k for k, v in _PLANET_NAME_TO_ID.items()}
+
+
+def _build_chart_1d(natal_sign: dict, lagna_sign_idx: int) -> list:
+    """Build PyJHora's house_to_planet_list format (12 strings, '/'-joined
+    planet ids, 'L' for Lagna) from the {planet_name: sign_idx} + lagna_idx
+    shape this module's callers already have.
+
+    Rahu/Ketu (ids 7/8) are placed at a fixed nominal position (sign 0) if
+    absent from natal_sign — PyJHora's get_ashtaka_varga/_ekadhipatya_sodhana
+    require *some* house entry for every id in const.SUN_TO_KETU to avoid a
+    KeyError, but classical Ashtakavarga's BAV/SAV math (7 planets + Lagna
+    as contributors) never actually reads their positions, so this has zero
+    effect on the returned bindus.
+    """
+    chart = ["" for _ in range(12)]
+    seen_ids = set()
+    for name, sign in natal_sign.items():
+        pid = _PLANET_NAME_TO_ID.get(name)
+        if pid is None:
+            continue
+        chart[sign] += f"{pid}/"
+        seen_ids.add(pid)
+    for placeholder_id in (7, 8):  # Rahu, Ketu — unused by BAV/SAV math
+        if placeholder_id not in seen_ids:
+            chart[0] += f"{placeholder_id}/"
+    chart[lagna_sign_idx] += "L/"
+    return [c[:-1] if c.endswith("/") else c for c in chart]
+
+
 def compute_ashtakavarga(natal_sign: dict, lagna_sign_idx: int) -> AshtakavargaResult:
     """Compute Bhinnashtakavarga (BAV) and Sarvashtakavarga (SAV).
+
+    Delegates BAV/SAV construction to jhora.horoscope.chart.ashtakavarga —
+    the same validated engine app/chart.py uses for the /chart endpoint's
+    Ashtakavarga block — rather than this module's own hand-transcribed
+    BAV_TABLE, which had a transcription error in Moon's contribution
+    distances (misplaced, though didn't lose, bindus across signs).
+
+    Returns the RAW (pre-Shodhana) board, matching every other Ashtakavarga
+    display in this app (the /chart endpoint, the portal's Ashtakavarga tab,
+    Kalachakra leap-strength scoring) and this module's own SAV_BANDS
+    thresholds (30+/28+/25+/depleted), which are calibrated for the raw
+    0-337 scale. An earlier version applied Trikona + Ekadhipatya Shodhana
+    here — correctly, once its own bugs were fixed — but that "Sodhita"
+    board runs on a much smaller scale (totals ~80-90 on a real chart, not
+    337), which silently broke every threshold check downstream (SAV_BANDS
+    here and fructification.py's separate exceptional/strong/moderate scale)
+    since nothing exceeds "30+" anymore. Shodhana's classical purpose (BPHS
+    Ch.68's Sodhya Pinda technique) is a distinct, deliberate calculation —
+    not something to fold into general-purpose bindu-strength lookups.
 
     Args:
         natal_sign: dict of planet → rashi_idx (0=Aries) for 7 planets
         lagna_sign_idx: Lagna rashi index
 
     Returns:
-        AshtakavargaResult with BAV, SAV, and totals.
+        AshtakavargaResult with raw BAV, SAV, and totals (SAV sums to 337).
     """
-    bav = {}
-    for planet in BAV_TABLE:
-        arr = [0] * 12
-        for contributor, distances in BAV_TABLE[planet].items():
-            if contributor == "Lagna":
-                base = lagna_sign_idx
-            elif contributor in natal_sign:
-                base = natal_sign[contributor]
-            else:
-                continue
-            for dist in distances:
-                arr[(base + dist - 1) % 12] += 1
-        bav[planet] = arr
+    from jhora.horoscope.chart import ashtakavarga as jh_ashtakavarga
 
-    # Apply Trikona Shodhana per BPHS Ch.67, then Ekadhipatya on SAV
-    for planet in bav:
-        bav[planet] = _trikona_shodhana(bav[planet])
+    chart_1d = _build_chart_1d(natal_sign, lagna_sign_idx)
+    binna, sav, _prastara = jh_ashtakavarga.get_ashtaka_varga(chart_1d)
 
-    sav = [sum(bav[p][s] for p in bav) for s in range(12)]
-    sav = _ekadhipatya_shodhana(bav, sav)
-
+    bav = {_PLANET_ID_TO_NAME[p]: list(binna[p]) for p in range(7)}
     planet_totals = {p: sum(bav[p]) for p in bav}
     total_sav = sum(sav)
 
@@ -296,10 +216,10 @@ def compute_transit_ashtakavarga(
 
     akv.transit_sav = transit_sav
 
-    # Build summary
-    lines = [
-        f"Ashtakavarga SAV total: {akv.total_sav} (invariant: 337) {'✓' if akv.total_sav == 337 else '⚠'}"
-    ]
+    # Build summary. Note: 337 is the raw/unreduced SAV invariant — this board
+    # is post Trikona+Ekadhipatya Shodhana ("Sodhita Ashtakavarga"), which
+    # legitimately totals less than 337.
+    lines = [f"Sodhita Ashtakavarga SAV total: {akv.total_sav} (raw invariant: 337)"]
     lines.append(
         f"Moon transiting {RASHIS[moon_sign_idx]} with {moon_bindus} bindus — {_get_band(moon_bindus)[3]}"
     )

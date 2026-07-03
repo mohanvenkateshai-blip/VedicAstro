@@ -12,7 +12,9 @@ Classical doctrine (Phaladeepika Ch.26 / Goel 2002):
   reference points beyond Janma Rashi.
 
 Ashtakavarga (BPHS Ch.67): SAV bindus in Saturn's transit sign weight
-  the strength of the fructification window (7=exceptional, 5+=strong, 4=moderate).
+  the strength of the fructification window (raw/337-scale SAV per sign:
+  30+=exceptional, 28+=strong, 25+=moderate, else limited — same convention
+  as SAV_BANDS elsewhere in this app).
 
 Vedha (Phaladeepika Ch.26 / GPD Ch.22): if another planet occupies the
   Vedha house of Saturn or Jupiter during their "good" transit, the benefit
@@ -313,18 +315,31 @@ def _build_window(months: list[dict]) -> dict:
     sat_effects = _house_domains("Saturn", sat_h)
     jup_effects = _house_domains("Jupiter", jup_h)
 
-    # Score: base 5 for double transit, +0–3 from SAV bindus
+    # Score: base 5 for double transit, +0-3 from SAV bindus. SAV here is the
+    # raw (0-337-total) Sarvashtakavarga per sign — typically 15-40 per sign,
+    # not the 0-8 single-planet-BAV range these thresholds were previously
+    # (and incorrectly) calibrated for, which made every window score near
+    # the maximum. Reuses the same 30/28/25 convention as SAV_BANDS elsewhere
+    # in this app for a consistent "what counts as strong" bar.
     score = 5
-    if avg_sav is not None:
-        score += max(0, min(3, int(avg_sav) - 3))
+    if rounded_sav is not None:
+        if rounded_sav >= 30:
+            bonus = 3
+        elif rounded_sav >= 28:
+            bonus = 2
+        elif rounded_sav >= 25:
+            bonus = 1
+        else:
+            bonus = 0
+        score += bonus
     score = max(0, min(10, score))
 
     if rounded_sav is not None:
-        if rounded_sav >= 7:
+        if rounded_sav >= 30:
             strength = "exceptional"
-        elif rounded_sav >= 5:
+        elif rounded_sav >= 28:
             strength = "strong"
-        elif rounded_sav >= 4:
+        elif rounded_sav >= 25:
             strength = "moderate"
         else:
             strength = "limited"
@@ -341,9 +356,9 @@ def _build_window(months: list[dict]) -> dict:
         f"Jupiter in {jup_h}th ({', '.join(jup_effects)}) from {ref_label}"
     )
     if rounded_sav is not None:
-        from vedic_engine.prediction.ashtakavarga import BINDU_RESULTS
+        from vedic_engine.prediction.ashtakavarga import _get_band
 
-        bindu_label = BINDU_RESULTS.get(min(rounded_sav, 8), ("", "", ""))[0]
+        bindu_label = _get_band(rounded_sav)[3]
         narrative += f" — SAV {rounded_sav} bindus ({bindu_label})"
 
     return {
