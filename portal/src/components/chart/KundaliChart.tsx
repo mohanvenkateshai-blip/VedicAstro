@@ -90,6 +90,10 @@ interface InnerProps {
 }
 
 const GRID = "var(--color-hairline)";
+// The chart itself should read as the brightest surface on the page — a
+// visible step up from the (deliberately duller) tile it sits in — so
+// planets/signs/ascendant pop instead of blending into a flat dark card.
+const CHART_SURFACE = "color-mix(in srgb, var(--color-card) 80%, var(--color-card-fg) 20%)";
 
 function PlanetStack({
   planets, expanded, x, y, w, fontSize,
@@ -155,7 +159,7 @@ function SouthChart({ size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focu
   ];
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className={className} role="img" aria-label={`South Indian kundali, Lagna in ${RASHI_SHORT[lagnaSign]}`}>
-      <rect width={size} height={size} rx={10} fill="var(--color-card)" />
+      <rect width={size} height={size} rx={10} fill={CHART_SURFACE} />
       {[1, 2, 3].map((i) => (
         <g key={i}>
           <line x1={i * CS} y1={0} x2={i * CS} y2={size} stroke={GRID} />

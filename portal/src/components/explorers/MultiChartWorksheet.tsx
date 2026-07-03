@@ -115,7 +115,7 @@ export function MultiChartWorksheet({ chart }: { chart: ChartData }) {
           return (
             <div
               key={key}
-              className="rounded-2xl border border-hairline bg-card p-5 flex flex-col items-center"
+              className="rounded-2xl border border-hairline bg-background p-5 flex flex-col items-center"
             >
               <div className="flex items-center justify-between w-full mb-3">
                 <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted">
