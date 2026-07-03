@@ -705,6 +705,35 @@ export interface KnowledgeEngineHealth {
   last_revived?: string | null;
 }
 
+/** One planet's Mahadasha window relevant to a priority prediction. */
+export interface PredictionTimingWindow {
+  planet: string;
+  start: string;
+  end: string;
+  when: "past" | "current" | "future";
+}
+
+/** Practical remedy theme attached to a priority prediction — present only
+ * when a genuine affliction (debilitated/combust planet) or negative
+ * classical text warrants one; positive yogas carry no remedy by design. */
+export interface PredictionRemedy {
+  theme: string;
+  label: string;
+  remedies: string[];
+}
+
+/** A chart-scored, dasha-timed prediction — the report's headline content
+ * (backend: report_facts.py:_priority_predictions). */
+export interface PriorityPrediction {
+  yoga_key: string;
+  name: string;
+  score: number;
+  planets_involved: string[];
+  timing_windows: PredictionTimingWindow[];
+  manifestation_text: string;
+  remedy: PredictionRemedy | null;
+}
+
 export interface ReportFacts {
   schemaVersion: string;
   meta: {
@@ -741,6 +770,7 @@ export interface ReportFacts {
   next_shubh_days?: ShubhDay[] | null;
   timing_merge?: TimingMerge | null;
   forecast?: ForecastPeriod[] | null;
+  priority_predictions?: PriorityPrediction[] | null;
   yogas?: {
     activeCount?: number;
     totalChecked?: number | null;

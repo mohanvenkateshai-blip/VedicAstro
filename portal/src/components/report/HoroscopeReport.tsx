@@ -11,6 +11,7 @@ import type {
   KnowledgeEngineHealth,
   TextConflict,
   GodNodeInsight,
+  PriorityPrediction,
 } from "@/lib/types";
 import type { BirthDefaults } from "@/lib/birth-params";
 import { RASHIS } from "@/lib/types";
@@ -339,32 +340,94 @@ function ForecastCard({ periods }: { periods: ForecastPeriod[] }) {
 function YogasCard({ yogas }: { yogas: NonNullable<ReportFacts["yogas"]> }) {
   const list = Object.entries(yogas.yogas || {});
   if (!list.length && !yogas.activeCount) return null;
+  // Collapsed by default — the prioritized predictions above are the
+  // headline; this exhaustive list is reference material for practitioners.
+  return (
+    <Card className="p-5">
+      <details className="group">
+        <summary className="flex items-center gap-3 flex-wrap cursor-pointer list-none select-none">
+          <SectionHeading>All Detected Yogas</SectionHeading>
+          {yogas.activeCount != null && (
+            <span className="text-xs font-mono text-text-muted">
+              {yogas.activeCount} active
+              {yogas.totalChecked ? ` / ${yogas.totalChecked} checked` : ""}
+            </span>
+          )}
+          <span className="ml-auto text-xs font-mono text-accent group-open:hidden">expand ▸</span>
+          <span className="ml-auto text-xs font-mono text-accent hidden group-open:inline">collapse ▾</span>
+        </summary>
+        {list.length === 0 ? (
+          <p className="text-sm text-text-muted mt-4">No yogas detected.</p>
+        ) : (
+          <div className="space-y-3 text-sm mt-4">
+            {list.slice(0, 40).map(([key, y]: any) => (
+              <div key={key} className="border-l-2 border-hairline pl-3">
+                <div className="font-semibold">{y.name || key} {y.strength ? `(${y.strength})` : ""}</div>
+                {y.definition && <p className="text-xs text-text-muted italic">{y.definition}</p>}
+                {y.prediction && <p className="text-sm">{y.prediction}</p>}
+                {(y.category || y.source || y.citation) && <p className="text-[10px] font-mono text-text-muted">{y.category} · {y.source || y.citation}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+        <p className="text-[10px] text-text-muted font-mono mt-3">yoga.py + KE Jataka structured (BPHS/PD/SC) + graph</p>
+      </details>
+    </Card>
+  );
+}
+
+// ─── Priority predictions (headline: prioritized · timed · actionable) ──────
+
+const WHEN_STYLE: Record<string, string> = {
+  current: "bg-accent/15 text-accent border-accent/40",
+  future: "bg-sky-500/10 text-sky-400 border-sky-500/30",
+  past: "bg-hairline/30 text-text-muted border-hairline",
+};
+
+function PriorityInsightsCard({ predictions }: { predictions: PriorityPrediction[] }) {
+  if (!predictions.length) return null;
   return (
     <Card className="p-5 space-y-4">
       <div className="flex items-center gap-3 flex-wrap">
-        <SectionHeading>Active Yogas (all)</SectionHeading>
-        {yogas.activeCount != null && (
-          <span className="text-xs font-mono text-text-muted">
-            {yogas.activeCount} active
-            {yogas.totalChecked ? ` / ${yogas.totalChecked} checked` : ""}
-          </span>
-        )}
+        <SectionHeading>What Matters Most in This Chart</SectionHeading>
+        <span className="text-xs font-mono text-text-muted">
+          top {predictions.length} — ranked by this chart&apos;s actual strength (SAV · Shadbala · dignity)
+        </span>
       </div>
-      {list.length === 0 ? (
-        <p className="text-sm text-text-muted">No yogas detected.</p>
-      ) : (
-        <div className="space-y-3 text-sm">
-          {list.slice(0, 40).map(([key, y]: any) => (
-            <div key={key} className="border-l-2 border-hairline pl-3">
-              <div className="font-semibold">{y.name || key} {y.strength ? `(${y.strength})` : ""}</div>
-              {y.definition && <p className="text-xs text-text-muted italic">{y.definition}</p>}
-              {y.prediction && <p className="text-sm">{y.prediction}</p>}
-              {(y.category || y.source || y.citation) && <p className="text-[10px] font-mono text-text-muted">{y.category} · {y.source || y.citation}</p>}
+      <div className="space-y-4">
+        {predictions.map((p, i) => (
+          <div key={p.yoga_key} className="rounded-xl border border-hairline bg-background/50 p-4 space-y-2.5">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent/15 text-accent text-xs font-bold">{i + 1}</span>
+              <span className="font-semibold">{p.name}</span>
+              {p.planets_involved.map((pl) => (
+                <span key={pl} className="rounded-full border border-hairline px-2 py-0.5 text-[11px] font-mono font-semibold" style={{ color: planetColor(pl) }}>
+                  {pl}
+                </span>
+              ))}
+              <span className="ml-auto text-[10px] font-mono text-text-muted">score {p.score}</span>
             </div>
-          ))}
-        </div>
-      )}
-      <p className="text-[10px] text-text-muted font-mono">yoga.py + KE Jataka structured (BPHS/PD/SC) + graph</p>
+            <p className="text-sm leading-relaxed">{p.manifestation_text}</p>
+            <div className="flex flex-wrap gap-1.5">
+              {p.timing_windows.map((w, wi) => (
+                <span key={wi} className={`rounded-md border px-2 py-0.5 text-[11px] font-mono ${WHEN_STYLE[w.when] ?? WHEN_STYLE.past}`}>
+                  {w.when === "current" ? "NOW · " : ""}
+                  <span style={{ color: planetColor(w.planet) }}>{w.planet}</span> MD {w.start.slice(0, 4)}–{w.end.slice(0, 4)}
+                </span>
+              ))}
+            </div>
+            {p.remedy && (
+              <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-3 py-2.5">
+                <p className="text-[10px] font-mono uppercase tracking-wider text-amber-500 mb-1.5">What you can do — {p.remedy.label}</p>
+                <ul className="space-y-1 text-xs leading-relaxed list-disc list-inside">
+                  {p.remedy.remedies.map((r, ri) => <li key={ri}>{r}</li>)}
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="text-[10px] text-text-muted font-mono">ranked by SAV+Shadbala+dignity of planets involved · timed to Vimshottari Mahadasha windows · remedies only where an affliction warrants</p>
     </Card>
   );
 }
@@ -528,10 +591,26 @@ export function HoroscopeReport({
   if (hasChara) alternateDashas.push("ch10-chara");
   if (hasKalachakra) alternateDashas.push("ch11-kalachakra");
 
+  const hasPriority = !!report.priority_predictions?.length;
   const allChapters = [
+    ...(hasPriority ? ["ch0-priority"] : []),
     "ch1-natal","ch2-yogas","ch3-akv","ch4-shadbala","ch5-timing",
     "ch6-dasha","ch7-varsha","ch8-narration", ...alternateDashas
   ];
+  const chapterLabels: Record<string, string> = {
+    "ch0-priority": "★ Key Predictions",
+    "ch1-natal": "1.Natal+Panch",
+    "ch2-yogas": "2.Yogas(all)",
+    "ch3-akv": "3.AKV(full SAV+BAV)",
+    "ch4-shadbala": "4.Shadbala(7×6)",
+    "ch5-timing": "5.Timing(merge+windows)",
+    "ch6-dasha": "6.Dasha(8AD+areas)",
+    "ch7-varsha": "7.Varshaphala",
+    "ch8-narration": "8.Narration+KE",
+    "ch9-kaksha": "9.Kaksha Dasha",
+    "ch10-chara": "10.Chara Dasha",
+    "ch11-kalachakra": "11.Kalachakra Dasha",
+  };
 
   const tm = report.timing_merge;
   const keVer = report.knowledge_engine?.version || "file-based";
@@ -549,16 +628,25 @@ export function HoroscopeReport({
       {/* Updated chapter nav including alternate dashas */}
       <div className="sticky top-0 z-10 bg-background/95 border-b border-hairline py-2">
         <nav className="flex flex-wrap gap-1 text-xs font-mono">
-          {allChapters.map((id, i) => (
-            <a key={id} href={`#${id}`} className="px-2 py-1 rounded border border-hairline hover:bg-accent/10">
-              {i < 8 ? ["1.Natal+Panch", "2.Yogas(full)", "3.AKV(full SAV+BAV)", "4.Shadbala(7×6)", "5.Timing(merge+windows)", "6.Dasha(8AD+areas)", "7.Varshaphala", "8.Narration+KE"][i] : 
-              id === 'ch9-kaksha' ? "9.Kaksha Dasha" : 
-              id === 'ch10-chara' ? "10.Chara Dasha" : 
-              id === 'ch11-kalachakra' ? "11.Kalachakra Dasha" : ""}
+          {allChapters.map((id) => (
+            <a key={id} href={`#${id}`} className={`px-2 py-1 rounded border hover:bg-accent/10 ${id === "ch0-priority" ? "border-accent/50 text-accent" : "border-hairline"}`}>
+              {chapterLabels[id] ?? id}
             </a>
           ))}
         </nav>
       </div>
+
+      {/* Ch0 — headline: prioritized, timed, actionable */}
+      {hasPriority && (
+        <div id="ch0-priority">
+          <PriorityInsightsCard predictions={report.priority_predictions!} />
+          <p className="text-[10px] px-1 font-mono text-text-muted">priority_predictions · report_facts.py join of yogas×SAV×Shadbala×dignity×MD windows · ke:{keVer}</p>
+        </div>
+      )}
+
+      {/* Dasha + transit intelligence — already computed by backend, now surfaced */}
+      {report.dasha_intelligence && <DashaIntelCard di={report.dasha_intelligence} />}
+      {report.transit_intelligence && <TransitIntelCard ti={report.transit_intelligence} nextShubhDays={report.next_shubh_days} />}
 
       {/* Ch1 */}
       <div id="ch1-natal"><NatalCard report={report} />
