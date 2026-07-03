@@ -16,6 +16,7 @@ import { Loader, ChevronDown, ChevronRight } from "lucide-react";
 import type { ChartData, DashaSeriesData, DashaSeriesPoint, DashaSeriesEvent } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
+import { PLANET_COLORS as PLANET_COLOR } from "@/lib/astroColors";
 
 // ── Colour tokens ─────────────────────────────────────────────────────────────
 
@@ -25,17 +26,6 @@ const DASHA   = "#7c3aed";
 const MOON_C  = "#60a5fa";
 const LAGNA_C = "#f59e0b";
 
-const PLANET_COLOR: Record<string, string> = {
-  Sun:     "#f97316",
-  Moon:    "#94a3b8",
-  Mars:    "#ef4444",
-  Mercury: "#22c55e",
-  Jupiter: "#facc15",
-  Venus:   "#ec4899",
-  Saturn:  "#7c3aed",
-  Rahu:    "#64748b",
-  Ketu:    "#a78bfa",
-};
 
 // Moon excluded — it changes sign every 2.5 days, so monthly sampling produces
 // meaningless noise; its reference perspective is already the "View from Moon" line.

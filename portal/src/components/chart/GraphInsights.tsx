@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import type { GraphEnhancements, PlanetTransitAnalysis, TransitIntelligence } from "@/lib/types";
+import { RASHIS, type GraphEnhancements, type PlanetTransitAnalysis, type TransitIntelligence } from "@/lib/types";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 function ordinal(n: number): string {
   if (n === 1) return "1st";
@@ -133,8 +134,8 @@ function PlanetCard({
         aria-expanded={open}
       >
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-medium">{p.planet}</span>
-          <span className="text-xs text-text-muted font-mono">{p.rashi}</span>
+          <span className="text-sm font-semibold" style={{ color: planetColor(p.planet) }}>{p.planet}</span>
+          <span className="text-xs font-mono" style={{ color: elementColor(RASHIS.indexOf(p.rashi as (typeof RASHIS)[number])) }}>{p.rashi}</span>
           {p.house_from_janma != null && (
             <span className="text-xs text-text-muted font-mono">· {ordinal(p.house_from_janma)} from Moon</span>
           )}

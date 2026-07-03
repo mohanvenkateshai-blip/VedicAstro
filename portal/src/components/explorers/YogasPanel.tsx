@@ -5,6 +5,7 @@ import { Sparkles, Loader, AlertCircle, TrendingUp } from "lucide-react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
+import { planetColor } from "@/lib/astroColors";
 
 interface YogaEntry {
   name?: string;
@@ -72,7 +73,7 @@ function ShadbalaSummary({ shadbala }: { shadbala: NonNullable<ChartData["shadba
               const ratio = row?.ratio ?? row?.Ratio ?? null;
               return (
                 <tr key={p} className="border-b border-hairline/60">
-                  <td className="py-2 pr-3 text-text-main">{p}</td>
+                  <td className="py-2 pr-3 font-semibold" style={{ color: planetColor(p) }}>{p}</td>
                   <td className="py-2 pr-3 tabular-nums text-text-muted">
                     {rupas != null ? Number(rupas).toFixed(2) : "—"}
                   </td>

@@ -50,8 +50,13 @@ const VARGA_SIGNIFICANCE: Record<string, string> = {
   D60: "Past-life karma, general life",
 };
 
+type ChartVariant = "south" | "north";
+
 export function MultiChartWorksheet({ chart }: { chart: ChartData }) {
   const [selected, setSelected] = useState<string[]>(["D1", "D9", "D10", "D24"]);
+  const [variants, setVariants] = useState<Record<string, ChartVariant>>(() =>
+    Object.fromEntries(VARGAS.map((v) => [v.key, v.variant])),
+  );
   const maxCharts = 4;
 
   const toggleVarga = (key: string) => {
@@ -106,31 +111,43 @@ export function MultiChartWorksheet({ chart }: { chart: ChartData }) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {vargas.map(({ key, variant }) => {
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {vargas.map(({ key }) => {
           const varga = chart.vargas?.[key];
           const signs = varga?.signs ?? chart.natalSign ?? {};
           const name = VARGA_NAMES[key] ?? varga?.name ?? key;
+          const variant = variants[key] ?? "south";
 
           return (
             <div
               key={key}
-              className="rounded-2xl border border-hairline bg-background p-5 flex flex-col items-center"
+              className="rounded-2xl border border-hairline bg-background p-6 flex flex-col items-center"
             >
               <div className="flex items-center justify-between w-full mb-3">
                 <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted">
                   {key}
                 </span>
-                <span className="text-xs text-text-muted">
-                  {variant === "south" ? "South" : "North"} Indian
-                </span>
+                <div role="radiogroup" aria-label={`${key} chart orientation`} className="inline-flex rounded-lg border border-hairline p-0.5 text-[11px]">
+                  {(["south", "north"] as const).map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setVariants((prev) => ({ ...prev, [key]: v }))}
+                      role="radio"
+                      aria-checked={variant === v}
+                      aria-label={`${v === "south" ? "South" : "North"} Indian style for ${key}`}
+                      className={`px-2.5 py-1.5 min-h-[32px] rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 ${variant === v ? "bg-primary text-primary-fg" : "text-text-muted hover:text-text-main"}`}
+                    >
+                      {v === "south" ? "South" : "North"}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <h3 className="font-display text-base font-semibold text-text-main">
+              <h3 className="font-display text-lg font-semibold text-text-main">
                 {name}
               </h3>
               {VARGA_SIGNIFICANCE[key] && (
-                <p className="text-[11px] text-text-muted text-center mb-3 mt-0.5 max-w-[220px]">
+                <p className="text-[11px] text-text-muted text-center mb-4 mt-0.5 max-w-[280px]">
                   {VARGA_SIGNIFICANCE[key]}
                 </p>
               )}
@@ -139,11 +156,12 @@ export function MultiChartWorksheet({ chart }: { chart: ChartData }) {
                 <KundaliChart
                   signs={signs}
                   variant={variant}
-                  size={260}
+                  size={380}
+                  className="drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
                 />
               </div>
 
-              <p className="mt-3 text-[11px] text-text-muted">
+              <p className="mt-4 text-[11px] text-text-muted">
                 Lagna in {varga?.signs?.Lagna != null ? ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"][varga.signs.Lagna] : "—"}
               </p>
             </div>

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { clsx } from "clsx";
 import type { KalachakraNode } from "@/lib/types";
 import { leapStyle, strengthStyle } from "./kalachakraCopy";
+import { elementColor } from "@/lib/astroColors";
 
 const LEVEL_LABELS: Record<number, string> = { 1: "MD", 2: "AD", 3: "PD" };
 
@@ -106,7 +107,7 @@ function TreeRow({ node, path, expanded, onToggle, onSelectPeriod, onSelectLeap,
             <span className="rounded bg-hairline/40 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-text-muted shrink-0">
               {LEVEL_LABELS[node.level] ?? node.level}
             </span>
-            <span className="text-sm font-medium">{node.sign}</span>
+            <span className="text-sm font-semibold" style={{ color: elementColor(node.signIndex) }}>{node.sign}</span>
             {running && (
               <span className="rounded-full bg-accent/15 px-1.5 py-0.5 text-[10px] font-mono text-accent">
                 now

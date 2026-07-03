@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { ChartData } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
+import { planetColor, elementColor } from "@/lib/astroColors";
+import { RASHIS } from "@/lib/types";
 
 const GRAHAS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
 
@@ -26,11 +28,10 @@ export function GrahaExplorer({ chart }: { chart: ChartData }) {
               key={g}
               type="button"
               onClick={() => setSelected(g)}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                selected === g
-                  ? "bg-accent text-[#1a1206]"
-                  : "bg-white/5 text-text-muted hover:text-text-main"
+              className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
+                selected === g ? "bg-accent text-[#1a1206]" : "bg-white/5 hover:brightness-125"
               }`}
+              style={selected === g ? undefined : { color: planetColor(g) }}
             >
               {g}
             </button>
@@ -40,11 +41,11 @@ export function GrahaExplorer({ chart }: { chart: ChartData }) {
 
       {body ? (
         <Card className="p-5 space-y-4">
-          <h3 className="font-semibold text-lg">{body.planet}</h3>
+          <h3 className="font-semibold text-lg" style={{ color: planetColor(body.planet) }}>{body.planet}</h3>
           <dl className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
             <div>
               <dt className="text-text-muted">Sign</dt>
-              <dd className="font-medium">{body.rashi}</dd>
+              <dd className="font-semibold" style={{ color: elementColor(RASHIS.indexOf(body.rashi as (typeof RASHIS)[number])) }}>{body.rashi}</dd>
             </div>
             <div>
               <dt className="text-text-muted">House from Lagna</dt>

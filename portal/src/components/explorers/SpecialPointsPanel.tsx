@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Star, AlertTriangle, Target } from "lucide-react";
-import type { ChartData } from "@/lib/types";
+import { RASHIS, type ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
+import { elementColor } from "@/lib/astroColors";
 
 interface SpecialPoint {
   name: string;
@@ -124,8 +125,9 @@ export function SpecialPointsPanel({ chart }: { chart: ChartData | undefined }) 
             <div>
               <h3 className="text-sm font-medium">{key}</h3>
               {point ? (
-                <p className="text-xs text-text-muted font-mono mt-0.5">
-                  {point.rashi} · {point.degLabel}
+                <p className="text-xs font-mono mt-0.5">
+                  <span className="font-semibold" style={{ color: elementColor(RASHIS.indexOf(point.rashi as (typeof RASHIS)[number])) }}>{point.rashi}</span>
+                  <span className="text-text-muted"> · {point.degLabel}</span>
                 </p>
               ) : (
                 <p className="text-xs text-text-muted italic mt-0.5">

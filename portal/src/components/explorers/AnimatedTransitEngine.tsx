@@ -5,20 +5,9 @@ import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
 import { motion } from "motion/react";
 import type { ChartData, Dignity } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { PLANET_COLORS } from "@/lib/astroColors";
 
 // ── Constants ───────────────────────────────────────────────────────────────
-
-const PLANET_COLORS: Record<string, string> = {
-  Sun: "#f59e0b",
-  Moon: "#c0c0c0",
-  Mars: "#ef4444",
-  Mercury: "#22c55e",
-  Jupiter: "#c5a46e",
-  Venus: "#ec4899",
-  Saturn: "#6b7280",
-  Rahu: "#8b5cf6",
-  Ketu: "#14b8a6",
-};
 
 const PLANETS = [
   "Sun",

@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Overlay } from "@/components/ui/Overlay";
 import type { KalachakraNode } from "@/lib/types";
 import { leapStyle, strengthStyle } from "./kalachakraCopy";
+import { elementColor } from "@/lib/astroColors";
 
 export function LeapExplanationSheet({
   node,
@@ -27,7 +28,7 @@ export function LeapExplanationSheet({
             <div>
               <div className={clsx("text-base font-semibold", style.colorClass)}>{leap.label}</div>
               <div className="text-xs text-text-muted font-mono">
-                {node.sign} · {node.start} → {node.end}
+                <span className="font-semibold" style={{ color: elementColor(node.signIndex) }}>{node.sign}</span> · {node.start} → {node.end}
               </div>
             </div>
           </div>

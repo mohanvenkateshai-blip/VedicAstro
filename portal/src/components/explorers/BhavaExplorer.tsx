@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ChartData } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 const SIGN_LORDS = [
   "Mars", "Venus", "Mercury", "Moon", "Sun", "Mercury",
@@ -73,11 +74,11 @@ export function BhavaExplorer({ chart }: { chart: ChartData }) {
         <dl className="grid grid-cols-2 gap-3 text-sm">
           <div>
             <dt className="text-text-muted">Sign on cusp</dt>
-            <dd className="font-medium">{signName}</dd>
+            <dd className="font-semibold" style={{ color: elementColor(signIdx) }}>{signName}</dd>
           </div>
           <div>
             <dt className="text-text-muted">House lord</dt>
-            <dd className="font-medium">{lord}</dd>
+            <dd className="font-semibold" style={{ color: planetColor(lord) }}>{lord}</dd>
           </div>
           {sav != null && (
             <div>
@@ -89,7 +90,12 @@ export function BhavaExplorer({ chart }: { chart: ChartData }) {
             <dt className="text-text-muted">Occupants</dt>
             <dd className="font-medium">
               {occupants.length
-                ? occupants.map((p) => p.planet).join(", ")
+                ? occupants.map((p, i) => (
+                    <span key={p.planet}>
+                      {i > 0 && ", "}
+                      <span style={{ color: planetColor(p.planet) }}>{p.planet}</span>
+                    </span>
+                  ))
                 : "—"}
             </dd>
           </div>
@@ -101,9 +107,9 @@ export function BhavaExplorer({ chart }: { chart: ChartData }) {
             <ul className="space-y-2 text-sm">
               {occupants.map((p) => (
                 <li key={p.planet} className="flex justify-between gap-4">
-                  <span>{p.planet}</span>
+                  <span className="font-medium" style={{ color: planetColor(p.planet) }}>{p.planet}</span>
                   <span className="text-text-muted">
-                    {p.rashi} · {p.nakshatra} P{p.pada}
+                    <span style={{ color: elementColor(p.signIndex) }}>{p.rashi}</span> · {p.nakshatra} P{p.pada}
                     {p.retro ? " · R" : ""}
                     {p.dignity ? ` · ${p.dignity}` : ""}
                   </span>

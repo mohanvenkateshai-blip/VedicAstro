@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Card } from "@/components/ui/Card";
 import type { ChartData } from "@/lib/types";
 import { RASHIS, RASHI_SHORT, PLANET_SHORT } from "@/lib/types";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 const BAV_ROWS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Lagna"];
 
@@ -65,7 +66,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
                   isLagna ? "border-accent" : "border-hairline",
                 )}
               >
-                <div className="text-[10px] font-mono uppercase tracking-wider text-text-muted">
+                <div className="text-[10px] font-mono uppercase tracking-wider font-semibold" style={{ color: elementColor(i) }}>
                   {RASHIS[i]}
                   {isLagna && <span className="text-accent"> · Lg</span>}
                 </div>
@@ -88,10 +89,8 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
               {RASHI_SHORT.map((r, i) => (
                 <th
                   key={i}
-                  className={clsx(
-                    "font-mono text-[10px] text-text-muted pb-2 px-1",
-                    i === akv.lagnaSignIdx && "text-accent",
-                  )}
+                  className="font-mono text-[10px] font-semibold pb-2 px-1"
+                  style={{ color: i === akv.lagnaSignIdx ? "var(--color-accent)" : elementColor(i) }}
                 >
                   {r}
                 </th>
@@ -106,8 +105,8 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
               const rowTotal = row.reduce((a, b) => a + b, 0);
               return (
                 <tr key={planet} className="border-t border-hairline">
-                  <td className="py-1.5 pr-2 font-medium whitespace-nowrap">
-                    {PLANET_SHORT[planet] ?? planet.slice(0, 2)} <span className="text-text-muted hidden sm:inline">{planet}</span>
+                  <td className="py-1.5 pr-2 font-semibold whitespace-nowrap" style={{ color: planet === "Lagna" ? "var(--color-accent)" : planetColor(planet) }}>
+                    {PLANET_SHORT[planet] ?? planet.slice(0, 2)} <span className="opacity-70 hidden sm:inline">{planet}</span>
                   </td>
                   {row.map((bindus, i) => {
                     const b = band(bindus);

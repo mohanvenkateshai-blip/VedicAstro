@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { clsx } from "clsx";
-import type { KalachakraLeapInfo, KalachakraTimelineEntry } from "@/lib/types";
+import { RASHIS, type KalachakraLeapInfo, type KalachakraTimelineEntry } from "@/lib/types";
 import { LEAP_STYLES, leapStyle } from "./kalachakraCopy";
+import { elementColor } from "@/lib/astroColors";
 
 const LEVEL_LABELS: Record<number, string> = { 1: "MD", 2: "AD", 3: "PD" };
 const LEAP_TYPES: KalachakraLeapInfo["type"][] = ["frog_leap", "lions_leap", "monkey_leap"];
@@ -87,7 +88,7 @@ export function LeapQuickNav({
                   <span className="font-mono text-[10px] text-text-muted shrink-0">
                     {LEVEL_LABELS[entry.level] ?? entry.level}
                   </span>
-                  <span className="font-medium truncate">{entry.sign}</span>
+                  <span className="font-semibold truncate" style={{ color: elementColor(RASHIS.indexOf(entry.sign as (typeof RASHIS)[number])) }}>{entry.sign}</span>
                   <span
                     className={clsx(
                       "shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide",

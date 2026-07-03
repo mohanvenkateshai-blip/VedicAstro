@@ -13,6 +13,8 @@ import type {
   GodNodeInsight,
 } from "@/lib/types";
 import type { BirthDefaults } from "@/lib/birth-params";
+import { RASHIS } from "@/lib/types";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 // ─── Shared primitives ───────────────────────────────────────────────────────
 
@@ -93,11 +95,11 @@ function NatalCard({ report }: { report: ReportFacts }) {
               .filter((p) => p.planet !== "Lagna")
               .map((p) => (
                 <tr key={p.planet} className="border-b border-hairline/60">
-                  <td className="py-1.5 pr-3 font-medium">
+                  <td className="py-1.5 pr-3 font-semibold" style={{ color: planetColor(p.planet) }}>
                     {p.planet}
                     {p.retrograde ? <span className="text-amber-600 ml-1">℞</span> : null}
                   </td>
-                  <td className="py-1.5 pr-3">{p.rashi}</td>
+                  <td className="py-1.5 pr-3" style={{ color: elementColor(RASHIS.indexOf(p.rashi as (typeof RASHIS)[number])) }}>{p.rashi}</td>
                   <td className="py-1.5 pr-3 tabular-nums">{p.degree}</td>
                   <td className="py-1.5 pr-3">
                     {p.nakshatra} p{p.pada}
@@ -295,8 +297,8 @@ function DashaLadderCard({ report }: { report: ReportFacts }) {
       <SectionHeading>Vimshottari ladder (current)</SectionHeading>
       <div className="text-xs font-mono space-y-1">
         {ladder.slice(0, 5).map((r: any, i: number) => (
-          <div key={i} className={i === 0 ? "text-accent font-semibold" : ""}>
-            {r.lord} · {r.start} → {r.end} ({r.years}y)
+          <div key={i} className={i === 0 ? "font-semibold" : "text-text-muted"}>
+            <span style={{ color: planetColor(r.lord) }}>{r.lord}</span> · {r.start} → {r.end} ({r.years}y)
           </div>
         ))}
       </div>

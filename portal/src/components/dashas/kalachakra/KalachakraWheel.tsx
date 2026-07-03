@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import type { KalachakraCycle } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
+import { elementColor } from "@/lib/astroColors";
 
 interface Slice {
   index: number;
   sign: string;
+  signIndex: number;
   years: number;
   startDeg: number;
   endDeg: number;
@@ -26,6 +28,7 @@ function sliceAngles(cycle: KalachakraCycle): Slice[] {
     return {
       index: n.index,
       sign: n.sign,
+      signIndex: n.signIndex,
       years: n.years,
       startDeg,
       endDeg,
@@ -146,8 +149,8 @@ export function KalachakraWheel({
               dominantBaseline="middle"
               fontSize={11}
               className="font-mono pointer-events-none"
-              fill={isCurrent ? "var(--color-accent)" : "var(--color-text-muted)"}
-              fontWeight={isCurrent ? 700 : 400}
+              fill={isCurrent ? "var(--color-accent)" : elementColor(s.signIndex)}
+              fontWeight={isCurrent ? 700 : 600}
             >
               {s.sign.slice(0, 3)}
             </text>

@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Loader, AlertTriangle, Info } from "lucide-react";
-import type { ChartData } from "@/lib/types";
+import { RASHIS, type ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
+import { PLANET_COLORS as PLANET_COLOR, elementColor } from "@/lib/astroColors";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -50,17 +51,6 @@ const NEUTRAL = "#94a3b8";
 const MOON_C  = "#60a5fa";
 const LAGNA_C = "#f59e0b";
 
-const PLANET_COLOR: Record<string, string> = {
-  Sun:     "#f97316",
-  Moon:    "#94a3b8",
-  Mars:    "#ef4444",
-  Mercury: "#22c55e",
-  Jupiter: "#facc15",
-  Venus:   "#ec4899",
-  Saturn:  "#7c3aed",
-  Rahu:    "#64748b",
-  Ketu:    "#a78bfa",
-};
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -157,7 +147,7 @@ function PlanetRow({ p, showLagna }: { p: PlanetTransit; showLagna: boolean }) {
             <span className="text-sm font-medium" style={{ color }}>{p.planet}</span>
             {p.retrograde && <span className="text-[9px] font-mono" style={{ color: `${color}77` }}>℞</span>}
           </div>
-          <div className="text-[10px] text-text-muted font-mono">{p.rashi}</div>
+          <div className="text-[10px] font-mono" style={{ color: elementColor(RASHIS.indexOf(p.rashi as (typeof RASHIS)[number])) }}>{p.rashi}</div>
         </td>
 
         {/* House from Moon */}

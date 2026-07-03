@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
-import type { KalachakraTimelineEntry } from "@/lib/types";
+import { RASHIS, type KalachakraTimelineEntry } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
+import { elementColor } from "@/lib/astroColors";
 
 const LEVEL_LABELS: Record<number, string> = { 1: "MD", 2: "AD", 3: "PD" };
 
@@ -26,7 +27,7 @@ function TimelineRow({ entry }: { entry: KalachakraTimelineEntry }) {
         <span className="font-mono text-[10px] text-text-muted shrink-0">
           {LEVEL_LABELS[entry.level] ?? entry.level}
         </span>
-        <span className="font-medium truncate">{entry.sign}</span>
+        <span className="font-semibold truncate" style={{ color: elementColor(RASHIS.indexOf(entry.sign as (typeof RASHIS)[number])) }}>{entry.sign}</span>
         <span className={clsx("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold", style.colorClass, style.bgClass)}>
           {style.shortLabel}
         </span>

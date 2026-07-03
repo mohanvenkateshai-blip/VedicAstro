@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { KundaliChart } from "./KundaliChart";
 import type { ChartData } from "@/lib/types";
 import { RASHIS } from "@/lib/types";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 const DIGNITY_COLOR: Record<string, string> = {
   exalted: "text-success",
@@ -67,7 +68,8 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
             variant={variant}
             sav={showSav && vargaKey === "D1" ? sav : undefined}
             degrees={degrees}
-            size={340}
+            size={460}
+            className="drop-shadow-[0_10px_28px_rgba(0,0,0,0.4)]"
           />
         </motion.div>
         {degrees && (
@@ -111,7 +113,7 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
             <tbody>
               <tr className="border-b border-hairline/60">
                 <td className="px-3 py-2 font-medium text-accent">Lagna</td>
-                <td className="px-3 py-2">{chart.lagna.rashi}</td>
+                <td className="px-3 py-2" style={{ color: elementColor(RASHIS.indexOf(chart.lagna.rashi as (typeof RASHIS)[number])) }}>{chart.lagna.rashi}</td>
                 <td className="px-3 py-2">{chart.lagna.nakshatra}</td>
                 <td className="px-3 py-2">{chart.lagna.pada}</td>
                 <td className="px-3 py-2 font-mono text-xs">{chart.lagna.degLabel}</td>
@@ -119,8 +121,8 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
               </tr>
               {chart.planets.map((p) => (
                 <tr key={p.planet} className="border-b border-hairline/60 last:border-0 hover:bg-[color-mix(in_srgb,var(--color-accent)_5%,transparent)]">
-                  <td className="px-3 py-2 font-medium">{p.planet}</td>
-                  <td className="px-3 py-2">{p.rashi}</td>
+                  <td className="px-3 py-2 font-semibold" style={{ color: planetColor(p.planet) }}>{p.planet}</td>
+                  <td className="px-3 py-2" style={{ color: elementColor(RASHIS.indexOf(p.rashi as (typeof RASHIS)[number])) }}>{p.rashi}</td>
                   <td className="px-3 py-2">{p.nakshatra}</td>
                   <td className="px-3 py-2">{p.pada}</td>
                   <td className="px-3 py-2 font-mono text-xs">{p.degLabel}</td>

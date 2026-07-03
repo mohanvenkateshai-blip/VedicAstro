@@ -3,8 +3,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { Loader, Star, Target } from "lucide-react";
 import { clsx } from "clsx";
-import type { ChartData } from "@/lib/types";
+import { RASHIS, type ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 interface KPCusp {
   bhava: number;
@@ -16,6 +17,7 @@ interface KPCusp {
 
 interface KPPlanet {
   planet: string;
+  rashi: string;
   rashi_label: string;
   retro: boolean;
   bhava: number;
@@ -124,6 +126,7 @@ function normalizeKP(raw: Record<string, unknown>): KPSystemResponse {
     const degLabel = String(p.degLabel ?? "");
     return {
       planet: String(p.planet ?? p.name ?? ""),
+      rashi,
       rashi_label:
         String(p.rashi_label ?? "") ||
         (rashi && degLabel ? `${rashi} ${degLabel}` : rashi || "—"),
@@ -502,20 +505,14 @@ export function KPExplorer({ chart }: { chart?: ChartData }) {
                   >
                     <td
                       className={clsx(
-                        "px-3 py-2.5 font-medium whitespace-nowrap",
-                        isLagna
-                          ? "font-bold"
-                          : "text-text-main",
+                        "px-3 py-2.5 font-semibold whitespace-nowrap",
+                        isLagna && "font-bold",
                       )}
-                      style={
-                        isLagna
-                          ? { color: "var(--color-accent-strong)" }
-                          : undefined
-                      }
+                      style={{ color: isLagna ? "var(--color-accent-strong)" : planetColor(p.planet) }}
                     >
                       {p.planet}
                     </td>
-                    <td className="px-3 py-2.5 font-mono tabular-nums text-text-main">
+                    <td className="px-3 py-2.5 font-mono tabular-nums" style={{ color: elementColor(RASHIS.indexOf(p.rashi as (typeof RASHIS)[number])) }}>
                       {p.rashi_label}
                     </td>
                     <td className="px-3 py-2.5 font-mono tabular-nums text-center">
@@ -585,7 +582,7 @@ export function KPExplorer({ chart }: { chart?: ChartData }) {
                     className="h-3.5 w-3.5 shrink-0"
                     style={{ color: STAR_LORD_COLOR }}
                   />
-                  <span className="text-sm font-semibold text-text-main">
+                  <span className="text-sm font-semibold" style={{ color: planetColor(entry.planet) }}>
                     {entry.planet}
                   </span>
                 </div>

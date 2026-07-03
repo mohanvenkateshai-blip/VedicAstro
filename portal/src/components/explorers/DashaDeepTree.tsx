@@ -8,6 +8,7 @@ import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow, DashaPredicti
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 import { DashaSeriesChart, ViewFromToggle } from "./DashaSeriesChart";
+import { planetColor } from "@/lib/astroColors";
 
 // Re-export for consumers that previously imported from here
 export type { DashaDeepData, DashaNode, DashaLadderRow };
@@ -95,8 +96,8 @@ function FructWindowCard({ w }: { w: FructificationWindow }) {
         </div>
       </div>
       <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-        <span className="text-[10px] font-mono text-text-muted">♄ {w.saturn.sign} · {w.saturn.house}th</span>
-        <span className="text-[10px] font-mono text-text-muted">♃ {w.jupiter.sign} · {w.jupiter.house}th</span>
+        <span className="text-[10px] font-mono" style={{ color: planetColor("Saturn") }}>♄ {w.saturn.sign} · {w.saturn.house}th</span>
+        <span className="text-[10px] font-mono" style={{ color: planetColor("Jupiter") }}>♃ {w.jupiter.sign} · {w.jupiter.house}th</span>
         <span className="text-[9px] font-mono text-text-muted opacity-60">from {w.ref_label}</span>
       </div>
       <p className="text-[10px] text-text-muted leading-relaxed">{w.narrative}</p>
@@ -341,7 +342,7 @@ function CurrentLadder({ ladder }: { ladder: DashaLadderRow[] }) {
           >
             {row.levelLabel}
           </span>
-          <span className="font-semibold" style={{ color: DASHA.main }}>
+          <span className="font-semibold" style={{ color: planetColor(row.lord) }}>
             {row.lord}
           </span>
           <span className="text-xs font-mono text-text-muted tabular-nums">
@@ -442,7 +443,7 @@ function MahadashaChip({
     >
       <span
         className={clsx("text-xs font-mono tracking-wide", isCurrent ? "font-semibold" : "font-medium")}
-        style={{ color: isCurrent ? DASHA.main : "var(--color-text-main)" }}
+        style={{ color: planetColor(lord) }}
       >
         {lord}
       </span>
@@ -537,13 +538,7 @@ function DashaNodeCard({
                 "text-sm truncate",
                 level === 1 ? "font-semibold" : "font-medium",
               )}
-              style={{
-                color: isCurrent
-                  ? DASHA.main
-                  : level === 1
-                    ? DASHA.main
-                    : "var(--color-text-main)",
-              }}
+              style={{ color: planetColor(node.lord) }}
             >
               {node.lord}
             </span>

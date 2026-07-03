@@ -8,6 +8,7 @@ import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 import { DashaSeriesChart, ViewFromToggle } from "./DashaSeriesChart";
+import { planetColor } from "@/lib/astroColors";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -125,11 +126,11 @@ function MahaChip({ lord, yoginiName, start, durationYears, isCurrent, isExpande
         borderColor:     isCurrent ? color : isExpanded ? border : "var(--color-hairline)",
       }}
     >
-      <span className="text-xs font-mono font-semibold" style={{ color: isCurrent ? color : "var(--color-text-main)" }}>
+      <span className="text-xs font-mono font-semibold" style={{ color: planetColor(lord) }}>
         {primary}
       </span>
       {secondary && (
-        <span className="text-[9px] font-mono" style={{ color: isCurrent ? color : "var(--color-text-muted)", opacity: 0.7 }}>
+        <span className="text-[9px] font-mono" style={{ color: planetColor(lord), opacity: 0.75 }}>
           {secondary}
         </span>
       )}
@@ -338,7 +339,7 @@ function AntarRow({
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="text-sm font-medium" style={{ color: isCurrent ? color : "var(--color-text-main)" }}>
+            <span className="text-sm font-medium" style={{ color: planetColor(node.lord) }}>
               {displayName}
             </span>
             {isCurrent && (
@@ -563,7 +564,7 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
                     style={{ color: t.color, opacity: 0.7 }}>
                     {row.levelLabel}
                   </span>
-                  <span className="text-sm font-semibold" style={{ color: t.color }}>
+                  <span className="text-sm font-semibold" style={{ color: planetColor(row.lord) }}>
                     {row.yoginiName ? `${row.yoginiName} (${row.lord})` : row.lord}
                   </span>
                   {row.start && row.end && (
@@ -705,7 +706,7 @@ function VimshottariCard({ data }: { data: VimshottariSummary }) {
                 style={{ color: VIMS_COLOR, opacity: 0.7 }}>
                 {row.levelLabel}
               </span>
-              <span className="text-sm font-semibold" style={{ color: VIMS_COLOR }}>{row.lord}</span>
+              <span className="text-sm font-semibold" style={{ color: planetColor(row.lord) }}>{row.lord}</span>
               {row.start && row.end && (
                 <span className="text-[11px] font-mono tabular-nums text-text-muted">
                   {row.start.slice(0,10)} → {row.end.slice(0,10)}
@@ -716,8 +717,8 @@ function VimshottariCard({ data }: { data: VimshottariSummary }) {
         </div>
       ) : (
         <div className="space-y-1.5 text-sm text-text-muted font-mono">
-          {data.maha && <p>Maha: <span style={{ color: VIMS_COLOR }}>{data.maha}</span></p>}
-          {data.antara && <p>Antar: <span style={{ color: VIMS_COLOR }}>{data.antara}</span></p>}
+          {data.maha && <p>Maha: <span style={{ color: planetColor(data.maha) }}>{data.maha}</span></p>}
+          {data.antara && <p>Antar: <span style={{ color: planetColor(data.antara) }}>{data.antara}</span></p>}
         </div>
       )}
 

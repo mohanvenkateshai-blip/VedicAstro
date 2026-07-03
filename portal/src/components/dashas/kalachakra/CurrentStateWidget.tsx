@@ -1,9 +1,10 @@
 "use client";
 
 import { clsx } from "clsx";
-import type { KalachakraDeepData } from "@/lib/types";
+import { RASHIS, type KalachakraDeepData } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
 import { narrateTeaser } from "./kalachakraNarrative";
+import { elementColor } from "@/lib/astroColors";
 
 function SignPill({ label, sign }: { label: string; sign: string }) {
   return (
@@ -11,7 +12,7 @@ function SignPill({ label, sign }: { label: string; sign: string }) {
       <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted">
         {label}
       </span>
-      <span className="text-sm font-medium">{sign}</span>
+      <span className="text-sm font-semibold" style={{ color: elementColor(RASHIS.indexOf(sign as (typeof RASHIS)[number])) }}>{sign}</span>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { Overlay } from "@/components/ui/Overlay";
 import type { KalachakraCycle, KalachakraMoonNavamsaPoint, KalachakraNode, KalachakraSignInterpretation } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
 import { narratePeriod } from "./kalachakraNarrative";
+import { elementColor } from "@/lib/astroColors";
 
 const LEVEL_LABELS: Record<number, string> = { 1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha" };
 
@@ -35,7 +36,7 @@ export function PeriodDetailModal({
           <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted">
             {LEVEL_LABELS[node.level] ?? `Level ${node.level}`}
           </div>
-          <h3 className="text-lg font-semibold mt-1">{node.sign}</h3>
+          <h3 className="text-lg font-semibold mt-1" style={{ color: elementColor(node.signIndex) }}>{node.sign}</h3>
 
           <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
             <div className="rounded-xl border border-hairline bg-surface px-3 py-2">
