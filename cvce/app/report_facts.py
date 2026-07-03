@@ -10,9 +10,11 @@ from app.dasha_vimshottari import (
     antardasha_table,
     birth_balance,
     dasha_deep_payload,
+    mahadasha_tree,
     running_ladder,
 )
 from app.ephem import jd_place, parse_dt, set_ayanamsa
+from app.remedies import remedy_for_yoga
 from knowledge_engine.integration import get_knowledge_engine, get_llm_narration
 from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
 from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
@@ -303,6 +305,152 @@ def _compute_forecast(
             )
 
     return forecast
+
+
+def _when_relative(start: str, end: str, today_str: str) -> str:
+    if end < today_str:
+        return "past"
+    if start > today_str:
+        return "future"
+    return "current"
+
+
+def _dignity_bonus(dignity: str | None) -> float:
+    if dignity == "exalted":
+        return 8.0
+    if dignity == "own":
+        return 4.0
+    if dignity == "debilitated":
+        return -8.0
+    if dignity == "combust":
+        return -5.0
+    return 0.0
+
+
+def _window_phrase(w: dict) -> str:
+    planet, start, end, when = w["planet"], w["start"], w["end"], w["when"]
+    if when == "current":
+        return f"is active now, through {planet}'s Mahadasha (running to {end})"
+    if when == "future":
+        return f"concentrates during {planet}'s Mahadasha ({start} to {end})"
+    return f"was most active during {planet}'s Mahadasha ({start} to {end}, already elapsed)"
+
+
+def _build_manifestation_text(yoga: dict, windows: list[dict]) -> str:
+    base = (yoga.get("prediction") or yoga.get("definition") or "").strip()
+    if not windows:
+        return base
+    phrases = [_window_phrase(w) for w in windows]
+    if len(phrases) == 1:
+        timing = phrases[0]
+    else:
+        timing = "; and ".join(phrases)
+    timing = timing[0].upper() + timing[1:]
+    if base:
+        return f"{base} {timing}."
+    return f"{timing}."
+
+
+def _priority_predictions(
+    enriched_yogas: dict,
+    sav: list[int] | None,
+    shadbala_data: dict | None,
+    planet_table: list[dict],
+    jd: float,
+    place,
+    today_str: str,
+    max_items: int = 6,
+) -> list[dict]:
+    """Rank detected yogas by actual chart strength (SAV + Shadbala + dignity
+    of the planets involved) and attach a real timing window (that planet's
+    Mahadasha) — replaces "40 yogas, each labeled moderate" with a small,
+    prioritized, timed, and (where relevant) remedied set.
+
+    Scope note: timing here is at Mahadasha granularity (each of the 9
+    planets runs as MD exactly once per 120-year Vimshottari cycle, so this
+    is an unambiguous single window per planet — cheap to compute for every
+    yoga). Month-level precision (Saturn+Jupiter double-transit within one
+    already-selected Antardasha) is available via app/fructification.py but
+    deliberately not run here for all ~40 yogas in one request — see the
+    Horoscope Report redesign plan for why this is a documented V1 scope
+    limit, not an oversight.
+    """
+    if not enriched_yogas or sav is None:
+        return []
+
+    sign_idx_by_planet: dict[str, int] = {}
+    dignity_by_planet: dict[str, str | None] = {}
+    for p in planet_table:
+        name = p.get("planet")
+        if not name:
+            continue
+        idx = _rashi_idx(p.get("rashi"))
+        if idx is not None:
+            sign_idx_by_planet[name] = idx
+        dignity_by_planet[name] = p.get("dignity")
+
+    try:
+        md_tree = mahadasha_tree(jd, place, max_level=1)
+    except Exception:
+        md_tree = []
+    md_window_by_planet = {n["lord"]: {"start": n["start"], "end": n["end"]} for n in md_tree}
+
+    scored: list[dict] = []
+    for key, y in enriched_yogas.items():
+        involved = [p for p in (y.get("planets") or []) if p]
+        if not involved:
+            continue  # no planet data -> can't score or time this one honestly
+
+        sav_vals = [sav[sign_idx_by_planet[p]] for p in involved if p in sign_idx_by_planet]
+        avg_sav = sum(sav_vals) / len(sav_vals) if sav_vals else 25.0
+
+        shadbala_vals = []
+        if shadbala_data:
+            for p in involved:
+                row = shadbala_data.get(p)
+                if row and row.get("total_rupa") is not None:
+                    shadbala_vals.append(float(row["total_rupa"]))
+        avg_shadbala = sum(shadbala_vals) / len(shadbala_vals) if shadbala_vals else 5.0
+
+        dignity_component = sum(_dignity_bonus(dignity_by_planet.get(p)) for p in involved) / len(involved)
+
+        # Approximate weights, tuned to put SAV (classical 0-40ish per-sign
+        # scale) and Shadbala (typically 2-12 rupa) on comparable footing;
+        # not a canonical formula — flagged for tuning as real charts are
+        # reviewed against it.
+        score = round(avg_sav + avg_shadbala * 3 + dignity_component, 2)
+
+        windows = []
+        for p in involved:
+            w = md_window_by_planet.get(p)
+            if w:
+                windows.append(
+                    {
+                        "planet": p,
+                        "start": w["start"],
+                        "end": w["end"],
+                        "when": _when_relative(w["start"], w["end"], today_str),
+                    }
+                )
+        if not windows:
+            continue  # no timing signal -> don't present as a "when" prediction
+
+        scored.append(
+            {
+                "yoga_key": key,
+                "name": y.get("name") or key,
+                "score": score,
+                "planets_involved": involved,
+                "timing_windows": windows,
+                "manifestation_text": _build_manifestation_text(y, windows),
+                "remedy": remedy_for_yoga(
+                    involved, dignity_by_planet, y.get("prediction") or y.get("definition") or ""
+                ),
+            }
+        )
+
+    scored.sort(key=lambda e: e["score"], reverse=True)
+    return scored[:max_items]
 
 
 def build_report_facts(
@@ -653,6 +801,20 @@ def build_report_facts(
         }
     ]
 
+    # --- Priority predictions: prioritized, timed, remedied (see redesign plan) ---
+    try:
+        priority_predictions = _priority_predictions(
+            yogas_raw.get("yogas") if yogas_raw else {},
+            ashtakavarga_data.get("sav") if ashtakavarga_data else None,
+            shadbala_data,
+            planet_table,
+            jd,
+            place,
+            query_date,
+        )
+    except Exception:
+        priority_predictions = []
+
     facts = {
         "schemaVersion": "1.1",
         "meta": {
@@ -708,6 +870,7 @@ def build_report_facts(
         "next_shubh_days": next_shubh_days,
         "timing_merge": timing_merge,
         "forecast": forecast,
+        "priority_predictions": priority_predictions,
         "yogas": {
             "activeCount": yogas_raw.get("activeCount") if yogas_raw else 0,
             "totalChecked": yogas_raw.get("totalChecked") if yogas_raw else None,
