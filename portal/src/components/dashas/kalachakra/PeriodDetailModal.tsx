@@ -2,23 +2,31 @@
 
 import { clsx } from "clsx";
 import { Overlay } from "@/components/ui/Overlay";
-import type { KalachakraCycle, KalachakraNode } from "@/lib/types";
+import type { KalachakraCycle, KalachakraMoonNavamsaPoint, KalachakraNode, KalachakraSignInterpretation } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
+import { narratePeriod } from "./kalachakraNarrative";
 
 const LEVEL_LABELS: Record<number, string> = { 1: "Mahadasha", 2: "Antardasha", 3: "Pratyantardasha" };
 
 export function PeriodDetailModal({
   node,
   cycle,
+  signInterpretations,
+  moonNavamsaPoint,
   onClose,
 }: {
   node: KalachakraNode | null;
   cycle: KalachakraCycle | undefined;
+  signInterpretations?: KalachakraSignInterpretation[] | null;
+  moonNavamsaPoint?: KalachakraMoonNavamsaPoint | null;
   onClose: () => void;
 }) {
   const leap = node?.leapFromPrevious;
   const isDeha = cycle && node && node.sign === cycle.dehaRasi;
   const isJeeva = cycle && node && node.sign === cycle.jeevaRasi;
+  const narrative = node
+    ? narratePeriod(node, signInterpretations, moonNavamsaPoint, cycle?.dehaRasi, cycle?.jeevaRasi)
+    : [];
 
   return (
     <Overlay open={!!node} onClose={onClose} slideFrom="center" ariaLabel="Period details">
@@ -63,6 +71,21 @@ export function PeriodDetailModal({
             <div className={clsx("mt-4 rounded-xl border p-3", leapStyle(leap.type).bgClass, leapStyle(leap.type).borderClass)}>
               <div className={clsx("text-sm font-medium", leapStyle(leap.type).colorClass)}>{leap.label}</div>
               <p className="text-xs text-text-muted mt-1 leading-relaxed">{leapStyle(leap.type).explanation}</p>
+            </div>
+          )}
+
+          {narrative.length > 0 && (
+            <div className="mt-4 rounded-xl border border-hairline bg-surface p-3.5">
+              <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted mb-2">
+                Interpretation
+              </div>
+              <div className="space-y-2.5">
+                {narrative.map((line, i) => (
+                  <p key={i} className="text-xs leading-relaxed text-text-fg">
+                    {line}
+                  </p>
+                ))}
+              </div>
             </div>
           )}
 

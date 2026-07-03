@@ -113,7 +113,13 @@ export function KalachakraDashboard({ data }: { data: KalachakraDeepData }) {
       )}
 
       <LeapExplanationSheet node={leapNode} onClose={() => setLeapNode(null)} />
-      <PeriodDetailModal node={periodNode} cycle={data.cycle} onClose={() => setPeriodNode(null)} />
+      <PeriodDetailModal
+        node={periodNode}
+        cycle={data.cycle}
+        signInterpretations={data.signInterpretations}
+        moonNavamsaPoint={data.moonNavamsaPoint}
+        onClose={() => setPeriodNode(null)}
+      />
     </div>
   );
 }

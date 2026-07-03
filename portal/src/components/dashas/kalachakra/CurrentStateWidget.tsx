@@ -3,6 +3,7 @@
 import { clsx } from "clsx";
 import type { KalachakraDeepData } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
+import { narrateTeaser } from "./kalachakraNarrative";
 
 function SignPill({ label, sign }: { label: string; sign: string }) {
   return (
@@ -18,6 +19,8 @@ function SignPill({ label, sign }: { label: string; sign: string }) {
 export function CurrentStateWidget({ data }: { data: KalachakraDeepData }) {
   const cycle = data.cycle;
   const leap = data.activeLeap;
+  const deepest = data.currentLadder?.[data.currentLadder.length - 1];
+  const teaser = deepest ? narrateTeaser(deepest.signIndex, data.signInterpretations) : null;
 
   return (
     <div className="space-y-3">
@@ -36,6 +39,10 @@ export function CurrentStateWidget({ data }: { data: KalachakraDeepData }) {
           </div>
         )}
       </div>
+
+      {teaser && (
+        <p className="text-xs text-text-muted leading-relaxed px-1">{teaser}</p>
+      )}
 
       {leap && (() => {
         const style = leapStyle(leap.type);

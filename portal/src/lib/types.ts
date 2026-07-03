@@ -462,6 +462,12 @@ export interface KalachakraLeapStrength {
   verdict: "positive_potential" | "mixed" | "challenging";
 }
 
+export interface KalachakraTravelDirection {
+  favorable: string[];
+  unfavorable: string[];
+  citation: string;
+}
+
 export interface KalachakraLeapInfo {
   isLeap: true;
   type: "frog_leap" | "lions_leap" | "monkey_leap";
@@ -476,6 +482,40 @@ export interface KalachakraLeapInfo {
   /** Ashtakavarga (SAV)-based positive-potential-vs-challenging verdict for
    * the leaping sign, per the handbook's modulating-factors table. */
   strength?: KalachakraLeapStrength;
+  /** Favorable/unfavorable travel directions for this exact sign transition —
+   * only present for the 6 (from,to) pairs PVR Rao's tutorial documents
+   * (p.12); omitted (not guessed) for all other transitions. */
+  travelDirection?: KalachakraTravelDirection | null;
+}
+
+export interface KalachakraArgala {
+  givers: string[];
+  obstructors: string[];
+  occupants: string[];
+  ownLordPresent: boolean;
+  maleficOccupant: string[];
+  verdict: "boosted" | "obstructed" | "neutral";
+  citation: string;
+}
+
+export interface KalachakraSignInterpretation {
+  signIndex: number;
+  sign: string;
+  argala: KalachakraArgala;
+  yogakaraka: string | null;
+  karakas: string[];
+  isLagnaLordSign: boolean;
+}
+
+export interface KalachakraLagnaLordAffliction {
+  planet: string | null;
+  afflicted: boolean;
+  reasons: string[];
+}
+
+export interface KalachakraMoonNavamsaPoint {
+  signIndex: number | null;
+  sign: string | null;
 }
 
 export interface KalachakraBirthNakshatra {
@@ -562,6 +602,12 @@ export interface KalachakraDeepData {
   /** Natal Sarvashtakavarga (12-sign bindu board) — the strength source for
    * each leap's positive-potential-vs-challenging verdict. */
   sav?: number[];
+  /** Argala/Yogakaraka/karaka verdict per sign (12 entries) — computed once
+   * per chart since it depends only on the natal chart, not on dates. Look
+   * up by a node's signIndex for its interpretation. */
+  signInterpretations?: KalachakraSignInterpretation[] | null;
+  lagnaLordAffliction?: KalachakraLagnaLordAffliction | null;
+  moonNavamsaPoint?: KalachakraMoonNavamsaPoint | null;
   currentLadder?: KalachakraLadderRow[];
   activeLeap?: KalachakraLeapInfo | null;
   dashaTree?: KalachakraNode[];

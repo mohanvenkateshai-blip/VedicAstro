@@ -69,6 +69,27 @@ export function LeapExplanationSheet({
               : "Outcome depends on chart strength — Ashtakavarga bindus in this sign, planets aspecting or occupying it, and the overall dasha lord's condition."}
           </p>
 
+          {leap.travelDirection && (
+            <div className="mt-3 rounded-xl border border-hairline bg-surface px-3 py-2.5">
+              <div className="text-[10px] font-mono uppercase tracking-wider text-text-muted mb-1.5">
+                Travel direction
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs">
+                {leap.travelDirection.favorable.map((d) => (
+                  <span key={d} className="rounded-full bg-success/10 px-2 py-0.5 text-success font-medium">
+                    {d} — favorable
+                  </span>
+                ))}
+                {leap.travelDirection.unfavorable.map((d) => (
+                  <span key={d} className="rounded-full bg-danger/10 px-2 py-0.5 text-danger font-medium">
+                    {d} — avoid
+                  </span>
+                ))}
+              </div>
+              <p className="text-[10px] text-text-muted mt-1.5">{leap.travelDirection.citation}</p>
+            </div>
+          )}
+
           {leap.verified === false && (
             <p className="mt-3 text-xs text-amber-600">
               Note: this name is geometric (non-adjacent sign jump), not classically verified for the
