@@ -178,6 +178,224 @@ def _sav_strength(sav: list[int], sign_idx: int) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Interpretive layer — Argala, Yogakaraka, house karakas, affliction,
+# travel direction, Moon's Navamsa cross-check.
+#
+# Argala house numbers (2nd/4th/11th give, obstructed by 12th/10th/3rd
+# respectively): Jaimini Maharishi's Upadesa Sutras 1.1.4-1.1.6
+# (knowledge-graph/raw/rath_s_jaimini_maharishis_upadesa_sutra.md).
+# Kalachakra-specific judgment (own-lord occupation = gain, 12th-from-rasi
+# occupant = loss, 8th/12th-lord or malefic occupant = adverse): BPHS Vol.2
+# Ch.50 v.53-59. V1 deliberately omits the sutras' secondary 5th/9th argala
+# and the Ketu-reversal nuance (1.1.7-1.1.9) — documented, not silently
+# dropped — and the givers/obstructors comparison below is a simplification
+# of sutra 1.1.7's fuller "assess the strength" instruction (no shadbala).
+# ---------------------------------------------------------------------------
+
+_MALEFICS = {"Sun", "Mars", "Saturn", "Rahu", "Ketu"}
+_SIGN_LORDS: dict[int, str] | None = None
+
+
+def _sign_lords_cached() -> dict[int, str]:
+    global _SIGN_LORDS
+    if _SIGN_LORDS is None:
+        from vedic_engine.synthesis.dasha_analyzer import PLANET_RULES
+
+        _SIGN_LORDS = {RASHIS.index(s): planet for planet, signs in PLANET_RULES.items() for s in signs}
+    return _SIGN_LORDS
+
+
+def _argala_verdict(sign_idx: int, natal_sign_map: dict[str, int]) -> dict:
+    """2nd/4th/11th-from-sign give Argala; 12th/10th/3rd-from-sign obstruct
+    (Jaimini Upadesa Sutras 1.1.4-1.1.6). `natal_sign_map` excludes 'Lagna'."""
+    givers_houses = {(sign_idx + 1) % 12, (sign_idx + 3) % 12, (sign_idx + 10) % 12}
+    obstructor_houses = {(sign_idx - 1) % 12, (sign_idx + 9) % 12, (sign_idx + 2) % 12}
+
+    givers = [p for p, s in natal_sign_map.items() if s in givers_houses]
+    obstructors = [p for p, s in natal_sign_map.items() if s in obstructor_houses]
+    occupants = [p for p, s in natal_sign_map.items() if s == sign_idx]
+
+    own_lord = _sign_lords_cached().get(sign_idx)
+    own_lord_present = own_lord in givers or own_lord in occupants
+    malefic_occupant = [p for p in occupants if p in _MALEFICS]
+
+    if malefic_occupant and not own_lord_present:
+        verdict = "obstructed"
+    elif own_lord_present or len(givers) > len(obstructors):
+        verdict = "boosted"
+    elif len(obstructors) > len(givers):
+        verdict = "obstructed"
+    else:
+        verdict = "neutral"
+
+    return {
+        "givers": givers,
+        "obstructors": obstructors,
+        "occupants": occupants,
+        "ownLordPresent": own_lord_present,
+        "maleficOccupant": malefic_occupant,
+        "verdict": verdict,
+        "citation": "Jaimini Upadesa Sutras 1.1.4-1.1.6; BPHS Vol.2 Ch.50 v.53-59",
+    }
+
+
+def _yogakaraka_giver(sign_idx: int, natal_sign_map: dict[str, int], lagna_sign_idx: int) -> str | None:
+    """Is the lagna's Yogakaraka (Phaladeepika Ch.20 sl.45-53 / BPHS Ch.34)
+    placed in, or giving Argala to, this sign? None if this lagna has no
+    Yogakaraka (6 of 12 lagnas don't — no single planet owns both a kendra
+    and trikona distinct from the lagna itself)."""
+    from vedic_engine.synthesis.dasha_analyzer import YOGAKARAKA_BY_LAGNA
+
+    yk = YOGAKARAKA_BY_LAGNA.get(RASHIS[lagna_sign_idx])
+    if not yk:
+        return None
+    yk_sign = natal_sign_map.get(yk)
+    if yk_sign is None:
+        return None
+    givers_houses = {(sign_idx + 1) % 12, (sign_idx + 3) % 12, (sign_idx + 10) % 12}
+    if yk_sign == sign_idx or yk_sign in givers_houses:
+        return yk
+    return None
+
+
+# General 12-house karaka (significator) table — classical BPHS doctrine,
+# corroborated against PVR Rao's own worked-example "Easy Reference" table
+# (Kalachakra Dasa Tutorial p.14-15) where matters overlap: 7th=Venus=Wife,
+# 10th=Sun=Career, 4th=Moon=Mother, 9th=Sun=Father all match exactly.
+HOUSE_KARAKAS: dict[int, list[str]] = {
+    1: ["Sun"],
+    2: ["Jupiter"],
+    3: ["Mars"],
+    4: ["Moon"],
+    5: ["Jupiter"],
+    6: ["Mars", "Saturn"],
+    7: ["Venus"],
+    8: ["Saturn"],
+    9: ["Sun", "Jupiter"],
+    10: ["Sun"],
+    11: ["Jupiter"],
+    12: ["Saturn", "Ketu"],
+}
+
+
+def _house_karakas_for_sign(sign_idx: int, lagna_sign_idx: int) -> list[str]:
+    house = ((sign_idx - lagna_sign_idx) % 12) + 1
+    return HOUSE_KARAKAS.get(house, [])
+
+
+def _lagna_lord_affliction(natal_sign_map: dict[str, int], lagna_sign_idx: int, planet_positions: list[dict]) -> dict:
+    """Is the Lagna lord afflicted (debilitated, combust, or sharing a sign
+    with a natural malefic)? Feeds the "unafflicted lagna lord" clause of the
+    Argala-boost rule (BPHS Vol.2 Ch.50 / general Jaimini practice)."""
+    lord = _sign_lords_cached().get(lagna_sign_idx)
+    if lord is None:
+        return {"planet": None, "afflicted": False, "reasons": []}
+
+    reasons = []
+    info = next((p for p in planet_positions if p.get("planet") == lord), None)
+    if info:
+        if info.get("dignity") == "debilitated":
+            reasons.append("debilitated")
+        if info.get("combust"):
+            reasons.append("combust")
+    lord_sign = natal_sign_map.get(lord)
+    if lord_sign is not None:
+        co_occupants = [p for p, s in natal_sign_map.items() if s == lord_sign and p != lord and p in _MALEFICS]
+        if co_occupants:
+            reasons.append(f"conjunct {', '.join(co_occupants)}")
+
+    return {"planet": lord, "afflicted": bool(reasons), "reasons": reasons}
+
+
+# Travel-direction guidance is genuinely example-specific in the source: PVR
+# Rao's tutorial (p.12) documents only 6 (from,to) sign-pairs — verified
+# computationally (all 16 birth-cycle combinations across kalachakra_cycle()
+# produce 24 distinct (from,to,leap-type) transitions) that this is NOT an
+# exhaustive rule. Direction guidance is shown only for these 6 documented
+# pairs; every other transition gets no guidance rather than an invented one.
+_TRAVEL_DIRECTIONS: dict[tuple[str, str], dict] = {
+    ("Virgo", "Cancer"): {"favorable": ["East", "North"], "unfavorable": []},
+    ("Leo", "Gemini"): {"favorable": ["Southwest"], "unfavorable": ["East"]},
+    ("Cancer", "Leo"): {"favorable": ["West"], "unfavorable": ["South"]},
+    ("Sagittarius", "Aries"): {"favorable": [], "unfavorable": ["All directions — avoid journeys"]},
+    ("Pisces", "Scorpio"): {"favorable": [], "unfavorable": ["North"]},
+    ("Leo", "Cancer"): {"favorable": [], "unfavorable": ["West"]},
+}
+
+
+def _travel_direction(from_sign: str | None, to_sign: str | None) -> dict | None:
+    if from_sign is None or to_sign is None:
+        return None
+    d = _TRAVEL_DIRECTIONS.get((from_sign, to_sign))
+    if d is None:
+        return None
+    return {
+        **d,
+        "citation": "P.V.R. Narasimha Rao, Kalachakra Dasa Tutorial p.12 (Parasara's prescribed directions)",
+    }
+
+
+# Same-lord-owns pairs mirror each other (Ar<->Sc, Ta<->Li, Ge<->Vi, Sg<->Pi,
+# Cp<->Aq); Cancer and Leo are self-mirrors since each is ruled by a planet
+# (Moon/Sun) that owns no other sign. Resolves an internal inconsistency in
+# PVR Rao's tutorial (p.9-10 derives Cn/Le as self-mirrors with a stated
+# rationale; p.11's Navamsa section lists "Cn<->Le" as if swapped — the
+# rigorous p.9-10 derivation is trusted here).
+_MIRROR_SIGN = {0: 7, 7: 0, 1: 6, 6: 1, 2: 5, 5: 2, 3: 3, 4: 4, 8: 11, 11: 8, 9: 10, 10: 9}
+
+
+def _moon_navamsa_point(jd: float, place, is_savya: bool) -> dict:
+    """Moon's D9 (Navamsa) sign — same sign for Savya births, mirror-image
+    sign for Apasavya (PVR Rao tutorial p.11, mirror rule per p.9-10)."""
+    from app.chart import _varga_sign_map
+
+    sign_map, _pp = _varga_sign_map(jd, place, 9)
+    moon_d9 = sign_map.get("Moon")
+    if moon_d9 is None:
+        return {"signIndex": None, "sign": None}
+    point = moon_d9 if is_savya else _MIRROR_SIGN[moon_d9]
+    return {"signIndex": point, "sign": RASHIS[point]}
+
+
+def sign_interpretations(jd: float, place) -> dict | None:
+    """12-entry (one per sign) Argala/Yogakaraka/karaka verdict, computed once
+    per chart — these depend only on the fixed natal chart + which sign is
+    being judged, never on dates, so every MD/AD/PD node at every level looks
+    itself up by signIndex rather than recomputing. Also returns the Lagna
+    lord's affliction verdict (a single fact, not per-sign)."""
+    from app.chart import _varga_sign_map
+
+    sign_map, _pp = _varga_sign_map(jd, place, 1)
+    lagna_idx = sign_map.get("Lagna")
+    if lagna_idx is None:
+        return None
+    natal_sign_map = {p: s for p, s in sign_map.items() if p != "Lagna"}
+    planet_positions = positions(jd, place)
+
+    lagna_lord = _sign_lords_cached().get(lagna_idx)
+    lagna_lord_sign = natal_sign_map.get(lagna_lord) if lagna_lord else None
+
+    signs = []
+    for sign_idx in range(12):
+        signs.append(
+            {
+                "signIndex": sign_idx,
+                "sign": RASHIS[sign_idx],
+                "argala": _argala_verdict(sign_idx, natal_sign_map),
+                "yogakaraka": _yogakaraka_giver(sign_idx, natal_sign_map, lagna_idx),
+                "karakas": _house_karakas_for_sign(sign_idx, lagna_idx),
+                "isLagnaLordSign": sign_idx == lagna_lord_sign,
+            }
+        )
+
+    return {
+        "signs": signs,
+        "lagnaSignIndex": lagna_idx,
+        "lagnaLordAffliction": _lagna_lord_affliction(natal_sign_map, lagna_idx, planet_positions),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Birth nakshatra/pada -> Savya/Apasavya group routing
 # ---------------------------------------------------------------------------
 
@@ -381,6 +599,7 @@ def _subtree_from_flat(
                 leap["verified"] = gatis_verified
                 if sav is not None:
                     leap["strength"] = _sav_strength(sav, sign)
+                leap["direction"] = _travel_direction(RASHIS[prev_sign], RASHIS[sign])
         prev_sign = sign
         nodes.append(
             {
@@ -601,6 +820,16 @@ def kalachakra_deep_payload(jd: float, place, dob, tob, query_jd: float | None =
         except Exception:
             sav = None
 
+        try:
+            interp = sign_interpretations(jd, place)
+        except Exception:
+            interp = None
+
+        try:
+            moon_navamsa = _moon_navamsa_point(jd, place, is_savya)
+        except Exception:
+            moon_navamsa = None
+
         primary = _method_block(jd, place, dob, tob, is_savya, dhasa_method=1, query_jd=q_jd, sav=sav)
         balance = _balance_of_first_dasha(jd, place)
 
@@ -624,6 +853,9 @@ def kalachakra_deep_payload(jd: float, place, dob, tob, query_jd: float | None =
             "cycle": cycle,
             "balanceOfFirstDasha": balance,
             "sav": sav,
+            "signInterpretations": interp["signs"] if interp else None,
+            "lagnaLordAffliction": interp["lagnaLordAffliction"] if interp else None,
+            "moonNavamsaPoint": moon_navamsa,
             "currentLadder": primary["currentLadder"],
             "activeLeap": primary["activeLeap"],
             "dashaTree": primary["dashaTree"],

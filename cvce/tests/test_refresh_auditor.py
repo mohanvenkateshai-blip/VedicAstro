@@ -11,9 +11,14 @@ from knowledge_engine.refresh_auditor import (
 
 def test_supported_engines():
     assert KnowledgeRefreshAuditor.supported_engines() == [
+        "ashtakavarga",
         "dasha",
         "gochar",
+        "kp",
+        "kp_system",
         "muhurta",
+        "panchanga",
+        "prashna",
         "report",
         "yoga",
     ]
