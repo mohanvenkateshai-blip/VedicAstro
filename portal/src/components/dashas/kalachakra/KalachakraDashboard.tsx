@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import type { KalachakraDeepData, KalachakraNode } from "@/lib/types";
 import { CurrentStateWidget } from "./CurrentStateWidget";
 import { LeapTimeline } from "./LeapTimeline";
+import { LeapQuickNav } from "./LeapQuickNav";
 import { KalachakraWheel } from "./KalachakraWheel";
 import { KalachakraTree } from "./KalachakraTree";
 import { LeapExplanationSheet } from "./LeapExplanationSheet";
@@ -15,6 +16,8 @@ export function KalachakraDashboard({ data }: { data: KalachakraDeepData }) {
   const [leapNode, setLeapNode] = useState<KalachakraNode | null>(null);
   const [periodNode, setPeriodNode] = useState<KalachakraNode | null>(null);
   const [method, setMethod] = useState<"primary" | "alternate">("primary");
+  const [focusToken, setFocusToken] = useState<{ path: string; nonce: number } | null>(null);
+  const jumpToPath = (path: string) => setFocusToken((prev) => ({ path, nonce: (prev?.nonce ?? 0) + 1 }));
 
   if (data.status === "error") {
     return (
@@ -82,15 +85,22 @@ export function KalachakraDashboard({ data }: { data: KalachakraDeepData }) {
         </Card>
       )}
 
+      {view.leapTimeline && <LeapQuickNav entries={view.leapTimeline} onJump={jumpToPath} />}
+
       {view.leapTimeline && <LeapTimeline entries={view.leapTimeline} />}
 
       {view.dashaTree && view.dashaTree.length > 0 && (
         <Card className="p-5">
           <h3 className="text-sm font-medium mb-3">Mahadasha → Antardasha → Pratyantardasha</h3>
+          <p className="text-[11px] text-text-muted mb-3">
+            MD = Mahadasha, AD = Antardasha, PD = Pratyantardasha. A leap badge marks a Gati transition
+            <em> into</em> that period, relative to the sign immediately before it.
+          </p>
           <KalachakraTree
             tree={view.dashaTree}
             onSelectPeriod={setPeriodNode}
             onSelectLeap={setLeapNode}
+            focusToken={focusToken}
           />
         </Card>
       )}

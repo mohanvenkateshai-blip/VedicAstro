@@ -537,6 +537,8 @@ export interface KalachakraTimelineEntry {
   end: string;
   leap: KalachakraLeapInfo;
   when: "past" | "current" | "future";
+  /** Index-chain path (e.g. "0-3-1") into dashaTree — jump target for quick-nav. */
+  path: string;
 }
 
 export interface KalachakraAlternateMethod {

@@ -1,11 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { clsx } from "clsx";
 import type { KalachakraNode } from "@/lib/types";
 import { leapStyle, strengthStyle } from "./kalachakraCopy";
+
+const LEVEL_LABELS: Record<number, string> = { 1: "MD", 2: "AD", 3: "PD" };
+
+/** All ancestor paths of `path`, e.g. "0-3-1" -> ["0", "0-3"] (excludes the path itself). */
+function ancestorPaths(path: string): string[] {
+  const parts = path.split("-");
+  const out: string[] = [];
+  for (let i = 1; i < parts.length; i++) out.push(parts.slice(0, i).join("-"));
+  return out;
+}
 
 function fmtRange(start: string, end?: string) {
   return end ? `${start} → ${end}` : start;
@@ -46,9 +56,10 @@ interface TreeRowProps {
   onToggle: (path: string) => void;
   onSelectPeriod: (node: KalachakraNode) => void;
   onSelectLeap: (node: KalachakraNode) => void;
+  highlightPath?: string | null;
 }
 
-function TreeRow({ node, path, expanded, onToggle, onSelectPeriod, onSelectLeap }: TreeRowProps) {
+function TreeRow({ node, path, expanded, onToggle, onSelectPeriod, onSelectLeap, highlightPath }: TreeRowProps) {
   const isOpen = expanded.has(path);
   const running = isRunning(node);
   const pct = calcPercent(node.start, node.end);
@@ -56,15 +67,18 @@ function TreeRow({ node, path, expanded, onToggle, onSelectPeriod, onSelectLeap 
   const hasChildren = (node.subPeriods?.length ?? 0) > 0;
   const style = leap ? leapStyle(leap.type) : null;
   const LeapIcon = style?.icon;
+  const isHighlighted = highlightPath === path;
 
   return (
     <div>
       <div
+        id={`kc-node-${path}`}
         className={clsx(
           "flex items-center gap-2 rounded-lg border py-2.5 pr-3 cursor-pointer transition-colors",
           style ? "border-l-4 pl-2.5" : "pl-3",
           running ? "border-accent/50 bg-accent/5" : style ? style.borderClass : "border-hairline",
           style && !running ? style.bgClass : "",
+          isHighlighted && "ring-2 ring-accent ring-offset-2 ring-offset-bg-canvas",
         )}
         style={{ marginLeft: `${(node.level - 1) * 16}px` }}
         onClick={() => hasChildren && onToggle(path)}
@@ -89,6 +103,9 @@ function TreeRow({ node, path, expanded, onToggle, onSelectPeriod, onSelectLeap 
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
+            <span className="rounded bg-hairline/40 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-text-muted shrink-0">
+              {LEVEL_LABELS[node.level] ?? node.level}
+            </span>
             <span className="text-sm font-medium">{node.sign}</span>
             {running && (
               <span className="rounded-full bg-accent/15 px-1.5 py-0.5 text-[10px] font-mono text-accent">
@@ -158,6 +175,7 @@ function TreeRow({ node, path, expanded, onToggle, onSelectPeriod, onSelectLeap 
                   onToggle={onToggle}
                   onSelectPeriod={onSelectPeriod}
                   onSelectLeap={onSelectLeap}
+                  highlightPath={highlightPath}
                 />
               ))}
             </div>
@@ -172,13 +190,18 @@ export function KalachakraTree({
   tree,
   onSelectPeriod,
   onSelectLeap,
+  focusToken,
 }: {
   tree: KalachakraNode[];
   onSelectPeriod: (node: KalachakraNode) => void;
   onSelectLeap: (node: KalachakraNode) => void;
+  /** Path (e.g. "0-3-1") to auto-expand ancestors of, scroll into view, and briefly highlight.
+   * `nonce` bumps on every jump so re-selecting the same path still re-triggers the scroll. */
+  focusToken?: { path: string; nonce: number } | null;
 }) {
   const initialExpanded = useMemo(() => buildCurrentPaths(tree), [tree]);
   const [expanded, setExpanded] = useState<Set<string>>(initialExpanded);
+  const [highlightPath, setHighlightPath] = useState<string | null>(null);
 
   const toggle = (path: string) => {
     setExpanded((prev) => {
@@ -188,6 +211,26 @@ export function KalachakraTree({
       return next;
     });
   };
+
+  useEffect(() => {
+    if (!focusToken) return;
+    const { path } = focusToken;
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      for (const p of ancestorPaths(path)) next.add(p);
+      return next;
+    });
+    setHighlightPath(path);
+    const scrollTimer = window.setTimeout(() => {
+      document.getElementById(`kc-node-${path}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+    const clearTimer = window.setTimeout(() => setHighlightPath(null), 2200);
+    return () => {
+      window.clearTimeout(scrollTimer);
+      window.clearTimeout(clearTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusToken]);
 
   return (
     <div className="space-y-1.5">
@@ -200,6 +243,7 @@ export function KalachakraTree({
           onToggle={toggle}
           onSelectPeriod={onSelectPeriod}
           onSelectLeap={onSelectLeap}
+          highlightPath={highlightPath}
         />
       ))}
     </div>

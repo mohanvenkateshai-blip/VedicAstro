@@ -452,12 +452,17 @@ def kalachakra_tree(
 
 
 def leap_timeline(tree: list[dict]) -> list[dict]:
-    """Flatten dashaTree into a chronological list of every leap, tagged past/current/future."""
+    """Flatten dashaTree into a chronological list of every leap, tagged past/current/future.
+
+    Each entry carries a `path` (e.g. "0-3-1") — the same index-chain the frontend
+    tree uses to key its rows — so the UI can jump directly to the exact node.
+    """
     today = date.today().isoformat()
     out: list[dict] = []
 
-    def walk(nodes):
-        for n in nodes:
+    def walk(nodes, prefix=""):
+        for i, n in enumerate(nodes):
+            path = f"{prefix}-{i}" if prefix else str(i)
             if n.get("leapFromPrevious"):
                 start, end = n["start"], n.get("end") or n["start"]
                 when = "past" if end < today else ("future" if start > today else "current")
@@ -469,9 +474,10 @@ def leap_timeline(tree: list[dict]) -> list[dict]:
                         "end": end,
                         "leap": n["leapFromPrevious"],
                         "when": when,
+                        "path": path,
                     }
                 )
-            walk(n.get("subPeriods") or [])
+            walk(n.get("subPeriods") or [], path)
 
     walk(tree)
     out.sort(key=lambda e: e["start"])
