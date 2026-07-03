@@ -20,14 +20,23 @@ logger = logging.getLogger(__name__)
 
 
 def _sync_helpers():
-    """Load Supabase REST helpers from scripts/supabase_corpus_sync.py."""
-    root = Path(__file__).resolve().parents[3]
-    scripts = root / "scripts"
-    if str(scripts) not in sys.path:
-        sys.path.insert(0, str(scripts))
-    from supabase_corpus_sync import api_request, load_env
+    """Supabase REST helpers. Vendored in-package (knowledge_engine._supabase_rest,
+    stdlib urllib) so the deployed CVCE image needs nothing from the repo-root
+    scripts/ dir — which isn't in the Docker build context, and whose absence
+    silently 503'd the Supabase-backed engine in prod. Falls back to the
+    scripts/ copy for any legacy local caller that still relies on it."""
+    try:
+        from knowledge_engine._supabase_rest import api_request, load_env
 
-    return load_env, api_request
+        return load_env, api_request
+    except Exception:
+        root = Path(__file__).resolve().parents[3]
+        scripts = root / "scripts"
+        if str(scripts) not in sys.path:
+            sys.path.insert(0, str(scripts))
+        from supabase_corpus_sync import api_request, load_env
+
+        return load_env, api_request
 
 
 class SupabaseKnowledgeStore(KnowledgeStore):
