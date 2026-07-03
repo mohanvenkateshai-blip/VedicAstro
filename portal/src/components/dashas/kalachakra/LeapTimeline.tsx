@@ -10,20 +10,24 @@ const LEVEL_LABELS: Record<number, string> = { 1: "MD", 2: "AD", 3: "PD" };
 
 function TimelineRow({ entry }: { entry: KalachakraTimelineEntry }) {
   const style = leapStyle(entry.leap.type);
+  const Icon = style.icon;
   return (
     <div
       className={clsx(
-        "flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-xs",
+        "flex items-center justify-between gap-3 rounded-lg border-l-4 border-y border-r py-2 pl-2.5 pr-3 text-xs",
         style.bgClass,
         style.borderClass,
       )}
     >
       <div className="flex items-center gap-2 min-w-0">
+        <span className={clsx("grid h-6 w-6 shrink-0 place-items-center rounded-md", style.bgClass)}>
+          <Icon className={clsx("h-3.5 w-3.5", style.colorClass)} />
+        </span>
         <span className="font-mono text-[10px] text-text-muted shrink-0">
           {LEVEL_LABELS[entry.level] ?? entry.level}
         </span>
         <span className="font-medium truncate">{entry.sign}</span>
-        <span className={clsx("shrink-0 font-mono text-[10px]", style.colorClass)}>
+        <span className={clsx("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold", style.colorClass, style.bgClass)}>
           {style.shortLabel}
         </span>
       </div>

@@ -455,6 +455,13 @@ export interface DashaDeepData {
 
 // ── Kalachakra Dasha (86y nakshatra-pada wheel; BPHS Vol.2 Ch.46/49) ────────
 
+export interface KalachakraLeapStrength {
+  sign: string;
+  bindus: number;
+  band: "strong" | "good" | "neutral" | "weak";
+  verdict: "positive_potential" | "mixed" | "challenging";
+}
+
 export interface KalachakraLeapInfo {
   isLeap: true;
   type: "frog_leap" | "lions_leap" | "monkey_leap";
@@ -466,6 +473,9 @@ export interface KalachakraLeapInfo {
    * method) — the geometric detection still applies, but BPHS Vol.2 Ch.46's
    * naming is only established for the PVR/book method. */
   verified?: boolean;
+  /** Ashtakavarga (SAV)-based positive-potential-vs-challenging verdict for
+   * the leaping sign, per the handbook's modulating-factors table. */
+  strength?: KalachakraLeapStrength;
 }
 
 export interface KalachakraBirthNakshatra {
@@ -547,6 +557,9 @@ export interface KalachakraDeepData {
   birthNakshatra?: KalachakraBirthNakshatra;
   cycle?: KalachakraCycle;
   balanceOfFirstDasha?: { actual: number | null; simplifiedEstimate: number | null };
+  /** Natal Sarvashtakavarga (12-sign bindu board) — the strength source for
+   * each leap's positive-potential-vs-challenging verdict. */
+  sav?: number[];
   currentLadder?: KalachakraLadderRow[];
   activeLeap?: KalachakraLeapInfo | null;
   dashaTree?: KalachakraNode[];

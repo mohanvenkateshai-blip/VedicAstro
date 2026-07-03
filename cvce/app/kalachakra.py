@@ -129,6 +129,55 @@ def _classify_transition(step: int, is_savya: bool) -> dict | None:
 
 
 # ---------------------------------------------------------------------------
+# Ashtakavarga (SAV) leap-strength modulation
+#
+# Per the Kalachakra 101 handbook's "modulating factors" table: whether a Gati
+# manifests as its classical warning effect or its positive potential depends
+# on chart strength — primarily Ashtakavarga (SAV) bindus in the leaping sign
+# (30+ = strong/positive-leaning, per BPHS Ch.67-72's "30 bindus" convention
+# already used elsewhere in this app, e.g. KundaliChart.tsx's SAV coloring).
+# The handbook mentions divisional-chart-specific boards (D-10, D-24) as an
+# even finer refinement; SAV (the D1/Rashi board) is used here as the
+# well-defined, always-available baseline rather than guessing which varga
+# applies to which leap.
+# ---------------------------------------------------------------------------
+
+
+def _natal_sav(jd: float, place) -> list[int]:
+    """Sarvashtakavarga — 12-sign combined bindu strength from the D1 chart.
+
+    Reuses app.chart's PyJHora-backed Ashtakavarga (the same one /chart and
+    the Ashtakavarga tab display — verified sums to the classical 337
+    invariant and matches textbook per-planet BAV totals), not
+    vedic_engine.prediction.ashtakavarga.compute_ashtakavarga: that module's
+    _trikona_shodhana reduces every trine group to its minimum whenever all
+    three signs are non-zero, which over-reduces the total by roughly a third
+    (337 -> ~220 on a real chart) — a pre-existing bug independent of this
+    feature, left as-is here since fixing it is out of scope for Kalachakra
+    leap-strength scoring.
+    """
+    from app.chart import _ashtakavarga, _varga_sign_map
+
+    _sign_map, d1_pp = _varga_sign_map(jd, place, 1)
+    akv = _ashtakavarga(d1_pp)
+    return list(akv["sav"])
+
+
+def _sav_strength(sav: list[int], sign_idx: int) -> dict:
+    """Leap-strength verdict for a given sign, from its SAV bindu count."""
+    bindus = sav[sign_idx]
+    if bindus >= 30:
+        band, verdict = "strong", "positive_potential"
+    elif bindus >= 28:
+        band, verdict = "good", "positive_potential"
+    elif bindus >= 22:
+        band, verdict = "neutral", "mixed"
+    else:
+        band, verdict = "weak", "challenging"
+    return {"sign": RASHIS[sign_idx], "bindus": bindus, "band": band, "verdict": verdict}
+
+
+# ---------------------------------------------------------------------------
 # Birth nakshatra/pada -> Savya/Apasavya group routing
 # ---------------------------------------------------------------------------
 
@@ -283,6 +332,7 @@ def _subtree_from_flat(
     is_savya: bool,
     parent_sign: int | None,
     gatis_verified: bool = True,
+    sav: list[int] | None = None,
 ) -> list[dict]:
     """Build nested nodes, chronologically ordered, with leaps computed
     sibling-to-sibling within each parent group (not parent-to-child): the
@@ -329,6 +379,8 @@ def _subtree_from_flat(
             leap = _classify_transition(step, is_savya)
             if leap is not None:
                 leap["verified"] = gatis_verified
+                if sav is not None:
+                    leap["strength"] = _sav_strength(sav, sign)
         prev_sign = sign
         nodes.append(
             {
@@ -347,6 +399,7 @@ def _subtree_from_flat(
                     is_savya,
                     parent_sign=sign,
                     gatis_verified=gatis_verified,
+                    sav=sav,
                 ),
             }
         )
@@ -354,7 +407,14 @@ def _subtree_from_flat(
 
 
 def kalachakra_tree(
-    jd: float, place, dob, tob, is_savya: bool, max_level: int = 3, dhasa_method: int = 1
+    jd: float,
+    place,
+    dob,
+    tob,
+    is_savya: bool,
+    max_level: int = 3,
+    dhasa_method: int = 1,
+    sav: list[int] | None = None,
 ) -> list[dict]:
     """3-level MD -> AD -> PD nested tree, leap-flagged.
 
@@ -363,6 +423,10 @@ def kalachakra_tree(
     computed identically but its Frog/Lion/Monkey labels are marked
     unverified (see _subtree_from_flat) since that classical mapping isn't
     established for this method.
+
+    sav, if provided, attaches an Ashtakavarga-based strength verdict to each
+    leap (see _sav_strength) — the "positive potential vs challenging" signal
+    per the handbook's modulating-factors table.
     """
     from jhora import const
     from jhora.horoscope.dhasa.raasi import kalachakra as kala_mod
@@ -376,7 +440,14 @@ def kalachakra_tree(
 
     rows = kala_mod.get_dhasa_bhukthi(dob, tob, place, dhasa_level_index=depth_enum, dhasa_method=dhasa_method)
     return _subtree_from_flat(
-        rows or [], (), 1, max_level, is_savya, parent_sign=None, gatis_verified=(dhasa_method == 1)
+        rows or [],
+        (),
+        1,
+        max_level,
+        is_savya,
+        parent_sign=None,
+        gatis_verified=(dhasa_method == 1),
+        sav=sav,
     )
 
 
@@ -487,8 +558,12 @@ def current_state_payload(
     }
 
 
-def _method_block(jd, place, dob, tob, is_savya: bool, dhasa_method: int, query_jd: float) -> dict:
-    tree = kalachakra_tree(jd, place, dob, tob, is_savya=is_savya, max_level=3, dhasa_method=dhasa_method)
+def _method_block(
+    jd, place, dob, tob, is_savya: bool, dhasa_method: int, query_jd: float, sav: list[int] | None = None
+) -> dict:
+    tree = kalachakra_tree(
+        jd, place, dob, tob, is_savya=is_savya, max_level=3, dhasa_method=dhasa_method, sav=sav
+    )
     state = current_state_payload(jd, place, tree, query_jd=query_jd, dhasa_method=dhasa_method)
     timeline = leap_timeline(tree)
     return {
@@ -515,12 +590,17 @@ def kalachakra_deep_payload(jd: float, place, dob, tob, query_jd: float | None =
         is_savya = birth_info["isSavya"]
         cycle = kalachakra_cycle(birth_info["kcIndex"], birth_info["padaIndex"])
 
-        primary = _method_block(jd, place, dob, tob, is_savya, dhasa_method=1, query_jd=q_jd)
+        try:
+            sav = _natal_sav(jd, place)
+        except Exception:
+            sav = None
+
+        primary = _method_block(jd, place, dob, tob, is_savya, dhasa_method=1, query_jd=q_jd, sav=sav)
         balance = _balance_of_first_dasha(jd, place)
 
         alternate = None
         try:
-            alt = _method_block(jd, place, dob, tob, is_savya, dhasa_method=3, query_jd=q_jd)
+            alt = _method_block(jd, place, dob, tob, is_savya, dhasa_method=3, query_jd=q_jd, sav=sav)
             alternate = {
                 "method": "raghavacharya",
                 "methodLabel": "Raghavacharya (navamsa-based, JHora)",
@@ -537,6 +617,7 @@ def kalachakra_deep_payload(jd: float, place, dob, tob, query_jd: float | None =
             "birthNakshatra": birth_info,
             "cycle": cycle,
             "balanceOfFirstDasha": balance,
+            "sav": sav,
             "currentLadder": primary["currentLadder"],
             "activeLeap": primary["activeLeap"],
             "dashaTree": primary["dashaTree"],

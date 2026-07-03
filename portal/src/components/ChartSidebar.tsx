@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import {
   Compass, Orbit, Clock, Sparkles,
   Sun, Crosshair, BookOpen, Download, Target,
-  Home, CircleDot, FileText,
+  Home, CircleDot, FileText, Grid3X3, BarChart3,
 } from "lucide-react";
 
 const TABS = [
@@ -16,6 +16,8 @@ const TABS = [
   { id: "yogas", label: "Yogas & Strength", icon: Sparkles, href: "/chart/yogas", engine: "Yoga + Bala" },
   { id: "bhava", label: "Bhava Explorer", icon: Home, href: "/chart/bhava", engine: "Bhava Phala" },
   { id: "graha", label: "Graha Explorer", icon: CircleDot, href: "/chart/graha", engine: "Graha Phala" },
+  { id: "divisional", label: "Divisional Charts", icon: Grid3X3, href: "/chart/divisional", engine: "Varga Charts" },
+  { id: "ashtakavarga", label: "Ashtakavarga", icon: BarChart3, href: "/chart/ashtakavarga", engine: "Bindu Strength" },
   { id: "special", label: "Special Points", icon: Target, href: "/chart/special", engine: "Special Points" },
   { id: "kp", label: "KP System", icon: Crosshair, href: "/chart/kp", engine: "KP Engine" },
   { id: "kalachakra", label: "Kalachakra Dasha", icon: Target, href: "/chart/kalachakra", engine: "Kalachakra" },

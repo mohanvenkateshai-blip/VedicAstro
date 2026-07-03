@@ -833,6 +833,9 @@ def predict(req: PredictionRequest):
             "moon_transit_verdict": r.ashtakavarga.moon_transit_verdict,
             "moon_transit_band": r.ashtakavarga.moon_transit_band,
             "sav": r.ashtakavarga.sav,
+            "bav": r.ashtakavarga.bav,
+            "planet_totals": r.ashtakavarga.planet_totals,
+            "lagna_sign_idx": r.ashtakavarga.lagna_sign_idx,
             "transit_sav": {
                 p: {"sign": d["sign"], "bindus": d["bindus"], "band": d["band"]}
                 for p, d in r.ashtakavarga.transit_sav.items()

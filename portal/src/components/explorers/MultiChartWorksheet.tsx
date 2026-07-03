@@ -7,20 +7,51 @@ import type { ChartData } from "@/lib/types";
 
 const VARGAS = [
   { key: "D1", variant: "south" as const },
+  { key: "D2", variant: "south" as const },
+  { key: "D3", variant: "south" as const },
+  { key: "D4", variant: "south" as const },
+  { key: "D7", variant: "north" as const },
   { key: "D9", variant: "south" as const },
   { key: "D10", variant: "north" as const },
   { key: "D12", variant: "north" as const },
+  { key: "D16", variant: "south" as const },
+  { key: "D24", variant: "north" as const },
+  { key: "D30", variant: "south" as const },
+  { key: "D60", variant: "north" as const },
 ];
 
 const VARGA_NAMES: Record<string, string> = {
   D1: "Rāśi",
+  D2: "Horā",
+  D3: "Drekkāṇa",
+  D4: "Chaturthāṁśa",
+  D7: "Saptāṁśa",
   D9: "Navāṁśa",
   D10: "Daśāṁśa",
   D12: "Dvādaśāṁśa",
+  D16: "Ṣoḍaśāṁśa",
+  D24: "Chaturviṁśāṁśa",
+  D30: "Triṁśāṁśa",
+  D60: "Ṣaṣṭyaṁśa",
+};
+
+const VARGA_SIGNIFICANCE: Record<string, string> = {
+  D1: "Physical body, overall life",
+  D2: "Wealth, family resources",
+  D3: "Siblings, courage",
+  D4: "Property, fixed assets, happiness",
+  D7: "Children, progeny",
+  D9: "Marriage, dharma, spouse — the classical co-chart with D1",
+  D10: "Career, profession, public status",
+  D12: "Parents, ancestry",
+  D16: "Vehicles, comforts, conveyances",
+  D24: "Education, learning — used for Kalachakra leap strength per BPHS",
+  D30: "Misfortunes, adversities",
+  D60: "Past-life karma, general life",
 };
 
 export function MultiChartWorksheet({ chart }: { chart: ChartData }) {
-  const [selected, setSelected] = useState<string[]>(["D1", "D9", "D10", "D12"]);
+  const [selected, setSelected] = useState<string[]>(["D1", "D9", "D10", "D24"]);
   const maxCharts = 4;
 
   const toggleVarga = (key: string) => {
@@ -95,9 +126,14 @@ export function MultiChartWorksheet({ chart }: { chart: ChartData }) {
                 </span>
               </div>
 
-              <h3 className="font-display text-base font-semibold text-text-main mb-4">
+              <h3 className="font-display text-base font-semibold text-text-main">
                 {name}
               </h3>
+              {VARGA_SIGNIFICANCE[key] && (
+                <p className="text-[11px] text-text-muted text-center mb-3 mt-0.5 max-w-[220px]">
+                  {VARGA_SIGNIFICANCE[key]}
+                </p>
+              )}
 
               <div className="flex justify-center">
                 <KundaliChart

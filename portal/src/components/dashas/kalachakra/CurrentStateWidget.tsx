@@ -1,6 +1,5 @@
 "use client";
 
-import { AlertTriangle } from "lucide-react";
 import { clsx } from "clsx";
 import type { KalachakraDeepData } from "@/lib/types";
 import { leapStyle } from "./kalachakraCopy";
@@ -38,25 +37,23 @@ export function CurrentStateWidget({ data }: { data: KalachakraDeepData }) {
         )}
       </div>
 
-      {leap && (
-        <div
-          className={clsx(
-            "flex items-start gap-3 rounded-xl border p-4",
-            leapStyle(leap.type).bgClass,
-            leapStyle(leap.type).borderClass,
-          )}
-        >
-          <AlertTriangle className={clsx("h-5 w-5 shrink-0 mt-0.5", leapStyle(leap.type).colorClass)} />
-          <div>
-            <div className={clsx("text-sm font-medium", leapStyle(leap.type).colorClass)}>
-              Active {leap.label}
+      {leap && (() => {
+        const style = leapStyle(leap.type);
+        const Icon = style.icon;
+        return (
+          <div className={clsx("flex items-start gap-3 rounded-xl border-l-4 border-y border-r p-4", style.bgClass, style.borderClass)}>
+            <span className={clsx("grid h-9 w-9 shrink-0 place-items-center rounded-lg", style.bgClass)}>
+              <Icon className={clsx("h-5 w-5", style.colorClass)} />
+            </span>
+            <div>
+              <div className={clsx("text-sm font-semibold", style.colorClass)}>
+                Active {leap.label}
+              </div>
+              <p className="text-xs text-text-muted mt-1 leading-relaxed">{style.explanation}</p>
             </div>
-            <p className="text-xs text-text-muted mt-1 leading-relaxed">
-              {leapStyle(leap.type).explanation}
-            </p>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }
