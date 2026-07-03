@@ -122,13 +122,36 @@ def _yogini_blocks(jd: float, place, dt: datetime) -> list[dict]:
     return blocks
 
 
-def _vimshottari_hits(jd: float, place, event_jd: float, domain_sigs: set[str]) -> list[dict]:
+def _proximity(event_date: _date, start: str, end: str) -> float:
+    """How centered `event_date` is within a [start,end] period: 1.0 dead
+    center, tapering toward the edges but floored at 0.35 (a real hit near a
+    boundary still counts, just discounted). This is the key v2 noise-damper:
+    a 1-minute birth shift that nudges an event just across a deep-level
+    period boundary now degrades the score smoothly instead of binary-
+    flipping it full→zero, which was the dominant source of the jagged v1
+    landscape.
+    """
+    s = _date.fromisoformat(start)
+    e = _date.fromisoformat(end)
+    span = (e - s).days
+    if span <= 0:
+        return 1.0
+    center = s + timedelta(days=span / 2)
+    dist = abs((event_date - center).days)
+    frac = 1.0 - (dist / (span / 2))  # 1 at center → 0 at edge
+    return max(0.35, frac)
+
+
+def _vimshottari_hits(jd: float, place, event_jd: float, event_date: _date, domain_sigs: set[str]) -> list[dict]:
     ladder = running_ladder(jd, place, query_jd=event_jd, depth=5)
-    return [
-        {"system": "Vimshottari", "level": row["level"], "levelLabel": row["levelLabel"], "planet": row["lord"]}
-        for row in ladder
-        if row["lord"] in domain_sigs
-    ]
+    hits = []
+    for row in ladder:
+        if row["lord"] in domain_sigs:
+            hits.append({
+                "system": "Vimshottari", "level": row["level"], "levelLabel": row["levelLabel"],
+                "planet": row["lord"], "proximity": round(_proximity(event_date, row["start"], row["end"]), 3),
+            })
+    return hits
 
 
 def _yogini_hits(blocks: list[dict], event_date: _date, domain_sigs: set[str]) -> list[dict]:
@@ -137,20 +160,27 @@ def _yogini_hits(blocks: list[dict], event_date: _date, domain_sigs: set[str]) -
         if not (b["start"] <= event_date <= b["end"]):
             continue
         if b["lord"] in domain_sigs:
-            hits.append({"system": "Yogini", "level": 1, "levelLabel": "Mahadasha", "planet": b["lord"]})
+            hits.append({"system": "Yogini", "level": 1, "levelLabel": "Mahadasha", "planet": b["lord"],
+                         "proximity": round(_proximity(event_date, b["start"].isoformat(), b["end"].isoformat()), 3)})
         for a in b["antars"]:
             if a["start"] <= event_date <= a["end"]:
                 if a["lord"] in domain_sigs:
-                    hits.append({"system": "Yogini", "level": 2, "levelLabel": "Antardasha", "planet": a["lord"]})
+                    hits.append({"system": "Yogini", "level": 2, "levelLabel": "Antardasha", "planet": a["lord"],
+                                 "proximity": round(_proximity(event_date, a["start"].isoformat(), a["end"].isoformat()), 3)})
                 break
         break
     return hits
 
 
 def _score_hits(hits: list[dict]) -> float:
+    """Proximity-weighted, confluence-rewarded. Each hit contributes its
+    level weight × how centered the event is in that period. Cross-system
+    agreement (Vimshottari + Yogini both flagging a significator) adds a
+    bonus, per the classical multi-system principle — a lone deep-level
+    coincidence stays cheap; genuine confluence is what scores."""
     if not hits:
         return 0.0
-    base = sum(_LEVEL_WEIGHT.get(h["level"], 1.0) for h in hits)
+    base = sum(_LEVEL_WEIGHT.get(h["level"], 1.0) * h.get("proximity", 1.0) for h in hits)
     systems_hit = {h["system"] for h in hits}
     return base + (_CONFLUENCE_BONUS if len(systems_hit) > 1 else 0.0)
 
@@ -189,7 +219,7 @@ def rectify_birth_time(
             ev_jd, _ = jd_place(parse_dt(ev_dt_str), lat, lon, tz)
             ev_date = _date.fromisoformat(ev["date"])
 
-            hits = _vimshottari_hits(jd, place, ev_jd, sigs) + _yogini_hits(yogini_blocks, ev_date, sigs)
+            hits = _vimshottari_hits(jd, place, ev_jd, ev_date, sigs) + _yogini_hits(yogini_blocks, ev_date, sigs)
             score = _score_hits(hits)
             total += score
             breakdown.append(
@@ -212,5 +242,66 @@ def rectify_birth_time(
             }
         )
 
-    candidates.sort(key=lambda c: c["total_score"], reverse=True)
-    return {"approx_datetime": approx_datetime, "window_minutes": window_minutes, "candidates": candidates}
+    # Stable-cluster analysis: a trustworthy rectified time is a *plateau*
+    # of consistently high scores, not a lone spike (which is noise). Slide a
+    # window over the by-clock-time ordering and find the highest-mean run;
+    # its center is a far more defensible recommendation than argmax.
+    by_time = sorted(candidates, key=lambda c: c["offset_minutes"])
+    cluster = _best_cluster(by_time, width=5)
+
+    candidates_by_score = sorted(candidates, key=lambda c: c["total_score"], reverse=True)
+    peak = candidates_by_score[0]
+    recommendation = _recommendation(peak, cluster, by_time)
+
+    return {
+        "approx_datetime": approx_datetime,
+        "window_minutes": window_minutes,
+        "recommendation": recommendation,
+        "stable_cluster": cluster,
+        "peak_candidate": {"datetime": peak["datetime"], "total_score": peak["total_score"], "offset_minutes": peak["offset_minutes"]},
+        "candidates": candidates_by_score,
+    }
+
+
+def _best_cluster(by_time: list[dict], width: int = 5) -> dict:
+    """Highest-mean contiguous run of `width` candidates (a score plateau)."""
+    best = None
+    half = width // 2
+    for i in range(half, len(by_time) - half):
+        window = by_time[i - half : i + half + 1]
+        mean = sum(c["total_score"] for c in window) / len(window)
+        if best is None or mean > best["mean_score"]:
+            center = by_time[i]
+            best = {
+                "center_datetime": center["datetime"],
+                "center_offset_minutes": center["offset_minutes"],
+                "mean_score": round(mean, 2),
+                "width_minutes": width,
+                "member_offsets": [c["offset_minutes"] for c in window],
+            }
+    return best or {}
+
+
+def _recommendation(peak: dict, cluster: dict, by_time: list[dict]) -> dict:
+    """Honest verdict: only endorse a rectified time when the peak sits inside
+    a genuine plateau AND stands clearly above the field. Otherwise say so —
+    a noisy landscape means the recorded time should stand, not that we should
+    hand back a spurious minute.
+    """
+    scores = [c["total_score"] for c in by_time]
+    mean_all = sum(scores) / len(scores) if scores else 0.0
+    peak_in_cluster = cluster and peak["offset_minutes"] in (cluster.get("member_offsets") or [])
+    # signal-to-noise: how far the best plateau rises above the overall mean
+    lift = (cluster.get("mean_score", 0.0) - mean_all) if cluster else 0.0
+    strong = bool(peak_in_cluster and lift >= 0.25 * mean_all and mean_all > 0)
+    return {
+        "confident": strong,
+        "suggested_datetime": cluster.get("center_datetime") if strong else None,
+        "note": (
+            f"Plateau near {cluster.get('center_datetime','?')[11:16]} rises "
+            f"clearly above the field (cluster mean {cluster.get('mean_score')} vs overall {round(mean_all,2)}) — a defensible rectified time."
+            if strong else
+            "No stable plateau clearly beats the field — landscape is noise-dominated. "
+            "Recorded time should stand; minute-level dasha rectification is at its limit for this data."
+        ),
+    }
