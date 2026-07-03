@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { RASHI_SHORT, PLANET_SHORT, type SignIndex } from "@/lib/types";
+import { planetColor, elementColor } from "@/lib/astroColors";
 
 /**
  * Professional Vedic Kundali — prop-driven, renders real planet placements.
@@ -35,6 +36,7 @@ const PLANET_ORDER = [
 interface Occupant {
   short: string;
   deg?: string;
+  color: string;
 }
 
 function occupantsBySign(signs: Record<string, SignIndex>, degrees?: Record<string, string>) {
@@ -42,7 +44,7 @@ function occupantsBySign(signs: Record<string, SignIndex>, degrees?: Record<stri
   for (const p of PLANET_ORDER) {
     const s = signs[p];
     if (s == null) continue;
-    (map[s] ??= []).push({ short: PLANET_SHORT[p] ?? p.slice(0, 2), deg: degrees?.[p] });
+    (map[s] ??= []).push({ short: PLANET_SHORT[p] ?? p.slice(0, 2), deg: degrees?.[p], color: planetColor(p) });
   }
   return map;
 }
@@ -101,8 +103,8 @@ function PlanetStack({
   if (!planets.length) return null;
 
   // Expanded (hovered/focused) — one line per planet with its exact degree,
-  // e.g. "Su 12°34'". Only ever one house expanded at a time, so there's
-  // room for this even in the smaller multi-chart grid sizes.
+  // e.g. "Su 12°34'", in that planet's own classical color. Only ever one
+  // house expanded at a time, so there's room even in smaller grid sizes.
   if (expanded && planets.some((p) => p.deg)) {
     return (
       <>
@@ -114,7 +116,7 @@ function PlanetStack({
             textAnchor="middle"
             fontSize={fontSize * 0.95}
             fontWeight={700}
-            fill="var(--color-accent)"
+            fill={p.color}
             className="font-mono"
           >
             {p.short}
@@ -125,10 +127,12 @@ function PlanetStack({
     );
   }
 
-  const shorts = planets.map((p) => p.short);
+  // Compact default view: each planet keeps its own classical color even
+  // when several share a line — real color signal, not decoration, since
+  // it's the same association used in the degree/hover view and elsewhere.
   const perRow = Math.max(2, Math.floor(w / (fontSize * 1.6)));
-  const rows: string[][] = [];
-  for (let i = 0; i < shorts.length; i += perRow) rows.push(shorts.slice(i, i + perRow));
+  const rows: Occupant[][] = [];
+  for (let i = 0; i < planets.length; i += perRow) rows.push(planets.slice(i, i + perRow));
   return (
     <>
       {rows.map((row, ri) => (
@@ -138,11 +142,15 @@ function PlanetStack({
           y={y + ri * (fontSize + 2)}
           textAnchor="middle"
           fontSize={fontSize}
-          fontWeight={600}
-          fill="var(--color-card-fg)"
+          fontWeight={700}
           className="font-mono"
         >
-          {row.join(" ")}
+          {row.map((p, i) => (
+            <tspan key={i} fill={p.color}>
+              {i > 0 ? " " : ""}
+              {p.short}
+            </tspan>
+          ))}
         </text>
       ))}
     </>
@@ -197,7 +205,11 @@ function SouthChart({ size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focu
                 stroke={isLagna ? "var(--color-accent)" : expanded ? "color-mix(in srgb, var(--color-accent) 50%, transparent)" : "transparent"}
                 strokeWidth={isLagna ? 1.5 : expanded ? 1 : 0}
               />
-              <text x={x + 6} y={y + CS * 0.2} fontSize={CS * 0.16} fill={isLagna ? "var(--color-accent)" : "var(--color-text-main)"} className="font-mono" fontWeight={isLagna ? 700 : 500}>
+              {/* Elemental accent (Fire/Earth/Air/Water) — a quiet color
+                  signal along each box's top edge, independent of the
+                  Lagna/hover highlight above. */}
+              <rect x={x + 5} y={y + 3} width={CS - 10} height={2.5} rx={1.25} fill={elementColor(si)} opacity={0.65} />
+              <text x={x + 6} y={y + CS * 0.24} fontSize={CS * 0.16} fill={isLagna ? "var(--color-accent)" : "var(--color-text-main)"} className="font-mono" fontWeight={isLagna ? 700 : 500}>
                 {RASHI_SHORT[si]}
               </text>
               <text x={x + CS - 5} y={y + CS * 0.2} textAnchor="end" fontSize={CS * 0.135} fill="var(--color-text-muted)" className="font-mono">{house}</text>
@@ -288,6 +300,10 @@ function NorthChart({ size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focu
               strokeWidth={isLagna ? 1.5 : expanded ? 1 : 0}
             />
             <text x={cx} y={cy - fPl * 1.1} textAnchor="middle" fontSize={S * 0.036} fill="var(--color-text-muted)" fontWeight={600} className="font-mono">{hn}</text>
+            {/* Elemental accent (Fire/Earth/Air/Water) — polygon house shapes
+                don't take a clean border strip like the South chart's square
+                cells, so a small dot next to the sign label carries it instead. */}
+            <circle cx={cx - fSign * 1.3} cy={cy - fPl * 0.14} r={S * 0.011} fill={elementColor(si)} opacity={0.75} />
             <text x={cx} y={cy - fPl * 0.1} textAnchor="middle" fontSize={fSign} fill={isLagna ? "var(--color-accent)" : "var(--color-text-main)"} className="font-mono" fontWeight={isLagna ? 700 : 500}>{RASHI_SHORT[si]}</text>
             <PlanetStack planets={planets} expanded={expanded} x={cx} y={cy + fPl + 2} w={kendra ? S * 0.34 : S * 0.22} fontSize={fPl} />
             {isLagna && expanded && lagnaDeg && (

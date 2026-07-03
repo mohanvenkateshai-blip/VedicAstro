@@ -5,18 +5,7 @@ import { Loader } from "lucide-react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
-
-const PLANET_COLORS: Record<string, string> = {
-  Sun: "#f59e0b",
-  Moon: "#c0c0c0",
-  Mars: "#ef4444",
-  Mercury: "#22c55e",
-  Jupiter: "#c5a46e",
-  Venus: "#ec4899",
-  Saturn: "#6b7280",
-  Rahu: "#8b5cf6",
-  Ketu: "#14b8a6",
-};
+import { PLANET_COLORS } from "@/lib/astroColors";
 
 const PLANET_ORDER = [
   "Sun",
