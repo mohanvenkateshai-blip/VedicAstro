@@ -599,7 +599,7 @@ def _subtree_from_flat(
                 leap["verified"] = gatis_verified
                 if sav is not None:
                     leap["strength"] = _sav_strength(sav, sign)
-                leap["direction"] = _travel_direction(RASHIS[prev_sign], RASHIS[sign])
+                leap["travelDirection"] = _travel_direction(RASHIS[prev_sign], RASHIS[sign])
         prev_sign = sign
         nodes.append(
             {
