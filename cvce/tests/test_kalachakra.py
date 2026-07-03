@@ -126,6 +126,52 @@ def test_yogakaraka_giver_present_for_qualifying_lagna_only():
     assert _yogakaraka_giver(0, {"Mars": 0}, lagna_sign_idx=0) is None
 
 
+def test_md_ad_duration_derived_from_children_not_a_single_leaf_row():
+    """Regression test: _subtree_from_flat used to set each non-leaf (MD/AD)
+    node's end/durationYears from a single grabbed Pratyantardasha-level
+    row's own short duration, instead of deriving it from the node's actual
+    children — e.g. a 10-year Mahadasha would show as ending 8 days after it
+    started. Caught by cross-checking against Cosmic Insights (a third-party
+    Kalachakra implementation) for a real chart, whose Mahadasha/Antardasha
+    spans matched once fixed. This locks the invariant down permanently:
+    a non-leaf node's end must equal its last child's end, and its duration
+    must span its full set of children, not one leaf fragment."""
+    from datetime import date as _date
+
+    from app.ephem import jd_place, parse_dt
+    from app.kalachakra import kalachakra_tree
+    from jhora.panchanga.drik import Date as DrikDate
+
+    dt = parse_dt("1975-04-22T19:15:00")
+    jd, place = jd_place(dt, 12.2979, 76.6393, 5.5)
+    dob = DrikDate(dt.year, dt.month, dt.day)
+    tob = (dt.hour, dt.minute, dt.second)
+
+    tree = kalachakra_tree(jd, place, dob, tob, is_savya=False, max_level=3)
+    assert len(tree) > 0
+
+    for md in tree:
+        assert md["subPeriods"], "expected AD children under each MD"
+        last_ad = md["subPeriods"][-1]
+        assert md["end"] == last_ad["end"], f"MD {md['sign']} end must match its last AD's end"
+        # A real Mahadasha (4-21 years per the classical sign-year table)
+        # must not collapse to a Pratyantardasha-length fragment.
+        assert md["durationYears"] > 1.0, f"MD {md['sign']} duration suspiciously short: {md['durationYears']}"
+
+        for ad in md["subPeriods"]:
+            assert ad["subPeriods"], "expected PD children under each AD"
+            last_pd = ad["subPeriods"][-1]
+            assert ad["end"] == last_pd["end"], f"AD {ad['sign']} end must match its last PD's end"
+
+    # The known-good comparison point: Mohan's chart (kc=3/Apasavya pada 3,
+    # verified null-leap cycle) — first MD (Sagittarius, partial at birth)
+    # must run well past its start, not just days.
+    first_md = tree[0]
+    start_d = _date.fromisoformat(first_md["start"])
+    end_d = _date.fromisoformat(first_md["end"])
+    assert (end_d - start_d).days > 300
+
+
 def test_house_karakas_for_sign_matches_pvr_easy_reference_table():
     # Lagna Aries (0): 7th house is Libra (6) -> Venus (PVR p.14-15: Wife=D-9=Venus=7th).
     assert _house_karakas_for_sign(6, lagna_sign_idx=0) == ["Venus"]

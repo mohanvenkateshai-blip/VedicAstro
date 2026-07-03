@@ -586,11 +586,40 @@ def _subtree_from_flat(
     prev_sign = parent_sign
     for key in sorted(groups.keys(), key=lambda k: groups[k][0]):
         start_t, dur, lords = groups[key]
-        end_t = _period_end(start_t, float(dur))
         # lords is the row's full (leaf-depth) tuple — index by this node's own
         # depth (child_level), not -1/-2, or a level-1 node would pick up the
         # leaf-level sign instead of its own.
         sign = lords[child_level - 1]
+
+        sub_periods = _subtree_from_flat(
+            flat_periods,
+            lords[:child_level],
+            child_level + 1,
+            max_level,
+            is_savya,
+            parent_sign=sign,
+            gatis_verified=gatis_verified,
+            sav=sav,
+        )
+
+        if sub_periods:
+            # Non-leaf node: `dur` above is a single LEAF-level (deepest
+            # requested depth) row's own short duration, grabbed only to find
+            # the earliest start under this MD/AD group — it is NOT this
+            # node's true span. The true end is the last child's end (bug
+            # caught by cross-checking against an external Kalachakra
+            # implementation: without this, every non-leaf node's duration
+            # was a Pratyantardasha-length fragment instead of the real
+            # multi-year Mahadasha/Antardasha span).
+            end_str = sub_periods[-1]["end"]
+            start_d = date(int(start_t[0]), int(start_t[1]), int(start_t[2]))
+            end_fmt = end_str
+            duration_years = round((date.fromisoformat(end_str) - start_d).days / 365.2425, 4)
+        else:
+            end_t = _period_end(start_t, float(dur))
+            end_fmt = _fmt(end_t)
+            duration_years = round(float(dur), 4)
+
         leap = None
         if prev_sign is not None:
             step = _signed_circular_step(prev_sign, sign)
@@ -607,19 +636,10 @@ def _subtree_from_flat(
                 "sign": RASHIS[sign],
                 "signIndex": sign,
                 "start": _fmt(start_t),
-                "end": _fmt(end_t),
-                "durationYears": round(float(dur), 4),
+                "end": end_fmt,
+                "durationYears": duration_years,
                 "leapFromPrevious": leap,
-                "subPeriods": _subtree_from_flat(
-                    flat_periods,
-                    lords[:child_level],
-                    child_level + 1,
-                    max_level,
-                    is_savya,
-                    parent_sign=sign,
-                    gatis_verified=gatis_verified,
-                    sav=sav,
-                ),
+                "subPeriods": sub_periods,
             }
         )
     return nodes
