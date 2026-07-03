@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Star, AlertTriangle, Target } from "lucide-react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 interface SpecialPoint {
   name: string;
@@ -91,7 +92,7 @@ export function SpecialPointsPanel({ chart }: { chart: ChartData | undefined }) 
         <span className="grid h-7 w-7 place-items-center rounded-lg bg-accent/15 text-accent">
           <Star className="h-4 w-4 animate-pulse" />
         </span>
-        Computing special points…
+        <LoadingPhrase />
       </div>
     );
   }

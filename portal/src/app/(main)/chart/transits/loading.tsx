@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 export default function TransitsLoading() {
   return (
@@ -20,7 +21,9 @@ export default function TransitsLoading() {
             ))}
           </div>
         ))}
-        <p className="text-center text-xs text-text-muted font-mono pt-2">computing ephemeris…</p>
+        <p className="text-center text-xs text-text-muted font-mono pt-2">
+          <LoadingPhrase />
+        </p>
       </div>
     </div>
   );

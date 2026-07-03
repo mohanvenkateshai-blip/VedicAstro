@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData, DashaDeepData, DashaNode, DashaLadderRow, DashaPrediction, FructificationResult, FructificationWindow } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 import { DashaSeriesChart, ViewFromToggle } from "./DashaSeriesChart";
 
 // Re-export for consumers that previously imported from here
@@ -281,7 +282,7 @@ function AntardashaPanel({
       {level === 2 && fructLoading && (
         <div className="flex items-center gap-2 text-text-muted">
           <Loader className="w-3 h-3 animate-spin" />
-          <span className="text-[10px] font-mono">Computing fructification windows…</span>
+          <span className="text-[10px] font-mono"><LoadingPhrase /></span>
         </div>
       )}
       {level === 2 && fructResult && (
@@ -857,7 +858,7 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
           className="w-6 h-6 animate-spin"
           style={{ color: DASHA.main }}
         />
-        <span className="text-sm font-mono">computing dasha periods...</span>
+        <span className="text-sm font-mono"><LoadingPhrase /></span>
       </div>
     );
   }

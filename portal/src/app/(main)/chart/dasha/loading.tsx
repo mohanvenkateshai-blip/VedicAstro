@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 export default function DashaLoading() {
   return (
@@ -28,7 +29,7 @@ export default function DashaLoading() {
       </div>
 
       <p className="text-center text-xs text-text-muted font-mono animate-pulse">
-        computing dasha periods…
+        <LoadingPhrase />
       </p>
 
       {/* AllDashasPanel skeleton */}

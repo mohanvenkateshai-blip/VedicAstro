@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Sparkles, Loader, AlertCircle, TrendingUp } from "lucide-react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 interface YogaEntry {
   name?: string;
@@ -151,7 +152,7 @@ export function YogasPanel({ chart }: YogasPanelProps) {
     return (
       <div className="flex flex-col items-center justify-center gap-2 py-16 text-text-muted">
         <Loader className="h-5 w-5 animate-spin" />
-        <span className="text-sm font-mono">Computing yogas…</span>
+        <span className="text-sm font-mono"><LoadingPhrase /></span>
       </div>
     );
   }

@@ -15,6 +15,7 @@ import {
 import { Loader, ChevronDown, ChevronRight } from "lucide-react";
 import type { ChartData, DashaSeriesData, DashaSeriesPoint, DashaSeriesEvent } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 // ── Colour tokens ─────────────────────────────────────────────────────────────
 
@@ -417,7 +418,7 @@ export function DashaSeriesChart({
     return (
       <div className="flex items-center gap-2 py-4 text-[11px] font-mono text-text-muted">
         <Loader className="w-3 h-3 animate-spin" style={{ color: DASHA }} />
-        computing transit series…
+        <LoadingPhrase />
       </div>
     );
   }

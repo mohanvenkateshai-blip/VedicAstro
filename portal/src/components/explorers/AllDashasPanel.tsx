@@ -6,6 +6,7 @@ import type { DashaPrediction, FructificationResult, FructificationWindow } from
 import { motion, AnimatePresence } from "motion/react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 import { DashaSeriesChart, ViewFromToggle } from "./DashaSeriesChart";
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -396,7 +397,7 @@ function AntarRow({
               {fructLoading && (
                 <div className="flex items-center gap-2 text-text-muted">
                   <Loader className="w-3 h-3 animate-spin" />
-                  <span className="text-[10px] font-mono">Computing fructification windows…</span>
+                  <span className="text-[10px] font-mono"><LoadingPhrase /></span>
                 </div>
               )}
               {fructResult && (

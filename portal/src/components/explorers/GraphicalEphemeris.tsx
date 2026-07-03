@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Loader } from "lucide-react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 const PLANET_COLORS: Record<string, string> = {
   Sun: "#f59e0b",
@@ -261,7 +262,7 @@ export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) 
         <span className="grid h-7 w-7 place-items-center rounded-lg bg-accent/15 text-accent">
           <Loader className="h-4 w-4 animate-spin" />
         </span>
-        Computing ephemeris positions…
+        <LoadingPhrase />
       </div>
     );
   }

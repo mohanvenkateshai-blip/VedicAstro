@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 export default function ChartLoading() {
   return (
@@ -28,7 +29,7 @@ export default function ChartLoading() {
       </div>
 
       <p className="text-center text-xs text-text-muted font-mono">
-        computing chart — PyJHora engine…
+        <LoadingPhrase />
       </p>
     </div>
   );

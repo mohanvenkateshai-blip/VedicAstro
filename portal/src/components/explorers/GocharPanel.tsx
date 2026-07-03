@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Loader, AlertTriangle, Info } from "lucide-react";
 import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
+import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -261,7 +262,7 @@ export function GocharPanel({ chart }: { chart: ChartData }) {
     return (
       <div className="flex items-center gap-3 py-12 text-text-muted text-sm font-mono">
         <Loader className="w-4 h-4 animate-spin" style={{ color: "#7c3aed" }} />
-        Computing transit assessment…
+        <LoadingPhrase />
       </div>
     );
   }
