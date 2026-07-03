@@ -557,6 +557,22 @@ try:
 except Exception:
     _knowledge_engine = None
 
+
+def _ensure_knowledge_engine():
+    """Lazily (re)initialize the KnowledgeEngine. The import-time attempt above
+    can fail on a transient at container boot (outbound network not yet ready
+    to reach Supabase); a swallowed failure there must NOT permanently disable
+    the knowledge endpoints — retry on first real use."""
+    global _knowledge_engine
+    if _knowledge_engine is None:
+        try:
+            from knowledge_engine import get_knowledge_engine as _gke
+
+            _knowledge_engine = _gke()
+        except Exception:
+            _knowledge_engine = None
+    return _knowledge_engine
+
 # KnowledgeEngine consumer registration (all 9 engines register via side-effect on import)
 try:
     from vedic_engine.prediction import kp_system as _kp_engine  # noqa: F401
@@ -2564,7 +2580,7 @@ def knowledge_refresh(reason: str = "manual"):
 
     This is the explicit "refresh all" command for the system.
     """
-    if _knowledge_engine is None:
+    if _ensure_knowledge_engine() is None:
         raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
 
     result = _knowledge_engine.trigger_global_refresh(reason=reason)
@@ -2574,7 +2590,7 @@ def knowledge_refresh(reason: str = "manual"):
 @app.get("/knowledge/search")
 def knowledge_search(q: str = "", top_k: int = 8):
     """Hybrid semantic + keyword search over corpus chunks via KnowledgeEngine."""
-    if _knowledge_engine is None:
+    if _ensure_knowledge_engine() is None:
         raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
 
     query = (q or "").strip()
@@ -2594,7 +2610,7 @@ def knowledge_search(q: str = "", top_k: int = 8):
 @app.post("/knowledge/embeddings-updated")
 def knowledge_embeddings_updated(chunk_count: int = 0):
     """Called after corpus embeddings are populated — clears caches and notifies engines."""
-    if _knowledge_engine is None:
+    if _ensure_knowledge_engine() is None:
         raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
 
     from knowledge_engine.integration import clear_knowledge_engine_cache
@@ -2618,7 +2634,7 @@ def knowledge_structured_book(book_id: str):
     a book with its authoritative TOC and the classical knowledge nodes that
     belong under each chapter/section.
     """
-    if _knowledge_engine is None:
+    if _ensure_knowledge_engine() is None:
         raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
     data = _knowledge_engine.get_structured_book(book_id)
     if not data:
@@ -2629,7 +2645,7 @@ def knowledge_structured_book(book_id: str):
 @app.get("/knowledge/chapter/{book_id}/{chapter_id}/nodes")
 def knowledge_chapter_nodes(book_id: str, chapter_id: str):
     """Nodes that the KnowledgeEngine has mapped to one specific chapter."""
-    if _knowledge_engine is None:
+    if _ensure_knowledge_engine() is None:
         raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
     nodes = _knowledge_engine.get_nodes_for_chapter(book_id, chapter_id)
     return {"book_id": book_id, "chapter_id": chapter_id, "count": len(nodes), "nodes": nodes}
@@ -2638,7 +2654,7 @@ def knowledge_chapter_nodes(book_id: str, chapter_id: str):
 @app.get("/knowledge/node/{node_id}/hierarchy")
 def knowledge_node_hierarchy(node_id: str):
     """Where a given KE node sits inside the source book's chapter hierarchy."""
-    if _knowledge_engine is None:
+    if _ensure_knowledge_engine() is None:
         raise HTTPException(status_code=503, detail="KnowledgeEngine not available")
     h = _knowledge_engine.get_hierarchy_for_node(node_id)
     if not h:
