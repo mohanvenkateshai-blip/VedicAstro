@@ -13,6 +13,7 @@ from typing import Any
 
 from ..core.panchanga import RASHIS
 from ..prediction.gochar import GocharResult, TransitPrediction
+from ..prediction.ashtakavarga import compute_transit_bindu_verdict
 from ..rules.transit_rules import (
     DEBIL_SIGN,
     EXALT_SIGN,
@@ -547,6 +548,8 @@ class TransitImpactAnalyzer:
             if sav:
                 bindus = sav.get("bindus", 0)
                 verdict = sav.get("verdict", "neutral")
+            # Enrich with classical bindu verdict helper
+            verdict = compute_transit_bindu_verdict(ashtakavarga, pred.planet, pred.sign_idx)
                 if bindus < 25:
                     factors.append(
                         Factor(

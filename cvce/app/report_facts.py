@@ -18,7 +18,12 @@ from app.remedies import remedy_for_yoga
 from knowledge_engine.integration import get_knowledge_engine, get_llm_narration
 from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
 from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
-from vedic_engine.prediction.ashtakavarga import SAV_BANDS, compute_ashtakavarga
+from vedic_engine.prediction.ashtakavarga import (
+    SAV_BANDS,
+    compute_ashtakavarga,
+    get_sav_strength,
+    compute_transit_bindu_verdict,
+)
 from vedic_engine.synthesis.dasha_analyzer import DashaImpactAnalyzer
 from vedic_engine.synthesis.engine import VedicPredictor
 
@@ -685,6 +690,7 @@ def build_report_facts(
         lagna_idx = _rashi_idx(lagna_rashi) if lagna_rashi else 0
 
         akv = compute_ashtakavarga(natal_sign_idx, lagna_idx or 0)
+        pred.ashtakavarga = akv  # expose for downstream consumers (transit, superimpose, predictions)
 
         # SAV with band labels per sign
         sav_annotated = []

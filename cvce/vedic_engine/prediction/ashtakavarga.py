@@ -309,6 +309,30 @@ def _register_ashtakavarga_engine() -> None:
 _register_ashtakavarga_engine()
 
 
+def get_bav_for_planet(akv: AshtakavargaResult, planet: str) -> list[int] | None:
+    """Return the 12-sign BAV row for a planet (classical Bhinnashtakavarga)."""
+    return akv.bav.get(planet) if akv and hasattr(akv, "bav") else None
+
+
+def get_sav_strength(sav: list[int], sign_idx: int) -> tuple[int, str]:
+    """Return (bindus, band) for a sign from SAV (classical strength lookup)."""
+    if not sav or sign_idx < 0 or sign_idx >= 12:
+        return 0, "unknown"
+    b = sav[sign_idx]
+    band = _get_band(b)
+    return b, band
+
+
+def compute_transit_bindu_verdict(akv: AshtakavargaResult, planet: str, transit_sign_idx: int) -> dict:
+    """Minimal classical transit verdict using SAV (BPHS Ch.67 gochar)."""
+    if not akv or not akv.sav:
+        return {"bindus": 0, "verdict": "unknown", "band": "unknown"}
+    b = akv.sav[transit_sign_idx] if transit_sign_idx < 12 else 0
+    band = _get_band(b)
+    verdict = "favorable" if b >= 28 else ("neutral" if b >= 25 else "challenging")
+    return {"bindus": b, "verdict": verdict, "band": band, "sign_idx": transit_sign_idx}
+
+
 def _ensure_ashtakavarga_registered() -> None:
     if not _ashtakavarga_registered:
         _register_ashtakavarga_engine()

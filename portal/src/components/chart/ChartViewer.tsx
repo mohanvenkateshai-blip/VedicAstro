@@ -16,7 +16,6 @@ const DIGNITY_COLOR: Record<string, string> = {
 export function ChartViewer({ chart }: { chart: ChartData }) {
   const [variant, setVariant] = useState<"south" | "north">("south");
   const [vargaKey, setVargaKey] = useState<string>("D1");
-  const [showSav, setShowSav] = useState(false);
   const prefersReduced = useReducedMotion();
 
   const vargaKeys = Object.keys(chart.vargas ?? {});
@@ -51,10 +50,6 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
               </button>
             ))}
           </div>
-          <label htmlFor="sav-toggle" className="flex items-center gap-1.5 text-xs text-text-muted cursor-pointer select-none min-h-[44px]">
-            <input id="sav-toggle" type="checkbox" checked={showSav} onChange={(e) => setShowSav(e.target.checked)} className="accent-[var(--color-accent)]" />
-            SAV bindus
-          </label>
         </div>
 
         <motion.div
@@ -66,7 +61,7 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
           <KundaliChart
             signs={signs}
             variant={variant}
-            sav={showSav && vargaKey === "D1" ? sav : undefined}
+            sav={vargaKey === "D1" ? sav : undefined}
             degrees={degrees}
             size={460}
             className="drop-shadow-[0_10px_28px_rgba(0,0,0,0.4)]"

@@ -19,6 +19,7 @@ export default async function AshtakavargaPage({
         </h2>
         <p className="text-sm text-text-muted mt-1">
           Sarvashtakavarga (SAV) and Bhinnashtakavarga (BAV) bindu strength boards — BPHS Ch.67-72.
+          Transit view + superimpose + dual-SAV + predictions included.
         </p>
       </Card>
       {error ? (

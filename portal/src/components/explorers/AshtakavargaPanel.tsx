@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { clsx } from "clsx";
 import { Card } from "@/components/ui/Card";
 import type { ChartData } from "@/lib/types";
@@ -17,6 +18,8 @@ function band(bindus: number): { color: string; bg: string; label: string } {
 
 export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
   const akv = chart.ashtakavarga;
+  const [showTransit, setShowTransit] = React.useState(false);
+  const [superimpose, setSuperimpose] = React.useState(false);
 
   if (!akv) {
     return (
@@ -27,6 +30,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
   }
 
   const total = akv.sav.reduce((a, b) => a + b, 0);
+  const transitSav = (akv as any).transit_sav as number[] | undefined;
 
   return (
     <div className="space-y-4">
@@ -52,16 +56,39 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
       </Card>
 
       <Card className="p-5">
-        <h3 className="text-sm font-medium mb-3">Sarvashtakavarga (SAV) — combined strength per sign</h3>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-medium">Sarvashtakavarga (SAV) — combined strength per sign</h3>
+          <div className="flex gap-2 text-xs">
+            {transitSav && (
+              <button
+                onClick={() => setShowTransit(!showTransit)}
+                className={clsx("px-2 py-0.5 rounded border", showTransit ? "bg-accent text-white border-accent" : "border-hairline")}
+              >
+                Transit SAV
+              </button>
+            )}
+            {transitSav && showTransit && (
+              <button
+                onClick={() => setSuperimpose(!superimpose)}
+                className={clsx("px-2 py-0.5 rounded border", superimpose ? "bg-accent text-white border-accent" : "border-hairline")}
+              >
+                Superimpose
+              </button>
+            )}
+          </div>
+        </div>
+
         <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
           {akv.sav.map((bindus, i) => {
             const b = band(bindus);
             const isLagna = i === akv.lagnaSignIdx;
+            const tBindus = transitSav?.[i];
+            const tBand = tBindus != null ? band(tBindus) : null;
             return (
               <div
                 key={i}
                 className={clsx(
-                  "rounded-xl border p-3 text-center",
+                  "rounded-xl border p-3 text-center relative",
                   b.bg,
                   isLagna ? "border-accent" : "border-hairline",
                 )}
@@ -72,6 +99,17 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
                 </div>
                 <div className={clsx("text-2xl font-bold mt-1", b.color)}>{bindus}</div>
                 <div className={clsx("text-[10px] font-mono mt-0.5", b.color)}>{b.label}</div>
+
+                {showTransit && tBindus != null && (
+                  <div className={clsx("mt-1 text-[10px] font-mono", tBand?.color)}>
+                    T: {tBindus} {tBand?.label}
+                  </div>
+                )}
+                {superimpose && tBindus != null && (
+                  <div className="absolute -top-1 -right-1 text-[9px] px-1 rounded bg-black/70 text-white">
+                    Δ{tBindus - bindus}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -123,6 +161,33 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
           </tbody>
         </table>
       </Card>
+
+      {showTransit && transitSav && (
+        <Card className="p-5">
+          <h3 className="text-sm font-medium mb-3">Transit Ashtakavarga — Predictions (with / without superimpose)</h3>
+          <div className="grid gap-3 md:grid-cols-2">
+            {transitSav.map((b, i) => {
+              const bb = band(b);
+              const delta = b - akv.sav[i];
+              return (
+                <div key={i} className="rounded-lg border border-hairline p-3 text-xs">
+                  <div className="font-mono flex justify-between">
+                    <span>{RASHIS[i]}</span>
+                    <span className={bb.color}>{b} bindus</span>
+                  </div>
+                  <div className="mt-1 text-[10px] text-text-muted">
+                    {delta >= 0 ? "Strengthened" : "Weakened"} by {Math.abs(delta)} vs natal
+                  </div>
+                  <div className={clsx("mt-1 text-[10px]", bb.color)}>{bb.label} transit influence</div>
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-[10px] text-text-muted">
+            Superimpose mode shows combined natal + transit bindu activation. High bindus in a sign during transit = favorable window for that house's matters.
+          </p>
+        </Card>
+      )}
     </div>
   );
 }

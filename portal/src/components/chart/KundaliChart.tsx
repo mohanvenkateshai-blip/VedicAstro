@@ -75,7 +75,25 @@ export function KundaliChart({
     size, occ, lagnaSign, lagnaDeg, sav, hover, setHover, focus, setFocus, className,
   };
 
-  return variant === "south" ? <SouthChart {...props} /> : <NorthChart {...props} />;
+  return (
+    <div className="relative">
+      {variant === "south" ? <SouthChart {...props} /> : <NorthChart {...props} />}
+      {sav && <SavLegend />}
+    </div>
+  );
+}
+
+function SavLegend() {
+  return (
+    <div className="absolute bottom-2 right-2 z-10 rounded-md border border-hairline bg-surface/90 px-2 py-1 text-[10px] text-text-muted shadow-sm">
+      <div className="flex items-center gap-3 font-mono">
+        <span><span className="text-success">●</span> 30+ Excellent</span>
+        <span><span className="text-[#2dd4bf]">●</span> 28–29 Good</span>
+        <span><span className="text-accent">●</span> 22–27 Standard</span>
+        <span><span className="text-danger">●</span> &lt;22 Depleted</span>
+      </div>
+    </div>
+  );
 }
 
 interface InnerProps {
