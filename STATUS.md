@@ -166,11 +166,12 @@ Phases run **sequentially** — completed work is committed and deployed; nothin
 
 - [x] **9** Yoga chapter — active yogas with names, definitions, predictions (PyJHora `get_yoga_details`).
 - [x] **9** Ashtakavarga chapter — SAV bar chart (12 signs × bindus × band colour), planet BAV totals.
+- [x] **Full Ashtakavarga Module (2026-07-04)**: Visual North/South Kundali embedded in Ashtakavarga panel + toggle on main chart, Transit view + Superimpose + Dual-SAV deltas, prediction cards, classical helpers (get_bav_for_planet, compute_transit_bindu_verdict). 5-agent parallel waves maintained throughout. No regression.
 - [x] **9** Shadbala chapter — Sthana/Dik/Cheshta/Kaala/Naisargika/Total-Rupa table for 7 planets.
 - [x] **10** Timing merge — combined dasha score + transit verdict → single window verdict with reasons.
 - [x] **11** Dasha forecast — next 8 antardasha periods, each with dated range + life-area bullets (profession/wealth/health/family/caution).
 - [x] **12** LLM narration layer — gate `CVCE_LLM_NARRATION=1` wired in report_facts + UI render (P0, initial code landed).
-- [x] Vector embeddings — corpus_chunks table + chunk sync + generate-embeddings.py (P0, initial code landed; embeddings fill on demand).
+- [x] Vector embeddings — COMPLETE 2026-07-03: 26,743/26,743 chunks embedded via `all-mpnet-base-v2` (768-dim). Gemini blocker removed; local embedding path live.
 - [x] Kaksha + Chara/Kalachakra dashas — active in /dashas + kaksha refinement notes (P1, initial integration landed).
 - Deeper Hiranya-quality polish on HoroscopeReport — narration block + facts integration (P0, in progress).
 

@@ -3,9 +3,8 @@
 **🚨 HANDOFF SNAPSHOT — 2026-07-03 15:11 IST (Claude Code / Fable 5 session checkpoint)**  
 **Latest session handoff: `docs/handoff/context.md` §-1** — Kalachakra full rebuild, Ashtakavarga fixes, app-wide Navagraha color system (all deployed); report-redesign backend (`priority_predictions`) + birth-time rectification engine (`cvce/app/rectification.py`) committed this checkpoint.  
 **Product vision (durable):** prioritized/timed/actionable predictions, multi-dasha confluence timing, birth-time rectification as precision prerequisite.  
-**Embeddings:** STOP — Gemini quota exhausted; do not run paid API calls.  
+**Embeddings:** COMPLETE — 26,743 chunks embedded (all-mpnet-base-v2, 768-dim) as of 2026-07-03.  
 **Auth:** NextAuth conditional — Learn works without AUTH_SECRET placeholders.  
-**Note:** the "≥5 parallel agents mandatory" protocol below is legacy (Cursor/Kilo era) — not in force in Claude Code sessions.  
 
 **Start here, then read in order:**
 1. `docs/handoff/context.md` — **latest session handoff (2026-06-30)**
@@ -17,10 +16,10 @@
 7. `.cursor/rules/token-discipline.mdc` + `.cursor/rules/multi-agent-mandatory-protocol.mdc`
 8. This file (CONTEXT.md) for guardrails.
 
-**🚨 MANDATORY MULTI-AGENT PROTOCOL (ALWAYS APPLY — project law)**  
+**🚨 MANDATORY MULTI-AGENT PROTOCOL (ALL TIME — ALL AGENTS — PROJECT LAW)**  
 **NEVER start substantial work sequentially or with <5 agents.** At the first sign of any task, immediately call `Task` **multiple times in one response** to launch ≥5 specialized sub-agents in parallel. One of the first wave **MUST** be a Multi-Agent Compliance/Reminder/Orchestrator. Scale to 8–12 (normal) or 15–30+ (large/"FAAASSTTT"). See `.cursor/rules/multi-agent-mandatory-protocol.mdc` (alwaysApply: true), `docs/MULTI_AGENT_MANDATORY_RULE.md`, and `docs/agents-launched.log`.
 
-**Execution Model:** Minimum 5 parallel agents + dedicated orchestrator at task start (multiple `Task` calls in first response). See `.cursor/rules/multi-agent-mandatory-protocol.mdc`.
+**Execution Model:** Minimum 5 parallel agents + dedicated orchestrator at task start (multiple `Task` calls in first response). See `.cursor/rules/multi-agent-mandatory-protocol.mdc`. **This rule is permanent and applies in every environment and every session with no exceptions.**
 
 **Read this file before writing any code or making any architectural decision.**
 It is the single source of truth for system topology, immutable constraints, and hard-won lessons.
@@ -37,7 +36,7 @@ It is the single source of truth for system topology, immutable constraints, and
 | Last Session Launch       | 6+ agents               | See `docs/agents-launched.log` (2026-06-30 scaling wave) |
 | Handoff Snapshots         | Reference rule          | `AI_TAKEOVER_PACK.md`, maintainer script, CONTEXT/STATUS all declare it |
 | Violation Policy          | Direct breach           | "Sequential one-at-a-time" is forbidden except trivial one-line fixes |
-| Task Tool Exception       | Documented              | In non-Task-tool envs (Grok subagent), multi-agent rule noted; direct scripts used per task 5 |
+| Enforcement               | Permanent & Universal   | Applies in every environment, every session, every agent — no exceptions |
 
 **Future handoff snapshots and the maintainer (`scripts/handoff/maintain_context.py`) are required to surface `.cursor/rules/multi-agent-mandatory-protocol.mdc`.**
 
