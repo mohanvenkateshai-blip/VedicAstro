@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ShieldCheck } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { ButtonLink } from "./ui/Button";
 import { GlobalSearch } from "./masthead/GlobalSearch";
@@ -43,11 +44,11 @@ export function SiteHeader({ session }: { session: Session | null }) {
           ))}
           {session?.role === "admin" && (
             <Link
-              href="/admin/knowledge"
+              href="/admin"
               aria-current={pathname.startsWith("/admin") ? "page" : undefined}
-              className="hidden px-3 py-2 text-sm text-text-muted transition-colors hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg sm:inline"
+              className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-accent transition-colors hover:text-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 sm:inline-flex"
             >
-              Knowledge
+              <ShieldCheck size={14} /> Admin
             </Link>
           )}
         </nav>

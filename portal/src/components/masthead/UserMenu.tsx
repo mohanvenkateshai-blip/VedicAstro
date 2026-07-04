@@ -1,7 +1,7 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-import { User, Settings, LogOut, ShieldCheck } from "lucide-react";
+import { User, Settings, LogOut } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Menu, MenuItem } from "@/components/ui/Menu";
 import { ThemePicker } from "./ThemePicker";
@@ -40,11 +40,6 @@ export function UserMenu({ session }: { session: Session }) {
         <MenuItem href="/settings" icon={<Settings size={15} />}>
           Settings
         </MenuItem>
-        {isAdmin && (
-          <MenuItem href="/admin/health" icon={<ShieldCheck size={15} />}>
-            Admin · System health
-          </MenuItem>
-        )}
       </div>
 
       <div className="border-t border-hairline px-4 py-3">
