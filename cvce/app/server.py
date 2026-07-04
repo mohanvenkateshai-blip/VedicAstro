@@ -297,18 +297,42 @@ def _mem_snapshot() -> dict:
     import os as _os
 
     rss_mb = limit_mb = None
-    try:  # cgroup v2 (Fly)
+    # Current RSS: cgroup v2 memory.current, else /proc/self/status VmRSS.
+    try:
         with open("/sys/fs/cgroup/memory.current") as f:
             rss_mb = int(f.read().strip()) / (1024 * 1024)
-        with open("/sys/fs/cgroup/memory.max") as f:
-            raw = f.read().strip()
-            limit_mb = None if raw == "max" else int(raw) / (1024 * 1024)
     except Exception:
         try:
-            import resource
+            with open("/proc/self/status") as f:
+                for line in f:
+                    if line.startswith("VmRSS:"):
+                        rss_mb = int(line.split()[1]) / 1024
+                        break
+        except Exception:
+            try:
+                import resource
 
-            ru = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-            rss_mb = ru / 1024 if _os.uname().sysname != "Darwin" else ru / (1024 * 1024)
+                ru = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+                rss_mb = ru / 1024 if _os.uname().sysname != "Darwin" else ru / (1024 * 1024)
+            except Exception:
+                pass
+    # Limit: cgroup memory.max if set, else the VM's total RAM (Fly enforces
+    # the machine size at the microVM level, so memory.max is often "max" and
+    # MemTotal IS the real ceiling).
+    try:
+        with open("/sys/fs/cgroup/memory.max") as f:
+            raw = f.read().strip()
+            if raw != "max":
+                limit_mb = int(raw) / (1024 * 1024)
+    except Exception:
+        pass
+    if limit_mb is None:
+        try:
+            with open("/proc/meminfo") as f:
+                for line in f:
+                    if line.startswith("MemTotal:"):
+                        limit_mb = int(line.split()[1]) / 1024
+                        break
         except Exception:
             pass
     headroom = None
