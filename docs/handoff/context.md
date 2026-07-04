@@ -71,6 +71,27 @@ Signed in as normal user uvwxme@gmail.com (name "Mr.Cool", Free). Findings:
 - ❓ Test 6 (DISCUSS): user questions the landing page's purpose/value. Product/UX decision,
   not a bug — needs a direction conversation before redesign.
 
+### 🔴 SECURITY FIX (2026-07-04) — saved charts leaked across all logins
+User report: "no matter what google account I login, I see all charts saved in dashboard."
+ROOT CAUSE: DashboardTable fetches /api/charts, which scoped rows ONLY by the per-BROWSER
+`vedicastro_guest_id` cookie — NEVER by session.userId. Same browser + any Google account =
+same guest cookie = everyone sees everyone's charts. The earlier 2d04140 "fix" was ineffective:
+it neutered getSavedCharts() in saved-charts.ts, but DashboardTable never calls that (hits
+/api/charts directly), and the `saved_charts` RLS table it added is DEAD scaffolding — nothing
+reads/writes it, its RLS uses Supabase auth.uid() (app uses NextAuth + service-role key that
+BYPASSES RLS), and the policy SQL is malformed (INSERT/UPDATE/DELETE missing CREATE POLICY
+headers). FIX (this session, pending push): new src/lib/chart-owner.ts resolves an owner key —
+`user_${session.userId}` for authed users (private per-account AND cross-device), else the guest
+cookie. Both /api/charts (GET/POST) and /api/charts/[id] (DELETE/PATCH) now filter guest_charts
+by that owner. Since service-role bypasses RLS, this APP-LAYER scoping is the only boundary —
+every guest_charts query MUST keep the .eq("guest_id", owner) filter. Build passes.
+NOTES: (1) Post-deploy, authed users' dashboards start EMPTY — their previously-saved charts sit
+under the old browser-guest UUID, not user_<sub>; this is the correct privacy outcome (old shared
+rows are quarantined, not served to any account). Optional follow-up: one-time "claim guest charts
+into your account on first login" migration (weigh the shared-browser risk). (2) CLEAN UP the dead
+`saved_charts` table + malformed policies in supabase-schema.sql. (3) saved-charts.ts localStorage
+path still exists (used by ChartSidebar?) — audit that it can't resurface others' charts.
+
 ### Ground truth from discovery (do NOT re-investigate)
 - **Auth**: NextAuth v5 JWT strategy, no DB adapter. Config `portal/src/app/api/auth/auth.ts`
   (jwt cb ~65-90 sets role; session cb ~91-98 copies ONLY `id`+`role`). Session type

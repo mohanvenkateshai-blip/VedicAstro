@@ -1,23 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
-
-const COOKIE = "vedicastro_guest_id";
+import { resolveChartOwner } from "@/lib/chart-owner";
 
 type Params = { params: Promise<{ id: string }> };
 
 // ── DELETE /api/charts/[id] ───────────────────────────────────────────────────
 export async function DELETE(_req: NextRequest, { params }: Params) {
   const { id } = await params;
-  const cookieStore = await cookies();
-  const guestId = cookieStore.get(COOKIE)?.value;
-  if (!guestId) return NextResponse.json({ error: "No session" }, { status: 401 });
+  const owner = await resolveChartOwner();
+  if (!owner) return NextResponse.json({ error: "No session" }, { status: 401 });
 
   const { error } = await supabase
     .from("guest_charts")
     .delete()
     .eq("id", id)
-    .eq("guest_id", guestId); // ensures you can only delete your own charts
+    .eq("guest_id", owner); // scope: you can only delete your own charts
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
@@ -26,9 +23,8 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
 // ── PATCH /api/charts/[id] — update sort_order ────────────────────────────────
 export async function PATCH(req: NextRequest, { params }: Params) {
   const { id } = await params;
-  const cookieStore = await cookies();
-  const guestId = cookieStore.get(COOKIE)?.value;
-  if (!guestId) return NextResponse.json({ error: "No session" }, { status: 401 });
+  const owner = await resolveChartOwner();
+  if (!owner) return NextResponse.json({ error: "No session" }, { status: 401 });
 
   const body = await req.json();
 
@@ -41,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     const { data: all } = await supabase
       .from("guest_charts")
       .select("id, sort_order")
-      .eq("guest_id", guestId)
+      .eq("guest_id", owner)
       .order("sort_order", { ascending: true });
 
     if (!all) return NextResponse.json({ ok: true });
@@ -54,8 +50,8 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
     const a = all[idx], b = all[swapIdx];
     await Promise.all([
-      supabase.from("guest_charts").update({ sort_order: b.sort_order }).eq("id", a.id).eq("guest_id", guestId),
-      supabase.from("guest_charts").update({ sort_order: a.sort_order }).eq("id", b.id).eq("guest_id", guestId),
+      supabase.from("guest_charts").update({ sort_order: b.sort_order }).eq("id", a.id).eq("guest_id", owner),
+      supabase.from("guest_charts").update({ sort_order: a.sort_order }).eq("id", b.id).eq("guest_id", owner),
     ]);
 
     return NextResponse.json({ ok: true });
@@ -65,7 +61,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     .from("guest_charts")
     .update({ sort_order: body.sort_order })
     .eq("id", id)
-    .eq("guest_id", guestId);
+    .eq("guest_id", owner);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });

@@ -8,7 +8,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
           <p className="mt-1 text-sm text-text-muted">
-            Saved charts — stored locally in this browser
+            Saved charts — private to your account when signed in
           </p>
         </div>
         <Link

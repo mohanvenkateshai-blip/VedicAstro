@@ -1,31 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
+import {
+  GUEST_COOKIE,
+  GUEST_COOKIE_OPTS,
+  resolveChartOwner,
+  resolveChartOwnerForWrite,
+} from "@/lib/chart-owner";
 
-const COOKIE = "vedicastro_guest_id";
-const COOKIE_OPTS = {
-  httpOnly: true,
-  sameSite: "lax" as const,
-  path: "/",
-  maxAge: 60 * 60 * 24 * 365, // 1 year
-};
-
-function getOrCreateGuestId(cookieStore: Awaited<ReturnType<typeof cookies>>): string {
-  const existing = cookieStore.get(COOKIE)?.value;
-  if (existing) return existing;
-  return crypto.randomUUID();
-}
-
-// ── GET /api/charts — list all charts for this guest ─────────────────────────
+// ── GET /api/charts — list charts for the current owner ──────────────────────
+// Authenticated users see ONLY their own charts (keyed by account id); guests
+// see only their per-browser cookie's charts. See lib/chart-owner.ts.
 export async function GET() {
-  const cookieStore = await cookies();
-  const guestId = cookieStore.get(COOKIE)?.value;
-  if (!guestId) return NextResponse.json([]);
+  const owner = await resolveChartOwner();
+  if (!owner) return NextResponse.json([]);
 
   const { data, error } = await supabase
     .from("guest_charts")
     .select("id, name, birth_date, birth_time, place, lat, lon, tz, sort_order, created_at")
-    .eq("guest_id", guestId)
+    .eq("guest_id", owner)
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: true });
 
@@ -33,33 +25,35 @@ export async function GET() {
   return NextResponse.json(data ?? []);
 }
 
-// ── POST /api/charts — save a chart ──────────────────────────────────────────
+// ── POST /api/charts — save a chart for the current owner ────────────────────
 export async function POST(req: NextRequest) {
-  const cookieStore = await cookies();
-  const guestId = getOrCreateGuestId(cookieStore);
+  const { owner, mintedGuestId } = await resolveChartOwnerForWrite();
   const body = await req.json();
+
+  const withCookie = (res: NextResponse) => {
+    if (mintedGuestId) res.cookies.set(GUEST_COOKIE, mintedGuestId, GUEST_COOKIE_OPTS);
+    return res;
+  };
 
   // Deduplicate: same birth_date + birth_time + lat = same person/moment
   const { data: existing } = await supabase
     .from("guest_charts")
     .select("id")
-    .eq("guest_id", guestId)
+    .eq("guest_id", owner)
     .eq("birth_date", body.date ?? "")
     .eq("birth_time", body.time ?? "")
     .eq("lat", body.lat ?? "")
     .maybeSingle();
 
   if (existing) {
-    const res = NextResponse.json({ id: existing.id, duplicate: true });
-    res.cookies.set(COOKIE, guestId, COOKIE_OPTS);
-    return res;
+    return withCookie(NextResponse.json({ id: existing.id, duplicate: true }));
   }
 
-  // Get max sort_order for this guest
+  // Get max sort_order for this owner
   const { data: maxRow } = await supabase
     .from("guest_charts")
     .select("sort_order")
-    .eq("guest_id", guestId)
+    .eq("guest_id", owner)
     .order("sort_order", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -69,7 +63,7 @@ export async function POST(req: NextRequest) {
   const { data, error } = await supabase
     .from("guest_charts")
     .insert({
-      guest_id:   guestId,
+      guest_id:   owner,
       name:       body.name ?? "Unnamed chart",
       birth_date: body.date ?? "",
       birth_time: body.time ?? "",
@@ -83,8 +77,5 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-
-  const res = NextResponse.json({ id: data.id });
-  res.cookies.set(COOKIE, guestId, COOKIE_OPTS);
-  return res;
+  return withCookie(NextResponse.json({ id: data.id }));
 }
