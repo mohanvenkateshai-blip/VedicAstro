@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Heart, Loader, AlertTriangle } from "lucide-react";
 import { postCvce } from "@/lib/cvce-client";
 
@@ -10,6 +10,7 @@ interface PartnerInput {
   birth_lat: string;
   birth_lon: string;
   birth_tz: string;
+  place?: string;
 }
 
 interface KootaItem {
@@ -110,6 +111,7 @@ const DEFAULT_PARTNER_A: PartnerInput = {
   birth_lat: "12.2958",
   birth_lon: "76.6394",
   birth_tz: "5.5",
+  place: "Mysuru, Karnataka, India",
 };
 
 const EMPTY_PARTNER: PartnerInput = {
@@ -118,11 +120,143 @@ const EMPTY_PARTNER: PartnerInput = {
   birth_lat: "",
   birth_lon: "",
   birth_tz: "",
+  place: "",
 };
 
 const field =
   "w-full rounded-lg border border-hairline bg-card px-3 py-2 text-sm outline-none focus:border-accent transition-colors";
 const label = "block text-xs font-medium text-text-muted mb-1.5";
+
+interface PlaceResult {
+  name: string;
+  label: string;
+  state: string;
+  country: string;
+  lat: number;
+  lon: number;
+  tz: number;
+}
+
+interface SavedChartRow {
+  id: string;
+  name: string;
+  birth_date: string;
+  birth_time: string;
+  place: string;
+  lat: string;
+  lon: string;
+  tz: string;
+}
+
+/** City autocomplete that fills lat/lon/tz — reuses /api/cvce/places, same as the
+ *  main BirthForm, so partners can enter a place name instead of raw coordinates. */
+function PlaceField({ value, onPick }: { value: string; onPick: (r: PlaceResult) => void }) {
+  const [q, setQ] = useState(value);
+  const [results, setResults] = useState<PlaceResult[]>([]);
+  const [open, setOpen] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setQ(value); }, [value]);
+  useEffect(() => {
+    function h(e: MouseEvent) {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  function onChange(v: string) {
+    setQ(v);
+    if (debounce.current) clearTimeout(debounce.current);
+    if (v.length < 2) { setResults([]); setOpen(false); return; }
+    debounce.current = setTimeout(async () => {
+      setFetching(true);
+      try {
+        const res = await fetch(`/api/cvce/places?q=${encodeURIComponent(v)}`);
+        const data = await res.json();
+        const list: PlaceResult[] = data.results ?? [];
+        setResults(list);
+        setOpen(list.length > 0);
+      } catch {
+        setResults([]);
+      } finally {
+        setFetching(false);
+      }
+    }, 300);
+  }
+
+  return (
+    <div ref={wrapRef} className="relative">
+      <label className={label}>Place</label>
+      <div className="relative">
+        <input
+          className={field}
+          value={q}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => results.length > 0 && setOpen(true)}
+          onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+          placeholder="Type a city name…"
+          autoComplete="off"
+        />
+        {fetching && (
+          <span className="absolute right-3 inset-y-0 flex items-center text-[10px] font-mono text-text-muted pointer-events-none">···</span>
+        )}
+      </div>
+      {open && results.length > 0 && (
+        <ul className="absolute z-50 top-full mt-1 w-full rounded-xl border border-hairline bg-card overflow-hidden shadow-lg">
+          {results.map((r, i) => (
+            <li key={i} className="border-b border-hairline last:border-0">
+              <button
+                type="button"
+                onClick={() => { onPick(r); setQ(r.label); setOpen(false); }}
+                className="w-full text-left px-4 py-2.5 hover:bg-accent/5 transition-colors"
+              >
+                <span className="block text-sm font-medium text-text-main leading-tight">{r.name}</span>
+                <span className="block text-xs text-text-muted mt-0.5">
+                  {[r.state, r.country].filter(Boolean).join(", ")}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+/** Dropdown to load one of the user's saved charts into a partner slot. Hidden
+ *  when the account has no saved charts. Charts are account-scoped server-side. */
+function SavedChartPicker({ onLoad }: { onLoad: (c: SavedChartRow) => void }) {
+  const [charts, setCharts] = useState<SavedChartRow[]>([]);
+  useEffect(() => {
+    fetch("/api/charts")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((d) => setCharts(Array.isArray(d) ? d : []))
+      .catch(() => {});
+  }, []);
+  if (charts.length === 0) return null;
+  return (
+    <select
+      className={`${field} cursor-pointer`}
+      defaultValue=""
+      onChange={(e) => {
+        const c = charts.find((x) => x.id === e.target.value);
+        if (c) onLoad(c);
+        e.currentTarget.value = "";
+      }}
+      aria-label="Load a saved chart"
+    >
+      <option value="" disabled>Load a saved chart…</option>
+      {charts.map((c) => (
+        <option key={c.id} value={c.id}>
+          {(c.name || "Unnamed")}{c.birth_date ? ` · ${c.birth_date}` : ""}
+        </option>
+      ))}
+    </select>
+  );
+}
 
 function PartnerForm({
   title,
@@ -139,6 +273,20 @@ function PartnerForm({
         {title}
       </h3>
       <div className="flex flex-col gap-3">
+        <SavedChartPicker
+          onLoad={(c) =>
+            onChange({
+              name: c.name || value.name,
+              birth_datetime: c.birth_date
+                ? `${c.birth_date}T${(c.birth_time || "12:00")}:00`
+                : value.birth_datetime,
+              birth_lat: c.lat,
+              birth_lon: c.lon,
+              birth_tz: c.tz || "5.5",
+              place: c.place,
+            })
+          }
+        />
         <div>
           <label className={label}>Name</label>
           <input
@@ -184,6 +332,18 @@ function PartnerForm({
             />
           </div>
         </div>
+        <PlaceField
+          value={value.place ?? ""}
+          onPick={(r) =>
+            onChange({
+              ...value,
+              place: r.label,
+              birth_lat: String(r.lat),
+              birth_lon: String(r.lon),
+              birth_tz: String(r.tz),
+            })
+          }
+        />
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label className={label}>Lat</label>
