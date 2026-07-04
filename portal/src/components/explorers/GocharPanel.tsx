@@ -138,7 +138,7 @@ function PlanetRow({ p, showLagna }: { p: PlanetTransit; showLagna: boolean }) {
   return (
     <>
       <tr
-        className="border-b border-hairline cursor-pointer hover:bg-white/[0.02] transition-colors"
+        className="border-b border-hairline cursor-pointer hover:bg-accent/5 transition-colors"
         onClick={() => p.effects.length > 0 && setOpen((s) => !s)}
       >
         {/* Planet */}

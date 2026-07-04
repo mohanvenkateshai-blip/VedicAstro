@@ -250,16 +250,16 @@ export function DashboardTable() {
                       <div className="flex items-center justify-end gap-1">
                         <button onClick={() => handleMove(c.id, "up")}
                           disabled={!inOrderMode || idx === 0} title="Move up"
-                          className="p-1.5 rounded-lg text-text-muted hover:text-text-main hover:bg-white/5 disabled:opacity-20 disabled:cursor-default transition-colors">
+                          className="p-1.5 rounded-lg text-text-muted hover:text-text-main hover:bg-accent/5 disabled:opacity-20 disabled:cursor-default transition-colors">
                           <ChevronUp className="w-3.5 h-3.5" />
                         </button>
                         <button onClick={() => handleMove(c.id, "down")}
                           disabled={!inOrderMode || idx === sorted.length - 1} title="Move down"
-                          className="p-1.5 rounded-lg text-text-muted hover:text-text-main hover:bg-white/5 disabled:opacity-20 disabled:cursor-default transition-colors">
+                          className="p-1.5 rounded-lg text-text-muted hover:text-text-main hover:bg-accent/5 disabled:opacity-20 disabled:cursor-default transition-colors">
                           <ChevronDown className="w-3.5 h-3.5" />
                         </button>
                         <button onClick={() => handleLoad(c)} title="Open chart"
-                          className="p-1.5 rounded-lg text-text-muted hover:text-accent hover:bg-white/5 transition-colors">
+                          className="p-1.5 rounded-lg text-text-muted hover:text-accent hover:bg-accent/5 transition-colors">
                           <ExternalLink className="w-3.5 h-3.5" />
                         </button>
                         <button onClick={() => handleDelete(c.id)} title="Delete"

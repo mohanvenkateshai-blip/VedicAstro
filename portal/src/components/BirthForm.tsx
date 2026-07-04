@@ -138,7 +138,7 @@ export function BirthForm({
                   <button
                     type="button"
                     onClick={() => pickResult(r)}
-                    className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors"
+                    className="w-full text-left px-4 py-3 hover:bg-accent/5 transition-colors"
                   >
                     <span className="block text-sm font-medium text-text-main leading-tight">
                       {r.name}

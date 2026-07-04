@@ -80,7 +80,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
               <button
                 key={v}
                 onClick={() => setChartVariant(v)}
-                className={clsx("px-3 py-1 text-xs rounded border", chartVariant === v ? "bg-accent text-white border-accent" : "border-hairline")}
+                className={clsx("px-3 py-1 text-xs rounded border", chartVariant === v ? "bg-accent text-accent-fg border-accent" : "border-hairline")}
               >
                 {v === "south" ? "South" : "North"} Indian
               </button>
@@ -110,7 +110,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
             {transitSav && (
               <button
                 onClick={() => setShowTransit(!showTransit)}
-                className={clsx("px-2 py-0.5 rounded border", showTransit ? "bg-accent text-white border-accent" : "border-hairline")}
+                className={clsx("px-2 py-0.5 rounded border", showTransit ? "bg-accent text-accent-fg border-accent" : "border-hairline")}
               >
                 Transit SAV
               </button>
@@ -118,7 +118,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
             {transitSav && showTransit && (
               <button
                 onClick={() => setSuperimpose(!superimpose)}
-                className={clsx("px-2 py-0.5 rounded border", superimpose ? "bg-accent text-white border-accent" : "border-hairline")}
+                className={clsx("px-2 py-0.5 rounded border", superimpose ? "bg-accent text-accent-fg border-accent" : "border-hairline")}
               >
                 Superimpose
               </button>

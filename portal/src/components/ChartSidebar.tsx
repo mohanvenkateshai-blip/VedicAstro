@@ -50,7 +50,7 @@ export function ChartSidebar() {
             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
               isActive
                 ? "bg-accent/15 text-accent font-medium"
-                : "text-text-muted hover:text-text-main hover:bg-white/3"
+                : "text-text-muted hover:text-text-main hover:bg-accent/5"
             }`}
           >
             <Icon size={15} />
@@ -75,7 +75,7 @@ export function ChartSidebar() {
             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
               isActive
                 ? "bg-accent/15 text-accent font-medium"
-                : "text-text-muted hover:text-text-main hover:bg-white/3"
+                : "text-text-muted hover:text-text-main hover:bg-accent/5"
             }`}
           >
             <Icon size={15} />
