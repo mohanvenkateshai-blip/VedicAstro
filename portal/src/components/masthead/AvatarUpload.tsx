@@ -2,11 +2,13 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Camera, Loader2 } from "lucide-react";
+import { Camera, Loader2, Check } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 
-/** Profile-page avatar with an upload control. Posts to /api/prefs/avatar, which
- *  stores the image in Supabase Storage and writes the URL to users.image. */
+/** Profile-page avatar with upload. The photo SAVES AUTOMATICALLY when a file is
+ *  chosen — it posts to /api/prefs/avatar (Supabase Storage → users.image); there
+ *  is no separate Save button for it (the "Save" under Display name is only for
+ *  the name). */
 export function AvatarUpload({
   name,
   email,
@@ -19,7 +21,8 @@ export function AvatarUpload({
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [shown, setShown] = useState<string | null>(null); // stored URL after success
+  const [saved, setSaved] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
   async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,19 +31,22 @@ export function AvatarUpload({
     if (!file) return;
 
     setErr(null);
+    setSaved(false);
     setBusy(true);
-    setPreview(URL.createObjectURL(file));
 
     const fd = new FormData();
     fd.append("file", file);
     try {
       const res = await fetch("/api/prefs/avatar", { method: "POST", body: fd });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Upload failed");
+      if (!res.ok || !data.url) throw new Error(data.error || "Upload failed");
+      // Show the ACTUAL stored URL — confirms Supabase served it (not a local blob),
+      // so a broken storage config shows as a broken image rather than a false success.
+      setShown(data.url);
+      setSaved(true);
       router.refresh();
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Upload failed");
-      setPreview(null);
     } finally {
       setBusy(false);
     }
@@ -49,7 +55,7 @@ export function AvatarUpload({
   return (
     <div>
       <div className="relative w-fit">
-        <Avatar name={name} email={email} image={preview ?? image} size="lg" />
+        <Avatar name={name} email={email} image={shown ?? image} size="lg" />
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
@@ -67,7 +73,20 @@ export function AvatarUpload({
           onChange={onFile}
         />
       </div>
-      {err && <p className="mt-1.5 text-xs text-danger">{err}</p>}
+
+      {err ? (
+        <p className="mt-1.5 max-w-[180px] text-xs text-danger">{err}</p>
+      ) : saved ? (
+        <p className="mt-1.5 flex items-center gap-1 text-xs text-success">
+          <Check size={12} /> Photo saved
+        </p>
+      ) : busy ? (
+        <p className="mt-1.5 text-xs text-text-muted">Uploading…</p>
+      ) : (
+        <p className="mt-1.5 max-w-[180px] text-[11px] text-text-muted">
+          Tap the camera — your photo saves automatically.
+        </p>
+      )}
     </div>
   );
 }
