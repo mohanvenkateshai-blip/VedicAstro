@@ -56,6 +56,23 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
           </span>
         </div>
 
+        {/* Classical House Group Totals (Kendra, Trikona, Dustana, Upachaya) */}
+        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs font-mono">
+          {[
+            { label: "Kendra", houses: [0,3,6,9] },
+            { label: "Trikona", houses: [0,4,8] },
+            { label: "Dustana", houses: [5,7,11] },
+            { label: "Upachaya", houses: [2,5,9,10] },
+          ].map((g) => {
+            const sum = g.houses.reduce((acc, h) => acc + akv.sav[h], 0);
+            return (
+              <span key={g.label}>
+                {g.label}: <span className="font-semibold text-accent">{sum}</span>
+              </span>
+            );
+          })}
+        </div>
+
         {/* Visual Kundali Chart with SAV bindus */}
         <div className="mt-4 border border-hairline rounded-xl p-3 bg-[#0a0a0a]">
           <div className="flex gap-2 mb-2">
