@@ -35,8 +35,13 @@ export function getSavedCharts(): SavedChart[] {
   // Charts from other logins on the same browser must not leak.
   // Proper DB-backed storage coming next.
   if (typeof window !== "undefined") {
-    // If user has a session cookie from NextAuth, treat as logged in
-    const hasSession = document.cookie.includes("next-auth.session-token") || document.cookie.includes("__Secure-next-auth.session-token");
+    // Check for any common NextAuth / Auth.js session cookie
+    const cookies = document.cookie;
+    const hasSession =
+      cookies.includes("next-auth.session-token") ||
+      cookies.includes("__Secure-next-auth.session-token") ||
+      cookies.includes("authjs.session-token") ||
+      cookies.includes("__Secure-authjs.session-token");
     if (hasSession) {
       return [];
     }
