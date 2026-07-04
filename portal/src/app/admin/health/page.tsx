@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { requireSession } from "@/lib/auth/index";
 import { getDeepHealth, type DeepHealthCheck } from "@/lib/service-health";
 import { HealthAutoRefresh } from "@/components/admin/HealthAutoRefresh";
@@ -37,18 +36,12 @@ export default async function AdminHealthPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs uppercase tracking-widest text-accent font-medium">Admin</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight font-serif">System health</h1>
-          <p className="mt-2 text-sm text-text-muted max-w-xl">
-            Deep per-subsystem probes from CVCE <code className="font-mono text-xs">/health/deep</code> —
-            actively exercises each engine, not just a port check.
-          </p>
-        </div>
-        <Link href="/dashboard" className="text-sm text-text-muted hover:text-text-main shrink-0">
-          ← Dashboard
-        </Link>
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold tracking-tight font-serif">System health</h1>
+        <p className="mt-2 text-sm text-text-muted max-w-xl">
+          Deep per-subsystem probes from CVCE <code className="font-mono text-xs">/health/deep</code> —
+          actively exercises each engine, not just a port check.
+        </p>
       </div>
 
       {/* Overall status banner */}
