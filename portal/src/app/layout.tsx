@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Fraunces, Sora, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -43,7 +44,9 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-fg focus:rounded-lg focus:text-sm focus:font-medium">Skip to content</a>
         <SiteHeader session={session} />
-        <LastVisitedTracker signedIn={!!session} />
+        <Suspense fallback={null}>
+          <LastVisitedTracker signedIn={!!session} />
+        </Suspense>
         <main id="main-content" className="flex-1" tabIndex={-1}>{children}</main>
         <footer className="border-t border-hairline px-6 py-8 text-center text-xs text-text-muted">
           VedicShastra AI · Sidereal (Nirayana) · Lahiri ayanāṁśa · Swiss Ephemeris.

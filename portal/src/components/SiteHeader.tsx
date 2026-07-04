@@ -52,12 +52,15 @@ export function SiteHeader({ session }: { session: Session | null }) {
           )}
         </nav>
 
+        {/* Account control (avatar when in, Sign in when out) is always rightmost,
+            with the "Cast a chart" primary action immediately to its left, so
+            nothing shifts position across the signed-in / signed-out boundary. */}
         <div className="flex items-center gap-2">
           <GlobalSearch />
           {signedIn ? (
             <>
               <NotificationBell />
-              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm md:inline-flex">
+              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm sm:inline-flex">
                 Cast a chart
               </ButtonLink>
               <UserMenu session={session} />
@@ -65,15 +68,15 @@ export function SiteHeader({ session }: { session: Session | null }) {
           ) : (
             <>
               <ThemeToggle />
+              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm sm:inline-flex">
+                Cast a chart
+              </ButtonLink>
               <Link
                 href="/auth/signin"
-                className="hidden px-3 py-2 text-sm text-text-muted transition-colors hover:text-text-main sm:inline"
+                className="rounded-xl border border-hairline px-4 py-2 text-sm font-medium text-text-main transition-colors hover:bg-accent/5"
               >
                 Sign in
               </Link>
-              <ButtonLink href="/chart" variant="primary" className="!px-4 !py-2 text-sm">
-                Cast a chart
-              </ButtonLink>
             </>
           )}
         </div>

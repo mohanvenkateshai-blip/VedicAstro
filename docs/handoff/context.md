@@ -15,14 +15,16 @@
 > admin users. ASAP." User authorized >5 agents FOR THIS FEATURE. Then: "PLAN EVERY
 > DETAIL, KEEP READY IN HANDOFF" (this section) + "proceed until ~95% context".
 >
-> **Status (2026-07-04, updated):** BUILT — all 7 phases implemented; `npm run typecheck`
-> clean + `next build` PASSES (new routes /profile /settings /resume /api/notifications
-> /api/prefs/{theme,last-path,profile} + Proxy all compiled). Committing + pushing to main
-> (Vercel auto-deploy). REMAINING: (1) apply DB migration to prod — `cd portal && npm run
-> db:schema:remote` (needs prod AUTH_SECRET) OR it auto-applies on next cold start via
-> ensureSchema(); verify `GET /api/db/migrate`. (2) Manual E2E checklist (see PHASE 7 — real
-> Google OAuth can't be curl'd, so this is human-run). Pre-existing lint `any` errors in
-> corpus.ts/db.ts/graphify.ts/types.ts are NOT mine and don't block `next build`.
+> **Status (2026-07-04, DEPLOYED):** LIVE on main (commit 87f6b11, pushed by user).
+> Verified in prod: home 200; /settings → 307 (new proxy matcher + route serving = new code
+> live); /api/db/migrate → configured:true, tablesPresent:true. DB migration auto-applied via
+> ensureSchema() on first getSession DB hit (idempotent ALTER/CREATE in schema.sql). If theme
+> persistence ever no-ops, belt-and-suspenders: `cd portal && npm run db:schema:remote`.
+> REMAINING: only the human E2E sign-in walkthrough (real Google OAuth, can't be curl'd) —
+> checklist in PHASE 7 below. Pre-existing lint `any` errors (corpus/db/graphify/types.ts) are
+> NOT mine and don't block `next build`.
+> OPTIONAL follow-up: seed a "welcome" notification in upsertUser so the bell is non-empty on
+> first sign-in (makes the notification center immediately visible/testable).
 >
 > **What shipped this build:** session now carries name/image/theme/lastPath (jwt+session cb
 > + getSession DB-merge); `users` gained image/theme/last_path cols + new `notifications`
@@ -32,6 +34,36 @@
 > script in layout); resume-last-page (LastVisitedTracker in layout → /api/prefs/last-path →
 > /resume redirector; signin defaults to /resume); Profile + Settings pages (proxy matcher +
 > PROTECTED_PREFIXES extended to /profile,/settings). New UI primitives Avatar + Menu/MenuItem.
+
+### E2E test results (user, 2026-07-04, live prod) + triage
+Signed in as normal user uvwxme@gmail.com (name "Mr.Cool", Free). Findings:
+- ✅ Test 1: theme change retained on re-login (per-user DB theme works).
+- 🔧 Test 2 (FIXED, pending push): resume restored the *page* (/chart overview) but not
+  the *chart*. Root cause: chart identity is in the URL query (chart pages read searchParams;
+  saved charts = localStorage birth-params). LastVisitedTracker recorded usePathname() only,
+  dropping the query. Fix: tracker now records path+query via useSearchParams (wrapped in
+  Suspense in layout to keep static pages static). NOTE remaining edge: saved charts are
+  localStorage-per-browser (src/lib/saved-charts.ts, key vedicastro_saved_charts) — resume via
+  URL works same-browser; cross-device chart resume would need saved charts in the DB (backlog).
+- 🔧 Test 7 (FIXED, pending push): account control jumped sides — Sign in was LEFT of
+  "Cast a chart" (signed out) but avatar was RIGHT of it (signed in). Fix: account control
+  (avatar / Sign in) is now rightmost in BOTH states, Cast-a-chart immediately left. User also
+  asked "why is Cast a chart in the header?" — kept (it's the only header entry to the core
+  action; there's no Chart nav item) but styled Sign in as a bordered button. Revisit if user
+  still wants it removed.
+- 🐞 Test 4 (OPEN): Learn tab "nothing happens when clicked". /learn returns 200 server-side
+  → it's a CLIENT nav issue (not a broken route, not obviously my regression). Needs: check the
+  <Link href="/learn"> click / whether /learn/page.tsx throws on client hydration. Investigate.
+- 🎨 Test 3 (OPEN): light theme low-contrast — colors/borders/text don't gel, poor contrast
+  (screenshot). Needs a pass over globals.css light-mode tokens (:root vs .dark) + card/hairline
+  usage on the pages that look off. Dark theme is fine.
+- 🧩 Test 5 (BACKLOG, feature): Compatibility tab has no location field; also wants to load
+  previously-saved charts into it. Pre-existing module, not part of this build.
+- 🖼️ Profile picture (BACKLOG, feature): avatar showed initials, not a Google photo (this
+  account may have none). User wants an OPTION to upload a profile picture — new feature (needs
+  storage; avatar-upload endpoint + users.image write). OAuth photo already threads if present.
+- ❓ Test 6 (DISCUSS): user questions the landing page's purpose/value. Product/UX decision,
+  not a bug — needs a direction conversation before redesign.
 
 ### Ground truth from discovery (do NOT re-investigate)
 - **Auth**: NextAuth v5 JWT strategy, no DB adapter. Config `portal/src/app/api/auth/auth.ts`
