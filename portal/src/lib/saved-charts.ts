@@ -31,6 +31,16 @@ function write(charts: SavedChart[]): void {
 }
 
 export function getSavedCharts(): SavedChart[] {
+  // Security fix: Do not show localStorage charts to authenticated users.
+  // Charts from other logins on the same browser must not leak.
+  // Proper DB-backed storage coming next.
+  if (typeof window !== "undefined") {
+    // If user has a session cookie from NextAuth, treat as logged in
+    const hasSession = document.cookie.includes("next-auth.session-token") || document.cookie.includes("__Secure-next-auth.session-token");
+    if (hasSession) {
+      return [];
+    }
+  }
   return read().sort((a, b) => a.order - b.order);
 }
 
