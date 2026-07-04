@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import type { ChartData } from "@/lib/types";
 import { RASHIS, RASHI_SHORT, PLANET_SHORT } from "@/lib/types";
 import { planetColor, elementColor } from "@/lib/astroColors";
+import { KundaliChart } from "@/components/chart/KundaliChart";
 
 const BAV_ROWS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Lagna"];
 
@@ -31,6 +32,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
 
   const total = akv.sav.reduce((a, b) => a + b, 0);
   const transitSav = (akv as any).transit_sav as number[] | undefined;
+  const [chartVariant, setChartVariant] = React.useState<"south" | "north">("south");
 
   return (
     <div className="space-y-4">
@@ -52,6 +54,35 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
           <span className="font-mono text-text-muted">
             Lagna: <span className="text-text-fg font-semibold">{RASHIS[akv.lagnaSignIdx]}</span>
           </span>
+        </div>
+
+        {/* Visual Kundali Chart with SAV bindus */}
+        <div className="mt-4 border border-hairline rounded-xl p-3 bg-[#0a0a0a]">
+          <div className="flex gap-2 mb-2">
+            {(["south", "north"] as const).map((v) => (
+              <button
+                key={v}
+                onClick={() => setChartVariant(v)}
+                className={clsx("px-3 py-1 text-xs rounded border", chartVariant === v ? "bg-accent text-white border-accent" : "border-hairline")}
+              >
+                {v === "south" ? "South" : "North"} Indian
+              </button>
+            ))}
+          </div>
+          <KundaliChart
+            signs={(() => {
+              const v = chart.vargas?.D1?.signs;
+              if (v && Object.keys(v).length > 0) return v;
+              // Fallback: build from planets + Lagna
+              const s: Record<string, number> = {};
+              (chart.planets || []).forEach((p: any) => { if (p.planet && p.signIdx != null) s[p.planet] = p.signIdx; });
+              if ((chart as any).lagna?.signIdx != null) s.Lagna = (chart as any).lagna.signIdx;
+              return s;
+            })()}
+            variant={chartVariant}
+            sav={akv.sav}
+            size={380}
+          />
         </div>
       </Card>
 
