@@ -60,16 +60,28 @@ Signed in as normal user uvwxme@gmail.com (name "Mr.Cool", Free). Findings:
   tag "learn-books") so it's slow only on the first request, instant after. Build passes.
   Follow-up option: same slow-listBooks pattern may affect /learn/[bookId] and dashboard-side
   book loads — consider caching listBooks itself in src/lib/books.ts if other routes drag.
-- 🎨 Test 3 (OPEN): light theme low-contrast — colors/borders/text don't gel, poor contrast
-  (screenshot). Needs a pass over globals.css light-mode tokens (:root vs .dark) + card/hairline
-  usage on the pages that look off. Dark theme is fine.
-- 🧩 Test 5 (BACKLOG, feature): Compatibility tab has no location field; also wants to load
-  previously-saved charts into it. Pre-existing module, not part of this build.
-- 🖼️ Profile picture (BACKLOG, feature): avatar showed initials, not a Google photo (this
-  account may have none). User wants an OPTION to upload a profile picture — new feature (needs
-  storage; avatar-upload endpoint + users.image write). OAuth photo already threads if present.
-- ❓ Test 6 (DISCUSS): user questions the landing page's purpose/value. Product/UX decision,
-  not a bug — needs a direction conversation before redesign.
+- 🔧 Test 3 (FIXED, commit 5a83ee3, pending push): light theme "not gelling" was components
+  using dark-only colors that vanish on light — hover:bg-white/{5,3,0.02} → hover:bg-accent/5
+  (BirthForm, DashboardTable, ChartSidebar, GocharPanel); Ashtakavarga chips bg-accent text-white
+  → text-accent-fg; light hairline 10%→14% for border definition. Deeper visual QA may still find
+  more (e.g. astroColors planet palette contrast on white) — revisit if user flags specific pages.
+  Also retired the dead saved_charts table from supabase-schema.sql (documented; drop optional).
+- 🔧 Test 5 (DONE, commit d42831c, pending push): Compatibility (KootaMatcher.tsx) now has a
+  per-partner city autocomplete (PlaceField → /api/cvce/places fills lat/lon/tz) + a
+  SavedChartPicker dropdown that loads an account-scoped saved chart into a partner slot.
+  Raw lat/lon/tz remain editable.
+- ⏳ UNPUSHED at this point: 5a83ee3 (light theme + cleanup), d42831c (compatibility). Plus
+  handoff edits. `git push origin main` to deploy.
+- 🔧 Profile picture (DONE, pending push): avatar UPLOAD to Supabase Storage. New
+  POST /api/prefs/avatar (png/jpg/webp/gif ≤2MB) → public "avatars" bucket (auto-created via
+  service-role on first upload) → users.image (cache-busted URL). Profile page has AvatarUpload
+  (camera button, preview, inline errors). New updateUserImage() helper. NOTE: needs
+  SUPABASE_SERVICE_ROLE_KEY with storage perms (service role has them); bucket is public-read
+  (fine for avatars). First upload creates the bucket — verify in Supabase Storage after.
+- 🔧 Test 6 (DONE, pending push): user decision = landing page is acquisition-only. Signed-in
+  users hitting / now redirect to /resume (last page / dashboard); anonymous visitors see the hero.
+- ⏳ UNPUSHED: 5a83ee3 (light theme+cleanup), d42831c (compatibility), + the avatar/landing commit
+  (profile+landing). `git push origin main` to deploy all. ALL Test-list items now resolved.
 
 ### 🔴 SECURITY FIX (2026-07-04) — saved charts leaked across all logins
 User report: "no matter what google account I login, I see all charts saved in dashboard."
