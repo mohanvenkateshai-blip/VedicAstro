@@ -31,6 +31,46 @@ export interface GraphRagStatus {
 
 const CVCE = process.env.CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
 
+/** Deep per-subsystem health from CVCE /health/deep (actively probes each
+ * engine, Supabase, KE vectors, and memory headroom — the observability the
+ * shallow /health lacks). Consumed by the admin health dashboard. */
+export interface DeepHealthCheck {
+  name: string;
+  tier: number;
+  ok: boolean;
+  detail: string;
+  ms: number;
+}
+export interface DeepHealth {
+  status: "healthy" | "degraded" | "down" | "unreachable";
+  checks: DeepHealthCheck[];
+  memory: { rss_mb: number | null; limit_mb: number | null; headroom_pct: number | null };
+  timestamp: string;
+  latencyMs?: number;
+  error?: string;
+}
+
+export async function getDeepHealth(timeoutMs = 20_000): Promise<DeepHealth> {
+  const started = Date.now();
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), timeoutMs);
+    const res = await fetch(`${CVCE}/health/deep`, { cache: "no-store", signal: ctrl.signal });
+    clearTimeout(t);
+    const json = (await res.json()) as DeepHealth;
+    return { ...json, latencyMs: Date.now() - started };
+  } catch (e) {
+    return {
+      status: "unreachable",
+      checks: [],
+      memory: { rss_mb: null, limit_mb: null, headroom_pct: null },
+      timestamp: new Date().toISOString(),
+      latencyMs: Date.now() - started,
+      error: e instanceof Error ? e.message : "CVCE /health/deep unreachable",
+    };
+  }
+}
+
 interface PredictHealthJson {
   engine?: string;
   version?: string;

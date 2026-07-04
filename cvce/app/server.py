@@ -292,6 +292,114 @@ def health():
     }
 
 
+def _mem_snapshot() -> dict:
+    """Current RSS + cgroup limit (Fly/Linux). Falls back gracefully off-Linux."""
+    import os as _os
+
+    rss_mb = limit_mb = None
+    try:  # cgroup v2 (Fly)
+        with open("/sys/fs/cgroup/memory.current") as f:
+            rss_mb = int(f.read().strip()) / (1024 * 1024)
+        with open("/sys/fs/cgroup/memory.max") as f:
+            raw = f.read().strip()
+            limit_mb = None if raw == "max" else int(raw) / (1024 * 1024)
+    except Exception:
+        try:
+            import resource
+
+            ru = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            rss_mb = ru / 1024 if _os.uname().sysname != "Darwin" else ru / (1024 * 1024)
+        except Exception:
+            pass
+    headroom = None
+    if rss_mb is not None and limit_mb:
+        headroom = round(100 * (1 - rss_mb / limit_mb), 1)
+    return {
+        "rss_mb": round(rss_mb, 1) if rss_mb is not None else None,
+        "limit_mb": round(limit_mb, 1) if limit_mb else None,
+        "headroom_pct": headroom,
+    }
+
+
+@app.get("/health/deep")
+def health_deep():
+    """Active per-subsystem health — the observability the shallow /health
+    lacks (a port-open check stayed green all while KnowledgeEngine was dead).
+    Each check actually exercises its subsystem. Overall status:
+      down     — a Tier-0 check (core PyJHora compute) failed → product broken
+      degraded — a non-core check (KE / Supabase / memory) failed → still usable
+      healthy  — all green
+    """
+    import time as _time
+
+    checks = []
+
+    def _check(name, tier, fn):
+        t0 = _time.perf_counter()
+        try:
+            ok, detail = fn()
+        except Exception as e:
+            ok, detail = False, f"{type(e).__name__}: {str(e)[:160]}"
+        checks.append(
+            {"name": name, "tier": tier, "ok": bool(ok), "detail": detail,
+             "ms": round((_time.perf_counter() - t0) * 1000, 1)}
+        )
+
+    # Tier 0 — core computation (must never fail)
+    def _ephem():
+        dt = parse_dt("1975-04-22T19:15:00")
+        jd, place = jd_place(dt, 12.2979, 76.6393, 5.5)
+        asc = ascendant(jd, place)
+        # golden invariant: Mohan's Lagna is Libra
+        return asc.get("rashi") == "Libra", f"Lagna={asc.get('rashi')}"
+
+    _check("pyjhora_compute", 0, _ephem)
+
+    # Tier 1 — KnowledgeEngine + Supabase + vectors
+    def _ke():
+        ke = _ensure_knowledge_engine()
+        if ke is None:
+            return False, "engine None"
+        healthy = ke.is_knowledge_healthy()
+        vec = ke.vector_search_available()
+        return healthy, f"healthy={healthy} vector={vec} version={getattr(ke,'current_version',None) and ke.current_version.version}"
+
+    _check("knowledge_engine", 1, _ke)
+
+    def _supabase():
+        ke = _ensure_knowledge_engine()
+        store = getattr(ke, "store", None)
+        if store is None or not hasattr(store, "health_check"):
+            return False, "no supabase store (file-based)"
+        return bool(store.health_check()), "graph_nodes reachable"
+
+    _check("supabase", 1, _supabase)
+
+    # Tier 1 — resource headroom (OOM early-warning)
+    mem = _mem_snapshot()
+
+    def _memory():
+        hr = mem.get("headroom_pct")
+        if hr is None:
+            return True, f"rss={mem.get('rss_mb')}MB (limit unknown)"
+        return hr > 12, f"rss={mem.get('rss_mb')}MB / {mem.get('limit_mb')}MB, headroom={hr}%"
+
+    _check("memory_headroom", 1, _memory)
+
+    tier0_down = any(not c["ok"] for c in checks if c["tier"] == 0)
+    tier1_down = any(not c["ok"] for c in checks if c["tier"] == 1)
+    status = "down" if tier0_down else ("degraded" if tier1_down else "healthy")
+
+    from datetime import datetime as _dt
+
+    return {
+        "status": status,
+        "checks": checks,
+        "memory": mem,
+        "timestamp": _dt.now(UTC).isoformat(),
+    }
+
+
 @app.get("/version")
 def version():
     """Lightweight probe for KnowledgeEngine corpus version (used by portal proxy + clients)."""

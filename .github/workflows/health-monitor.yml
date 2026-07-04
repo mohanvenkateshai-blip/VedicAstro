@@ -1,0 +1,91 @@
+name: Health Monitor
+
+# External synthetic monitor for the VedicAstro CVCE backend. Runs on GitHub's
+# infrastructure so it keeps watching even during a full Fly.io outage (the
+# kind that would take down any in-app monitor). Probes the deep health
+# endpoint; on degradation it opens/updates a single GitHub issue (which
+# emails the repo owner) and fails the run (a failed scheduled workflow also
+# emails you by default). No secrets or paid services required.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # every 10 minutes (GitHub may delay under load)
+  workflow_dispatch: {} # allow manual "check now"
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe /health/deep
+        id: probe
+        run: |
+          set +e
+          BODY=$(curl -sS --max-time 60 --retry 3 --retry-delay 5 \
+            "https://vedicastro-cvce.fly.dev/health/deep")
+          echo "raw<<EOF" >> "$GITHUB_OUTPUT"; echo "$BODY" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
+          STATUS=$(echo "$BODY" | jq -r '.status // "unreachable"' 2>/dev/null)
+          [ -z "$STATUS" ] && STATUS="unreachable"
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          FAILED=$(echo "$BODY" | jq -r '[.checks[]? | select(.ok==false) | "\(.name): \(.detail)"] | join("\n")' 2>/dev/null)
+          echo "failed<<EOF" >> "$GITHUB_OUTPUT"; echo "$FAILED" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "Probe status: $STATUS"
+
+      - name: Alert on degradation
+        if: steps.probe.outputs.status != 'healthy'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.probe.outputs.status }}
+          FAILED: ${{ steps.probe.outputs.failed }}
+          RAW: ${{ steps.probe.outputs.raw }}
+        run: |
+          TITLE="🔴 CVCE health: ${STATUS}"
+          MARK="<!-- health-monitor-alert -->"
+          NUM=$(gh issue list --repo "$GITHUB_REPOSITORY" --label health-alert --state open \
+            --json number,body --jq ".[] | select(.body | contains(\"$MARK\")) | .number" | head -1)
+          NOW=$(date -u +"%Y-%m-%d %H:%M UTC")
+          COMMENT="**${NOW}** — status: \`${STATUS}\`
+          Failing checks:
+          \`\`\`
+          ${FAILED:-'(endpoint unreachable — no per-check detail)'}
+          \`\`\`"
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "$COMMENT"
+          else
+            gh label create health-alert --repo "$GITHUB_REPOSITORY" --color b60205 --force 2>/dev/null || true
+            gh issue create --repo "$GITHUB_REPOSITORY" --label health-alert \
+              --title "$TITLE" \
+              --body "${MARK}
+          Automated health alert from \`.github/workflows/health-monitor.yml\`.
+
+          $COMMENT
+
+          Full response:
+          \`\`\`json
+          ${RAW}
+          \`\`\`
+
+          Close this issue once resolved; it will reopen/comment on the next failure."
+          fi
+
+      - name: Auto-resolve note when healthy
+        if: steps.probe.outputs.status == 'healthy'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MARK="<!-- health-monitor-alert -->"
+          NUM=$(gh issue list --repo "$GITHUB_REPOSITORY" --label health-alert --state open \
+            --json number,body --jq ".[] | select(.body | contains(\"$MARK\")) | .number" | head -1)
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "✅ $(date -u +'%Y-%m-%d %H:%M UTC') — health recovered (status: healthy). Auto-closing."
+            gh issue close "$NUM" --repo "$GITHUB_REPOSITORY" --reason completed
+          fi
+
+      - name: Fail run on degradation
+        if: steps.probe.outputs.status != 'healthy'
+        run: |
+          echo "::error::CVCE health is ${{ steps.probe.outputs.status }}"
+          exit 1
