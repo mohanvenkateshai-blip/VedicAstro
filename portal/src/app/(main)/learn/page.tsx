@@ -1,7 +1,18 @@
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { listBooks } from "@/lib/books";
 import { LearnGlobalSearch } from "@/components/LearnGlobalSearch";
+
+// The library listing fans out to ~240 Supabase count-queries (61 books × up to
+// 4 probes) + per-book markdown parsing — ~4-6s uncached. The corpus is static,
+// so cache the whole result for an hour: slow only on the first request, instant
+// after. Paired with loading.tsx this makes the Learn tab feel responsive.
+const getLibraryBooks = unstable_cache(
+  async () => listBooks("newbooks-v1"),
+  ["learn-library-books:newbooks-v1"],
+  { revalidate: 3600, tags: ["learn-books"] },
+);
 
 export default async function LearnPage({
   searchParams,
@@ -13,7 +24,7 @@ export default async function LearnPage({
 
   let books: Awaited<ReturnType<typeof listBooks>> = [];
   try {
-    books = await listBooks("newbooks-v1");
+    books = await getLibraryBooks();
   } catch {
     books = [];
   }

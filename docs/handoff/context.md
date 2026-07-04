@@ -51,9 +51,15 @@ Signed in as normal user uvwxme@gmail.com (name "Mr.Cool", Free). Findings:
   asked "why is Cast a chart in the header?" — kept (it's the only header entry to the core
   action; there's no Chart nav item) but styled Sign in as a bordered button. Revisit if user
   still wants it removed.
-- 🐞 Test 4 (OPEN): Learn tab "nothing happens when clicked". /learn returns 200 server-side
-  → it's a CLIENT nav issue (not a broken route, not obviously my regression). Needs: check the
-  <Link href="/learn"> click / whether /learn/page.tsx throws on client hydration. Investigate.
+- 🔧 Test 4 (FIXED, pending push): Learn tab "nothing happens when clicked". ROOT CAUSE (not a
+  JS error): /learn RSC navigation took ~4.3-5.9s because listBooks("newbooks-v1") fans out to
+  ~240 Supabase count-queries (61 books × up to 4 ilike probes) + per-book markdown parsing, and
+  there was NO loading.tsx → a click gave zero feedback for ~5s = "non-functional". Other tabs
+  are fast so they felt instant. FIX: (1) added src/app/(main)/learn/loading.tsx skeleton →
+  instant navigation feedback; (2) wrapped the book list in unstable_cache (revalidate 3600,
+  tag "learn-books") so it's slow only on the first request, instant after. Build passes.
+  Follow-up option: same slow-listBooks pattern may affect /learn/[bookId] and dashboard-side
+  book loads — consider caching listBooks itself in src/lib/books.ts if other routes drag.
 - 🎨 Test 3 (OPEN): light theme low-contrast — colors/borders/text don't gel, poor contrast
   (screenshot). Needs a pass over globals.css light-mode tokens (:root vs .dark) + card/hairline
   usage on the pages that look off. Dark theme is fine.
