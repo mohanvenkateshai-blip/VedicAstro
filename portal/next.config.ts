@@ -20,7 +20,8 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://muhurtha.uvwx.me",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob:",
+              // Allow avatars: Supabase Storage (uploaded pics) + Google OAuth photos.
+              "img-src 'self' data: blob: https://*.supabase.co https://lh3.googleusercontent.com",
               "font-src 'self' data:",
               "connect-src 'self' https://vedicastro-cvce.fly.dev",
               "frame-src https://muhurtha.uvwx.me",
