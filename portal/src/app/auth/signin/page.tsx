@@ -10,7 +10,9 @@ export default async function SignIn({
   searchParams: Promise<SP>;
 }) {
   const { callbackUrl } = await searchParams;
-  const redirectTo = callbackUrl?.startsWith("/") ? callbackUrl : "/dashboard";
+  // No explicit deep-link → send through /resume, which lands the user on the
+  // last page they were on (falling back to /dashboard).
+  const redirectTo = callbackUrl?.startsWith("/") ? callbackUrl : "/resume";
 
   if (!isAuthConfigured()) {
     return (

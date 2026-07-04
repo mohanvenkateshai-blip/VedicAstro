@@ -55,6 +55,7 @@ function createNextAuth() {
               id,
               email: user.email,
               name: user.name ?? undefined,
+              image: user.image ?? undefined,
             });
           } catch {
             // Non-fatal — user can still sign in without DB
@@ -70,6 +71,12 @@ function createNextAuth() {
           const id = googleUserId(user, account);
           token.id = id;
           token.sub = id;
+        }
+        // Persist display name + avatar from the OAuth profile onto the token so
+        // the masthead can show them without a DB round-trip on every request.
+        if (user) {
+          if (user.name) token.name = user.name;
+          if (user.image) token.picture = user.image;
         }
         if (user || account?.providerAccountId) {
           const id = (token.id ?? token.sub) as string;
@@ -93,6 +100,8 @@ function createNextAuth() {
           const id = (token.id ?? token.sub) as string;
           (session.user as { id?: string }).id = id;
           (session.user as { role?: Role }).role = (token.role as Role) ?? "free";
+          if (token.name) session.user.name = token.name as string;
+          if (token.picture) session.user.image = token.picture as string;
         }
         return session;
       },

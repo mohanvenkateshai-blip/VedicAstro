@@ -31,7 +31,13 @@ export const getSession = cache(async (): Promise<Session | null> => {
 
   try {
     const s = (await auth()) as {
-      user?: { id?: string; email?: string | null; role?: Role };
+      user?: {
+        id?: string;
+        email?: string | null;
+        role?: Role;
+        name?: string | null;
+        image?: string | null;
+      };
       userId?: string;
     } | null;
     if (!s?.user) return null;
@@ -39,10 +45,33 @@ export const getSession = cache(async (): Promise<Session | null> => {
     const userId = user.id ?? s.userId;
     if (!userId) return null;
 
+    // Enrich with personalization fields from the DB (theme, last_path, and the
+    // canonical name/image). Role/email/userId stay authoritative from the JWT.
+    let theme: Session["theme"] = "system";
+    let lastPath: string | null = null;
+    let name: string | null = user.name ?? null;
+    let image: string | null = user.image ?? null;
+    try {
+      const { getUserPrefs } = await import("./index");
+      const prefs = await getUserPrefs(userId);
+      if (prefs) {
+        theme = prefs.theme;
+        lastPath = prefs.lastPath;
+        name = prefs.name ?? name;
+        image = prefs.image ?? image;
+      }
+    } catch {
+      /* DB down — fall back to token values + default theme */
+    }
+
     return {
       userId,
       email: user.email ?? "",
       role: user.role ?? "free",
+      name,
+      image,
+      theme,
+      lastPath,
     };
   } catch {
     return null;

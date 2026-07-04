@@ -1,7 +1,207 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-07-03 15:11 IST (mid-session checkpoint — Kalachakra rebuild + report redesign backend + rectification engine; Claude Code / Fable 5)  
+**Snapshot:** 2026-07-04 (Claude Code / Sonnet 5 — session-management + personalization + masthead build spec; discovery done, build starting)  
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
+
+---
+
+## -2. ACTIVE BUILD — Session Mgmt + Personalization + Masthead (EXECUTION-READY SPEC, 2026-07-04)
+
+> **User intent (verbatim):** "User Name should be captured, Personalization module
+> implemented, Theme + page-where-user-left remembered so on re-login they carry on
+> from that page. Complete session management with all standards. Username top-right
+> shows Profile, Theme, Settings, Log out/in. Standard masthead: search, notification
+> center, username top-right. Build ground-up, wire everything, test E2E for normal +
+> admin users. ASAP." User authorized >5 agents FOR THIS FEATURE. Then: "PLAN EVERY
+> DETAIL, KEEP READY IN HANDOFF" (this section) + "proceed until ~95% context".
+>
+> **Status (2026-07-04, updated):** BUILT — all 7 phases implemented; `npm run typecheck`
+> clean + `next build` PASSES (new routes /profile /settings /resume /api/notifications
+> /api/prefs/{theme,last-path,profile} + Proxy all compiled). Committing + pushing to main
+> (Vercel auto-deploy). REMAINING: (1) apply DB migration to prod — `cd portal && npm run
+> db:schema:remote` (needs prod AUTH_SECRET) OR it auto-applies on next cold start via
+> ensureSchema(); verify `GET /api/db/migrate`. (2) Manual E2E checklist (see PHASE 7 — real
+> Google OAuth can't be curl'd, so this is human-run). Pre-existing lint `any` errors in
+> corpus.ts/db.ts/graphify.ts/types.ts are NOT mine and don't block `next build`.
+>
+> **What shipped this build:** session now carries name/image/theme/lastPath (jwt+session cb
+> + getSession DB-merge); `users` gained image/theme/last_path cols + new `notifications`
+> table (RLS); masthead rebuilt (SiteHeader takes `session`) with GlobalSearch (→/api/learn/search)
+> + NotificationBell (polls /api/notifications) + UserMenu (Avatar→Profile/Settings/Theme/Admin/
+> Sign out); per-user theme (lib/theme.ts + ThemePicker, DB-persisted, server-injected no-flash
+> script in layout); resume-last-page (LastVisitedTracker in layout → /api/prefs/last-path →
+> /resume redirector; signin defaults to /resume); Profile + Settings pages (proxy matcher +
+> PROTECTED_PREFIXES extended to /profile,/settings). New UI primitives Avatar + Menu/MenuItem.
+
+### Ground truth from discovery (do NOT re-investigate)
+- **Auth**: NextAuth v5 JWT strategy, no DB adapter. Config `portal/src/app/api/auth/auth.ts`
+  (jwt cb ~65-90 sets role; session cb ~91-98 copies ONLY `id`+`role`). Session type
+  `portal/src/lib/auth/types.ts` = `{userId,email,role}` — **no name/image/theme**.
+  `getSession()` in `portal/src/lib/auth/session.ts` is `cache()`-wrapped, wraps `auth()`.
+  `requireSession(minRole,returnPath)` in `portal/src/lib/auth/index.ts` redirects to
+  `/auth/signin?callbackUrl=`. Proxy `portal/src/proxy.ts` (Next16 middleware) matcher
+  `["/dashboard/:path*","/admin/:path*"]`, checks cookie PRESENCE only.
+- **DB**: Neon `@neondatabase/serverless`, raw SQL via `portal/src/lib/db.ts` — tagged
+  template `` sql`...` `` for params, `sql.query(stmt,[])` for raw DDL. `withUserContext(userId, makeQuery)`
+  runs inside txn with `set_config('app.current_user_id',...)` for RLS. Schema =
+  single idempotent file `portal/src/lib/auth/schema.sql`, auto-applied on first prod
+  connection via `ensureSchema()` (`migrate.ts`), or `npm run db:schema:remote`.
+  Convention: append `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` / `CREATE TABLE IF NOT EXISTS`.
+  `users`(id TEXT PK=Google sub, email, name, role, created_at, updated_at) — **no image col**.
+  `horoscopes` has the RLS pattern to mirror (`horoscopes_isolate` USING `app.current_user_id`).
+- **Theme**: `portal/src/components/ThemeToggle.tsx` client-only, toggles `.dark` on
+  `<html>`, persists `localStorage['va-theme']`. No provider, next-themes NOT installed.
+  `portal/src/app/layout.tsx` (async SERVER comp) has inline no-flash script (lines ~24-35)
+  reading `va-theme` before paint; `<html suppressHydrationWarning>`. CSS tokens in
+  `globals.css` (`@custom-variant dark`, indigo `--color-primary`, gold `--color-accent`).
+- **UI kit** `portal/src/components/ui/`: `Button`/`ButtonLink` (primary|accent|ghost),
+  `Card`+`CardLabel`, `Overlay` (full-screen modal/sheet, motion/react, Escape-close —
+  too heavy for a corner dropdown). **MISSING: anchored popover/menu + avatar** — build them.
+  `SiteHeader.tsx` (68 lines, client, `usePathname`) props `{signedIn?,role?}`, flat nav
+  Links + ThemeToggle + "Cast a chart" CTA. Rendered `layout.tsx:39` `<SiteHeader signedIn role/>`.
+  Search pattern to COPY (not the API): `LearnGlobalSearch.tsx` (180ms debounce, outside-click,
+  dropdown `rounded-2xl border-hairline bg-card shadow-lg`). Notifications = 100% greenfield.
+- **Resume/test**: NO `(main)/layout.tsx` — only root `layout.tsx`; mount any global client
+  hook there. No `document.cookie` in src; guest-cookie pattern `api/charts/route.ts:5-16`
+  (`httpOnly,sameSite:lax,path:/,maxAge:1yr`). signin `portal/src/app/auth/signin/page.tsx`
+  reads/validates `callbackUrl`, default hardcoded `"/dashboard"` (~line 13). **Zero frontend
+  test infra** (no Playwright/Jest/Vitest); `npm run ci` = lint+typecheck+build. Admin vs normal
+  = `role` field only; no separate admin login.
+- **Next.js 16 caveats** (portal/AGENTS.md): breaking changes vs training data — READ
+  `node_modules/next/dist/docs/` before writing. Use `proxy.ts` not middleware; `searchParams`
+  is awaited; route handlers/pages async server comps by default.
+
+### PHASE 0 — Data foundation (BLOCKS ALL; do first, commit alone)
+**0a. `portal/src/lib/auth/schema.sql`** — append (mirror horoscopes' exact UUID-default
+expression — check its `id ... DEFAULT` and copy it, likely `gen_random_uuid()`):
+```sql
+ALTER TABLE users ADD COLUMN IF NOT EXISTS image     TEXT;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS theme     TEXT NOT NULL DEFAULT 'system'
+  CHECK (theme IN ('light','dark','system'));
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_path TEXT;
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),   -- match horoscopes' default expr
+  user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  kind       TEXT NOT NULL DEFAULT 'info' CHECK (kind IN ('info','success','warning','alert')),
+  title      TEXT NOT NULL,
+  body       TEXT,
+  href       TEXT,
+  read_at    TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS notifications_user_created
+  ON notifications (user_id, created_at DESC);
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS notifications_isolate ON notifications;
+CREATE POLICY notifications_isolate ON notifications
+  USING (user_id = current_setting('app.current_user_id', true));
+```
+**0b. `portal/src/lib/auth/index.ts`** — (i) `upsertUser` + `ensureUser`: add `image`
+to INSERT + `ON CONFLICT DO UPDATE` (don't clobber role logic). (ii) NEW fns, all
+`withUserContext(userId,...)` where user-scoped:
+- `getUserPrefs(userId) -> {theme, lastPath, image, name} | null`
+- `updateUserTheme(userId, theme: 'light'|'dark'|'system')`
+- `updateLastPath(userId, path: string)`
+- `updateDisplayName(userId, name: string)`
+- `listNotifications(userId, {limit=20})`, `unreadCount(userId)`,
+  `markNotificationRead(userId, id)`, `markAllRead(userId)`,
+  `createNotification(userId, {kind,title,body?,href?})`
+**0c. Session threading**:
+- `types.ts`: `Session = {userId,email,role,name?,image?,theme:ThemePref,lastPath?}`;
+  `type ThemePref='light'|'dark'|'system'`.
+- `auth.ts` jwt cb: persist `token.name = user.name; token.picture = (user as any).image`
+  on sign-in. session cb: also `session.user.name/image` from token (role stays).
+- `session.ts` `getSession()`: after `auth()`, call `getUserPrefs(userId)` and merge
+  `theme/lastPath/image/name` (role+email+userId still authoritative from token).
+  Keep it inside the existing `cache()` wrap (one DB read/request).
+
+### PHASE 1 — UI primitives (commit with PHASE 2)
+- `portal/src/components/ui/Avatar.tsx` — client; props `{name?,email,image?,size?}`;
+  render `<img>` if image else initials (first letter of name else email) on
+  `bg-primary/10 text-primary` circle. Sizes sm/md.
+- `portal/src/components/ui/Menu.tsx` — anchored dropdown. Client. `{trigger, children, align?}`.
+  Button toggles `open`; panel `absolute right-0 mt-2 rounded-2xl border-hairline bg-card
+  shadow-lg z-50`; outside-click (ref + mousedown listener) + Escape close (copy from
+  LearnGlobalSearch). Export `MenuItem` ({href?|onClick, icon?, children, danger?}).
+
+### PHASE 2 — Masthead (rebuild SiteHeader)
+- Change `layout.tsx:39` to pass full session: `<SiteHeader session={session} />`
+  (session already fetched at `layout.tsx:30`). SiteHeader accepts `{session: Session|null}`.
+- Keep existing primary nav Links + logo. Right cluster (signed-in): `<GlobalSearch/>`
+  `<NotificationBell/>` `<UserMenu session/>`. Signed-out: keep "Cast a chart" + a
+  "Sign in" link to `/auth/signin`.
+- `portal/src/components/masthead/UserMenu.tsx` — `<Menu>` triggered by `<Avatar>`; panel:
+  header (name + email), `MenuItem` Profile (`/profile`), Settings (`/settings`), a Theme
+  row (3 pills light/dark/system → calls setTheme, see PHASE 3), Admin (`/admin/health`,
+  only if `role==='admin'`), divider, Sign out (`danger`, calls `signOut({redirectTo:'/'})`
+  from `next-auth/react`).
+- `portal/src/components/masthead/NotificationBell.tsx` — client; bell icon + unread badge;
+  on open fetch `GET /api/notifications`; list rows (kind color dot, title, body, relative
+  time, href link); "Mark all read" → `PATCH /api/notifications {all:true}`; clicking a row
+  marks it read. Poll unread count on mount + every 60s (cheap).
+- `portal/src/components/masthead/GlobalSearch.tsx` — copy LearnGlobalSearch mechanics;
+  hit `GET /api/search?q=` (PHASE 6). v1 acceptable = learn results only, labeled.
+
+### PHASE 3 — Per-user theme
+- `ThemeToggle.tsx` / a new `setTheme(theme)` helper: still write `localStorage['va-theme']`
+  (instant, no-flash) AND if signed-in `POST /api/prefs/theme {theme}`. 'system' → clear
+  explicit class, honor matchMedia (existing script already does).
+- `layout.tsx`: if `session?.theme` is 'light'|'dark', set `<html className>` accordingly
+  server-side (authoritative cross-device); 'system'/guest → leave to inline script. Keep
+  inline script for guests + no-flash. Ensure the two don't fight (server class wins on load,
+  script only sets when no server class / system).
+
+### PHASE 4 — Resume last page
+- `portal/src/components/LastVisitedTracker.tsx` — client, `usePathname` + `useEffect`;
+  if signed-in and path is a "real" page (not `/auth`, `/api`, not the current last_path),
+  debounce ~1s then `POST /api/prefs/last-path {path}`. Mount in `layout.tsx` next to header.
+  (Pass `signedIn` as prop from layout since it's a server comp.)
+- `portal/src/app/resume/page.tsx` — server; `requireSession()`; read `session.lastPath`,
+  `redirect(lastPath || '/dashboard')`.
+- signin: change post-login default `redirectTo` from `/dashboard` → `/resume` (only when no
+  explicit callbackUrl). So fresh login resumes last page; deep-link callbackUrl still wins.
+
+### PHASE 5 — Pages (protect via proxy)
+- Add `"/profile"`,`"/settings"` to `PROTECTED_PREFIXES` (`types.ts`) AND proxy matcher
+  (`proxy.ts` matcher array) so they gate on cookie presence.
+- `portal/src/app/profile/page.tsx` — server, `requireSession()`; Avatar + name (editable
+  → `/api/prefs/profile`), email, role badge, "member since" (created_at), saved-charts count.
+- `portal/src/app/settings/page.tsx` — server, `requireSession()`; Appearance (theme picker,
+  reuses PHASE 3 setter), Notifications (future toggles — stub OK), Account (email/role read-only,
+  Sign out button, link to `/api/auth/signout`).
+
+### PHASE 6 — API routes (all Next16 route handlers, async, `requireSession` inside)
+- `portal/src/app/api/prefs/theme/route.ts` POST `{theme}` → `updateUserTheme`.
+- `portal/src/app/api/prefs/last-path/route.ts` POST `{path}` → `updateLastPath`.
+- `portal/src/app/api/prefs/profile/route.ts` POST `{name}` → `updateDisplayName`.
+- `portal/src/app/api/notifications/route.ts` GET (→ `{items, unread}`), PATCH `{id?|all?}`
+  → mark read.
+- `portal/src/app/api/search/route.ts` GET `?q=` → v1 delegate to existing
+  `/api/learn/search` logic (`getAllStructuredBooksSync`), shape `{hits}`.
+- All: validate session, 401 if none; RLS via `withUserContext`.
+
+### PHASE 7 — Verify + deploy
+- `cd portal && npm run ci` (lint+typecheck+build) MUST pass — this is the automated gate
+  (no E2E framework exists; do NOT add Playwright under the token/time limit unless asked).
+- Apply migration to prod: `npm run db:schema:remote` (needs prod AUTH_SECRET) OR rely on
+  cold-start `ensureSchema()`; verify with `GET /api/db/migrate` (reports tablesPresent).
+- Deploy = push to main (Vercel auto). Verify Vercel `Ready`.
+- **Manual E2E checklist** (real Google OAuth can't be curl'd) — record pass/fail in handoff:
+  NORMAL USER: sign in → name+avatar top-right; open user menu (Profile/Settings/Theme/Sign
+  out present, NO Admin); switch theme → persists after reload + cross-device (DB); visit a
+  deep page (e.g. /dashboard/... or a chart) → sign out → sign back in → lands on that page;
+  notification bell shows (seed one via `createNotification`), mark read clears badge; Profile
+  edit name persists; search returns learn hits. ADMIN USER: same PLUS Admin item → `/admin/health`
+  loads; non-admin hitting `/admin/*` is redirected.
+
+### Open decisions already made (don't re-ask)
+- Theme source of truth = DB `users.theme`, localStorage only for no-flash mirror.
+- Profile/Settings at top-level `/profile`,`/settings` (add to proxy), not under `/dashboard`.
+- Notifications stored in Neon `notifications` table w/ RLS (not Supabase).
+- Search v1 = learn-only, generalize later (don't block masthead on cross-entity search).
+- name/image threaded via JWT token + merged in getSession from DB; role stays token-authoritative.
+- No Playwright this pass — `npm run ci` + manual checklist is the gate.
 
 ---
 
@@ -160,7 +360,7 @@ cd portal && npm run dev
 | Graph version | `newbooks-v1` / file-based locally — **26,722 nodes**, **38,881 links** |
 | Structured books | 61 manifest; **60 structured-pass**, 1 zero-chapter edge |
 | Registered KE engines | 9: ashtakavarga, dasha, gochar, kp_system, muhurta, panchanga, prashna, report, yoga |
-| Embeddings | **BLOCKED** — Gemini quota exhausted; do **not** run `generate-embeddings.py` until user confirms credits |
+| Embeddings | **COMPLETE 2026-07-03** — 28,495 nodes via local `all-MiniLM-L6-v2` (384-dim). 2 transient errors (dim mismatch + Supabase offline) non-blocking. Gemini blocker removed. |
 | Raw markdown | 61 files in `knowledge-graph/raw/` (IP — may not all be in git) |
 | Patch backups | `knowledge-graph/patches/*.bak-20260630-*` — session backups of node-chapter-map + 4 patch files |
 

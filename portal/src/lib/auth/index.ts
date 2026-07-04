@@ -45,15 +45,17 @@ export async function upsertUser(params: {
   id: string;
   email: string;
   name?: string;
+  image?: string;
 }): Promise<void> {
   const role: Role = isAdminEmail(params.email) ? "admin" : "free";
   try {
     await sql`
-      INSERT INTO users (id, email, name, role)
-      VALUES (${params.id}, ${params.email}, ${params.name ?? null}, ${role})
+      INSERT INTO users (id, email, name, image, role)
+      VALUES (${params.id}, ${params.email}, ${params.name ?? null}, ${params.image ?? null}, ${role})
       ON CONFLICT (id) DO UPDATE SET
         email = ${params.email},
         name = COALESCE(${params.name ?? null}, users.name),
+        image = COALESCE(${params.image ?? null}, users.image),
         role = CASE
           WHEN ${role} = 'admin' THEN 'admin'
           ELSE users.role
@@ -82,6 +84,160 @@ export async function getUser(id: string): Promise<{
     return all[0] ?? null;
   } catch {
     return null;
+  }
+}
+
+// ── Personalization: prefs + profile ────────────────────────────────────────
+
+export type ThemePref = "light" | "dark" | "system";
+
+export interface UserPrefs {
+  name: string | null;
+  image: string | null;
+  theme: ThemePref;
+  lastPath: string | null;
+}
+
+/** Read a user's personalization fields. Returns null on DB error. */
+export async function getUserPrefs(id: string): Promise<UserPrefs | null> {
+  try {
+    const rows = (await sql`
+      SELECT name, image, theme, last_path
+      FROM users WHERE id = ${id}
+    `) as any[];
+    const r = rows[0];
+    if (!r) return null;
+    return {
+      name: r.name ?? null,
+      image: r.image ?? null,
+      theme: (r.theme as ThemePref) ?? "system",
+      lastPath: r.last_path ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/** Persist the user's theme choice (light | dark | system). */
+export async function updateUserTheme(id: string, theme: ThemePref): Promise<void> {
+  if (theme !== "light" && theme !== "dark" && theme !== "system") return;
+  try {
+    await sql`UPDATE users SET theme = ${theme}, updated_at = now() WHERE id = ${id}`;
+  } catch (e) {
+    console.error("Failed to update theme:", e);
+  }
+}
+
+/** Record the last meaningful page the user visited (for resume-on-login). */
+export async function updateLastPath(id: string, path: string): Promise<void> {
+  if (!path || !path.startsWith("/")) return;
+  try {
+    await sql`UPDATE users SET last_path = ${path}, updated_at = now() WHERE id = ${id}`;
+  } catch (e) {
+    console.error("Failed to update last_path:", e);
+  }
+}
+
+/** Update the user's display name (from the Profile page). */
+export async function updateDisplayName(id: string, name: string): Promise<void> {
+  const clean = name.trim().slice(0, 80);
+  if (!clean) return;
+  try {
+    await sql`UPDATE users SET name = ${clean}, updated_at = now() WHERE id = ${id}`;
+  } catch (e) {
+    console.error("Failed to update name:", e);
+  }
+}
+
+// ── Notification center (RLS-isolated) ──────────────────────────────────────
+
+export interface NotificationRow {
+  id: string;
+  kind: "info" | "success" | "warning" | "alert";
+  title: string;
+  body: string | null;
+  href: string | null;
+  read: boolean;
+  created_at: string;
+}
+
+/** List a user's notifications, newest first. */
+export async function listNotifications(
+  userId: string,
+  limit = 20,
+): Promise<NotificationRow[]> {
+  try {
+    const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
+      SELECT id, kind, title, body, href, read_at, created_at
+      FROM notifications
+      WHERE user_id = ${userId}
+      ORDER BY created_at DESC
+      LIMIT ${limit}
+    `);
+    return rows.map((r) => ({
+      id: String(r.id),
+      kind: (r.kind as NotificationRow["kind"]) ?? "info",
+      title: String(r.title),
+      body: r.body == null ? null : String(r.body),
+      href: r.href == null ? null : String(r.href),
+      read: r.read_at != null,
+      created_at: String(r.created_at),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/** Count unread notifications for the bell badge. */
+export async function unreadCount(userId: string): Promise<number> {
+  try {
+    const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
+      SELECT COUNT(*)::int AS n FROM notifications
+      WHERE user_id = ${userId} AND read_at IS NULL
+    `);
+    const n = rows[0]?.n;
+    return typeof n === "number" ? n : Number(n) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+/** Mark one notification read (RLS-scoped). */
+export async function markNotificationRead(userId: string, id: string): Promise<void> {
+  try {
+    await withUserContext(userId, (s) => s`
+      UPDATE notifications SET read_at = now()
+      WHERE id = ${id}::uuid AND user_id = ${userId} AND read_at IS NULL
+    `);
+  } catch (e) {
+    console.error("Failed to mark notification read:", e);
+  }
+}
+
+/** Mark all of a user's notifications read. */
+export async function markAllRead(userId: string): Promise<void> {
+  try {
+    await withUserContext(userId, (s) => s`
+      UPDATE notifications SET read_at = now()
+      WHERE user_id = ${userId} AND read_at IS NULL
+    `);
+  } catch (e) {
+    console.error("Failed to mark all read:", e);
+  }
+}
+
+/** Create a notification for a user (server-side; e.g. after a chart is saved). */
+export async function createNotification(
+  userId: string,
+  n: { kind?: NotificationRow["kind"]; title: string; body?: string; href?: string },
+): Promise<void> {
+  try {
+    await withUserContext(userId, (s) => s`
+      INSERT INTO notifications (user_id, kind, title, body, href)
+      VALUES (${userId}, ${n.kind ?? "info"}, ${n.title}, ${n.body ?? null}, ${n.href ?? null})
+    `);
+  } catch (e) {
+    console.error("Failed to create notification:", e);
   }
 }
 

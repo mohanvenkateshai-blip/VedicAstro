@@ -33,3 +33,35 @@ CREATE POLICY horoscopes_isolate ON horoscopes
   USING (user_id = current_setting('app.current_user_id', true))
   WITH CHECK (user_id = current_setting('app.current_user_id', true));
 
+-- ── Personalization (added 2026-07-04) ──────────────────────────────────────
+-- Profile avatar + per-user theme + resume-last-page. Idempotent ALTERs so the
+-- auto-migration on cold start upgrades existing users rows in place.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS image     TEXT;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS theme     TEXT NOT NULL DEFAULT 'system'
+  CHECK (theme IN ('light', 'dark', 'system'));
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_path TEXT;
+
+-- Notification center — per-user, RLS-isolated (mirrors horoscopes pattern).
+CREATE TABLE IF NOT EXISTS notifications (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  kind       TEXT NOT NULL DEFAULT 'info'              -- info | success | warning | alert
+    CHECK (kind IN ('info', 'success', 'warning', 'alert')),
+  title      TEXT NOT NULL,
+  body       TEXT,
+  href       TEXT,                                     -- optional deep-link target
+  read_at    TIMESTAMPTZ,                              -- NULL = unread
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_user_created
+  ON notifications (user_id, created_at DESC);
+
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS notifications_isolate ON notifications;
+CREATE POLICY notifications_isolate ON notifications
+  FOR ALL
+  USING (user_id = current_setting('app.current_user_id', true))
+  WITH CHECK (user_id = current_setting('app.current_user_id', true));
+
