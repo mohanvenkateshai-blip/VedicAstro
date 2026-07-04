@@ -1,7 +1,61 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-07-04 (Claude Code / Sonnet 5 — session-management + personalization + masthead build spec; discovery done, build starting)  
+**Snapshot:** 2026-07-04 (Claude Code / Opus 4.8 — session mgmt + personalization + masthead + admin + charts-privacy security fix, all shipped)  
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
+
+---
+
+## ✅ SESSION COMPLETE — 2026-07-04 — READ THIS FIRST (authoritative status)
+
+**Deploy model:** push `main` → **Vercel** auto-deploys `portal/` (frontend, https://portal-omega-two-10.vercel.app).
+Backend `cvce/` → **Fly.io** `vedicastro-cvce` (NOT touched this session). Supabase (guest charts +
+avatars + KG vault) + Neon (users/auth). **State:** origin/main = `6264d6e`; **UNPUSHED = `f7e7be3`
+(admin back-link cleanup) + this handoff commit → run `git push origin main` to deploy them.**
+(Claude Code auto-mode blocks pushing to main; the user pushes manually.)
+
+### Shipped this session (newest first; all committed on main)
+- **f7e7be3** admin: removed "← Dashboard" back-links + duplicate "Admin" eyebrow from admin pages *(UNPUSHED)*
+- **6264d6e** admin: persistent sub-nav (Console/System health/Knowledge graph) via `app/admin/layout.tsx` + `components/admin/AdminNav.tsx`
+- **60e2186** admin: dedicated admin-only **Admin tab** in masthead + `/admin` console hub (`app/admin/page.tsx`). Admin reached ONLY via the role-gated tab — never by typing a URL.
+- **dbe38ce** csp: `next.config.ts` img-src now allows `https://*.supabase.co` + `https://lh3.googleusercontent.com` (avatars uploaded fine but CSP blocked rendering → looked broken)
+- **52dab61** profile: avatar auto-save feedback ("Photo saved"/"Uploading…"/real errors)
+- **fe45aa9** profile: avatar **UPLOAD to Supabase Storage** (`POST /api/prefs/avatar` → public `avatars` bucket, auto-created via service-role → `users.image`) + landing page redirects signed-in users to `/resume`
+- **d42831c** compatibility: `KootaMatcher` per-partner **city autocomplete** (`/api/cvce/places`) + **"Load a saved chart"** dropdown
+- **5a83ee3** theme: light-mode contrast (`hover:bg-white/*`→`hover:bg-accent/5`; `bg-accent text-white`→`text-accent-fg`; hairline 10%→14%) + retired dead `saved_charts` table
+- **1052dd5** 🔴 security: **saved charts scoped to ACCOUNT not browser** (`lib/chart-owner.ts`; `/api/charts` + `/api/charts/[id]` filter `guest_charts` by `user_<id>` or guest cookie)
+- **0b3eb2e** learn: `loading.tsx` skeleton + `unstable_cache` on `listBooks` (was ~5s dead click → "non-functional")
+- **7ac0f34** masthead: resume restores chart (path+query via `useSearchParams`) + account control rightmost in both auth states
+- *(same session, already live earlier: the full session-mgmt/personalization/masthead BUILD — see §-2. Landed same day but NOT this AI: `9c7d735/dee610b/4ade94b/58ce40c` ashtakavarga overhaul, `2d04140/4d83715` the earlier INEFFECTIVE saved-charts fix that `1052dd5` superseded.)*
+
+### Feature map (current state)
+- **Auth/session**: NextAuth v5 JWT. `Session = {userId,email,role,name,image,theme,lastPath}` (`lib/auth/types.ts`). Role from `ADMIN_EMAILS` env → jwt cb → session; `getSession()` merges DB prefs (`getUserPrefs`).
+- **Masthead** (`SiteHeader.tsx`, prop `session`): nav (Compatibility/Muhūrta/Learn/Dashboard + **Admin tab if role==="admin"**), `GlobalSearch`, `NotificationBell`, "Cast a chart", `UserMenu` (Avatar→Profile/Settings/Theme/Sign out). Account control rightmost in both states.
+- **Personalization**: per-user theme (`users.theme`, `lib/theme.ts`+`ThemePicker`, no-flash script in `layout.tsx`); resume-last-page (`LastVisitedTracker`→`/api/prefs/last-path`→`/resume`; signin defaults to `/resume`); `/profile` (avatar upload + editable name) + `/settings` (theme, account, sign out). Both proxy-protected.
+- **Notifications**: `notifications` table (RLS), `/api/notifications` GET+PATCH, `NotificationBell` polls 60s. **Empty (no seeder yet).**
+- **Admin**: `/admin` hub + `/admin/health` + `/admin/knowledge`, all gated by `app/admin/layout.tsx` `requireSession("admin")`, with persistent `AdminNav` sub-nav. Admin tab visible only to admins.
+- **Charts privacy**: `guest_charts` scoped by `lib/chart-owner.ts` `resolveChartOwner()` → `user_<id>` for authed (private + cross-device), guest cookie for anon. **This app-layer filter is THE boundary — service-role bypasses RLS; every guest_charts query must keep `.eq("guest_id", owner)`.**
+
+### DB / env prerequisites
+- **Neon** (`portal/src/lib/auth/schema.sql`, auto-applies on cold start): `users` +image/theme/last_path; new `notifications` table.
+- **Supabase** (`portal/supabase-schema.sql`): `guest_charts` now holds authed charts under `guest_id="user_<id>"`; dead `saved_charts` table removed/documented.
+- **Vercel env**: `ADMIN_EMAILS` (comma list; gates Admin tab — change → REDEPLOY → sign out/in). `SUPABASE_URL`+`SUPABASE_SERVICE_ROLE_KEY` (avatars+charts). `AUTH_SECRET`/`AUTH_GOOGLE_ID`/`AUTH_GOOGLE_SECRET`. `DATABASE_URL` (Neon). `ENCRYPTION_KEY`.
+
+### Verified LIVE (prod probes) · Verified by USER · Needs USER verify
+- LIVE: Learn 0.3–0.7s; `/api/prefs/avatar` 401 unauth /405 GET; CSP img-src has supabase.co+googleusercontent; `/admin` gated.
+- USER-CONFIRMED: admin role works (badge=Admin, Admin tab visible); theme persists on re-login.
+- STILL NEEDS USER: 🔴 **saved-charts A/B privacy** (2 accounts, same browser → B's dashboard empty, not A's); avatar renders after CSP fix (hard-reload Cmd+Shift+R); compatibility city/saved-chart; resume-last-page incl. chart.
+
+### Open backlog (not started)
+- Notification **seeder** (welcome notif on first sign-in) — bell currently always empty.
+- Audit `lib/saved-charts.ts` **localStorage** path (used by `ChartSidebar`?) so it can't resurface others' charts (the DB path is fixed; this legacy path wasn't).
+- Light-theme deeper QA: `astroColors` planet palette contrast on white.
+- Landing hero copy could be sharpened (currently: signed-in→/resume, anon→hero).
+- From prior sessions (deferred): rectification `POST` endpoint + UI; report-redesign frontend (`PriorityInsightsCard`, wire `DashaIntelCard`/`TransitIntelCard`); Learn curriculum revamp; notification-center Phase 2; admin KPI analytics.
+- Ashtakavarga module (not this AI's work): sanity-check SAV=337 invariant.
+
+### Housekeeping
+- Uncommitted non-feature files left alone: `.gitignore`, `docs/knowledge-engine-status.md`, `knowledge-graph/KNOWLEDGE_CATALOG.md` (other session); stray `Branding/`, `embeddings.pid`, `vedicastro-audit-report.html`.
+- Pre-existing lint `any` errors (`corpus.ts`/`db.ts`/`graphify.ts`/`types.ts`) are NOT from this session and don't block `next build` (Vercel's deploy gate).
 
 ---
 
