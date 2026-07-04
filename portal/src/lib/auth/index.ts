@@ -149,6 +149,16 @@ export async function updateDisplayName(id: string, name: string): Promise<void>
   }
 }
 
+/** Update the user's avatar URL (after an upload to Supabase Storage). */
+export async function updateUserImage(id: string, url: string): Promise<void> {
+  if (!url) return;
+  try {
+    await sql`UPDATE users SET image = ${url}, updated_at = now() WHERE id = ${id}`;
+  } catch (e) {
+    console.error("Failed to update image:", e);
+  }
+}
+
 // ── Notification center (RLS-isolated) ──────────────────────────────────────
 
 export interface NotificationRow {

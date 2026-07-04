@@ -1,9 +1,17 @@
+import { redirect } from "next/navigation";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card, CardLabel } from "@/components/ui/Card";
 import { getHealth } from "@/lib/cvce";
+import { getSession } from "@/lib/auth/session";
 import { Sparkles, Compass, ScrollText, Activity } from "lucide-react";
 
 export default async function Home() {
+  // The landing hero is an acquisition page for new/anonymous visitors. Signed-in
+  // users don't need the pitch — send them to where they left off (/resume →
+  // last page or dashboard).
+  const session = await getSession().catch(() => null);
+  if (session) redirect("/resume");
+
   const health = await getHealth();
 
   return (

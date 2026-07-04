@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireSession, getUser, countHoroscopes } from "@/lib/auth/index";
-import { Avatar } from "@/components/ui/Avatar";
+import { AvatarUpload } from "@/components/masthead/AvatarUpload";
 import { ProfileNameForm } from "@/components/masthead/ProfileNameForm";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +41,7 @@ export default async function ProfilePage() {
 
       <div className="rounded-2xl border border-hairline bg-card p-6">
         <div className="flex items-center gap-4">
-          <Avatar name={session.name} email={session.email} image={session.image} size="lg" />
+          <AvatarUpload name={session.name} email={session.email} image={session.image} />
           <div className="min-w-0">
             <p className="truncate text-lg font-medium">{session.name || "Unnamed seeker"}</p>
             <p className="truncate text-sm text-text-muted">{session.email}</p>
