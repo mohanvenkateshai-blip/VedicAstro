@@ -18,6 +18,9 @@ primary_region = "lhr"   # London — closest Fly region to Ireland
   # CORS: tightened to the portal origin once the portal is deployed.
   # Until then, allow local dev origins only.
   CVCE_ALLOWED_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173,https://portal-omega-two-10.vercel.app"
+  # Person Timeline append-only ledger — durable storage required for production
+  CVCE_TIMELINE_DB_PATH = "/data/timeline/timeline.sqlite3"
+  CVCE_TIMELINE_WRITES_ENABLED = "true"
   # Raw research and its volume are intentionally absent from this default
   # deployment. Use fly.research.toml only after provisioning its named volume
   # and setting distinct product and research service-token secrets.
@@ -41,3 +44,7 @@ primary_region = "lhr"   # London — closest Fly region to Ireland
 [[vm]]
   size = "shared-cpu-1x"
   memory = "1gb"                    # numpy/pandas/pyswisseph need headroom
+
+[[mounts]]
+  source = "vedicastro_timeline_data"
+  destination = "/data/timeline"
