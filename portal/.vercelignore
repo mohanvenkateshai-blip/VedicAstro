@@ -11,7 +11,8 @@ build
 coverage
 .env*.local
 .vercel
-knowledge-graph
+knowledge-graph/
+knowledge-graph/**/*
 .kilo
 Branding
 !scripts

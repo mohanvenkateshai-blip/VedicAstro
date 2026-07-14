@@ -16,11 +16,11 @@ knowledge-graph
 Branding
 cvce
 docs
-scripts
+# Don't ignore portal/scripts - it's needed for build
+!portal/scripts
 portal/.next
 portal/node_modules
 portal/venv
-!portal/scripts
 portal/knowledge-graph
 portal/.kilo
 portal/Branding
