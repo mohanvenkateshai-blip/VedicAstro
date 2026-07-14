@@ -18,6 +18,8 @@ cvce
 docs
 # Don't ignore portal/scripts - it's needed for build
 !portal/scripts
+# Don't ignore portal/src/docs - needed for feature-progress.json
+!portal/src/docs
 portal/.next
 portal/node_modules
 portal/venv
