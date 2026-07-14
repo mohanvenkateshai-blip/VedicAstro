@@ -55,14 +55,19 @@ const structuredCount = copyDir(SRC_STRUCTURED, DST_STRUCTURED, (f) => f.endsWit
 const patchCount = copyDir(SRC_PATCHES, DST_PATCHES, (f) => f.endsWith(".json"));
 
 /**
- * Copy raw markdown sources.
- * We intentionally copy ALL .md so that loadLocalRawMarkdown can resolve any
- * of the 61+ classical texts by storage_path stem, canonical name, or fuzzy match.
- * This enables full-chapter rendering from local files without Supabase in both
- * dev (via sibling) and production bundles (via the copied portal/data/raw/).
+ * NOTE: Raw markdown sources (~20MB, 61 files) are NOT copied into the Vercel bundle.
+ * Production uses Supabase corpus-vault for chapter content. Local dev falls back to
+ * the monorepo sibling ../knowledge-graph/raw/.
+ * If you need local raw files for offline dev, run: node scripts/sync-structured-data.mjs --with-raw
  */
-const rawCount = copyDir(SRC_RAW, DST_RAW, (f) => f.toLowerCase().endsWith(".md"));
-
-console.log(
-  `[sync-structured] copied ${structuredCount} structured + ${patchCount} patch + ${rawCount} raw → portal/data/`,
-);
+let rawCount = 0;
+if (process.argv.includes("--with-raw")) {
+  rawCount = copyDir(SRC_RAW, DST_RAW, (f) => f.toLowerCase().endsWith(".md"));
+  console.log(
+    `[sync-structured] copied ${structuredCount} structured + ${patchCount} patch + ${rawCount} raw (--with-raw) → portal/data/`,
+  );
+} else {
+  console.log(
+    `[sync-structured] copied ${structuredCount} structured + ${patchCount} patch (raw skipped; use --with-raw for local dev) → portal/data/`,
+  );
+}
