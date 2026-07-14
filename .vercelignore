@@ -14,3 +14,9 @@ coverage
 knowledge-graph
 .kilo
 Branding
+cvce
+docs
+scripts
+portal/.next
+portal/node_modules
+portal/venv
