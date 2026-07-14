@@ -56,6 +56,20 @@ export default async function SettingsPage() {
           </p>
         </Section>
 
+        <Section title="Saved-chart privacy" desc="How sensitive birth details are protected.">
+          <div className="space-y-2 text-sm text-text-muted">
+            <p>
+              New server-saved charts are accepted only when authenticated encryption is configured.
+              Saved charts are scoped to your account; guest charts are scoped to this browser.
+            </p>
+            <p>
+              Charts saved before encrypted storage was enabled may remain in the legacy plaintext
+              format until the deployment migration is completed. Birth details in copied URLs or
+              browser history are outside server-side saved-chart encryption.
+            </p>
+          </div>
+        </Section>
+
         <Section title="Account">
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>

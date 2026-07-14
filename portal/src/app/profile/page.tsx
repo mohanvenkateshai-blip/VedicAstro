@@ -68,7 +68,7 @@ export default async function ProfilePage() {
       </div>
 
       <p className="mt-4 text-center text-xs text-text-muted">
-        Your birth data is encrypted at rest. See{" "}
+        Saved charts are isolated to your account. Encryption coverage and legacy-data details are in{" "}
         <Link href="/settings" className="text-accent hover:underline">
           Settings
         </Link>{" "}

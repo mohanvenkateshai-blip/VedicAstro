@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-from .base import KnowledgeStore
+from .base import KnowledgeStore, KnowledgeStorePaginationError
 
 logger = logging.getLogger(__name__)
 
@@ -106,6 +106,29 @@ class SupabaseKnowledgeStore(KnowledgeStore):
         if code == 200:
             return json.loads(body)
         return []
+
+    def get_nodes_page(self, limit: int = 500, offset: int = 0) -> list[dict[str, Any]]:
+        end = offset + limit - 1
+        code, body = self._request(
+            "GET",
+            f"/rest/v1/graph_nodes?graph_version=eq.{self.graph_version}"
+            f"&order=id.asc&offset={offset}&limit={limit}",
+        )
+        if code == 200:
+            try:
+                data = json.loads(body)
+            except json.JSONDecodeError as exc:
+                raise KnowledgeStorePaginationError(
+                    f"node page returned invalid JSON at offset={offset}"
+                ) from exc
+            if not isinstance(data, list):
+                raise KnowledgeStorePaginationError(
+                    f"node page returned a non-list payload at offset={offset}"
+                )
+            return data
+        raise KnowledgeStorePaginationError(
+            f"node page fetch failed HTTP {code} at offset={offset}, end={end}"
+        )
 
     def get_links(self, source_id: str | None = None, limit: int = 100) -> list[dict[str, Any]]:
         query = f"/rest/v1/graph_links?graph_version=eq.{self.graph_version}&limit={limit}"

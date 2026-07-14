@@ -8,7 +8,7 @@ Start there + CONTEXT.md + STATUS.md.
 → Read `knowledge-graph/KNOWLEDGE_CATALOG.md` first. It is the human-readable inventory + explanation of the current mess and how we access it.
 
 **Date:** 2026-06-29  
-**Version:** `newbooks-v1` (26,722 nodes / 38,881 links)
+**Version:** `newbooks-v1` (28,495 nodes / ~39k links) — embeddings wave 2026-07-03: local all-MiniLM-L6-v2 (384-dim) run complete; Supabase 768-dim mismatch + connectivity transient (non-blocking)
 
 ---
 

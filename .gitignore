@@ -53,3 +53,5 @@ uv.lock
 
 # Commit Agent local artifacts
 scripts/commit_log.json
+.vercel
+.env*

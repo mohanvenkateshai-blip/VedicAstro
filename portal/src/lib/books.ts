@@ -1,5 +1,6 @@
 import "server-only";
 import { supabase } from "@/lib/supabase";
+import { cvceServiceHeaders } from "@/lib/cvce-auth";
 import { DEFAULT_GRAPH_VERSION, GraphNodeRow, searchGraphNodes, listCorpusSources, CorpusSource } from "./corpus";
 import fs from "fs";
 import path from "path";
@@ -594,7 +595,10 @@ export async function resolveStructuredBook(...hints: (string | null | undefined
   const base = process.env.CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
   for (const id of ids) {
     try {
+      const headers = cvceServiceHeaders();
+      if (!headers) return null;
       const res = await fetch(`${base}/knowledge/structured/${encodeURIComponent(id)}`, {
+        headers,
         cache: "force-cache",
         next: { revalidate: 3600 },
       });

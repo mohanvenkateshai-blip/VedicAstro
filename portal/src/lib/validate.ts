@@ -24,6 +24,7 @@ export const muhurtaParamsSchema = z.object({
 
 export const envSchema = z.object({
   CVCE_BASE_URL: z.string().url().default("https://vedicastro-cvce.fly.dev"),
+  CVCE_SERVICE_TOKEN: z.string().min(32).optional(),
   DATABASE_URL: z.string().url().optional(),
   AUTH_SECRET: z.string().optional(),
   AUTH_GOOGLE_ID: z.string().optional(),

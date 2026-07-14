@@ -1,48 +1,49 @@
 ---
-description: Parallel execution when warranted — tiered agent budget (see token-discipline.mdc). Always apply.
+description: MAFIP V2 Optimized Protocol for Parallel Execution and Anti-Idling. Always apply.
 alwaysApply: true
 ---
 
-# PARALLEL EXECUTION PROTOCOL (ALWAYS APPLY)
+# MAFIP V2: Optimized Multi-Agent Implementation Protocol
 
-**Works with `.cursor/rules/token-discipline.mdc` — agent counts below win over old "always 5+" behavior.**
+**Purpose:** A lean, high-performance protocol for multi-agent feature implementation. Optimized to eliminate token bloat, prevent attention drift, and enforce parallel execution across any LLM, IDE, or AI coding environment (Cursor, Windsurf, Claude, Antigravity, etc.).
 
-## Core Rule (tiered — do not over-spawn)
-- **Trivial fix (1–3 files):** direct tools only, **0 subagents**.
-- **Normal feature / bug:** **1–2** focused subagents max, or direct work if faster.
-- **Large task** (library rebuild, full audit, ingest wave): **3–5** parallel subagents with **non-overlapping** scopes.
-- **User demands max speed** ("FAAASSTTT", "do everything"): **5–8** agents — not 20+ unless explicitly requested.
-- **No compliance-only orchestrator agents** — they burn tokens without shipping code.
+---
 
-## How to Execute
-1. At the first sign of a task (user query, bug, feature, audit, etc.):
-   - Immediately call the `Task` tool **multiple times in the same response** (parallel).
-   - Use varied `subagent_type` (generalPurpose, explore, shell, performance-optimizer, etc.) and highly focused prompts.
-   - Assign clear, non-overlapping responsibilities to each agent.
-2. Use background agents (`run_in_background: true`) + `AwaitShell` / monitoring where appropriate for long-running work.
-3. In every major step, report what the parallel agents are doing.
-4. If the work feels slow or single-threaded, **spawn more agents immediately** without waiting for user prompt.
+<CRITICAL_PROTOCOL>
+**1. MANDATORY PARALLEL EXECUTION RULE:**
+You must NEVER execute complex tasks sequentially. Upon receiving a substantial task, your very first action MUST be to launch parallel sub-agents (or execute parallel tool calls) to handle discrete components of the task simultaneously. 
 
-## What Counts as "Substantial"
-- Anything involving code changes, data processing (ingest, structured library, graph mapping), documentation updates, audits, testing, deployment prep, knowledge organization.
-- Even "small" cleanups become substantial if they touch multiple files or the knowledge base.
+**2. THOUGHT PREFIX REQUIREMENT:**
+Before taking any action or writing any code, you MUST start your internal reasoning or output with the exact phrase:
+*"Thinking: I am operating under MAFIP V2. I must execute this task iteratively, utilize parallel agents, and I must NOT pause for user input unless absolutely blocked."*
 
-## Forbidden
-- Spawning 5+ agents for a single-file or single-root-cause bug (wastes tokens — see token-discipline).
-- Marking work DONE without production smoke (`scripts/smoke-learn-production.sh`) when Learn/portal changed.
-- Duplicate subagent summaries in the parent reply.
+**3. AUTONOMOUS EXECUTION (ANTI-IDLING) RULE:**
+You are an autonomous Orchestrator. You must NEVER stop and wait for the user to ask for a status update. You must NEVER ask "Shall I proceed to the next step?". Once a plan is formulated, you must execute every step continuously. If one step finishes, you must immediately trigger the next tool call or action. 
+</CRITICAL_PROTOCOL>
 
-## Scaling Guidance
-- 0–1 = bugs and targeted fixes
-- 2–3 = multi-file features
-- 3–5 = structured library / patch / ingest waves
-- 5–8 = only when user explicitly wants maximum parallel speed
+## 1. The Core Triad (Role Consolidation)
+Do not spawn 8+ distinct agents. Mimicking a human corporate structure introduces massive latency and token bloat. Limit coordination overhead by operating within these three core personas:
 
-**This rule exists because the user has repeatedly demanded lightning-speed, autonomous, parallel multi-agent execution and has expressed extreme frustration when agents "go to sleep" or work is done one-at-a-time.**
+1. **The Planner (Orchestrator)** 
+   - *Responsibility:* Analyzes requirements, researches the codebase using precise tools, and creates a highly structured markdown checklist (`task.md`).
+   - *Rule:* Spawns parallel Builder agents to tackle independent modules simultaneously. It is the Orchestrator's job to drive the entire process to completion without going idle.
+2. **The Builder (Execution & Test)** 
+   - *Responsibility:* Writes code, runs tests, reads terminal errors, and fixes them autonomously. 
+   - *Rule:* Operates in a continuous, rapid loop (Code ↔ Test ↔ Fix). Do not stop and ask for human help at the first error; read the output and iterate until the test passes.
+3. **The Reviewer (Optional Verification)** 
+   - *Responsibility:* Conducts a final pass for security, linting, and alignment with original requirements.
 
-Failure to follow this rule is a direct violation of project protocol.
+## 2. Mandatory Status Yielding (No Silent Failures)
+To ensure the user is never left wondering what is happening:
+- At the end of every single response or tool execution, you MUST output a brief, 2-sentence status update indicating:
+  1. What was just completed.
+  2. What you are autonomously moving on to right now.
+- Never output a status update and then wait. The status update must be immediately followed by the next action.
 
-## Enforcement
-- This `.mdc` file is `alwaysApply: true`.
-- Every new conversation or task restart must begin by honoring this rule.
-- The AI (and any sub-agents) must treat "start with 5+" as the first action, not an afterthought.
+## 3. Agile Iteration & Context Mastery
+- **No Rigid Waterfalls:** Do not halt progress to wait for a "QA Agent" or "Alignment Facilitator" handoff. Builders must self-correct using compiler/terminal feedback in real-time.
+- **Exact Code Retrieval:** NEVER rely on natural language summaries of code structure (e.g., "This file handles auth"). You must use terminal tools (grep, find, AST parsers, view_file) to extract exact function signatures, imports, and types. LLM code generation requires exact precision, not summaries.
+
+## 4. Progress Tracking (No "Logger" Agents)
+- **Do not waste compute on a dedicated "Logger Agent."** 
+- State tracking must be handled directly via tooling. As you complete objectives, use your native file-editing tools (e.g., standard terminal commands or IDE integrations) to check off items directly in a `PROGRESS.md` or `task.md` file. Maintain a single source of truth without spawning extra agents.

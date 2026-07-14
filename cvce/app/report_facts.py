@@ -18,6 +18,7 @@ from app.remedies import remedy_for_yoga
 from knowledge_engine.integration import get_knowledge_engine, get_llm_narration
 from knowledge_engine.integration import get_prediction_enhancer as PredictionEnhancer
 from knowledge_engine.integration import get_structured_book, get_hierarchy_for_node, get_nodes_for_chapter
+from prediction_policy import apply_product_claim_policy
 from vedic_engine.prediction.ashtakavarga import (
     SAV_BANDS,
     compute_ashtakavarga,
@@ -910,5 +911,16 @@ def build_report_facts(
     except Exception:
         facts["knowledge_engine"] = None
         facts["ke_version"] = "unknown"
+
+    # Product boundary only: calculations and source-learning data remain intact.
+    # The returned personalised report must not surface high-severity claims.
+    safe_report = apply_product_claim_policy(facts)
+    facts = safe_report.value
+    facts["claim_safety"] = {
+        "policy": "personalised-t3-v1",
+        "status": "filtered" if safe_report.blocked_count else "passed",
+        "blocked_count": safe_report.blocked_count,
+        "blocked_categories": list(safe_report.blocked_categories),
+    }
 
     return facts

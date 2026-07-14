@@ -1,15 +1,8 @@
 import { cookies } from "next/headers";
 import { getSession } from "@/lib/auth/session";
+import { GUEST_COOKIE } from "@/lib/guest-owner-cookie";
 
-/** Cookie holding the anonymous per-browser guest id. */
-export const GUEST_COOKIE = "vedicastro_guest_id";
-
-export const GUEST_COOKIE_OPTS = {
-  httpOnly: true,
-  sameSite: "lax" as const,
-  path: "/",
-  maxAge: 60 * 60 * 24 * 365, // 1 year
-};
+export { GUEST_COOKIE, GUEST_COOKIE_OPTS } from "@/lib/guest-owner-cookie";
 
 /**
  * The scoping key for a person's saved charts (used as the `guest_id` column

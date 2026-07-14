@@ -1,0 +1,578 @@
+{
+  "$defs": {
+    "Abstention": {
+      "additionalProperties": false,
+      "properties": {
+        "abstained": {
+          "title": "Abstained",
+          "type": "boolean"
+        },
+        "code": {
+          "$ref": "#/$defs/AbstentionCode"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "retryable": {
+          "default": false,
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "abstained",
+        "code"
+      ],
+      "title": "Abstention",
+      "type": "object"
+    },
+    "AbstentionCode": {
+      "enum": [
+        "none",
+        "insufficient_evidence",
+        "conflicting_evidence",
+        "birth_time_instability",
+        "out_of_distribution",
+        "unsupported_event",
+        "policy_blocked",
+        "data_incomplete"
+      ],
+      "title": "AbstentionCode",
+      "type": "string"
+    },
+    "BirthTimeSensitivity": {
+      "enum": [
+        "stable",
+        "moderate",
+        "high",
+        "unknown"
+      ],
+      "title": "BirthTimeSensitivity",
+      "type": "string"
+    },
+    "CalculationProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "calculated_at": {
+          "format": "date-time",
+          "title": "Calculated At",
+          "type": "string"
+        },
+        "calculation_hash": {
+          "description": "Hash of canonical calculation inputs",
+          "minLength": 16,
+          "title": "Calculation Hash",
+          "type": "string"
+        },
+        "calculation_hash_algorithm": {
+          "default": "sha256",
+          "title": "Calculation Hash Algorithm",
+          "type": "string"
+        },
+        "citation_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Citation Ids",
+          "type": "array"
+        },
+        "data_cutoff_at": {
+          "format": "date-time",
+          "title": "Data Cutoff At",
+          "type": "string"
+        },
+        "engine_version": {
+          "minLength": 1,
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "rule_pack_versions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Rule Pack Versions",
+          "type": "object"
+        },
+        "source_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "calculation_hash",
+        "engine_version",
+        "data_cutoff_at",
+        "calculated_at"
+      ],
+      "title": "CalculationProvenance",
+      "type": "object"
+    },
+    "CertaintyTier": {
+      "enum": [
+        "insufficient_evidence",
+        "traditional_signal",
+        "calibrated_forecast"
+      ],
+      "title": "CertaintyTier",
+      "type": "string"
+    },
+    "EventCode": {
+      "description": "Leaf nodes in the event hierarchy.\n\nThe dot-separated value is the stable machine identity.  Its first segment\nis the parent domain; downstream code must not infer a second event from a\nbroad prose label such as ``career`` or ``relationships``.",
+      "enum": [
+        "employment.offer_received",
+        "employment.start",
+        "employment.involuntary_end",
+        "contract.signed",
+        "travel.departure_international",
+        "residence.move_completed",
+        "education.enrolment",
+        "education.credential_completed",
+        "relationship.marriage_registered"
+      ],
+      "title": "EventCode",
+      "type": "string"
+    },
+    "EventDomain": {
+      "enum": [
+        "employment",
+        "contract",
+        "travel",
+        "residence",
+        "education",
+        "relationship"
+      ],
+      "title": "EventDomain",
+      "type": "string"
+    },
+    "ForecastMode": {
+      "enum": [
+        "forecast",
+        "electional",
+        "natal_interpretation",
+        "explanation"
+      ],
+      "title": "ForecastMode",
+      "type": "string"
+    },
+    "ForecastPolarity": {
+      "enum": [
+        "favourable",
+        "unfavourable",
+        "mixed",
+        "indeterminate"
+      ],
+      "title": "ForecastPolarity",
+      "type": "string"
+    },
+    "ProbabilityStatus": {
+      "enum": [
+        "unavailable",
+        "uncalibrated_signal",
+        "calibrated"
+      ],
+      "title": "ProbabilityStatus",
+      "type": "string"
+    },
+    "TemporalGranularity": {
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "quarter"
+      ],
+      "title": "TemporalGranularity",
+      "type": "string"
+    },
+    "TimingWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end_on": {
+          "format": "date",
+          "title": "End On",
+          "type": "string"
+        },
+        "granularity": {
+          "$ref": "#/$defs/TemporalGranularity"
+        },
+        "horizon_days": {
+          "exclusiveMinimum": 0,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "resolution_due_on": {
+          "format": "date",
+          "title": "Resolution Due On",
+          "type": "string"
+        },
+        "start_on": {
+          "format": "date",
+          "title": "Start On",
+          "type": "string"
+        },
+        "timezone": {
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_on",
+        "end_on",
+        "resolution_due_on",
+        "timezone",
+        "granularity",
+        "horizon_days"
+      ],
+      "title": "TimingWindow",
+      "type": "object"
+    },
+    "UncertaintyAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "birth_time_sensitivity": {
+          "$ref": "#/$defs/BirthTimeSensitivity",
+          "default": "unknown"
+        },
+        "cross_system_agreement_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cross System Agreement Ratio"
+        },
+        "data_completeness_ratio": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Data Completeness Ratio",
+          "type": "number"
+        },
+        "event_agreement_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Agreement Ratio"
+        },
+        "notes": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        },
+        "polarity_agreement_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Polarity Agreement Ratio"
+        },
+        "sampled_birth_times": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Sampled Birth Times",
+          "type": "integer"
+        },
+        "unresolved_conflict_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Unresolved Conflict Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "data_completeness_ratio"
+      ],
+      "title": "UncertaintyAssessment",
+      "type": "object"
+    }
+  },
+  "$id": "https://vedicastro.local/schemas/ForecastClaim/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One user-visible, versioned claim about one event and one horizon.",
+  "properties": {
+    "abstention": {
+      "$ref": "#/$defs/Abstention"
+    },
+    "alternate_manifestations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Alternate Manifestations",
+      "type": "array"
+    },
+    "avoidance_advice": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Avoidance Advice",
+      "type": "array"
+    },
+    "base_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Base Rate"
+    },
+    "base_rate_source": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Base Rate Source"
+    },
+    "calibration_release_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Calibration Release Id"
+    },
+    "certainty_tier": {
+      "$ref": "#/$defs/CertaintyTier"
+    },
+    "citation_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Citation Ids",
+      "type": "array"
+    },
+    "claim_id": {
+      "minLength": 1,
+      "title": "Claim Id",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "decision_scope": {
+      "minLength": 1,
+      "title": "Decision Scope",
+      "type": "string"
+    },
+    "disconfirmers": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Disconfirmers",
+      "type": "array"
+    },
+    "event_code": {
+      "$ref": "#/$defs/EventCode"
+    },
+    "event_domain": {
+      "$ref": "#/$defs/EventDomain"
+    },
+    "forecast_id": {
+      "minLength": 1,
+      "title": "Forecast Id",
+      "type": "string"
+    },
+    "forecast_probability": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Forecast Probability"
+    },
+    "high_stakes": {
+      "default": false,
+      "title": "High Stakes",
+      "type": "boolean"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "locale": {
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2})?$",
+      "title": "Locale",
+      "type": "string"
+    },
+    "mode": {
+      "$ref": "#/$defs/ForecastMode"
+    },
+    "observable_outcome": {
+      "minLength": 1,
+      "title": "Observable Outcome",
+      "type": "string"
+    },
+    "opposing_evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Opposing Evidence Ids",
+      "type": "array"
+    },
+    "polarity": {
+      "$ref": "#/$defs/ForecastPolarity"
+    },
+    "prerequisites": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Prerequisites",
+      "type": "array"
+    },
+    "probability_status": {
+      "$ref": "#/$defs/ProbabilityStatus"
+    },
+    "provenance": {
+      "$ref": "#/$defs/CalculationProvenance"
+    },
+    "release_id": {
+      "minLength": 1,
+      "title": "Release Id",
+      "type": "string"
+    },
+    "review_required": {
+      "default": false,
+      "title": "Review Required",
+      "type": "boolean"
+    },
+    "rule_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Rule Ids",
+      "type": "array"
+    },
+    "safe_next_steps": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Safe Next Steps",
+      "type": "array"
+    },
+    "subject": {
+      "default": "native",
+      "pattern": "^native$",
+      "title": "Subject",
+      "type": "string"
+    },
+    "supporting_evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Supporting Evidence Ids",
+      "type": "array"
+    },
+    "timing": {
+      "$ref": "#/$defs/TimingWindow"
+    },
+    "traditional_strength_index": {
+      "title": "Traditional Strength Index",
+      "type": "number"
+    },
+    "uncertainty": {
+      "$ref": "#/$defs/UncertaintyAssessment"
+    },
+    "what_to_expect": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "What To Expect",
+      "type": "array"
+    }
+  },
+  "required": [
+    "claim_id",
+    "forecast_id",
+    "release_id",
+    "locale",
+    "mode",
+    "event_code",
+    "event_domain",
+    "observable_outcome",
+    "timing",
+    "polarity",
+    "traditional_strength_index",
+    "probability_status",
+    "provenance",
+    "uncertainty",
+    "decision_scope",
+    "certainty_tier",
+    "abstention"
+  ],
+  "title": "ForecastClaim",
+  "type": "object",
+  "x-artifact-version": "1.0.0"
+}

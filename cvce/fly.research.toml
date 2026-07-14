@@ -1,0 +1,47 @@
+# Explicit opt-in Fly.io deployment for the raw research service.
+#
+# Prerequisites (do not place either token in this file):
+#   fly volumes create vedicastro_research_data --region lhr
+#   fly secrets set CVCE_SERVICE_TOKEN=... CVCE_RESEARCH_SERVICE_TOKEN=...
+# Deploy only after those steps:
+#   fly deploy --config fly.research.toml --remote-only --ha=false
+app = "vedicastro-cvce"
+primary_region = "lhr"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  CVCE_ENVIRONMENT = "production"
+  CVCE_HOST = "0.0.0.0"
+  CVCE_PORT = "8400"
+  CVCE_DEFAULT_AYANAMSA = "LAHIRI"
+  CVCE_VARGAS = "1,2,3,4,7,9,10,12,16,24,30,60"
+  CVCE_GRAPH_AS_RULES = "1"
+  CVCE_ALLOWED_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173,https://portal-omega-two-10.vercel.app"
+  CVCE_RESEARCH_MODE_ENABLED = "true"
+  CVCE_RESEARCH_DB_PATH = "/data/research/research.sqlite3"
+  CVCE_RESEARCH_MOUNT_PATH = "/data/research"
+
+[mounts]
+  source = "vedicastro_research_data"
+  destination = "/data/research"
+
+[http_service]
+  internal_port = 8400
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  concurrency = { type = "requests", hard_limit = 25, soft_limit = 20 }
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "20s"
+    method = "GET"
+    path = "/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

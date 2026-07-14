@@ -268,17 +268,13 @@ export async function saveHoroscope(
   name: string,
   chartData: Record<string, unknown>,
 ): Promise<string | null> {
-  let data = chartData;
-  try {
-    const { encryptChartData } = await import("./encrypt");
-    data = await encryptChartData(chartData);
-  } catch {
-    /* encryption optional */
-  }
+  // Fail closed: authenticated birth data must never be inserted in plaintext.
+  const { encryptChartData } = await import("./encrypt");
+  const data = await encryptChartData(chartData);
 
   const rows = await withUserContext<Record<string, unknown>[]>(userId, (s) => s`
-    INSERT INTO horoscopes (user_id, name, chart_data)
-    VALUES (${userId}, ${name}, ${JSON.stringify(data)}::jsonb)
+    INSERT INTO horoscopes (user_id, name, chart_data, encrypted)
+    VALUES (${userId}, ${name}, ${JSON.stringify(data)}::jsonb, TRUE)
     RETURNING id
   `);
   const id = rows[0]?.id;
@@ -321,12 +317,21 @@ export async function getHoroscopes(userId: string): Promise<
     }
     if (!chart_data || typeof chart_data !== "object") continue;
 
-    out.push({
-      id: String(r.id),
-      name: String(r.name),
-      chart_data: await decryptChartData(chart_data as Record<string, unknown>),
-      created_at: String(r.created_at),
-    });
+    try {
+      out.push({
+        id: String(r.id),
+        name: String(r.name),
+        chart_data: await decryptChartData(chart_data as Record<string, unknown>),
+        created_at: String(r.created_at),
+      });
+    } catch (error) {
+      // Fail closed per row: do not return ciphertext to a UI or downstream API.
+      console.error(
+        "Saved horoscope decryption failed",
+        String(r.id),
+        error instanceof Error ? error.name : "UnknownError",
+      );
+    }
   }
 
   return out;

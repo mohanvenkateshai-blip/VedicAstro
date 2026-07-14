@@ -52,6 +52,9 @@ Optional env (defaults to the live engine if unset):
 
 ```bash
 CVCE_BASE_URL=https://vedicastro-cvce.fly.dev
+# Required for production server-to-server calls. Configure the exact same
+# high-entropy value on CVCE; never prefix this secret with NEXT_PUBLIC_.
+CVCE_SERVICE_TOKEN=...
 
 # Auth + database (anonymous mode when unset)
 AUTH_SECRET=...
@@ -60,6 +63,12 @@ AUTH_GOOGLE_SECRET=...
 DATABASE_URL=postgresql://...
 ADMIN_EMAILS=you@example.com
 ```
+
+Local portal development can call an unauthenticated local CVCE without a
+token. Production portal requests fail closed when `CVCE_SERVICE_TOKEN` is
+missing. CVCE's shallow `GET /health` remains public for liveness monitoring;
+deep diagnostics and all calculation, prediction, knowledge, and version calls
+use the protected server boundary.
 
 ## Deploy
 

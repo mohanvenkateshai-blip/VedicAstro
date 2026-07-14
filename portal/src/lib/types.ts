@@ -135,6 +135,52 @@ export interface MuhurtaResult {
   warnings: string[];
   transit_summary?: string;
   graph_enhancements?: GraphEnhancements | null;
+  rules_source?: string;
+  muhurta_yogas?: {
+    overall?: string;
+    score?: number;
+    summary?: string;
+    active?: Array<{
+      name?: string;
+      nature?: string;
+      detail?: string;
+      source?: string;
+      strength?: number;
+    }>;
+  } | null;
+  calculation_context?: {
+    request_id: string;
+    engine: string;
+    backend: string;
+    backend_version?: string;
+    engine_version: string;
+    ayanamsa: string;
+    calculation_path: string;
+    fallback_used: boolean;
+  };
+  election_context?: {
+    instant: string;
+    utc_instant: string;
+    local_datetime: string;
+    place: string;
+    latitude: number;
+    longitude: number;
+    timezone: string;
+    timezone_source: string;
+    disambiguation: string;
+    utc_offset_hours: number;
+    jd: number;
+  };
+  natal_context?: {
+    birth_datetime: string;
+    birth_latitude: number;
+    birth_longitude: number;
+    birth_timezone_offset_hours: number;
+    ayanamsa: string;
+    jd: number;
+    identity_verified: boolean;
+  };
+  windows?: DayWindows;
 }
 
 export interface GraphEnhancements {
@@ -305,11 +351,11 @@ export interface AlternateDashas {
 }
 
 export interface DayWindows {
-  rahu_kalam: { start: number; end: number };
-  yamaganda: { start: number; end: number };
-  gulika: { start: number; end: number };
-  sunrise?: number;
-  sunset?: number;
+  rahu_kalam: { start: number | string; end: number | string };
+  yamaganda: { start: number | string; end: number | string };
+  gulika: { start: number | string; end: number | string };
+  sunrise?: number | string;
+  sunset?: number | string;
 }
 
 export interface DashaLadderRow {
@@ -835,4 +881,266 @@ export interface KakshaData {
 
 export interface KalachakraDashaData {
   kalachakraDashas: Array<{ name: string; duration: string }>;
+}
+
+// Additive v2 forecast contracts. These intentionally do not expose the
+// internal traditional_strength_index as a user-facing probability.
+export type ForecastV2Mode = "forecast";
+export type ForecastV2Polarity =
+  | "favourable"
+  | "unfavourable"
+  | "mixed"
+  | "indeterminate";
+export type ForecastV2ProbabilityStatus =
+  | "unavailable"
+  | "uncalibrated_signal"
+  | "calibrated";
+
+export interface ForecastV2Input {
+  contract_version?: string;
+  claim_id: string;
+  forecast_id: string;
+  release_id: string;
+  locale: string;
+  mode: ForecastV2Mode;
+  event_code: string;
+  event_domain: string;
+  subject?: "native";
+  observable_outcome: string;
+  timing: {
+    start_on: string;
+    end_on: string;
+    resolution_due_on: string;
+    timezone: string;
+    granularity: "day" | "week" | "month" | "quarter";
+    horizon_days: number;
+  };
+  polarity: ForecastV2Polarity;
+  traditional_strength_index: number;
+  forecast_probability?: number | null;
+  probability_status: ForecastV2ProbabilityStatus;
+  calibration_release_id?: string | null;
+  base_rate?: number | null;
+  base_rate_source?: string | null;
+  supporting_evidence_ids?: string[];
+  opposing_evidence_ids?: string[];
+  rule_ids?: string[];
+  citation_ids?: string[];
+  provenance: Record<string, unknown>;
+  uncertainty: Record<string, unknown>;
+  prerequisites?: string[];
+  alternate_manifestations?: string[];
+  disconfirmers?: string[];
+  what_to_expect?: string[];
+  safe_next_steps?: string[];
+  avoidance_advice?: string[];
+  decision_scope: string;
+  limitations?: string[];
+  certainty_tier: string;
+  abstention: {
+    abstained: boolean;
+    code: string;
+    reason?: string | null;
+    retryable?: boolean;
+  };
+  high_stakes?: boolean;
+  review_required?: boolean;
+}
+
+export interface GroundedForecastText {
+  text: string;
+  source_paths: string[];
+}
+
+export interface ForecastV2Brief {
+  claim_id: string;
+  concise_sentence: string;
+  paragraphs: string[];
+  content_plan: {
+    claim_id: string;
+    event: GroundedForecastText;
+    timing: GroundedForecastText;
+    implication: GroundedForecastText;
+    expectations: GroundedForecastText[];
+    prerequisites: GroundedForecastText[];
+    evidence: Array<{
+      direction: "supporting" | "opposing";
+      evidence_ids: string[];
+      statement: GroundedForecastText;
+    }>;
+    safe_actions: GroundedForecastText[];
+    limitations: GroundedForecastText[];
+    probability: GroundedForecastText;
+    birth_time_stability: GroundedForecastText;
+    abstention: GroundedForecastText | null;
+  };
+}
+
+export interface ForecastV2ReleaseMetadata {
+  api_version: string;
+  contract_version: string;
+  release_id: string;
+  engine_version: string;
+  policy_version: string;
+  verbalizer_version: string;
+  probability_status: ForecastV2ProbabilityStatus;
+  ledger_write_enabled: boolean;
+  ledger_written: boolean;
+}
+
+export interface ForecastV2ReleasedResponse {
+  status: "released";
+  metadata: ForecastV2ReleaseMetadata;
+  claim: {
+    event_code: string;
+    timing: ForecastV2Input["timing"];
+    polarity: ForecastV2Polarity;
+    probability_status: ForecastV2ProbabilityStatus;
+    forecast_probability: number | null;
+    base_rate: number | null;
+    base_rate_source: string | null;
+    birth_time_sensitivity: "stable" | "moderate" | "high" | "unknown";
+    supporting_evidence_ids: string[];
+    opposing_evidence_ids: string[];
+  };
+  brief: ForecastV2Brief;
+}
+
+export interface ForecastV2ShadowResponse {
+  status: "shadow";
+  accepted: true;
+  verbalization_computed: boolean;
+  safety_status: "passed" | "filtered";
+  blocked_category_count: number;
+  metadata: ForecastV2ReleaseMetadata;
+}
+
+export type ForecastV2Response = ForecastV2ReleasedResponse | ForecastV2ShadowResponse;
+
+// Canonical Person Timeline HTTP projection. These names intentionally match
+// the backend contract; the portal does not maintain a lossy duplicate model.
+export type TimelineOrigin = "prospective_prediction" | "observed_event" | "retrospective_hypothesis" | "imported_history" | "engine_inference";
+export type TimelineDirection = "favourable" | "unfavourable" | "mixed" | "neutral" | "not_applicable";
+export type TimelineOutcomeStatus = "hit" | "partial_hit" | "miss" | "false_alarm" | "unresolved" | "ambiguous";
+export type TimelineZoom = "lifetime" | "decade" | "year" | "month" | "week" | "day";
+
+export interface TimelineTolerance {
+  before_seconds: number;
+  after_seconds: number;
+  native_label: string;
+}
+
+export interface TimelineWindow {
+  start_at: string;
+  peak_at: string | null;
+  end_at: string;
+  native_resolution: string;
+  native_resolution_label: string;
+  tolerance: TimelineTolerance;
+}
+
+export interface TimelineMilestone {
+  milestone_id: string;
+  timeline_id: string;
+  subject_reference_id: string;
+  origin: TimelineOrigin;
+  origin_record_id: string;
+  origin_identity_hash: string;
+  canonical_event_id: string;
+  original_label: string;
+  title: string;
+  description: string | null;
+  direction: TimelineDirection;
+  magnitude: unknown;
+  window: TimelineWindow;
+  created_at: string;
+  sealed_at: string | null;
+  knowledge_cutoff_at: string | null;
+  known_event_milestone_id: string | null;
+  supersedes_milestone_id: string | null;
+  native_score_refs: string[];
+  provenance: {
+    actor_id: string;
+    engine_version: string | null;
+    run_id: string | null;
+    release_id: string | null;
+    input_snapshot_hash: string | null;
+    calculation_hash: string | null;
+    rule_pack_versions: Record<string, string>;
+    source_ids: string[];
+    citation_ids: string[];
+    artifact_refs: string[];
+  };
+  visibility: string;
+}
+
+export interface TimelineTimingPeriod {
+  system: string;
+  level: string;
+  ruler: string;
+  parentRuler?: string;
+  startAt: string;
+  endAt: string;
+  deepLink: string;
+}
+
+export interface PersonTimelineRecord {
+  timeline_id: string;
+  subject: { reference_id: string; protection: "deidentified" | "encrypted"; key_id: string | null };
+  created_at: string;
+  prediction_release_versions: string[];
+  outcome_ledger_version: string | null;
+}
+
+export interface PersonTimeline {
+  timeline: PersonTimelineRecord;
+  generatedAt: string;
+  scientificIdentity: { legacyCandidates: "engine_inference"; prospectivePredictionCount: number; notice: string };
+  milestones: TimelineMilestone[];
+  timingPeriods: TimelineTimingPeriod[];
+  outcomes: TimelineOutcomeProjection[];
+  calculation: Record<string, unknown>;
+}
+
+export interface TimelineOutcomeProjection {
+  resolutionId: string;
+  predictionMilestoneId: string;
+  observedMilestoneId: string | null;
+  status: TimelineOutcomeStatus;
+  actualWindow: TimelineWindow | null;
+  certainty: string;
+  resolvedAt: string;
+  supersedesResolutionId: string | null;
+}
+
+export interface TimelineDashaPeriod {
+  level: string;
+  ruler: string;
+  start_at: string;
+  end_at: string;
+  node_id: string | null;
+  deep_link: string | null;
+}
+
+export interface TimelineEvidenceProjection {
+  role: string;
+  statement: string;
+  nativeScoreRef: string | null;
+  ruleIds: string[];
+  artifactRef: string;
+}
+
+export interface PersonTimelineDetailResponse {
+  milestone: TimelineMilestone;
+  humanStatement: string;
+  direction: TimelineDirection;
+  scientificIdentity: { origin: TimelineOrigin; prospective: boolean; notice: string };
+  temporalPrecision: { interval: TimelineWindow; statement?: string };
+  timingLadders: Array<{ system: string; periods: TimelineDashaPeriod[] }>;
+  dashaDeepLink: string;
+  supportingEvidence: TimelineEvidenceProjection[];
+  opposingEvidence: TimelineEvidenceProjection[];
+  evidenceSummary?: string;
+  oppositionNotice: string;
+  calculationTrace: Record<string, unknown>;
 }

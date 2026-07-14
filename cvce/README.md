@@ -32,6 +32,15 @@ cp .env.example .env                   # adjust CORS origins if needed
 ./start.sh                             # http://localhost:8400
 ```
 
+Local development permits requests without service authentication by default.
+Production (`CVCE_ENVIRONMENT=production`) fails closed: set the same
+high-entropy `CVCE_SERVICE_TOKEN` on CVCE and the portal. The portal adds it as
+`x-cvce-service-token` only on server-to-server requests; it must never use a
+`NEXT_PUBLIC_` variable. `GET /health` (and the empty favicon response) remains
+public for shallow liveness checks. Deep diagnostics and all calculation,
+knowledge, prediction, and version endpoints are protected. To exercise this
+boundary locally, set `CVCE_REQUIRE_SERVICE_AUTH=true`.
+
 ## Key endpoint
 
 `POST /chart` → full canonical `chart_data` (geometry + dasha + shadbala +
@@ -55,6 +64,29 @@ Granular endpoints remain for transit/incremental use: `/positions`,
 .venv/bin/python -m pytest        # golden charts + schema validation + cross-check
 ```
 
+From `cvce/`, run the complete baseline verification with:
+
+```bash
+.venv/bin/python -m compileall -q app vedic_engine graph_rag knowledge_engine tests && .venv/bin/python -m pytest
+```
+
+### Forecast contract artifacts
+
+The human-reviewable event ontology and JSON Schemas under `../docs/` are
+generated from the closed `forecasting.taxonomy` ontology and Pydantic contract
+models. After changing either source, regenerate and review the artifacts:
+
+```bash
+cd cvce
+.venv/bin/python -m forecasting.generate_artifacts
+```
+
+CI and local checks can detect drift without writing files:
+
+```bash
+.venv/bin/python -m forecasting.generate_artifacts --check
+```
+
 The golden suite runs each reference chart through `/chart`, asserts placements
 against a professionally cast horoscope, validates the payload against the JSON
 Schema, and confirms PyJHora agrees with jyotishganit within 0.1° (after the
@@ -66,3 +98,11 @@ Containerized via `Dockerfile` (build context = this directory). PyJHora bundles
 the Swiss Ephemeris data files, so no separate ephemeris provisioning is needed.
 Recommended hosts: **Render** or **Railway** (persistent Python service). Set
 `CVCE_ALLOWED_ORIGINS` to the portal origin in production.
+
+The default `fly.toml` has no volume and keeps raw research disabled. To opt in
+to research persistence, first provision the named `vedicastro_research_data`
+volume in `lhr`, set distinct `CVCE_SERVICE_TOKEN` and
+`CVCE_RESEARCH_SERVICE_TOKEN` secrets, and deploy explicitly with
+`fly deploy --config fly.research.toml --remote-only --ha=false`. The opt-in
+configuration fixes the database beneath the dedicated `/data/research` mount;
+do not enable research against Fly's root filesystem.

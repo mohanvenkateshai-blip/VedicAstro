@@ -6,6 +6,11 @@ import type { ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 import { PLANET_COLORS } from "@/lib/astroColors";
+import {
+  localDateTimeAt,
+  zonedLocalToOffsetIso,
+  type TransitObservationRequest,
+} from "@/lib/transit-context";
 
 const PLANET_ORDER = [
   "Sun",
@@ -91,11 +96,6 @@ function formatDegree(longitude: number): string {
   return `${deg}°${String(min).padStart(2, "0")}'`;
 }
 
-function rashiForY(yNorm: number) {
-  const idx = Math.min(11, Math.max(0, Math.floor(yNorm * 12)));
-  return 11 - idx;
-}
-
 // ── Constants for SVG geometry ──────────────────────────────────────────────
 
 const VB_W = 900;
@@ -106,11 +106,18 @@ const PLOT_H = VB_H - MARGIN.top - MARGIN.bottom;
 
 // ── Main Component ──────────────────────────────────────────────────────────
 
-export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) {
+export function GraphicalEphemeris({
+  chart,
+  transit,
+}: {
+  chart: ChartData | undefined;
+  transit: TransitObservationRequest;
+}) {
   const [positions, setPositions] = useState<MonthlyPosition[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
+  const [retryToken, setRetryToken] = useState(0);
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -120,32 +127,36 @@ export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) 
     async function fetchPositions() {
       if (!chart?.meta?.birth_datetime) return;
 
-      const year = new Date().getFullYear();
-      const lat = chart.meta.birth_lat ?? 12.3;
-      const lon = chart.meta.birth_lon ?? 76.65;
-      const tz = chart.meta.birth_tz ?? 5.5;
+      const year = Number(
+        localDateTimeAt(new Date(transit.transit_instant), transit.transit_timezone).date.slice(0, 4),
+      );
+      const lat = transit.transit_lat;
+      const lon = transit.transit_lon;
       setLoading(true);
       setError(null);
 
       try {
         const months = Array.from({ length: 12 }, (_, i) => {
-          const d = new Date(year, i, 15);
-          return d.toISOString().slice(0, 10);
+          return `${year}-${String(i + 1).padStart(2, "0")}-15`;
         });
 
         const responses = await Promise.all(
-          months.map((dateStr) =>
-            postCvce<{ positions?: { planet: string; longitude: number }[] }>(
+          months.map((dateStr) => {
+            const instant = zonedLocalToOffsetIso(dateStr, "12:00", transit.transit_timezone);
+            const offset = instant.slice(-6);
+            const sign = offset.startsWith("-") ? -1 : 1;
+            const tz = sign * (Number(offset.slice(1, 3)) + Number(offset.slice(4, 6)) / 60);
+            return postCvce<{ positions?: { planet: string; longitude: number }[] }>(
               "positions",
               {
                 datetime: `${dateStr}T12:00:00`,
                 lat,
                 lon,
                 tz_offset: tz,
-                ayanamsa: "LAHIRI",
+                ayanamsa: chart.ayanamsa,
               },
-            ),
-          ),
+            );
+          }),
         );
 
         const json: MonthlyPosition[] = months.map((dateStr, i) => {
@@ -179,6 +190,9 @@ export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) 
     chart?.meta?.birth_lat,
     chart?.meta?.birth_lon,
     chart?.meta?.birth_tz,
+    chart?.ayanamsa,
+    transit,
+    retryToken,
   ]);
 
   const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
@@ -202,11 +216,8 @@ export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) 
     }
 
     const xNorm = (mx - MARGIN.left) / PLOT_W;
-    const yNorm = (my - MARGIN.top) / PLOT_H;
     const monthIdx = Math.round(xNorm * 11);
     const clampedMonth = Math.max(0, Math.min(11, monthIdx));
-    const rashiIdx = rashiForY(yNorm);
-
     const pos = positions[clampedMonth];
     if (!pos) {
       setTooltip(null);
@@ -268,6 +279,7 @@ export function GraphicalEphemeris({ chart }: { chart: ChartData | undefined }) 
           onClick={() => {
             setError(null);
             setPositions(null);
+            setRetryToken((token) => token + 1);
           }}
           className="text-accent hover:underline text-xs"
         >

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Brand Blueprint • 6-Phase Master Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --accent: #c026d3;
+            --accent-2: #7c3aed;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif;
+            font-feature-settings: "ss02";
+        }
+
+        .cosmic-bg {
+            background: radial-gradient(circle at 50% 20%, #1e1135 0%, #0f0a1f 50%, #0a0814 100%);
+        }
+
+        .section-header {
+            font-size: 3.1rem;
+            line-height: 1.05;
+            font-weight: 600;
+            letter-spacing: -0.045em;
+        }
+
+        .premium-card {
+            transition: transform 0.2s cubic-bezier(0.23, 1.0, 0.32, 1), 
+                       box-shadow 0.2s cubic-bezier(0.23, 1.0, 0.32, 1);
+        }
+        
+        .premium-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .phase-card {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .nav-active {
+            color: #c026d3;
+            position: relative;
+        }
+        
+        .nav-active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #c026d3, #7c3aed);
+        }
+
+        .luxury-gradient {
+            background: linear-gradient(135deg, #c026d3 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.05;
+        }
+
+        .glass {
+            background: rgba(255,255,255, 0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255, 0.08);
+        }
+
+        .cosmic-grid {
+            background-image: 
+                linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+            background-size: 55px 55px;
+        }
+
+        .timeline-dot {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #c026d3, #7c3aed);
+            box-shadow: 0 0 0 6px rgba(192, 38, 211, 0.15);
+        }
+
+        .brand-token {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.75rem;
+        }
+
+        .prose-cosmic {
+            color: #d1d5db;
+        }
+        
+        .prose-cosmic h3, .prose-cosmic h4 {
+            color: #f5f5f7;
+        }
+
+        .nav-scrolled {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+
+        .metric-bar {
+            height: 4px;
+            background: linear-gradient(to right, #c026d3, #7c3aed);
+            border-radius: 9999px;
+            transition: width 1.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .phase-number {
+            font-size: 1.35rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c026d3, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background-color: #4c1d95;
+            border-radius: 20px;
+        }
+
+        .design-system-demo {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0814] text-zinc-200 antialiased cosmic-bg">
+    <!-- NAV -->
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#0a0814]/95 backdrop-blur-2xl">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-purple-600 flex items-center justify-center shadow-inner">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2.25" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2.25" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2.25" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-2xl tracking-tighter">WorldBrand</span>
+                        <span class="text-xs font-mono tracking-[2.5px] text-violet-400 block -mt-1">BLUEPRINT</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="#tools" class="hover:text-violet-400 transition-colors">Toolstack</a>
+                    <a href="#phases" class="hover:text-violet-400 transition-colors">6-Phase Strategy</a>
+                    <a href="#design-system" class="hover:text-violet-400 transition-colors">Design System</a>
+                    <a href="#implementation" class="hover:text-violet-400 transition-colors">Implementation</a>
+                </div>
+
+                <div class="flex items-center gap-x-3">
+                    <button onclick="downloadHTML()" 
+                            class="hidden md:flex items-center gap-x-2.5 px-6 h-10 rounded-2xl border border-white/20 hover:bg-white/5 transition-all text-sm font-medium">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download</span>
+                    </button>
+                    
+                    <button onclick="document.getElementById('phases').scrollIntoView({ behavior: 'smooth' })" 
+                            class="flex items-center gap-x-2 px-7 h-10 bg-white text-[#0a0814] hover:bg-violet-100 transition-all rounded-2xl text-sm font-semibold active:scale-[0.985]">
+                        <span>Start the Journey</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="pt-20 pb-16 px-8 max-w-screen-2xl mx-auto">
+        <div class="max-w-5xl pt-14">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 text-xs tracking-[2.5px] mb-6 bg-white/5">
+                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                COMPREHENSIVE • BATTLE-TESTED • 2026
+            </div>
+            
+            <h1 class="text-[86px] md:text-[102px] leading-[0.9] font-semibold tracking-[-5.4px] font-display">
+                Build a world-class<br>
+                brand from <span class="luxury-gradient">zero to global.</span>
+            </h1>
+            
+            <p class="max-w-2xl mt-6 text-2xl text-zinc-400 tracking-tight">
+                The definitive 6-phase strategic playbook that transforms scattered ideas into a cohesive, 
+                high-impact global brand — complete with tools, frameworks, and production-ready code.
+            </p>
+            
+            <div class="flex flex-wrap items-center gap-4 mt-10">
+                <button onclick="document.getElementById('phases').scrollIntoView({ behavior: 'smooth' })" 
+                        class="group flex items-center justify-center gap-x-3 bg-white hover:bg-zinc-100 active:bg-white text-[#0a0814] px-9 h-[58px] rounded-3xl font-semibold text-lg transition-all">
+                    <span>Explore the 6 Phases</span>
+                    <i class="fa-solid fa-arrow-right group-active:translate-x-0.5 transition"></i>
+                </button>
+                
+                <button onclick="document.getElementById('design-system').scrollIntoView({ behavior: 'smooth' })" 
+                        class="flex items-center justify-center gap-x-3 border border-white/30 hover:bg-white/5 transition-all px-8 h-[58px] rounded-3xl font-medium text-lg">
+                    <i class="fa-solid fa-code"></i>
+                    <span>View Design System</span>
+                </button>
+            </div>
+            
+            <div class="mt-8 flex items-center gap-x-4 text-sm text-zinc-500">
+                <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full ring-2 ring-[#0a0814] overflow-hidden border border-white/20"><img src="https://i.pravatar.cc/24?img=28" class="w-full h-full object-cover"></div>
+                    <div class="w-6 h-6 rounded-full ring-2 ring-[#0a0814] overflow-hidden border border-white/20"><img src="https://i.pravatar.cc/24?img=47" class="w-full h-full object-cover"></div>
+                    <div class="w-6 h-6 rounded-full ring-2 ring-[#0a0814] overflow-hidden border border-white/20"><img src="https://i.pravatar.cc/24?img=12" class="w-full h-full object-cover"></div>
+                </div>
+                <div>Used by founders building category-defining brands in 2025–2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="border-y border-white/10 bg-black/20">
+        <div class="max-w-screen-2xl mx-auto px-8 py-6 grid grid-cols-2 md:grid-cols-4 gap-y-6 text-center">
+            <div>
+                <div class="text-4xl font-semibold tracking-tighter">6</div>
+                <div class="text-xs text-zinc-500 mt-1 tracking-widest">STRATEGIC PHASES</div>
+            </div>
+            <div>
+                <div class="text-4xl font-semibold tracking-tighter">5</div>
+                <div class="text-xs text-zinc-500 mt-1 tracking-widest">ESSENTIAL TOOLS</div>
+            </div>
+            <div>
+                <div class="text-4xl font-semibold tracking-tighter">∞</div>
+                <div class="text-xs text-zinc-500 mt-1 tracking-widest">SCALABLE OUTPUTS</div>
+            </div>
+            <div>
+                <div class="text-4xl font-semibold tracking-tighter">100%</div>
+                <div class="text-xs text-zinc-500 mt-1 tracking-widest">PRODUCTION READY</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOOLS SECTION -->
+    <section id="tools" class="max-w-screen-2xl mx-auto px-8 pt-16 pb-12">
+        <div class="max-w-3xl mb-10">
+            <div class="uppercase tracking-[3.5px] text-xs font-semibold text-violet-400">THE ESSENTIAL TOOLSTACK</div>
+            <h2 class="section-header mt-2">Five battle-tested platforms<br>that power world-class brands.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <!-- Tool 1: Claude -->
+            <div class="premium-card glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest text-violet-400">01 • AI STRATEGY</div>
+                        <h4 class="font-semibold text-2xl mt-3 leading-none">Claude +<br>Brand Mastery</h4>
+                    </div>
+                    <i class="fa-solid fa-robot text-3xl text-violet-400/60"></i>
+                </div>
+                <div class="mt-8 text-sm text-zinc-300">
+                    The highest-leverage resource for brand strategy, messaging architecture, positioning, and deep psychological frameworks. 
+                    Use it as your always-on Chief Brand Strategist.
+                </div>
+                <div class="mt-6 text-xs px-3 py-1 bg-white/5 rounded-full inline-block">Brand Strategy Frameworks • Positioning • Voice</div>
+            </div>
+
+            <!-- Tool 2: Figma -->
+            <div class="premium-card glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest text-violet-400">02 • VISUAL IDENTITY</div>
+                        <h4 class="font-semibold text-2xl mt-3 leading-none">Figma</h4>
+                    </div>
+                    <i class="fa-brands fa-figma text-3xl text-violet-400/60"></i>
+                </div>
+                <div class="mt-8 text-sm text-zinc-300">
+                    Central design system hub. Create visual identity systems, responsive prototypes, and high-fidelity mockups with 
+                    perfect typography and spacing systems.
+                </div>
+                <div class="mt-6 text-xs px-3 py-1 bg-white/5 rounded-full inline-block">Design Systems • Prototyping • Collaboration</div>
+            </div>
+
+            <!-- Tool 3: Coolors -->
+            <div class="premium-card glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest text-violet-400">03 • COLOR</div>
+                        <h4 class="font-semibold text-2xl mt-3 leading-none">Coolors</h4>
+                    </div>
+                    <i class="fa-solid fa-palette text-3xl text-violet-400/60"></i>
+                </div>
+                <div class="mt-8 text-sm text-zinc-300">
+                    Generate sophisticated, accessible color palettes that match your brand’s psychology. 
+                    Export ready-to-use palettes for digital and print.
+                </div>
+                <div class="mt-6 text-xs px-3 py-1 bg-white/5 rounded-full inline-block">Color Psychology • Accessibility • Export</div>
+            </div>
+
+            <!-- Tool 4: Google Fonts -->
+            <div class="premium-card glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest text-violet-400">04 • TYPOGRAPHY</div>
+                        <h4 class="font-semibold text-2xl mt-3 leading-none">Google Fonts</h4>
+                    </div>
+                    <i class="fa-solid fa-font text-3xl text-violet-400/60"></i>
+                </div>
+                <div class="mt-8 text-sm text-zinc-300">
+                    Curate a distinctive, high-performance typography system. Pair display + body fonts with perfect tracking and 
+                    optical sizing for screen and print.
+                </div>
+                <div class="mt-6 text-xs px-3 py-1 bg-white/5 rounded-full inline-block">Web Typography • Performance • Pairing</div>
+            </div>
+
+            <!-- Tool 5: HubSpot -->
+            <div class="premium-card glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest text-violet-400">05 • VOICE &amp; MESSAGING</div>
+                        <h4 class="font-semibold text-2xl mt-3 leading-none">HubSpot Brand Voice Toolkit</h4>
+                    </div>
+                    <i class="fa-solid fa-comments text-3xl text-violet-400/60"></i>
+                </div>
+                <div class="mt-8 text-sm text-zinc-300">
+                    Define your brand’s personality, tone, and messaging pillars. Create consistent, emotionally resonant copy 
+                    across every touchpoint.
+                </div>
+                <div class="mt-6 text-xs px-3 py-1 bg-white/5 rounded-full inline-block">Persona • Messaging • Consistency</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASES SECTION -->
+    <section id="phases" class="border-y border-white/10 bg-black/30 py-16">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-3xl mb-12">
+                <div class="uppercase tracking-[3.5px] text-xs font-semibold text-violet-400">THE STRATEGIC ARCHITECTURE</div>
+                <h2 class="section-header mt-2">The 6-Phase World Brand<br>Development Playbook</h2>
+                <p class="mt-4 text-xl text-zinc-400">A complete, sequential methodology used by elite agencies and category-defining founders.</p>
+            </div>
+
+            <!-- Phase Timeline Visual -->
+            <div class="mb-12 hidden lg:block">
+                <div class="relative">
+                    <div class="absolute left-8 top-8 bottom-8 w-px bg-gradient-to-b from-violet-500/30 via-violet-500/20 to-transparent"></div>
+                    
+                    <div class="grid grid-cols-6 gap-4">
+                        <div class="text-center"><div class="inline-block w-4 h-4 rounded-full bg-violet-500 mb-2"></div><div class="text-xs font-medium">Phase 1</div></div>
+                        <div class="text-center"><div class="inline-block w-4 h-4 rounded-full bg-violet-500 mb-2"></div><div class="text-xs font-medium">Phase 2</div></div>
+                        <div class="text-center"><div class="inline-block w-4 h-4 rounded-full bg-violet-500 mb-2"></div><div class="text-xs font-medium">Phase 3</div></div>
+                        <div class="text-center"><div class="inline-block w-4 h-4 rounded-full bg-violet-500 mb-2"></div><div class="text-xs font-medium">Phase 4</div></div>
+                        <div class="text-center"><div class="inline-block w-4 h-4 rounded-full bg-violet-500 mb-2"></div><div class="text-xs font-medium">Phase 5</div></div>
+                        <div class="text-center"><div class="inline-block w-4 h-4 rounded-full bg-violet-500 mb-2"></div><div class="text-xs font-medium">Phase 6</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 1 -->
+            <div class="mb-8 phase-card glass rounded-3xl p-8 border border-white/10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-72 flex-shrink-0">
+                        <div class="flex items-center gap-x-3">
+                            <div class="phase-number">01</div>
+                            <div>
+                                <div class="text-xs tracking-[2px] text-violet-400 font-bold">COSMIC FOUNDATIONS</div>
+                                <div class="font-semibold text-3xl tracking-tight">Core Strategy</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 prose-cosmic text-[15px]">
+                        <p class="text-zinc-300">Define the soul of your brand. This phase establishes the strategic foundation that all future decisions inherit from.</p>
+                        <div class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div><span class="font-medium text-white">• Archetypal Positioning</span> — Define your brand’s mythic role and emotional territory.</div>
+                            <div><span class="font-medium text-white">• Target Persona Mapping</span> — Deep audience psychology and jobs-to-be-done.</div>
+                            <div><span class="font-medium text-white">• Competitive Audit</span> — Visual, verbal, and strategic gap analysis.</div>
+                            <div><span class="font-medium text-white">• Brand DNA Document</span> — Mission, vision, values, promise, and personality.</div>
+                            <div><span class="font-medium text-white">• Naming &amp; Domain Strategy</span> — Secure memorable, ownable brand assets.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="mb-8 phase-card glass rounded-3xl p-8 border border-white/10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-72 flex-shrink-0">
+                        <div class="flex items-center gap-x-3">
+                            <div class="phase-number">02</div>
+                            <div>
+                                <div class="text-xs tracking-[2px] text-violet-400 font-bold">VISUAL IDENTITY</div>
+                                <div class="font-semibold text-3xl tracking-tight">Mystical Aesthetics</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 prose-cosmic text-[15px]">
+                        <p class="text-zinc-300">Translate strategy into a distinctive, ownable visual language that feels inevitable.</p>
+                        <div class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div><span class="font-medium text-white">• The Cosmic Palette</span> — Primary, secondary, accent, neutral, and semantic colors with accessibility baked in.</div>
+                            <div><span class="font-medium text-white">• Symbolic Logo Design</span> — Geometric marks, wordmarks, and clearspace rules.</div>
+                            <div><span class="font-medium text-white">• Typography Pairing</span> — Display + text pairing with precise tracking and optical sizing.</div>
+                            <div><span class="font-medium text-white">• Design System Creation</span> — Component library, iconography system, motion language.</div>
+                            <div><span class="font-medium text-white">• Photography &amp; Illustration Direction</span> — Mood, treatment, and usage guidelines.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="mb-8 phase-card glass rounded-3xl p-8 border border-white/10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-72 flex-shrink-0">
+                        <div class="flex items-center gap-x-3">
+                            <div class="phase-number">03</div>
+                            <div>
+                                <div class="text-xs tracking-[2px] text-violet-400 font-bold">TECHNICAL MAPPING</div>
+                                <div class="font-semibold text-3xl tracking-tight">UX Architecture</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 prose-cosmic text-[15px]">
+                        <p class="text-zinc-300">Bridge brand strategy with technical execution. Build the scalable infrastructure.</p>
+                        <div class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div><span class="font-medium text-white">• Chart Layout Engine</span> — Information architecture &amp; user flows.</div>
+                            <div><span class="font-medium text-white">• Design Tokens</span> — CSS variables, Tailwind config, Figma tokens sync.</div>
+                            <div><span class="font-medium text-white">• Responsive System</span> — Mobile-first, fluid typography, and spacing scales.</div>
+                            <div><span class="font-medium text-white">• High-Fidelity Prototyping</span> — Clickable journeys in Figma.</div>
+                            <div><span class="font-medium text-white">• Accessibility &amp; Performance</span> — WCAG 2.2 AA compliance built in.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="mb-8 phase-card glass rounded-3xl p-8 border border-white/10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-72 flex-shrink-0">
+                        <div class="flex items-center gap-x-3">
+                            <div class="phase-number">04</div>
+                            <div>
+                                <div class="text-xs tracking-[2px] text-violet-400 font-bold">TONE &amp; CONTENT</div>
+                                <div class="font-semibold text-3xl tracking-tight">Voice Framework</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 prose-cosmic text-[15px]">
+                        <p class="text-zinc-300">Define the verbal identity that builds deep emotional trust and recognition.</p>
+                        <div class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div><span class="font-medium text-white">• Brand Voice Guidelines</span> — Archetype, personality traits, do’s and don’ts.</div>
+                            <div><span class="font-medium text-white">• Messaging Pillars</span> — Core narratives and proof points.</div>
+                            <div><span class="font-medium text-white">• Terminology Glossary</span> — Approved language for product, marketing, and support.</div>
+                            <div><span class="font-medium text-white">• Automated Copy Framework</span> — Templates for emails, landing pages, social, and ads.</div>
+                            <div><span class="font-medium text-white">• Error States &amp; Microcopy</span> — Human, empathetic language in every edge case.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="mb-8 phase-card glass rounded-3xl p-8 border border-white/10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-72 flex-shrink-0">
+                        <div class="flex items-center gap-x-3">
+                            <div class="phase-number">05</div>
+                            <div>
+                                <div class="text-xs tracking-[2px] text-violet-400 font-bold">ACTIVATION</div>
+                                <div class="font-semibold text-3xl tracking-tight">Go-To-Market</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 prose-cosmic text-[15px]">
+                        <p class="text-zinc-300">Prepare every channel and asset for launch with precision and coherence.</p>
+                        <div class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div><span class="font-medium text-white">• Launch Landing Page</span> — High-converting hero + narrative experience.</div>
+                            <div><span class="font-medium text-white">• Social Media Kit</span> — Templates, carousels, stories, and motion assets.</div>
+                            <div><span class="font-medium text-white">• Community Building Strategy</span> — Discord, X, LinkedIn, and owned channels.</div>
+                            <div><span class="font-medium text-white">• Influencer &amp; Analyst Outreach</span> — Narrative-led pitch materials.</div>
+                            <div><span class="font-medium text-white">• Internal Brand Training</span> — Enable every team member to live the brand.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 6 -->
+            <div class="phase-card glass rounded-3xl p-8 border border-white/10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-72 flex-shrink-0">
+                        <div class="flex items-center gap-x-3">
+                            <div class="phase-number">06</div>
+                            <div>
+                                <div class="text-xs tracking-[2px] text-violet-400 font-bold">LAUNCH &amp; EVOLUTION</div>
+                                <div class="font-semibold text-3xl tracking-tight">Audit &amp; Growth</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 prose-cosmic text-[15px]">
+                        <p class="text-zinc-300">Launch with confidence, then continuously evolve based on real-world feedback.</p>
+                        <div class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div><span class="font-medium text-white">• Launch Audit</span> — Brand consistency checklist across all touchpoints.</div>
+                            <div><span class="font-medium text-white">• App Store &amp; Marketplace Optimization</span> — Screenshots, descriptions, and visual identity.</div>
+                            <div><span class="font-medium text-white">• Feedback Loops</span> — Structured user research and brand sentiment tracking.</div>
+                            <div><span class="font-medium text-white">• Feature &amp; Brand Expansion</span> — Scalable system for new products and markets.</div>
+                            <div><span class="font-medium text-white">• Continuous Evolution Framework</span> — Quarterly brand health reviews and updates.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESIGN SYSTEM SECTION -->
+    <section id="design-system" class="max-w-screen-2xl mx-auto px-8 pt-16 pb-12">
+        <div class="max-w-3xl mb-10">
+            <div class="uppercase tracking-[3.5px] text-xs font-semibold text-violet-400">PRODUCTION LAYER</div>
+            <h2 class="section-header mt-2">Complete Design System &amp;<br>Ready-to-Use Code</h2>
+            <p class="mt-4 text-xl text-zinc-400">The following is a production-ready Tailwind + CSS custom properties implementation of the brand system. Use it as the foundation for your website, product, and marketing assets.</p>
+        </div>
+
+        <div class="bg-[#0f0c22] border border-white/10 rounded-3xl overflow-hidden">
+            <!-- Tabs -->
+            <div class="flex border-b border-white/10 bg-black/30 px-2">
+                <button onclick="switchTab(0)" class="tab-button active px-6 py-4 text-sm font-medium border-b-2 border-violet-500">CSS Variables &amp; Theme</button>
+                <button onclick="switchTab(1)" class="tab-button px-6 py-4 text-sm font-medium">Component Library</button>
+                <button onclick="switchTab(2)" class="tab-button px-6 py-4 text-sm font-medium">Live Demo</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="tab-0" class="tab-content p-8">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="font-semibold">Full Theme Configuration</div>
+                    <button onclick="copyCodeBlock(this)" class="text-xs flex items-center gap-x-2 px-4 h-9 rounded-2xl border border-white/20 hover:bg-white/5">
+                        <i class="fa-solid fa-copy"></i> <span>Copy All</span>
+                    </button>
+                </div>
+                <pre class="custom-scroll text-xs bg-black/40 p-6 rounded-2xl overflow-auto max-h-[420px] text-emerald-300"><code>:root {
+  /* === AETHER BRAND TOKENS === */
+  --color-primary: #c026d3;
+  --color-primary-dark: #a21caf;
+  --color-secondary: #7c3aed;
+  --color-accent: #22d3ee;
+  --color-surface: #0f0c22;
+  --color-surface-2: #1a1633;
+  --color-deep: #0a0814;
+  --color-text: #f5f5f7;
+  --color-text-muted: #a1a1aa;
+  --color-border: #27253a;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Spacing &amp; Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+}</code></pre>
+            </div>
+
+            <div id="tab-1" class="tab-content hidden p-8">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="font-semibold">Key Components (Excerpt)</div>
+                    <button onclick="copyCodeBlock(this)" class="text-xs flex items-center gap-x-2 px-4 h-9 rounded-2xl border border-white/20 hover:bg-white/5">
+                        <i class="fa-solid fa-copy"></i> <span>Copy Components</span>
+                    </button>
+                </div>
+                <pre class="custom-scroll text-xs bg-black/40 p-6 rounded-2xl overflow-auto max-h-[420px] text-emerald-300"><code>/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: white;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgb(192 38 211 / 0.3); }
+
+/* Cards */
+.card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover { transform: translateY(-4px); }
+
+/* Navigation */
+.nav { background: rgba(15, 12, 34, 0.95); backdrop-filter: blur(20px); }
+
+/* Form Inputs */
+.input {
+  background: var(--color-deep);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+}</code></pre>
+            </div>
+
+            <div id="tab-2" class="tab-content hidden p-8 design-system-demo">
+                <div class="mb-6">
+                    <div class="font-semibold mb-3">Live Component Preview</div>
+                    <div class="text-xs text-zinc-400">These components use the exact tokens from the design system above.</div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Button Demo -->
+                    <div>
+                        <div class="text-xs text-zinc-400 mb-2">PRIMARY BUTTON</div>
+                        <button class="px-8 py-3.5 rounded-2xl font-semibold text-white transition-all active:scale-[0.985]" 
+                                style="background: linear-gradient(135deg, #c026d3, #7c3aed);">
+                            Launch Brand Experience
+                        </button>
+                    </div>
+                    
+                    <!-- Card Demo -->
+                    <div>
+                        <div class="text-xs text-zinc-400 mb-2">PREMIUM CARD</div>
+                        <div class="card p-6 max-w-sm" style="background: #1a1633; border: 1px solid #27253a; border-radius: 1.25rem;">
+                            <div class="font-semibold">Cosmic Foundations</div>
+                            <div class="text-sm text-zinc-400 mt-1">Phase 1 of the World Brand Blueprint</div>
+                            <div class="mt-4 text-xs px-3 py-1 rounded-full inline-block" style="background: rgba(192,38,211,0.1); color: #c026d3;">STRATEGIC</div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <div class="text-xs text-zinc-400 mb-2">NAVIGATION BAR</div>
+                        <div class="flex items-center justify-between px-6 py-4 rounded-2xl" style="background: rgba(15,12,34,0.95); border: 1px solid #27253a;">
+                            <div class="flex items-center gap-x-2">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-500 flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">WB</span>
+                                </div>
+                                <span class="font-semibold">WorldBrand</span>
+                            </div>
+                            <div class="flex gap-x-6 text-sm">
+                                <span class="text-zinc-400">Strategy</span>
+                                <span class="text-zinc-400">Identity</span>
+                                <span class="text-zinc-400">System</span>
+                            </div>
+                            <button class="px-5 py-2 text-sm rounded-2xl font-medium" style="background: #c026d3; color: white;">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPLEMENTATION -->
+    <section id="implementation" class="border-t border-white/10 bg-black/30 py-16">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-3xl">
+                <div class="uppercase tracking-[3.5px] text-xs font-semibold text-violet-400">NEXT STEPS</div>
+                <h2 class="section-header mt-2">How to Use This Blueprint</h2>
+            </div>
+            
+            <div class="mt-10 grid md:grid-cols-3 gap-6">
+                <div class="glass border border-white/10 p-7 rounded-3xl">
+                    <div class="font-semibold text-xl">1. Start with Strategy</div>
+                    <div class="mt-3 text-sm text-zinc-300">Work through Phases 1–2 using Claude as your strategic partner. Output the BRAND_DNA.md and DESIGN_SYSTEM.md files.</div>
+                </div>
+                <div class="glass border border-white/10 p-7 rounded-3xl">
+                    <div class="font-semibold text-xl">2. Build in Figma + Code</div>
+                    <div class="mt-3 text-sm text-zinc-300">Translate the visual system into Figma. Use the provided CSS variables and component code to build your website or product interface.</div>
+                </div>
+                <div class="glass border border-white/10 p-7 rounded-3xl">
+                    <div class="font-semibold text-xl">3. Activate &amp; Evolve</div>
+                    <div class="mt-3 text-sm text-zinc-300">Follow Phases 5–6 for launch. Revisit the blueprint quarterly to keep your brand coherent as you scale.</div>
+                </div>
+            </div>
+
+            <div class="mt-10 p-8 border border-white/10 rounded-3xl bg-[#0f0c22]">
+                <div class="font-semibold mb-2">Pro Tip: Combine with the Autonomous Claude Framework</div>
+                <div class="text-sm text-zinc-300">For maximum velocity and consistency, layer this strategic blueprint with the self-sustaining Claude Brand Architect system (from our previous conversation). Use Claude Projects + the Elite CCO prompt to generate all assets while strictly inheriting from the documents created in Phase 1–2.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-9 text-xs text-zinc-500">
+        <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-y-3">
+            <div>World Brand Blueprint • A comprehensive, production-ready strategic document • 2026</div>
+            <div class="flex gap-x-5">
+                <div>Phased methodology inspired by top-tier brand consultancies</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function initializeTailwind() {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'display': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif']
+                        }
+                    }
+                }
+            };
+        }
+
+        function initializeNav() {
+            const nav = document.getElementById('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            });
+
+            // Active section highlighting
+            const sections = ['tools', 'phases', 'design-system', 'implementation'];
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section) {
+                        const top = section.getBoundingClientRect().top;
+                        if (top <= 160) current = id;
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('nav-active');
+                    }
+                });
+            });
+        }
+
+        function switchTab(tabIndex) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active', 'border-b-2', 'border-violet-500'));
+            
+            document.getElementById(`tab-${tabIndex}`).classList.remove('hidden');
+            document.querySelectorAll('.tab-button')[tabIndex].classList.add('active', 'border-b-2', 'border-violet-500');
+        }
+
+        function copyCodeBlock(button) {
+            const pre = button.parentElement.nextElementSibling || button.closest('.tab-content').querySelector('pre');
+            if (!pre) return;
+            
+            const text = pre.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = `<i class="fa-solid fa-check"></i> <span>Copied!</span>`;
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            });
+        }
+
+        function downloadHTML() {
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'world-brand-blueprint.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function initializeMermaidIfNeeded() {
+            // Optional: could add a process diagram here if desired
+        }
+
+        function initializeAll() {
+            initializeTailwind();
+            initializeNav();
+            initializeMermaidIfNeeded();
+            
+            // Default to first tab
+            const firstTab = document.getElementById('tab-0');
+            if (firstTab) firstTab.classList.remove('hidden');
+            
+            // Keyboard shortcut for download
+            document.addEventListener('keydown', function(e) {
+                if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+                    e.preventDefault();
+                    downloadHTML();
+                }
+            });
+            
+            console.log('%c[WorldBrand Blueprint] Comprehensive branding document initialized. Press Cmd/Ctrl + S to download.', 'color:#4c1d95');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeAll);
+        } else {
+            initializeAll();
+        }
+        
+        window.downloadBlueprint = downloadHTML;
+    </script>
+</body>
+</html>

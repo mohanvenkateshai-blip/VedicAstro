@@ -2,6 +2,7 @@ import "server-only";
 
 import { healthCheck } from "@/lib/db";
 import { isAuthConfigured, isDatabaseConfigured } from "@/lib/auth-config";
+import { cvceServiceHeaders } from "@/lib/cvce-auth";
 
 export interface ServiceProbe {
   name: string;
@@ -53,9 +54,15 @@ export interface DeepHealth {
 export async function getDeepHealth(timeoutMs = 20_000): Promise<DeepHealth> {
   const started = Date.now();
   try {
+    const headers = cvceServiceHeaders();
+    if (!headers) throw new Error("CVCE service authentication is not configured");
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), timeoutMs);
-    const res = await fetch(`${CVCE}/health/deep`, { cache: "no-store", signal: ctrl.signal });
+    const res = await fetch(`${CVCE}/health/deep`, {
+      headers,
+      cache: "no-store",
+      signal: ctrl.signal,
+    });
     clearTimeout(t);
     const json = (await res.json()) as DeepHealth;
     return { ...json, latencyMs: Date.now() - started };
@@ -97,7 +104,10 @@ async function probePredictHealth(timeoutMs = 15_000): Promise<{
 }> {
   const start = Date.now();
   try {
+    const headers = cvceServiceHeaders();
+    if (!headers) throw new Error("CVCE service authentication is not configured");
     const res = await fetch(`${CVCE}/predict/health`, {
+      headers,
       cache: "no-store",
       signal: AbortSignal.timeout(timeoutMs),
     });

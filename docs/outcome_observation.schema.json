@@ -1,0 +1,66 @@
+{
+  "$defs": {
+    "OutcomeStatus": {
+      "enum": [
+        "occurred",
+        "did_not_occur",
+        "indeterminate",
+        "unobservable"
+      ],
+      "title": "OutcomeStatus",
+      "type": "string"
+    }
+  },
+  "$id": "https://vedicastro.local/schemas/OutcomeObservation/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "notes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Notes",
+      "type": "array"
+    },
+    "observable_value": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Observable Value"
+    },
+    "observation_id": {
+      "minLength": 1,
+      "title": "Observation Id",
+      "type": "string"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "source": {
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/OutcomeStatus"
+    }
+  },
+  "required": [
+    "observation_id",
+    "status",
+    "observed_at",
+    "source"
+  ],
+  "title": "OutcomeObservation",
+  "type": "object",
+  "x-artifact-version": "1.0.0"
+}

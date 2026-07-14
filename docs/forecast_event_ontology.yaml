@@ -1,0 +1,213 @@
+# Generated from cvce/forecasting/taxonomy.py.
+# Run: cd cvce && .venv/bin/python -m forecasting.generate_artifacts
+artifact_version: "1.0.0"
+source: "cvce.forecasting.taxonomy.EVENT_TAXONOMY"
+closed_ontology: true
+event_count: 9
+events:
+  - code: "employment.offer_received"
+    domain: "employment"
+    leaf: "offer_received"
+    observable_predicate: "The native receives a dated offer for paid employment."
+    target_entity: "native"
+    inclusion_criteria:
+      - "A specific role, employer, and proposed start or response date are stated."
+    exclusion_criteria:
+      - "Informal interest or an interview without an offer is excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive on receipt of the offer, whether or not it is accepted."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "employment.start"
+    domain: "employment"
+    leaf: "start"
+    observable_predicate: "The native begins paid work in a new employment engagement."
+    target_entity: "native"
+    inclusion_criteria:
+      - "At least one paid working day is completed."
+    exclusion_criteria:
+      - "An accepted offer that has not started is excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive on the first paid working day."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "employment.involuntary_end"
+    domain: "employment"
+    leaf: "involuntary_end"
+    observable_predicate: "The native's employment ends at the employer's initiative."
+    target_entity: "native"
+    inclusion_criteria:
+      - "Dismissal, redundancy, or employer-initiated non-renewal is documented."
+    exclusion_criteria:
+      - "Voluntary resignation and planned retirement are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive on the effective end date in the employer notice."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "moderate"
+    requires_explicit_opt_in: false
+  - code: "contract.signed"
+    domain: "contract"
+    leaf: "signed"
+    observable_predicate: "The native becomes a signatory to a dated, binding contract."
+    target_entity: "native"
+    inclusion_criteria:
+      - "The agreement identifies the parties, obligations, and signature date."
+    exclusion_criteria:
+      - "Drafts, negotiations, and non-binding expressions of interest are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive when all signatures required for execution are present."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "travel.departure_international"
+    domain: "travel"
+    leaf: "departure_international"
+    observable_predicate: "The native departs their country of residence for international travel."
+    target_entity: "native"
+    inclusion_criteria:
+      - "A physical border crossing out of the country of residence occurs."
+    exclusion_criteria:
+      - "Booking, planning, and domestic travel are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive at the recorded departure border crossing."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "residence.move_completed"
+    domain: "residence"
+    leaf: "move_completed"
+    observable_predicate: "The native begins living at a different primary residence."
+    target_entity: "native"
+    inclusion_criteria:
+      - "The new address becomes the native's primary overnight residence."
+    exclusion_criteria:
+      - "Temporary stays and an unsigned intention to move are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive on the first day the new address is the primary residence."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "education.enrolment"
+    domain: "education"
+    leaf: "enrolment"
+    observable_predicate: "The native formally enrols in a named education programme."
+    target_entity: "native"
+    inclusion_criteria:
+      - "The institution confirms active enrolment in a specific programme."
+    exclusion_criteria:
+      - "Applications, offers, and informal study are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive on the institution's effective enrolment date."
+    default_horizon_days: 90
+    maximum_horizon_days: 365
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "education.credential_completed"
+    domain: "education"
+    leaf: "credential_completed"
+    observable_predicate: "The native satisfies the requirements for a named education credential."
+    target_entity: "native"
+    inclusion_criteria:
+      - "The awarding institution confirms completion or conferral."
+    exclusion_criteria:
+      - "Expected completion and partial course completion are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+      - "subject_attestation"
+    resolution_policy: "Resolve positive on the official completion or conferral date."
+    default_horizon_days: 90
+    maximum_horizon_days: 730
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "low"
+    requires_explicit_opt_in: false
+  - code: "relationship.marriage_registered"
+    domain: "relationship"
+    leaf: "marriage_registered"
+    observable_predicate: "The native's marriage is registered by a competent authority."
+    target_entity: "native"
+    inclusion_criteria:
+      - "A civil or legally recognised marriage registration is recorded."
+    exclusion_criteria:
+      - "Dating, engagement, ceremonies without registration, and third-party marriages are excluded."
+    evidence_hierarchy:
+      - "official_record"
+      - "dated_document"
+    resolution_policy: "Resolve positive on the official registration date."
+    default_horizon_days: 90
+    maximum_horizon_days: 730
+    permitted_granularities:
+      - "day"
+      - "week"
+      - "month"
+    censoring_policy: "indeterminate_if_observation_window_or_evidence_is_incomplete"
+    sensitivity: "sensitive_opt_in"
+    requires_explicit_opt_in: true

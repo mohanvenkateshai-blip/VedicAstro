@@ -29,3 +29,10 @@ export function canAccessFeature(role: Role, feature: string): boolean {
 export function maxSavedCharts(role: Role): number {
   return MAX_SAVED_CHARTS[role] ?? MAX_SAVED_CHARTS.free;
 }
+
+/** Server-controlled additive forecast release gate. Missing/invalid is off. */
+export function isForecastV2Enabled(): boolean {
+  return ["1", "true", "yes", "on"].includes(
+    process.env.PORTAL_FORECAST_V2?.trim().toLowerCase() ?? "",
+  );
+}

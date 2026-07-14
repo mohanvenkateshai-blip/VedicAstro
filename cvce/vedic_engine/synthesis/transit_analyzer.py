@@ -547,9 +547,15 @@ class TransitImpactAnalyzer:
             sav = ashtakavarga.transit_sav.get(pred.planet)
             if sav:
                 bindus = sav.get("bindus", 0)
-                verdict = sav.get("verdict", "neutral")
-            # Enrich with classical bindu verdict helper
-            verdict = compute_transit_bindu_verdict(ashtakavarga, pred.planet, pred.sign_idx)
+                # Enrich with the classical bindu verdict helper.
+                try:
+                    transit_sign_idx = RASHIS.index(pred.rashi)
+                except ValueError:
+                    transit_sign_idx = None
+                if transit_sign_idx is not None:
+                    bindus = compute_transit_bindu_verdict(
+                        ashtakavarga, pred.planet, transit_sign_idx
+                    ).get("bindus", bindus)
                 if bindus < 25:
                     factors.append(
                         Factor(

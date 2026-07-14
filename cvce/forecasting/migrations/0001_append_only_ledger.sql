@@ -1,0 +1,8 @@
+-- Reference schema only. Production datastore wiring requires a separate approval.
+-- The executable schema and append-only triggers live in forecasting/ledger.py
+-- so the stdlib SQLite reference implementation remains self-contained.
+--
+-- Privacy invariant: identify a person only by (tenant_id, subject_key). Never
+-- add name, birth date/time, coordinates, address, email, or phone columns.
+-- Retention invariant: do not UPDATE/DELETE issued facts. Append a tombstone and
+-- destroy the subject-specific linkage/encryption key in a production adapter.

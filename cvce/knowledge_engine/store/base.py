@@ -15,6 +15,10 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
+class KnowledgeStorePaginationError(RuntimeError):
+    """Raised when an exhaustive store page cannot be distinguished from EOF."""
+
+
 class KnowledgeStore(ABC):
     """Abstract base class for knowledge graph storage."""
 
@@ -37,6 +41,11 @@ class KnowledgeStore(ABC):
     def get_nodes(self, limit: int = 100) -> list[dict[str, Any]]:
         """Fetch a batch of nodes."""
         ...
+
+    def get_nodes_page(self, limit: int = 500, offset: int = 0) -> list[dict[str, Any]]:
+        """Optional exhaustive-research pagination with a compatible fallback."""
+
+        return self.get_nodes(limit=limit + offset)[offset : offset + limit]
 
     @abstractmethod
     def get_links(self, source_id: str | None = None, limit: int = 100) -> list[dict[str, Any]]:

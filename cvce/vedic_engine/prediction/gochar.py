@@ -120,6 +120,7 @@ class TransitPrediction:
     retrograde: bool
     verdict: str  # shubh, ashubh, neutral
     house_quality: str  # good, bad, worst, neutral
+    longitude: float | None = None
     effects: list = field(default_factory=list)  # list of effect strings
     vedha_active: bool = False
     vedha_by: str | None = None
@@ -164,6 +165,7 @@ def compute_gochar(
     janma_nakshatra: str = None,
     natal_sign: dict = None,
     lagna_rashi: str = None,
+    transit_rows: list[dict] | None = None,
 ) -> GocharResult:
     """Compute transit (gochar) predictions for a given date and optional natal chart.
 
@@ -174,10 +176,19 @@ def compute_gochar(
         janma_rashi: native's Moon sign (e.g., 'Leo')
         janma_nakshatra: native's birth star (e.g., 'Purva Phalguni')
         natal_sign: dict of planet → rashi_idx (0=Aries)
+        transit_rows: optional canonical ephemeris rows. When supplied, these
+            replace the legacy Panchanga astronomy while retaining the Gochar
+            interpretation rules.
     """
     _ensure_gochar_registered()
-    # Compute panchanga first (for planet positions)
-    panch = compute_panchanga(date_str, time_str, lat, lon, tz)
+    if transit_rows is None:
+        # Compatibility path for existing research callers. Product endpoints
+        # must inject canonical PyJHora/Swiss rows explicitly.
+        panch = compute_panchanga(date_str, time_str, lat, lon, tz)
+        transit_rows = panch.transit
+        result_date = panch.date
+    else:
+        result_date = date_str
 
     j_rashi_idx = RASHIS.index(janma_rashi) if janma_rashi and janma_rashi in RASHIS else None
     j_nak_idx = (
@@ -188,19 +199,20 @@ def compute_gochar(
     l_rashi_idx = RASHIS.index(lagna_rashi) if lagna_rashi and lagna_rashi in RASHIS else None
 
     results = GocharResult(
-        date=panch.date,
+        date=result_date,
         janma_rashi=janma_rashi,
         janma_nakshatra=janma_nakshatra,
     )
 
     # Compute transit for each planet
     for planet in PLANETS:
-        row = next((t for t in panch.transit if t["planet"] == planet), None)
+        row = next((t for t in transit_rows if t["planet"] == planet), None)
         if not row:
             continue
 
         pred = TransitPrediction(
             planet=planet,
+            longitude=float(row["lon"]),
             rashi=row["rashi"],
             nakshatra=row["nak"],
             retrograde=row["retro"],
@@ -267,7 +279,7 @@ def compute_gochar(
             vedha_rules = GOCHARA_VEDHA.get(planet, {}).get("vedha", {})
             if house in vedha_rules:
                 vedha_house = vedha_rules[house]
-                for tp in panch.transit:
+                for tp in transit_rows:
                     tp_rashi = rashi_index(tp["lon"])
                     tp_house = ((tp_rashi - j_rashi_idx + 12) % 12) + 1
                     if tp_house == vedha_house:
@@ -282,7 +294,7 @@ def compute_gochar(
             vip = VIPAREETHA_VEDHA.get(planet, {})
             if pred.house_quality in ("bad", "worst") and house in vip:
                 vedha_house = vip[house]
-                for tp in panch.transit:
+                for tp in transit_rows:
                     tp_rashi = rashi_index(tp["lon"])
                     tp_house = ((tp_rashi - j_rashi_idx + 12) % 12) + 1
                     if tp_house == vedha_house:
@@ -297,7 +309,7 @@ def compute_gochar(
                         break
 
             # Combustion check (transiting planet near transiting Sun)
-            sun_row = next((t for t in panch.transit if t["planet"] == "Sun"), None)
+            sun_row = next((t for t in transit_rows if t["planet"] == "Sun"), None)
             if planet != "Sun" and sun_row and row["rashi"] == sun_row["rashi"]:
                 diff = abs(row["deg"] - sun_row["deg"])
                 orb = COMBUST_ORB.get(planet, 12)
@@ -381,7 +393,7 @@ def compute_gochar(
 
     # Moorthy Nirnaya (if Janma Rashi known)
     if j_rashi_idx is not None:
-        moon_row = next((t for t in panch.transit if t["planet"] == "Moon"), None)
+        moon_row = next((t for t in transit_rows if t["planet"] == "Moon"), None)
         if moon_row:
             moon_rashi = rashi_index(moon_row["lon"])
             moorthy_house = ((moon_rashi - j_rashi_idx + 12) % 12) + 1
@@ -396,7 +408,7 @@ def compute_gochar(
 
     # Sade Sati check (Saturn in 12, 1, or 2 from Janma Rasi)
     if j_rashi_idx is not None:
-        saturn_row = next((t for t in panch.transit if t["planet"] == "Saturn"), None)
+        saturn_row = next((t for t in transit_rows if t["planet"] == "Saturn"), None)
         if saturn_row:
             sat_rashi = rashi_index(saturn_row["lon"])
             sat_house = ((sat_rashi - j_rashi_idx + 12) % 12) + 1
@@ -424,7 +436,7 @@ def compute_gochar(
 
     # Tara Balam
     if j_nak_idx is not None:
-        moon_row = next((t for t in panch.transit if t["planet"] == "Moon"), None)
+        moon_row = next((t for t in transit_rows if t["planet"] == "Moon"), None)
         if moon_row:
             moon_nak = _nak_idx(moon_row["lon"])
             count = ((moon_nak - j_nak_idx + 27) % 27) + 1

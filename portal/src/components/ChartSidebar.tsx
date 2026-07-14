@@ -5,13 +5,15 @@ import { usePathname, useSearchParams } from "next/navigation";
 import {
   Compass, Orbit, Clock, Sparkles,
   Sun, Crosshair, BookOpen, Download, Target,
-  Home, CircleDot, FileText, Grid3X3, BarChart3,
+  Home, CircleDot, FileText, Grid3X3, BarChart3, CalendarCheck, CalendarDays,
 } from "lucide-react";
 
 const TABS = [
   { id: "overview", label: "Chart Overview", icon: Compass, href: "/chart", engine: "Janma Kundali" },
   { id: "report", label: "Horoscope Report", icon: FileText, href: "/chart/report", engine: "Synthesis" },
   { id: "transits", label: "Transits", icon: Orbit, href: "/chart/transits", engine: "Gochar Phala" },
+  { id: "muhurta", label: "Native Muhūrta", icon: CalendarCheck, href: "/chart/muhurta", engine: "Electional" },
+  { id: "timeline", label: "Person Timeline", icon: CalendarDays, href: "/chart/timeline", engine: "Life Events" },
   { id: "dasha", label: "Dasha Timeline", icon: Clock, href: "/chart/dasha", engine: "Dasha Phala" },
   { id: "yogas", label: "Yogas & Strength", icon: Sparkles, href: "/chart/yogas", engine: "Yoga + Bala" },
   { id: "bhava", label: "Bhava Explorer", icon: Home, href: "/chart/bhava", engine: "Bhava Phala" },

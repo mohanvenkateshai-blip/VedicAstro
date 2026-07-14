@@ -43,12 +43,34 @@ def _csv(name: str, default: str) -> list[str]:
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 
+def _bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in ("1", "true", "yes", "on")
+
+
+def _choice(name: str, default: str, allowed: tuple[str, ...]) -> str:
+    raw = os.environ.get(name, default).strip().lower()
+    return raw if raw in allowed else default
+
+
 class Settings:
     """Process-wide settings, resolved once from the environment."""
 
     # Server
     HOST: str = os.environ.get("CVCE_HOST", "0.0.0.0")
     PORT: int = int(os.environ.get("CVCE_PORT", "8400"))
+
+    # Portal-to-service authentication. Production fails closed by default;
+    # local development remains unauthenticated unless a token is configured
+    # or CVCE_REQUIRE_SERVICE_AUTH is explicitly enabled.
+    ENVIRONMENT: str = os.environ.get("CVCE_ENVIRONMENT", "development").strip().lower()
+    SERVICE_TOKEN: str = os.environ.get("CVCE_SERVICE_TOKEN", "").strip()
+    SERVICE_AUTH_REQUIRED: bool = ENVIRONMENT in ("production", "prod") or _bool(
+        "CVCE_REQUIRE_SERVICE_AUTH",
+        False,
+    )
 
     # CORS — comma-separated allowlist. Default is local dev only; production
     # MUST set CVCE_ALLOWED_ORIGINS to the portal origin(s).
@@ -75,6 +97,44 @@ class Settings:
         "yes",
         "on",
     )
+
+    # Additive v2 forecast release controls. These are deliberately off until
+    # the evaluation and release gates approve user-visible use.
+    FORECAST_V2_MODE: str = _choice(
+        "CVCE_FORECAST_V2_MODE", "off", ("off", "shadow", "on")
+    )
+    VERBALIZATION_V2: bool = _bool("CVCE_VERBALIZATION_V2", False)
+    FORECAST_LEDGER_WRITE: bool = _bool("CVCE_FORECAST_LEDGER_WRITE", False)
+
+    # Product Person Timeline ledger. Local development gets an ephemeral
+    # append-only SQLite store; production must opt into a durable mounted path.
+    TIMELINE_DB_PATH: str = os.environ.get(
+        "CVCE_TIMELINE_DB_PATH",
+        "/tmp/vedicastro-person-timeline.sqlite3"
+        if ENVIRONMENT not in ("production", "prod")
+        else "",
+    ).strip()
+    TIMELINE_WRITES_ENABLED: bool = _bool(
+        "CVCE_TIMELINE_WRITES_ENABLED",
+        ENVIRONMENT not in ("production", "prod"),
+    )
+
+    # Accuracy-first native Muhurta research surface. The service and portal
+    # both fail closed unless their server-only gates are explicitly enabled.
+    NATIVE_MUHURTA_RESEARCH_ENABLED: bool = _bool(
+        "NATIVE_MUHURTA_RESEARCH_ENABLED", False
+    )
+
+    # Raw research is a separate, authenticated plane. It is disabled by
+    # default and never falls back to the product service token or an in-memory
+    # database. The research router validates these values again at request
+    # time so a misconfigured production deployment fails closed.
+    RESEARCH_MODE_ENABLED: bool = _bool("CVCE_RESEARCH_MODE_ENABLED", False)
+    RESEARCH_DB_PATH: str = os.environ.get("CVCE_RESEARCH_DB_PATH", "").strip()
+    RESEARCH_MOUNT_PATH: str = os.environ.get("CVCE_RESEARCH_MOUNT_PATH", "").strip()
+    RESEARCH_SERVICE_TOKEN: str = os.environ.get(
+        "CVCE_RESEARCH_SERVICE_TOKEN", ""
+    ).strip()
 
 
 @lru_cache(maxsize=1)

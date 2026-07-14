@@ -17,16 +17,40 @@ import type {
   KalachakraDeepData,
   MuhurtaResult,
   ReportFacts,
+  ForecastV2Input,
+  ForecastV2Response,
+  PersonTimeline,
+  PersonTimelineDetailResponse,
 } from "./types";
+import { cvceServiceHeaders } from "./cvce-auth";
+import { isForecastV2Enabled } from "./features";
 
 const CVCE_BASE_URL =
   process.env.CVCE_BASE_URL ?? "https://vedicastro-cvce.fly.dev";
+
+function cvceHeaders(json = false): Record<string, string> {
+  const headers = cvceServiceHeaders(json);
+  if (!headers) {
+    throw new CvceError("CVCE service authentication is not configured.", 503);
+  }
+  return headers;
+}
 
 export class CvceError extends Error {
   constructor(message: string, readonly status?: number) {
     super(message);
     this.name = "CvceError";
   }
+}
+
+/** Submit an already-canonical claim; this never adapts legacy prediction prose. */
+export async function getForecastBriefV2(
+  claim: ForecastV2Input,
+): Promise<ForecastV2Response> {
+  if (!isForecastV2Enabled()) {
+    throw new CvceError("Forecast v2 is disabled.", 404);
+  }
+  return post<ForecastV2Response>("/v2/forecasts", claim, 0);
 }
 
 /**
@@ -38,7 +62,7 @@ export async function getChart(birth: BirthInput): Promise<ChartData> {
   try {
     res = await fetch(`${CVCE_BASE_URL}/chart`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: cvceHeaders(true),
       body: JSON.stringify({ ayanamsa: "LAHIRI", ...birth }),
       // Deterministic output → cache aggressively; the engine scales to zero,
       // so this also smooths over cold starts for repeat views.
@@ -78,7 +102,7 @@ export async function getPrashna(params: {
 async function post<T>(path: string, body: unknown, revalidate = 60 * 60): Promise<T> {
   const res = await fetch(`${CVCE_BASE_URL}${path}`, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: cvceHeaders(true),
     body: JSON.stringify(body),
     next: { revalidate },
   });
@@ -99,7 +123,7 @@ export async function getDashaDeep(birth: BirthInput): Promise<DashaDeepData> {
   try {
     const res = await fetch(`${CVCE_BASE_URL}/dasha-deep`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: cvceHeaders(true),
       body: JSON.stringify({
         birth_datetime: birth.birth_datetime,
         birth_lat: birth.birth_lat,
@@ -130,7 +154,7 @@ export async function getDashaPredictions(birth: BirthInput): Promise<DashaPredi
   try {
     const res = await fetch(`${CVCE_BASE_URL}/dasha-predict`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: cvceHeaders(true),
       body: JSON.stringify({
         birth_datetime: birth.birth_datetime,
         birth_lat: birth.birth_lat,
@@ -160,12 +184,34 @@ export async function getReportFacts(birth: BirthInput): Promise<ReportFacts> {
   );
 }
 
+/** Person-centred event and prediction timeline. Always fresh: observed events
+ * and outcome resolutions are append-only records that may change at any time. */
+export async function getPersonTimeline(
+  birth: BirthInput,
+  subjectId: string,
+): Promise<PersonTimeline> {
+  return post<PersonTimeline>("/timeline/query", { ...birth, subject_id: subjectId }, 0);
+}
+
+export async function getPersonTimelineMilestone(
+  birth: BirthInput,
+  milestoneId: string,
+  subjectId: string,
+): Promise<PersonTimelineDetailResponse> {
+  return post<PersonTimelineDetailResponse>(
+    `/timeline/milestones/${encodeURIComponent(milestoneId)}/detail`,
+    { ...birth, subject_id: subjectId },
+    0,
+  );
+}
+
 export interface MuhurtaQuery {
-  date: string; // YYYY-MM-DD (the day being judged)
-  time: string; // HH:MM
+  instant: string;
+  place: string;
   lat: number;
   lon: number;
-  tz: number;
+  timezone: string;
+  disambiguation: "exact" | "earlier" | "later";
 }
 
 export interface MuhurtaBundle {
@@ -175,46 +221,85 @@ export interface MuhurtaBundle {
   query: MuhurtaQuery;
 }
 
+function assertSameChartIdentity(loaded: ChartData, recomputed: ChartData): void {
+  const sameAyanamsa = loaded.ayanamsa === recomputed.ayanamsa;
+  const sameJd = Number.isFinite(loaded.jd) && Math.abs(loaded.jd - recomputed.jd) <= 1e-8;
+  const loadedMoon = loaded.planets.find((planet) => planet.planet === "Moon");
+  const recomputedMoon = recomputed.planets.find((planet) => planet.planet === "Moon");
+  const sameMoon =
+    loadedMoon !== undefined &&
+    recomputedMoon !== undefined &&
+    Math.abs(loadedMoon.longitude - recomputedMoon.longitude) <= 1e-6;
+  const sameBirthContext =
+    loaded.meta?.birth_datetime === recomputed.meta?.birth_datetime &&
+    loaded.meta?.birth_lat === recomputed.meta?.birth_lat &&
+    loaded.meta?.birth_lon === recomputed.meta?.birth_lon &&
+    loaded.meta?.birth_tz === recomputed.meta?.birth_tz;
+  if (!sameAyanamsa || !sameJd || !sameMoon || !sameBirthContext) {
+    throw new CvceError("The loaded natal chart changed during Muhurta verification. Reload the chart before continuing.", 409);
+  }
+}
+
 /**
- * Muhurta analysis for a native on a given day. Pulls the natal chart first
- * (the engine's gochar/daśā/ashtakavarga need janma context), then runs the
- * personalized prediction and the day's inauspicious windows in parallel.
+ * Accuracy-gated Muhurta research calculation. The loaded natal chart is
+ * recomputed and identity-checked before the one canonical CVCE request.
  */
 export async function getMuhurta(
   birth: BirthInput,
   query: MuhurtaQuery,
+  loadedChart: ChartData,
 ): Promise<MuhurtaBundle> {
   const chart = await getChart(birth);
-  const moon = chart.planets.find((p) => p.planet === "Moon");
+  assertSameChartIdentity(loadedChart, chart);
+  if (birth.ayanamsa !== loadedChart.ayanamsa) {
+    throw new CvceError("The Muhurta request ayanamsa does not match the loaded natal chart.", 409);
+  }
 
-  const predictBody = {
-    date: query.date,
-    time: query.time,
-    lat: query.lat,
-    lon: query.lon,
-    tz: query.tz,
-    janma_rashi: moon?.rashi,
-    janma_nakshatra: moon?.nakshatra,
-    birth_moon_lon: moon?.longitude,
-    natal_signs: chart.natalSign,
-    birth_date: birth.birth_datetime.slice(0, 10),
-    birth_time: birth.birth_datetime.slice(11, 16),
+  const prediction = await post<MuhurtaResult>("/muhurta/canonical", {
+    transit_instant: query.instant,
+    transit_place: query.place,
+    transit_lat: query.lat,
+    transit_lon: query.lon,
+    transit_timezone: query.timezone,
+    transit_disambiguation: query.disambiguation,
+    expected_natal_jd: chart.jd,
+    ayanamsa: loadedChart.ayanamsa,
+    birth_datetime: birth.birth_datetime,
     birth_lat: birth.birth_lat,
     birth_lon: birth.birth_lon,
     birth_tz: birth.birth_tz,
-  };
+    name: birth.name,
+  }, 0);
+  if (
+    !prediction.calculation_context ||
+    prediction.calculation_context.fallback_used ||
+    prediction.calculation_context.engine !== "PyJHora" ||
+    prediction.calculation_context.backend !== "Swiss Ephemeris" ||
+    prediction.calculation_context.calculation_path !== "app.ephem + jhora.panchanga.drik"
+  ) {
+    throw new CvceError("Canonical Muhurta provenance was missing or reported a fallback.", 502);
+  }
+  if (
+    prediction.calculation_context.ayanamsa !== loadedChart.ayanamsa ||
+    prediction.natal_context?.identity_verified !== true ||
+    Math.abs((prediction.natal_context?.jd ?? Number.NaN) - loadedChart.jd) > 1e-8
+  ) {
+    throw new CvceError("Canonical Muhurta natal identity verification failed.", 409);
+  }
+  if (!prediction.windows) {
+    throw new CvceError("Canonical Muhurta windows were not returned.", 502);
+  }
+  if (
+    prediction.election_context?.instant !== query.instant ||
+    prediction.election_context?.timezone !== query.timezone ||
+    prediction.election_context?.latitude !== query.lat ||
+    prediction.election_context?.longitude !== query.lon ||
+    prediction.election_context?.place !== query.place
+  ) {
+    throw new CvceError("Canonical Muhurta election context verification failed.", 409);
+  }
 
-  const [prediction, windows] = await Promise.all([
-    post<MuhurtaResult>("/predict", predictBody),
-    post<DayWindows>("/rahu-kalam", {
-      datetime: `${query.date}T${query.time}:00`,
-      lat: query.lat,
-      lon: query.lon,
-      tz_offset: query.tz,
-    }),
-  ]);
-
-  return { chart, prediction, windows, query };
+  return { chart, prediction, windows: prediction.windows, query };
 }
 
 /** Kalachakra Dasha — 86-year sign-based cycle with deha/jeeva and citations. */
@@ -242,7 +327,7 @@ export async function getKalachakraDeep(birth: BirthInput): Promise<KalachakraDe
   try {
     const res = await fetch(`${CVCE_BASE_URL}/kalachakra-deep`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: cvceHeaders(true),
       body: JSON.stringify({
         birth_datetime: birth.birth_datetime,
         birth_lat: birth.birth_lat,
@@ -265,6 +350,7 @@ export async function getKalachakraDeep(birth: BirthInput): Promise<KalachakraDe
 export async function getHealth(): Promise<{ status: string; engine: string } | null> {
   try {
     const res = await fetch(`${CVCE_BASE_URL}/health`, {
+      // /health is deliberately public liveness; no service token is needed.
       next: { revalidate: 30 },
     });
     return res.ok ? await res.json() : null;
@@ -301,7 +387,7 @@ export async function getGraphInsights(
   try {
     const res = await fetch(`${CVCE_BASE_URL}/predict`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: cvceHeaders(true),
       body: JSON.stringify(body),
       next: { revalidate: 60 * 60 },
     });

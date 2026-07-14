@@ -1,5 +1,39 @@
 # VedicAstro — AI Context Constitution
 
+## Prediction-engine MAFIP checkpoint — 2026-07-14T15:56:45+01:00
+
+- **Person Timeline gate:** remediation passed independent re-review at **96/100 with zero Critical or High findings**. This supersedes the failed 15:42 checkpoint below; retain the earlier entry as audit history.
+- **Integrity and ownership:** stored detail is timeline/subject-bound, portal timeline traffic is bound to an owner-scoped signed guest cookie, forged ownership is rejected, matching criteria are sealed before resolution, and miss/false-alarm verdicts cannot be recorded before the prediction window closes.
+- **Verification:** complete CVCE suite **338 passed, 1 skipped** from 339 collected; focused timeline suite **21/21**; portal ownership tests **5/5**; portal typecheck, targeted lint, production build and `git diff --check` passed. Fresh guest access returned HTTP 200, forged ownership returned 403, cross-subject stored detail returned 404, and the live timeline returned 11 milestones, 90 timing periods and zero outcomes.
+- **Scientific limit:** prospective prediction ingestion/sealing is not implemented, so the current 11 `engine_inference` bands remain non-prospective research candidates and demonstrated accuracy remains **N/A**. Internal rule scores are not probabilities.
+- **Remaining non-blockers:** there is no observed-event correction UI; browser automation remains unavailable, so real-browser pixel, responsive, interaction and accessibility QA is still open.
+- **Release state:** Person Timeline passed its local automated/integrity gate, but remains local and uncommitted. No commit, push, Supabase migration, Vercel deployment or Fly deployment was executed.
+
+## Prediction-engine MAFIP checkpoint — 2026-07-14T15:42:44+01:00
+
+- **Person Timeline:** `/chart/timeline` is implemented locally across CVCE and the portal. It separates observed events, migrated non-prospective engine inferences, future prospective predictions, timing periods, activation windows and current outcomes; milestone detail traces the exact MD/AD/PD ladder and links into Dasha.
+- **Persistence:** canonical timeline contracts, append-only SQLite storage, resolution history/current-outcome projection and UI/API paths are implemented. Production writes require a durable database path and operating policy; the local default is `/tmp/vedicastro-person-timeline.sqlite3`.
+- **Verification:** focused timeline tests passed **18/18**; the integrated CVCE suite passed **335 tests with 1 intentional skip** from 336 collected using the official local Swiss Ephemeris files; `git diff --check`, portal typecheck, targeted lint and production build passed. A live Mohan query returned 11 engine-inference milestones, 90 timing periods, zero outcomes and Swiss Ephemeris 2.10.03 provenance; detail returned the timing ladder; the portal route/proxy included all six lanes.
+- **Failed gate:** independent review scored **58/100**, below the required 95. Release blockers are a reproduced cross-subject stored-detail disclosure, missing authenticated owner binding for portal timeline traffic, outcome-aware matching criteria selected during resolution, and the ability to record misses/false alarms before a prediction window ends. The portal must also refresh after saving a resolution. Remediate, add regression tests and run a fresh independent gate before release.
+- **Scientific limit:** the 11 current prediction bands are migrated non-prospective `engine_inference` research candidates. There are no clean prospective resolved outcomes, so demonstrated prediction accuracy remains **N/A** and internal rule scores must not be displayed as probabilities.
+- **Open acceptance gap:** browser automation could not initialize because its runtime attempted to redefine `process`. Pixel, interaction, responsive and accessibility QA must still be performed in a real browser; an HTTP 200 does not close this gate.
+- **Release state:** HOLD. The Person Timeline is suitable only for local remediation/testing at this checkpoint. No commit, push, Supabase migration, Vercel deployment or Fly deployment was executed. Use `docs/prediction-engine-strategy/RELEASE_HANDOFF.md` for bounded staging groups and deployment prerequisites.
+
+## Prediction-engine MAFIP checkpoint — 2026-07-14T14:08:28+01:00
+
+- **Release decision:** HOLD. Transit Context failed independent review at **68/100** and remediation is active; the B2 experiment system entered a third remediation after **66/100**; B3 raw-service remediation is complete but awaits independent re-gate.
+- **Native Muhūrta:** `/chart/muhurta` is implemented with a separate IANA-timezone election context, CVCE-only calculation, five-limb Panchanga, verdict/score, factors, avoid windows and provenance. Automated gates are green; pixel-level browser QA remains open because browser control could not initialize.
+- **Donor policy:** `docs/prediction-engine-strategy/MUHURTA_REUSE_MANIFEST.md` governs standalone reuse: port validated information patterns, validate rule tables before promotion, and reject wholesale browser-engine/static-DST copying. The existing `/muhurta` iframe remains the migration fallback.
+- **Release state:** no commit, push, Supabase migration, Vercel deployment, or Fly deployment was executed. Stage only the bounded groups in `RELEASE_HANDOFF.md`; preserve user-owned exclusions.
+
+## Prediction-engine MAFIP checkpoint — 2026-07-14T12:35:51+01:00
+
+- **Canonical release detail:** `docs/prediction-engine-strategy/RELEASE_HANDOFF.md`.
+- **Gate:** Wave A accepted (A1 98/100, A2 96/100, A3 97/100; accepted verification 208 passed, 1 skipped). Wave B is in progress and is not release-gated.
+- **Current local verification:** CVCE full suite completed successfully (246 passed, 1 skipped inferred from 247 collected progress markers), compileall and `git diff --check` passed. Exact commands are in the release handoff.
+- **Release state:** no commit, push, Supabase migration, Vercel deployment, or Fly deployment was executed at this checkpoint. The mixed dirty worktree includes unrelated user-owned files and must be staged by bounded file group only.
+- **Orchestration:** exact per-agent token telemetry and model routing are unavailable; bounded scopes, targeted verification, and checkpoint handoffs are active.
+
 **🚨 HANDOFF SNAPSHOT — 2026-07-03 15:11 IST (Claude Code / Fable 5 session checkpoint)**  
 **Latest session handoff: `docs/handoff/context.md` §-1** — Kalachakra full rebuild, Ashtakavarga fixes, app-wide Navagraha color system (all deployed); report-redesign backend (`priority_predictions`) + birth-time rectification engine (`cvce/app/rectification.py`) committed this checkpoint.  
 **Product vision (durable):** prioritized/timed/actionable predictions, multi-dasha confluence timing, birth-time rectification as precision prerequisite.  

@@ -58,6 +58,8 @@ def test_priority_predictions_shape_for_real_chart():
     pp = facts.get("priority_predictions")
     assert pp is not None
     assert 0 < len(pp) <= 6
+    assert facts["claim_safety"]["policy"] == "personalised-t3-v1"
+    assert facts["claim_safety"]["status"] in {"passed", "filtered"}
 
     scores = [e["score"] for e in pp]
     assert scores == sorted(scores, reverse=True), "priority_predictions must be sorted by score descending"

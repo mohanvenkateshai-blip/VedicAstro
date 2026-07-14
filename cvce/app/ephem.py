@@ -13,11 +13,19 @@ and hand PyJHora the tz offset on the Place struct — never pre-converting to U
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 from datetime import datetime
+import os
+from threading import RLock
 
+import swisseph as swe
 from jhora import const, utils
 from jhora.panchanga import drik
 from jhora.panchanga.drik import Place
+
+_SWISS_EPHEMERIS_PATH = os.environ.get("CVCE_SWISS_EPHEMERIS_PATH", "").strip()
+if _SWISS_EPHEMERIS_PATH:
+    swe.set_ephe_path(_SWISS_EPHEMERIS_PATH)
 
 # Keep the planet list to the classical nine (drop Uranus/Neptune/Pluto) so
 # planetary_positions lines up 1:1 with the frontend's PLANETS array.
@@ -69,6 +77,11 @@ NAKSHATRAS = [
 ]
 WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
+# PyJHora stores the selected ayanamsa in process-global state.  Keep a whole
+# calculation (selection + every Swiss call) inside this re-entrant lock so two
+# requests using different ayanamsas cannot relabel one another's positions.
+_AYANAMSA_LOCK = RLock()
+
 # Classical dignities (sidereal, whole-sign) by sign index 0=Aries..11=Pisces.
 EXALT_SIGN = {"Sun": 0, "Moon": 1, "Mars": 9, "Mercury": 5, "Jupiter": 3, "Venus": 11, "Saturn": 6}
 DEBIL_SIGN = {"Sun": 6, "Moon": 7, "Mars": 3, "Mercury": 11, "Jupiter": 9, "Venus": 5, "Saturn": 0}
@@ -107,10 +120,55 @@ def jd_place(dt: datetime, lat: float, lon: float, tz: float):
 
 
 def set_ayanamsa(name: str) -> None:
-    try:
-        drik.set_ayanamsa_mode((name or "LAHIRI").upper())
-    except Exception:
-        drik.set_ayanamsa_mode("LAHIRI")
+    with _AYANAMSA_LOCK:
+        try:
+            drik.set_ayanamsa_mode((name or "LAHIRI").upper())
+        except Exception:
+            drik.set_ayanamsa_mode("LAHIRI")
+
+
+@contextmanager
+def ayanamsa_context(name: str):
+    """Serialize a complete PyJHora calculation under its requested ayanamsa."""
+    with _AYANAMSA_LOCK:
+        set_ayanamsa(name)
+        yield
+
+
+def ephemeris_runtime_provenance(jd: float) -> dict[str, str]:
+    """Report the backend actually selected for all required ephemeris files.
+
+    Swiss can satisfy the Sun while silently falling back for the Moon or a
+    planet when only part of the ``.se1`` data set is installed. Probe one body
+    from each file family used by the canonical nine-body calculation so a
+    caller may safely fail closed on the returned backend.
+    """
+    return_flags = [
+        swe.calc_ut(jd, body, swe.FLG_SWIEPH)[1]
+        for body in (swe.SUN, swe.MOON, swe.MARS, swe.TRUE_NODE)
+    ]
+    if all(flags & swe.FLG_SWIEPH for flags in return_flags):
+        backend = "Swiss Ephemeris"
+    elif any(flags & swe.FLG_MOSEPH for flags in return_flags):
+        backend = "Moshier analytical fallback"
+    else:
+        backend = f"Unknown ephemeris flags {','.join(map(str, return_flags))}"
+    return {
+        "engine": "PyJHora",
+        "engine_version": str(getattr(const, "_APP_VERSION", "unknown")),
+        "backend": backend,
+        "backend_version": str(getattr(swe, "version", "unknown")),
+    }
+
+
+def ephemeris_provenance() -> dict[str, str]:
+    """Compatibility metadata for existing calculation consumers."""
+    return {
+        "engine": "PyJHora",
+        "engine_version": str(getattr(const, "_APP_VERSION", "unknown")),
+        "backend": "Swiss Ephemeris",
+        "backend_version": str(getattr(swe, "version", "unknown")),
+    }
 
 
 def split_longitude(lon: float) -> dict:

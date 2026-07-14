@@ -19,30 +19,66 @@ environment via `app.config` — see `.env.example`. No secrets in code.
 
 from __future__ import annotations
 
+import hashlib
+import json
+import re
+import secrets
 import time
 from collections import defaultdict
-from datetime import UTC
+from datetime import UTC, datetime
+from functools import wraps
+from typing import Literal
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
+from forecasting.contracts import ForecastClaim
+from forecasting.service import process_forecast_claim, validation_error_detail
 from jhora import const
 from jhora.panchanga import drik
-from pydantic import BaseModel, Field
+from prediction_policy import apply_product_claim_policy
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    JsonValue,
+    ValidationError,
+    field_validator,
+    model_validator,
+)
+from research_engine.service import create_research_router
+from research_engine.timeline import (
+    EventDirection,
+    MilestoneResolution,
+    ResolutionStatus,
+    SQLiteTimelineStore,
+    TemporalResolution,
+    TemporalTolerance,
+    TimelineStoreConflict,
+    TimelineStoreIntegrityError,
+    TimelineWindow,
+)
+from research_engine.timeline.service import PersonTimelineService
 
+from vedic_engine.verbalization import VerbalizationError
+
+# Dedicated dasha systems self-register with the KnowledgeEngine on import.
+from . import chara_dasha as chara_mod  # noqa: F401
+from . import kaksha as kaksha_mod  # noqa: F401
+from . import kalachakra as kala_mod  # noqa: F401
 from .chart import build_chart_geometry
 from .chart_svg import chart_svg
 from .config import get_settings
-# Dedicated dasha systems (Kaksha/Chara/Kalachakra) — self-register with KE on import
-from . import kaksha as kaksha_mod
-from . import chara_dasha as chara_mod
-from . import kalachakra as kala_mod
 from .ephem import (
     NAKSHATRAS,
     PLANET_NAMES,
     RASHIS,
     WEEKDAYS,
     ascendant,
+    ayanamsa_context,
+    ephemeris_provenance,
+    ephemeris_runtime_provenance,
     jd_place,
     parse_dt,
     positions,
@@ -130,6 +166,19 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+research_router, clear_research_service_cache = create_research_router(settings)
+# Extend with the router's already-prefixed APIRoutes. This preserves the
+# historical `app.routes` contract used by product safety introspection while
+# keeping the research plane additive.
+app.router.routes.extend(research_router.routes)
+app.router.add_event_handler("shutdown", clear_research_service_cache)
+
+# The shallow liveness endpoint intentionally stays public so an orchestrator
+# can decide whether to restart the service. All diagnostic and business
+# endpoints require the portal's server-side token when auth is enabled.
+_PUBLIC_PATHS = frozenset({"/health", "/favicon.ico"})
+_SERVICE_TOKEN_HEADER = "x-cvce-service-token"
+
 
 # --- rate limiting (per client IP) ----------------------------------------
 _rate_limit_store: dict[str, list[float]] = defaultdict(list)
@@ -144,29 +193,190 @@ async def rate_limit_middleware(request: Request, call_next):
             t for t in _rate_limit_store[client_ip] if now - t < settings.RATE_LIMIT_WINDOW
         ]
         if len(_rate_limit_store[client_ip]) >= settings.RATE_LIMIT_REQUESTS:
-            raise HTTPException(status_code=429, detail="Rate limit exceeded. Try again later.")
+            oldest = min(_rate_limit_store[client_ip])
+            retry_after = max(
+                1,
+                int(settings.RATE_LIMIT_WINDOW - (now - oldest) + 0.999),
+            )
+            return JSONResponse(
+                status_code=429,
+                content={"detail": "Rate limit exceeded. Try again later."},
+                headers={"Retry-After": str(retry_after)},
+            )
         _rate_limit_store[client_ip].append(now)
+    return await call_next(request)
+
+
+@app.middleware("http")
+async def service_auth_middleware(request: Request, call_next):
+    if request.method == "OPTIONS" or request.url.path in _PUBLIC_PATHS:
+        return await call_next(request)
+    if request.url.path.startswith("/research/"):
+        return await call_next(request)
+
+    expected = settings.SERVICE_TOKEN
+    auth_enabled = settings.SERVICE_AUTH_REQUIRED or bool(expected)
+    if not auth_enabled:
+        return await call_next(request)
+
+    # A required service with no configured secret must not silently become
+    # public. Keep the response generic and never log token material.
+    if not expected:
+        return JSONResponse(
+            status_code=503,
+            content={"detail": "Service authentication is unavailable"},
+        )
+
+    supplied = request.headers.get(_SERVICE_TOKEN_HEADER, "")
+    if not secrets.compare_digest(supplied.encode("utf-8"), expected.encode("utf-8")):
+        return JSONResponse(status_code=401, content={"detail": "Unauthorized"})
+
     return await call_next(request)
 
 
 # --- request models -------------------------------------------------------
 class TransitRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     datetime: str = Field(
         ..., description="Local civil datetime, ISO 8601 e.g. 2026-06-20T12:00:00"
     )
-    lat: float
-    lon: float
-    tz_offset: float = 0.0
+    lat: float = Field(..., ge=-90, le=90, allow_inf_nan=False)
+    lon: float = Field(..., ge=-180, le=180, allow_inf_nan=False)
+    tz_offset: float = Field(0.0, ge=-14, le=14, allow_inf_nan=False)
     ayanamsa: str = settings.DEFAULT_AYANAMSA
+
+    @model_validator(mode="after")
+    def validate_datetime(self):
+        try:
+            parse_dt(self.datetime)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("datetime must be a valid local ISO 8601 value") from exc
+        return self
 
 
 class BirthRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     birth_datetime: str
-    birth_lat: float
-    birth_lon: float
-    birth_tz: float = 0.0
+    birth_lat: float = Field(..., ge=-90, le=90, allow_inf_nan=False)
+    birth_lon: float = Field(..., ge=-180, le=180, allow_inf_nan=False)
+    birth_tz: float = Field(0.0, ge=-14, le=14, allow_inf_nan=False)
     ayanamsa: str = settings.DEFAULT_AYANAMSA
     name: str | None = None
+
+    @field_validator("birth_datetime")
+    @classmethod
+    def validate_birth_datetime(cls, value: str) -> str:
+        """Require a real, timezone-free local civil second.
+
+        Birth coordinates carry their UTC offset separately in ``birth_tz``;
+        accepting an offset here would make the instant ambiguous.  Validate
+        at the request boundary so malformed and impossible calendar values
+        are reported as 422 rather than escaping from endpoint calculations.
+        """
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}", value):
+            raise ValueError(
+                "birth_datetime must be a local ISO civil datetime in "
+                "YYYY-MM-DDTHH:MM:SS format"
+            )
+        try:
+            datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
+        except ValueError as exc:
+            raise ValueError("birth_datetime must be a valid local civil datetime") from exc
+        return value
+
+
+class TimelineQueryRequest(BirthRequest):
+    subject_id: str = Field(min_length=1, max_length=256)
+    query_date: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+
+class TimelineToleranceRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    before_seconds: int = Field(default=0, ge=0)
+    after_seconds: int = Field(default=0, ge=0)
+    native_label: str = Field(min_length=1, max_length=500)
+
+
+class TimelineWindowRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    start_at: datetime
+    peak_at: datetime | None = None
+    end_at: datetime
+    native_resolution: TemporalResolution
+    native_resolution_label: str = Field(min_length=1, max_length=200)
+    tolerance: TimelineToleranceRequest
+
+    @model_validator(mode="after")
+    def validate_timezone(self):
+        if self.start_at.tzinfo is None or self.end_at.tzinfo is None:
+            raise ValueError("timeline timestamps must include a timezone")
+        if self.peak_at is not None and self.peak_at.tzinfo is None:
+            raise ValueError("peak_at must include a timezone")
+        return self
+
+    def to_contract(self) -> TimelineWindow:
+        return TimelineWindow(
+            start_at=self.start_at,
+            peak_at=self.peak_at,
+            end_at=self.end_at,
+            native_resolution=self.native_resolution,
+            native_resolution_label=self.native_resolution_label,
+            tolerance=TemporalTolerance(
+                before_seconds=self.tolerance.before_seconds,
+                after_seconds=self.tolerance.after_seconds,
+                native_label=self.tolerance.native_label,
+            ),
+        )
+
+
+class ObservedTimelineEventRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    subject_id: str = Field(min_length=1, max_length=256)
+    event_id: str = Field(min_length=1, max_length=256)
+    canonical_event_id: str = Field(min_length=1, max_length=256)
+    original_label: str | None = Field(default=None, max_length=500)
+    title: str = Field(min_length=1, max_length=500)
+    description: str | None = Field(default=None, max_length=10_000)
+    direction: EventDirection = EventDirection.NOT_APPLICABLE
+    magnitude: object | None = None
+    window: TimelineWindowRequest
+    recorded_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    supersedes_milestone_id: str | None = Field(default=None, max_length=256)
+
+    @field_validator("recorded_at")
+    @classmethod
+    def recorded_at_must_be_aware(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            raise ValueError("recorded_at must include a timezone")
+        return value
+
+
+class TimelineResolutionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    subject_id: str = Field(min_length=1, max_length=256)
+    resolution_id: str = Field(min_length=1, max_length=256)
+    observed_milestone_id: str | None = Field(default=None, max_length=256)
+    status: ResolutionStatus
+    actual_window: TimelineWindowRequest | None = None
+    certainty: str = Field(min_length=1, max_length=500)
+    resolver_id: str = Field(min_length=1, max_length=256)
+    resolved_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    notes: tuple[str, ...] = ()
+    supersedes_resolution_id: str | None = Field(default=None, max_length=256)
+    match_criteria: dict[str, JsonValue] | None = None
+
+    @field_validator("resolved_at")
+    @classmethod
+    def resolved_at_must_be_aware(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            raise ValueError("resolved_at must include a timezone")
+        return value
 
 
 class PrashnaRequest(BaseModel):
@@ -178,6 +388,56 @@ class PrashnaRequest(BaseModel):
     birth_datetime: str | None = None
     ayanamsa: str = settings.DEFAULT_AYANAMSA
     name: str | None = "Prashna"
+
+
+_timeline_service: PersonTimelineService | None = None
+_timeline_service_database_path: str | None = None
+
+
+def _clear_timeline_service_cache() -> None:
+    global _timeline_service, _timeline_service_database_path
+    if _timeline_service is not None:
+        _timeline_service.close()
+    _timeline_service = None
+    _timeline_service_database_path = None
+
+
+def _get_timeline_service(*, require_writes: bool = False) -> PersonTimelineService:
+    global _timeline_service, _timeline_service_database_path
+    path = str(settings.TIMELINE_DB_PATH).strip()
+    if require_writes and (not settings.TIMELINE_WRITES_ENABLED or not path):
+        raise HTTPException(
+            status_code=503,
+            detail="Person Timeline durable writes are unavailable",
+        )
+    if _timeline_service is None or _timeline_service_database_path != path:
+        _clear_timeline_service_cache()
+        try:
+            store = SQLiteTimelineStore(path) if path else None
+            _timeline_service = PersonTimelineService(store)
+        except (OSError, ValueError, TimelineStoreIntegrityError) as exc:
+            raise HTTPException(
+                status_code=503,
+                detail="Person Timeline durable storage is unavailable",
+            ) from exc
+        _timeline_service_database_path = path
+    return _timeline_service
+
+
+app.router.add_event_handler("shutdown", _clear_timeline_service_cache)
+
+
+def _timeline_query_kwargs(req: TimelineQueryRequest) -> dict:
+    return {
+        "subject_id": req.subject_id,
+        "birth_datetime": req.birth_datetime,
+        "birth_lat": req.birth_lat,
+        "birth_lon": req.birth_lon,
+        "birth_tz": req.birth_tz,
+        "ayanamsa": req.ayanamsa,
+        "name": req.name,
+        "query_date": req.query_date,
+    }
 
 
 # --- panchanga helper (shared by /panchanga and /chart) -------------------
@@ -219,7 +479,7 @@ def _panchanga(jd: float, place) -> dict:
         "yoga": label(yg, YOGA_NAMES),
         "karana": {
             "number": int(kr[0]),
-            "name": KARANA_NAMES[(int(kr[0]) - 1) % 11],
+            "name": _canonical_karana_name(int(kr[0])),
             "start": round(float(kr[1]), 4) if len(kr) > 1 else None,
             "end": round(float(kr[2]), 4) if len(kr) > 2 else None,
         },
@@ -278,6 +538,53 @@ def _guard(fn):
         return fn(), None
     except Exception as e:
         return None, f"{type(e).__name__}: {e}"
+
+
+_PERSONALISED_PREDICTION_PATHS = frozenset(
+    {
+        "/predict",
+        "/dasha-predict",
+        "/dasha-predict-yogini",
+        "/fructification",
+        "/dasha-series",
+        "/gochar",
+        "/report/facts",
+    }
+)
+
+
+def _product_safe_prediction_response(payload):
+    """Apply fail-safe T3 policy only at a personalised product boundary."""
+    safe = apply_product_claim_policy(payload)
+    if not isinstance(safe.value, dict):
+        return safe.value
+
+    output = safe.value
+    prior = output.get("claim_safety") if isinstance(output.get("claim_safety"), dict) else {}
+    prior_count = prior.get("blocked_count", 0)
+    prior_categories = prior.get("blocked_categories", [])
+    blocked_count = (prior_count if isinstance(prior_count, int) else 0) + safe.blocked_count
+    categories = sorted(
+        set(prior_categories if isinstance(prior_categories, list) else [])
+        | set(safe.blocked_categories)
+    )
+    output["claim_safety"] = {
+        "policy": "personalised-t3-v1",
+        "status": "filtered" if blocked_count else "passed",
+        "blocked_count": blocked_count,
+        "blocked_categories": categories,
+    }
+    return output
+
+
+def _product_claim_safe(fn):
+    """Mark and enforce a personalised prediction endpoint."""
+    @wraps(fn)
+    def wrapped(*args, **kwargs):
+        return _product_safe_prediction_response(fn(*args, **kwargs))
+
+    wrapped._product_claim_policy = "personalised-t3-v1"
+    return wrapped
 
 
 # --- endpoints ------------------------------------------------------------
@@ -430,6 +737,49 @@ def version():
     return {"ke_version": _ke_version(), "service": "cvce"}
 
 
+@app.post("/v2/forecast/brief", include_in_schema=False)
+@app.post("/v2/forecasts")
+async def forecast_brief_v2(request: Request):
+    """Validate one canonical event claim and render its safe product brief.
+
+    This boundary intentionally has no legacy-output adapter. Callers must
+    provide a complete event-specific ForecastClaim or receive a validation
+    failure; broad legacy scores and prose are never promoted into claims.
+    """
+
+    mode = settings.FORECAST_V2_MODE
+    if mode == "off":
+        raise HTTPException(status_code=404, detail="Forecast v2 is disabled")
+    if mode == "on" and not settings.VERBALIZATION_V2:
+        raise HTTPException(status_code=404, detail="Forecast v2 verbalization is disabled")
+
+    try:
+        payload = await request.json()
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Invalid JSON body") from exc
+
+    try:
+        claim = ForecastClaim.model_validate(payload)
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=validation_error_detail(exc)) from exc
+
+    try:
+        result = process_forecast_claim(
+            claim,
+            mode=mode,
+            verbalization_enabled=settings.VERBALIZATION_V2,
+            ledger_write_enabled=settings.FORECAST_LEDGER_WRITE,
+        )
+    except VerbalizationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    if mode == "shadow":
+        return JSONResponse(status_code=202, content=result.model_dump(mode="json"))
+    return result
+
+
 @app.get("/favicon.ico")
 def favicon():
     return Response(status_code=204)
@@ -479,6 +829,103 @@ def dasha_endpoint(req: BirthRequest):
     set_ayanamsa(req.ayanamsa)
     jd, place = jd_place(parse_dt(req.birth_datetime), req.birth_lat, req.birth_lon, req.birth_tz)
     return {"birth_datetime": req.birth_datetime, "jd": jd, **_dasha(jd, place)}
+
+
+@app.post("/timeline/query")
+def timeline_query(req: TimelineQueryRequest):
+    """Return a personal timeline without promoting legacy output to forecasts."""
+
+    try:
+        result = _get_timeline_service().query(**_timeline_query_kwargs(req))
+        result.pop("_details", None)
+        return result
+    except HTTPException:
+        raise
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail="Invalid timeline calculation input") from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Timeline calculation failed") from exc
+
+
+@app.post("/timeline/milestones/{milestone_id}/detail")
+def timeline_milestone_detail(milestone_id: str, req: TimelineQueryRequest):
+    """Replay a milestone with native timing, evidence and calculation identity."""
+
+    try:
+        return _get_timeline_service().detail(
+            milestone_id,
+            **_timeline_query_kwargs(req),
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="Timeline milestone not found") from exc
+    except HTTPException:
+        raise
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail="Invalid timeline calculation input") from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Timeline detail failed") from exc
+
+
+@app.post("/timeline/events", status_code=201)
+def capture_timeline_event(req: ObservedTimelineEventRequest):
+    """Append a person-entered event; corrections create successor milestones."""
+
+    try:
+        return _get_timeline_service(require_writes=True).capture_observed_event(
+            subject_id=req.subject_id,
+            event_id=req.event_id,
+            canonical_event_id=req.canonical_event_id,
+            original_label=req.original_label or req.title,
+            title=req.title,
+            description=req.description,
+            direction=req.direction,
+            magnitude=req.magnitude,
+            window=req.window.to_contract(),
+            recorded_at=req.recorded_at,
+            supersedes_milestone_id=req.supersedes_milestone_id,
+        )
+    except TimelineStoreConflict as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except (ValidationError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail="Invalid observed event") from exc
+    except HTTPException:
+        raise
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.post("/timeline/milestones/{milestone_id}/resolutions", status_code=201)
+def append_timeline_resolution(milestone_id: str, req: TimelineResolutionRequest):
+    """Append an outcome assessment while leaving the sealed forecast untouched."""
+
+    try:
+        resolution = MilestoneResolution(
+            resolution_id=req.resolution_id,
+            prediction_milestone_id=milestone_id,
+            observed_milestone_id=req.observed_milestone_id,
+            status=req.status,
+            actual_window=req.actual_window.to_contract() if req.actual_window else None,
+            certainty=req.certainty,
+            resolver_id=req.resolver_id,
+            resolved_at=req.resolved_at,
+            notes=req.notes,
+            supersedes_resolution_id=req.supersedes_resolution_id,
+            match_criteria=req.match_criteria,
+        )
+        return _get_timeline_service(require_writes=True).append_resolution(
+            subject_id=req.subject_id,
+            resolution=resolution,
+        )
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=validation_error_detail(exc)) from exc
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="Prediction milestone not found") from exc
+    except TimelineStoreConflict as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except HTTPException:
+        raise
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 @app.post("/shadbala")
@@ -815,6 +1262,10 @@ def index():
             "prashna": "POST /prashna",
             "yogas": "POST /yogas",
             "dasha_deep": "POST /dasha-deep",
+            "person_timeline": "POST /timeline/query",
+            "timeline_detail": "POST /timeline/milestones/{milestone_id}/detail",
+            "timeline_event": "POST /timeline/events",
+            "timeline_resolution": "POST /timeline/milestones/{milestone_id}/resolutions",
             "kalachakra_deep": "POST /kalachakra-deep",
             "kp_system": "POST /kp-system",
             "varshaphala": "POST /varshaphala",
@@ -833,23 +1284,34 @@ def index():
 
 
 class PredictionRequest(BaseModel):
-    date: str = Field(default="")
-    time: str = Field(default="12:00")
-    lat: float = Field(default=12.30)
-    lon: float = Field(default=76.65)
-    tz: float = Field(default=5.5)
+    model_config = ConfigDict(extra="forbid")
+
+    date: str = Field(..., pattern=r"^\d{4}-\d{2}-\d{2}$")
+    time: str = Field(..., pattern=r"^\d{2}:\d{2}(?::\d{2})?$")
+    lat: float = Field(..., ge=-90, le=90, allow_inf_nan=False)
+    lon: float = Field(..., ge=-180, le=180, allow_inf_nan=False)
+    tz: float = Field(..., ge=-14, le=14, allow_inf_nan=False)
     janma_rashi: str | None = None
     janma_nakshatra: str | None = None
     birth_date: str | None = None
     birth_time: str | None = None
-    birth_lat: float | None = None
-    birth_lon: float | None = None
-    birth_tz: float | None = None
-    birth_moon_lon: float | None = None
+    birth_lat: float | None = Field(None, ge=-90, le=90, allow_inf_nan=False)
+    birth_lon: float | None = Field(None, ge=-180, le=180, allow_inf_nan=False)
+    birth_tz: float | None = Field(None, ge=-14, le=14, allow_inf_nan=False)
+    birth_moon_lon: float | None = Field(None, ge=0, lt=360, allow_inf_nan=False)
     natal_signs: dict | None = None
+
+    @model_validator(mode="after")
+    def validate_date_time(self):
+        try:
+            datetime.fromisoformat(f"{self.date}T{self.time}")
+        except ValueError as exc:
+            raise ValueError("date and time must form a valid local civil datetime") from exc
+        return self
 
 
 @app.post("/predict")
+@_product_claim_safe
 def predict(req: PredictionRequest):
     if not _ENGINE_AVAILABLE:
         raise HTTPException(status_code=503, detail="Prediction engine not available")
@@ -1422,6 +1884,7 @@ def dasha_deep(req: BirthRequest):
 
 
 @app.post("/dasha-predict")
+@_product_claim_safe
 def dasha_predict(req: BirthRequest):
     """
     Transit-fused Dasha predictions for the current Mahadasha + next Mahadasha.
@@ -1527,6 +1990,7 @@ def dasha_predict(req: BirthRequest):
 
 
 @app.post("/dasha-predict-yogini")
+@_product_claim_safe
 def dasha_predict_yogini(req: BirthRequest):
     """
     Yogini Dasha predictions — pure Yogini framework (V.P. Goel / BPHS).
@@ -1613,6 +2077,7 @@ class FructificationRequest(BirthRequest):
 
 
 @app.post("/fructification")
+@_product_claim_safe
 def fructification_endpoint(req: FructificationRequest):
     """
     Fructification windows within a dasha antardasha period.
@@ -1653,6 +2118,7 @@ class DashaSeriesRequest(BirthRequest):
 
 
 @app.post("/dasha-series")
+@_product_claim_safe
 def dasha_series(req: DashaSeriesRequest):
     """
     Monthly transit-score time series for a single Maha-Antar window.
@@ -1695,11 +2161,265 @@ def dasha_series(req: DashaSeriesRequest):
 
 
 class GocharRequest(BirthRequest):
-    query_date: str | None = None
-    query_time: str = "12:00"
+    transit_instant: datetime = Field(
+        ...,
+        description="Timezone-aware ISO 8601 instant for the transit observation",
+    )
+    transit_place: str = Field(..., min_length=1, max_length=200)
+    transit_lat: float = Field(..., ge=-90, le=90, allow_inf_nan=False)
+    transit_lon: float = Field(..., ge=-180, le=180, allow_inf_nan=False)
+    transit_timezone: str = Field(
+        ...,
+        min_length=1,
+        max_length=100,
+        description="IANA timezone for the observation place, e.g. Europe/Dublin",
+    )
+    transit_disambiguation: Literal["exact", "earlier", "later"] = "exact"
+
+    @model_validator(mode="after")
+    def validate_transit_context(self):
+        requested_ayanamsa = self.ayanamsa.strip().upper()
+        if requested_ayanamsa not in const.available_ayanamsa_modes:
+            raise ValueError("ayanamsa must be a PyJHora-supported mode")
+        self.ayanamsa = requested_ayanamsa
+        self.transit_place = self.transit_place.strip()
+        if not self.transit_place:
+            raise ValueError("transit_place must not be blank")
+        if self.transit_instant.utcoffset() is None:
+            raise ValueError("transit_instant must include a UTC offset")
+        try:
+            zone = ZoneInfo(self.transit_timezone)
+        except ZoneInfoNotFoundError as exc:
+            raise ValueError("transit_timezone must be a valid IANA timezone") from exc
+        local = self.transit_instant.astimezone(zone)
+        if local.utcoffset() != self.transit_instant.utcoffset():
+            raise ValueError(
+                "transit_instant UTC offset does not match transit_timezone at that instant"
+            )
+
+        naive_local = local.replace(tzinfo=None)
+        candidates = sorted(
+            {
+                naive_local.replace(tzinfo=zone, fold=fold).astimezone(UTC)
+                for fold in (0, 1)
+                if naive_local.replace(tzinfo=zone, fold=fold)
+                .astimezone(UTC)
+                .astimezone(zone)
+                .replace(tzinfo=None)
+                == naive_local
+            }
+        )
+        ambiguous = len(candidates) == 2 and candidates[0] != candidates[1]
+        if ambiguous:
+            if self.transit_disambiguation not in ("earlier", "later"):
+                raise ValueError(
+                    "transit_disambiguation must be earlier or later for an ambiguous local time"
+                )
+            expected = candidates[0] if self.transit_disambiguation == "earlier" else candidates[1]
+            if self.transit_instant.astimezone(UTC) != expected:
+                raise ValueError(
+                    "transit_instant does not match the requested DST overlap disambiguation"
+                )
+        elif self.transit_disambiguation != "exact":
+            raise ValueError(
+                "transit_disambiguation must be exact when the local time is not ambiguous"
+            )
+        return self
+
+
+class CanonicalMuhurtaRequest(GocharRequest):
+    """One election instant plus the exact loaded natal-chart identity."""
+
+    expected_natal_jd: float = Field(..., allow_inf_nan=False)
+
+
+def _canonical_karana_name(number: int) -> str:
+    """Map PyJHora's 1..60 half-tithi index to the canonical Karana name."""
+    if number == 1:
+        return "Kimstughna"
+    if 2 <= number <= 57:
+        return KARANA_NAMES[1 + ((number - 2) % 7)]
+    return {58: "Shakuni", 59: "Chatushpada", 60: "Naga"}.get(number, "Unknown")
+
+
+def _canonical_muhurta_panchanga(jd: float, place) -> dict:
+    """Swiss/PyJHora-only Panchanga projection; no approximate fallback."""
+    raw = _panchanga(jd, place)
+    karana_number = int(raw["karana"]["number"])
+    raw["karana"]["name"] = _canonical_karana_name(karana_number)
+    return raw
+
+
+@app.post("/muhurta/canonical")
+def canonical_muhurta(req: CanonicalMuhurtaRequest):
+    """Canonical calculation-only Muhurta research result.
+
+    All astronomy is evaluated through PyJHora/Swiss Ephemeris. Interpretive
+    Vara/Tithi/Nakshatra combinations are returned with their source records;
+    unvalidated limb interpretations remain explicitly neutral.
+    """
+    if not settings.NATIVE_MUHURTA_RESEARCH_ENABLED:
+        raise HTTPException(status_code=404, detail="Native Muhurta research is disabled")
+
+    resolved_timezone = _timezone_at(req.transit_lat, req.transit_lon)
+    if resolved_timezone != req.transit_timezone:
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                "transit_timezone does not match the server-resolved timezone "
+                f"for the supplied coordinates ({resolved_timezone})"
+            ),
+        )
+
+    birth_dt = parse_dt(req.birth_datetime)
+    natal_jd, _natal_place = jd_place(
+        birth_dt, req.birth_lat, req.birth_lon, req.birth_tz
+    )
+    if abs(natal_jd - req.expected_natal_jd) > 1e-8:
+        raise HTTPException(
+            status_code=409,
+            detail="Loaded natal chart identity does not match canonical recomputation",
+        )
+
+    observation_zone = ZoneInfo(resolved_timezone)
+    observation_local = req.transit_instant.astimezone(observation_zone)
+    observation_offset = observation_local.utcoffset()
+    assert observation_offset is not None
+    observation_tz_hours = observation_offset.total_seconds() / 3600
+    local_naive = observation_local.replace(tzinfo=None)
+
+    # Serialize the complete PyJHora calculation under the requested ayanamsa.
+    # No alternate engine or approximate branch is permitted if this raises.
+    with ayanamsa_context(req.ayanamsa):
+        election_jd, election_place = jd_place(
+            local_naive, req.transit_lat, req.transit_lon, observation_tz_hours
+        )
+        calculation_engine = ephemeris_runtime_provenance(election_jd)
+        if calculation_engine["backend"] != "Swiss Ephemeris":
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    "Canonical Swiss Ephemeris data files are unavailable; "
+                    f"refusing {calculation_engine['backend']}"
+                ),
+            )
+        panchanga = _canonical_muhurta_panchanga(election_jd, election_place)
+        rk = drik.raahu_kaalam(election_jd, election_place)
+        yg = drik.yamaganda_kaalam(election_jd, election_place)
+        gk = drik.gulikai_kaalam(election_jd, election_place)
+        sr = drik.sunrise(election_jd, election_place)
+        ss = drik.sunset(election_jd, election_place)
+    karana_number = int(panchanga["karana"]["number"])
+
+    from vedic_engine.prediction.muhurta_yogas import (
+        evaluate_muhurta_yogas,
+        muhurta_yogas_to_dict,
+    )
+
+    yoga_result = evaluate_muhurta_yogas(
+        panchanga["vara"]["name"],
+        panchanga["tithi"]["number"],
+        panchanga["nakshatra"]["name"],
+        graph_hits=[],
+    )
+    yoga_payload = muhurta_yogas_to_dict(yoga_result)
+
+    replay_payload = req.model_dump(mode="json")
+    request_digest = hashlib.sha256(
+        json.dumps(replay_payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()[:16]
+    neutral = "neutral"
+    summary = yoga_payload["summary"]
+    if not yoga_payload["active"]:
+        summary = (
+            "No cited Vara/Tithi/Nakshatra combination yoga was active at this instant. "
+            "The raw Panchanga limbs remain neutral until an activity-specific rule is validated."
+        )
+
+    return {
+        "date": observation_local.strftime("%Y-%m-%d"),
+        "time": observation_local.strftime("%H:%M:%S"),
+        "overall_verdict": yoga_payload["overall"],
+        "overall_score": yoga_payload["score"],
+        "summary": summary,
+        "panchanga": {
+            "tithi": {
+                "name": panchanga["tithi"]["name"],
+                "paksha": panchanga["tithi"]["paksha"],
+                "num": panchanga["tithi"]["number"],
+                "verdict": neutral,
+            },
+            "vaar": panchanga["vara"]["name"],
+            "nakshatra": {
+                "name": panchanga["nakshatra"]["name"],
+                "pada": panchanga["nakshatra"]["pada"],
+                "nature": "unknown",
+                "verdict": neutral,
+            },
+            "yoga": {
+                "name": panchanga["yoga"]["name"],
+                "nature": "unknown",
+                "verdict": neutral,
+            },
+            "karana": {
+                "name": panchanga["karana"]["name"],
+                "num": karana_number,
+                "verdict": neutral,
+            },
+            "sunrise": sr[1] if isinstance(sr, (list, tuple)) else sr,
+            "sunset": ss[1] if isinstance(ss, (list, tuple)) else ss,
+        },
+        "gochar": None,
+        "dasha": None,
+        "ashtakavarga": None,
+        "muhurta_yogas": yoga_payload,
+        "warnings": [
+            "Activity-specific contraindications and natal transit factors are not yet validated on this canonical research path."
+        ],
+        "rules_source": "cited_classical_muhurta_tables",
+        "graph_enhancements": None,
+        "windows": {
+            "datetime": observation_local.isoformat(),
+            "rahu_kalam": {"start": rk[0], "end": rk[1]},
+            "yamaganda": {"start": yg[0], "end": yg[1]},
+            "gulika": {"start": gk[0], "end": gk[1]},
+            "sunrise": sr[1] if isinstance(sr, (list, tuple)) else sr,
+            "sunset": ss[1] if isinstance(ss, (list, tuple)) else ss,
+        },
+        "calculation_context": {
+            "request_id": f"muhurta_{request_digest}",
+            **calculation_engine,
+            "ayanamsa": req.ayanamsa,
+            "calculation_path": "app.ephem + jhora.panchanga.drik",
+            "fallback_used": False,
+        },
+        "election_context": {
+            "instant": req.transit_instant.isoformat(),
+            "utc_instant": req.transit_instant.astimezone(UTC).isoformat(),
+            "local_datetime": observation_local.isoformat(),
+            "place": req.transit_place,
+            "latitude": req.transit_lat,
+            "longitude": req.transit_lon,
+            "timezone": resolved_timezone,
+            "timezone_source": "server_coordinate_resolution",
+            "disambiguation": req.transit_disambiguation,
+            "utc_offset_hours": observation_tz_hours,
+            "jd": election_jd,
+        },
+        "natal_context": {
+            "birth_datetime": req.birth_datetime,
+            "birth_latitude": req.birth_lat,
+            "birth_longitude": req.birth_lon,
+            "birth_timezone_offset_hours": req.birth_tz,
+            "ayanamsa": req.ayanamsa,
+            "jd": natal_jd,
+            "identity_verified": True,
+        },
+    }
 
 
 @app.post("/gochar")
+@_product_claim_safe
 def gochar_endpoint(req: GocharRequest):
     """
     Full Gochar (transit) interpretation for a given date against the natal chart.
@@ -1707,39 +2427,123 @@ def gochar_endpoint(req: GocharRequest):
     Returns per-planet house positions from natal Moon and Lagna, quality ratings,
     scores, effects, and any active special transits (Sade Sati, Ashtama Shani, etc.).
     """
-    from datetime import datetime as _dt
-
     from app.chart import build_chart_geometry
     from vedic_engine.prediction.gochar import compute_gochar
 
-    set_ayanamsa(req.ayanamsa)
+    resolved_timezone = _timezone_at(req.transit_lat, req.transit_lon)
+    if resolved_timezone != req.transit_timezone:
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                "transit_timezone does not match the server-resolved timezone "
+                f"for the supplied coordinates ({resolved_timezone})"
+            ),
+        )
+
     dt = parse_dt(req.birth_datetime)
     jd, place = jd_place(dt, req.birth_lat, req.birth_lon, req.birth_tz)
 
-    geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
+    observation_zone = ZoneInfo(resolved_timezone)
+    observation_local = req.transit_instant.astimezone(observation_zone)
+    query_date = observation_local.strftime("%Y-%m-%d")
+    query_time = observation_local.strftime("%H:%M")
+    observation_offset = observation_local.utcoffset()
+    assert observation_offset is not None
+    observation_tz_hours = observation_offset.total_seconds() / 3600
+    observation_clock = observation_local.replace(tzinfo=None)
+    observation_jd, observation_place = jd_place(
+        observation_clock,
+        req.transit_lat,
+        req.transit_lon,
+        observation_tz_hours,
+    )
+
+    # PyJHora's ayanamsa mode is process-global. Keep natal and transit Swiss
+    # calculations in one serialized context so the returned label necessarily
+    # matches the math, even under concurrent mixed-ayanamsa requests.
+    with ayanamsa_context(req.ayanamsa):
+        natal_engine = ephemeris_runtime_provenance(jd)
+        calculation_engine = ephemeris_runtime_provenance(observation_jd)
+        if (
+            natal_engine["backend"] != "Swiss Ephemeris"
+            or calculation_engine["backend"] != "Swiss Ephemeris"
+        ):
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    "Canonical Swiss Ephemeris data files are unavailable for "
+                    "the natal or transit instant; refusing analytical fallback"
+                ),
+            )
+        geometry = build_chart_geometry(jd, place, ayanamsa=req.ayanamsa, vargas=[1])
+        canonical_positions = positions(observation_jd, observation_place)
+
     planets_data = geometry.get("planets") or []
     moon = next((p for p in planets_data if p.get("planet") == "Moon"), None)
     janma_rashi = moon.get("rashi") if moon else None
     janma_nakshatra = moon.get("nakshatra") if moon else None
     natal_sign = geometry.get("natalSign")
     lagna_rashi = (geometry.get("lagna") or {}).get("rashi")
-
-    query_date = req.query_date or _dt.now().strftime("%Y-%m-%d")
+    transit_rows = [
+        {
+            "planet": body["planet"],
+            "rashi": body["rashi"],
+            "nak": body["nakshatra"],
+            "pada": body["pada"],
+            "deg": body["degInSign"],
+            "deg_label": body["degLabel"],
+            "retro": body["retro"],
+            "lon": body["longitude"],
+        }
+        for body in canonical_positions
+    ]
 
     g = compute_gochar(
         date_str=query_date,
-        time_str=req.query_time,
-        lat=req.birth_lat,
-        lon=req.birth_lon,
-        tz=req.birth_tz,
+        time_str=query_time,
+        lat=req.transit_lat,
+        lon=req.transit_lon,
+        tz=observation_tz_hours,
         janma_rashi=janma_rashi,
         janma_nakshatra=janma_nakshatra,
         natal_sign=natal_sign,
         lagna_rashi=lagna_rashi,
+        transit_rows=transit_rows,
     )
+
+    replay_payload = req.model_dump(mode="json")
+    request_digest = hashlib.sha256(
+        json.dumps(replay_payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()[:16]
 
     return {
         "date": query_date,
+        "calculation_context": {
+            "request_id": f"gochar_{request_digest}",
+            **calculation_engine,
+            "ayanamsa": req.ayanamsa,
+            "replay_payload": replay_payload,
+            "fallback_used": False,
+        },
+        "transit_context": {
+            "instant": req.transit_instant.isoformat(),
+            "utc_instant": req.transit_instant.astimezone(UTC).isoformat(),
+            "local_datetime": observation_local.isoformat(),
+            "place": req.transit_place,
+            "latitude": req.transit_lat,
+            "longitude": req.transit_lon,
+            "timezone": resolved_timezone,
+            "timezone_source": "server_coordinate_resolution",
+            "disambiguation": req.transit_disambiguation,
+            "utc_offset_hours": observation_tz_hours,
+        },
+        "natal_context": {
+            "birth_datetime": req.birth_datetime,
+            "birth_latitude": req.birth_lat,
+            "birth_longitude": req.birth_lon,
+            "birth_timezone_offset_hours": req.birth_tz,
+            "ayanamsa": req.ayanamsa,
+        },
         "janma_rashi": janma_rashi,
         "janma_nakshatra": janma_nakshatra,
         "lagna_rashi": lagna_rashi,
@@ -1755,6 +2559,7 @@ def gochar_endpoint(req: GocharRequest):
         "planets": [
             {
                 "planet": p.planet,
+                "longitude": p.longitude,
                 "rashi": p.rashi,
                 "nakshatra": p.nakshatra,
                 "retrograde": p.retrograde,
@@ -1781,6 +2586,7 @@ class ReportFactsRequest(BirthRequest):
 
 
 @app.post("/report/facts")
+@_product_claim_safe
 def report_facts(req: ReportFactsRequest):
     """Unified horoscope facts + dasha/transit intelligence for the report UI."""
     from app.report_facts import build_report_facts
@@ -2696,10 +3502,34 @@ def search_places(q: str = ""):
                         "lat": round(lat, 4),
                         "lon": round(lon, 4),
                         "tz": tz,
+                        "timezone": _timezone_at(lat, lon),
                     }
                 )
 
     return {"results": results}
+
+
+_timezone_finder = None
+
+
+def _timezone_at(lat: float, lon: float) -> str:
+    """Resolve an observation coordinate to an IANA timezone."""
+    global _timezone_finder
+    if _timezone_finder is None:
+        from timezonefinder import TimezoneFinder
+
+        _timezone_finder = TimezoneFinder(in_memory=True)
+    timezone = _timezone_finder.timezone_at(lat=lat, lng=lon)
+    if not timezone:
+        raise HTTPException(status_code=422, detail="Could not resolve timezone for coordinates")
+    return timezone
+
+
+@app.get("/timezone")
+def timezone_at(lat: float, lon: float):
+    if not -90 <= lat <= 90 or not -180 <= lon <= 180:
+        raise HTTPException(status_code=422, detail="Coordinates are out of range")
+    return {"timezone": _timezone_at(lat, lon), "lat": lat, "lon": lon}
 
 
 @app.post("/knowledge/refresh")

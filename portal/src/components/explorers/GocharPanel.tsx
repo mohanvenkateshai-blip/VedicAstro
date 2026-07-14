@@ -6,11 +6,13 @@ import { RASHIS, type ChartData } from "@/lib/types";
 import { postCvce } from "@/lib/cvce-client";
 import { LoadingPhrase } from "@/components/ui/LoadingPhrase";
 import { PLANET_COLORS as PLANET_COLOR, elementColor } from "@/lib/astroColors";
+import type { TransitObservationRequest } from "@/lib/transit-context";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 interface PlanetTransit {
   planet: string;
+  longitude: number;
   rashi: string;
   nakshatra: string;
   retrograde: boolean;
@@ -41,6 +43,34 @@ interface GocharData {
   kantaka_shani: { house: number; effect: string } | null;
   tara_balam: { name: string; verdict: string; paryaya: number; description: string } | null;
   planets: PlanetTransit[];
+  calculation_context: {
+    request_id: string;
+    engine: string;
+    engine_version: string;
+    backend: string;
+    backend_version: string;
+    ayanamsa: string;
+    replay_payload: Record<string, unknown>;
+  };
+  natal_context: {
+    birth_datetime: string;
+    birth_latitude: number;
+    birth_longitude: number;
+    birth_timezone_offset_hours: number;
+    ayanamsa: string;
+  };
+  transit_context: {
+    instant: string;
+    utc_instant: string;
+    local_datetime: string;
+    place: string;
+    latitude: number;
+    longitude: number;
+    timezone: string;
+    timezone_source: string;
+    disambiguation: string;
+    utc_offset_hours: number;
+  };
 }
 
 // ── Colour tokens ─────────────────────────────────────────────────────────────
@@ -68,12 +98,6 @@ function ordinal(n: number): string {
   const suffixes = ["th", "st", "nd", "rd"];
   const v = n % 100;
   return n + (suffixes[(v - 20) % 10] ?? suffixes[v] ?? suffixes[0]);
-}
-
-function fmtDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-IN", {
-    day: "numeric", month: "long", year: "numeric",
-  });
 }
 
 // ── Score orb ─────────────────────────────────────────────────────────────────
@@ -134,19 +158,33 @@ function QualityDot({ quality }: { quality: string }) {
 function PlanetRow({ p, showLagna }: { p: PlanetTransit; showLagna: boolean }) {
   const [open, setOpen] = useState(false);
   const color = PLANET_COLOR[p.planet] ?? NEUTRAL;
+  const effectsId = `transit-effects-${p.planet.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   return (
     <>
       <tr
-        className="border-b border-hairline cursor-pointer hover:bg-accent/5 transition-colors"
-        onClick={() => p.effects.length > 0 && setOpen((s) => !s)}
+        className="border-b border-hairline hover:bg-accent/5 transition-colors"
       >
         {/* Planet */}
         <td className="py-2 pl-3 pr-2">
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm font-medium" style={{ color }}>{p.planet}</span>
-            {p.retrograde && <span className="text-[9px] font-mono" style={{ color: `${color}77` }}>℞</span>}
-          </div>
+          {p.effects.length > 0 ? (
+            <button
+              type="button"
+              className="flex items-center gap-1.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              aria-expanded={open}
+              aria-controls={effectsId}
+              onClick={() => setOpen((state) => !state)}
+            >
+              <span className="text-sm font-medium" style={{ color }}>{p.planet}</span>
+              <span className="sr-only">{open ? "Collapse" : "Expand"} transit effects</span>
+              {p.retrograde && <span aria-label="retrograde" className="text-[9px] font-mono" style={{ color: `${color}77` }}>℞</span>}
+            </button>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm font-medium" style={{ color }}>{p.planet}</span>
+              {p.retrograde && <span aria-label="retrograde" className="text-[9px] font-mono" style={{ color: `${color}77` }}>℞</span>}
+            </div>
+          )}
           <div className="text-[10px] font-mono" style={{ color: elementColor(RASHIS.indexOf(p.rashi as (typeof RASHIS)[number])) }}>{p.rashi}</div>
         </td>
 
@@ -210,7 +248,7 @@ function PlanetRow({ p, showLagna }: { p: PlanetTransit; showLagna: boolean }) {
 
       {/* Expanded effects row */}
       {open && p.effects.length > 0 && (
-        <tr className="border-b border-hairline">
+        <tr id={effectsId} className="border-b border-hairline">
           <td colSpan={showLagna ? 6 : 4} className="pb-2 pt-0 px-3">
             <ul className="space-y-0.5 pl-3">
               {p.effects.map((e, i) => (
@@ -226,27 +264,34 @@ function PlanetRow({ p, showLagna }: { p: PlanetTransit; showLagna: boolean }) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function GocharPanel({ chart }: { chart: ChartData }) {
+export function GocharPanel({
+  chart,
+  transit,
+}: {
+  chart: ChartData;
+  transit: TransitObservationRequest;
+}) {
   const [data, setData] = useState<GocharData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError(null);
 
     postCvce<GocharData>("gochar", {
       birth_datetime: chart.meta?.birth_datetime,
       birth_lat: chart.meta?.birth_lat,
       birth_lon: chart.meta?.birth_lon,
       birth_tz: chart.meta?.birth_tz,
+      ayanamsa: chart.ayanamsa,
+      ...transit,
     })
       .then((d) => { if (!cancelled) { setData(d); setLoading(false); } })
       .catch((e) => { if (!cancelled) { setError(e.message); setLoading(false); } });
 
     return () => { cancelled = true; };
-  }, [chart]);
+  }, [chart, transit, retryToken]);
 
   if (loading) {
     return (
@@ -259,9 +304,20 @@ export function GocharPanel({ chart }: { chart: ChartData }) {
 
   if (error || !data) {
     return (
-      <p className="text-sm font-mono text-text-muted py-6">
-        Could not load transit data. {error}
-      </p>
+      <div className="flex flex-col items-start gap-3 py-6 text-sm font-mono text-text-muted">
+        <p>Could not load transit data. {error}</p>
+        <button
+          type="button"
+          onClick={() => {
+            setLoading(true);
+            setError(null);
+            setRetryToken((token) => token + 1);
+          }}
+          className="rounded-md border border-accent/30 px-3 py-1.5 text-xs text-accent hover:bg-accent/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          Retry transit calculation
+        </button>
+      </div>
     );
   }
 
@@ -301,8 +357,19 @@ export function GocharPanel({ chart }: { chart: ChartData }) {
 
       {/* ── Reference context ──────────────────────────────────────────────── */}
       <div className="text-[11px] font-mono text-text-muted">
-        Transit scores as of{" "}
-        <span className="text-text-main">{fmtDate(data.date)}</span>
+        Transit scores for{" "}
+        <span className="text-text-main">
+          {new Date(data.transit_context.instant).toLocaleString("en-IE", {
+            dateStyle: "long",
+            timeStyle: "short",
+            timeZone: data.transit_context.timezone,
+          })}
+        </span>{" "}
+        at <span className="text-text-main">{data.transit_context.place}</span>
+        <span className="text-text-muted">
+          {` (${data.transit_context.latitude.toFixed(4)}, ${data.transit_context.longitude.toFixed(4)} · ${data.transit_context.timezone} · ${data.transit_context.utc_instant})`}
+        </span>
+        {` · ${data.calculation_context.ayanamsa} ayanamsa`}
         {data.janma_rashi && (
           <> · Janma Rashi <span style={{ color: MOON_C }}>{data.janma_rashi}</span>{" "}
             {data.janma_nakshatra && <span className="text-text-muted">({data.janma_nakshatra})</span>}
@@ -312,6 +379,21 @@ export function GocharPanel({ chart }: { chart: ChartData }) {
           <> · Lagna <span style={{ color: LAGNA_C }}>{data.lagna_rashi}</span></>
         )}
       </div>
+
+      <details className="rounded-lg border border-hairline px-3 py-2 text-[11px] text-text-muted">
+        <summary className="cursor-pointer font-mono text-text-main">Calculation context · {data.calculation_context.request_id}</summary>
+        <dl className="mt-2 grid gap-x-4 gap-y-1 sm:grid-cols-2">
+          <dt>Engine</dt><dd className="font-mono">{data.calculation_context.engine} {data.calculation_context.engine_version}</dd>
+          <dt>Backend</dt><dd className="font-mono">{data.calculation_context.backend} {data.calculation_context.backend_version}</dd>
+          <dt>Ayanamsa</dt><dd className="font-mono">{data.natal_context.ayanamsa}</dd>
+          <dt>Natal coordinates</dt><dd className="font-mono">{data.natal_context.birth_latitude}, {data.natal_context.birth_longitude}</dd>
+          <dt>Natal time / offset</dt><dd className="font-mono">{data.natal_context.birth_datetime} · UTC{data.natal_context.birth_timezone_offset_hours >= 0 ? "+" : ""}{data.natal_context.birth_timezone_offset_hours}</dd>
+          <dt>Observation timezone source</dt><dd className="font-mono">{data.transit_context.timezone_source}</dd>
+          <dt>DST occurrence</dt><dd className="font-mono">{data.transit_context.disambiguation}</dd>
+        </dl>
+        <p className="mt-2 font-medium text-text-main">Replay payload</p>
+        <pre className="mt-1 overflow-x-auto whitespace-pre-wrap break-all rounded bg-card p-2 font-mono text-[10px]">{JSON.stringify(data.calculation_context.replay_payload, null, 2)}</pre>
+      </details>
 
       {/* ── Score cards ────────────────────────────────────────────────────── */}
       <div className="flex gap-3">

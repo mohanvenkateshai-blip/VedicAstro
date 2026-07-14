@@ -14,7 +14,10 @@ export default async function DashaPage({
 }: {
   searchParams: Promise<SP>;
 }) {
-  const { chart, birth, error } = await loadChartFromSearchParams(await searchParams);
+  const params = await searchParams;
+  const { chart, birth, error } = await loadChartFromSearchParams(params);
+  const one = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
+  const linkedPath = [one(params.md), one(params.ad), one(params.pd), one(params.sd), one(params.prana)].filter((value): value is string => !!value);
 
   const [dashaDeep, predictionsResp] = await Promise.all([
     chart ? getDashaDeep(birth).catch(() => null) : Promise.resolve(null),
@@ -46,7 +49,7 @@ export default async function DashaPage({
       ) : null}
       {chart ? (
         <>
-          <DashaDeepTree chart={chart} dashaData={dashaDeep ?? undefined} />
+          <DashaDeepTree chart={chart} dashaData={dashaDeep ?? undefined} initialPath={linkedPath} />
           <AllDashasPanel chart={chart} />
         </>
       ) : null}

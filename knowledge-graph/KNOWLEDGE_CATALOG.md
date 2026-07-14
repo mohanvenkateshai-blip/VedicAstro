@@ -193,7 +193,7 @@ All consumers should go through KE. Direct Supabase or direct file reads are con
 ## Next Improvements (to reduce fear / confusion)
 
 - [ ] Make `corpus_sources` the absolute source of canonical names; during ingest, normalize `graph_nodes.source_file` to match exactly.
-- [ ] Populate `corpus_chunks` + embeddings so vector search becomes first-class under KE.
+- [x] **Embeddings (local, no Gemini)**: COMPLETE 2026-07-03 — 26,743/26,743 chunks embedded via `all-mpnet-base-v2` (768-dim). Script: `scripts/generate-embeddings-local.py`. Vector search live in KnowledgeEngine.
 - [ ] One command: `./scripts/ingest-text.sh <file-or-dir>` that does copy → extract → promote → supabase-sync → KE cascade.
 - [ ] Expose `ke.list_texts()` or `/knowledge/texts` that returns the catalog with live node counts.
 - [ ] Retire or clearly label all the dated graphify-out/ subdirs and old logs.

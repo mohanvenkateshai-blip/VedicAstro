@@ -11,18 +11,22 @@ All new code should import from here instead of directly from `graph_rag`.
 from __future__ import annotations
 
 import os
+import threading
+from collections.abc import Callable
 from typing import Any
 
 from .engine import KnowledgeEngine
-
+from .registry import RegisteredEngine
 
 _KE: KnowledgeEngine | None = None
+_KE_LOCK = threading.RLock()
 
 
 def clear_knowledge_engine_cache() -> None:
     """Drop the singleton so the next call rebuilds store caches."""
     global _KE
-    _KE = None
+    with _KE_LOCK:
+        _KE = None
 
 
 def get_knowledge_engine() -> KnowledgeEngine:
@@ -38,17 +42,19 @@ def get_knowledge_engine() -> KnowledgeEngine:
     during import-time registration side-effects from dependent engines.
     """
     global _KE
-    if _KE is not None:
+    with _KE_LOCK:
+        if _KE is not None:
+            return _KE
+        use_supabase = os.environ.get("KE_USE_SUPABASE", "").lower() in (
+            "1",
+            "true",
+        ) or bool(os.environ.get("SUPABASE_URL"))
+        if use_supabase:
+            version = os.environ.get("CORPUS_GRAPH_VERSION", "newbooks-v1")
+            _KE = KnowledgeEngine.with_supabase(graph_version=version)
+        else:
+            _KE = KnowledgeEngine()
         return _KE
-    use_supabase = os.environ.get("KE_USE_SUPABASE", "").lower() in ("1", "true") or bool(
-        os.environ.get("SUPABASE_URL")
-    )
-    if use_supabase:
-        version = os.environ.get("CORPUS_GRAPH_VERSION", "newbooks-v1")
-        _KE = KnowledgeEngine.with_supabase(graph_version=version)
-    else:
-        _KE = KnowledgeEngine()
-    return _KE
 
 
 # Back-compat shims for code that expects lru_cache interface (e.g. performance_monitor)
@@ -117,6 +123,23 @@ def search_knowledge(query: str, top_k: int = 8) -> list[dict[str, Any]]:
     return ke.search(query, top_k=top_k)
 
 
+def query_research_knowledge(
+    pattern: str | None = None,
+    limit: int | None = None,
+    *,
+    include_invalidated: bool = True,
+    include_unhealthy: bool = True,
+) -> dict[str, Any]:
+    """Exhaustive annotated research access; never use for product predictions."""
+
+    return get_knowledge_engine().query_research_nodes(
+        pattern=pattern,
+        limit=limit,
+        include_invalidated=include_invalidated,
+        include_unhealthy=include_unhealthy,
+    )
+
+
 def notify_embeddings_updated(chunk_count: int = 0) -> dict[str, Any]:
     """Clear embedding caches and notify registered engines."""
     ke = get_knowledge_engine()
@@ -132,7 +155,6 @@ def notify_embeddings_updated(chunk_count: int = 0) -> dict[str, Any]:
 
 def get_prediction_enhancer():
     """Returns a PredictionEnhancer that is aware of the KnowledgeEngine."""
-    ke = get_knowledge_engine()
     # Create enhancer using the validated graph from KnowledgeEngine
     from graph_rag.enhancer import PredictionEnhancer
 
@@ -328,4 +350,3 @@ def ensure_engine_registration(engine_name: str, on_refresh: Callable | None = N
     """Ensure an engine is registered with the registry."""
     ke = get_knowledge_engine()
     return ke.registry.ensure_registration(engine_name, on_refresh, on_invalidation)
-

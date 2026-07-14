@@ -4,18 +4,23 @@ KnowledgeEngine — The central manager for the Knowledge Graph and its consumer
 
 from __future__ import annotations
 
+import copy
 import fnmatch
 import json
 import logging
 import os
+import threading
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from prediction_policy import apply_product_claim_policy, prepare_external_narration_payload
+
 from .models import GraphVersion, InvalidationReason, KnowledgeValidity
 from .registry import EngineRegistry, RegisteredEngine
+from .research_state import SQLiteKnowledgeResearchState
 from .store.base import KnowledgeStore
 from .store.supabase_store import SupabaseKnowledgeStore
 
@@ -68,7 +73,7 @@ class _FileKnowledgeStore(KnowledgeStore):
         g = self._load()
         links = g.get("links", [])
         if source_id:
-            links = [l for l in links if l.get("source") == source_id]
+            links = [link for link in links if link.get("source") == source_id]
         return links[:limit]
 
     def health_check(self) -> bool:
@@ -88,14 +93,32 @@ class KnowledgeEngine:
 
     store: KnowledgeStore = field(default_factory=_FileKnowledgeStore)
     registry: EngineRegistry = field(default_factory=EngineRegistry)
+    research_persistence: SQLiteKnowledgeResearchState | None = None
     current_version: GraphVersion | None = None
     _invalidations: dict[str, KnowledgeValidity] = field(default_factory=dict)
+    _invalidation_history: dict[str, list[KnowledgeValidity]] = field(default_factory=dict)
+    _research_node_archive: dict[str, dict[str, Any]] = field(default_factory=dict)
+    _research_node_archive_metadata: dict[str, dict[str, Any]] = field(default_factory=dict)
+    _research_graph_snapshot: dict[str, dict[str, Any]] = field(default_factory=dict)
+    _research_graph_snapshot_version: str | None = None
+    _last_research_enumeration_complete: bool = True
+    _last_research_source_error: str | None = None
+    _last_research_store_observed_count: int = 0
+    _last_research_store_expected_count: int | None = None
+    _last_research_local_ids: set[str] = field(default_factory=set)
+    _state_lock: threading.RLock = field(default_factory=threading.RLock, repr=False)
     _last_revived_at: datetime | None = None
     _revive_interval_seconds: int = 3600
 
     def __post_init__(self):
         self._load_current_version()
         self._attach_graph_compat()
+        if self.research_persistence is None and os.environ.get("KE_RESEARCH_STATE_DB"):
+            self.research_persistence = SQLiteKnowledgeResearchState(
+                os.environ["KE_RESEARCH_STATE_DB"]
+            )
+        self._restore_research_state()
+        self._reconcile_research_snapshot("engine_start")
 
     def _load_current_version(self) -> GraphVersion:
         """Load the active graph version."""
@@ -213,6 +236,25 @@ class KnowledgeEngine:
         store = SupabaseKnowledgeStore(graph_version=graph_version)
         return cls(store=store)
 
+    @classmethod
+    def for_research(
+        cls,
+        *,
+        store: KnowledgeStore | None = None,
+        db_path: str | Path | None = None,
+    ) -> KnowledgeEngine:
+        """Create fail-closed research mode with mandatory durable state."""
+
+        configured_path = db_path or os.environ.get("KE_RESEARCH_STATE_DB")
+        if not configured_path:
+            raise RuntimeError(
+                "research mode requires db_path or KE_RESEARCH_STATE_DB durable storage"
+            )
+        return cls(
+            store=store or _FileKnowledgeStore(),
+            research_persistence=SQLiteKnowledgeResearchState(configured_path),
+        )
+
     def get_safe_node(self, node_id: str) -> dict | None:
         """
         Return a graph node only when it is currently valid.
@@ -248,6 +290,358 @@ class KnowledgeEngine:
             return valid[:limit]
         return valid
 
+    def query_research_nodes(
+        self,
+        pattern: str | None = None,
+        limit: int | None = None,
+        *,
+        include_invalidated: bool = True,
+        include_unhealthy: bool = True,
+    ) -> dict[str, Any]:
+        """Thread-safe exhaustive research access with explicit status metadata."""
+
+        with self._state_lock:
+            self._reload_shared_research_state()
+            return self._query_research_nodes_locked(
+                pattern,
+                limit,
+                include_invalidated=include_invalidated,
+                include_unhealthy=include_unhealthy,
+            )
+
+    def _query_research_nodes_locked(
+        self,
+        pattern: str | None = None,
+        limit: int | None = None,
+        *,
+        include_invalidated: bool = True,
+        include_unhealthy: bool = True,
+    ) -> dict[str, Any]:
+        """Exhaustive, annotated access for research—not product consumption.
+
+        Unlike :meth:`query_nodes`, this path can retain invalidated nodes and
+        remain available while global knowledge health is degraded.  Every
+        result carries explicit eligibility metadata so research recall never
+        silently becomes product evidence.
+        """
+
+        knowledge_healthy = self.is_knowledge_healthy()
+        base_status: dict[str, Any] = {
+            "knowledge_healthy": knowledge_healthy,
+            "include_invalidated": include_invalidated,
+            "include_unhealthy": include_unhealthy,
+            "graph_version": self.current_version.version if self.current_version else None,
+        }
+        if not knowledge_healthy and not include_unhealthy:
+            return {
+                "nodes": [],
+                "status": {
+                    **base_status,
+                    "available_count": 0,
+                    "returned_count": 0,
+                    "truncated": False,
+                    "blocked_reason": "knowledge_unhealthy",
+                },
+            }
+
+        candidates = self._enumerate_current_research_nodes()
+        base_status["source_enumeration_complete"] = self._last_research_enumeration_complete
+        base_status["source_error"] = self._last_research_source_error
+        base_status["store_observed_count"] = self._last_research_store_observed_count
+        base_status["store_expected_count"] = self._last_research_store_expected_count
+        current_ids = {node.get("id", "") for node in candidates}
+        candidates.extend(
+            copy.deepcopy(node)
+            for node_id, node in self._research_node_archive.items()
+            if node_id not in current_ids
+        )
+        candidate_by_id = {
+            str(node.get("id")): node for node in candidates if node.get("id")
+        }
+        for node_id, node in self._research_node_archive.items():
+            metadata = self._research_node_archive_metadata.get(node_id, {})
+            if metadata.get("removed_at") and node_id not in self._last_research_local_ids:
+                candidate_by_id[node_id] = copy.deepcopy(node)
+        anonymous = [node for node in candidates if not node.get("id")]
+        candidates = [candidate_by_id[node_id] for node_id in sorted(candidate_by_id)] + anonymous
+        if pattern:
+            candidates = [
+                node for node in candidates if fnmatch.fnmatch(node.get("id", ""), pattern)
+            ]
+
+        annotated: list[dict[str, Any]] = []
+        for node in candidates:
+            node_id = node.get("id", "")
+            invalidation = self._invalidations.get(node_id)
+            invalidated = invalidation is not None
+            archive_metadata = self._research_node_archive_metadata.get(node_id)
+            archived_capture = node_id not in current_ids or bool(
+                archive_metadata
+                and archive_metadata.get("removed_at")
+                and node_id not in self._last_research_local_ids
+            )
+            node_healthy = self._research_node_is_healthy(node) and not archived_capture
+            if invalidated and not include_invalidated:
+                continue
+            if not node_healthy and not include_unhealthy:
+                continue
+            result = copy.deepcopy(node)
+            result["research_status"] = {
+                "invalidated": invalidated,
+                "node_healthy": node_healthy,
+                "knowledge_healthy": knowledge_healthy,
+                "product_eligible": (
+                    not invalidated
+                    and not archived_capture
+                    and node_healthy
+                    and knowledge_healthy
+                ),
+                "archived_capture": archived_capture,
+                "removal": copy.deepcopy(archive_metadata)
+                if archived_capture and archive_metadata and archive_metadata.get("removed_at")
+                else None,
+                "archive_metadata": copy.deepcopy(archive_metadata),
+                "reason": invalidation.reason.value
+                if invalidation and invalidation.reason
+                else None,
+                "details": invalidation.details if invalidation else "",
+                "invalidated_at": invalidation.invalidated_at.isoformat()
+                if invalidation and invalidation.invalidated_at
+                else None,
+                "invalidation_history": [
+                    self._validity_metadata(item)
+                    for item in self._invalidation_history.get(node_id, [])
+                ],
+            }
+            annotated.append(result)
+
+        available_count = len(annotated)
+        if limit is not None:
+            annotated = annotated[:limit]
+        return {
+            "nodes": annotated,
+            "status": {
+                **base_status,
+                "available_count": available_count,
+                "returned_count": len(annotated),
+                "truncated": (
+                    not self._last_research_enumeration_complete
+                    or (limit is not None and available_count > len(annotated))
+                ),
+                "blocked_reason": None,
+            },
+        }
+
+    def _enumerate_current_research_nodes(self) -> list[dict[str, Any]]:
+        """Union local graph and every store page; local payload wins duplicate IDs."""
+
+        graph = self.graph
+        loader = getattr(graph, "_load", None)
+        if callable(loader):
+            try:
+                loader()
+            except Exception as exc:
+                logger.debug("research graph load failed; continuing with captured nodes: %s", exc)
+        local_nodes = [
+            copy.deepcopy(node)
+            for node in (getattr(graph, "nodes", []) or [])
+            if isinstance(node, dict)
+        ]
+        self._last_research_local_ids = {
+            str(node["id"]) for node in local_nodes if node.get("id")
+        }
+
+        store_nodes: list[dict[str, Any]] = []
+        page_size = 500
+        offset = 0
+        previous_page_signature: tuple[str, ...] | None = None
+        self._last_research_enumeration_complete = True
+        self._last_research_source_error = None
+        self._last_research_store_expected_count = None
+        while True:
+            try:
+                page = self.store.get_nodes_page(limit=page_size, offset=offset)
+            except Exception as exc:
+                logger.debug("research store page failed at offset %s: %s", offset, exc)
+                self._last_research_enumeration_complete = False
+                self._last_research_source_error = f"{type(exc).__name__}: {exc}"
+                break
+            page = [copy.deepcopy(node) for node in (page or []) if isinstance(node, dict)]
+            signature = tuple(
+                str(node.get("id") or json.dumps(node, sort_keys=True, default=str))
+                for node in page
+            )
+            if page and signature == previous_page_signature:
+                logger.warning("research store pagination repeated offset %s; stopping safely", offset)
+                self._last_research_enumeration_complete = False
+                self._last_research_source_error = (
+                    f"store repeated page content at offset={offset}"
+                )
+                break
+            store_nodes.extend(page)
+            if len(page) < page_size:
+                break
+            previous_page_signature = signature
+            offset += page_size
+        self._last_research_store_observed_count = len(store_nodes)
+        try:
+            stats = self.store.get_stats() or {}
+            expected = stats.get("node_count", stats.get("nodes"))
+            if expected is not None:
+                self._last_research_store_expected_count = int(expected)
+        except Exception as exc:
+            logger.debug("authoritative store count unavailable: %s", exc)
+        if (
+            self._last_research_store_expected_count is not None
+            and self._last_research_store_observed_count
+            != self._last_research_store_expected_count
+        ):
+            self._last_research_enumeration_complete = False
+            self._last_research_source_error = (
+                self._last_research_source_error
+                or "store enumeration count differs from authoritative node_count"
+            )
+
+        merged: dict[str, dict[str, Any]] = {}
+        anonymous: dict[str, dict[str, Any]] = {}
+        for node in store_nodes:
+            node_id = str(node.get("id") or "")
+            if node_id:
+                merged.setdefault(node_id, node)
+            else:
+                anonymous.setdefault(json.dumps(node, sort_keys=True, default=str), node)
+        for node in local_nodes:
+            node_id = str(node.get("id") or "")
+            if node_id:
+                merged[node_id] = node
+            else:
+                anonymous[json.dumps(node, sort_keys=True, default=str)] = node
+        return [merged[node_id] for node_id in sorted(merged)] + [
+            anonymous[key] for key in sorted(anonymous)
+        ]
+
+    @staticmethod
+    def _research_node_is_healthy(node: dict[str, Any]) -> bool:
+        if node.get("healthy") is False:
+            return False
+        return str(node.get("health_status") or "").lower() not in {
+            "unhealthy",
+            "failed",
+            "corrupt",
+        }
+
+    @staticmethod
+    def _validity_metadata(validity: KnowledgeValidity) -> dict[str, Any]:
+        return {
+            "is_valid": validity.is_valid,
+            "reason": validity.reason.value if validity.reason else None,
+            "details": validity.details,
+            "invalidated_at": validity.invalidated_at.isoformat()
+            if validity.invalidated_at
+            else None,
+        }
+
+    @staticmethod
+    def _validity_from_metadata(node_id: str, payload: dict[str, Any]) -> KnowledgeValidity:
+        reason = payload.get("reason")
+        invalidated_at = payload.get("invalidated_at")
+        return KnowledgeValidity(
+            node_id=node_id,
+            is_valid=bool(payload.get("is_valid", False)),
+            reason=InvalidationReason(reason) if reason else None,
+            details=str(payload.get("details") or ""),
+            invalidated_at=datetime.fromisoformat(invalidated_at) if invalidated_at else None,
+        )
+
+    def _restore_research_state(self) -> None:
+        if self.research_persistence is None:
+            return
+        with self._state_lock:
+            state = self.research_persistence.load_ke_state()
+            self._invalidations = {
+                node_id: self._validity_from_metadata(node_id, payload)
+                for node_id, payload in state["current"].items()
+            }
+            self._invalidation_history = {
+                node_id: [self._validity_from_metadata(node_id, item) for item in history]
+                for node_id, history in state["history"].items()
+            }
+            self._research_node_archive = {
+                node_id: copy.deepcopy(record["node"])
+                for node_id, record in state["archive"].items()
+            }
+            self._research_node_archive_metadata = {
+                node_id: copy.deepcopy(record["metadata"])
+                for node_id, record in state["archive"].items()
+            }
+            self._research_graph_snapshot = copy.deepcopy(state["snapshot"])
+            self._research_graph_snapshot_version = state["snapshot_version"]
+
+    def _reload_shared_research_state(self) -> None:
+        """Refresh durable state so peer engine instances cannot leave stale views."""
+
+        if self.research_persistence is not None:
+            self._restore_research_state()
+
+    def _reconcile_research_snapshot(self, reason: str) -> None:
+        """Archive every node removed since the last observed graph snapshot."""
+
+        with self._state_lock:
+            current_nodes = {
+                str(node["id"]): copy.deepcopy(node)
+                for node in self._enumerate_current_research_nodes()
+                if node.get("id")
+            }
+            previous = self._research_graph_snapshot
+            removed_at = datetime.now(UTC).isoformat()
+            current_version = self.current_version.version if self.current_version else None
+            for node_id in sorted(set(previous) - set(current_nodes)):
+                metadata = {
+                    "removed_at": removed_at,
+                    "last_seen_version": self._research_graph_snapshot_version,
+                    "removed_in_version": current_version,
+                    "reason": reason,
+                }
+                if node_id not in self._research_node_archive:
+                    self._research_node_archive[node_id] = copy.deepcopy(previous[node_id])
+                self._research_node_archive_metadata[node_id] = metadata
+                if self.research_persistence is not None:
+                    self.research_persistence.save_ke_archive(
+                        node_id, self._research_node_archive[node_id], metadata
+                    )
+            self._research_graph_snapshot = current_nodes
+            self._research_graph_snapshot_version = current_version
+            if self.research_persistence is not None:
+                self.research_persistence.replace_ke_graph_snapshot(
+                    current_nodes, current_version
+                )
+
+    def _archive_removed_nodes(
+        self,
+        previous_nodes: dict[str, dict[str, Any]],
+        current_ids: set[str],
+        *,
+        reason: str,
+        last_seen_version: str | None,
+        removed_in_version: str | None,
+    ) -> None:
+        removed_at = datetime.now(UTC).isoformat()
+        for node_id in sorted(set(previous_nodes) - current_ids):
+            metadata = {
+                "removed_at": removed_at,
+                "last_seen_version": last_seen_version,
+                "removed_in_version": removed_in_version,
+                "reason": reason,
+            }
+            if node_id not in self._research_node_archive:
+                node = copy.deepcopy(previous_nodes[node_id])
+                self._research_node_archive[node_id] = node
+            self._research_node_archive_metadata[node_id] = metadata
+            if self.research_persistence is not None:
+                self.research_persistence.save_ke_archive(
+                    node_id, self._research_node_archive[node_id], metadata
+                )
+
     def get_structured_book(self, book_id: str) -> dict | None:
         """Return the clean, hierarchical chapter/subtitle/content structure for a source book.
 
@@ -263,9 +657,6 @@ class KnowledgeEngine:
           - nodes_by_chapter: {chapter_id: [full_node, ...]} (best-effort lookup)
         """
         try:
-            from pathlib import Path
-            import json
-
             base = _REPO_ROOT / "knowledge-graph" / "structured"
             data: dict | None = None
             candidates = [
@@ -636,12 +1027,19 @@ class KnowledgeEngine:
         if not key:
             return {"status": "skipped", "reason": "no Gemini key"}
 
+        prompt_payload = prepare_external_narration_payload(facts, birth, allowed)
+        if not prompt_payload or not any(prompt_payload.values()):
+            return {
+                "status": "blocked",
+                "reason": "no privacy-safe narration facts",
+                "sources_blocked": blocked,
+            }
+
         from google import genai
 
         client = genai.Client(api_key=key)
 
-        prompt_payload = {k: facts[k] for k in allowed if k in facts}
-        prompt = f"""You are a concise Vedic astrologer. Given the structured facts below for {birth}, write 3-5 short natural paragraphs (no tables) that a client can read directly. Cover: overall tone of the period, key strengths, cautions, and one actionable recommendation. Stay factual to the data. Use plain modern English.
+        prompt = f"""You are a concise Vedic astrologer. Given the de-identified structured facts below, write 3-5 short natural paragraphs (no tables) that a client can read directly. Cover: overall tone of the period, key strengths, cautions, and one low-risk actionable recommendation. Stay factual to the data. Use plain modern English. Do not infer identity, birth details, private life events, or make claims about death, self-harm, violence, serious disease diagnoses, pregnancy outcomes, crime, abuse, infidelity, or third-party tragedy.
 
 Facts (abbrev):
 {json.dumps(prompt_payload, indent=2)[:3000]}
@@ -652,13 +1050,21 @@ Facts (abbrev):
             contents=prompt,
         )
         text = (resp.text or "").strip()
-        return {
-            "prose": text,
+        safe_text = apply_product_claim_policy(text)
+        result = {
+            "prose": safe_text.value,
             "model": "gemini-1.5-flash",
             "generated": True,
             "sources_used": allowed,
             "sources_blocked": blocked,
         }
+        if safe_text.blocked_count:
+            result["claim_safety"] = {
+                "status": "filtered",
+                "blocked_count": safe_text.blocked_count,
+                "blocked_categories": list(safe_text.blocked_categories),
+            }
+        return result
 
     def _resolve_narration_sources(self, facts: dict) -> tuple[list[str], list[str]]:
         """Split narration source keys into allowed vs invalidated (with data present)."""
@@ -712,6 +1118,20 @@ Facts (abbrev):
         reason: InvalidationReason = InvalidationReason.MANUAL,
         details: str = "",
     ) -> list[str]:
+        with self._state_lock:
+            self._reload_shared_research_state()
+            targets = self._invalidate_locked(node_ids, pattern, reason, details)
+        if targets:
+            self.registry.notify_invalidation(targets, reason, details)
+        return targets
+
+    def _invalidate_locked(
+        self,
+        node_ids: list[str] | None = None,
+        pattern: str | None = None,
+        reason: InvalidationReason = InvalidationReason.MANUAL,
+        details: str = "",
+    ) -> list[str]:
         """
         Block specific knowledge from being consumed by any engine.
 
@@ -725,18 +1145,55 @@ Facts (abbrev):
 
         now = datetime.now(UTC)
         for node_id in targets:
-            self._invalidations[node_id] = KnowledgeValidity(
+            validity = KnowledgeValidity(
                 node_id=node_id,
                 is_valid=False,
                 reason=reason,
                 details=details,
                 invalidated_at=now,
             )
-
-        self.registry.notify_invalidation(targets, reason, details)
+            self._invalidations[node_id] = validity
+            self._invalidation_history.setdefault(node_id, []).append(validity)
+            node = None
+            try:
+                node = self.graph.node(node_id)
+            except Exception:
+                pass
+            if node is None:
+                try:
+                    node = self.store.get_node(node_id)
+                except Exception:
+                    pass
+            if isinstance(node, dict):
+                archived = copy.deepcopy(node)
+                metadata = {
+                    "archived_at": now.isoformat(),
+                    "last_seen_version": self.current_version.version
+                    if self.current_version
+                    else None,
+                    "removed_in_version": None,
+                    "reason": "invalidation_capture",
+                }
+                self._research_node_archive.setdefault(node_id, archived)
+                self._research_node_archive_metadata.setdefault(node_id, metadata)
+                if self.research_persistence is not None:
+                    self.research_persistence.save_ke_archive(node_id, archived, metadata)
+            if self.research_persistence is not None:
+                self.research_persistence.save_ke_invalidation(
+                    node_id, self._validity_metadata(validity)
+                )
         return targets
 
     def revalidate(
+        self,
+        node_ids: list[str] | None = None,
+        pattern: str | None = None,
+    ) -> list[str]:
+        with self._state_lock:
+            self._reload_shared_research_state()
+            return self._revalidate_locked(node_ids, pattern)
+
+    def _revalidate_locked(
         self,
         node_ids: list[str] | None = None,
         pattern: str | None = None,
@@ -749,6 +1206,8 @@ Facts (abbrev):
         if node_ids is None and pattern is None:
             cleared = list(self._invalidations.keys())
             self._invalidations.clear()
+            if self.research_persistence is not None:
+                self.research_persistence.remove_ke_invalidations()
             return cleared
 
         targets = self._resolve_invalidation_targets(
@@ -758,27 +1217,37 @@ Facts (abbrev):
         )
         for node_id in targets:
             self._invalidations.pop(node_id, None)
+        if self.research_persistence is not None:
+            self.research_persistence.remove_ke_invalidations(tuple(targets))
         return targets
 
     def get_validity(self, node_id: str) -> KnowledgeValidity:
         """Return the validity record for a node (valid by default)."""
-        if node_id in self._invalidations:
-            return self._invalidations[node_id]
-        return KnowledgeValidity(node_id=node_id, is_valid=True)
+        with self._state_lock:
+            self._reload_shared_research_state()
+            if node_id in self._invalidations:
+                return copy.deepcopy(self._invalidations[node_id])
+            return KnowledgeValidity(node_id=node_id, is_valid=True)
 
     def is_node_valid(self, node_id: str) -> bool:
         """Return True when the node is not in the invalidation set."""
-        return node_id not in self._invalidations
+        with self._state_lock:
+            self._reload_shared_research_state()
+            return node_id not in self._invalidations
 
     def invalidated_node_ids(self) -> list[str]:
         """Return all currently invalidated node IDs."""
-        return list(self._invalidations.keys())
+        with self._state_lock:
+            self._reload_shared_research_state()
+            return list(self._invalidations.keys())
 
     def is_knowledge_healthy(self) -> bool:
         """High-level health for the whole system."""
-        if self.current_version is None:
-            return False
-        return len(self._invalidations) < 50
+        with self._state_lock:
+            self._reload_shared_research_state()
+            if self.current_version is None:
+                return False
+            return len(self._invalidations) < 50
 
     def _resolve_invalidation_targets(
         self,
@@ -808,11 +1277,17 @@ Facts (abbrev):
 
         Returns the stale node IDs that were removed.
         """
-        graph_ids = {node.get("id", "") for node in getattr(self.graph, "nodes", [])}
-        stale = [node_id for node_id in self._invalidations if node_id not in graph_ids]
-        for node_id in stale:
-            del self._invalidations[node_id]
-        return stale
+        with self._state_lock:
+            self._reconcile_research_snapshot("removed_during_refresh")
+            graph_ids = {
+                node.get("id", "") for node in self._enumerate_current_research_nodes()
+            }
+            stale = [node_id for node_id in self._invalidations if node_id not in graph_ids]
+            for node_id in stale:
+                del self._invalidations[node_id]
+            if stale and self.research_persistence is not None:
+                self.research_persistence.remove_ke_invalidations(tuple(stale))
+            return stale
 
     # ------------------------------------------------------------------ #
     # Cascading updates (when new literature is added)
@@ -830,22 +1305,43 @@ Facts (abbrev):
         - (optional) Rebuild structured chapter trees + re-map KE nodes to chapters
           when KE_REBUILD_STRUCTURED_ON_INGEST or KE_AUTO_REBUILD_STRUCTURED is set.
         """
-        if hasattr(self.graph, "_loaded"):
-            self.graph._loaded = False
-            self.graph._GRAPH_PATH = str(new_graph_path)  # type: ignore[attr-defined]
+        with self._state_lock:
+            old_version = self.current_version.version if self.current_version else None
+            previous_local = {
+                str(node["id"]): copy.deepcopy(node)
+                for node in (getattr(self.graph, "nodes", []) or [])
+                if isinstance(node, dict) and node.get("id")
+            }
+            if hasattr(self.graph, "_loaded"):
+                self.graph._loaded = False
+                self.graph._GRAPH_PATH = str(new_graph_path)  # type: ignore[attr-defined]
 
-        self.graph._load()
+            self.graph._load()
 
-        stats = getattr(self.graph, "stats", {})
-        self.current_version = GraphVersion(
-            version=new_version,
-            node_count=stats.get("nodes", 0),
-            link_count=stats.get("links", 0),
-            loaded_at=datetime.now(UTC),
-            source=str(new_graph_path),
-        )
-
-        self._invalidations.clear()
+            stats = getattr(self.graph, "stats", {})
+            self.current_version = GraphVersion(
+                version=new_version,
+                node_count=stats.get("nodes", 0),
+                link_count=stats.get("links", 0),
+                loaded_at=datetime.now(UTC),
+                source=str(new_graph_path),
+            )
+            new_local_ids = {
+                str(node["id"])
+                for node in (getattr(self.graph, "nodes", []) or [])
+                if isinstance(node, dict) and node.get("id")
+            }
+            self._archive_removed_nodes(
+                previous_local,
+                new_local_ids,
+                reason="removed_during_version_change",
+                last_seen_version=old_version,
+                removed_in_version=new_version,
+            )
+            self._invalidations.clear()
+            if self.research_persistence is not None:
+                self.research_persistence.remove_ke_invalidations()
+            self._reconcile_research_snapshot("new_literature_ingested")
         self.registry.notify_refresh(new_version=new_version)
         self._last_revived_at = datetime.now(UTC)
 
@@ -888,10 +1384,10 @@ Facts (abbrev):
             if age < self._revive_interval_seconds:
                 return False
 
-        self._load_current_version()
-        self._clear_stale_invalidations()
-
-        new_version = self.current_version.version if self.current_version else "unknown"
+        with self._state_lock:
+            self._load_current_version()
+            self._clear_stale_invalidations()
+            new_version = self.current_version.version if self.current_version else "unknown"
         self.registry.notify_refresh(new_version=new_version)
 
         self._last_revived_at = datetime.now(UTC)
@@ -907,10 +1403,10 @@ Facts (abbrev):
         after new literature is added or when knowledge needs to be
         forcefully propagated across the entire system.
         """
-        self._load_current_version()
-        self._clear_stale_invalidations()
-
-        new_version = self.current_version.version if self.current_version else "unknown"
+        with self._state_lock:
+            self._load_current_version()
+            self._clear_stale_invalidations()
+            new_version = self.current_version.version if self.current_version else "unknown"
         self.registry.notify_refresh(new_version=new_version)
 
         self._last_revived_at = datetime.now(UTC)

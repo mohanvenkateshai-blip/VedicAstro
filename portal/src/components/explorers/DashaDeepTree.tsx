@@ -16,6 +16,8 @@ export type { DashaDeepData, DashaNode, DashaLadderRow };
 export interface DashaDeepProps {
   chart?: ChartData;
   dashaData?: DashaDeepData;
+  /** Exact ruler path supplied by a Person Timeline deep link. */
+  initialPath?: string[];
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
@@ -748,7 +750,7 @@ function DashaLevel({
 
 // ── Main component ──────────────────────────────────────────────────────────
 
-export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps) {
+export function DashaDeepTree({ chart, dashaData: externalData, initialPath = [] }: DashaDeepProps) {
   const [fetchedData, setFetchedData] = useState<DashaDeepData | null>(null);
   const [loading, setLoading] = useState(() => !externalData && !!chart?.meta?.birth_datetime);
   const [error, setError] = useState<string | null>(null);
@@ -807,9 +809,12 @@ export function DashaDeepTree({ chart, dashaData: externalData }: DashaDeepProps
   // ── Auto-expand the current running dasha path ────────────────────────────
 
   useEffect(() => {
-    if (!data || current.length === 0) return;
-    const paths = buildCurrentPaths(mahadashas, current);
+    const targetPath = initialPath.length > 0 ? initialPath : current;
+    if (!data || targetPath.length === 0) return;
+    const paths = buildCurrentPaths(mahadashas, targetPath);
     if (paths.length === 0) return;
+    // This initializes expansion from server-supplied period identity.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setExpandedPaths((prev) => {
       const next = new Set(prev);
       for (const p of paths) next.add(p);

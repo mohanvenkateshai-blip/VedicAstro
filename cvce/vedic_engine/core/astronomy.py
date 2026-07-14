@@ -1,16 +1,19 @@
-"""
-Core Astronomy Module — Planetary positions using PySwissEph with in-browser fallback.
+"""Legacy approximate astronomy research arm.
 
-Uses the Swiss Ephemeris via pyswisseph when available, falling back to
-a Keplerian/Schlyter approximation (ported from MuhurtaCosmos.jsx).
+This module preserves the original Keplerian/Schlyter and truncated-series
+implementation for compatibility and comparative research.  It is not Swiss
+Ephemeris and must not be described as the high-precision calculation path.
+The high-precision research adapter lives in ``research_engine.cross_engine``.
 
-Ayanamsha: Lahiri (Chitrapaksha)
+Ayanamsha: simplified Lahiri (Chitrapaksha)
 """
 
 import math
 
 RAD = math.pi / 180
 DEG = 180 / math.pi
+LEGACY_APPROXIMATE_ENGINE_ID = "legacy_schlyter_elp_approximation"
+LEGACY_APPROXIMATE_ENGINE_VERSION = "1.0.0"
 
 
 def norm360(x: float) -> float:
@@ -244,13 +247,17 @@ def planet_sidereal_lon(planet: str, jd_ut: float) -> float:
 
 
 def rahu_true_tropical(jd: float) -> float:
-    """True lunar node (Rahu) tropical longitude. Matches Swiss Ephemeris to ~0.06 deg."""
+    """Approximate true lunar-node tropical longitude from truncated terms.
+
+    This preserved research arm has not been independently accuracy-certified
+    and must not be represented as matching Swiss Ephemeris to a fixed error.
+    """
     T = (jd - 2451545) / 36525
     r = RAD
     mean_node = 125.0445 - 1934.1363 * T
     D = norm360(297.8501921 + 445267.1114034 * T)
     Ms = norm360(357.5291092 + 35999.0502909 * T)
-    Mp = norm360(357.5291092 + 35999.0502909 * T)  # Sun mean anomaly
+    Mp = norm360(134.9633964 + 477198.8675055 * T)  # Moon mean anomaly
     F = norm360(93.272095 + 483202.0175233 * T)
 
     correction = (
@@ -307,3 +314,15 @@ def is_retrograde(planet: str, jd_ut: float) -> bool:
     if diff < -180:
         diff += 360
     return diff < 0
+
+
+def legacy_approximate_all_positions(jd_ut: float) -> dict:
+    """Explicitly named entry point for the preserved approximation arm."""
+
+    return all_positions(jd_ut)
+
+
+def legacy_approximate_is_retrograde(planet: str, jd_ut: float) -> bool:
+    """Explicitly named legacy finite-difference motion classification."""
+
+    return is_retrograde(planet, jd_ut)
