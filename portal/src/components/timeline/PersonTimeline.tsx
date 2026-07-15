@@ -15,6 +15,7 @@ import type {
 import { AddObservedEventForm } from "./AddObservedEventForm";
 import { MilestoneDetailSheet } from "./MilestoneDetailSheet";
 import { TimelineControls } from "./TimelineControls";
+import { TimelineGuide } from "./TimelineGuide";
 import { TimelineLanes } from "./TimelineLanes";
 
 const ALL_ORIGINS: TimelineOrigin[] = [
@@ -101,6 +102,11 @@ export function PersonTimeline({
   const observedCount = timeline.milestones.filter((item) => item.origin === "observed_event" || item.origin === "imported_history").length;
   const sealedCount = timeline.milestones.filter((item) => item.origin === "prospective_prediction" && item.sealed_at !== null).length;
   const candidateCount = timeline.milestones.filter((item) => item.origin === "engine_inference" || item.origin === "retrospective_hypothesis").length;
+  const originCounts = useMemo(() => {
+    const counts = Object.fromEntries(ALL_ORIGINS.map((origin) => [origin, 0])) as Record<TimelineOrigin, number>;
+    for (const item of timeline.milestones) counts[item.origin] += 1;
+    return counts;
+  }, [timeline.milestones]);
 
   function toggleOrigin(origin: TimelineOrigin) {
     setOrigins((previous) => {
@@ -144,7 +150,8 @@ export function PersonTimeline({
           <div><h2 id="timeline-workspace-title" className="text-lg font-semibold">Life events, predictions and timing</h2><p className="mt-1 max-w-3xl text-xs leading-relaxed text-text-muted">One synchronized view keeps observed history, sealed forecasts and after-the-fact research scientifically distinct. Select any record for its timing and evidence.</p></div>
           <div className="flex flex-wrap gap-3 font-mono text-[9px] text-text-muted"><span className="flex items-center gap-1"><CircleDot className="size-3 fill-primary text-primary" /> observed</span><span className="flex items-center gap-1"><CircleDot className="size-3 text-accent" /> sealed prediction</span><span className="flex items-center gap-1"><CircleDot className="size-3 text-warning" /> research candidate</span></div>
         </div>
-        <TimelineControls zoom={zoom} origins={origins} onZoom={setZoom} onToggleOrigin={toggleOrigin} onAddEvent={() => setShowAddEvent(true)} />
+        <TimelineControls zoom={zoom} origins={origins} originCounts={originCounts} onZoom={setZoom} onToggleOrigin={toggleOrigin} onAddEvent={() => setShowAddEvent(true)} />
+        <TimelineGuide />
         {timeline.milestones.length || timeline.timingPeriods.length ? (
           <TimelineLanes milestones={filtered} periods={visiblePeriods} outcomes={visibleOutcomes} range={range} selectedId={selected?.milestone_id ?? null} onSelect={selectMilestone} />
         ) : (

@@ -133,11 +133,11 @@ export function TimelineLanes({
         <Axis range={range} />
         <Lane label="Observed events">
           {observed.map(marker)}
-          {observed.length === 0 && <p className="p-5 text-xs text-text-muted">No observed milestones yet.</p>}
+          {observed.length === 0 && <p className="p-5 text-xs text-text-muted">No observed milestones yet. Use <span className="font-medium text-text-main">Add observed milestone</span> to record what actually happened.</p>}
         </Lane>
         <Lane label="Predictions & research">
           {predictions.map(marker)}
-          {predictions.length === 0 && <p className="p-5 text-xs text-text-muted">No prediction or research records in this range.</p>}
+          {predictions.length === 0 && <p className="p-5 text-xs text-text-muted">No prediction or research records in this range. Engine inferences from your chart appear here when that filter is enabled.</p>}
         </Lane>
         <Lane label="Timing periods">
           {periods.map((period, index) => (

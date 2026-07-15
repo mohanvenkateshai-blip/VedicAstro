@@ -40,7 +40,7 @@ export default async function TimelinePage({ searchParams }: { searchParams: Pro
       <Card className="overflow-hidden bg-aurora p-5 sm:p-6">
         <div className="flex items-start gap-3">
           <div className="rounded-xl bg-accent/15 p-2.5 text-accent"><CalendarDays className="size-5" /></div>
-          <div><h1 className="text-xl font-semibold">Person Timeline</h1><p className="mt-1 max-w-3xl text-sm leading-relaxed text-text-muted">A person-centred history of lived milestones, sealed predictions, timing periods, activation windows and measured outcomes. Research inferences are always labelled and never presented as events.</p></div>
+          <div><h1 className="text-xl font-semibold">Person Timeline</h1><p className="mt-1 max-w-3xl text-sm leading-relaxed text-text-muted">Compare what actually happened in this person&apos;s life with timing research from the chart. On first open you will see dasha periods and yoga activation candidates — not life events until you add them.</p></div>
         </div>
       </Card>
 
