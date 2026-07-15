@@ -18,3 +18,5 @@ Branding
 !scripts
 # Don't ignore portal/src/docs - needed for feature-progress.json
 !src/docs
+# Don't ignore portal/src/app/status/docs - needed for feature-progress.json
+!src/app/status/docs

@@ -20,6 +20,8 @@ docs
 !portal/scripts
 # Don't ignore portal/src/docs - needed for feature-progress.json
 !portal/src/docs
+# Don't ignore portal/src/app/status/docs - needed for feature-progress.json
+!portal/src/app/status/docs
 portal/.next
 portal/node_modules
 portal/venv
