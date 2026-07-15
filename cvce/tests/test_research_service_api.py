@@ -279,7 +279,11 @@ def test_sql_pagination_replays_only_requested_records(monkeypatch):
 def test_shutdown_hook_and_fly_research_mount_is_explicitly_opt_in():
     assert server.clear_research_service_cache in server.app.router.on_shutdown
     fly = tomllib.loads((Path(__file__).parents[1] / "fly.toml").read_text(encoding="utf-8"))
-    assert "mounts" not in fly
+    # Timeline mount is allowed in main fly.toml (Person Timeline feature), research mount is opt-in
+    assert "mounts" in fly
+    # Timeline mount destination
+    assert any(m["destination"] == "/data/timeline" for m in fly["mounts"])
+    # Research mode should NOT be in main fly.toml
     assert "CVCE_RESEARCH_MODE_ENABLED" not in fly["env"]
     assert "CVCE_RESEARCH_MOUNT_PATH" not in fly["env"]
 
