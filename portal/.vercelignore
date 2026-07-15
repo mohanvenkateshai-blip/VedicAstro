@@ -16,7 +16,7 @@ knowledge-graph/**/*
 .kilo
 Branding
 !scripts
-# Don't ignore portal/src/docs - needed for feature-progress.json
+# Don't ignore src/docs - needed for feature-progress.json
 !src/docs
-# Don't ignore portal/src/app/status/docs - needed for feature-progress.json
+# Don't ignore src/app/status/docs - needed for feature-progress.json
 !src/app/status/docs
