@@ -1,6 +1,6 @@
 import { getLiveServiceHealth, getGraphRagStatus } from "@/lib/service-health";
 import { Card } from "@/components/ui/Card";
-import featureProgress from "../../docs/feature-progress.json";
+import featureProgress from "@/docs/feature-progress.json";
 
 export const dynamic = "force-dynamic";
 
