@@ -14,9 +14,11 @@ coverage
 knowledge-graph
 .kilo
 Branding
-cvce
+# Python engine at repo root only — bare "cvce" also matched portal/src/app/api/cvce
+/cvce
 # Don't ignore portal/scripts - it's needed for build
 !portal/scripts
+!portal/src/app/api/cvce
 # Don't ignore portal/src/docs - needed for feature-progress.json
 !portal/src/docs
 # Don't ignore portal/src/app/status/docs - needed for feature-progress.json

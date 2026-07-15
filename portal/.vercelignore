@@ -11,11 +11,9 @@ build
 coverage
 .env*.local
 .vercel
-knowledge-graph/
-knowledge-graph/**/*
+knowledge-graph
 .kilo
 Branding
-!scripts
 # Don't ignore src/docs - needed for feature-progress.json
 !src/docs
 # Don't ignore src/app/status/docs - needed for feature-progress.json
