@@ -63,12 +63,14 @@ export function BirthForm({
       setFetching(true);
       try {
         const res = await fetch(`/api/cvce/places?q=${encodeURIComponent(v)}`);
+        if (!res.ok) throw new Error(`place search failed (${res.status})`);
         const data = await res.json();
         const list: PlaceResult[] = data.results ?? [];
         setResults(list);
         setOpen(list.length > 0);
       } catch {
         setResults([]);
+        setOpen(false);
       } finally {
         setFetching(false);
       }
