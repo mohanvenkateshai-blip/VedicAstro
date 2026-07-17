@@ -56,18 +56,21 @@ function getSavedChartKey(raw: string): Promise<CryptoKey> {
   return promise;
 }
 
+// Plain Uint8Array (not Uint8Array<ArrayBuffer>): TextEncoder.encode() is
+// typed Uint8Array<ArrayBufferLike> in current @types/node, and WebCrypto
+// accepts BufferSource either way.
 function additionalData(
   owner: string,
   field: SavedChartSensitiveField,
-): Uint8Array<ArrayBuffer> {
+): Uint8Array {
   return new TextEncoder().encode(`${SAVED_CHART_CONTEXT}:${owner}:${field}`);
 }
 
-function toBase64Url(value: ArrayBuffer | Uint8Array<ArrayBuffer>): string {
+function toBase64Url(value: ArrayBuffer | Uint8Array): string {
   return Buffer.from(value instanceof Uint8Array ? value : new Uint8Array(value)).toString("base64url");
 }
 
-function fromBase64Url(value: string): Uint8Array<ArrayBuffer> {
+function fromBase64Url(value: string): Uint8Array {
   return Uint8Array.from(Buffer.from(value, "base64url"));
 }
 

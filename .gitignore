@@ -55,3 +55,7 @@ uv.lock
 scripts/commit_log.json
 .vercel
 .env*
+
+# Playwright artifacts (baselines under tests/visual/*-snapshots ARE committed)
+portal/test-results/
+portal/playwright-report/

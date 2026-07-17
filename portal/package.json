@@ -15,13 +15,21 @@
     "verify:gate": "bash ../scripts/verification_gate.sh",
     "db:schema": "node scripts/apply-schema.mjs",
     "db:schema:remote": "node scripts/migrate-remote.mjs",
-    "db:corpus-schema": "bash ../scripts/apply-supabase-corpus-schema.sh"
+    "db:corpus-schema": "bash ../scripts/apply-supabase-corpus-schema.sh",
+    "test:unit": "node --test src/lib/*.test.mts",
+    "test:e2e": "playwright test",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "test:e2e:ui": "playwright test --ui",
+    "test:a11y": "playwright test tests/accessibility",
+    "test:visual": "playwright test --project=chromium tests/visual",
+    "test:responsive": "playwright test tests/responsive",
+    "test:interaction": "playwright test tests/interaction",
+    "test:e2e:baselines": "playwright test --project=chromium tests/visual --update-snapshots"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "@supabase/supabase-js": "^2.108.2",
     "clsx": "^2.1.1",
-    "jspdf-html2canvas": "^1.6.0",
     "lucide-react": "^1.21.0",
     "motion": "^12.41.0",
     "next": "16.2.9",
@@ -33,6 +41,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
