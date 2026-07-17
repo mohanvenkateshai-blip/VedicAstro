@@ -2,10 +2,18 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { ArrowUpRight, CalendarRange, ChevronRight, ShieldCheck, X } from "lucide-react";
+import { ArrowUpRight, CalendarRange, ChevronRight, PencilLine, ShieldCheck, X } from "lucide-react";
 import { clsx } from "clsx";
 import type { PersonTimelineDetailResponse, TimelineEvidenceProjection, TimelineMilestone, TimelineOutcomeProjection } from "@/lib/types";
+import { type ValenceTone, TONE_LABELS, formatDateShort, toneOf } from "@/lib/timeline-view";
 import { OutcomeResolutionForm } from "./OutcomeResolutionForm";
+
+const TONE_BANNER: Record<ValenceTone, string> = {
+  good: "border-success/50 bg-success/10 text-success",
+  bad: "border-danger/50 bg-danger/10 text-danger",
+  mixed: "border-warning/50 bg-warning/10 text-warning",
+  neutral: "border-hairline bg-background/50 text-text-muted",
+};
 
 const ORIGIN_COPY: Record<TimelineMilestone["origin"], { label: string; className: string }> = {
   prospective_prediction: { label: "Sealed prospective prediction", className: "border-accent text-accent" },
@@ -49,20 +57,24 @@ export function MilestoneDetailSheet({
   detail,
   subjectId,
   observedMilestones,
+  history = [],
   birthQuery,
   loading,
   currentOutcome,
   onOutcomeSaved,
+  onCorrect,
   onClose,
 }: {
   milestone: TimelineMilestone;
   detail: PersonTimelineDetailResponse | null;
   subjectId: string;
   observedMilestones: TimelineMilestone[];
+  history?: TimelineMilestone[];
   birthQuery: string;
   loading?: boolean;
   currentOutcome?: TimelineOutcomeProjection | null;
   onOutcomeSaved: () => void;
+  onCorrect?: () => void;
   onClose: () => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -87,11 +99,22 @@ export function MilestoneDetailSheet({
     <aside className="fixed inset-y-0 right-0 z-40 w-full overflow-y-auto border-l border-hairline bg-card shadow-2xl sm:max-w-2xl" role="dialog" aria-modal="true" aria-labelledby="milestone-title">
       <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-hairline bg-card/95 p-5 backdrop-blur">
         <div className="min-w-0">
-          <span className={clsx("inline-flex rounded-full border px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-wide", origin.className)}>{origin.label}</span>
+          <span className="flex flex-wrap items-center gap-1.5">
+            <span className={clsx("inline-flex rounded-full border px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-wide", origin.className)}>{origin.label}</span>
+            <span className={clsx("inline-flex rounded-full border px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-wide", TONE_BANNER[toneOf(milestone)])}>{TONE_LABELS[toneOf(milestone)]}</span>
+          </span>
           <h2 id="milestone-title" className="mt-3 text-xl font-semibold">{displayText(milestone.title)}</h2>
           {milestone.origin === "engine_inference" && <p className="mt-1 text-xs text-warning">This broad activation candidate was migrated from research output. It is not a sealed prediction and not evidence that this event occurred.</p>}
         </div>
-        <button ref={closeRef} type="button" onClick={onClose} aria-label="Close milestone details" className="shrink-0 rounded-lg border border-hairline p-2 hover:bg-accent/10"><X className="size-4" /></button>
+        <div className="flex shrink-0 items-center gap-2">
+          {onCorrect && (
+            <button type="button" onClick={onCorrect} className="inline-flex items-center gap-1.5 rounded-lg border border-hairline px-2.5 py-2 text-xs text-text-muted hover:text-text-main focus-visible:ring-2 focus-visible:ring-accent">
+              <PencilLine aria-hidden="true" className="size-3.5" />
+              Correct
+            </button>
+          )}
+          <button ref={closeRef} type="button" onClick={onClose} aria-label="Close milestone details" className="rounded-lg border border-hairline p-2 hover:bg-accent/10"><X className="size-4" /></button>
+        </div>
       </div>
 
       <div className="space-y-7 p-5 pb-16">
@@ -111,6 +134,21 @@ export function MilestoneDetailSheet({
           <p className="mt-2 text-sm leading-7 text-text-muted">{displayText(narrative || "The engine has not supplied a human-readable explanation for this record.")}</p>
           {detail?.scientificIdentity.notice && <p className="mt-3 rounded-lg border border-hairline bg-background/50 p-3 text-xs text-text-muted">{detail.scientificIdentity.notice}</p>}
         </section>
+
+        {history.length > 0 && (
+          <section aria-labelledby="history-heading">
+            <h3 id="history-heading" className="text-base font-semibold">Correction history</h3>
+            <p className="mt-1 text-xs text-text-muted">This record supersedes {history.length === 1 ? "an earlier version" : `${history.length} earlier versions`}; the originals are preserved in the append-only ledger.</p>
+            <ol className="mt-3 space-y-2">
+              {history.map((prior) => (
+                <li key={prior.milestone_id} className="rounded-xl border border-dashed border-hairline p-3">
+                  <p className="text-xs font-semibold text-text-muted line-through decoration-hairline">{displayText(prior.title)}</p>
+                  <p className="mt-1 font-mono text-[9px] text-text-muted">{formatDateShort(prior.window.start_at)} → {formatDateShort(prior.window.end_at)} · recorded {formatDateShort(prior.created_at)}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
         <section aria-labelledby="ladder-heading">
           <div className="flex flex-wrap items-center justify-between gap-2"><h3 id="ladder-heading" className="text-base font-semibold">Timing ladder</h3>{ladder.length > 0 && <Link href={dashaHref} className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:underline">Open exact period in Dasha <ArrowUpRight className="size-3" /></Link>}</div>
