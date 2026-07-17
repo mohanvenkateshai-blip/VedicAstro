@@ -415,6 +415,11 @@ class PersonTimelineService:
         )
         score = prediction.get("score")
         native_score_refs = () if score is None else (f"legacy_rule_score:{score}",)
+        direction_key = prediction.get("direction")
+        direction = {
+            "favourable": EventDirection.FAVOURABLE,
+            "unfavourable": EventDirection.UNFAVOURABLE,
+        }.get(direction_key, EventDirection.MIXED)
         calculation_hash = stable_hash(
             {
                 "adapter": _ADAPTER_VERSION,
@@ -422,6 +427,7 @@ class PersonTimelineService:
                 "origin_record_id": origin_record_id,
                 "window": window.model_dump(mode="json"),
                 "rule_score": score,
+                "direction": direction.value,
             }
         )
         milestone = TimelineMilestone(
@@ -435,7 +441,7 @@ class PersonTimelineService:
             original_label=str(prediction.get("name") or yoga_key),
             title=f"{prediction.get('name') or yoga_key} — migrated research candidate",
             description=legacy_candidate_statement(prediction),
-            direction=EventDirection.MIXED,
+            direction=direction,
             magnitude=None,
             window=window,
             created_at=generated_at,

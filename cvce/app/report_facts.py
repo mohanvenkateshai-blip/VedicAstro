@@ -441,6 +441,9 @@ def _priority_predictions(
         if not windows:
             continue  # no timing signal -> don't present as a "when" prediction
 
+        benefic = y.get("benefic")
+        direction = "favourable" if benefic is True else "unfavourable" if benefic is False else "mixed"
+
         scored.append(
             {
                 "yoga_key": key,
@@ -452,6 +455,7 @@ def _priority_predictions(
                 "remedy": remedy_for_yoga(
                     involved, dignity_by_planet, y.get("prediction") or y.get("definition") or ""
                 ),
+                "direction": direction,
             }
         )
 
@@ -638,12 +642,14 @@ def build_report_facts(
                     "category": ry.category,
                     "planets": ry.planets_involved,
                     "source": ry.source,
+                    "benefic": ry.benefic,
                 }
             else:
                 enriched_yogas[kk].update({
                     "category": ry.category,
                     "source": ry.source,
                     "planets": ry.planets_involved,
+                    "benefic": ry.benefic,
                 })
             # KE chapter citation
             try:

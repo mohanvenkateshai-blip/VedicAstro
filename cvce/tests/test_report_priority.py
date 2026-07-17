@@ -84,3 +84,21 @@ def test_priority_predictions_empty_when_no_yogas_or_sav():
     jd, place = jd_place(parse_dt("1975-04-22T19:15:00"), 12.2979, 76.6393, 5.5)
     assert _priority_predictions({}, [0] * 12, {}, [], jd, place, "2026-01-01") == []
     assert _priority_predictions({"x": {"planets": ["Sun"]}}, None, {}, [], jd, place, "2026-01-01") == []
+
+
+def test_priority_predictions_direction_reflects_benefic_flag():
+    from app.report_facts import _priority_predictions
+
+    jd, place = jd_place(parse_dt("1975-04-22T19:15:00"), 12.2979, 76.6393, 5.5)
+    enriched_yogas = {
+        "favourable_yoga": {"name": "Favourable Yoga", "planets": ["Jupiter"], "benefic": True},
+        "unfavourable_yoga": {"name": "Unfavourable Yoga", "planets": ["Saturn"], "benefic": False},
+        "unlabelled_yoga": {"name": "Unlabelled Yoga", "planets": ["Mars"]},
+    }
+    scored = _priority_predictions(
+        enriched_yogas, [25] * 12, {}, [], jd, place, "2026-01-01", max_items=10
+    )
+    by_key = {e["yoga_key"]: e for e in scored}
+    assert by_key["favourable_yoga"]["direction"] == "favourable"
+    assert by_key["unfavourable_yoga"]["direction"] == "unfavourable"
+    assert by_key["unlabelled_yoga"]["direction"] == "mixed"

@@ -144,6 +144,79 @@ def event_payload() -> dict:
     }
 
 
+def test_legacy_candidate_direction_reflects_yoga_polarity(monkeypatch):
+    facts = {
+        "priority_predictions": [
+            {
+                "yoga_key": "favourable_yoga",
+                "name": "Favourable Yoga",
+                "score": 80.0,
+                "planets_involved": ["Jupiter"],
+                "timing_windows": [
+                    {
+                        "planet": "Jupiter",
+                        "start": "2020-11-28",
+                        "end": "2036-11-28",
+                        "when": "current",
+                    }
+                ],
+                "manifestation_text": "A favourable legacy manifestation statement.",
+                "remedy": None,
+                "direction": "favourable",
+            },
+            {
+                "yoga_key": "unfavourable_yoga",
+                "name": "Unfavourable Yoga",
+                "score": 60.0,
+                "planets_involved": ["Saturn"],
+                "timing_windows": [
+                    {
+                        "planet": "Saturn",
+                        "start": "2010-01-01",
+                        "end": "2029-01-01",
+                        "when": "current",
+                    }
+                ],
+                "manifestation_text": "An unfavourable legacy manifestation statement.",
+                "remedy": None,
+                "direction": "unfavourable",
+            },
+            {
+                "yoga_key": "unlabelled_yoga",
+                "name": "Unlabelled Yoga",
+                "score": 40.0,
+                "planets_involved": ["Mars"],
+                "timing_windows": [
+                    {
+                        "planet": "Mars",
+                        "start": "2005-01-01",
+                        "end": "2050-01-01",
+                        "when": "current",
+                    }
+                ],
+                "manifestation_text": "An unlabelled legacy manifestation statement.",
+                "remedy": None,
+                # no "direction" key at all -> should fall back to mixed
+            },
+        ],
+        "dashas": {"dashaTree": []},
+    }
+    monkeypatch.setattr(timeline_service, "build_report_facts", lambda **_: facts)
+    monkeypatch.setattr(timeline_service, "running_ladder", lambda *_args, **_kwargs: [])
+    monkeypatch.setattr(
+        timeline_service,
+        "ephemeris_runtime_provenance",
+        lambda _jd: {"engine": "PyJHora", "backend": "Swiss Ephemeris"},
+    )
+
+    result = PersonTimelineService().query(**birth_payload())
+    by_yoga = {m["origin_record_id"].split(":")[1]: m for m in result["milestones"]}
+
+    assert by_yoga["favourable_yoga"]["direction"] == "favourable"
+    assert by_yoga["unfavourable_yoga"]["direction"] == "unfavourable"
+    assert by_yoga["unlabelled_yoga"]["direction"] == "mixed"
+
+
 def test_service_marks_legacy_candidates_as_non_prospective_and_preserves_precision(
     legacy_facts,
 ):
