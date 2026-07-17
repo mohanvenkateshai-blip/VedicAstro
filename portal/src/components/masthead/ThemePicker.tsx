@@ -16,7 +16,12 @@ export function ThemePicker({ signedIn, size = "sm" }: { signedIn: boolean; size
   const [theme, setTheme] = useState<ThemePref>("system");
 
   useEffect(() => {
-    setTheme(getStoredTheme());
+    // Read localStorage after mount rather than synchronously in the effect
+    // body, so this doesn't cascade-render.
+    const t = setTimeout(() => {
+      setTheme(getStoredTheme());
+    }, 0);
+    return () => clearTimeout(t);
   }, []);
 
   function choose(next: ThemePref) {

@@ -80,8 +80,13 @@ export async function getUser(id: string): Promise<{
       SELECT id, email, name, role, created_at
       FROM users WHERE id = ${id}
     `;
-    const all = rows as any[];
-    return all[0] ?? null;
+    return (rows[0] as {
+      id: string;
+      email: string;
+      name: string | null;
+      role: Role;
+      created_at: string;
+    } | undefined) ?? null;
   } catch {
     return null;
   }
@@ -101,17 +106,17 @@ export interface UserPrefs {
 /** Read a user's personalization fields. Returns null on DB error. */
 export async function getUserPrefs(id: string): Promise<UserPrefs | null> {
   try {
-    const rows = (await sql`
+    const rows = await sql`
       SELECT name, image, theme, last_path
       FROM users WHERE id = ${id}
-    `) as any[];
+    `;
     const r = rows[0];
     if (!r) return null;
     return {
-      name: r.name ?? null,
-      image: r.image ?? null,
+      name: (r.name as string | null) ?? null,
+      image: (r.image as string | null) ?? null,
       theme: (r.theme as ThemePref) ?? "system",
-      lastPath: r.last_path ?? null,
+      lastPath: (r.last_path as string | null) ?? null,
     };
   } catch {
     return null;

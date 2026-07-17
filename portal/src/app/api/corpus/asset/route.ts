@@ -40,7 +40,8 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({ error: "Asset not found", path }, { status: 404 });
-  } catch (e: any) {
-    return NextResponse.json({ error: "Asset error", detail: String(e?.message || e) }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: "Asset error", detail: message }, { status: 500 });
   }
 }

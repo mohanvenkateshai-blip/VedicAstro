@@ -29,6 +29,23 @@
 3. **Proceed** with the **Life-Event Prediction engine** — THE next mission. Event-first dated windows (marriage/children/career/foreign/home/health): six-witness promise (bhava+lord+occupants+karaka+varga+yoga → confidence), dasha windows gated on the event's house network (lord chain), fructification/AV transit narrowing to months, published with the notes' output template (window+confidence+alternatives+limits), timeline shows them as checkable claims ("did this happen?") feeding the append-only hit/miss tally per chart — the product's trust engine (user: "I want to know if the app correctly predicted my marriage date, my kid's birth, my international job"). Spec seed = the audit doc D1–D6 + Domain Keys table (p5) + high-specificity map (p15) of the prediction notes.
 4. KG ingest of the digest PDFs: recommended, **not yet approved** — ask before running (graph rebuild + redeploy).
 
+### 🚦 WORK ALLOCATION — for any OTHER agent/session (owner-approved 2026-07-17)
+
+**✅ OPEN — take these up freely (isolated lanes):**
+1. **Fly timeline volume** — provision volume + `CVCE_TIMELINE_DATABASE_PATH`, redeploy CVCE, verify prod `POST /timeline/events` → 201 (fixes known 503).
+2. **KG ingest of Vedic Digest PDFs** *(only if owner confirms)* — transcribe → `knowledge-graph/raw/` → `ingest-newbooks-md.py` → promote → sync; ingest as a distinct "method" source per docs/VEDIC_DIGEST_METHOD_AUDIT.md.
+3. **Linux visual baselines** — generate linux snapshots for `portal/tests/visual`, commit, remove `--ignore-snapshots` from .github/workflows/playwright.yml.
+4. **Saved-chart plaintext→encrypted migration tool** — `portal/scripts` + SQL only (gap noted in RELEASE_HANDOFF).
+5. **Learn module content** — additional texts / chapter polish.
+
+**⏳ QUEUED — wait for sequencing:** B2 experiment-system remediation (start only after the B3 re-gate verdict is recorded here).
+
+**⛔ RESERVED — do NOT touch (active or single-owner MAFIP orchestration):**
+- **Life-Event Prediction engine** and its whole chain: `cvce/app/report_facts.py`, `cvce/research_engine/timeline/`, `portal/src/components/timeline/**`, `portal/src/lib/timeline-view*` (fresh 97/100 gate; design in flight → LIFE_EVENT_ENGINE_PLAN.md).
+- `portal/tests/**`, `portal/playwright.config.ts`, `portal/package.json` and any config-file rewrites (post-incident rule: config diffs get reviewed against HEAD).
+- **All of `portal/src`** until the in-flight lint-cleanup agent's work is committed (it is sweeping 27 files); transit-context files (`portal/src/.../Transit*`, `transit-context.*`, `cvce/tests/test_gochar_transit_context.py`) while remediation runs; `cvce/research_engine/` (B3 re-gate reading + B2 queued).
+- Deploys (Vercel/Fly) other than the volume task above — no concurrent deploy races.
+
 ### Verification quickstart (all green at checkpoint)
 `cd cvce && .venv/bin/python -m pytest -q` (340+1) · `cd portal && npm run typecheck` · `node --test src/lib/timeline-view.test.mts` (9/9) · `npx playwright test --project=chromium tests/app.spec.ts tests/interaction tests/responsive tests/accessibility` (53/53; needs both local servers) · golden chart: Mohan 1975-04-22 19:15 Mysore, Lagna Libra/Swati p4.
 

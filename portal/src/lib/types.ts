@@ -342,6 +342,19 @@ export interface KakshaBlock {
   lagnaKakshas?: { index: number; lord: string; rangeDeg: string; binduActive: boolean }[];
 }
 
+/** Kaksha Dasha period list as surfaced on ReportFacts.dashas.kaksha —
+ * distinct shape from KakshaBlock (which covers the transit-kaksha chart panel). */
+export interface KakshaDashaPeriod {
+  lord?: string;
+  start?: string;
+  end?: string;
+  isCurrent?: boolean;
+}
+
+export interface KakshaDashaBlock {
+  periods: KakshaDashaPeriod[];
+}
+
 export interface AlternateDashas {
   chara?: SignDashaBlock | null;
   kalachakra?: SignDashaBlock | null;
@@ -807,9 +820,9 @@ export interface ReportFacts {
     current: string[];
     currentLadder: DashaLadderRow[];
     antardashaTable: { maha: string; antara: string; start: string; durationYears: number }[];
-    kaksha?: any;
-    chara?: any;
-    kalachakra?: any;
+    kaksha?: KakshaDashaBlock | null;
+    chara?: SignDashaBlock | null;
+    kalachakra?: SignDashaBlock | null;
   };
   dasha_intelligence?: DashaIntelligence | null;
   transit_intelligence?: TransitIntelligence | null;
@@ -842,8 +855,8 @@ export interface ReportFacts {
     year?: number;
     lagna?: string;
     muntha?: { sign?: string; yearsElapsed?: number } | null;
-    planets?: any[];
-    yogas?: any[];
+    planets?: unknown[];
+    yogas?: unknown[];
   } | null;
   classical_sources?: Record<string, string> | null;
   timing?: {

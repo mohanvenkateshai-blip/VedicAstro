@@ -7,7 +7,12 @@ export function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
+    // Read the DOM (set by an inline pre-hydration script) after mount rather
+    // than synchronously in the effect body, so this doesn't cascade-render.
+    const t = setTimeout(() => {
+      setDark(document.documentElement.classList.contains("dark"));
+    }, 0);
+    return () => clearTimeout(t);
   }, []);
 
   function toggle() {

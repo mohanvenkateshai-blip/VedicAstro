@@ -158,7 +158,14 @@ function PlaceField({ value, onPick }: { value: string; onPick: (r: PlaceResult)
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { setQ(value); }, [value]);
+  // Sync `value` into `q` during render (instead of setState-in-effect) when
+  // the caller passes a new value, e.g. loading a saved chart.
+  const [prevValue, setPrevValue] = useState(value);
+  if (value !== prevValue) {
+    setPrevValue(value);
+    setQ(value);
+  }
+
   useEffect(() => {
     function h(e: MouseEvent) {
       if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);

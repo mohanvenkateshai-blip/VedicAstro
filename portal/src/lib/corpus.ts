@@ -187,7 +187,14 @@ export async function getBookTextNodes(
  */
 export async function getJaiminiNodes(graphVersion = DEFAULT_GRAPH_VERSION) {
   const patterns = ["%jaimini%", "%upadesa%", "%sutra%"];
-  const all: any[] = [];
+  const all: {
+    id: string;
+    label: string | null;
+    source_location: string | null;
+    properties: Record<string, unknown>;
+    file_type: string | null;
+    source_file?: string | null;
+  }[] = [];
   for (const p of patterns) {
     const { data } = await supabase
       .from("graph_nodes")

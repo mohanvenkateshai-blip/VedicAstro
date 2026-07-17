@@ -249,7 +249,6 @@ export function BookReaderClient({
     > = [];
     let last = 0;
     let m: RegExpExecArray | null;
-    // eslint-disable-next-line no-cond-assign
     while ((m = imgRe.exec(raw)) !== null) {
       if (m.index > last) parts.push({ type: "text", text: raw.slice(last, m.index) });
       parts.push({ type: "image", alt: m[1] || "", src: m[2], title: m[3] });
@@ -528,7 +527,7 @@ export function BookReaderClient({
                       {ch.sourceLocation ? ` • ${ch.sourceLocation}` : ""}
                     </div>
                     {(() => {
-                      const chProv = Object.values(nodeProvenance || {}).find((p: any) => p?.chapter_id === ch.id);
+                      const chProv = Object.values(nodeProvenance || {}).find((p) => p?.chapter_id === ch.id);
                       return chProv?.hierarchy_path ? (
                         <div className="text-[9px] text-text-muted/70 truncate mt-0.5">From: {chProv.hierarchy_path}</div>
                       ) : null;
@@ -563,7 +562,7 @@ export function BookReaderClient({
                   if (ch) {
                     const isSec = /-sec-/.test(ch.id) || /^sec-/.test(ch.id) || ((ch.properties?.level as number) || 1) > 1;
                     const kind = isSec ? "Section" : "Chapter";
-                    const bp = Object.values(nodeProvenance || {}).find((p: any) => p?.chapter_id === ch.id);
+                    const bp = Object.values(nodeProvenance || {}).find((p) => p?.chapter_id === ch.id);
                     const mapNote = bp?.method ? ` (mapped via ${bp.method}${typeof bp.confidence === "number" ? ` conf ${bp.confidence}` : ""})` : "";
                     return (
                       <>

@@ -91,7 +91,12 @@ export function DashboardTable() {
     }
   }, []);
 
-  useEffect(() => { reload(); }, [reload]);
+  useEffect(() => {
+    // Defer past the current commit so the initial load doesn't set state
+    // synchronously within the effect body.
+    const t = setTimeout(() => { reload(); }, 0);
+    return () => clearTimeout(t);
+  }, [reload]);
 
   // ── Sorting ───────────────────────────────────────────────────────────────
 
@@ -119,7 +124,11 @@ export function DashboardTable() {
   const allSelected = sorted.length > 0 && selected.size === sorted.length;
   function toggleAll() { setSelected(allSelected ? new Set() : new Set(sorted.map((c) => c.id))); }
   function toggleOne(id: string) {
-    setSelected((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+    setSelected((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id); else n.add(id);
+      return n;
+    });
   }
 
   // ── Actions ───────────────────────────────────────────────────────────────

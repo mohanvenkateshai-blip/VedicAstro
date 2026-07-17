@@ -2,14 +2,21 @@
 
 import React from "react";
 import { Card } from "@/components/ui/Card";
-import type { SignDashaBlock } from "@/lib/types";
+import type { SignDashaBlock, SignDashaPeriod } from "@/lib/types";
+
+// Kalachakra responses carry a couple of fields beyond the shared SignDashaBlock
+// shape (deha/jeeva narrative note, engine version tag).
+type KalachakraBlock = SignDashaBlock & {
+  dehaJeeva?: { note?: string };
+  ke_version?: string;
+};
 
 interface KalachakraDashaProps {
   data: SignDashaBlock | null;
 }
 
 export function KalachakraDasha({ data }: KalachakraDashaProps) {
-  const d = data as any;
+  const d = data as KalachakraBlock | null;
   if (!d) {
     return (
       <Card className="p-5 border border-hairline">
@@ -37,8 +44,8 @@ export function KalachakraDasha({ data }: KalachakraDashaProps) {
           <div className="text-xs text-text-muted mt-0.5">
             {current.start} → {current.end}
           </div>
-          {(data as any).dehaJeeva?.note && (
-            <p className="text-[11px] text-text-muted mt-1 italic">{(data as any).dehaJeeva.note}</p>
+          {d.dehaJeeva?.note && (
+            <p className="text-[11px] text-text-muted mt-1 italic">{d.dehaJeeva.note}</p>
           )}
         </div>
       )}
@@ -47,7 +54,7 @@ export function KalachakraDasha({ data }: KalachakraDashaProps) {
         <div>
           <h4 className="text-xs font-mono uppercase text-text-muted mb-2">Upcoming Periods (first 8)</h4>
           <div className="space-y-1 text-xs font-mono">
-            {periods.slice(0, 8).map((p: any, i: number) => (
+            {periods.slice(0, 8).map((p: SignDashaPeriod, i: number) => (
               <div key={i} className={`flex justify-between border-l-2 pl-2 ${p.isCurrent ? "border-accent text-accent" : "border-hairline"}`}>
                 <span>{p.maha} / {p.antara}</span>
                 <span>{p.start} → {p.end} ({p.years}y)</span>
@@ -57,13 +64,13 @@ export function KalachakraDasha({ data }: KalachakraDashaProps) {
         </div>
       )}
 
-      {(data as any).graph_citations && (data as any).graph_citations.length > 0 && (
+      {d.graph_citations && d.graph_citations.length > 0 && (
         <div className="pt-2 border-t border-hairline text-[10px] text-text-muted">
-          Sources: {(data as any).graph_citations.map((c: any) => c.label || c.id).join(" · ")}
+          Sources: {d.graph_citations.map((c) => c.label || c.id).join(" · ")}
         </div>
       )}
 
-      <p className="text-[10px] text-text-muted font-mono">Deha/Jeeva from Moon nakshatra-pada wheel (BPHS Vol.2 Ch.49) · ke:{(data as any).ke_version || "—"}</p>
+      <p className="text-[10px] text-text-muted font-mono">Deha/Jeeva from Moon nakshatra-pada wheel (BPHS Vol.2 Ch.49) · ke:{d.ke_version || "—"}</p>
     </Card>
   );
 }

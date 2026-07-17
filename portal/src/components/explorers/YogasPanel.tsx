@@ -100,8 +100,9 @@ export function YogasPanel({ chart }: YogasPanelProps) {
 
   useEffect(() => {
     if (hasEmbedded || !chart.meta?.birth_datetime) {
-      setLoading(false);
-      return;
+      // Defer past the current commit so this doesn't cascade-render.
+      const t = setTimeout(() => setLoading(false), 0);
+      return () => clearTimeout(t);
     }
 
     let cancelled = false;

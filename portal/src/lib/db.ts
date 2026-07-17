@@ -4,10 +4,15 @@
 
 import type { NeonQueryFunction } from "@neondatabase/serverless";
 
-let _sql: NeonQueryFunction<any, any> | null = null;
-let _initPromise: Promise<NeonQueryFunction<any, any> | null> | null = null;
+// `neon(url)` is called below with no options, so it's the default
+// (non-array-mode, non-full-results) shape: rows come back as
+// `Record<string, unknown>[]`.
+type Sql = NeonQueryFunction<false, false>;
 
-async function getSql(): Promise<NeonQueryFunction<any, any> | null> {
+let _sql: Sql | null = null;
+let _initPromise: Promise<Sql | null> | null = null;
+
+async function getSql(): Promise<Sql | null> {
   if (_sql) return _sql;
   if (_initPromise) return _initPromise;
 
@@ -47,17 +52,17 @@ export function rowsFrom(result: unknown): Record<string, unknown>[] {
   return [];
 }
 
-export function sql(strings: TemplateStringsArray, ...values: unknown[]): Promise<any> {
+export function sql(strings: TemplateStringsArray, ...values: unknown[]): Promise<Record<string, unknown>[]> {
   return _execute(strings, ...values);
 }
 
-async function _execute(strings: TemplateStringsArray, ...values: unknown[]): Promise<any> {
+async function _execute(strings: TemplateStringsArray, ...values: unknown[]): Promise<Record<string, unknown>[]> {
   const s = await getSql();
   if (!s) throw new Error("DATABASE_URL not configured");
-  return s(strings as any, ...values);
+  return s(strings, ...values);
 }
 
-type SqlQuery = ReturnType<NeonQueryFunction<any, any>>;
+type SqlQuery = ReturnType<Sql>;
 
 /**
  * Run a query with RLS context set in the same Neon transaction.
@@ -65,13 +70,12 @@ type SqlQuery = ReturnType<NeonQueryFunction<any, any>>;
  */
 export async function withUserContext<T>(
   userId: string,
-  makeQuery: (s: NeonQueryFunction<any, any>) => SqlQuery,
+  makeQuery: (s: Sql) => SqlQuery,
 ): Promise<T> {
   const s = await getSql();
   if (!s) throw new Error("DATABASE_URL not configured");
 
-  const txFn = (s as NeonQueryFunction<any, any> & { transaction?: Function })
-    .transaction;
+  const txFn = s.transaction;
 
   if (typeof txFn !== "function") {
     await setRlsContext(userId);
@@ -92,7 +96,7 @@ export async function healthCheck(): Promise<boolean> {
   try {
     const s = await getSql();
     if (!s) return false;
-    await (s as any)`SELECT 1`;
+    await s`SELECT 1`;
     return true;
   } catch {
     return false;
@@ -104,7 +108,7 @@ export async function setRlsContext(userId: string | null) {
   try {
     const s = await getSql();
     if (!s) return;
-    await (s as any)`SELECT set_config('app.current_user_id', ${userId}, true)`;
+    await s`SELECT set_config('app.current_user_id', ${userId}, true)`;
   } catch {
     /* non-fatal */
   }

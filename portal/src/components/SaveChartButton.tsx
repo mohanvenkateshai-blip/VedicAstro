@@ -20,9 +20,9 @@ export function SaveChartButton({ chart, chartName }: { chart: ChartData; chartN
         setStatus("error");
         setErrorMsg(result.error || "Unknown error");
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       setStatus("error");
-      setErrorMsg(e?.message || "Save failed");
+      setErrorMsg(e instanceof Error ? e.message : "Save failed");
     }
   }
 

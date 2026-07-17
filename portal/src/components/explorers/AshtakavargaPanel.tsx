@@ -3,7 +3,7 @@
 import * as React from "react";
 import { clsx } from "clsx";
 import { Card } from "@/components/ui/Card";
-import type { ChartData } from "@/lib/types";
+import type { ChartData, Ashtakavarga } from "@/lib/types";
 import { RASHIS, RASHI_SHORT, PLANET_SHORT } from "@/lib/types";
 import { planetColor, elementColor } from "@/lib/astroColors";
 import { KundaliChart } from "@/components/chart/KundaliChart";
@@ -21,6 +21,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
   const akv = chart.ashtakavarga;
   const [showTransit, setShowTransit] = React.useState(false);
   const [superimpose, setSuperimpose] = React.useState(false);
+  const [chartVariant, setChartVariant] = React.useState<"south" | "north">("south");
 
   if (!akv) {
     return (
@@ -31,18 +32,17 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
   }
 
   const total = akv.sav.reduce((a, b) => a + b, 0);
-  const transitSav = (akv as any).transit_sav as number[] | undefined;
-  const [chartVariant, setChartVariant] = React.useState<"south" | "north">("south");
+  const transitSav = (akv as Ashtakavarga & { transit_sav?: number[] }).transit_sav;
 
   return (
     <div className="space-y-4">
       <Card className="p-5">
         <h3 className="text-sm font-medium mb-2">What is Ashtakavarga?</h3>
         <p className="text-xs text-text-muted leading-relaxed">
-          Ashtakavarga scores each sign's strength by counting benefic bindus (points) contributed by
+          Ashtakavarga scores each sign&rsquo;s strength by counting benefic bindus (points) contributed by
           the 7 planets and the Lagna, per BPHS Ch.67-72. <strong>Sarvashtakavarga (SAV)</strong> is the
           combined total per sign (always 337 across all 12); <strong>Bhinnashtakavarga (BAV)</strong> is
-          each contributor's individual 12-sign board. Rashis with <strong>30+ bindus</strong> during
+          each contributor&rsquo;s individual 12-sign board. Rashis with <strong>30+ bindus</strong> during
           their dasha or transit generally give strong positive results — this is a major prerequisite
           for interpreting Vimshottari, Kalachakra, and Gochara predictions accurately.
         </p>
@@ -90,10 +90,13 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
             signs={(() => {
               const v = chart.vargas?.D1?.signs;
               if (v && Object.keys(v).length > 0) return v;
-              // Fallback: build from planets + Lagna
+              // Fallback: build from planets + Lagna. Some engine payloads carry a
+              // legacy `signIdx` alias alongside the schema's `signIndex`.
+              type LooseSignIdx = { planet?: string; signIdx?: number };
               const s: Record<string, number> = {};
-              (chart.planets || []).forEach((p: any) => { if (p.planet && p.signIdx != null) s[p.planet] = p.signIdx; });
-              if ((chart as any).lagna?.signIdx != null) s.Lagna = (chart as any).lagna.signIdx;
+              (chart.planets as LooseSignIdx[] || []).forEach((p) => { if (p.planet && p.signIdx != null) s[p.planet] = p.signIdx; });
+              const lagnaSignIdx = (chart.lagna as LooseSignIdx | undefined)?.signIdx;
+              if (lagnaSignIdx != null) s.Lagna = lagnaSignIdx;
               return s;
             })()}
             variant={chartVariant}
@@ -232,7 +235,7 @@ export function AshtakavargaPanel({ chart }: { chart: ChartData }) {
             })}
           </div>
           <p className="mt-3 text-[10px] text-text-muted">
-            Superimpose mode shows combined natal + transit bindu activation. High bindus in a sign during transit = favorable window for that house's matters.
+            Superimpose mode shows combined natal + transit bindu activation. High bindus in a sign during transit = favorable window for that house&rsquo;s matters.
           </p>
         </Card>
       )}

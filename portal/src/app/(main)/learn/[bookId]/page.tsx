@@ -11,7 +11,6 @@ import {
   enrichChaptersWithNodeIds,
   buildNodeProvenanceMap,
   loadFullMarkdownForBook,
-  getFullBookMarkdown,
 } from "@/lib/books";
 import { BookReaderClient } from "@/components/BookReaderClient";
 

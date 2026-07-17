@@ -100,8 +100,13 @@ export function ChartBirthForm() {
 
   const chartLoaded = hasChartParams(searchParams);
   const [expanded, setExpanded] = useState(!chartLoaded);
-
-  useEffect(() => { setExpanded(!chartLoaded); }, [chartLoaded]);
+  // Track chartLoaded so we can re-derive `expanded` during render when it changes,
+  // instead of setState-in-effect (which would cause an extra render pass).
+  const [prevChartLoaded, setPrevChartLoaded] = useState(chartLoaded);
+  if (chartLoaded !== prevChartLoaded) {
+    setPrevChartLoaded(chartLoaded);
+    setExpanded(!chartLoaded);
+  }
 
   const defaults = useMemo(() => {
     const sp: Record<string, string> = {};

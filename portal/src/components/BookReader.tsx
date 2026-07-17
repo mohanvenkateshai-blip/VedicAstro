@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
-import { Card } from "@/components/ui/Card";
 
 interface Artifact {
   type: "image";

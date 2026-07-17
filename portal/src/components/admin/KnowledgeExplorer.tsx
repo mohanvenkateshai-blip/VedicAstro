@@ -160,7 +160,10 @@ export function KnowledgeExplorer() {
   }, [q, sourceFilter, communityFilter, loadNeighbors]);
 
   useEffect(() => {
-    if (!loading) runSearch();
+    if (loading) return;
+    // Defer past the current commit so this doesn't cascade-render.
+    const t = setTimeout(() => { runSearch(); }, 0);
+    return () => clearTimeout(t);
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {

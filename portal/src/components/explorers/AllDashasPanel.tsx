@@ -447,16 +447,20 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
   function toggleLagna(v: boolean) { if (!v && !moonOn)  return; setLagnaOn(v); }
 
   const birth = chart?.meta;
+  const birthDatetime = birth?.birth_datetime;
+  const birthLat = birth?.birth_lat;
+  const birthLon = birth?.birth_lon;
+  const birthTz = birth?.birth_tz;
 
   const load = useCallback(async () => {
-    if (!birth?.birth_datetime) return;
+    if (!birthDatetime) return;
     setLoading(true); setError(null);
     try {
       const json = await postCvce<DashaSystemPayload>(endpoint, {
-        birth_datetime: birth.birth_datetime,
-        birth_lat: birth.birth_lat,
-        birth_lon: birth.birth_lon,
-        birth_tz:  birth.birth_tz,
+        birth_datetime: birthDatetime,
+        birth_lat: birthLat,
+        birth_lon: birthLon,
+        birth_tz:  birthTz,
       });
       setData(json);
       // Auto-expand the running Mahadasha
@@ -470,10 +474,10 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
       // Fetch predictions for Yogini (same engine as Vimshottari, keyed by planet lords)
       if (dashaKey === "yogini") {
         postCvce<{ predictions: Record<string, DashaPrediction> }>("dasha-predict-yogini", {
-          birth_datetime: birth!.birth_datetime,
-          birth_lat: birth!.birth_lat,
-          birth_lon: birth!.birth_lon,
-          birth_tz:  birth!.birth_tz,
+          birth_datetime: birthDatetime,
+          birth_lat: birthLat,
+          birth_lon: birthLon,
+          birth_tz:  birthTz,
         }).then((r) => setPredictions(r.predictions ?? {})).catch(() => {});
       }
     } catch (e) {
@@ -481,9 +485,13 @@ function OtherDashaTree({ dashaKey, chart }: { dashaKey: OtherKey; chart?: Chart
     } finally {
       setLoading(false);
     }
-  }, [birth?.birth_datetime, birth?.birth_lat, birth?.birth_lon, birth?.birth_tz, endpoint, dashaKey]);
+  }, [birthDatetime, birthLat, birthLon, birthTz, endpoint, dashaKey]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    // Defer past the current commit so this doesn't cascade-render.
+    const t = setTimeout(() => { load(); }, 0);
+    return () => clearTimeout(t);
+  }, [load]);
 
   const runningMaha  = data?.currentLadder?.[0]?.lord ?? null;
   const runningAntar = data?.currentLadder?.[1]?.lord ?? null;

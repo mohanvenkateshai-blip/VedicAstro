@@ -96,7 +96,7 @@ export default function NakshatraExplorer() {
       <div className="mb-8">
         <h2 className="font-display text-3xl text-text-main mb-1">27 Nakshatras</h2>
         <p className="text-sm text-text-muted">
-          The lunar mansions of Vedic astrology — each spanning 13°20' of the zodiac.
+          The lunar mansions of Vedic astrology — each spanning 13°20&apos; of the zodiac.
         </p>
       </div>
 

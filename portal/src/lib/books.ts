@@ -153,7 +153,7 @@ export type StructuredBook = {
   canonical_name: string;
   source_file: string;
   chapters: StructuredChapter[];
-  toc?: any[];
+  toc?: unknown[];
   total_chapters?: number;
 };
 
@@ -256,7 +256,7 @@ export function extractDisplayMeta(raw: string | null, fallback: string): { disp
     for (const re of authorPatterns) {
       const m = line.match(re);
       if (m && m[1]) {
-        let cand = m[1].replace(/[\s,.;:]+$/,'').trim();
+        const cand = m[1].replace(/[\s,.;:]+$/,'').trim();
         if (cand.length > 3 && !/^(the|and|with|from|by)$/i.test(cand)) {
           author = cand;
           break;
@@ -472,7 +472,7 @@ export async function loadBook(
     // Legacy fallback: build from nodes (the old bad path)
     const chapterMap = new Map<string, { title: string; nodes: GraphNodeRow[]; order: number }>();
 
-    nodes.forEach((node, idx) => {
+    nodes.forEach((node) => {
       const loc = node.source_location ?? "frontmatter";
       const chapterKey = loc.split(":")[0] || "main";
       if (!chapterMap.has(chapterKey)) {
@@ -658,7 +658,7 @@ export function chaptersFromStructured(sb: StructuredBook): Chapter[] {
         order: out.length,
         sourceLocation: undefined,
         nodeIds: [],
-        properties: { level: sec.level ?? 2, structured: true, parentChapter: ch.id, start_line: (sec as any).start_line, end_line: (sec as any).end_line },
+        properties: { level: sec.level ?? 2, structured: true, parentChapter: ch.id, start_line: sec.start_line, end_line: sec.end_line },
       });
     });
   });
@@ -704,7 +704,7 @@ export function loadNodeChapterPatch(bookId?: string): { patches?: Array<{ node_
           try {
             const data = JSON.parse(fs.readFileSync(full, "utf8"));
             const bks = (data.books || []) as string[];
-            const bid = (data as any).book_id || "";
+            const bid = data.book_id || "";
             if (bks.includes(bookId) || bid === bookId || bks.some((b) => b.toLowerCase().includes(bookId.toLowerCase())) || bid.toLowerCase().includes(bookId.toLowerCase())) {
               return data;
             }
@@ -929,9 +929,9 @@ export async function getChapterContent(
   if (structured && full) {
     // Locate the chapter (or section treated as chapter target) in the structured tree
     const chEntry =
-      (structured.chapters || []).find((c: any) => c.id === chapterId) ||
-      (structured.chapters || []).flatMap((c: any) => c.sections || []).find((s: any) => s.id === chapterId);
-    const p = (chapter.properties || {}) as any;
+      (structured.chapters || []).find((c) => c.id === chapterId) ||
+      (structured.chapters || []).flatMap((c) => c.sections || []).find((s) => s.id === chapterId);
+    const p = chapter.properties || {};
     const start = typeof chEntry?.start_line === "number" ? chEntry.start_line : (typeof p.start_line === "number" ? p.start_line : undefined);
     const end = typeof chEntry?.end_line === "number" ? chEntry.end_line : (typeof p.end_line === "number" ? p.end_line : undefined);
     if (typeof start === "number") {

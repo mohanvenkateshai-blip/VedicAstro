@@ -33,7 +33,10 @@ export function LeapQuickNav({
     const current = grouped.find((g) => g.type === active);
     if (current && current.items.length > 0) return;
     const firstNonEmpty = grouped.find((g) => g.items.length > 0);
-    if (firstNonEmpty) setActive(firstNonEmpty.type);
+    if (!firstNonEmpty) return;
+    // Defer past the current commit so this doesn't cascade-render.
+    const t = setTimeout(() => setActive(firstNonEmpty.type), 0);
+    return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entries]);
 

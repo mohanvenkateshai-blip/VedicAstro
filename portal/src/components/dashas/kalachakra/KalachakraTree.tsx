@@ -216,21 +216,24 @@ export function KalachakraTree({
   useEffect(() => {
     if (!focusToken) return;
     const { path } = focusToken;
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      for (const p of ancestorPaths(path)) next.add(p);
-      return next;
-    });
-    setHighlightPath(path);
+    // Defer past the current commit so expand/highlight don't cascade-render.
+    const expandTimer = window.setTimeout(() => {
+      setExpanded((prev) => {
+        const next = new Set(prev);
+        for (const p of ancestorPaths(path)) next.add(p);
+        return next;
+      });
+      setHighlightPath(path);
+    }, 0);
     const scrollTimer = window.setTimeout(() => {
       document.getElementById(`kc-node-${path}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 50);
     const clearTimer = window.setTimeout(() => setHighlightPath(null), 2200);
     return () => {
+      window.clearTimeout(expandTimer);
       window.clearTimeout(scrollTimer);
       window.clearTimeout(clearTimer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusToken]);
 
   return (

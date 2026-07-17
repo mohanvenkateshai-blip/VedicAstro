@@ -77,7 +77,8 @@ export function NotificationBell() {
 
   useEffect(() => {
     if (!open) return;
-    load();
+    // Defer past the current commit so this doesn't cascade-render.
+    const t = setTimeout(() => { load(); }, 0);
     function onClick(e: MouseEvent) {
       if (!ref.current?.contains(e.target as Node)) setOpen(false);
     }
@@ -87,6 +88,7 @@ export function NotificationBell() {
     document.addEventListener("mousedown", onClick);
     document.addEventListener("keydown", onKey);
     return () => {
+      clearTimeout(t);
       document.removeEventListener("mousedown", onClick);
       document.removeEventListener("keydown", onKey);
     };

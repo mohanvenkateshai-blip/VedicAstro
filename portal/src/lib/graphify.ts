@@ -3,7 +3,12 @@ import path from "path";
 
 /** Local Graphify loader (no Supabase). Loads the big graph.json once and provides book-scoped queries. */
 
-let _graphCache: any = null;
+type GraphifyGraph = {
+  nodes?: GraphifyNode[];
+  [key: string]: unknown;
+};
+
+let _graphCache: GraphifyGraph | null = null;
 
 function getGraphPath(): string {
   // Try bundled data first (if we ever snapshot a subset), then monorepo source.
@@ -12,14 +17,14 @@ function getGraphPath(): string {
   return path.join(process.cwd(), "..", "knowledge-graph", "graphify-out", "graph.json");
 }
 
-export function loadGraphifyGraph() {
+export function loadGraphifyGraph(): GraphifyGraph {
   if (_graphCache) return _graphCache;
   const p = getGraphPath();
   if (!fs.existsSync(p)) {
     throw new Error(`Graphify graph not found at ${p}`);
   }
   const raw = fs.readFileSync(p, "utf8");
-  _graphCache = JSON.parse(raw);
+  _graphCache = JSON.parse(raw) as GraphifyGraph;
   return _graphCache;
 }
 
@@ -28,9 +33,9 @@ export type GraphifyNode = {
   label?: string;
   source_file?: string;
   source_location?: string;
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
   community?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 export function getNodesForBook(bookId: string): GraphifyNode[] {
@@ -49,7 +54,11 @@ export function getNodesForBook(bookId: string): GraphifyNode[] {
   });
 }
 
-export function getNodesForChapter(bookId: string, chapterId: string, patch: any): GraphifyNode[] {
+type NodeChapterPatch = {
+  patches?: { book_id?: string; chapter_id?: string; node_id?: string }[];
+};
+
+export function getNodesForChapter(bookId: string, chapterId: string, patch: NodeChapterPatch | null | undefined): GraphifyNode[] {
   if (!patch?.patches) return [];
   const norm = (s: string) => (s || "").toLowerCase().replace(/\s+/g, "_");
   const bookKey = norm(bookId);

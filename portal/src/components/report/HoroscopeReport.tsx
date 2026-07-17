@@ -4,13 +4,7 @@ import type {
   AshtakavargaFacts,
   ForecastPeriod,
   TimingMerge,
-  AlternateDashas,
-  GraphEnhancements,
-  SignDashaBlock,
-  KakshaBlock,
   KnowledgeEngineHealth,
-  TextConflict,
-  GodNodeInsight,
   PriorityPrediction,
 } from "@/lib/types";
 import type { BirthDefaults } from "@/lib/birth-params";
@@ -290,24 +284,6 @@ function TransitIntelCard({
 
 // ─── Dasha ladder ────────────────────────────────────────────────────────────
 
-function DashaLadderCard({ report }: { report: ReportFacts }) {
-  const ladder = report.dashas.currentLadder || [];
-  if (!ladder.length) return null;
-  return (
-    <Card className="p-5 space-y-3">
-      <SectionHeading>Vimshottari ladder (current)</SectionHeading>
-      <div className="text-xs font-mono space-y-1">
-        {ladder.slice(0, 5).map((r: any, i: number) => (
-          <div key={i} className={i === 0 ? "font-semibold" : "text-text-muted"}>
-            <span style={{ color: planetColor(r.lord) }}>{r.lord}</span> · {r.start} → {r.end} ({r.years}y)
-          </div>
-        ))}
-      </div>
-      <p className="text-[10px] text-text-muted font-mono">ke: {report.knowledge_engine?.version || "—"}</p>
-    </Card>
-  );
-}
-
 // ─── Forecast (next 8) ───────────────────────────────────────────────────────
 
 function ForecastCard({ periods }: { periods: ForecastPeriod[] }) {
@@ -360,7 +336,7 @@ function YogasCard({ yogas }: { yogas: NonNullable<ReportFacts["yogas"]> }) {
           <p className="text-sm text-text-muted mt-4">No yogas detected.</p>
         ) : (
           <div className="space-y-3 text-sm mt-4">
-            {list.slice(0, 40).map(([key, y]: any) => (
+            {list.slice(0, 40).map(([key, y]) => (
               <div key={key} className="border-l-2 border-hairline pl-3">
                 <div className="font-semibold">{y.name || key} {y.strength ? `(${y.strength})` : ""}</div>
                 {y.definition && <p className="text-xs text-text-muted italic">{y.definition}</p>}
@@ -451,7 +427,7 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
       </div>
       {/* SAV */}
       <div className="space-y-1.5">
-        {akv.sav_annotated?.map((row: any, idx: number) => (
+        {akv.sav_annotated?.map((row, idx) => (
           <div key={idx} className="flex items-center gap-2 text-xs font-mono">
             <span className="w-14 text-text-muted shrink-0">{row.sign.slice(0, 3)}</span>
             <div className="flex-1 h-3 bg-hairline/40 rounded-sm overflow-hidden">
@@ -469,7 +445,7 @@ function AshtakavargaCard({ akv }: { akv: AshtakavargaFacts }) {
           <table className="min-w-full border border-hairline">
             <thead><tr className="text-left"><th className="px-1">Pl</th>{Array.from({length:12}).map((_,i)=><th key={i} className="px-0.5 text-center tabular-nums">{i+1}</th>)}<th>Tot</th></tr></thead>
             <tbody>
-              {Object.entries(akv.bav || {}).map(([pl, arr]: any) => (
+              {Object.entries(akv.bav || {}).map(([pl, arr]) => (
                 <tr key={pl} className="border-t border-hairline/60">
                   <td className="font-semibold pr-1">{pl.slice(0,2)}</td>
                   {(arr||[]).map((b:number,i:number)=><td key={i} className="px-0.5 text-center tabular-nums">{b}</td>)}
@@ -582,9 +558,9 @@ export function HoroscopeReport({
   }
   if (!report) return null;
 
-  const hasKaksha = !!(report as any)?.dashas?.kaksha;
-  const hasChara = !!(report as any)?.dashas?.chara;
-  const hasKalachakra = !!(report as any)?.dashas?.kalachakra;
+  const hasKaksha = !!report.dashas.kaksha;
+  const hasChara = !!report.dashas.chara;
+  const hasKalachakra = !!report.dashas.kalachakra;
 
   const alternateDashas: string[] = [];
   if (hasKaksha) alternateDashas.push("ch9-kaksha");
@@ -650,7 +626,7 @@ export function HoroscopeReport({
 
       {/* Ch1 */}
       <div id="ch1-natal"><NatalCard report={report} />
-        {report.panchanga && <Card className="p-5 mt-3 border border-hairline"><SectionHeading>Panchanga</SectionHeading><div className="text-xs font-mono grid grid-cols-5 gap-1">{Object.keys(report.panchanga).map(k=><span key={k}>{k}:{(report.panchanga as any)[k]?.name||""}</span>)}</div><p className="text-[10px] text-text-muted">drik+KE · ke:{keVer}</p></Card>}
+        {report.panchanga && <Card className="p-5 mt-3 border border-hairline"><SectionHeading>Panchanga</SectionHeading><div className="text-xs font-mono grid grid-cols-5 gap-1">{Object.keys(report.panchanga).map(k=><span key={k}>{k}:{(report.panchanga as Record<string, { name?: string }>)[k]?.name||""}</span>)}</div><p className="text-[10px] text-text-muted">drik+KE · ke:{keVer}</p></Card>}
       </div>
 
       {/* Ch2 Yogas full */}
@@ -663,7 +639,7 @@ export function HoroscopeReport({
       <div id="ch4-shadbala">{report.shadbala && <ShadbalaCard shadbala={report.shadbala} />}<p className="text-[10px] px-1 font-mono text-text-muted">7 planets, 6 comps + total_rupa · BPHS27 · ke:{keVer}</p></div>
 
       {/* Ch5 Timing */}
-      <div id="ch5-timing">{tm && <TimingMergeCard tm={tm} />}{report.next_shubh_days?.length ? <Card className="p-5 mt-3 border border-hairline"><SectionHeading>Next shubh</SectionHeading><div className="text-xs font-mono">{report.next_shubh_days.map((d:any)=>d.date).join(", ")}</div></Card> : null}<p className="text-[10px] px-1 font-mono text-text-muted">merged dasha+transit via KE · ke:{keVer}</p></div>
+      <div id="ch5-timing">{tm && <TimingMergeCard tm={tm} />}{report.next_shubh_days?.length ? <Card className="p-5 mt-3 border border-hairline"><SectionHeading>Next shubh</SectionHeading><div className="text-xs font-mono">{report.next_shubh_days.map((d)=>d.date).join(", ")}</div></Card> : null}<p className="text-[10px] px-1 font-mono text-text-muted">merged dasha+transit via KE · ke:{keVer}</p></div>
 
       {/* Ch6 Dasha forecast */}
       <div id="ch6-dasha">{report.forecast?.length && <ForecastCard periods={report.forecast} />}<p className="text-[10px] px-1 font-mono text-text-muted">next 8 AD + 5 area bullets · ke:{keVer} {classSrc.dasha}</p></div>
@@ -699,7 +675,7 @@ export function HoroscopeReport({
           <Card className="p-5 border border-hairline">
             <SectionHeading>Kaksha Dasha</SectionHeading>
             <div className="text-xs font-mono">
-              {report.dashas.kaksha.periods.map((period: any, index: number) => (
+              {report.dashas.kaksha!.periods.map((period, index) => (
                 <div key={index} className="border-b border-hairline/60 py-1">
                   <div className="flex justify-between">
                     <span>{period.lord}</span>
@@ -720,7 +696,7 @@ export function HoroscopeReport({
           <Card className="p-5 border border-hairline">
             <SectionHeading>Chara Dasha</SectionHeading>
             <div className="text-xs font-mono">
-              {report.dashas.chara.periods.map((period: any, index: number) => (
+              {report.dashas.chara!.periods!.map((period, index) => (
                 <div key={index} className="border-b border-hairline/60 py-1">
                   <div className="flex justify-between">
                     <span>{period.maha}/{period.antara}</span>
@@ -741,7 +717,7 @@ export function HoroscopeReport({
           <Card className="p-5 border border-hairline">
             <SectionHeading>Kalachakra Dasha</SectionHeading>
             <div className="text-xs font-mono">
-              {report.dashas.kalachakra.periods.map((period: any, index: number) => (
+              {report.dashas.kalachakra!.periods!.map((period, index) => (
                 <div key={index} className="border-b border-hairline/60 py-1">
                   <div className="flex justify-between">
                     <span>{period.maha}/{period.antara}</span>

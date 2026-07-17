@@ -192,15 +192,16 @@ export function KPExplorer({ chart }: { chart?: ChartData }) {
     retryKey,
   ]);
 
+  const cusps = data?.cusps;
   const significations = useMemo(() => {
-    if (!data?.cusps) return [];
+    if (!cusps) return [];
 
     const byPlanet = new Map<
       string,
       { starLordOf: number[]; subLordOf: number[] }
     >();
 
-    for (const c of data.cusps) {
+    for (const c of cusps) {
       if (c.star_lord) {
         const entry = byPlanet.get(c.star_lord) ?? {
           starLordOf: [],
@@ -237,11 +238,12 @@ export function KPExplorer({ chart }: { chart?: ChartData }) {
         (a, b) =>
           PLANET_ORDER.indexOf(a.planet) - PLANET_ORDER.indexOf(b.planet),
       );
-  }, [data?.cusps]);
+  }, [cusps]);
 
+  const planets = data?.planets;
   const sortedPlanets = useMemo(() => {
-    if (!data?.planets) return [];
-    return [...data.planets].sort((a, b) => {
+    if (!planets) return [];
+    return [...planets].sort((a, b) => {
       const ai = PLANET_ORDER.indexOf(a.planet);
       const bi = PLANET_ORDER.indexOf(b.planet);
       if (ai === -1 && bi === -1) return 0;
@@ -249,7 +251,7 @@ export function KPExplorer({ chart }: { chart?: ChartData }) {
       if (bi === -1) return -1;
       return ai - bi;
     });
-  }, [data?.planets]);
+  }, [planets]);
 
   if (!chart) {
     return (

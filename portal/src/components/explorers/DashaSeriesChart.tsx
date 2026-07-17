@@ -379,29 +379,34 @@ export function DashaSeriesChart({
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError(null);
 
-    const durationDays =
-      (new Date(endDate).getTime() - new Date(startDate).getTime()) / 86_400_000;
-    const intervalDays = Math.max(3, Math.min(30, Math.round(durationDays / 8)));
+    // Defer past the current commit so this doesn't cascade-render.
+    const kickoff = setTimeout(() => {
+      if (cancelled) return;
+      setLoading(true);
+      setError(null);
 
-    postCvce<DashaSeriesData>("dasha-series", {
-      birth_datetime: chart.meta?.birth_datetime,
-      birth_lat: chart.meta?.birth_lat,
-      birth_lon: chart.meta?.birth_lon,
-      birth_tz: chart.meta?.birth_tz,
-      maha_lord: mahaLord,
-      antar_lord: antarLord,
-      start_date: startDate,
-      end_date: endDate,
-      dasha_score: dashaScore,
-      interval_days: intervalDays,
-    })
-      .then((d) => { if (!cancelled) { setData(d); setLoading(false); } })
-      .catch((e) => { if (!cancelled) { setError(e.message); setLoading(false); } });
+      const durationDays =
+        (new Date(endDate).getTime() - new Date(startDate).getTime()) / 86_400_000;
+      const intervalDays = Math.max(3, Math.min(30, Math.round(durationDays / 8)));
 
-    return () => { cancelled = true; };
+      postCvce<DashaSeriesData>("dasha-series", {
+        birth_datetime: chart.meta?.birth_datetime,
+        birth_lat: chart.meta?.birth_lat,
+        birth_lon: chart.meta?.birth_lon,
+        birth_tz: chart.meta?.birth_tz,
+        maha_lord: mahaLord,
+        antar_lord: antarLord,
+        start_date: startDate,
+        end_date: endDate,
+        dasha_score: dashaScore,
+        interval_days: intervalDays,
+      })
+        .then((d) => { if (!cancelled) { setData(d); setLoading(false); } })
+        .catch((e) => { if (!cancelled) { setError(e.message); setLoading(false); } });
+    }, 0);
+
+    return () => { cancelled = true; clearTimeout(kickoff); };
   }, [chart, mahaLord, antarLord, startDate, endDate, dashaScore]);
 
   if (loading) {

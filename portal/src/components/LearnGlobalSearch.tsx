@@ -55,14 +55,26 @@ export function LearnGlobalSearch({ initialQuery = "" }: { initialQuery?: string
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  // Tracks the last-seen initialQuery so we can sync it into `query` during
+  // render (avoiding setState-in-effect) when the caller passes a new value,
+  // e.g. navigating back from a book with ?q=.
+  const [prevInitialQuery, setPrevInitialQuery] = useState(initialQuery);
+  if (initialQuery && initialQuery !== prevInitialQuery) {
+    setPrevInitialQuery(initialQuery);
+    setQuery(initialQuery);
+  }
 
   // Debounced search
   useEffect(() => {
     const q = query.trim();
+    // Short queries clear results on the same debounced path as fetches, so
+    // the effect body itself never sets state synchronously.
     if (!q || q.length < 2) {
-      setHits([]);
-      setOpen(false);
-      return;
+      const t = setTimeout(() => {
+        setHits([]);
+        setOpen(false);
+      }, 0);
+      return () => clearTimeout(t);
     }
 
     const t = setTimeout(async () => {
@@ -92,13 +104,6 @@ export function LearnGlobalSearch({ initialQuery = "" }: { initialQuery?: string
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
-
-  // If initialQuery changes (e.g. coming back from a book with ?q=), trigger search
-  useEffect(() => {
-    if (initialQuery && initialQuery !== query) {
-      setQuery(initialQuery);
-    }
-  }, [initialQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const hasResults = hits.length > 0;
 
