@@ -1,7 +1,36 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-07-04 (Claude Code / Opus 4.8 — session mgmt + personalization + masthead + admin + charts-privacy security fix, all shipped)  
+**Snapshot:** 2026-07-17 (Claude Code / Fable 5 — Timeline v2 + E2E infra shipped; Life-Event Prediction engine is the next mission)  
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
+
+---
+
+## ✅ SESSION 2026-07-16/17 — READ THIS FIRST (authoritative status)
+
+**Everything below is committed AND pushed AND deployed** (Vercel auto-deploy from main; Fly deployed manually this session). `origin/main = 80ffa2a`.
+
+### Shipped
+- **Person Timeline v2** (MAFIP final gate **97/100 PASS**): Behind/Active/Ahead digest, whole-life minimap (planet-coloured MD blocks, click-to-travel), valence-first canvas (green/red/amber by direction; origin = border style), drag-pan + Today, List view, observed-event **correction/supersession UI**. View-model lib `portal/src/lib/timeline-view.ts` (+ node:test, 9/9).
+- **CVCE valence pipeline**: yoga `benefic` → priority_predictions `direction` → milestone EventDirection (was all MIXED). Suite 340 passed/1 skipped. Deployed to Fly.
+- **Playwright E2E suite rebuilt** against the real app: `date`/`time` params (never `dob`), accessible-name selectors, chromium 53/53 functional+axe+responsive, 21 visual baselines (darwin), CI workflow repaired (was invalid YAML; runs chromium `--ignore-snapshots`). Local E2E: CVCE on :8400 + `CVCE_BASE_URL` in portal/.env.local (present, gitignored).
+- **portal/package.json restored** after an interim session template-rewrite dropped `server-only`/`zod`/data-sync hooks/verify:gate. Rule: always `git diff HEAD` any wholesale config rewrite.
+- **App fixes** found by the suite: masthead overflowed 640–1000px (search lg-only, nav/CTA md+), kundali SVG fixed-460px on mobile (max-w-full), landing h1→h3 skip (sr-only h2).
+- **/muhurta restored to the frozen standalone iframe** (owner decision; 80ffa2a). Native `/chart/muhurta` stays feature-gated.
+- **docs/VEDIC_DIGEST_METHOD_AUDIT.md**: handwritten notes (accurate-prediction 15pp, panchanga-muhurta 5pp, calendar pp1–8, Jyotisha orientation sheet) vs engine. Calculations aligned; deviations **D1–D6** (headline: yoga-first vs event-first).
+
+### Known issues / caveats
+- **Prod timeline writes 503**: Fly has no durable volume/`CVCE_TIMELINE_DATABASE_PATH`; add/correct-event fails in production (reads fine). Provision before advertising the feature.
+- **Lint debt**: 90 pre-existing errors in 27 files (NOT timeline) block `npm run ci` — cleanup agent was running at checkpoint; commit its work when green (`npx eslint src/ tests/` must exit 0).
+- Visual baselines are darwin-only; CI ignores snapshots until linux baselines land.
+
+### Owner decisions recorded 2026-07-17
+1. Muhūrta: iframe restored (done).
+2. **Proceed** with programme re-gates: B3 (remediation complete, needs independent re-gate), Transit Context (last 68/100), B2 (last 66/100). The "holds" are the project's own ≥95 MAFIP release policy — not external.
+3. **Proceed** with the **Life-Event Prediction engine** — THE next mission. Event-first dated windows (marriage/children/career/foreign/home/health): six-witness promise (bhava+lord+occupants+karaka+varga+yoga → confidence), dasha windows gated on the event's house network (lord chain), fructification/AV transit narrowing to months, published with the notes' output template (window+confidence+alternatives+limits), timeline shows them as checkable claims ("did this happen?") feeding the append-only hit/miss tally per chart — the product's trust engine (user: "I want to know if the app correctly predicted my marriage date, my kid's birth, my international job"). Spec seed = the audit doc D1–D6 + Domain Keys table (p5) + high-specificity map (p15) of the prediction notes.
+4. KG ingest of the digest PDFs: recommended, **not yet approved** — ask before running (graph rebuild + redeploy).
+
+### Verification quickstart (all green at checkpoint)
+`cd cvce && .venv/bin/python -m pytest -q` (340+1) · `cd portal && npm run typecheck` · `node --test src/lib/timeline-view.test.mts` (9/9) · `npx playwright test --project=chromium tests/app.spec.ts tests/interaction tests/responsive tests/accessibility` (53/53; needs both local servers) · golden chart: Mohan 1975-04-22 19:15 Mysore, Lagna Libra/Swati p4.
 
 ---
 

@@ -1,5 +1,14 @@
 # VedicAstro — AI Context Constitution
 
+## Session checkpoint — 2026-07-17 (Timeline v2 shipped; next mission: Life-Event Prediction engine)
+
+- **Shipped & deployed (Vercel + Fly, commits 958f9af..80ffa2a on main):** Person Timeline v2 (digest/minimap/valence canvas/list/correction UI, final MAFIP gate **97/100 PASS**); CVCE valence pipeline (yoga benefic → milestone direction; CVCE suite 340 passed/1 skipped); Playwright E2E suite rebuilt against the real app (chromium 53/53, 21 visual baselines, CI workflow repaired); portal package.json restored after an interim template rewrite dropped used deps; masthead tablet overflow + kundali mobile scaling + landing heading fixes; **/muhurta restored to the frozen standalone iframe per owner decision (80ffa2a)**.
+- **Deploy caveat:** Fly has no durable timeline DB volume — `POST /timeline/events` (add/correct observed events) returns 503 in production until `CVCE_TIMELINE_DATABASE_PATH` + volume are provisioned; reads work.
+- **Vedic Digest audit (docs/VEDIC_DIGEST_METHOD_AUDIT.md):** handwritten method notes reviewed in full; calculation core aligned; prediction layer deviates — **D1 yoga-first vs event-first (fundamental), D2 no house-network dasha gating, D3 no transit trigger layer, D4 no witness-count confidence, D5 no birth-time stability gate, D6 no varga confirmation.** KG ingest of the digest PDFs: recommended, not yet owner-approved.
+- **Owner decisions (2026-07-17):** (a) muhūrta = restore iframe (done); (b) proceed with programme re-gates — Transit Context (last 68/100), B2 (66/100), B3 (re-gate pending); (c) **build the Life-Event Prediction engine** — event-first dated windows (marriage/children/career/foreign/home/health) via six-witness promise + house-network dasha gating + fructification transit narrowing, surfaced on the timeline as checkable claims with hit/miss tally per chart. This is the product's trust engine and the next session's mission; the audit doc is its spec seed.
+- **In progress at checkpoint:** portal lint-debt cleanup agent (90 pre-existing errors in 27 untouched files; blocks npm run ci at HEAD); programme re-gate + Life-Event design agents being launched.
+- **E2E conventions:** chart pages parse `date`/`time` (never `dob`); local E2E needs CVCE on :8400 and `CVCE_BASE_URL` in portal/.env.local (present); suite docs in memory + STATUS.md 2026-07-16 entry.
+
 ## Prediction-engine MAFIP checkpoint — 2026-07-14T15:56:45+01:00
 
 - **Person Timeline gate:** remediation passed independent re-review at **96/100 with zero Critical or High findings**. This supersedes the failed 15:42 checkpoint below; retain the earlier entry as audit history.
