@@ -52,7 +52,8 @@ export default async function Home() {
       </section>
 
       {/* Feature triptych */}
-      <section className="mx-auto max-w-7xl px-6 pb-24">
+      <section aria-labelledby="landing-pillars" className="mx-auto max-w-7xl px-6 pb-24">
+        <h2 id="landing-pillars" className="sr-only">What makes VedicShastra different</h2>
         <div className="grid gap-6 md:grid-cols-3">
           {[
             {

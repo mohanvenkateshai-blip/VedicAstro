@@ -23,7 +23,7 @@ export function SiteHeader({ session }: { session: Session | null }) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-hairline bg-[color-mix(in_srgb,var(--color-background)_85%,transparent)] backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 lg:px-6">
         <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="VedicShastra AI home">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-fg font-serif text-lg" aria-hidden="true">ॐ</span>
           <span className="hidden font-semibold tracking-tight sm:inline">
@@ -37,7 +37,7 @@ export function SiteHeader({ session }: { session: Session | null }) {
               key={item.href}
               href={item.href}
               aria-current={item.match(pathname) ? "page" : undefined}
-              className="hidden px-3 py-2 text-sm text-text-muted transition-colors hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg sm:inline"
+              className="hidden px-2 py-2 text-sm text-text-muted transition-colors hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded-lg md:inline lg:px-3"
             >
               {item.label}
             </Link>
@@ -46,7 +46,7 @@ export function SiteHeader({ session }: { session: Session | null }) {
             <Link
               href="/admin"
               aria-current={pathname.startsWith("/admin") ? "page" : undefined}
-              className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-accent transition-colors hover:text-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 sm:inline-flex"
+              className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-accent transition-colors hover:text-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 md:inline-flex"
             >
               <ShieldCheck size={14} /> Admin
             </Link>
@@ -61,7 +61,7 @@ export function SiteHeader({ session }: { session: Session | null }) {
           {signedIn ? (
             <>
               <NotificationBell />
-              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm sm:inline-flex">
+              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm md:inline-flex">
                 Cast a chart
               </ButtonLink>
               <UserMenu session={session} />
@@ -69,7 +69,7 @@ export function SiteHeader({ session }: { session: Session | null }) {
           ) : (
             <>
               <ThemeToggle />
-              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm sm:inline-flex">
+              <ButtonLink href="/chart" variant="primary" className="hidden !px-4 !py-2 text-sm md:inline-flex">
                 Cast a chart
               </ButtonLink>
               <Link

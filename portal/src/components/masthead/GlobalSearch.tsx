@@ -35,10 +35,14 @@ export function GlobalSearch() {
 
   useEffect(() => {
     const q = query.trim();
+    // Short queries clear results on the same debounced path as fetches, so
+    // the effect body itself never sets state synchronously.
     if (q.length < 2) {
-      setHits([]);
-      setOpen(false);
-      return;
+      const t = setTimeout(() => {
+        setHits([]);
+        setOpen(false);
+      }, 0);
+      return () => clearTimeout(t);
     }
     const t = setTimeout(async () => {
       setLoading(true);
@@ -64,8 +68,10 @@ export function GlobalSearch() {
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
+  // Inline input only from lg up — tablet mastheads overflowed the viewport;
+  // below lg, search lives on the pages themselves.
   return (
-    <div ref={ref} className="relative hidden md:block">
+    <div ref={ref} className="relative hidden lg:block">
       <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-text-muted" />
       <input
         type="text"

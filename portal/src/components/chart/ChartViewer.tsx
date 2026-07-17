@@ -69,7 +69,7 @@ export function ChartViewer({ chart }: { chart: ChartData }) {
             sav={showSav && vargaKey === "D1" ? sav : undefined}
             degrees={degrees}
             size={460}
-            className="drop-shadow-[0_10px_28px_rgba(0,0,0,0.4)]"
+            className="h-auto max-w-full drop-shadow-[0_10px_28px_rgba(0,0,0,0.4)]"
           />
         </motion.div>
         {degrees && (
