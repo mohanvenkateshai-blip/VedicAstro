@@ -162,8 +162,8 @@ test.describe('Transits page', () => {
 });
 
 test.describe('Muhūrta surfaces', () => {
-  test('global /muhurta redirects into the native workspace', async ({ page }) => {
-    await new MuhurtaPages(page).expectRedirectToNative();
+  test('global muhurta tab is the frozen standalone iframe', async ({ page }) => {
+    await new MuhurtaPages(page).expectStandaloneIframe();
   });
 
   test('native muhurta research shows the feature-gate hold page', async ({ page }) => {

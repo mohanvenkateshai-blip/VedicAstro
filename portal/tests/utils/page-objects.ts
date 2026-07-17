@@ -144,14 +144,12 @@ export class TimelinePage {
 export class MuhurtaPages {
   constructor(readonly page: Page) {}
 
-  /**
-   * /muhurta currently redirects into the feature-gated native workspace
-   * (src/app/muhurta/page.tsx). The frozen standalone remains live at
-   * muhurtha.uvwx.me but is no longer iframed — flagged as a product gap.
-   */
-  async expectRedirectToNative() {
+  /** /muhurta is ONLY the frozen standalone in an iframe (CONTEXT.md law). */
+  async expectStandaloneIframe() {
     await this.page.goto('/muhurta', { timeout: TIMEOUTS.pageLoad });
-    await this.page.waitForURL(/\/chart\/muhurta/, { timeout: TIMEOUTS.pageLoad });
+    await expect(this.page.locator('iframe[src*="muhurtha.uvwx.me"]')).toBeVisible({
+      timeout: TIMEOUTS.chartLoad,
+    });
   }
 
   /** Native muhūrta research is currently feature-gated off. */

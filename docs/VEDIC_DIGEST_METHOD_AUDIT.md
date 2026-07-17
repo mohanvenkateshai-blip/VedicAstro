@@ -4,7 +4,8 @@
 **Sources reviewed:** `Panchang/Gyan/Vedic Digest/` —
 `vedic-astrology-accurate-predictions-handwritten-study-notes.pdf` (15 pp, read in full),
 `vedic-panchanga-muhurta-handwritten-study-notes.pdf` (5 pp, read in full),
-`vedic-calendar-complete-handwritten-study-notes-v3.pdf` (pp 1–8 read; pp 9–15 are festival/era/regional-calendar material outside the prediction engine's scope).
+`vedic-calendar-complete-handwritten-study-notes-v3.pdf` (pp 1–8 read; pp 9–15 are festival/era/regional-calendar material outside the prediction engine's scope),
+and the series' orientation sheet `~/Downloads/Vedic Astrology (Jyotisha).png` (3 skandhas, 6 limbs, READING = graha·rashi·bhava·dasha/gochar, "guidance ≠ certainty" — reinforces D2–D4 below; move it into the Vedic Digest folder for the eventual KG ingest).
 
 The notes are a modern, source-cited method synthesis (Phaladeepika, Brihat Jataka, BPHS, Jataka Parijata, Brihat Samhita, Surya Siddhanta, Muhurta Cintamani), not a new rule corpus. Their value to us is the **prediction discipline**: the 5-Lock chain (Promise → Power → Period → Trigger → Manifestation) and the 10-gate Master Prediction Flow ending in *publish with confidence + limits, then score without rewriting rules*.
 
