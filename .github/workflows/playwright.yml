@@ -51,6 +51,12 @@ jobs:
 
       - name: Start dev server
         working-directory: ./portal
+        # CVCE_BASE_URL/CVCE_SERVICE_TOKEN must be set here, not only on the
+        # test-run step below — the running Next.js server process reads
+        # process.env at request time from whatever env it booted with.
+        env:
+          CVCE_BASE_URL: ${{ secrets.CVCE_BASE_URL }}
+          CVCE_SERVICE_TOKEN: ${{ secrets.CVCE_SERVICE_TOKEN }}
         run: |
           npm run dev > dev.log 2>&1 &
           DEV_PID=$!

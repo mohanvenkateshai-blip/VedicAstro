@@ -22,9 +22,18 @@ jobs:
     steps:
       - name: Probe /health/deep
         id: probe
+        env:
+          # /health/deep requires the portal's service token like every other
+          # diagnostic endpoint (see cvce/tests/test_service_auth.py
+          # test_deep_health_is_protected — this is deliberate, not a bug).
+          # Add this secret in repo Settings → Secrets → Actions so the
+          # monitor can authenticate; without it every run 401s regardless
+          # of real CVCE health.
+          CVCE_SERVICE_TOKEN: ${{ secrets.CVCE_SERVICE_TOKEN }}
         run: |
           set +e
           BODY=$(curl -sS --max-time 60 --retry 3 --retry-delay 5 \
+            -H "x-cvce-service-token: ${CVCE_SERVICE_TOKEN}" \
             "https://vedicastro-cvce.fly.dev/health/deep")
           echo "raw<<EOF" >> "$GITHUB_OUTPUT"; echo "$BODY" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
           STATUS=$(echo "$BODY" | jq -r '.status // "unreachable"' 2>/dev/null)
