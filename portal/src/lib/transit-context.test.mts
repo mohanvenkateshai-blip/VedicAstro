@@ -54,6 +54,17 @@ describe("transit observation instant", () => {
     );
   });
 
+  it("rejects an invalid IANA timezone with a readable message instead of the runtime's raw error", () => {
+    assert.throws(
+      () => zonedLocalToOffsetIso("2026-07-14", "12:30", "Not/AZone"),
+      /"Not\/AZone" is not a valid IANA timezone/,
+    );
+    assert.throws(
+      () => resolveZonedLocalInstants("2026-07-14", "12:30", "Not/AZone"),
+      /"Not\/AZone" is not a valid IANA timezone/,
+    );
+  });
+
   it("builds transit fields without copying Mysuru natal coordinates", () => {
     const request = buildTransitObservationRequest({
       date: "2026-07-14",

@@ -6,6 +6,7 @@ import type { ChartData } from "@/lib/types";
 import {
   buildTransitObservationRequest,
   localDateTimeAt,
+  parseCoordinate,
   resolveZonedLocalInstants,
   type TransitDisambiguation,
   type TransitObservationRequest,
@@ -80,11 +81,19 @@ export function TransitWorkspace({
   }, []);
 
   function useCurrentDateTime() {
-    const now = localDateTimeAt(new Date(), timezone || browserTimezone);
-    setDate(now.date);
-    setTime(now.time);
-    setDisambiguation("");
-    setError(null);
+    // `timezone` is free text the user may have typed manually (e.g. after a
+    // failed place search); an invalid IANA zone must surface as the same
+    // inline error affordance the rest of the form uses, not an uncaught
+    // exception — this route has no error boundary to catch a raw throw.
+    try {
+      const now = localDateTimeAt(new Date(), timezone || browserTimezone);
+      setDate(now.date);
+      setTime(now.time);
+      setDisambiguation("");
+      setError(null);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Invalid timezone.");
+    }
   }
 
   function onPlaceChange(value: string) {
@@ -210,8 +219,8 @@ export function TransitWorkspace({
         date,
         time,
         place,
-        latitude: Number(lat),
-        longitude: Number(lon),
+        latitude: parseCoordinate(lat),
+        longitude: parseCoordinate(lon),
         timezone,
         disambiguation: disambiguation || undefined,
       });

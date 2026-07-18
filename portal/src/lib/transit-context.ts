@@ -40,16 +40,23 @@ const LOCAL_FORMATTERS = new Map<string, Intl.DateTimeFormat>();
 function formatter(timezone: string): Intl.DateTimeFormat {
   let value = LOCAL_FORMATTERS.get(timezone);
   if (!value) {
-    value = new Intl.DateTimeFormat("en-CA", {
-      timeZone: timezone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hourCycle: "h23",
-    });
+    try {
+      value = new Intl.DateTimeFormat("en-CA", {
+        timeZone: timezone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23",
+      });
+    } catch {
+      // The runtime's own message (e.g. "Invalid time zone specified: ...")
+      // is not written for end users; every caller in this module funnels
+      // through here, so this is the single place to make it readable.
+      throw new Error(`"${timezone}" is not a valid IANA timezone (example: Europe/Dublin).`);
+    }
     LOCAL_FORMATTERS.set(timezone, value);
   }
   return value;
@@ -187,6 +194,17 @@ export function zonedLocalToOffsetIso(
     throw new Error("Earlier/later disambiguation is only valid for a repeated local time.");
   }
   return candidates[0].instant;
+}
+
+/**
+ * Parse a coordinate field's raw text. `Number(" ")` (and `Number("")`)
+ * evaluate to `0` in JavaScript, which would otherwise let a blank or
+ * whitespace-only latitude/longitude field silently pass `Number.isFinite`
+ * and compute transits at the equator/prime meridian instead of being
+ * rejected. Blank input must fail validation, not resolve to 0.
+ */
+export function parseCoordinate(value: string): number {
+  return value.trim() === "" ? NaN : Number(value);
 }
 
 export function buildTransitObservationRequest(

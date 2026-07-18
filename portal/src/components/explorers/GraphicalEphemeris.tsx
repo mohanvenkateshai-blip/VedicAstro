@@ -120,6 +120,13 @@ export function GraphicalEphemeris({
   const [retryToken, setRetryToken] = useState(0);
   const svgRef = useRef<SVGSVGElement>(null);
 
+  // Derived once from the confirmed transit observation context (not the
+  // browser's current date) so the chart title always names the year whose
+  // ephemeris is actually plotted, including past/future transit lookups.
+  const observationYear = Number(
+    localDateTimeAt(new Date(transit.transit_instant), transit.transit_timezone).date.slice(0, 4),
+  );
+
   useEffect(() => {
     if (!chart?.meta?.birth_datetime) return;
     let cancelled = false;
@@ -127,9 +134,7 @@ export function GraphicalEphemeris({
     async function fetchPositions() {
       if (!chart?.meta?.birth_datetime) return;
 
-      const year = Number(
-        localDateTimeAt(new Date(transit.transit_instant), transit.transit_timezone).date.slice(0, 4),
-      );
+      const year = observationYear;
       const lat = transit.transit_lat;
       const lon = transit.transit_lon;
       setLoading(true);
@@ -192,6 +197,7 @@ export function GraphicalEphemeris({
     chart?.meta?.birth_tz,
     chart?.ayanamsa,
     transit,
+    observationYear,
     retryToken,
   ]);
 
@@ -516,7 +522,7 @@ export function GraphicalEphemeris({
           fill="var(--color-text-main)"
           className="font-display"
         >
-          Annual Ephemeris — {new Date().getFullYear()}
+          Annual Ephemeris — {observationYear}
         </text>
       </svg>
     </div>
