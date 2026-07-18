@@ -7,10 +7,24 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 2 : 4,
   reporter: [
-    ['html', { outputFolder: 'test-results/html-report' }],
+    // 'list' gives per-test progress as it runs — without it, a hang looks
+    // identical to silence until the whole job dies on GitHub's hard
+    // timeout, which is exactly what happened the first time this ran.
+    ['list'],
+    ...(process.env.CI ? [['github'] as const] : []),
+    // A distinct top-level folder, not 'test-results/html-report': the html
+    // reporter previously nested inside the same dir Playwright clears for
+    // trace/screenshot/video artifacts on every run, which the html
+    // reporter warned would wipe its own output ("HTML reporter output
+    // folder clashes with the tests output folder").
+    ['html', { outputFolder: 'playwright-report' }],
     ['json', { outputFile: 'test-results/results.json' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
   ],
+  // In CI a hung test must fail fast with a partial report instead of
+  // silently eating the whole job's time budget until GitHub force-cancels
+  // it (which produces no report and no diagnostic signal at all).
+  globalTimeout: process.env.CI ? 15 * 60 * 1000 : undefined,
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000',
     trace: 'on-first-retry',

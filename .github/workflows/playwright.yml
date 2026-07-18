@@ -9,7 +9,10 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # playwright.config.ts caps the test run itself at 15 min in CI
+    # (globalTimeout) so a hang fails fast with a partial report; this
+    # ceiling only needs to cover setup + that + upload overhead.
+    timeout-minutes: 20
     env:
       CVCE_BASE_URL: ${{ secrets.CVCE_BASE_URL }}
       CVCE_HEALTH_URL: ${{ secrets.CVCE_HEALTH_URL }}
@@ -97,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-${{ github.run_id }}
-          path: portal/test-results/html-report/
+          path: portal/playwright-report/
           retention-days: 7
 
       - name: Stop dev server
