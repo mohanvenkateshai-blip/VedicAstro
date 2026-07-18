@@ -46,7 +46,14 @@ jobs:
 
       - name: Install CVCE dependencies
         working-directory: ./cvce
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          # PyPI's "4.8.7" wheel for PyJHora is not immutable in practice —
+          # the currently-published build silently regressed a fix this
+          # patcher applies (planet_list.index() on a dict, AttributeError
+          # on every /chart call). cvce/Dockerfile already runs this after
+          # every fresh pip install for exactly this reason; CI must too.
+          python patch_pyjhora.py
 
       # E2E used to run against production Fly (via CVCE_BASE_URL/
       # CVCE_SERVICE_TOKEN secrets) — that meant CI load competed with real
