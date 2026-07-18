@@ -5,7 +5,16 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
-  workers: process.env.CI ? 2 : 4,
+  // GitHub's standard hosted runners have 2 CPU cores. 2 workers here meant
+  // 2 Playwright processes + Next.js dev-mode compilation + CVCE's
+  // CPU-bound ephemeris/dasha computation all contended for those same 2
+  // cores — every /chart/timeline navigation (heaviest client bundle: the
+  // canvas/minimap/digest components) timed out at 60s, 100% of the time,
+  // even though CVCE's own responses were logged as fast 200s throughout —
+  // this was CPU starvation, not a hang in the app or CVCE. The same suite
+  // with 2 workers against a local CVCE completes in 2.9 min on a normal
+  // multi-core dev machine, which is why this never reproduced locally.
+  workers: process.env.CI ? 1 : 4,
   reporter: [
     // 'list' gives per-test progress as it runs — without it, a hang looks
     // identical to silence until the whole job dies on GitHub's hard
