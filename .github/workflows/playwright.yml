@@ -14,9 +14,8 @@ jobs:
     # ceiling only needs to cover setup + that + upload overhead.
     timeout-minutes: 20
     env:
-      CVCE_BASE_URL: ${{ secrets.CVCE_BASE_URL }}
-      CVCE_HEALTH_URL: ${{ secrets.CVCE_HEALTH_URL }}
       PLAYWRIGHT_BASE_URL: http://localhost:3000
+      CVCE_BASE_URL: http://localhost:8400
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,7 +27,14 @@ jobs:
           cache: 'npm'
           cache-dependency-path: portal/package-lock.json
 
-      - name: Install dependencies
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: cvce/requirements.txt
+
+      - name: Install portal dependencies
         working-directory: ./portal
         run: npm ci
 
@@ -38,28 +44,55 @@ jobs:
         working-directory: ./portal
         run: npx playwright install --with-deps chromium
 
-      - name: Verify CVCE health
+      - name: Install CVCE dependencies
+        working-directory: ./cvce
+        run: pip install -r requirements.txt
+
+      # E2E used to run against production Fly (via CVCE_BASE_URL/
+      # CVCE_SERVICE_TOKEN secrets) — that meant CI load competed with real
+      # users on a single, non-autoscaled machine. Each timeline test costs
+      # a full report_facts recompute (documented 15-20s "on a warm CVCE" —
+      # STATUS.md known issue #2); ~15 such tests across 2 parallel workers
+      # saturated the machine mid-run, triggering a real Fly health-check
+      # failure (confirmed in Fly logs) and a cascade of test timeouts that
+      # ate the full 30-minute job budget with nothing passing.
+      #
+      # An ephemeral local CVCE isolates CI entirely from production: no
+      # shared load, no dependency on CVCE_SERVICE_TOKEN, no risk of writing
+      # test data into the production timeline DB, and it's faster (no
+      # network hop to Fly's LHR region). PyJHora ships its own bundled
+      # Swiss Ephemeris data, so no CVCE_SWISS_EPHEMERIS_PATH is needed —
+      # verified locally: `ascendant()` for the golden chart resolves to
+      # Libra with the env var unset. No CVCE_SERVICE_TOKEN is set below,
+      # so the service-auth middleware stays open exactly like local dev
+      # (cvce/app/config.py: auth is enabled only when a token is present
+      # or SERVICE_AUTH_REQUIRED is set — neither is true here).
+      - name: Start CVCE (local, isolated from production)
+        working-directory: ./cvce
         run: |
-          echo "Waiting for CVCE health check at $CVCE_HEALTH_URL..."
-          for i in {1..30}; do
-            if curl -sf "$CVCE_HEALTH_URL" > /dev/null; then
-              echo "CVCE health check passed"
+          python -m uvicorn app.server:app --host 0.0.0.0 --port 8400 > cvce.log 2>&1 &
+          CVCE_PID=$!
+          echo "CVCE_PID=$CVCE_PID" >> $GITHUB_ENV
+          echo "Waiting for local CVCE..."
+          for i in {1..60}; do
+            if curl -sf http://localhost:8400/health > /dev/null 2>&1; then
+              echo "CVCE ready"
               exit 0
             fi
-            echo "Waiting for CVCE... (attempt $i/30)"
-            sleep 2
+            sleep 1
           done
-          echo "CVCE health check failed after 60 seconds"
+          echo "CVCE failed to start"
+          cat cvce.log
+          kill $CVCE_PID 2>/dev/null || true
           exit 1
 
       - name: Start dev server
         working-directory: ./portal
-        # CVCE_BASE_URL/CVCE_SERVICE_TOKEN must be set here, not only on the
-        # test-run step below — the running Next.js server process reads
-        # process.env at request time from whatever env it booted with.
+        # CVCE_BASE_URL must be set here, not only on the test-run step
+        # below — the running Next.js server process reads process.env at
+        # request time from whatever env it booted with.
         env:
-          CVCE_BASE_URL: ${{ secrets.CVCE_BASE_URL }}
-          CVCE_SERVICE_TOKEN: ${{ secrets.CVCE_SERVICE_TOKEN }}
+          CVCE_BASE_URL: http://localhost:8400
         run: |
           npm run dev > dev.log 2>&1 &
           DEV_PID=$!
@@ -82,9 +115,6 @@ jobs:
       - name: Run Playwright tests (chromium)
         working-directory: ./portal
         run: npx playwright test --project=chromium --ignore-snapshots
-        env:
-          PLAYWRIGHT_BASE_URL: http://localhost:3000
-          CVCE_BASE_URL: ${{ secrets.CVCE_BASE_URL }}
 
       - name: Upload test artifacts on failure
         if: failure()
@@ -93,6 +123,7 @@ jobs:
           name: playwright-artifacts-${{ github.run_id }}
           path: |
             portal/test-results/
+            cvce/cvce.log
           retention-days: 7
 
       - name: Upload Playwright report
@@ -103,9 +134,12 @@ jobs:
           path: portal/playwright-report/
           retention-days: 7
 
-      - name: Stop dev server
+      - name: Stop servers
         if: always()
         run: |
           if [ -n "$DEV_PID" ]; then
             kill $DEV_PID 2>/dev/null || true
+          fi
+          if [ -n "$CVCE_PID" ]; then
+            kill $CVCE_PID 2>/dev/null || true
           fi
