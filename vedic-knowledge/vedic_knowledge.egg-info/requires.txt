@@ -1,0 +1,8 @@
+
+[embed]
+numpy>=1.24
+fastembed>=0.3
+
+[full]
+numpy>=1.24
+fastembed>=0.3

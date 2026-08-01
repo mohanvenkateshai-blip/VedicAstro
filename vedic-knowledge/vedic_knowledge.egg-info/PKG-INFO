@@ -1,0 +1,118 @@
+Metadata-Version: 2.4
+Name: vedic-knowledge
+Version: 0.1.0
+Summary: Shared GraphRAG + knowledge integration for VedicAstro and panchanga_muhurtha
+Author: VedicAstro / MuhurtaCosmos
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Provides-Extra: embed
+Requires-Dist: numpy>=1.24; extra == "embed"
+Requires-Dist: fastembed>=0.3; extra == "embed"
+Provides-Extra: full
+Requires-Dist: numpy>=1.24; extra == "full"
+Requires-Dist: fastembed>=0.3; extra == "full"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: provides-extra
+Dynamic: requires-python
+Dynamic: summary
+
+# vedic-knowledge
+
+Shared **GraphRAG** + knowledge-integration package used by:
+
+- **VedicAstro** (`cvce/`) — full KnowledgeEngine + prediction enhancement
+- **panchanga_muhurtha** (`api/`) — lightweight graph search / rule lookups
+
+## Install
+
+```bash
+# editable (VedicAstro monorepo)
+pip install -e /path/to/VedicAstro/vedic-knowledge
+
+# or path install (panchanga)
+pip install /path/to/VedicAstro/vedic-knowledge
+```
+
+Optional embedding extras:
+
+```bash
+pip install -e "/path/to/vedic-knowledge[embed]"
+```
+
+## Environment
+
+| Variable | Purpose |
+|----------|---------|
+| `GRAPH_JSON_PATH` | Absolute path to `graph.json` (production) |
+| `GRAPH_VERSION` | Expected version / `built_at_commit`; startup gate |
+| `GRAPHIFY_GRAPH_PATH` | Legacy alias for `GRAPH_JSON_PATH` |
+| `CORPUS_GRAPH_VERSION` | Supabase KE store version tag |
+
+If `graph.json` is missing the package **degrades gracefully** (empty graph, `stats.loaded=False`) instead of crashing.
+
+## Public API
+
+```python
+from vedic_knowledge import (
+    get_knowledge_graph,   # → GraphRAG singleton
+    get_transit_rules,     # → GraphTransitRules | None
+    get_muhurta_rules,     # → GraphMuhurtaRules | None
+    enforce_graph_version, # startup gate
+    search_knowledge,
+    get_safe_graph,
+    get_safe_transit_rules,
+    get_safe_muhurta_rules,
+)
+
+g = get_knowledge_graph()
+print(g.search("Sade Sati", 3))
+
+# Fail startup if GRAPH_VERSION ≠ graph metadata
+enforce_graph_version()  # raises GraphVersionMismatchError on mismatch
+```
+
+## Graph version gate
+
+Both apps should call `enforce_graph_version()` (or `check_graph_version(strict=True)`) at startup when `GRAPH_VERSION` is set. This prevents serving stale rules after a graph update without an engine redeploy.
+
+```python
+import os
+from vedic_knowledge import enforce_graph_version, GraphVersionMismatchError
+
+if os.environ.get("GRAPH_VERSION"):
+    enforce_graph_version()  # strict by default
+```
+
+Mismatch test (do not run against production):
+
+```bash
+GRAPH_VERSION=wrong-version python3 -c \
+  "from vedic_knowledge import enforce_graph_version; enforce_graph_version()"
+# → GraphVersionMismatchError
+```
+
+## Package layout
+
+```
+vedic_knowledge/
+  __init__.py
+  graph/
+    graph.py            # GraphRAG singleton
+    rules_provider.py   # GraphTransitRules
+    muhurta_rules.py    # GraphMuhurtaRules
+    enhancer.py         # PredictionEnhancer
+  knowledge/
+    integration.py      # get_knowledge_engine / safe_* accessors
+    auto_mapper.py
+    schema_mutator.py
+    session_memory.py
+    local_embedder.py
+```
+
+Host apps keep local `graph_rag/` and `knowledge_engine/` packages as **shims** that re-export from `vedic_knowledge` for backward compatibility.

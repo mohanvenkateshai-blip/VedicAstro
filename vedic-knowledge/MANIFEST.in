@@ -1,0 +1,3 @@
+recursive-include vedic_knowledge *.py
+recursive-include vedic_knowledge/graph graph.json
+include README.md
