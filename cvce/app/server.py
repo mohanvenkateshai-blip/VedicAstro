@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import secrets
 import time
@@ -1270,6 +1271,7 @@ def index():
             "kp_system": "POST /kp-system",
             "varshaphala": "POST /varshaphala",
             "orchestrate": "POST /orchestrate",
+            "knowledge_transit": "GET /knowledge/transit?planet=Sun&house=3",
             "docs": "GET /docs",
         },
         "example": {
@@ -3622,6 +3624,706 @@ def knowledge_node_hierarchy(node_id: str):
     if not h:
         raise HTTPException(status_code=404, detail=f"No chapter mapping for node: {node_id}")
     return h
+
+
+# Canonical planet names accepted by transit house tables (graph + hardcoded).
+_TRANSIT_PLANETS = frozenset(
+    {"Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"}
+)
+_TRANSIT_PLANET_ALIASES = {
+    "sun": "Sun",
+    "moon": "Moon",
+    "mars": "Mars",
+    "mercury": "Mercury",
+    "jupiter": "Jupiter",
+    "venus": "Venus",
+    "saturn": "Saturn",
+    "rahu": "Rahu",
+    "ketu": "Ketu",
+    "surya": "Sun",
+    "chandra": "Moon",
+    "mangal": "Mars",
+    "budha": "Mercury",
+    "guru": "Jupiter",
+    "shukra": "Venus",
+    "shani": "Saturn",
+}
+
+
+def _normalize_transit_planet(planet: str) -> str | None:
+    raw = (planet or "").strip()
+    if not raw:
+        return None
+    if raw in _TRANSIT_PLANETS:
+        return raw
+    return _TRANSIT_PLANET_ALIASES.get(raw.lower())
+
+
+def _hardcoded_transit_lookup(planet: str, house: int) -> dict:
+    """Fallback when graph rules are unavailable — uses vedic_engine transit tables."""
+    from vedic_engine.rules.transit_rules import TRANSIT_HOUSES
+
+    tbl = TRANSIT_HOUSES.get(planet, {})
+    if house in tbl.get("worst", []):
+        quality = "worst"
+    elif house in tbl.get("bad", []):
+        quality = "bad"
+    elif house in tbl.get("good", []):
+        quality = "good"
+    elif house in tbl.get("neutral", []):
+        quality = "neutral"
+    else:
+        quality = "neutral"
+
+    src = tbl.get("source") or "GPD-Ch10-Table12"
+    # Normalize source tags into human-readable citation list
+    sources = ["GPD Ch.10"]
+    if "HS" in str(src) or "Hora" in str(src):
+        sources.append("Hora Sara Ch.17")
+
+    effect_map = {
+        "good": f"{planet} in {house}th from Janma Rasi — favourable (hardcoded GPD table)",
+        "bad": f"{planet} in {house}th from Janma Rasi — unfavourable (hardcoded GPD table)",
+        "worst": f"{planet} in {house}th from Janma Rasi — worst position (hardcoded GPD table)",
+        "neutral": f"{planet} in {house}th from Janma Rasi — neutral (hardcoded GPD table)",
+    }
+    return {
+        "quality": quality,
+        "confidence": 0.5,
+        "sources": sources,
+        "effect_text": effect_map[quality],
+        "conflict_note": None,
+        "rules_source": "hardcoded",
+        "planet": planet,
+        "house": house,
+    }
+
+
+@app.get("/knowledge/transit")
+def knowledge_transit(planet: str = "", house: int | None = None):
+    """Graph-backed transit house quality for a planet in a house from Janma Rasi.
+
+    Query params:
+      - planet: Sun|Moon|Mars|Mercury|Jupiter|Venus|Saturn|Rahu|Ketu
+      - house: 1–12 (house counted from natal Moon / Janma Rasi)
+
+    Prefers KnowledgeEngine GraphTransitRules (multi-text consensus + confidence).
+    Falls back to hardcoded vedic_engine.rules.transit_rules when graph rules
+    are unavailable.
+    """
+    planet_norm = _normalize_transit_planet(planet)
+    if not planet_norm:
+        raise HTTPException(
+            status_code=400,
+            detail="planet is required (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu)",
+        )
+    if house is None:
+        raise HTTPException(status_code=400, detail="house is required (integer 1–12)")
+    try:
+        house_num = int(house)
+    except (TypeError, ValueError):
+        raise HTTPException(status_code=400, detail="house must be an integer 1–12") from None
+    if not 1 <= house_num <= 12:
+        raise HTTPException(status_code=400, detail="house must be an integer 1–12")
+
+    rules = None
+    try:
+        from knowledge_engine.integration import get_safe_transit_rules
+
+        rules = get_safe_transit_rules()
+    except Exception:
+        rules = None
+
+    # Graph path: GraphTransitRules exposes house_quality / confidence / effects
+    if rules is not None and hasattr(rules, "house_quality"):
+        quality, _verdict, _score = rules.house_quality(planet_norm, house_num)
+        conf = float(rules.confidence(planet_norm, house_num)) if hasattr(rules, "confidence") else 0.5
+        conf = max(0.0, min(1.0, conf))
+
+        effects = (
+            rules.transit_effects(planet_norm, house_num)
+            if hasattr(rules, "transit_effects")
+            else []
+        )
+        # Prefer classical graph note (2nd line) when present; else join all
+        if isinstance(effects, list) and len(effects) >= 2:
+            effect_text = str(effects[1])
+        elif isinstance(effects, list) and effects:
+            effect_text = str(effects[0])
+        else:
+            effect_text = (
+                f"{planet_norm} in {house_num}th from Janma Rasi — {quality}"
+            )
+
+        sources: list[str] = ["GPD Ch.10", "Hora Sara Ch.17"]
+        # Enrich from graph citations when available
+        if hasattr(rules, "get_citations"):
+            try:
+                cites = rules.get_citations(planet_norm, house_num) or []
+                for c in cites:
+                    nid = str(c.get("node") or "")
+                    if "hora_sara" in nid and "Hora Sara Ch.17" not in sources:
+                        sources.append("Hora Sara Ch.17")
+                    if "sarvartha" in nid and "Sarvartha Chintamani" not in sources:
+                        sources.append("Sarvartha Chintamani")
+            except Exception:
+                pass
+
+        conflict_note = None
+        if hasattr(rules, "transit_houses"):
+            try:
+                tbl = rules.transit_houses(planet_norm) or {}
+                note = tbl.get("conflict_note")
+                if note:
+                    conflict_note = str(note)
+            except Exception:
+                conflict_note = None
+
+        return {
+            "quality": quality,
+            "confidence": conf,
+            "sources": sources,
+            "effect_text": effect_text,
+            "conflict_note": conflict_note,
+            "rules_source": "graph",
+            "planet": planet_norm,
+            "house": house_num,
+        }
+
+    # Hardcoded fallback
+    return _hardcoded_transit_lookup(planet_norm, house_num)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Self-evolving memory subsystem  (/memory/*)
+# auto_mapper · schema_mutator · session_memory · ingest pipeline
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+class MemoryIngestRequest(BaseModel):
+    """Trigger ingestion of new content into the knowledge graph."""
+
+    content: str | None = Field(
+        default=None,
+        description="Raw markdown/text to ingest. Ignored when path is set.",
+    )
+    path: str | None = Field(
+        default=None,
+        description="Filesystem path to a markdown file under Gyan/ (or absolute).",
+    )
+    label: str | None = Field(
+        default=None,
+        description="Optional document label when ingesting raw content.",
+    )
+    threshold: float = Field(
+        default=0.75,
+        ge=0.0,
+        le=1.0,
+        description="Cosine similarity threshold for auto-mapped links.",
+    )
+    skip_refresh: bool = Field(
+        default=False,
+        description="If true, do not call KnowledgeEngine.trigger_global_refresh.",
+    )
+    dry_run: bool = Field(
+        default=False,
+        description="If true, map+mutate only — do not merge into graph.json.",
+    )
+
+
+class MemoryEvolveRequest(BaseModel):
+    """Accept or reject pending schema mutation proposals."""
+
+    action: Literal["accept", "reject", "accept_all", "reject_all", "list"] = Field(
+        default="list",
+        description="Decision action. 'list' returns pending proposals without changing them.",
+    )
+    proposal_id: str | None = Field(
+        default=None,
+        description="Required for accept/reject of a single proposal.",
+    )
+    note: str = Field(default="", description="Optional decision note.")
+
+
+@app.post("/memory/ingest")
+def memory_ingest(req: MemoryIngestRequest):
+    """
+    Trigger ingestion of new content.
+
+    Accepts either a filesystem `path` to a markdown file, or raw `content`
+    (written to a temp batch under memory-state/). Runs extract → merge →
+    auto_mapper → schema_mutator → KnowledgeEngine.trigger_global_refresh().
+    """
+    from pathlib import Path as _Path
+
+    try:
+        from knowledge_engine import memory_state
+        from knowledge_engine.auto_mapper import AutoMapper
+        from knowledge_engine.schema_mutator import SchemaMutator
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503, detail=f"memory subsystem unavailable: {exc}"
+        ) from exc
+
+    graph_path = _Path(
+        os.environ.get(
+            "GRAPHIFY_GRAPH_PATH",
+            str(
+                _Path(__file__).resolve().parents[2]
+                / "knowledge-graph"
+                / "graphify-out"
+                / "graph.json"
+            ),
+        )
+    )
+
+    # Resolve source markdown
+    src_path: _Path | None = None
+    cleanup_tmp = False
+    if req.path:
+        src_path = _Path(req.path).expanduser().resolve()
+        if not src_path.exists():
+            raise HTTPException(status_code=404, detail=f"path not found: {req.path}")
+    elif req.content and req.content.strip():
+        state_dir = _Path(
+            os.environ.get(
+                "MEMORY_STATE_DIR",
+                str(graph_path.parent / "memory-state"),
+            )
+        )
+        state_dir.mkdir(parents=True, exist_ok=True)
+        tmp = state_dir / f"ingest_{int(time.time())}.md"
+        title = (req.label or "inline ingest").strip()
+        tmp.write_text(f"# {title}\n\n{req.content}", encoding="utf-8")
+        src_path = tmp
+        cleanup_tmp = True
+    else:
+        raise HTTPException(
+            status_code=400, detail="provide either path or content"
+        )
+
+    # Reuse the watcher's Python extraction by importing the same heuristics
+    # inline (avoid shelling out from the request path).
+    try:
+        text = src_path.read_text(encoding="utf-8", errors="replace")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"cannot read source: {exc}") from exc
+
+    def _slug(s: str) -> str:
+        return re.sub(r"[^a-zA-Z0-9]+", "_", s).strip("_").lower()[:60] or "node"
+
+    doc_id = f"ingest_{_slug(src_path.stem)}"
+    nodes: list[dict] = [
+        {
+            "id": doc_id,
+            "label": req.label or src_path.stem.replace("_", " "),
+            "file_type": "document",
+            "source_file": str(src_path.name),
+            "description": text[:400],
+            "norm_label": (req.label or src_path.stem).lower(),
+        }
+    ]
+    links: list[dict] = []
+    heading_stack = [doc_id]
+    seen = {doc_id}
+    for i, line in enumerate(text.splitlines()):
+        hm = re.match(r"^(#{1,4})\s+(.+)$", line.strip())
+        if hm:
+            level = len(hm.group(1))
+            title = hm.group(2).strip()
+            nid = f"{doc_id}_{_slug(title)}"
+            base, n = nid, 2
+            while nid in seen:
+                nid = f"{base}_{n}"
+                n += 1
+            seen.add(nid)
+            nodes.append(
+                {
+                    "id": nid,
+                    "label": title,
+                    "file_type": "concept",
+                    "source_file": str(src_path.name),
+                    "source_location": f"L{i+1}",
+                    "description": title,
+                    "norm_label": title.lower(),
+                }
+            )
+            parent = heading_stack[min(level - 1, len(heading_stack) - 1)]
+            links.append(
+                {
+                    "source": parent,
+                    "target": nid,
+                    "relation": "contains_section",
+                    "confidence": "EXTRACTED",
+                    "confidence_score": 1.0,
+                    "source_file": str(src_path.name),
+                    "weight": 1.0,
+                }
+            )
+            heading_stack = heading_stack[:level] + [nid]
+            continue
+        bm = re.match(r"^[-*]\s+(.+)$", line.strip())
+        if bm and heading_stack:
+            claim = bm.group(1).strip()
+            if len(claim) < 8:
+                continue
+            cid = f"{doc_id}_claim_{hashlib.sha1(claim.encode()).hexdigest()[:10]}"
+            if cid in seen:
+                continue
+            seen.add(cid)
+            nodes.append(
+                {
+                    "id": cid,
+                    "label": claim[:160],
+                    "file_type": "concept",
+                    "source_file": str(src_path.name),
+                    "description": claim,
+                    "norm_label": claim[:160].lower(),
+                }
+            )
+            links.append(
+                {
+                    "source": heading_stack[-1],
+                    "target": cid,
+                    "relation": "states_rule",
+                    "confidence": "EXTRACTED",
+                    "confidence_score": 1.0,
+                    "source_file": str(src_path.name),
+                    "weight": 1.0,
+                }
+            )
+
+    added_nodes: list[dict] = []
+    added_links: list[dict] = []
+    if not req.dry_run and graph_path.exists():
+        try:
+            data = json.loads(graph_path.read_text(encoding="utf-8"))
+            existing_ids = {n.get("id") for n in data.get("nodes") or []}
+            existing_link_keys = {
+                (l.get("source"), l.get("target"), l.get("relation"))
+                for l in data.get("links") or []
+            }
+            for n in nodes:
+                if n.get("id") and n["id"] not in existing_ids:
+                    data.setdefault("nodes", []).append(n)
+                    existing_ids.add(n["id"])
+                    added_nodes.append(n)
+            for l in links:
+                key = (l.get("source"), l.get("target"), l.get("relation"))
+                if key in existing_link_keys:
+                    continue
+                if l.get("source") in existing_ids and l.get("target") in existing_ids:
+                    data.setdefault("links", []).append(l)
+                    existing_link_keys.add(key)
+                    added_links.append(l)
+            graph_path.write_text(
+                json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
+        except Exception as exc:
+            raise HTTPException(
+                status_code=500, detail=f"graph merge failed: {exc}"
+            ) from exc
+    else:
+        added_nodes, added_links = nodes, links
+
+    map_nodes = added_nodes or nodes
+    map_result: dict = {}
+    try:
+        mapper = AutoMapper(graph_path=graph_path, threshold=req.threshold)
+        max_n = os.environ.get("AUTO_MAPPER_MAX_NODES")
+        mapper.load_corpus(max_nodes=int(max_n) if max_n else None)
+        map_result = mapper.map_and_store(map_nodes, threshold=req.threshold)
+        if not req.dry_run and map_result.get("proposed_links"):
+            try:
+                data = json.loads(graph_path.read_text(encoding="utf-8"))
+                existing_link_keys = {
+                    (l.get("source"), l.get("target"), l.get("relation"))
+                    for l in data.get("links") or []
+                }
+                existing_ids = {n.get("id") for n in data.get("nodes") or []}
+                for l in map_result["proposed_links"]:
+                    key = (l.get("source"), l.get("target"), l.get("relation"))
+                    if key in existing_link_keys:
+                        continue
+                    if l.get("source") in existing_ids and l.get("target") in existing_ids:
+                        data.setdefault("links", []).append(l)
+                        existing_link_keys.add(key)
+                graph_path.write_text(
+                    json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+                )
+            except Exception:
+                pass
+    except Exception as exc:
+        map_result = {"meta": {"error": str(exc)}}
+
+    mut_result: dict = {}
+    try:
+        mut = SchemaMutator(graph_path=graph_path)
+        mut.load_corpus()
+        mut_result = mut.propose_and_store(map_nodes, added_links or links)
+    except Exception as exc:
+        mut_result = {"meta": {"error": str(exc)}}
+
+    refresh: dict = {"status": "skipped"}
+    if not req.skip_refresh and not req.dry_run:
+        ke = _ensure_knowledge_engine()
+        if ke is not None:
+            try:
+                refresh = ke.trigger_global_refresh(
+                    reason=f"memory/ingest:{src_path.name}"
+                )
+            except Exception as exc:
+                refresh = {"status": "error", "error": str(exc)}
+        else:
+            refresh = {"status": "unavailable"}
+
+    memory_state.log_ingest(
+        {
+            "source": str(src_path),
+            "added_nodes": len(added_nodes),
+            "added_links": len(added_links),
+            "map_meta": map_result.get("meta"),
+            "mutation_meta": mut_result.get("meta"),
+            "refresh": refresh,
+            "dry_run": req.dry_run,
+        }
+    )
+
+    if cleanup_tmp:
+        try:
+            src_path.unlink(missing_ok=True)  # type: ignore[arg-type]
+        except Exception:
+            pass
+
+    return {
+        "status": "ok",
+        "dry_run": req.dry_run,
+        "extracted": {"nodes": len(nodes), "links": len(links)},
+        "merged": {"nodes": len(added_nodes), "links": len(added_links)},
+        "map": map_result.get("meta"),
+        "mutations": mut_result.get("meta"),
+        "refresh": refresh,
+        "proposed_links": len(map_result.get("proposed_links") or []),
+        "duplicates": len(map_result.get("duplicates") or []),
+        "contradictions": len(map_result.get("contradictions") or []),
+    }
+
+
+@app.get("/memory/map")
+def memory_map(similarity: float = 0.75, top_k: int = 5, rebuild: bool = False):
+    """
+    Show auto-mapped relationships for the latest ingest batch.
+
+    If no batch is stored yet (or rebuild=true), re-runs AutoMapper on the
+    latest_batch_nodes using the given similarity threshold.
+    """
+    try:
+        from knowledge_engine import memory_state
+        from knowledge_engine.auto_mapper import AutoMapper
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503, detail=f"memory subsystem unavailable: {exc}"
+        ) from exc
+
+    similarity = max(0.0, min(1.0, float(similarity)))
+    top_k = max(1, min(int(top_k), 50))
+    state = memory_state.get()
+    latest = state.get("latest_map")
+    batch = state.get("latest_batch_nodes") or []
+
+    if rebuild or latest is None or (
+        latest.get("meta", {}).get("threshold") != similarity and batch
+    ):
+        if not batch:
+            # Fall back to a tiny demo batch so the endpoint is never empty-useless
+            from knowledge_engine.auto_mapper import _demo_batch
+
+            batch = _demo_batch()
+        try:
+            mapper = AutoMapper(threshold=similarity, top_k=top_k)
+            max_n = os.environ.get("AUTO_MAPPER_MAX_NODES")
+            mapper.load_corpus(max_nodes=int(max_n) if max_n else None)
+            latest = mapper.map_and_store(batch, threshold=similarity, top_k=top_k)
+        except Exception as exc:
+            raise HTTPException(
+                status_code=500, detail=f"auto_mapper failed: {exc}"
+            ) from exc
+
+    return {
+        "similarity": similarity,
+        "meta": (latest or {}).get("meta"),
+        "matches": (latest or {}).get("matches") or [],
+        "proposed_links": (latest or {}).get("proposed_links") or [],
+        "duplicates": (latest or {}).get("duplicates") or [],
+        "contradiction_count": len((latest or {}).get("contradictions") or []),
+    }
+
+
+@app.get("/memory/contradictions")
+def memory_contradictions(limit: int = 100):
+    """List auto-detected contradictions (latest batch + graph 'contradicts' links)."""
+    limit = max(1, min(int(limit), 500))
+    results: list[dict] = []
+
+    try:
+        from knowledge_engine import memory_state
+
+        latest = (memory_state.get().get("latest_map") or {})
+        results.extend(latest.get("contradictions") or [])
+    except Exception:
+        pass
+
+    # Always include classical graph contradicts edges
+    try:
+        from graph_rag.graph import GraphRAG
+
+        g = GraphRAG()
+        for c in g.contradictions():
+            results.append(
+                {
+                    "source_label": c.get("source"),
+                    "target_label": c.get("target"),
+                    "source_file": c.get("source_file"),
+                    "flag": "CONTRADICTION",
+                    "origin": "graph_link",
+                }
+            )
+    except Exception:
+        pass
+
+    # Dedup by label pair
+    seen: set[tuple] = set()
+    unique: list[dict] = []
+    for r in results:
+        key = (
+            str(r.get("new_id") or r.get("source_label") or ""),
+            str(r.get("existing_id") or r.get("target_label") or ""),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(r)
+        if len(unique) >= limit:
+            break
+
+    return {"count": len(unique), "contradictions": unique}
+
+
+@app.post("/memory/evolve")
+def memory_evolve(req: MemoryEvolveRequest):
+    """
+    Accept or reject pending schema mutations produced by schema_mutator.
+
+    Actions: list | accept | reject | accept_all | reject_all.
+    """
+    try:
+        from knowledge_engine import memory_state
+        from knowledge_engine.schema_mutator import SchemaMutator
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503, detail=f"memory subsystem unavailable: {exc}"
+        ) from exc
+
+    state = memory_state.get()
+    pending = state.get("pending_mutations") or []
+
+    if req.action == "list":
+        # If nothing pending, offer a fresh full-graph discovery proposal
+        if not pending:
+            try:
+                mut = SchemaMutator()
+                mut.load_corpus()
+                proposal = mut.propose_and_store(analyse_full_graph=True)
+                state = memory_state.get()
+                pending = state.get("pending_mutations") or []
+                return {
+                    "action": "list",
+                    "pending_count": len(pending),
+                    "pending": pending,
+                    "latest_meta": (proposal or {}).get("meta"),
+                    "relation_catalogue": (proposal or {}).get("relation_catalogue", [])[:20],
+                    "existing_community_samples": (proposal or {}).get(
+                        "existing_community_samples", []
+                    )[:10],
+                }
+            except Exception as exc:
+                return {
+                    "action": "list",
+                    "pending_count": 0,
+                    "pending": [],
+                    "error": str(exc),
+                }
+        return {
+            "action": "list",
+            "pending_count": len(pending),
+            "pending": pending,
+            "latest_meta": (state.get("latest_mutations") or {}).get("meta"),
+        }
+
+    if req.action in ("accept_all", "reject_all"):
+        result = memory_state.decide_all(
+            accept=(req.action == "accept_all"), note=req.note
+        )
+        return {"action": req.action, **result}
+
+    if req.action in ("accept", "reject"):
+        if not req.proposal_id:
+            raise HTTPException(
+                status_code=400, detail="proposal_id is required for accept/reject"
+            )
+        result = memory_state.decide_mutation(
+            req.proposal_id, accept=(req.action == "accept"), note=req.note
+        )
+        if not result.get("ok"):
+            raise HTTPException(status_code=404, detail=result.get("error"))
+        return {"action": req.action, **result}
+
+    raise HTTPException(status_code=400, detail=f"unknown action: {req.action}")
+
+
+@app.get("/memory/query")
+def memory_query(q: str = "", top_k: int = 8, graph: bool = True):
+    """
+    Semantic search across session memory (CONTEXT.md) + knowledge graph.
+
+    Example: GET /memory/query?q=transit+scoring
+    """
+    query = (q or "").strip()
+    if not query:
+        raise HTTPException(status_code=400, detail="query parameter q is required")
+    top_k = max(1, min(int(top_k), 50))
+
+    try:
+        from knowledge_engine.session_memory import hybrid_memory_query
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503, detail=f"session_memory unavailable: {exc}"
+        ) from exc
+
+    try:
+        result = hybrid_memory_query(query, top_k=top_k, include_graph=graph)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"query failed: {exc}") from exc
+
+    # Also try KnowledgeEngine vector/keyword search when available
+    ke_hits: list = []
+    ke = _ensure_knowledge_engine()
+    if ke is not None:
+        try:
+            ke_hits = ke.search(query, top_k=top_k) or []
+        except Exception:
+            ke_hits = []
+
+    return {
+        "query": query,
+        "top_k": top_k,
+        "session_memory": result.get("session_memory"),
+        "functions": result.get("top_functions") or [],
+        "gotchas": result.get("top_gotchas") or [],
+        "patterns": result.get("top_patterns") or [],
+        "graph_hits": result.get("graph_hits") or [],
+        "knowledge_engine_hits": ke_hits,
+    }
 
 
 if __name__ == "__main__":
