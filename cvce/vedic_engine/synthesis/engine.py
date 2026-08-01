@@ -224,11 +224,18 @@ class VedicPredictor:
                     )
             except Exception:
                 graph_hits = None
+            # Moon lon from transit list (PanchangaResult has no bare moon_lon field)
+            _moon_lon = None
+            for _t in getattr(result.panchanga, "transit", None) or []:
+                if isinstance(_t, dict) and _t.get("planet") == "Moon" and "lon" in _t:
+                    _moon_lon = _t["lon"]
+                    break
             my = evaluate_muhurta_yogas(
                 result.panchanga.weekday,
                 result.panchanga.tithi_num,
                 result.panchanga.nakshatra,
                 graph_hits=graph_hits,
+                moon_lon=_moon_lon,
             )
             result.muhurta_yogas = muhurta_yogas_to_dict(my)
 
@@ -298,6 +305,18 @@ class VedicPredictor:
                 }
             )
 
+        # Grahan (eclipse) — universal, non-personal; deliberately NOT gated on
+        # r.gochar/janma_rashi (unlike the Sade Sati chain below), since
+        # r.panchanga is always computed even for a guest/no-birth-chart query.
+        if r.panchanga and r.panchanga.eclipse:
+            ecl = r.panchanga.eclipse
+            kind = "Solar" if ecl["type"] == "solar" else "Lunar"
+            moment = "conjunction" if ecl["type"] == "solar" else "opposition"
+            r.warnings.append(
+                f"⚠ {kind} eclipse (Grahan) — classically avoided for all new undertakings "
+                f"(Moon within {ecl['node_distance']}° of the lunar node at {moment})"
+            )
+
         # Gochar summary
         if r.gochar:
             g = r.gochar
@@ -323,9 +342,63 @@ class VedicPredictor:
                 }
             )
 
+            # Grade-aware Saturn-affliction warnings (B-16.14 Kaksha×BAV 2×2;
+            # KAKSHA_SADE_SATI_OVERRIDE.md §10). Falls back to frictional text
+            # when grade fields are absent (older payloads).
+            def _saturn_affliction_warning(affliction, name):
+                grade = affliction.get("grade")
+                subcase = affliction.get("subcase")
+                bav = affliction.get("saturn_bav")
+                bav_str = f"{bav}/8" if bav is not None else "unknown"
+                if grade == "constructive":
+                    return (
+                        f"✦ {name}, but Saturn's Kaksha and sign-strength both favour "
+                        f"you today — a genuinely good window within a generally cautious period"
+                    )
+                if grade == "mixed":
+                    if subcase == "protectedMicroWindow":
+                        return (
+                            f"◐ {name}: your Moon sign itself is weak here "
+                            f"(Saturn BAV {bav_str}), but the active Kaksha gives a small "
+                            f"protected window right now — mild relief, not a green light"
+                        )
+                    if subcase == "bavMixedActive":
+                        return (
+                            f"◐ {name}: sign-strength is mixed (Saturn BAV {bav_str}), "
+                            f"but the active Kaksha leans favourable — a modest opening, "
+                            f"not a clear win"
+                        )
+                    if subcase == "supportedFriction":
+                        return (
+                            f"◐ {name}, but your Moon sign itself is well-supported "
+                            f"(Saturn BAV {bav_str}) — expect temporary friction today, "
+                            f"not a deep affliction"
+                        )
+                    if subcase == "bavMixedInactive":
+                        return (
+                            f"◐ {name}: sign-strength is mixed (Saturn BAV {bav_str}) "
+                            f"with no active Kaksha boost today — lean cautious"
+                        )
+                    return (
+                        f"◐ {name}: mixed signal today — Kaksha and Saturn's "
+                        f"sign-strength point different ways"
+                    )
+                effect = affliction.get("effect", "")
+                return f"⚠ {name}: {effect}" if effect else f"⚠ {name}"
+
             if g.sade_sati:
                 r.warnings.append(
-                    f"⚠ Sade Sati {g.sade_sati['phase']} phase: {g.sade_sati['effect']}"
+                    _saturn_affliction_warning(
+                        g.sade_sati, f"Sade Sati {g.sade_sati['phase']} phase"
+                    )
+                )
+            if g.ashtama_shani:
+                r.warnings.append(
+                    _saturn_affliction_warning(g.ashtama_shani, "Ashtama Shani")
+                )
+            if g.kantaka_shani:
+                r.warnings.append(
+                    _saturn_affliction_warning(g.kantaka_shani, "Kantaka Shani")
                 )
             if g.moorthy:
                 r.detailed_predictions.append(
@@ -377,6 +450,15 @@ class VedicPredictor:
             scores.append(r.dasha.dasha_score)
 
         r.overall_score = sum(scores) if scores else 0
+        # Grahan (eclipse) floor — deliberately separate from the scores list
+        # above (r.gochar.overall_score already carries its own eclipse floor
+        # when a birth chart is present; this second, independent floor covers
+        # the no-birth-chart/guest case, where r.gochar is never computed but
+        # r.panchanga.eclipse still is). Classical muhurta treats an eclipse
+        # window as universally inauspicious — this guarantees an
+        # "Inauspicious" verdict below regardless of any other factor's magnitude.
+        if r.panchanga and r.panchanga.eclipse:
+            r.overall_score = min(r.overall_score, -15)
         if r.overall_score >= 20:
             r.overall_verdict = "Highly Auspicious"
         elif r.overall_score >= 10:

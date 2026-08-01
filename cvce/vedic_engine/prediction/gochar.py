@@ -20,6 +20,7 @@ from ..rules.transit_rules import (
     DEBIL_SIGN,
     EXALT_SIGN,
     GOCHARA_VEDHA,
+    KANTAKA_ASHTAMA_PHASES,
     LATTA_RULES,
     MOORTHI_RESULTS,
     OWN_SIGN,
@@ -28,6 +29,7 @@ from ..rules.transit_rules import (
     VIPAREETHA_VEDHA,
     tara_of,
 )
+from .ashtakavarga import kaksha_bav_grade, kaksha_gives_bindu, saturn_bav_in_sign
 
 try:
     from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
@@ -149,6 +151,12 @@ class GocharResult:
     ashtama_shani: dict | None = None
     kantaka_shani: dict | None = None
     tara_balam: dict | None = None
+    # B-16.7 personal factors (ported from MuhurtaCosmos.jsx)
+    chandrabala: dict | None = None  # Moon house from Janma Rashi; 6/8/12 weak
+    ghaat: dict | None = None  # Ghaat Chakra hits keyed to Janma Rashi
+    pancha_pakshi_bird: str | None = None  # natal ruling bird (display only)
+    choghadiya: dict | None = None  # 8-part day/night segment at query time
+    eclipse: dict | None = None  # Grahan — universal, non-personal
     overall_verdict: str = "neutral"
     overall_score: int = 0
     lagna_overall_score: int = 0  # parallel score computed from Lagna reference
@@ -181,6 +189,7 @@ def compute_gochar(
             interpretation rules.
     """
     _ensure_gochar_registered()
+    panch = None
     if transit_rows is None:
         # Compatibility path for existing research callers. Product endpoints
         # must inject canonical PyJHora/Swiss rows explicitly.
@@ -189,6 +198,13 @@ def compute_gochar(
         result_date = panch.date
     else:
         result_date = date_str
+        # Grahan is universal/non-personal — still need it when ephemeris rows
+        # are injected from outside (product path). Lightweight: reuse
+        # compute_panchanga which already scans the civil day's tithi segs.
+        try:
+            panch = compute_panchanga(date_str, time_str, lat, lon, tz)
+        except Exception:
+            panch = None
 
     j_rashi_idx = RASHIS.index(janma_rashi) if janma_rashi and janma_rashi in RASHIS else None
     j_nak_idx = (
@@ -202,6 +218,8 @@ def compute_gochar(
         date=result_date,
         janma_rashi=janma_rashi,
         janma_nakshatra=janma_nakshatra,
+        # Grahan (eclipse) — universal, non-personal fact from panchanga.
+        eclipse=panch.eclipse if panch is not None else None,
     )
 
     # Compute transit for each planet
@@ -406,33 +424,63 @@ def compute_gochar(
                     "description": desc,
                 }
 
-    # Sade Sati check (Saturn in 12, 1, or 2 from Janma Rasi)
+    # Sade Sati / Kantaka / Ashtama Shani. Combines Kaksha bindu exception
+    # (GPD Ch.27; kaksha_gives_bindu) with Saturn's own aggregate BAV in the
+    # transited sign (saturn_bav_in_sign) into a qualitative grade
+    # (kaksha_bav_grade) — owner's Kaksha research (Phaladeepika 23.10-20/
+    # 26.1-5, BPHS 66.13-15/66.69-72; B-16.14 port from MuhurtaCosmos.jsx).
+    # Kantaka Shani is reckoned at Saturn in the 4th, 7th, OR 10th from
+    # Janma Rasi (was missing 10th before this port).
     if j_rashi_idx is not None:
         saturn_row = next((t for t in transit_rows if t["planet"] == "Saturn"), None)
         if saturn_row:
             sat_rashi = rashi_index(saturn_row["lon"])
             sat_house = ((sat_rashi - j_rashi_idx + 12) % 12) + 1
+            sat_deg = saturn_row.get("deg")
+            if sat_deg is None and saturn_row.get("lon") is not None:
+                sat_deg = float(saturn_row["lon"]) % 30
+            kaksha_ok = sat_house in (1, 12, 2, 4, 7, 8, 10) and bool(
+                natal_sign
+                and sat_deg is not None
+                and kaksha_gives_bindu("Saturn", sat_rashi, sat_deg, natal_sign)
+            )
+            saturn_bav = (
+                saturn_bav_in_sign(sat_rashi, natal_sign) if natal_sign else None
+            )
+            grade_info = kaksha_bav_grade(kaksha_ok, saturn_bav)
             if sat_house == 1:
                 results.sade_sati = {"phase": "peak", **SADE_SATI_PHASES["peak"]}
             elif sat_house == 12:
                 results.sade_sati = {"phase": "rise", **SADE_SATI_PHASES["rise"]}
             elif sat_house == 2:
                 results.sade_sati = {"phase": "setting", **SADE_SATI_PHASES["setting"]}
-            elif sat_house == 4:
+            elif sat_house in (4, 7, 10):
                 results.kantaka_shani = {
-                    "house": 4,
-                    "effect": "Kantaka Shani — Saturn in 4th from Janma Rasi; domestic stress, property delays",
-                }
-            elif sat_house == 7:
-                results.kantaka_shani = {
-                    "house": 7,
-                    "effect": "Kantaka Shani — Saturn in 7th from Janma Rasi; danger to spouse, loss of status",
+                    "house": sat_house,
+                    **{
+                        **KANTAKA_ASHTAMA_PHASES["kantaka"],
+                        "name": (
+                            f"Kantaka/Ardhashtama Shani "
+                            f"(Saturn in {sat_house}th from Janma Rasi)"
+                        ),
+                    },
                 }
             elif sat_house == 8:
                 results.ashtama_shani = {
                     "house": 8,
-                    "effect": "Ashtama Shani — Saturn in 8th from Janma Rasi; obstacles, delays, health issues",
+                    **KANTAKA_ASHTAMA_PHASES["ashtama"],
                 }
+            for affliction in (
+                results.sade_sati,
+                results.ashtama_shani,
+                results.kantaka_shani,
+            ):
+                if affliction is None:
+                    continue
+                affliction["kaksha_exception"] = kaksha_ok
+                affliction["saturn_bav"] = saturn_bav
+                affliction["grade"] = grade_info["grade"]
+                affliction["subcase"] = grade_info["subcase"]
 
     # Tara Balam
     if j_nak_idx is not None:
@@ -443,6 +491,55 @@ def compute_gochar(
             tara = tara_of(count)
             if tara:
                 results.tara_balam = tara
+
+    # B-16.7 — Chandrabala, Ghaat Chakra, Pancha Pakshi, Choghadiya
+    # (ported from MuhurtaCosmos.jsx; see prediction/personal_factors.py)
+    try:
+        from .personal_factors import (
+            chandrabala as _chandrabala,
+            ghaat_chakra as _ghaat_chakra,
+            get_choghadiya as _get_choghadiya,
+            pancha_pakshi_ruling_bird as _pancha_pakshi_ruling_bird,
+        )
+    except ImportError:
+        _chandrabala = None  # type: ignore[assignment]
+        _ghaat_chakra = None  # type: ignore[assignment]
+        _get_choghadiya = None  # type: ignore[assignment]
+        _pancha_pakshi_ruling_bird = None  # type: ignore[assignment]
+
+    moon_row = next((t for t in transit_rows if t["planet"] == "Moon"), None)
+    moon_rashi_name = moon_row["rashi"] if moon_row else None
+    moon_nak_name = moon_row["nak"] if moon_row else None
+
+    if _chandrabala is not None and janma_rashi and moon_rashi_name:
+        cb = _chandrabala(janma_rashi, moon_rashi_name)
+        if cb is not None:
+            results.chandrabala = cb.to_dict()
+
+    if _ghaat_chakra is not None and janma_rashi:
+        weekday = getattr(panch, "weekday", None) if panch is not None else None
+        tithi_grp = getattr(panch, "tithi_group", None) if panch is not None else None
+        gh = _ghaat_chakra(
+            janma_rashi,
+            weekday=weekday,
+            moon_nakshatra=moon_nak_name,
+            tithi_group=tithi_grp,
+        )
+        if gh is not None:
+            results.ghaat = gh.to_dict()
+
+    if _pancha_pakshi_ruling_bird is not None and janma_nakshatra:
+        results.pancha_pakshi_bird = _pancha_pakshi_ruling_bird(janma_nakshatra)
+
+    if _get_choghadiya is not None and panch is not None:
+        # Sunrise/sunset as decimal hours when available on the panchanga result.
+        sunrise_h = _decimal_hour(getattr(panch, "sunrise", None))
+        sunset_h = _decimal_hour(getattr(panch, "sunset", None))
+        query_h = _decimal_hour(time_str)
+        if sunrise_h is not None and sunset_h is not None and query_h is not None:
+            chog = _get_choghadiya(result_date or date_str, query_h, sunrise_h, sunset_h)
+            if chog is not None:
+                results.choghadiya = chog.to_dict()
 
     _apply_special_transit_overrides(results)
 
@@ -456,14 +553,65 @@ def compute_gochar(
         elif results.moorthy.get("verdict") == "ashubh":
             results.overall_score -= 5
 
+    # Sade Sati / Kantaka / Ashtama share Kaksha×BAV grade scoring (B-16.14).
+    # Grade softens or sharpens instead of a flat penalty; natal dignity
+    # (exalt/own on Saturn) halves the base penalty before the grade is applied.
+    saturn_pred = next(
+        (p for p in results.planet_predictions if p.planet == "Saturn"), None
+    )
+
+    def _apply_saturn_affliction(affliction: dict) -> int:
+        base_penalty = affliction.get("penalty", -15)
+        if (
+            saturn_pred
+            and saturn_pred.natal_override
+            and "mitigates" in saturn_pred.natal_override
+        ):
+            base_penalty = base_penalty // 2
+        grade = affliction.get("grade")
+        subcase = affliction.get("subcase")
+        if grade == "constructive":
+            # Strongest-mitigation cell (Kaksha active AND Saturn BAV ≥5), or
+            # kakshaOnly fallback when BAV data is unavailable. +8 on this
+            # engine's point scale (JS Finder uses +6 on its own scale — same
+            # qualitative grade, language-specific magnitudes; see
+            # KAKSHA_SADE_SATI_OVERRIDE.md §10).
+            penalty = 8
+        elif grade == "frictional":
+            penalty = base_penalty
+        else:
+            # MIXED: muted nudge. protectedMicroWindow / bavMixedActive lean
+            # mildly positive; supportedFriction / bavMixedInactive half-penalty.
+            if subcase in ("protectedMicroWindow", "bavMixedActive"):
+                penalty = 3
+            else:
+                penalty = base_penalty // 2
+        affliction["applied_penalty"] = penalty
+        return penalty
+
     if results.sade_sati:
-        results.overall_score -= 15
-    if results.kantaka_shani:
-        results.overall_score -= 10
+        results.overall_score += _apply_saturn_affliction(results.sade_sati)
     if results.ashtama_shani:
-        results.overall_score -= 8
+        results.overall_score += _apply_saturn_affliction(results.ashtama_shani)
+    if results.kantaka_shani:
+        results.overall_score += _apply_saturn_affliction(results.kantaka_shani)
     if results.tara_balam and results.tara_balam.get("verdict") == "ashubh":
         results.overall_score -= 8
+
+    # Chandrabala: +5 acceptable / −12 weak (JS runEngine L3110)
+    if results.chandrabala is not None:
+        results.overall_score += int(results.chandrabala.get("score", 0))
+
+    # Ghaat Chakra hits: −8 vaar / −8 nak / −6 tithi-class (JS L3104)
+    if results.ghaat is not None:
+        results.overall_score += int(results.ghaat.get("score", 0))
+
+    # Grahan (eclipse) avoidance — universal, non-personal. Classical muhurta
+    # treats an eclipse window as universally inauspicious for new undertakings.
+    # Floors the FINAL score after every other modifier so nothing can push it
+    # back up. -30 matches MuhurtaCosmos.jsx findMuhurta eclipse penalty.
+    if results.eclipse:
+        results.overall_score = min(results.overall_score, -30)
 
     if results.overall_score >= 15:
         results.overall_verdict = "shubh"
@@ -480,6 +628,12 @@ def compute_gochar(
     good = [p for p in results.planet_predictions if p.verdict == "shubh"]
     bad = [p for p in results.planet_predictions if p.verdict == "ashubh"]
     parts = []
+    if results.eclipse:
+        kind = "Solar" if results.eclipse["type"] == "solar" else "Lunar"
+        parts.append(
+            f"{kind} eclipse (Grahan) — classically avoided for all new undertakings "
+            f"(Moon within {results.eclipse['node_distance']}° of the lunar node)"
+        )
     if good:
         parts.append(
             f"{len(good)} planets in favourable transit ({', '.join(p.planet for p in good)})"
@@ -500,6 +654,27 @@ def compute_gochar(
         parts.append(tara_line)
         for exc in results.tara_balam.get("exceptions") or []:
             parts.append(f"Tara note: {exc}")
+    if results.chandrabala:
+        cb = results.chandrabala
+        parts.append(
+            f"Chandrabala: Moon {cb['house']}th from Janma "
+            f"({'ok' if cb.get('ok') else 'weak'}, score {cb.get('score', 0)})"
+        )
+    if results.ghaat and results.ghaat.get("active"):
+        hits = []
+        if results.ghaat.get("vaarHit"):
+            hits.append("vaar")
+        if results.ghaat.get("nakHit"):
+            hits.append("nak")
+        if results.ghaat.get("tithiHit"):
+            hits.append("tithi")
+        parts.append(f"Ghaat Chakra active ({', '.join(hits)})")
+    if results.pancha_pakshi_bird:
+        parts.append(f"Pancha Pakshi ruling bird: {results.pancha_pakshi_bird}")
+    if results.choghadiya:
+        parts.append(
+            f"Choghadiya: {results.choghadiya['name']} ({results.choghadiya['verdict']})"
+        )
     if results.kantaka_shani:
         parts.append(results.kantaka_shani["effect"])
     if results.ashtama_shani:
@@ -511,6 +686,34 @@ def compute_gochar(
     results.synthesis = " | ".join(parts) if parts else "No natal chart — transit-only analysis"
 
     return results
+
+
+def _decimal_hour(value) -> float | None:
+    """Coerce sunrise/sunset/time to a local decimal hour, or None if unavailable.
+
+    Accepts ``'HH:MM'``, ``'HH:MM:SS'``, decimal hours, or datetime-like with
+    ``.hour``/``.minute``. Returns None for missing/unparseable values so
+    Choghadiya stays optional when the panchanga payload lacks sun times.
+    """
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        parts = value.strip().split(":")
+        try:
+            h = int(parts[0])
+            m = int(parts[1]) if len(parts) > 1 else 0
+            s = float(parts[2]) if len(parts) > 2 else 0.0
+            return h + m / 60.0 + s / 3600.0
+        except (TypeError, ValueError, IndexError):
+            return None
+    hour = getattr(value, "hour", None)
+    minute = getattr(value, "minute", None)
+    if hour is not None and minute is not None:
+        second = getattr(value, "second", 0) or 0
+        return float(hour) + float(minute) / 60.0 + float(second) / 3600.0
+    return None
 
 
 def _apply_special_transit_overrides(results: GocharResult) -> None:

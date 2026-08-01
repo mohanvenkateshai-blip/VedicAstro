@@ -19,7 +19,9 @@ from ..core.astronomy import (
     all_positions,
     is_retrograde,
     julian_day,
+    lahiri_ayanamsha,
     norm360,
+    rahu_true_tropical,
     sun_moon,
 )
 from knowledge_engine.integration import get_structured_book
@@ -560,6 +562,87 @@ def sun_times(y: int, m: int, d: int, lat: float, lon: float, tz: float) -> dict
 
 
 # =====================================================================
+# Grahan (eclipse) avoidance — honest astronomical approximation
+# =====================================================================
+# A solar eclipse can only occur at Amavasya (Sun-Moon conjunction); a lunar
+# eclipse only at Purnima (opposition). Neither is guaranteed by the tithi
+# alone — it also needs the Moon to sit close to one of its two orbital
+# nodes (Rahu/Ketu) at the exact syzygy instant. Uses the standard
+# "ecliptic limit" test from eclipse geometry. Ported verbatim (same
+# constants, same algorithm) from MuhurtaCosmos.jsx detectEclipse()/
+# findSyzygyJD() for frontend/backend parity.
+SOLAR_ECLIPSE_LIMIT = 18.5      # Amavasya: Moon-node sep within this -> solar eclipse possible
+SOLAR_ECLIPSE_CENTRAL = 11.8    # tighter: central/total-annular likely
+LUNAR_ECLIPSE_LIMIT = 12.2      # Purnima: Moon-node sep within this -> lunar eclipse possible
+LUNAR_ECLIPSE_CENTRAL = 5.9     # tighter: total lunar eclipse likely
+
+
+def find_syzygy_jd(jd_guess: float, is_amavasya: bool) -> float:
+    """Bisect for the exact JD (UT) of the nearest syzygy (opposition=Purnima,
+    conjunction=Amavasya) to jd_guess. Caller should already be inside (or
+    within ~1 day of) a tithi-15/30 window."""
+    target = 360.0 if is_amavasya else 180.0
+
+    def f(jd_val: float) -> float:
+        sm = sun_moon(jd_val)
+        e = norm360(sm["moon"] - sm["sun"])
+        if is_amavasya and e < 180:
+            e += 360  # unwrap so the 0/360 seam isn't inside the bracket
+        return e - target
+
+    lo, hi = jd_guess - 2, jd_guess + 2
+    flo, fhi = f(lo), f(hi)
+    if flo == 0:
+        return lo
+    if fhi == 0:
+        return hi
+    if (flo < 0) == (fhi < 0):
+        return jd_guess  # shouldn't happen for a real tithi-15/30 instant; fail safe
+    for _ in range(50):
+        mid = (lo + hi) / 2
+        fm = f(mid)
+        if (fm < 0) == (flo < 0):
+            lo, flo = mid, fm
+        else:
+            hi, fhi = mid, fm
+    return (lo + hi) / 2
+
+
+def detect_eclipse(jd: float) -> dict | None:
+    """Grahan plausibility check. Call with any JD inside the civil day being
+    judged; internally finds the tithi and, if it's Purnima (15) or
+    Amavasya (30), locates the exact syzygy instant and measures the
+    Moon's angular distance to the nearer lunar node there. Returns None
+    for every non-syzygy day (the overwhelming majority)."""
+    sm = sun_moon(jd)
+    elong = norm360(sm["moon"] - sm["sun"])
+    tithi_num_here = int(elong / 12) + 1
+    if tithi_num_here not in (15, 30):
+        return None
+    is_amavasya = tithi_num_here == 30
+    peak_jd = find_syzygy_jd(jd, is_amavasya)
+    ayan = lahiri_ayanamsha(peak_jd)
+    rahu_sid = norm360(rahu_true_tropical(peak_jd) - ayan)
+    ketu_sid = norm360(rahu_sid + 180)
+    moon_at_peak = sun_moon(peak_jd)["moon"]
+    d1 = abs(norm360(moon_at_peak - rahu_sid))
+    dist_rahu = min(d1, 360 - d1)
+    d2 = abs(norm360(moon_at_peak - ketu_sid))
+    dist_ketu = min(d2, 360 - d2)
+    node_dist = min(dist_rahu, dist_ketu)
+    limit = SOLAR_ECLIPSE_LIMIT if is_amavasya else LUNAR_ECLIPSE_LIMIT
+    central_limit = SOLAR_ECLIPSE_CENTRAL if is_amavasya else LUNAR_ECLIPSE_CENTRAL
+    if node_dist > limit:
+        return None  # too far from the node: no eclipse
+    return {
+        "type": "solar" if is_amavasya else "lunar",
+        "node_distance": round(node_dist, 2),
+        "central": node_dist <= central_limit,
+        "peak_jd": peak_jd,
+    }
+
+
+# =====================================================================
 # Main Panchanga Computation
 # =====================================================================
 
@@ -614,6 +697,10 @@ class PanchangaResult:
 
     # KE provenance
     source_notes: str | None = None
+
+    # Grahan (eclipse) — universal, non-personal; None on the overwhelming
+    # majority of days. See docs/methodology/ECLIPSE_AVOIDANCE.md.
+    eclipse: dict | None = None
 
 
 _panchanga_rules_version: str | None = None
@@ -748,6 +835,21 @@ def compute_panchanga(
     seg_y = panch_segments(y, m, d, tz, "yoga")
     seg_k = panch_segments(y, m, d, tz, "karana")
 
+    # Grahan (eclipse) avoidance — universal, non-personal fact. Deliberately
+    # scans seg_t (the whole civil day's tithi segments) rather than testing
+    # only query_jd: a tithi lasts ~21.5-26h vs a 24h civil day, so Purnima/
+    # Amavasya routinely spans two civil days. Any JD inside the matching
+    # segment is enough to seed find_syzygy_jd's own +-2-day search.
+    eclipse_seg = next((s for s in seg_t if (s["idx"] % 30) + 1 in (15, 30)), None)
+    eclipse = (
+        detect_eclipse(
+            julian_day(y, m, d)
+            + ((eclipse_seg["from"] + min(eclipse_seg["to"], 24)) / 2 - tz) / 24
+        )
+        if eclipse_seg
+        else None
+    )
+
     # Active segments at query hour
     ts = active_at(seg_t, query_hour)
     ns = active_at(seg_n, query_hour)
@@ -866,4 +968,5 @@ def compute_panchanga(
         transit=transit,
         segments={"tithi": seg_t, "nak": seg_n, "yoga": seg_y, "karana": seg_k},
         source_notes=source_notes,
+        eclipse=eclipse,
     )

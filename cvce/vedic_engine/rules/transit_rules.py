@@ -170,16 +170,40 @@ SADE_SATI_PHASES = {
         "name": "Rising Phase (1st 2.5 years)",
         "effect": "Mental stress, financial pressure, health concerns begin",
         "severity": "moderate",
+        "penalty": -11,
     },
     "peak": {  # Saturn in 1st (Janma Rasi) — middle 2.5 years
         "name": "Peak Phase (middle 2.5 years)",
         "effect": "Maximum difficulty — job loss, family strife, health crisis, financial drain",
         "severity": "severe",
+        "penalty": -19,
     },
     "setting": {  # Saturn entering 2nd from Janma Rasi
         "name": "Setting Phase (last 2.5 years)",
         "effect": "Recovery period — gradual relief, lessons learned, rebuilding",
         "severity": "moderate",
+        "penalty": -11,
+    },
+}
+
+# Ashtama Shani (Saturn in 8th from Janma Rasi) and Kantaka/Ardhashtama Shani
+# (Saturn in 4th, 7th, OR 10th — B-16.14; was 4th-only before the Kaksha×BAV
+# rebuild). Distinct doshas from Sade Sati proper (GPD Ch.26). Penalty
+# magnitudes are a judgment call placed relative to SADE_SATI_PHASES' scale
+# (same honesty convention as the panchanga API port; see
+# docs/methodology/KAKSHA_SADE_SATI_OVERRIDE.md §10).
+KANTAKA_ASHTAMA_PHASES = {
+    "ashtama": {
+        "name": "Ashtama Shani (Saturn in 8th from Janma Rasi)",
+        "effect": "Obstacles, delays, health issues",
+        "severity": "moderate-severe",
+        "penalty": -14,
+    },
+    "kantaka": {
+        "name": "Kantaka/Ardhashtama Shani (Saturn in 4th/7th/10th from Janma Rasi)",
+        "effect": "Harassment, unwanted transfers, property/financial friction",
+        "severity": "mild-moderate",
+        "penalty": -8,
     },
 }
 

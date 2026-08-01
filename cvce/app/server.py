@@ -288,6 +288,60 @@ class BirthRequest(BaseModel):
         return value
 
 
+class DashaDeepJdRequest(BaseModel):
+    """JD-based comprehensive dasha analysis (POST /dasha/deep).
+
+    Callers supply precomputed Julian Days plus sidereal Moon longitude and
+    Lagna index so the portal/muhurta stack need not re-send place coordinates.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    birth_jd: float = Field(..., allow_inf_nan=False, description="Birth Julian Day (UT)")
+    query_jd: float = Field(..., allow_inf_nan=False, description="Query Julian Day (UT)")
+    moon_lon_sidereal: float = Field(
+        ..., ge=0.0, lt=360.0, allow_inf_nan=False, description="Sidereal Moon longitude 0–360°"
+    )
+    lagna_idx: int = Field(..., ge=0, le=11, description="Lagna rashi index 0=Aries … 11=Pisces")
+
+
+class AshtakavargaRequest(BaseModel):
+    """True PyJHora BAV/SAV board + Kaksha grade (POST /ashtakavarga).
+
+    Body (B-16.12):
+      natal_sign: {planet: sign_idx|name, ...} for Sun..Saturn (+ optional Lagna)
+      lagna_sign: sign_idx | rashi name | {sign|signIndex|index: ...}
+
+    Optional transit snapshot fields (for moon_transit_bindus + kaksha grade):
+      moon_transit_sign, saturn_transit_sign, saturn_deg_in_sign, kaksha_planet
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    natal_sign: dict = Field(
+        ...,
+        description="Natal sign indices (0=Aries) or rashi names keyed by planet",
+    )
+    lagna_sign: object = Field(
+        ...,
+        description="Lagna as int 0-11, rashi name, or dict with sign/signIndex",
+    )
+    moon_transit_sign: int | None = Field(
+        default=None, ge=0, le=11, description="Transit Moon sign idx for moon_transit_bindus"
+    )
+    saturn_transit_sign: int | None = Field(
+        default=None, ge=0, le=11, description="Transit Saturn sign idx for Kaksha grade"
+    )
+    saturn_deg_in_sign: float | None = Field(
+        default=None, ge=0.0, lt=30.0, allow_inf_nan=False,
+        description="Saturn degree-in-sign for active Kaksha lord (0–30)",
+    )
+    kaksha_planet: str = Field(
+        default="Saturn",
+        description="Planet whose BAV row the active Kaksha lord is checked against",
+    )
+
+
 class TimelineQueryRequest(BirthRequest):
     subject_id: str = Field(min_length=1, max_length=256)
     query_date: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
@@ -1263,6 +1317,8 @@ def index():
             "prashna": "POST /prashna",
             "yogas": "POST /yogas",
             "dasha_deep": "POST /dasha-deep",
+            "dasha_deep_jd": "POST /dasha/deep",
+            "ashtakavarga": "POST /ashtakavarga",
             "person_timeline": "POST /timeline/query",
             "timeline_detail": "POST /timeline/milestones/{milestone_id}/detail",
             "timeline_event": "POST /timeline/events",
@@ -1883,6 +1939,59 @@ def dasha_deep(req: BirthRequest):
         pass
 
     return {"birth_datetime": req.birth_datetime, "jd": jd, **payload}
+
+
+@app.post("/dasha/deep")
+def dasha_deep_jd(req: DashaDeepJdRequest):
+    """Comprehensive multi-system dasha analysis from precomputed JDs.
+
+    Body: birth_jd, query_jd, moon_lon_sidereal, lagna_idx.
+    Returns Vimshottari (+ score), Yogini, Chara current, Kalachakra deha/jeeva,
+    functional nature (Table 30), and a plain-text analysis summary.
+    """
+    from app.dasha_deep_jd import build_dasha_deep
+
+    try:
+        return build_dasha_deep(
+            birth_jd=req.birth_jd,
+            query_jd=req.query_jd,
+            moon_lon_sidereal=req.moon_lon_sidereal,
+            lagna_idx=req.lagna_idx,
+        )
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"dasha/deep failed: {type(exc).__name__}: {exc}",
+        ) from exc
+
+
+
+@app.post("/ashtakavarga")
+def ashtakavarga_endpoint(req: AshtakavargaRequest):
+    """True PyJHora BAV/SAV + Kaksha grade for a natal chart (B-16.12).
+
+    Body: natal_sign, lagna_sign (+ optional transit snapshot fields).
+    Returns named-sign BAV/SAV boards, SAV bands, moon_transit_bindus, and
+    the 2×2 Kaksha × Saturn-BAV grade (constructive|mixed|frictional).
+    """
+    from vedic_engine.prediction.ashtakavarga import build_ashtakavarga_payload
+
+    try:
+        return build_ashtakavarga_payload(
+            natal_sign=req.natal_sign,
+            lagna_sign=req.lagna_sign,
+            moon_transit_sign=req.moon_transit_sign,
+            saturn_transit_sign=req.saturn_transit_sign,
+            saturn_deg_in_sign=req.saturn_deg_in_sign,
+            kaksha_planet=req.kaksha_planet,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"ashtakavarga failed: {type(exc).__name__}: {exc}",
+        ) from exc
 
 
 @app.post("/dasha-predict")

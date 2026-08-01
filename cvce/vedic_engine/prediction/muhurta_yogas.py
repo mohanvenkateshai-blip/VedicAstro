@@ -6,17 +6,156 @@ Sources:
     triple Vara/Tithi/Nakshatra yogas; relative strengths on p.83)
   - Sarvartha Chintamani / Phaladeepika (via knowledge-graph nodes)
   - knowledge-graph nodes tagged is_muhurta_yoga=True
+  - C.S. Patel, "Predicting Through Navamsa & Nadi Astrology" pp.34-38
+    (Pushkarabhaga via Muhurta Darpana; Pushkara Navamsa via Vidyamadhaviyam)
+  - BPHS (Girish Chand Sharma tr.) — Gandanta / Gand Mool junction Nakshatras
 
 Relative strength (WE Ch.9 p.83):
   Vara/Tithi/Nakshatra  > Vara/Nakshatra (3×) > Vara/Tithi (3×) > Tithi/Nakshatra (weakest)
+
+Day-level extras ported from panchanga_muhurtha JS (B-16.8):
+  - Pushkara Navamsa on transiting Moon  → +8  (Issue #26)
+  - Gand Mool on Moon's Nakshatra        → −10 (Issue #27)
+  - Pushkarabhaga detection helper       (scored at Muhurta Lagna in muhurta_lagna.py)
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
+from typing import Optional, Union
 
 from ..core.panchanga import VARA_LORD
 from knowledge_engine.integration import get_structured_book
+
+Number = Union[int, float]
+
+# ---------------------------------------------------------------------------
+# PUSHKARA NAVAMSA / PUSHKARABHAGA / GAND MOOL  (B-16.8, JS parity)
+# ---------------------------------------------------------------------------
+# Port of MuhurtaCosmos.jsx:
+#   SIGN_ELEMENT / PUSHKARABHAGA_DEG / isPushkarabhaga   ~L400-409
+#   PUSHKARA_NAVAMSA_RANGES / isPushkaraNavamsa         ~L413-421
+#   GAND_MOOL_NAKSHATRAS / isGandMool                   ~L438-441
+# Ranges verified against C.S. Patel pp.34-38 and Dr. N.G. Kumaran (IJATET 2023).
+# ---------------------------------------------------------------------------
+
+SIGN_ELEMENT: list[str] = [
+    "fire", "earth", "air", "water",
+    "fire", "earth", "air", "water",
+    "fire", "earth", "air", "water",
+]  # Aries … Pisces
+
+# Pushkarabhaga: single classical degree per triplicity (floor match).
+# Fire 21°, Earth 14°, Air 24°, Water 7° — Muhurta Darpana via C.S. Patel.
+PUSHKARABHAGA_DEG: dict[str, int] = {
+    "fire": 21,
+    "earth": 14,
+    "air": 24,
+    "water": 7,
+}
+
+# Pushkara Navamsa: two 3°20′ arcs per sign, keyed by triplicity.
+# Half-open [lo, hi) — matches JS `degInSign >= lo && degInSign < hi`.
+PUSHKARA_NAVAMSA_RANGES: dict[str, list[tuple[float, float]]] = {
+    "fire": [(20.0, 23.0 + 20.0 / 60.0), (26.0 + 40.0 / 60.0, 30.0)],
+    "earth": [(6.0 + 40.0 / 60.0, 10.0), (13.0 + 20.0 / 60.0, 16.0 + 40.0 / 60.0)],
+    "air": [(16.0 + 40.0 / 60.0, 20.0), (23.0 + 20.0 / 60.0, 26.0 + 40.0 / 60.0)],
+    "water": [(0.0, 3.0 + 20.0 / 60.0), (6.0 + 40.0 / 60.0, 10.0)],
+}
+
+# Gand Mool: the 6 Nakshatras whose first/last pada sits in a water→fire
+# Gandanta junction (Ashwini, Ashlesha, Magha, Jyeshtha, Mula, Revati).
+GAND_MOOL_NAKSHATRAS: frozenset[str] = frozenset({
+    "Ashwini",
+    "Ashlesha",
+    "Magha",
+    "Jyeshtha",
+    "Mula",
+    "Revati",
+})
+
+# JS day-score magnitudes (runEngine STEP 11)
+PUSHKARA_NAVAMSA_BONUS: int = 8
+GAND_MOOL_PENALTY: int = -10
+
+# Common transliteration aliases → canonical GAND_MOOL / panchanga names
+_NAK_ALIAS: dict[str, str] = {
+    "Asvini": "Ashwini",
+    "Aswini": "Ashwini",
+    "Aslesha": "Ashlesha",
+    "Aślesha": "Ashlesha",
+    "Ashlesa": "Ashlesha",
+    "Makha": "Magha",
+    "Jyestha": "Jyeshtha",
+    "Jyeshtha": "Jyeshtha",
+    "Moola": "Mula",
+    "Mool": "Mula",
+    "Revati": "Revati",
+}
+
+
+def _canonical_nak(name: str | None) -> str | None:
+    """Normalise a Nakshatra spelling to the canonical form used by GAND_MOOL."""
+    if not name:
+        return None
+    s = str(name).strip()
+    if s in GAND_MOOL_NAKSHATRAS:
+        return s
+    if s in _NAK_ALIAS:
+        return _NAK_ALIAS[s]
+    # title-case fallback (e.g. "ashwini")
+    titled = s.title()
+    if titled in GAND_MOOL_NAKSHATRAS:
+        return titled
+    return _NAK_ALIAS.get(titled, s)
+
+
+def is_pushkarabhaga(sign_idx: int, deg_in_sign: Number) -> bool:
+    """Return True if the point sits in Pushkarabhaga (single degree per triplicity).
+
+    Matched as ``floor(deg) == target`` — classical reading of a one-degree
+    Bhaga, not a zero-width instant. Port of JS ``isPushkarabhaga``.
+
+    Source: Muhurta Darpana (via C.S. Patel); Fire 21 / Earth 14 / Air 24 /
+    Water 7. Scored at the Muhurta Lagna (+10) in ``muhurta_lagna.py``.
+    """
+    element = SIGN_ELEMENT[int(sign_idx) % 12]
+    target = PUSHKARABHAGA_DEG[element]
+    return int(math.floor(float(deg_in_sign))) == target
+
+
+def is_pushkara_navamsa(sign_idx: int, deg_in_sign: Number) -> bool:
+    """Return True if sign+degree falls in a Pushkara Navamsa arc.
+
+    Two 3°20′ navamsha arcs per sign, keyed by triplicity. Day-level check on
+    the transiting Moon (no natal chart). Port of JS ``isPushkaraNavamsa``.
+
+    Source: Vidyamadhaviyam Part 1 pp.30-31 via C.S. Patel pp.35-38;
+    cross-checked vs Dr. N.G. Kumaran, IJATET Vol.8 Issue.1 (2023).
+    """
+    element = SIGN_ELEMENT[int(sign_idx) % 12]
+    d = float(deg_in_sign)
+    return any(lo <= d < hi for lo, hi in PUSHKARA_NAVAMSA_RANGES[element])
+
+
+def is_gand_mool(nakshatra_name: str | None) -> bool:
+    """Return True if Moon's Nakshatra is one of the six Gand Mool stars.
+
+    Ashwini, Ashlesha, Magha, Jyeshtha, Mula, Revati — the Nakshatra-level
+    expression of the water→fire Gandanta junctions (BPHS). Port of JS
+    ``isGandMool``; day-score penalty −10.
+    """
+    canon = _canonical_nak(nakshatra_name)
+    return canon in GAND_MOOL_NAKSHATRAS if canon else False
+
+
+def moon_pushkara_navamsa(moon_lon: Number | None) -> bool:
+    """Convenience: Pushkara Navamsa check from a 0–360° sidereal Moon longitude."""
+    if moon_lon is None or not isinstance(moon_lon, (int, float)):
+        return False
+    lon = float(moon_lon) % 360.0
+    return is_pushkara_navamsa(int(lon // 30), lon % 30.0)
 
 # ---------------------------------------------------------------------------
 # VARA × TITHI YOGAS  (WE Ch.9 pp.75-76)
@@ -426,6 +565,10 @@ class MuhurtaYogaResult:
     overall: str = "neutral"
     score: int = 0
     summary: str = ""
+    # Day-level extras (B-16.8) — JS runEngine parity
+    pushkara_navamsa: bool = False
+    gand_mool: bool = False
+    pushkarabhaga: bool = False  # set when lagna deg supplied; else False
 
 
 # ---------------------------------------------------------------------------
@@ -478,6 +621,9 @@ def evaluate_muhurta_yogas(
     tithi_num: int,
     nakshatra: str | None = None,
     graph_hits: list[dict] | None = None,
+    moon_lon: Number | None = None,
+    lagna_sign_idx: int | None = None,
+    lagna_deg: Number | None = None,
 ) -> MuhurtaYogaResult:
     """
     Evaluate all Vara/Tithi/Nakshatra combination yogas for a muhurta moment.
@@ -486,6 +632,12 @@ def evaluate_muhurta_yogas(
       Vara/Tithi = 1 unit
       Vara/Nakshatra = 3 units
       Vara/Tithi/Nakshatra = 9 units (checked separately when nak is given)
+
+    Optional day-level extras (B-16.8, JS parity):
+      moon_lon         — sidereal Moon 0–360° → Pushkara Navamsa (+8)
+      nakshatra        — also drives Gand Mool (−10)
+      lagna_sign_idx + lagna_deg — Muhurta Lagna → Pushkarabhaga flag
+        (bonus applied by muhurta_lagna / finder; exposed here for callers)
     """
     try:
         # additional report path (muhurta_yogas) now calls structured
@@ -704,6 +856,37 @@ def evaluate_muhurta_yogas(
         nature = gh.get("nature") or gh.get("verdict", "mixed")
         hits.append((name, nature, gh.get("source", "graph.json"), gh.get("detail", ""), 1))
 
+    # ── DAY-LEVEL: Pushkara Navamsa / Gand Mool / Pushkarabhaga (B-16.8) ──
+    # Magnitudes match JS runEngine (MuhurtaCosmos.jsx ~L3087–3095):
+    #   Pushkara Navamsa +8, Gand Mool −10. These are additive day-score
+    #   terms (not WE strength units); folded into result.score so the
+    #   existing synthesis path that sums muhurta_yogas["score"] picks them up.
+    result.pushkara_navamsa = moon_pushkara_navamsa(moon_lon)
+    result.gand_mool = is_gand_mool(nakshatra)
+    if lagna_sign_idx is not None and lagna_deg is not None:
+        result.pushkarabhaga = is_pushkarabhaga(lagna_sign_idx, lagna_deg)
+
+    if result.pushkara_navamsa:
+        hits.append(
+            (
+                "Pushkara Navamsa",
+                "auspicious",
+                "C.S.Patel-Navamsa-pp35-38 / Vidyamadhaviyam",
+                "Moon in Pushkara Navamsa (auspicious navamsha)",
+                PUSHKARA_NAVAMSA_BONUS,  # absolute JS magnitude, not WE unit
+            )
+        )
+    if result.gand_mool:
+        hits.append(
+            (
+                "Gand Mool",
+                "inauspicious",
+                "BPHS-Gandanta / Gand-Mool-Nakshatras",
+                f"Moon in Gand Mool Nakshatra ({_canonical_nak(nakshatra)}) — junction-point caution",
+                5,  # WE-style unit: score -= strength*2 → −10, matching JS
+            )
+        )
+
     # ── SCORE (weighted by strength) ────────────────────────────────────────
     score = 0
     for name, nature, source, detail, strength in hits:
@@ -712,7 +895,13 @@ def evaluate_muhurta_yogas(
                 name=name, nature=nature, source=source, detail=detail, strength=strength
             )
         )
-        if nature == "auspicious":
+        if name == "Pushkara Navamsa":
+            # Absolute JS day-score (+8), not the WE unit scale.
+            score += PUSHKARA_NAVAMSA_BONUS
+        elif name == "Gand Mool":
+            # Absolute JS day-score (−10).
+            score += GAND_MOOL_PENALTY
+        elif nature == "auspicious":
             score += strength
         elif nature == "inauspicious":
             score -= strength * 2  # inauspicious outweighs auspicious per WE p.84
@@ -748,6 +937,9 @@ def muhurta_yogas_to_dict(r: MuhurtaYogaResult) -> dict:
             }
             for h in r.active
         ],
+        "pushkara_navamsa": r.pushkara_navamsa,
+        "gand_mool": r.gand_mool,
+        "pushkarabhaga": r.pushkarabhaga,
     }
 
 
