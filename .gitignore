@@ -43,6 +43,11 @@ knowledge-graph/gcp-ocr-staging/
 !portal/data/raw/
 knowledge-graph/graphify-out/*.bak*
 knowledge-graph/graphify-out/graph.json.bak*
+# Self-evolving memory system's runtime cache (regenerable embeddings +
+# mutable state) — not source, not versioned corpus data. Any dry-run batch
+# worth keeping gets extracted into knowledge-graph/dry-run-review/ first
+# (tracked), same as 2026-08-01-transit-scoring-memo. See docs/BACKLOG.md V-5.
+knowledge-graph/graphify-out/memory-state/
 
 # Supabase CLI local state
 supabase/.temp/
