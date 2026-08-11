@@ -9,19 +9,24 @@ Current graph: newbooks-v1 (26,722 nodes). Learn module live. KE is authoritativ
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: August 11, 2026 (backlog review after a 3.5-week handoff gap; V-1/V-13 production incident fixed; Fly→Vercel migration in progress)*
+*Last Updated: August 11, 2026 (backlog review after a 3.5-week handoff gap — full remediation cycle complete, V-7 Vercel cutover live, V-11 gated)*
 
 ---
 
 ## Session checkpoint — 2026-08-11 (supersedes the June 29 snapshot below for current status)
 
-2026-08-01 → 2026-08-11 shipped with zero handoff-doc updates until this pass — full detail in `docs/BACKLOG.md` (V-1 through V-17).
+**End-of-session: 17 of 18 tracked backlog items closed, working tree clean, everything pushed.**
+2026-08-01 → 2026-08-11 shipped with zero handoff-doc updates until this pass — full detail in
+`docs/BACKLOG.md` (V-1 through V-18).
 
 - **Shipped since June 29:** B-16 Phase 1 (panchanga_muhurtha activity-finder logic ported to CVCE), B-16 Phase 2 (`graph_rag`+`knowledge_engine` extracted into a shared `vedic_knowledge` pip package for both apps), the self-evolving memory system (`auto_mapper`/`schema_mutator`/`session_memory`/`/memory/*` endpoints), and CVCE vendored into `cvce/vedic_knowledge/` for a new parallel Vercel deployment (`vedicastro-cvce-vercel`).
-- **Real production incident found and fixed (2026-08-11):** the shared package imported VedicAstro-local `vedic_engine`, causing a non-deterministic import crash. Independently traced from the panchanga_muhurtha side to a real Supabase org-wide egress-quota trip that broke that app's admin dashboard. Fixed via dependency injection; an unrelated egress-caching fix shipped in the same commit. 340/340 CVCE tests green.
-- **Fly→Vercel migration (owner-approved, root cause: Muhurtha's Fly free tier got unintentionally billed):** CVCE redeployed to Vercel with the fixes, `/health` verified stable. Cutover blocked on two owner actions — a `CVCE_SERVICE_TOKEN` mismatch between the portal's and CVCE's Vercel projects (never synced), and 8 local commits not yet pushed to `origin/main` (sandbox blocked the push as a shared-state action).
-- **Also closed:** RLS-on-`guest_charts` verified live; panchanga_muhurtha's shared-package usage confirmed HTTP-only in production (no coupling risk); stale B3 re-gate text corrected; 456/458 dormant worktrees pruned; a graph node-count discrepancy confirmed as a non-bug.
-- **Still open:** B2 experiment-system remediation (last 66/100) and Transit Context remediation (last 68/100) both need a fresh independent review cycle. Life-Event Prediction engine (see 2026-07-17 notes elsewhere) still has zero implementation.
+- **Real production incident found and fixed:** the shared package imported VedicAstro-local `vedic_engine`, causing a non-deterministic import crash. Independently traced from the panchanga_muhurtha side to a real Supabase org-wide egress-quota trip that broke that app's admin dashboard. Fixed via dependency injection; an unrelated egress-caching fix shipped in the same commit. 340/340 CVCE tests green.
+- **Fly→Vercel migration — fully cut over and verified.** Owner-approved (root cause: Muhurtha's Fly free tier got unintentionally billed). Commits pushed, a new shared `CVCE_SERVICE_TOKEN` generated and synced across both Vercel projects (previously mismatched), CVCE redeployed, portal's production `CVCE_BASE_URL` flipped to it and redeployed, verified with a real end-to-end request on the live production path — correct golden reference chart returned. Fly stays up as a fallback.
+- **A real upstream bug found during that verification, not before:** `PyJHora==4.8.7`'s own code crashes on any fresh install (a dict/list bug inside the third-party package). It never surfaced locally or on Fly because those environments had an untracked hand-patch nobody had recorded anywhere — any fresh CVCE deploy would have silently broken most of the product. Fixed with a self-healing monkeypatch, verified 3 ways.
+- **B2 experiment-system and Transit Context** both got fresh independent reviews (the original 66/100 and 68/100 verdicts' detail wasn't preserved anywhere). DeepSeek did the raw adversarial pass; every finding was individually verified against the real code before being trusted — most "critical" claims for both were false positives. B2: no real bugs. Transit Context: 2 small genuine issues fixed.
+- **Life-Event Prediction engine — implementation deliberately gated, not started.** Owner's decision: hold until the Vercel cutover closed (done now); a ≥95/100 remediate-and-re-gate cycle stays mandatory regardless of delegation used to draft it. Design review done (plan still accurate, one real gap flagged); a verified golden-chart fixture pulled from the live engine; synthetic fixtures deliberately deferred to the implementation session.
+- **Also closed:** RLS-on-`guest_charts` verified live; panchanga_muhurtha's shared-package usage confirmed HTTP-only in production (no coupling risk); stale B3 re-gate text corrected; 456/458 dormant worktrees pruned; a graph node-count discrepancy confirmed as a non-bug; 2 failed book-embedding slices re-run successfully.
+- **Not urgent, no action needed:** a dormant launchd daemon's old crash history — only relevant if ingestion is re-run.
 
 ---
 

@@ -1,27 +1,37 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-08-11 (Claude Code / Sonnet 5 — post-handoff-gap backlog review + fix; Vercel migration in progress)  
+**Snapshot:** 2026-08-11 (Claude Code / Sonnet 5 — post-handoff-gap backlog review, full remediation cycle, V-7 Vercel cutover live)  
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
 
 ---
 
 ## ✅ SESSION 2026-08-11 — READ THIS FIRST (supersedes 2026-07-17 below for current status)
 
-**Context:** owner returned after ~3.5 weeks with no handoff update. Full detail, criticality, and evidence for every item below: `docs/BACKLOG.md`.
+**End of session: 17 of 18 tracked backlog items closed. Working tree clean, everything committed
+and pushed to `origin/main`.** Full detail, criticality, and evidence for every item:
+`docs/BACKLOG.md` (V-1 through V-18).
 
-**What shipped 2026-08-01 → 2026-08-11 with no doc trail until now:**
+**What shipped 2026-08-01 → 2026-08-11 with no doc trail until this session:**
 - B-16 Phase 1: panchanga_muhurtha's activity-finder logic ported to CVCE (finder, muhurta_lagna, activity_profiles, personal_factors, eclipse, gandmool, kaksha, kantaka, `dasha_deep`/`ashtakavarga` endpoints).
 - B-16 Phase 2: `graph_rag`+`knowledge_engine` extracted into a shared `vedic_knowledge` pip package (sibling repo `vedic-knowledge/`), meant for both VedicAstro and panchanga_muhurtha. VedicAstro's own copies are now thin re-export shims.
 - Self-evolving memory system (`auto_mapper.py`, `schema_mutator.py`, `session_memory.py`, ingest-watcher, `/memory/*` endpoints).
 - CVCE vendored into `cvce/vedic_knowledge/` for Vercel (Functions don't see sibling dirs) — new `vedicastro-cvce-vercel` project created.
 
-**Real production incident found and fixed this session (2026-08-11):** the shared `vedic_knowledge/graph/enhancer.py` imported VedicAstro-local `vedic_engine` — a non-deterministic `KeyError` crash (not a catchable `ImportError`) depending on import order. Independently confirmed from the *panchanga_muhurtha* side as the root cause of a real Supabase org-wide egress-quota trip (~5.4GB/72s from an uncached full-table scan) that broke that app's admin dashboard and stalled its release. Fixed via dependency injection (`PredictionEnhancer(transit_analyzer=...)` instead of an internal import); egress fix (TTL+row-count cache) shipped in the same commit. 340/340 CVCE tests green. Full trail: `docs/BACKLOG.md` V-1, V-13.
+**Real production incident found and fixed:** the shared `vedic_knowledge/graph/enhancer.py` imported VedicAstro-local `vedic_engine` — a non-deterministic `KeyError` crash (not a catchable `ImportError`) depending on import order. Independently confirmed from the *panchanga_muhurtha* side as the root cause of a real Supabase org-wide egress-quota trip (~5.4GB/72s from an uncached full-table scan) that broke that app's admin dashboard and stalled its release. Fixed via dependency injection (`PredictionEnhancer(transit_analyzer=...)` instead of an internal import); egress fix (TTL+row-count cache) shipped in the same commit (`c779525`, pushed). 340/340 CVCE tests green. Full trail: `docs/BACKLOG.md` V-1, V-13.
 
-**V-7, Fly→Vercel migration (owner-approved, cause: Muhurtha's Fly free tier was unintentionally billed and froze):** CVCE redeployed to `vedicastro-cvce-vercel.vercel.app` with the fixes above, `/health` verified stable. **Cutover blocked** on two owner actions: (1) `CVCE_SERVICE_TOKEN` differs between the portal's and CVCE's Vercel projects — never synced, would 401 every call if cut over now; (2) 8 local commits aren't pushed to `origin/main` yet (sandbox blocked `git push` as a shared-state action). Portal's production `CVCE_BASE_URL` is still unset (defaults to Fly) pending both.
+**V-7, Fly→Vercel migration — fully cut over and verified.** Owner-approved (cause: Muhurtha's Fly free tier was unintentionally billed and froze). Sequence completed in the owner's specified order: pushed pending commits → generated and synced a new shared `CVCE_SERVICE_TOKEN` across both Vercel projects (they'd never matched — root cause of an earlier auth failure mid-verification) → redeployed CVCE → set the portal's production `CVCE_BASE_URL` to the Vercel CVCE and redeployed → verified with a real end-to-end request through the actual production path (`portal-omega-two-10.vercel.app/api/cvce/positions` → the live Vercel CVCE) returning the correct golden reference chart. Fly is left running as a fallback, not decommissioned.
 
-**Also closed 2026-08-11:** RLS-on-`guest_charts` security fix confirmed live; panchanga_muhurtha's `vedic_knowledge` usage confirmed HTTP-only in production (no in-process coupling risk); stale B3 re-gate text in `RELEASE_HANDOFF.md` corrected; 456/458 dormant `.kilo/worktrees/*` pruned; `graph-deepseek.json` node-count gap confirmed non-bug (separate diagnostic-only extraction).
+**A real upstream bug found during that verification, not before — new item, V-18:** `PyJHora==4.8.7`'s own `drik.planetary_positions()` crashes on any fresh install (`AttributeError`, a dict/list mismatch bug in the third-party package itself, reproduced in an isolated Python 3.12 venv matching Vercel's exact build). It never surfaced locally or on Fly because those environments carried an untracked hand-patch nobody had recorded anywhere — meaning *any* fresh CVCE deploy (this migration, a Fly rebuild without cache, a new dev machine, CI) would have silently broken `/chart`, `/natal`, `/report/facts`, `/predict`, effectively the whole product. Fixed with a self-healing monkeypatch in `cvce/app/ephem.py` (the one file this project's convention allows to import PyJHora); verified against the isolated repro, the full CVCE suite, and live authenticated production requests.
 
-**Still open, unchanged from 2026-07-17 below:** V-4 (B2 remediation, last 66/100) and V-8 (Transit Context remediation, last 68/100) both need a fresh independent review — the original per-finding detail was never preserved in the repo. V-11 (Life-Event Prediction engine) still has zero implementation — remains the next real mission once the above lands.
+**V-4 (B2 remediation) and V-8 (Transit Context remediation) both closed.** Fresh from-scratch independent reviews — the original 66/100 and 68/100 verdicts' per-finding detail was never preserved anywhere to remediate against. DeepSeek did the raw adversarial pass (once a working `DEEPSEEK_API_KEY` was wired in, at the owner's insistence, to conserve Claude budget for the Muhurtha release); every finding was individually verified against the real code and its dependencies before being trusted, not shipped as-is. Most flagged "critical"/"high" findings for both were false positives once traced through the actual invariants. V-4: no real bugs, 30/30 tests pass, nothing to fix. V-8: 2 small genuine issues found and fixed (unmount-safe debounced place search, a specific geolocation-timeout message), all tests green.
+
+**V-11, Life-Event Prediction engine — implementation deliberately gated, not started.** Owner's explicit decision: hold implementation until the Vercel cutover was fully closed (now done); a MAFIP ≥95/100 remediate-and-re-gate cycle stays mandatory regardless of BOSS/DeepSeek delegation being used to draft the code. Design review done: every file:line citation in `LIFE_EVENT_ENGINE_PLAN.md` checked against current code, still fully accurate a month later. One real gap found and flagged: the plan's witness pseudocode for karaka presence is vacuous as written (always true for any natal chart) — needs resolving against the audit doc's real intended language before `evaluate_witnesses()` is implemented. A golden-chart fixture was pulled live from the running engine (verified, not fabricated); synthetic branch-coverage fixtures deliberately deferred to the implementation session itself, since the functions they'd test don't exist yet.
+
+**Also closed this session:** RLS-on-`guest_charts` security fix confirmed live; panchanga_muhurtha's `vedic_knowledge` usage confirmed HTTP-only in production (no in-process coupling risk); stale B3 re-gate text in `RELEASE_HANDOFF.md` corrected; 456/458 dormant `.kilo/worktrees/*` pruned; `graph-deepseek.json` node-count gap confirmed non-bug (separate diagnostic-only extraction); 2 failed book-embedding slices (`Phaladeepika_Mantreswara_1961`) re-run successfully (scope note: only updates the diagnostic `graph-deepseek.json`, not the canonical serving graph).
+
+**Not urgent, no action needed:** the `com.vedicastro.ingest` launchd daemon's old crash-loop history — only worth a look before ingestion is re-run, which it isn't currently.
+
+**Resume trigger for the next session:** nothing is blocked. The only open item is V-11 implementation, which stays gated until the owner explicitly says go.
 
 ---
 
