@@ -1,11 +1,31 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-07-17 (Claude Code / Fable 5 — Timeline v2 + E2E infra shipped; Life-Event Prediction engine is the next mission)  
+**Snapshot:** 2026-08-11 (Claude Code / Sonnet 5 — post-handoff-gap backlog review + fix; Vercel migration in progress)  
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
 
 ---
 
-## ✅ SESSION 2026-07-16/17 — READ THIS FIRST (authoritative status)
+## ✅ SESSION 2026-08-11 — READ THIS FIRST (supersedes 2026-07-17 below for current status)
+
+**Context:** owner returned after ~3.5 weeks with no handoff update. Full detail, criticality, and evidence for every item below: `docs/BACKLOG.md`.
+
+**What shipped 2026-08-01 → 2026-08-11 with no doc trail until now:**
+- B-16 Phase 1: panchanga_muhurtha's activity-finder logic ported to CVCE (finder, muhurta_lagna, activity_profiles, personal_factors, eclipse, gandmool, kaksha, kantaka, `dasha_deep`/`ashtakavarga` endpoints).
+- B-16 Phase 2: `graph_rag`+`knowledge_engine` extracted into a shared `vedic_knowledge` pip package (sibling repo `vedic-knowledge/`), meant for both VedicAstro and panchanga_muhurtha. VedicAstro's own copies are now thin re-export shims.
+- Self-evolving memory system (`auto_mapper.py`, `schema_mutator.py`, `session_memory.py`, ingest-watcher, `/memory/*` endpoints).
+- CVCE vendored into `cvce/vedic_knowledge/` for Vercel (Functions don't see sibling dirs) — new `vedicastro-cvce-vercel` project created.
+
+**Real production incident found and fixed this session (2026-08-11):** the shared `vedic_knowledge/graph/enhancer.py` imported VedicAstro-local `vedic_engine` — a non-deterministic `KeyError` crash (not a catchable `ImportError`) depending on import order. Independently confirmed from the *panchanga_muhurtha* side as the root cause of a real Supabase org-wide egress-quota trip (~5.4GB/72s from an uncached full-table scan) that broke that app's admin dashboard and stalled its release. Fixed via dependency injection (`PredictionEnhancer(transit_analyzer=...)` instead of an internal import); egress fix (TTL+row-count cache) shipped in the same commit. 340/340 CVCE tests green. Full trail: `docs/BACKLOG.md` V-1, V-13.
+
+**V-7, Fly→Vercel migration (owner-approved, cause: Muhurtha's Fly free tier was unintentionally billed and froze):** CVCE redeployed to `vedicastro-cvce-vercel.vercel.app` with the fixes above, `/health` verified stable. **Cutover blocked** on two owner actions: (1) `CVCE_SERVICE_TOKEN` differs between the portal's and CVCE's Vercel projects — never synced, would 401 every call if cut over now; (2) 8 local commits aren't pushed to `origin/main` yet (sandbox blocked `git push` as a shared-state action). Portal's production `CVCE_BASE_URL` is still unset (defaults to Fly) pending both.
+
+**Also closed 2026-08-11:** RLS-on-`guest_charts` security fix confirmed live; panchanga_muhurtha's `vedic_knowledge` usage confirmed HTTP-only in production (no in-process coupling risk); stale B3 re-gate text in `RELEASE_HANDOFF.md` corrected; 456/458 dormant `.kilo/worktrees/*` pruned; `graph-deepseek.json` node-count gap confirmed non-bug (separate diagnostic-only extraction).
+
+**Still open, unchanged from 2026-07-17 below:** V-4 (B2 remediation, last 66/100) and V-8 (Transit Context remediation, last 68/100) both need a fresh independent review — the original per-finding detail was never preserved in the repo. V-11 (Life-Event Prediction engine) still has zero implementation — remains the next real mission once the above lands.
+
+---
+
+## ✅ SESSION 2026-07-16/17
 
 **Everything below is committed AND pushed AND deployed** (Vercel auto-deploy from main; Fly deployed manually this session). `origin/main = 80ffa2a`.
 

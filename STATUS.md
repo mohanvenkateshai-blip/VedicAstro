@@ -9,7 +9,19 @@ Current graph: newbooks-v1 (26,722 nodes). Learn module live. KE is authoritativ
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: June 29, 2026 (26,722-node graph with Core 20 + 12 newbooks texts; deterministic layer complete and deployed)*
+*Last Updated: August 11, 2026 (backlog review after a 3.5-week handoff gap; V-1/V-13 production incident fixed; Fly→Vercel migration in progress)*
+
+---
+
+## Session checkpoint — 2026-08-11 (supersedes the June 29 snapshot below for current status)
+
+2026-08-01 → 2026-08-11 shipped with zero handoff-doc updates until this pass — full detail in `docs/BACKLOG.md` (V-1 through V-17).
+
+- **Shipped since June 29:** B-16 Phase 1 (panchanga_muhurtha activity-finder logic ported to CVCE), B-16 Phase 2 (`graph_rag`+`knowledge_engine` extracted into a shared `vedic_knowledge` pip package for both apps), the self-evolving memory system (`auto_mapper`/`schema_mutator`/`session_memory`/`/memory/*` endpoints), and CVCE vendored into `cvce/vedic_knowledge/` for a new parallel Vercel deployment (`vedicastro-cvce-vercel`).
+- **Real production incident found and fixed (2026-08-11):** the shared package imported VedicAstro-local `vedic_engine`, causing a non-deterministic import crash. Independently traced from the panchanga_muhurtha side to a real Supabase org-wide egress-quota trip that broke that app's admin dashboard. Fixed via dependency injection; an unrelated egress-caching fix shipped in the same commit. 340/340 CVCE tests green.
+- **Fly→Vercel migration (owner-approved, root cause: Muhurtha's Fly free tier got unintentionally billed):** CVCE redeployed to Vercel with the fixes, `/health` verified stable. Cutover blocked on two owner actions — a `CVCE_SERVICE_TOKEN` mismatch between the portal's and CVCE's Vercel projects (never synced), and 8 local commits not yet pushed to `origin/main` (sandbox blocked the push as a shared-state action).
+- **Also closed:** RLS-on-`guest_charts` verified live; panchanga_muhurtha's shared-package usage confirmed HTTP-only in production (no coupling risk); stale B3 re-gate text corrected; 456/458 dormant worktrees pruned; a graph node-count discrepancy confirmed as a non-bug.
+- **Still open:** B2 experiment-system remediation (last 66/100) and Transit Context remediation (last 68/100) both need a fresh independent review cycle. Life-Event Prediction engine (see 2026-07-17 notes elsewhere) still has zero implementation.
 
 ---
 
@@ -47,7 +59,7 @@ Sequential execution is forbidden. Scale aggressively. This is project law.
 | Component | Live URL / Connection | Hosted On | Status | Notes |
 |:---|:---|:---|:---|:---|
 | **Portal** | [portal-omega-two-10.vercel.app](https://portal-omega-two-10.vercel.app) | Vercel | 🟢 LIVE | `/api/cvce/*` proxy for explorers; `/chart/report` Horoscope Report; Transit Intelligence panel (June 27 evening deploy). |
-| **CVCE (Engine)** | [vedicastro-cvce.fly.dev](https://vedicastro-cvce.fly.dev) | Fly.io (LHR) | 🟢 LIVE | Vimshottari fix (`dasha_vimshottari.py`), `/report/facts`, transit/dasha analyzers. Scale-to-zero — first request after idle can take **30–60s** via proxy. |
+| **CVCE (Engine)** | [vedicastro-cvce.fly.dev](https://vedicastro-cvce.fly.dev) | Fly.io (LHR) | 🟢 LIVE | Vimshottari fix (`dasha_vimshottari.py`), `/report/facts`, transit/dasha analyzers. Scale-to-zero — first request after idle can take **30–60s** via proxy. **Migrating to Vercel** (`vedicastro-cvce-vercel.vercel.app`, health-verified 2026-08-11) — portal still defaults here until `CVCE_SERVICE_TOKEN` is synced across both Vercel projects and `CVCE_BASE_URL` is flipped. |
 | **Muhūrta** | [muhurtha.uvwx.me](https://muhurtha.uvwx.me) | Fly.io (IAD) | 🟢 LIVE (HTTP 200) | **Frozen standalone.** Fully complete. Untouched per directive. |
 | **Database** | Neon Postgres (teal-prism) | Neon (LHR) | 🟢 ACTIVE | Credentials loaded in Portal. |
 
