@@ -533,7 +533,12 @@ def build_report_facts(
         natal_sign=natal_sign,
     )
 
-    enhancer = PredictionEnhancer()
+    # vedic_knowledge's PredictionEnhancer takes transit_analyzer by
+    # injection, not import — it's a shared package (also used by
+    # panchanga_muhurtha) and must not depend on VedicAstro-local code.
+    from vedic_engine.synthesis.transit_analyzer import TransitImpactAnalyzer as _TIA
+
+    enhancer = PredictionEnhancer(transit_analyzer=_TIA())
     enhancements = enhancer.enhance(
         pred,
         natal_sign=natal_sign,

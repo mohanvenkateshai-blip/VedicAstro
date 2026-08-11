@@ -145,8 +145,12 @@ def test_search_knowledge_integration_wrapper(monkeypatch):
 
     clear_knowledge_engine_cache()
     ke = KnowledgeEngine(store=store)
+    # search_knowledge's real implementation lives in
+    # vedic_knowledge.knowledge.integration (knowledge_engine.integration is
+    # a re-export shim) and resolves get_knowledge_engine from its own
+    # module globals.
     monkeypatch.setattr(
-        "knowledge_engine.integration.get_knowledge_engine",
+        "vedic_knowledge.knowledge.integration.get_knowledge_engine",
         lambda: ke,
     )
 

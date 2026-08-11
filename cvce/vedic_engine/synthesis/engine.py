@@ -44,14 +44,20 @@ def _clear_muhurta_rules_cache() -> None:
     Explicitly revives the GraphMuhurtaRules provider data on refresh.
     """
     try:
-        from knowledge_engine.integration import clear_knowledge_engine_cache
+        try:
+            from vedic_knowledge import clear_knowledge_engine_cache
+        except ImportError:
+            from knowledge_engine.integration import clear_knowledge_engine_cache
 
         clear_knowledge_engine_cache()
     except Exception:
         pass
     # Force provider singleton rebuild on next access (reloads _yoga_nodes/_combo_nodes from current graph)
     try:
-        from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
+        try:
+            from vedic_knowledge import GraphMuhurtaRules
+        except ImportError:
+            from graph_rag.muhurta_rules_provider import GraphMuhurtaRules
 
         GraphMuhurtaRules._instance = None
         # Touch to eagerly reload from (possibly refreshed) graph
@@ -59,9 +65,16 @@ def _clear_muhurta_rules_cache() -> None:
     except Exception:
         pass
     try:
-        from graph_rag.graph import GraphRAG
+        try:
+            from vedic_knowledge import GraphRAG
+        except ImportError:
+            from graph_rag.graph import GraphRAG
 
-        GraphRAG()._loaded = False
+        g = GraphRAG()
+        if hasattr(g, "reset_singleton"):
+            GraphRAG.reset_singleton()
+        else:
+            g._loaded = False
     except Exception:
         pass
 
@@ -77,10 +90,15 @@ def _register_muhurta_engine() -> None:
     if _muhurta_registered:
         return
     try:
-        from knowledge_engine.integration import get_knowledge_engine
+        try:
+            from vedic_knowledge import get_knowledge_engine
+        except ImportError:
+            from knowledge_engine.integration import get_knowledge_engine
         from knowledge_engine.registry import RegisteredEngine
 
         ke = get_knowledge_engine()
+        if ke is None:
+            return
         ke.register_engine("muhurta", on_refresh=_on_muhurta_refresh)
         # ensure lands even under import timing variance
         if "muhurta" not in getattr(ke.registry, "_engines", {}):
@@ -195,9 +213,12 @@ class VedicPredictor:
         if result.panchanga:
             graph_hits = None
             try:
-                from knowledge_engine.integration import (
-                    get_safe_muhurta_rules as active_muhurta_rules,
-                )
+                try:
+                    from vedic_knowledge import get_safe_muhurta_rules as active_muhurta_rules
+                except ImportError:
+                    from knowledge_engine.integration import (
+                        get_safe_muhurta_rules as active_muhurta_rules,
+                    )
 
                 rules = active_muhurta_rules()
                 if rules and result.panchanga:
@@ -670,9 +691,14 @@ def _generate_transit_summary(r: VedicPrediction) -> str:
 
 # Final ensure for "muhurta" registration (covers all import orders in this process)
 try:
-    from knowledge_engine.integration import get_knowledge_engine
+    try:
+        from vedic_knowledge import get_knowledge_engine
+    except ImportError:
+        from knowledge_engine.integration import get_knowledge_engine
     from knowledge_engine.registry import RegisteredEngine
     _ke = get_knowledge_engine()
+    if _ke is None:
+        raise RuntimeError("no ke")
     if "muhurta" not in getattr(_ke.registry, "_engines", {}):
         _ke.registry._engines["muhurta"] = RegisteredEngine(name="muhurta", on_refresh=_on_muhurta_refresh)
 except Exception:

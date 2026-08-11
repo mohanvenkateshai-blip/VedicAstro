@@ -144,7 +144,11 @@ def test_official_integration_gateway_exposes_research_query(monkeypatch) -> Non
     from knowledge_engine.integration import query_research_knowledge
 
     ke = engine()
-    monkeypatch.setattr("knowledge_engine.integration.get_knowledge_engine", lambda: ke)
+    # query_research_knowledge's real implementation now lives in
+    # vedic_knowledge.knowledge.integration (knowledge_engine.integration is
+    # a re-export shim) — it resolves get_knowledge_engine from its own
+    # module globals, so that's the patch target, not the shim's.
+    monkeypatch.setattr("vedic_knowledge.knowledge.integration.get_knowledge_engine", lambda: ke)
     result = query_research_knowledge(pattern="valid")
     assert [item["id"] for item in result["nodes"]] == ["valid"]
     assert "knowledge_healthy" in result["status"]
@@ -320,16 +324,21 @@ def test_ke_owned_state_mutations_are_concurrency_safe(tmp_path) -> None:
 
 def test_singleton_reset_restores_durable_ke_state(monkeypatch, tmp_path) -> None:
     import knowledge_engine.integration as integration
+    import vedic_knowledge.knowledge.integration as shared_integration
 
     store = StaticStore()
     path = tmp_path / "singleton.sqlite3"
     engine_class = KnowledgeEngine
     monkeypatch.delenv("SUPABASE_URL", raising=False)
     monkeypatch.delenv("KE_USE_SUPABASE", raising=False)
+    # get_knowledge_engine()'s real construction path is
+    # vedic_knowledge.knowledge.integration._try_import_ke_class() -> KE();
+    # the shim module no longer holds its own KnowledgeEngine reference to
+    # patch, so intercept the class-resolution step instead.
     monkeypatch.setattr(
-        integration,
-        "KnowledgeEngine",
-        lambda: engine_class(
+        shared_integration,
+        "_try_import_ke_class",
+        lambda: lambda: engine_class(
             store=store,
             research_persistence=SQLiteKnowledgeResearchState(path),
         ),
@@ -346,11 +355,16 @@ def test_singleton_reset_restores_durable_ke_state(monkeypatch, tmp_path) -> Non
 
 def test_singleton_creation_is_concurrency_safe(monkeypatch) -> None:
     import knowledge_engine.integration as integration
+    import vedic_knowledge.knowledge.integration as shared_integration
 
     engine_class = KnowledgeEngine
     monkeypatch.delenv("SUPABASE_URL", raising=False)
     monkeypatch.delenv("KE_USE_SUPABASE", raising=False)
-    monkeypatch.setattr(integration, "KnowledgeEngine", lambda: engine_class(store=StaticStore()))
+    monkeypatch.setattr(
+        shared_integration,
+        "_try_import_ke_class",
+        lambda: lambda: engine_class(store=StaticStore()),
+    )
     integration.clear_knowledge_engine_cache()
     with ThreadPoolExecutor(max_workers=12) as pool:
         instances = tuple(pool.map(lambda _: integration.get_knowledge_engine(), range(48)))

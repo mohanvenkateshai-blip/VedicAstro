@@ -1151,10 +1151,31 @@ except Exception:
     _ENGINE_AVAILABLE = False
     _predictor = None
 
+# Shared vedic-knowledge package — graph path + version gate (B-16 Phase 2)
+try:
+    from .graph_version_gate import enforce_at_startup as _graph_version_gate
+
+    _GRAPH_VERSION_STATUS = _graph_version_gate()
+except Exception as _gve:
+    # Only hard-fail when GRAPH_VERSION is set (mismatch) or GRAPH_VERSION_REQUIRED=1
+    import os as _os
+
+    if _os.environ.get("GRAPH_VERSION") or _os.environ.get("GRAPH_VERSION_REQUIRED", "").lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    ):
+        raise
+    _GRAPH_VERSION_STATUS = {"ok": False, "message": str(_gve)}
+
 # Knowledge layer — prefer KnowledgeEngine safe access. GraphRAG kept only for
 # specialized stats providers (deepseek/gemini etc) that are not yet under KE.
 try:
-    from knowledge_engine.integration import get_safe_graph, get_prediction_enhancer, is_knowledge_healthy
+    try:
+        from vedic_knowledge import get_safe_graph, get_prediction_enhancer, is_knowledge_healthy
+    except ImportError:
+        from knowledge_engine.integration import get_safe_graph, get_prediction_enhancer, is_knowledge_healthy
 
     _enhancer = get_prediction_enhancer()
     _GRAPH_AVAILABLE = True
@@ -1185,7 +1206,10 @@ def graph_rules_enabled() -> bool:
 
 # New central KnowledgeEngine (P0 active work)
 try:
-    from knowledge_engine import get_knowledge_engine
+    try:
+        from vedic_knowledge import get_knowledge_engine
+    except ImportError:
+        from knowledge_engine import get_knowledge_engine
 
     _knowledge_engine = get_knowledge_engine()
 except Exception:
@@ -1200,7 +1224,10 @@ def _ensure_knowledge_engine():
     global _knowledge_engine
     if _knowledge_engine is None:
         try:
-            from knowledge_engine import get_knowledge_engine as _gke
+            try:
+                from vedic_knowledge import get_knowledge_engine as _gke
+            except ImportError:
+                from knowledge_engine import get_knowledge_engine as _gke
 
             _knowledge_engine = _gke()
         except Exception:
@@ -1285,7 +1312,10 @@ def index():
     graph_rag = None
     if _GRAPH_AVAILABLE and _enhancer is not None:
         try:
-            from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
+            try:
+                from vedic_knowledge import get_safe_transit_rules as active_transit_rules
+            except ImportError:
+                from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
 
             graph_rag = {
                 "available": True,
@@ -1543,7 +1573,10 @@ def _enhancer_graph_stats() -> dict | None:
 
 @app.get("/predict/health")
 def predict_health():
-    from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
+    try:
+        from vedic_knowledge import get_safe_transit_rules as active_transit_rules
+    except ImportError:
+        from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
     from knowledge_engine.integration import is_knowledge_healthy as graph_rules_enabled
 
     graph_rules = active_transit_rules()

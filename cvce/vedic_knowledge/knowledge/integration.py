@@ -259,11 +259,17 @@ def notify_embeddings_updated(chunk_count: int = 0) -> dict[str, Any]:
     return result
 
 
-def get_prediction_enhancer():
-    """Returns a PredictionEnhancer backed by package GraphRAG."""
+def get_prediction_enhancer(transit_analyzer=None):
+    """Returns a PredictionEnhancer backed by package GraphRAG.
+
+    `transit_analyzer` (optional): pass a VedicAstro-side
+    `TransitImpactAnalyzer()` instance to enable transit_intelligence
+    enrichment. Left unset, that one field stays empty — every other
+    enrichment (citations, conflicts, god nodes) is unaffected.
+    """
     from vedic_knowledge.graph.enhancer import PredictionEnhancer
 
-    return PredictionEnhancer()
+    return PredictionEnhancer(transit_analyzer=transit_analyzer)
 
 
 def get_llm_narration(facts: dict, birth: dict) -> dict | None:

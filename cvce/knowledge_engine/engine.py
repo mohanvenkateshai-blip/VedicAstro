@@ -106,6 +106,17 @@ class KnowledgeEngine:
     _last_research_store_observed_count: int = 0
     _last_research_store_expected_count: int | None = None
     _last_research_local_ids: set[str] = field(default_factory=set)
+    # _enumerate_current_research_nodes() does a full unfiltered graph_nodes
+    # table scan (every row, every column) against the hosted Supabase store
+    # on every call -- no caller does its own caching, so repeated research
+    # queries were re-walking the whole table each time and driving real
+    # Supabase egress cost. Cache the result for this TTL instead.
+    _research_enumeration_cache: list[dict[str, Any]] | None = field(default=None, repr=False)
+    _research_enumeration_cache_at: datetime | None = field(default=None, repr=False)
+    _research_enumeration_cache_diagnostics: dict[str, Any] | None = field(
+        default=None, repr=False
+    )
+    _research_enumeration_cache_ttl_seconds: int = 300
     _state_lock: threading.RLock = field(default_factory=threading.RLock, repr=False)
     _last_revived_at: datetime | None = None
     _revive_interval_seconds: int = 3600
@@ -140,7 +151,10 @@ class KnowledgeEngine:
         if getattr(self, "graph", None) is not None:
             return
         try:
-            from graph_rag.graph import GraphRAG
+            try:
+                from vedic_knowledge import GraphRAG
+            except ImportError:
+                from graph_rag.graph import GraphRAG
 
             self.graph = GraphRAG()
             return
@@ -433,8 +447,24 @@ class KnowledgeEngine:
         }
 
     def _enumerate_current_research_nodes(self) -> list[dict[str, Any]]:
-        """Union local graph and every store page; local payload wins duplicate IDs."""
+        """Union local graph and every store page; local payload wins duplicate IDs.
 
+        The local graph is always re-read fresh (cheap, in-memory), so a
+        caller that mutates/removes local nodes between calls sees that
+        immediately. Only the *store* side -- a full unfiltered remote table
+        scan, expensive against a hosted Supabase project's egress quota
+        with no caller-side caching of its own -- is cached.
+
+        Freshness is verified via a cheap get_stats() row-count check on
+        every call (not just elapsed time): a node added/removed in the
+        store changes that count, so it's detected on the very next call
+        regardless of TTL. _research_enumeration_cache_ttl_seconds is only
+        a fallback ceiling for the rare case where a removal and an
+        addition happen to cancel out in the count. This matters because
+        the archival/removal-detection logic downstream (research_status's
+        archived_capture) depends on the store enumeration reflecting a
+        real removal immediately, not after some elapsed window.
+        """
         graph = self.graph
         loader = getattr(graph, "_load", None)
         if callable(loader):
@@ -451,56 +481,90 @@ class KnowledgeEngine:
             str(node["id"]) for node in local_nodes if node.get("id")
         }
 
-        store_nodes: list[dict[str, Any]] = []
-        page_size = 500
-        offset = 0
-        previous_page_signature: tuple[str, ...] | None = None
-        self._last_research_enumeration_complete = True
-        self._last_research_source_error = None
-        self._last_research_store_expected_count = None
-        while True:
-            try:
-                page = self.store.get_nodes_page(limit=page_size, offset=offset)
-            except Exception as exc:
-                logger.debug("research store page failed at offset %s: %s", offset, exc)
-                self._last_research_enumeration_complete = False
-                self._last_research_source_error = f"{type(exc).__name__}: {exc}"
-                break
-            page = [copy.deepcopy(node) for node in (page or []) if isinstance(node, dict)]
-            signature = tuple(
-                str(node.get("id") or json.dumps(node, sort_keys=True, default=str))
-                for node in page
-            )
-            if page and signature == previous_page_signature:
-                logger.warning("research store pagination repeated offset %s; stopping safely", offset)
-                self._last_research_enumeration_complete = False
-                self._last_research_source_error = (
-                    f"store repeated page content at offset={offset}"
-                )
-                break
-            store_nodes.extend(page)
-            if len(page) < page_size:
-                break
-            previous_page_signature = signature
-            offset += page_size
-        self._last_research_store_observed_count = len(store_nodes)
+        now = datetime.now(UTC)
+        store_expected_count: int | None = None
         try:
             stats = self.store.get_stats() or {}
             expected = stats.get("node_count", stats.get("nodes"))
             if expected is not None:
-                self._last_research_store_expected_count = int(expected)
+                store_expected_count = int(expected)
         except Exception as exc:
             logger.debug("authoritative store count unavailable: %s", exc)
-        if (
-            self._last_research_store_expected_count is not None
-            and self._last_research_store_observed_count
-            != self._last_research_store_expected_count
-        ):
-            self._last_research_enumeration_complete = False
-            self._last_research_source_error = (
-                self._last_research_source_error
-                or "store enumeration count differs from authoritative node_count"
+
+        cached_diagnostics = self._research_enumeration_cache_diagnostics
+        cache_fresh = (
+            self._research_enumeration_cache is not None
+            and self._research_enumeration_cache_at is not None
+            and (now - self._research_enumeration_cache_at).total_seconds()
+            < self._research_enumeration_cache_ttl_seconds
+            and cached_diagnostics is not None
+            and store_expected_count is not None
+            and store_expected_count == cached_diagnostics.get("store_expected_count")
+        )
+        if cache_fresh:
+            store_nodes = list(self._research_enumeration_cache)
+            self._last_research_enumeration_complete = cached_diagnostics.get(
+                "enumeration_complete", True
             )
+            self._last_research_source_error = cached_diagnostics.get("source_error")
+            self._last_research_store_observed_count = cached_diagnostics.get(
+                "store_observed_count", 0
+            )
+            self._last_research_store_expected_count = store_expected_count
+        else:
+            store_nodes = []
+            page_size = 500
+            offset = 0
+            previous_page_signature: tuple[str, ...] | None = None
+            self._last_research_enumeration_complete = True
+            self._last_research_source_error = None
+            self._last_research_store_expected_count = store_expected_count
+            while True:
+                try:
+                    page = self.store.get_nodes_page(limit=page_size, offset=offset)
+                except Exception as exc:
+                    logger.debug("research store page failed at offset %s: %s", offset, exc)
+                    self._last_research_enumeration_complete = False
+                    self._last_research_source_error = f"{type(exc).__name__}: {exc}"
+                    break
+                page = [copy.deepcopy(node) for node in (page or []) if isinstance(node, dict)]
+                signature = tuple(
+                    str(node.get("id") or json.dumps(node, sort_keys=True, default=str))
+                    for node in page
+                )
+                if page and signature == previous_page_signature:
+                    logger.warning(
+                        "research store pagination repeated offset %s; stopping safely", offset
+                    )
+                    self._last_research_enumeration_complete = False
+                    self._last_research_source_error = (
+                        f"store repeated page content at offset={offset}"
+                    )
+                    break
+                store_nodes.extend(page)
+                if len(page) < page_size:
+                    break
+                previous_page_signature = signature
+                offset += page_size
+            self._last_research_store_observed_count = len(store_nodes)
+            if (
+                self._last_research_store_expected_count is not None
+                and self._last_research_store_observed_count
+                != self._last_research_store_expected_count
+            ):
+                self._last_research_enumeration_complete = False
+                self._last_research_source_error = (
+                    self._last_research_source_error
+                    or "store enumeration count differs from authoritative node_count"
+                )
+            self._research_enumeration_cache = list(store_nodes)
+            self._research_enumeration_cache_at = now
+            self._research_enumeration_cache_diagnostics = {
+                "enumeration_complete": self._last_research_enumeration_complete,
+                "source_error": self._last_research_source_error,
+                "store_observed_count": self._last_research_store_observed_count,
+                "store_expected_count": self._last_research_store_expected_count,
+            }
 
         merged: dict[str, dict[str, Any]] = {}
         anonymous: dict[str, dict[str, Any]] = {}
@@ -932,11 +996,17 @@ class KnowledgeEngine:
 
         # Fallback to current providers (temporary until store implements rules)
         if category == "transit":
-            from graph_rag.rules_provider import active_transit_rules
+            try:
+                from vedic_knowledge import active_transit_rules
+            except ImportError:
+                from graph_rag.rules_provider import active_transit_rules
 
             return active_transit_rules()
         elif category == "muhurta":
-            from graph_rag.muhurta_rules_provider import active_muhurta_rules
+            try:
+                from vedic_knowledge import active_muhurta_rules
+            except ImportError:
+                from graph_rag.muhurta_rules_provider import active_muhurta_rules
 
             return active_muhurta_rules()
         else:

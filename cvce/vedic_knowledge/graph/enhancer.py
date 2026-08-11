@@ -15,21 +15,28 @@ from __future__ import annotations
 
 import re
 from dataclasses import asdict
-
-try:
-    from vedic_engine.synthesis.transit_analyzer import TransitImpactAnalyzer
-except ImportError:
-    TransitImpactAnalyzer = None  # type: ignore
+from typing import Any
 
 from .graph import GraphRAG
 
 
 class PredictionEnhancer:
-    """Enriches VedicPrediction results with graph knowledge."""
+    """Enriches VedicPrediction results with graph knowledge.
 
-    def __init__(self):
+    `transit_analyzer` is injected, not imported: this package is shared
+    between VedicAstro and panchanga_muhurtha, so it must not import
+    VedicAstro-local code (`vedic_engine`) directly — a prior version did,
+    via a try/except ImportError, which doesn't actually protect against
+    import-order-dependent failures (importing a package that itself raises
+    a non-ImportError deep in its own import chain isn't caught by that
+    except clause). Callers that want transit intelligence construct their
+    own analyzer and pass it in; `None` disables that one optional feature,
+    exactly as the old silent-fallback behaviour did.
+    """
+
+    def __init__(self, transit_analyzer: Any = None):
         self.graph = GraphRAG()
-        self._transit_analyzer = TransitImpactAnalyzer() if TransitImpactAnalyzer else None
+        self._transit_analyzer = transit_analyzer
 
     def enhance(
         self,

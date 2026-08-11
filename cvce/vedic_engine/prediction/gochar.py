@@ -14,7 +14,11 @@ from ..core.panchanga import (
     rashi_index,
 )
 from ..core.panchanga import nak_index as _nak_idx
-from knowledge_engine.integration import get_structured_book
+try:
+    from vedic_knowledge import get_safe_transit_rules as _vk_transit  # noqa: F401
+    from knowledge_engine.integration import get_structured_book
+except ImportError:
+    from knowledge_engine.integration import get_structured_book
 from ..rules.transit_rules import (
     COMBUST_ORB,
     DEBIL_SIGN,
@@ -32,18 +36,24 @@ from ..rules.transit_rules import (
 from .ashtakavarga import kaksha_bav_grade, kaksha_gives_bindu, saturn_bav_in_sign
 
 try:
-    from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
+    from vedic_knowledge import get_safe_transit_rules as active_transit_rules
 except ImportError:
+    try:
+        from knowledge_engine.integration import get_safe_transit_rules as active_transit_rules
+    except ImportError:
 
-    def active_transit_rules():
-        return None
+        def active_transit_rules():
+            return None
 
 try:
-    from graph_rag.rules_provider import rebuild_transit_rules as _rebuild_transit_rules
+    from vedic_knowledge.graph.rules_provider import rebuild_transit_rules as _rebuild_transit_rules
 except ImportError:
+    try:
+        from graph_rag.rules_provider import rebuild_transit_rules as _rebuild_transit_rules
+    except ImportError:
 
-    def _rebuild_transit_rules():
-        return None
+        def _rebuild_transit_rules():
+            return None
 
 
 PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
@@ -57,7 +67,10 @@ def _clear_transit_rules_cache() -> None:
     Uses provider rebuild + KE cache clear (no direct GraphRAG bypass).
     """
     try:
-        from knowledge_engine.integration import clear_knowledge_engine_cache
+        try:
+            from vedic_knowledge import clear_knowledge_engine_cache
+        except ImportError:
+            from knowledge_engine.integration import clear_knowledge_engine_cache
 
         clear_knowledge_engine_cache()
     except Exception:
@@ -67,7 +80,10 @@ def _clear_transit_rules_cache() -> None:
     except Exception:
         # Last resort: reset provider singleton
         try:
-            from graph_rag.rules_provider import GraphTransitRules
+            try:
+                from vedic_knowledge import GraphTransitRules
+            except ImportError:
+                from graph_rag.rules_provider import GraphTransitRules
 
             GraphTransitRules._instance = None
         except Exception:
@@ -95,9 +111,14 @@ def _register_gochar_engine() -> None:
     if _gochar_registered:
         return
     try:
-        from knowledge_engine.integration import get_knowledge_engine
+        try:
+            from vedic_knowledge import get_knowledge_engine
+        except ImportError:
+            from knowledge_engine.integration import get_knowledge_engine
 
-        get_knowledge_engine().register_engine("gochar", on_refresh=_on_gochar_refresh)
+        ke = get_knowledge_engine()
+        if ke is not None:
+            ke.register_engine("gochar", on_refresh=_on_gochar_refresh)
         _gochar_registered = True
     except Exception:
         pass
