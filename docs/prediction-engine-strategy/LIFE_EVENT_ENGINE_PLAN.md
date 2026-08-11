@@ -305,6 +305,65 @@ labelling of what it currently is.
 
 ---
 
+## 10. Design review + fixture prep (2026-08-11, pre-implementation — implementation itself stays gated)
+
+**Design review verdict: still fully accurate, no plan updates needed.** Checked every file:line
+citation in this doc against the codebase as it stands today, a month after this plan was written
+(and after a month of unrelated B-16/knowledge-engine/self-evolving-memory/Vercel-migration work
+landing elsewhere). Every citation matched exactly or within a few lines: `DOMAIN_HOUSES`/
+`_domain_significators`/`RASHIS`/`SIGN_LORDS`/`_house_lord` in `rectification.py`,
+`_varga_sign_map` in `chart.py`, `_planet_in_house`/`_sign_lord` in `yoga.py` (both landed on the
+exact cited line), `mahadasha_tree`/`dasha_deep_payload` in `dasha_vimshottari.py` (exact),
+`fructify` in `fructification.py` (exact), `query()`/`_legacy_candidate`/
+`facts.get("priority_predictions")` in `timeline/service.py` (exact), `legacy_candidate_statement`/
+`legacy_identity_notice` in `narration.py`, the `milestone.origin === "prospective_prediction"`
+gate in `MilestoneDetailSheet.tsx`, `buildDigest` in `timeline-view.ts`. Only the
+`report_facts.py` wiring point drifted (§4 cited 813-823; `"priority_predictions"` now wires at
+891 — other work landed in between). None of this plan's target files were touched by the past
+month's other work.
+
+**One real gap found — resolve before implementing, not after.** §2's witness pseudocode for
+karaka presence — `Witness("karaka", karaka, present=karaka in planet_signs)` — is vacuous as
+literally written: `planet_signs` always contains all 9 grahas for any natal chart, so this
+specific check is `True` unconditionally, for every chart, every domain. The audit doc
+(`VEDIC_DIGEST_METHOD_AUDIT.md`) almost certainly has the real intended rule (karaka well-placed /
+angular-or-trinal from its own significations / aspecting the domain's house — not merely existing
+in the chart, which is trivially always true) — re-read that doc's exact language for this before
+`evaluate_witnesses()` gets written, or the "karaka" witness will silently always fire and the
+whole confidence-tier system loses one of its four legs.
+
+**Golden-chart fixture — verified against the live engine, not fabricated.** Pulled Mohan's real
+chart (1975-04-22T19:15, Mysore) from a live local `/chart` call. Lagna Libra (signIndex 6).
+House-by-house occupancy for the 5 v1 domains, computed directly from the live response:
+
+| Domain | House(s) | House sign | Occupants | House lord |
+|---|---|---|---|---|
+| Marriage | 7 | Aries | Sun, Mercury | Mars |
+| Children | 5 | Aquarius | Mars | Saturn |
+| Career rise | 10 | Cancer | *(empty)* | Moon |
+| Home/property | 4 | Capricorn | *(empty)* | Saturn |
+| Health episode | 1, 6, 8, 12 | Libra / Pisces / Taurus / Virgo | *(empty)* / Jupiter / Venus, Ketu / *(empty)* | Venus / Jupiter / Venus / Mercury |
+
+This is the real, verified basis for §7's own golden-chart rule ("structural assertion only... no
+real marriage/kid/job dates exist... none should be fabricated").
+
+**Synthetic fixtures — deliberately not hand-authored yet.** §7 calls for charts engineered to hit
+each of §3's four qualification branches (lordship, occupation, aspect, dispositor chain) plus a
+zero-witness chart. Lordship is already covered by Mohan's real chart above (Mars is both house-7
+lord and, separately, a real dasha lord in his tree). Occupation and dispositor-chain need
+constructed (non-real) planet-position sets — deliberately **not** authored here: `evaluate_witnesses()`/
+`qualifies()` don't exist yet, so there is nothing to run a hand-picked fixture against to confirm
+it actually hits the intended branch rather than a neighboring one. Authoring exact fixture
+literals now would mean guessing at internal function behavior with no way to verify — the same
+"trust but don't verify" mistake this session spent real effort avoiding with delegated review
+output elsewhere. The aspect branch is harder-blocked: it depends on `aspects_between()`, new code
+this plan itself specifies adding to `ephem.py`, which doesn't exist at all yet. **Recommendation:**
+build literal fixture data in the implementation session itself, immediately after
+`life_event_domains.py`/`life_event_witness.py` land, where each fixture can be authored and
+verified against real running code in the same sitting — not as a disconnected prep step now.
+
+---
+
 ## 9. Risks (carried into the MAFIP review as explicit check items)
 
 1. **False precision** — mitigated by §5's mandatory `limits` field and §2's stability gate
