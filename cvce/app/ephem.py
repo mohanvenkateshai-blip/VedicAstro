@@ -31,6 +31,37 @@ if _SWISS_EPHEMERIS_PATH:
 # planetary_positions lines up 1:1 with the frontend's PLANETS array.
 const._INCLUDE_URANUS_TO_PLUTO = False
 
+
+def _patched_planetary_positions(jd, place):
+    """Drop-in replacement for `jhora.panchanga.drik.planetary_positions`.
+
+    Upstream PyJHora 4.8.7's own `planetary_positions` calls
+    `drik.planet_list.index(planet)`, but `drik.planet_list` is a dict
+    (`{const._SUN: const.SUN_ID, ...}`), not a list — `dict.index()` doesn't
+    exist, so this crashes with `AttributeError: 'dict' object has no
+    attribute 'index'` on every fresh install (confirmed reproducible in a
+    clean Python 3.12 venv with a plain `pip install PyJHora==4.8.7`, and on
+    the Vercel deployment's fresh build). It never surfaced locally or on Fly
+    because those environments carry an older/patched copy of the installed
+    package rather than a fresh resolve. Same logic as upstream, just
+    `drik.planet_list[planet]` instead of `.index(planet)`.
+    """
+    jd_ut = jd - place.timezone / 24.0
+    positions = []
+    for planet in drik.planet_list:
+        p_id = drik.planet_list[planet]
+        if planet == const._KETU:
+            nirayana_long = drik.ketu(drik.sidereal_longitude(jd_ut, const._RAHU))
+        else:
+            nirayana_long = drik.sidereal_longitude(jd_ut, planet)
+        constellation = int(nirayana_long / 30)
+        coordinates = nirayana_long - constellation * 30
+        positions.append([p_id, coordinates, constellation])
+    return positions
+
+
+drik.planetary_positions = _patched_planetary_positions
+
 PLANET_NAMES = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
 RASHIS = [
     "Aries",
