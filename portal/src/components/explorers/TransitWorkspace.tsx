@@ -56,6 +56,7 @@ export function TransitWorkspace({
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   const placeRequest = useRef<AbortController | null>(null);
   const placeWrap = useRef<HTMLDivElement>(null);
+  const mounted = useRef(true);
 
   useEffect(() => {
     // Resolve after hydration so server UTC cannot overwrite the browser's
@@ -74,6 +75,7 @@ export function TransitWorkspace({
     }
     document.addEventListener("mousedown", close);
     return () => {
+      mounted.current = false;
       document.removeEventListener("mousedown", close);
       if (debounce.current) clearTimeout(debounce.current);
       placeRequest.current?.abort();
@@ -116,16 +118,17 @@ export function TransitWorkspace({
         });
         if (!response.ok) throw new Error("place search failed");
         const payload = await response.json();
-        if (placeRequest.current !== controller) return;
+        if (!mounted.current || placeRequest.current !== controller) return;
         const list = (payload.results ?? []) as PlaceResult[];
         setResults(list);
         setOpen(list.length > 0);
         setActivePlaceIndex(list.length > 0 ? 0 : -1);
       } catch (caught) {
         if (caught instanceof DOMException && caught.name === "AbortError") return;
+        if (!mounted.current) return;
         setError("Place search is unavailable. Enter coordinates and an IANA timezone manually.");
       } finally {
-        if (placeRequest.current === controller) setFetching(false);
+        if (mounted.current && placeRequest.current === controller) setFetching(false);
       }
     }, 300);
   }
@@ -204,7 +207,9 @@ export function TransitWorkspace({
         setError(
           reason.code === reason.PERMISSION_DENIED
             ? "Location permission was not granted. Select a city or enter the observation context manually."
-            : "Current location could not be read. Select a city or enter coordinates manually.",
+            : reason.code === reason.TIMEOUT
+              ? "Location request timed out. Select a city or enter coordinates manually."
+              : "Current location could not be read. Select a city or enter coordinates manually.",
         );
       },
       { enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
