@@ -117,6 +117,21 @@ class KnowledgeEngine:
         default=None, repr=False
     )
     _research_enumeration_cache_ttl_seconds: int = 300
+    # Keyset (updated_at, id) cursor from the last row observed in the store
+    # during the last successful full or delta scan. Lets a store that
+    # supports supports_incremental_pagination() fetch only rows changed
+    # since then, instead of re-walking the whole table on every reconcile.
+    _research_enumeration_cursor: tuple[str, str] | None = field(default=None, repr=False)
+    # Store-side node ids as of the last successful scan (full or delta).
+    # Diffing this against a fresh full scan is how store-side *deletions*
+    # are detected and explicitly archived -- a delta fetch can only ever
+    # observe inserts/updates, never a row's absence.
+    _research_enumeration_known_store_ids: set[str] | None = field(default=None, repr=False)
+    _research_enumeration_last_full_scan_at: datetime | None = field(default=None, repr=False)
+    # Sanity floor independent of the delta/full decision: never let two full
+    # scans for the same engine happen closer together than this, even under
+    # a retry storm or a burst of concurrent reconcile triggers.
+    _research_enumeration_min_full_scan_interval_seconds: int = 5
     _state_lock: threading.RLock = field(default_factory=threading.RLock, repr=False)
     _last_revived_at: datetime | None = None
     _revive_interval_seconds: int = 3600
@@ -447,23 +462,31 @@ class KnowledgeEngine:
         }
 
     def _enumerate_current_research_nodes(self) -> list[dict[str, Any]]:
-        """Union local graph and every store page; local payload wins duplicate IDs.
+        """Union local graph and the store's nodes; local payload wins duplicate IDs.
 
         The local graph is always re-read fresh (cheap, in-memory), so a
         caller that mutates/removes local nodes between calls sees that
-        immediately. Only the *store* side -- a full unfiltered remote table
-        scan, expensive against a hosted Supabase project's egress quota
-        with no caller-side caching of its own -- is cached.
+        immediately. The *store* side is cached and, when the backend
+        supports it (SupabaseKnowledgeStore), kept fresh via an incremental
+        (updated_at, id) keyset delta instead of re-walking the whole table:
 
-        Freshness is verified via a cheap get_stats() row-count check on
-        every call (not just elapsed time): a node added/removed in the
-        store changes that count, so it's detected on the very next call
-        regardless of TTL. _research_enumeration_cache_ttl_seconds is only
-        a fallback ceiling for the rare case where a removal and an
-        addition happen to cancel out in the count. This matters because
-        the archival/removal-detection logic downstream (research_status's
-        archived_capture) depends on the store enumeration reflecting a
-        real removal immediately, not after some elapsed window.
+          - cache_fresh (cheap get_stats() count unchanged, within TTL):
+            reuse the cache untouched -- zero store reads.
+          - count unchanged but stale, or count grew: fetch only rows with
+            (updated_at, id) > the last-seen cursor and merge them into the
+            cached snapshot by id.
+          - count dropped, or the delta merge's total doesn't reconcile with
+            the authoritative count (a delete a pure-additive delta can
+            never see, possibly netted against an insert): fall back to a
+            full scan *this call* so removed ids are explicitly diffed and
+            archived via _archive_removed_nodes, not silently dropped.
+          - no cache yet, or the backend can't do incremental pagination at
+            all: full scan (unchanged legacy behaviour).
+
+        A full scan is also floor-guarded to at most one per
+        _research_enumeration_min_full_scan_interval_seconds per engine, so
+        a retry storm or a burst of concurrent reconcile triggers can't
+        thrash the store even when every other check above says "rescan".
         """
         graph = self.graph
         loader = getattr(graph, "_load", None)
@@ -483,23 +506,46 @@ class KnowledgeEngine:
 
         now = datetime.now(UTC)
         store_expected_count: int | None = None
+        store_max_updated_at: str | None = None
         try:
             stats = self.store.get_stats() or {}
             expected = stats.get("node_count", stats.get("nodes"))
             if expected is not None:
                 store_expected_count = int(expected)
+            max_updated_at = stats.get("max_updated_at")
+            if isinstance(max_updated_at, str) and max_updated_at:
+                store_max_updated_at = max_updated_at
         except Exception as exc:
             logger.debug("authoritative store count unavailable: %s", exc)
 
         cached_diagnostics = self._research_enumeration_cache_diagnostics
+        # max_updated_at is an optional, cheap second freshness signal (only
+        # populated by stores that report it, e.g. SupabaseKnowledgeStore).
+        # A delete+insert that happens to net to the same row count is
+        # invisible to node_count alone, but a real insert/update always
+        # bumps this. Only compared when BOTH sides have it -- stores that
+        # don't report it keep the original count-only freshness check.
+        max_updated_at_unchanged = (
+            store_max_updated_at is None
+            or cached_diagnostics is None
+            or cached_diagnostics.get("store_max_updated_at") is None
+            or store_max_updated_at == cached_diagnostics.get("store_max_updated_at")
+        )
         cache_fresh = (
             self._research_enumeration_cache is not None
             and self._research_enumeration_cache_at is not None
             and (now - self._research_enumeration_cache_at).total_seconds()
             < self._research_enumeration_cache_ttl_seconds
             and cached_diagnostics is not None
+            # A failed/incomplete scan must never be reused as "fresh" --
+            # otherwise a transient failure whose expected-count happens to
+            # still match gets silently retried on no future call at all,
+            # masking the failure indefinitely instead of retrying it on
+            # the very next call.
+            and cached_diagnostics.get("enumeration_complete", True)
             and store_expected_count is not None
             and store_expected_count == cached_diagnostics.get("store_expected_count")
+            and max_updated_at_unchanged
         )
         if cache_fresh:
             store_nodes = list(self._research_enumeration_cache)
@@ -512,59 +558,167 @@ class KnowledgeEngine:
             )
             self._last_research_store_expected_count = store_expected_count
         else:
-            store_nodes = []
-            page_size = 500
-            offset = 0
-            previous_page_signature: tuple[str, ...] | None = None
-            self._last_research_enumeration_complete = True
-            self._last_research_source_error = None
-            self._last_research_store_expected_count = store_expected_count
-            while True:
-                try:
-                    page = self.store.get_nodes_page(limit=page_size, offset=offset)
-                except Exception as exc:
-                    logger.debug("research store page failed at offset %s: %s", offset, exc)
-                    self._last_research_enumeration_complete = False
-                    self._last_research_source_error = f"{type(exc).__name__}: {exc}"
-                    break
-                page = [copy.deepcopy(node) for node in (page or []) if isinstance(node, dict)]
-                signature = tuple(
-                    str(node.get("id") or json.dumps(node, sort_keys=True, default=str))
-                    for node in page
+            store = self.store
+            supports_incremental = bool(
+                getattr(store, "supports_incremental_pagination", lambda: False)()
+            )
+            have_baseline = (
+                self._research_enumeration_cache is not None
+                and self._research_enumeration_cursor is not None
+            )
+            prior_expected = (cached_diagnostics or {}).get("store_expected_count")
+            # Deliberately independent of have_baseline/cursor: a dropped
+            # count is a real signal regardless of whether this store can do
+            # incremental pagination at all (StaticStore and other
+            # non-incremental backends never populate a cursor, but a real
+            # deletion there must still be detected via the cheap count).
+            deletion_suspected = (
+                self._research_enumeration_cache is not None
+                and store_expected_count is not None
+                and prior_expected is not None
+                and store_expected_count < prior_expected
+            )
+            want_full_scan = not (supports_incremental and have_baseline) or deletion_suspected
+            # The guard only throttles *redundant* full scans -- e.g. a
+            # non-incremental store hitting cache_fresh=False repeatedly for
+            # reasons other than a real change (get_stats() flakiness, TTL
+            # churn). A genuinely new deletion (deletion_suspected) must
+            # never be masked by it, or a real removal silently goes
+            # undetected for up to the guard interval.
+            guard_blocked = (
+                want_full_scan
+                and not deletion_suspected
+                and self._research_enumeration_cache is not None
+                and self._research_enumeration_last_full_scan_at is not None
+                and (now - self._research_enumeration_last_full_scan_at).total_seconds()
+                < self._research_enumeration_min_full_scan_interval_seconds
+            )
+
+            if guard_blocked:
+                # A full scan just ran moments ago (retry storm / concurrent
+                # burst of reconcile triggers) -- reuse the cache rather than
+                # hammering the store again; the next call past the floor
+                # will resolve it for real.
+                store_nodes = list(self._research_enumeration_cache)
+                stale_diag = cached_diagnostics or {}
+                self._last_research_enumeration_complete = stale_diag.get(
+                    "enumeration_complete", True
                 )
-                if page and signature == previous_page_signature:
-                    logger.warning(
-                        "research store pagination repeated offset %s; stopping safely", offset
-                    )
-                    self._last_research_enumeration_complete = False
-                    self._last_research_source_error = (
-                        f"store repeated page content at offset={offset}"
-                    )
-                    break
-                store_nodes.extend(page)
-                if len(page) < page_size:
-                    break
-                previous_page_signature = signature
-                offset += page_size
-            self._last_research_store_observed_count = len(store_nodes)
-            if (
-                self._last_research_store_expected_count is not None
-                and self._last_research_store_observed_count
-                != self._last_research_store_expected_count
-            ):
-                self._last_research_enumeration_complete = False
-                self._last_research_source_error = (
-                    self._last_research_source_error
-                    or "store enumeration count differs from authoritative node_count"
+                self._last_research_source_error = stale_diag.get("source_error")
+                self._last_research_store_observed_count = stale_diag.get(
+                    "store_observed_count", 0
                 )
-            self._research_enumeration_cache = list(store_nodes)
-            self._research_enumeration_cache_at = now
-            self._research_enumeration_cache_diagnostics = {
-                "enumeration_complete": self._last_research_enumeration_complete,
-                "source_error": self._last_research_source_error,
-                "store_observed_count": self._last_research_store_observed_count,
-                "store_expected_count": self._last_research_store_expected_count,
-            }
+                self._last_research_store_expected_count = store_expected_count
+            else:
+                if not want_full_scan:
+                    delta_nodes, complete, source_error = self._delta_store_scan(
+                        self._research_enumeration_cursor
+                    )
+                    merged_by_id = {
+                        str(n["id"]): n
+                        for n in self._research_enumeration_cache
+                        if n.get("id")
+                    }
+                    anon_prev = [
+                        n for n in self._research_enumeration_cache if not n.get("id")
+                    ]
+                    for node in delta_nodes:
+                        node_id = str(node.get("id") or "")
+                        if node_id:
+                            merged_by_id[node_id] = node
+                    candidate_total = len(merged_by_id) + len(anon_prev)
+                    reconciles = complete and (
+                        store_expected_count is None
+                        or candidate_total == store_expected_count
+                    )
+                    if reconciles:
+                        store_nodes = list(merged_by_id.values()) + anon_prev
+                        self._research_enumeration_cursor = (
+                            self._max_cursor(delta_nodes)
+                            or self._research_enumeration_cursor
+                        )
+                        self._research_enumeration_known_store_ids = set(merged_by_id)
+                        self._last_research_enumeration_complete = True
+                        self._last_research_source_error = None
+                        self._last_research_store_observed_count = candidate_total
+                        self._last_research_store_expected_count = store_expected_count
+                        self._research_enumeration_cache = list(store_nodes)
+                        self._research_enumeration_cache_at = now
+                        self._research_enumeration_cache_diagnostics = {
+                            "enumeration_complete": True,
+                            "source_error": None,
+                            "store_observed_count": candidate_total,
+                            "store_expected_count": store_expected_count,
+                            "store_max_updated_at": store_max_updated_at,
+                        }
+                    else:
+                        # Delta fetch failed, or its merged total doesn't
+                        # reconcile with the authoritative count -- a
+                        # deletion a pure-additive delta can't see.
+                        # Fall back to a full scan this call.
+                        want_full_scan = True
+
+                if want_full_scan:
+                    previous_known_ids = self._research_enumeration_known_store_ids
+                    previous_by_id = (
+                        {
+                            n["id"]: n
+                            for n in self._research_enumeration_cache
+                            if n.get("id")
+                        }
+                        if self._research_enumeration_cache is not None
+                        else {}
+                    )
+                    store_nodes, complete, source_error, observed_count = (
+                        self._full_store_scan()
+                    )
+                    self._last_research_enumeration_complete = complete
+                    self._last_research_source_error = source_error
+                    self._last_research_store_expected_count = store_expected_count
+                    self._last_research_store_observed_count = observed_count
+                    if (
+                        self._last_research_store_expected_count is not None
+                        and observed_count != self._last_research_store_expected_count
+                    ):
+                        self._last_research_enumeration_complete = False
+                        self._last_research_source_error = (
+                            self._last_research_source_error
+                            or "store enumeration count differs from authoritative node_count"
+                        )
+
+                    new_ids = {str(n["id"]) for n in store_nodes if n.get("id")}
+                    if previous_known_ids is not None and complete:
+                        removed_ids = previous_known_ids - new_ids
+                        if removed_ids:
+                            version = (
+                                self.current_version.version
+                                if self.current_version
+                                else None
+                            )
+                            self._archive_removed_nodes(
+                                previous_by_id,
+                                new_ids,
+                                reason="removed_from_store",
+                                last_seen_version=version,
+                                removed_in_version=version,
+                            )
+
+                    self._research_enumeration_cache = list(store_nodes)
+                    self._research_enumeration_cache_at = now
+                    self._research_enumeration_cache_diagnostics = {
+                        "enumeration_complete": self._last_research_enumeration_complete,
+                        "source_error": self._last_research_source_error,
+                        "store_observed_count": self._last_research_store_observed_count,
+                        "store_expected_count": self._last_research_store_expected_count,
+                        "store_max_updated_at": store_max_updated_at,
+                    }
+                    if complete:
+                        self._research_enumeration_cursor = self._max_cursor(store_nodes)
+                        self._research_enumeration_known_store_ids = new_ids
+                        # Only a *successful* full scan should ever throttle
+                        # a subsequent one -- a failed attempt must not
+                        # block its own retry on the very next call.
+                        self._research_enumeration_last_full_scan_at = now
 
         merged: dict[str, dict[str, Any]] = {}
         anonymous: dict[str, dict[str, Any]] = {}
@@ -583,6 +737,98 @@ class KnowledgeEngine:
         return [merged[node_id] for node_id in sorted(merged)] + [
             anonymous[key] for key in sorted(anonymous)
         ]
+
+    def _full_store_scan(self) -> tuple[list[dict[str, Any]], bool, str | None, int]:
+        """Walk the entire store via get_nodes_page(). Returns
+        (nodes, complete, source_error, observed_count)."""
+        store_nodes: list[dict[str, Any]] = []
+        page_size = 500
+        offset = 0
+        previous_page_signature: tuple[str, ...] | None = None
+        complete = True
+        source_error: str | None = None
+        while True:
+            try:
+                page = self.store.get_nodes_page(limit=page_size, offset=offset)
+            except Exception as exc:
+                logger.debug("research store page failed at offset %s: %s", offset, exc)
+                complete = False
+                source_error = f"{type(exc).__name__}: {exc}"
+                break
+            page = [copy.deepcopy(node) for node in (page or []) if isinstance(node, dict)]
+            signature = tuple(
+                str(node.get("id") or json.dumps(node, sort_keys=True, default=str))
+                for node in page
+            )
+            if page and signature == previous_page_signature:
+                logger.warning(
+                    "research store pagination repeated offset %s; stopping safely", offset
+                )
+                complete = False
+                source_error = f"store repeated page content at offset={offset}"
+                break
+            store_nodes.extend(page)
+            if len(page) < page_size:
+                break
+            previous_page_signature = signature
+            offset += page_size
+        return store_nodes, complete, source_error, len(store_nodes)
+
+    def _delta_store_scan(
+        self, cursor: tuple[str, str] | None
+    ) -> tuple[list[dict[str, Any]], bool, str | None]:
+        """Walk only rows changed since `cursor` via get_nodes_page_since().
+        Same repeated-offset safety as _full_store_scan(), against a much
+        smaller (usually empty-to-few-rows) result set."""
+        delta_nodes: list[dict[str, Any]] = []
+        page_size = 500
+        offset = 0
+        previous_page_signature: tuple[str, ...] | None = None
+        complete = True
+        source_error: str | None = None
+        while True:
+            try:
+                page = self.store.get_nodes_page_since(cursor, limit=page_size, offset=offset)
+            except Exception as exc:
+                logger.debug("research store delta page failed at offset %s: %s", offset, exc)
+                complete = False
+                source_error = f"{type(exc).__name__}: {exc}"
+                break
+            page = [copy.deepcopy(node) for node in (page or []) if isinstance(node, dict)]
+            signature = tuple(
+                str(node.get("id") or json.dumps(node, sort_keys=True, default=str))
+                for node in page
+            )
+            if page and signature == previous_page_signature:
+                logger.warning(
+                    "research store delta pagination repeated offset %s; stopping safely", offset
+                )
+                complete = False
+                source_error = f"store repeated delta page content at offset={offset}"
+                break
+            delta_nodes.extend(page)
+            if len(page) < page_size:
+                break
+            previous_page_signature = signature
+            offset += page_size
+        return delta_nodes, complete, source_error
+
+    @staticmethod
+    def _max_cursor(nodes: list[dict[str, Any]]) -> tuple[str, str] | None:
+        """Largest (updated_at, id) among `nodes` with both fields present,
+        for keyset-pagination cursor advancement. String comparison is
+        chronologically correct because every writer stamps updated_at with
+        datetime.now(UTC).isoformat() -- consistent timezone and precision."""
+        best: tuple[str, str] | None = None
+        for node in nodes:
+            ts = node.get("updated_at")
+            node_id = node.get("id")
+            if not isinstance(ts, str) or not ts or node_id is None:
+                continue
+            key = (ts, str(node_id))
+            if best is None or key > best:
+                best = key
+        return best
 
     @staticmethod
     def _research_node_is_healthy(node: dict[str, Any]) -> bool:

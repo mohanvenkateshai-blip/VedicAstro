@@ -82,9 +82,31 @@ class SupabaseKnowledgeStore(KnowledgeStore):
             except Exception:
                 pass
 
+        # Cheap (single-row) freshness signal alongside the row count: a
+        # delete+insert that nets to the same row count is invisible to
+        # node_count alone, but a real insert/update always bumps this.
+        # Still not perfect (a pure delete with nothing newer inserted
+        # bumps neither), which is why deletions are also independently
+        # caught via the fuller reconciliation in the caller -- this just
+        # narrows the gap cheaply.
+        max_updated_at = None
+        code2, body2 = self._request(
+            "GET",
+            f"/rest/v1/graph_nodes?select=updated_at&graph_version=eq.{self.graph_version}"
+            f"&order=updated_at.desc&limit=1",
+        )
+        if code2 == 200:
+            try:
+                data2 = json.loads(body2)
+                if data2:
+                    max_updated_at = data2[0].get("updated_at")
+            except Exception:
+                pass
+
         return {
             "version": self.graph_version,
             "node_count": node_count,
+            "max_updated_at": max_updated_at,
             "source": "supabase",
         }
 
@@ -112,7 +134,7 @@ class SupabaseKnowledgeStore(KnowledgeStore):
         code, body = self._request(
             "GET",
             f"/rest/v1/graph_nodes?graph_version=eq.{self.graph_version}"
-            f"&order=id.asc&offset={offset}&limit={limit}",
+            f"&order=updated_at.asc,id.asc&offset={offset}&limit={limit}",
         )
         if code == 200:
             try:
@@ -128,6 +150,48 @@ class SupabaseKnowledgeStore(KnowledgeStore):
             return data
         raise KnowledgeStorePaginationError(
             f"node page fetch failed HTTP {code} at offset={offset}, end={end}"
+        )
+
+    def supports_incremental_pagination(self) -> bool:
+        return True
+
+    def get_nodes_page_since(
+        self,
+        cursor: tuple[str, str] | None,
+        limit: int = 500,
+        offset: int = 0,
+    ) -> list[dict[str, Any]]:
+        """Keyset delta page: nodes with (updated_at, id) > cursor, ordered the
+        same way -- so a cursor taken from the last row of a prior page (full
+        scan or delta) can always resume correctly, and rows sharing the exact
+        boundary timestamp are neither skipped nor double-counted.
+        """
+        end = offset + limit - 1
+        if cursor is None:
+            return self.get_nodes_page(limit=limit, offset=offset)
+        since_ts, since_id = cursor
+        ts_q = quote(since_ts, safe="")
+        id_q = quote(since_id, safe="")
+        code, body = self._request(
+            "GET",
+            f"/rest/v1/graph_nodes?graph_version=eq.{self.graph_version}"
+            f"&or=(updated_at.gt.{ts_q},and(updated_at.eq.{ts_q},id.gt.{id_q}))"
+            f"&order=updated_at.asc,id.asc&offset={offset}&limit={limit}",
+        )
+        if code == 200:
+            try:
+                data = json.loads(body)
+            except json.JSONDecodeError as exc:
+                raise KnowledgeStorePaginationError(
+                    f"delta page returned invalid JSON at offset={offset}"
+                ) from exc
+            if not isinstance(data, list):
+                raise KnowledgeStorePaginationError(
+                    f"delta page returned a non-list payload at offset={offset}"
+                )
+            return data
+        raise KnowledgeStorePaginationError(
+            f"delta page fetch failed HTTP {code} at offset={offset}, end={end}"
         )
 
     def get_links(self, source_id: str | None = None, limit: int = 100) -> list[dict[str, Any]]:

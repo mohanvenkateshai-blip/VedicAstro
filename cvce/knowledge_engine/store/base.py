@@ -47,6 +47,32 @@ class KnowledgeStore(ABC):
 
         return self.get_nodes(limit=limit + offset)[offset : offset + limit]
 
+    def supports_incremental_pagination(self) -> bool:
+        """Whether get_nodes_page_since() returns real incremental deltas.
+
+        False (the default) means callers must always use the full
+        get_nodes_page() scan -- correct for every backend that doesn't
+        override this, including test doubles and the file-based store.
+        """
+        return False
+
+    def get_nodes_page_since(
+        self,
+        cursor: tuple[str, str] | None,
+        limit: int = 500,
+        offset: int = 0,
+    ) -> list[dict[str, Any]]:
+        """Nodes with (updated_at, id) strictly greater than `cursor`, ordered
+        by (updated_at, id) ascending -- keyset pagination so rows sharing
+        the cursor's exact updated_at timestamp are never skipped or
+        double-counted across pages. `cursor` is (updated_at_iso, id) or
+        None to fetch from the beginning. Only meaningful when
+        supports_incremental_pagination() is True; the default here mirrors
+        get_nodes_page() (ignores the cursor) and must not be called
+        otherwise.
+        """
+        return self.get_nodes_page(limit=limit, offset=offset)
+
     @abstractmethod
     def get_links(self, source_id: str | None = None, limit: int = 100) -> list[dict[str, Any]]:
         """Fetch links, optionally filtered by source."""
