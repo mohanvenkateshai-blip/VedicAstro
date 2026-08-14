@@ -9,7 +9,57 @@ Current graph: newbooks-v1 (26,722 nodes). Learn module live. KE is authoritativ
 
 This document is the **Single Source of Truth** for the current status, live health, and immediate roadmap of the VedicAstro project. For architectural principles, system topology, and immutable code guardrails, refer directly to `CONTEXT.md`.
 
-*Last Updated: August 11, 2026 (backlog review after a 3.5-week handoff gap — full remediation cycle complete, V-7 Vercel cutover live, V-11 gated)*
+*Last Updated: August 14, 2026 (Supabase egress fix — committed + pushed, deploy externally blocked on Fly billing)*
+
+---
+
+## Session checkpoint — 2026-08-14: graph_nodes egress fix shipped to `main`, deploy externally blocked
+
+**Problem:** Supabase logs showed ~715 `graph_nodes` requests/24h — ~13 full 500-row-paginated
+traversals of the ~26.5k-row table (offsets 0–26,500, many duplicated). Root cause:
+`KnowledgeEngine._enumerate_current_research_nodes()` re-walked the entire store on every
+research reconcile whenever the cheap `get_stats()` row count differed from the cached one —
+guaranteed on every real ingest (`/memory/ingest`, service-token gated, not public/bot traffic).
+
+**Fix:** `(updated_at, id)` keyset incremental pagination (`SupabaseKnowledgeStore.get_nodes_page_since`)
+so a routine ingest fetches only the delta, not the whole table. A store-side deletion (count
+drop, or a delta merge that doesn't reconcile against the authoritative count — catching a
+delete+insert netting the same row count) still explicitly triggers a full scan and archives
+the removed node via `_archive_removed_nodes`, not a silent miss. A `get_stats()` `max(updated_at)`
+signal alongside row count closes the "same-count delete+insert looks unchanged" gap. A
+floor-guard caps redundant full-scan attempts, exempting genuine deletions and failed attempts
+so neither a real removal nor a retry-after-failure gets masked.
+
+**Evidence:** 11 new tests (`cvce/tests/test_knowledge_incremental_sync.py`) prove: a second
+unchanged call performs zero store reads, a changed ingest fetches only its delta, deletions
+(incl. delete+reinsert netting the same count) are explicitly detected and archived, a
+delta/full-scan interruption falls back safely and recovers on retry, duplicate ingests stay
+idempotent, 24 concurrent reconciles under `ThreadPoolExecutor` stay consistent. Zero regressions
+across the existing `knowledge_engine` suite (44 passed, 1 skipped; 3 unrelated `test_graph_rules.py`
+failures are a pre-existing missing `fastapi` dep in this venv, confirmed via `git stash` against
+the clean tree, not caused by this change).
+
+**Shipped:** commit `a34f583505ad21d46ef8a0b9b4229b2e3b2364d9` on `main`, pushed to `origin/main`.
+Scope: `cvce/knowledge_engine/` only — no Panchanga, DNS, billing, or Supabase plan changes.
+
+**Deployment: externally blocked, not attempted further.** Both `fly deploy --remote-only`
+(Depot builder) and `fly deploy --local-only` (local Docker, daemon confirmed started) returned
+HTTP 403 requiring payment information on the Fly account — an account-level gate, not
+Depot-specific (local build hit the same wall at release-creation time). Per owner instruction:
+no further deploy retries, no `--depot=false` attempt, no billing changes, no 402MB
+build-context investigation — that's a separate, deferred optimization item.
+
+**Production confirmed unaffected** (checked immediately after both failed attempts, 2026-08-14
+~05:52 UTC): `vedicastro-cvce` machine `d8d96956ae5308` still `started`, image
+`vedicastro-cvce:deployment-01KXQ1TPXBRKQBGMJSQFW9X57Z` (version 108, unchanged since the
+2026-07-18 deploy), 1/1 health check passing, `GET /health` → `200` verified independently via
+`curl`. The old code is still what's live; the fix exists only on `main`, undeployed.
+
+**Next:** once the Fly account's payment/billing block is resolved (owner's call, not attempted
+here), deploy manually and report back for live verification — `/health`, `fly status`, and a
+Fly-logs tail confirming no repeated 500-row `graph_nodes` traversal. Separately worth tracking:
+the Free-plan Supabase usage-counter reset (~2026-08-18) and grace-period end (2026-09-13) —
+future egress should drop once this fix is actually live, not before.
 
 ---
 
