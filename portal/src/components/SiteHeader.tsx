@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { ButtonLink } from "./ui/Button";
-import { GlobalSearch } from "./masthead/GlobalSearch";
 import { NotificationBell } from "./masthead/NotificationBell";
 import { UserMenu } from "./masthead/UserMenu";
 import type { Session } from "@/lib/auth/types";
@@ -13,7 +12,6 @@ import type { Session } from "@/lib/auth/types";
 const NAV = [
   { href: "/compatibility", label: "Compatibility", match: (p: string) => p === "/compatibility" },
   { href: "/muhurta", label: "Muhūrta", match: (p: string) => p === "/muhurta" },
-  { href: "/learn", label: "Learn", match: (p: string) => p.startsWith("/learn") },
   { href: "/dashboard", label: "Dashboard", match: (p: string) => p === "/dashboard" },
 ];
 
@@ -57,7 +55,6 @@ export function SiteHeader({ session }: { session: Session | null }) {
             with the "Cast a chart" primary action immediately to its left, so
             nothing shifts position across the signed-in / signed-out boundary. */}
         <div className="flex items-center gap-2">
-          <GlobalSearch />
           {signedIn ? (
             <>
               <NotificationBell />

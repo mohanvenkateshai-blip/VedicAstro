@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/server.py": {
+      "includeFiles": "{graph_rag/graph.json,knowledge_engine/graph.db,knowledge-graph/structured/**/*.json,knowledge-graph/patches/node-chapter-map.json,knowledge-graph/patches/patch-*.json}"
+    }
+  }
+}

@@ -393,20 +393,29 @@ def get_structured_coverage() -> dict:
     import json
     from pathlib import Path
 
-    # Prefer env, then walk up to VedicAstro repo
+    # Prefer env, then support both the repository checkout and the bundled
+    # Vercel project root. The latter contains the generated copy created by
+    # cvce/scripts/sync_provenance_bundle.py.
+    roots: list[Path] = []
     root_env = os.environ.get("VEDICASTRO_ROOT")
     if root_env:
-        root = Path(root_env)
-    else:
-        root = Path(__file__).resolve().parents[3]  # .../VedicAstro
-    structured_dir = root / "knowledge-graph" / "structured"
-    patch_file = root / "knowledge-graph" / "patches" / "node-chapter-map.json"
+        roots.append(Path(root_env))
+    roots.extend((Path(__file__).resolve().parents[3], Path(__file__).resolve().parents[2], Path.cwd()))
+    structured_dir = None
+    patch_file = None
+    for root in roots:
+        candidate_structured = root / "knowledge-graph" / "structured"
+        candidate_patch = root / "knowledge-graph" / "patches" / "node-chapter-map.json"
+        if candidate_structured.exists() or candidate_patch.exists():
+            structured_dir = candidate_structured
+            patch_file = candidate_patch
+            break
 
     books: list[dict] = []
     total_chapters = 0
     total_patched_nodes = 0
 
-    if structured_dir.exists():
+    if structured_dir and structured_dir.exists():
         for p in sorted(structured_dir.glob("*.json")):
             try:
                 data = json.loads(p.read_text(encoding="utf-8"))
@@ -424,7 +433,7 @@ def get_structured_coverage() -> dict:
                 continue
 
     patch_stats: dict = {"present": False, "entries": 0, "books_covered": 0}
-    if patch_file.exists():
+    if patch_file and patch_file.exists():
         try:
             pdata = json.loads(patch_file.read_text(encoding="utf-8"))
             patches = pdata.get("patches") or []

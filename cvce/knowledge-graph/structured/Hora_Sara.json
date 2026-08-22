@@ -1,0 +1,525 @@
+{
+  "book_id": "Hora_Sara",
+  "canonical_name": "Hora Sara",
+  "source_file": "Hora_Sara.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-1",
+      "number": "1",
+      "title": "ATR आज: I",
+      "level": 1,
+      "start_line": 304,
+      "end_line": 729,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-2",
+      "number": "2",
+      "title": "हितीयोऽध्यायः",
+      "level": 1,
+      "start_line": 730,
+      "end_line": 1313,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-3",
+      "number": "3",
+      "title": "तृतीयोऽध्यायः",
+      "level": 1,
+      "start_line": 1314,
+      "end_line": 1817,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-4",
+      "number": "4",
+      "title": "चतुर्थोऽध्यायः",
+      "level": 1,
+      "start_line": 1818,
+      "end_line": 2287,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-5",
+      "number": "5",
+      "title": "पंचमोऽध्याय",
+      "level": 1,
+      "start_line": 2288,
+      "end_line": 3223,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-6",
+      "number": "6",
+      "title": "Should Mars and the Sun be in the ascendant which is a",
+      "level": 1,
+      "start_line": 3224,
+      "end_line": 3808,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-7",
+      "number": "7",
+      "title": "सप्तमोऽध्यायः",
+      "level": 1,
+      "start_line": 3809,
+      "end_line": 4489,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-8",
+      "number": "8",
+      "title": "अष्टमोऽध्यायः",
+      "level": 1,
+      "start_line": 4490,
+      "end_line": 5713,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-9",
+      "number": "9",
+      "title": "नवमोऽध्यायः",
+      "level": 1,
+      "start_line": 5714,
+      "end_line": 5961,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-10",
+      "number": "10",
+      "title": "दशमोऽध्यायः",
+      "level": 1,
+      "start_line": 5962,
+      "end_line": 6347,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-11",
+      "number": "11",
+      "title": "एकादशोऽध्यायः",
+      "level": 1,
+      "start_line": 6348,
+      "end_line": 6621,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-12",
+      "number": "12",
+      "title": "दादशोऽध्यायः",
+      "level": 1,
+      "start_line": 6622,
+      "end_line": 6912,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-13",
+      "number": "13",
+      "title": "त्रयोदशोऽध्यायः",
+      "level": 1,
+      "start_line": 6913,
+      "end_line": 7165,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-14",
+      "number": "14",
+      "title": "चतुर्दशोऽध्यायः",
+      "level": 1,
+      "start_line": 7166,
+      "end_line": 7387,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-15",
+      "number": "15",
+      "title": "पञ्चदशोऽध्यायः",
+      "level": 1,
+      "start_line": 7388,
+      "end_line": 7621,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-16",
+      "number": "16",
+      "title": "षोडशोऽध्यायः",
+      "level": 1,
+      "start_line": 7622,
+      "end_line": 7764,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-22",
+      "number": "22",
+      "title": "exaltation or Moolatrikona signs if in kendra position to each",
+      "level": 1,
+      "start_line": 7765,
+      "end_line": 8144,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-17",
+      "number": "17",
+      "title": "सप्तदशोऽध्यायः",
+      "level": 1,
+      "start_line": 8145,
+      "end_line": 9731,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-18",
+      "number": "18",
+      "title": "अष्टादशोऽध्यायः",
+      "level": 1,
+      "start_line": 9732,
+      "end_line": 9752,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-31",
+      "number": "31",
+      "title": "ion, Vimshottari dasa is the most suited one. It is widely in",
+      "level": 1,
+      "start_line": 9753,
+      "end_line": 10578,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-19",
+      "number": "19",
+      "title": "एकोनविंशोऽध्यायः",
+      "level": 1,
+      "start_line": 10579,
+      "end_line": 11319,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-20",
+      "number": "20",
+      "title": "विंशोऽध्यायः",
+      "level": 1,
+      "start_line": 11320,
+      "end_line": 11408,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-21",
+      "number": "21",
+      "title": "Notes: Refer to Jataka Parijata, ch. 6, 5. 36 in which it is",
+      "level": 1,
+      "start_line": 11409,
+      "end_line": 12539,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-23",
+      "number": "23",
+      "title": "त्रयोविंशोऽध्यायः",
+      "level": 1,
+      "start_line": 12540,
+      "end_line": 13430,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-24",
+      "number": "24",
+      "title": "चतुर्विशोऽध्यायः",
+      "level": 1,
+      "start_line": 13431,
+      "end_line": 14146,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-25",
+      "number": "25",
+      "title": "पंयविंशोऽध्यायः",
+      "level": 1,
+      "start_line": 14147,
+      "end_line": 14651,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-26",
+      "number": "26",
+      "title": "षड्विंशोऽध्यायः",
+      "level": 1,
+      "start_line": 14652,
+      "end_line": 15220,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-27",
+      "number": "27",
+      "title": "सप्तविंशोऽध्यायः",
+      "level": 1,
+      "start_line": 15221,
+      "end_line": 15555,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-28",
+      "number": "28",
+      "title": "अष्टाविंशोउध्याय",
+      "level": 1,
+      "start_line": 15556,
+      "end_line": 15873,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-29",
+      "number": "29",
+      "title": "एकोनत्रिंशोध्यायः",
+      "level": 1,
+      "start_line": 15874,
+      "end_line": 16112,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-30",
+      "number": "30",
+      "title": "त्रिंशोऽध्यायः",
+      "level": 1,
+      "start_line": 16113,
+      "end_line": 16538,
+      "sections": [],
+      "content_preview": ""
+    },
+    {
+      "id": "ch-32",
+      "number": "32",
+      "title": "दात्रिंशोऽध्यायः",
+      "level": 1,
+      "start_line": 16539,
+      "end_line": 16773,
+      "sections": [],
+      "content_preview": ""
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-1",
+      "title": "ATR आज: I",
+      "chapter": "ATR आज: I",
+      "chapter_id": "ch-1"
+    },
+    {
+      "id": "ch-2",
+      "title": "हितीयोऽध्यायः",
+      "chapter": "हितीयोऽध्यायः",
+      "chapter_id": "ch-2"
+    },
+    {
+      "id": "ch-3",
+      "title": "तृतीयोऽध्यायः",
+      "chapter": "तृतीयोऽध्यायः",
+      "chapter_id": "ch-3"
+    },
+    {
+      "id": "ch-4",
+      "title": "चतुर्थोऽध्यायः",
+      "chapter": "चतुर्थोऽध्यायः",
+      "chapter_id": "ch-4"
+    },
+    {
+      "id": "ch-5",
+      "title": "पंचमोऽध्याय",
+      "chapter": "पंचमोऽध्याय",
+      "chapter_id": "ch-5"
+    },
+    {
+      "id": "ch-6",
+      "title": "Should Mars and the Sun be in the ascendant which is a",
+      "chapter": "Should Mars and the Sun be in the ascendant which is a",
+      "chapter_id": "ch-6"
+    },
+    {
+      "id": "ch-7",
+      "title": "सप्तमोऽध्यायः",
+      "chapter": "सप्तमोऽध्यायः",
+      "chapter_id": "ch-7"
+    },
+    {
+      "id": "ch-8",
+      "title": "अष्टमोऽध्यायः",
+      "chapter": "अष्टमोऽध्यायः",
+      "chapter_id": "ch-8"
+    },
+    {
+      "id": "ch-9",
+      "title": "नवमोऽध्यायः",
+      "chapter": "नवमोऽध्यायः",
+      "chapter_id": "ch-9"
+    },
+    {
+      "id": "ch-10",
+      "title": "दशमोऽध्यायः",
+      "chapter": "दशमोऽध्यायः",
+      "chapter_id": "ch-10"
+    },
+    {
+      "id": "ch-11",
+      "title": "एकादशोऽध्यायः",
+      "chapter": "एकादशोऽध्यायः",
+      "chapter_id": "ch-11"
+    },
+    {
+      "id": "ch-12",
+      "title": "दादशोऽध्यायः",
+      "chapter": "दादशोऽध्यायः",
+      "chapter_id": "ch-12"
+    },
+    {
+      "id": "ch-13",
+      "title": "त्रयोदशोऽध्यायः",
+      "chapter": "त्रयोदशोऽध्यायः",
+      "chapter_id": "ch-13"
+    },
+    {
+      "id": "ch-14",
+      "title": "चतुर्दशोऽध्यायः",
+      "chapter": "चतुर्दशोऽध्यायः",
+      "chapter_id": "ch-14"
+    },
+    {
+      "id": "ch-15",
+      "title": "पञ्चदशोऽध्यायः",
+      "chapter": "पञ्चदशोऽध्यायः",
+      "chapter_id": "ch-15"
+    },
+    {
+      "id": "ch-16",
+      "title": "षोडशोऽध्यायः",
+      "chapter": "षोडशोऽध्यायः",
+      "chapter_id": "ch-16"
+    },
+    {
+      "id": "ch-22",
+      "title": "exaltation or Moolatrikona signs if in kendra position to each",
+      "chapter": "exaltation or Moolatrikona signs if in kendra position to each",
+      "chapter_id": "ch-22"
+    },
+    {
+      "id": "ch-17",
+      "title": "सप्तदशोऽध्यायः",
+      "chapter": "सप्तदशोऽध्यायः",
+      "chapter_id": "ch-17"
+    },
+    {
+      "id": "ch-18",
+      "title": "अष्टादशोऽध्यायः",
+      "chapter": "अष्टादशोऽध्यायः",
+      "chapter_id": "ch-18"
+    },
+    {
+      "id": "ch-31",
+      "title": "ion, Vimshottari dasa is the most suited one. It is widely in",
+      "chapter": "ion, Vimshottari dasa is the most suited one. It is widely in",
+      "chapter_id": "ch-31"
+    },
+    {
+      "id": "ch-19",
+      "title": "एकोनविंशोऽध्यायः",
+      "chapter": "एकोनविंशोऽध्यायः",
+      "chapter_id": "ch-19"
+    },
+    {
+      "id": "ch-20",
+      "title": "विंशोऽध्यायः",
+      "chapter": "विंशोऽध्यायः",
+      "chapter_id": "ch-20"
+    },
+    {
+      "id": "ch-21",
+      "title": "Notes: Refer to Jataka Parijata, ch. 6, 5. 36 in which it is",
+      "chapter": "Notes: Refer to Jataka Parijata, ch. 6, 5. 36 in which it is",
+      "chapter_id": "ch-21"
+    },
+    {
+      "id": "ch-23",
+      "title": "त्रयोविंशोऽध्यायः",
+      "chapter": "त्रयोविंशोऽध्यायः",
+      "chapter_id": "ch-23"
+    },
+    {
+      "id": "ch-24",
+      "title": "चतुर्विशोऽध्यायः",
+      "chapter": "चतुर्विशोऽध्यायः",
+      "chapter_id": "ch-24"
+    },
+    {
+      "id": "ch-25",
+      "title": "पंयविंशोऽध्यायः",
+      "chapter": "पंयविंशोऽध्यायः",
+      "chapter_id": "ch-25"
+    },
+    {
+      "id": "ch-26",
+      "title": "षड्विंशोऽध्यायः",
+      "chapter": "षड्विंशोऽध्यायः",
+      "chapter_id": "ch-26"
+    },
+    {
+      "id": "ch-27",
+      "title": "सप्तविंशोऽध्यायः",
+      "chapter": "सप्तविंशोऽध्यायः",
+      "chapter_id": "ch-27"
+    },
+    {
+      "id": "ch-28",
+      "title": "अष्टाविंशोउध्याय",
+      "chapter": "अष्टाविंशोउध्याय",
+      "chapter_id": "ch-28"
+    },
+    {
+      "id": "ch-29",
+      "title": "एकोनत्रिंशोध्यायः",
+      "chapter": "एकोनत्रिंशोध्यायः",
+      "chapter_id": "ch-29"
+    },
+    {
+      "id": "ch-30",
+      "title": "त्रिंशोऽध्यायः",
+      "chapter": "त्रिंशोऽध्यायः",
+      "chapter_id": "ch-30"
+    },
+    {
+      "id": "ch-32",
+      "title": "दात्रिंशोऽध्यायः",
+      "chapter": "दात्रिंशोऽध्यायः",
+      "chapter_id": "ch-32"
+    }
+  ],
+  "total_chapters": 32,
+  "total_sections": 0
+}

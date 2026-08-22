@@ -12,6 +12,30 @@ urgent-urgent) · Medium (should happen soon, not on fire) · Low (housekeeping)
 
 **Status key:** ☐ pending · ◐ needs your decision before work starts · ☑ done
 
+## Current checkpoint — 2026-08-22
+
+**Owner directive captured and satisfied:** Set `GRAPH_SOURCE=sqlite` in production only after
+the structured/provenance bundle was verified and CVCE/Panchanga smoke checks passed. No
+Supabase fallback was added for missing metadata. Production deployment
+`dpl_i1QKUoMbvPvqKofybAvxu4hcWkXB` now reports the SQLite backend live.
+
+**Preview evidence 2026-08-22:** Vercel Preview
+`dpl_2f3DCg86RLXAuoHN1KcM6CaqzHBs` reached READY after correcting the project schema requirement
+that `functions.app/server.py.includeFiles` be a string. Authenticated `/graphinfo` reported
+`graph_db.present=true` (18,604,032 bytes), `graph_json.present=true` (21,845,134 bytes),
+62 structured JSON files, the node-chapter map, and 12 canonical patch files under
+`/var/task/knowledge-graph`. This proves the bundle is present in the Vercel function. The
+Preview remained `graph_source_env=supabase`; no production flag or deployment was changed.
+
+**Production evidence 2026-08-22:** `GRAPH_SOURCE=sqlite` was added to the Vercel Production
+environment and deployed as `dpl_i1QKUoMbvPvqKofybAvxu4hcWkXB`. Live authenticated
+`/graphinfo` returned `graph_source_env=sqlite`, `graph_db.present=true` (18,604,032 bytes),
+26,722 nodes, 38,881 links, 62 structured files, and 12 canonical patches.
+
+**Owner decision 2026-08-22T20:44:12+0100:** Remove the Learn option from the VedicAstro
+portal. Do not build or migrate the portal Learn reader. The decision is recorded as V-19
+below and in `docs/handoff/context.md`; the CVCE SQLite graph cutover remains in scope.
+
 ---
 
 ## Open
@@ -36,6 +60,7 @@ urgent-urgent) · Medium (should happen soon, not on fire) · Low (housekeeping)
 | V-9 | `docs/prediction-engine-strategy/RELEASE_HANDOFF.md` still says B3's "Independent re-gate is pending" — it isn't; B3 passed at 97/100 on 2026-07-18. Stale doc, will mislead the next reader. | Low | 2026-08-11 | ☑ Fixed (2026-08-11) — line now reads "passed 97/100 on 2026-07-18." |
 | V-10 | `cvce/graph_rag/_original_backup/`, `cvce/knowledge_engine/_original_backup/` — untracked pre-refactor safety copies. | Low | 2026-08-11 | ☑ **Deleted (owner approved, 2026-08-11).** Never tracked, nothing to commit — working tree clean. |
 | V-11 | Life-Event Prediction engine (owner mandate: "did the app predict my marriage/kid/job date") — full design doc exists (`docs/prediction-engine-strategy/LIFE_EVENT_ENGINE_PLAN.md`, 2026-07-18) but zero implementation. Not urgent relative to the items above, but easy to lose track of under the volume of new B-16/Vercel work — keeping it visible here on purpose. | Low | 2026-07-18 (carried over) | ☐ |
+| V-19 | Remove the Learn product from the VedicAstro portal; do not spend effort migrating its Supabase-backed reader. | Medium | 2026-08-22T20:44:12+0100 | ☑ **Implemented:** removed Learn from the main navigation and masthead search; the `/learn` route now returns not-found. No Learn migration or new CVCE catalog endpoints are retained. |
 
 ---
 

@@ -1,7 +1,59 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-08-11 (Claude Code / Sonnet 5 — post-handoff-gap backlog review, full remediation cycle, V-7 Vercel cutover live)  
+**Snapshot:** 2026-08-22 (Codex — SQLite graph cutover live; Learn product removed from the portal)
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
+
+---
+
+## SESSION 2026-08-22 — SQLite cutover packaging checkpoint
+
+**Owner directive:** Flip `GRAPH_SOURCE=sqlite` only after the provenance bundle is shipped and
+verified, CVCE/Panchanga smoke checks pass, and live parity evidence is recorded. This gate is
+now satisfied; no Supabase fallback was added for missing metadata.
+
+`cvce/vercel.json` includes the SQLite graph plus
+the structured/provenance bundle. `cvce/scripts/sync_provenance_bundle.py` copies 62 canonical
+structured JSON files, the canonical `node-chapter-map.json`, and 12 canonical per-book patch
+files into `cvce/knowledge-graph/`; `.fresh` and backup artifacts are excluded. The GitHub
+Actions workflow refreshes and verifies this generated bundle when source artifacts change.
+`engine.py` now resolves both repository and bundled Vercel layouts, and `/graphinfo` reports
+provenance-bundle presence/counts.
+
+**Verification:** CVCE SQLite direct checks passed with 26,722 nodes, 38,881 links, 1,773
+hyperedges, 62 structured books, 1,790 patch entries, and real hierarchy metadata. CVCE
+endpoint smoke passed for `/health`, `/graphinfo`, `/knowledge/search`, `/knowledge/transit`,
+`/knowledge/structured/...`, `/knowledge/chapter/.../nodes`, and `/knowledge/node/.../hierarchy`.
+The full CVCE suite passed. Panchanga bridge/personalization/retrieval smoke passed 43/43;
+the full Panchanga suite remains 207 passed, 4 skipped, 6 encryption-test failures unrelated
+to this cutover.
+
+**Residual evidence gap:** the live Supabase parity command has no credentials in this checkout,
+so full production field parity remains unestablished. The production runtime source is
+nevertheless proven by live `/graphinfo` on the exact deployed alias. Supabase credentials
+remain available for rollback; no on-demand metadata fallback is in the normal path.
+
+**Preview verification 2026-08-22:** A fresh Vercel Preview deployment
+`dpl_2f3DCg86RLXAuoHN1KcM6CaqzHBs` (`vedicastro-cvce-vercel-ngdlqw1br.vercel.app`) completed
+READY. The first deployment attempt correctly exposed a Vercel schema error: `includeFiles`
+must be a string for this project; it was corrected to the brace-glob string form. Authenticated
+`vercel curl` against Preview `/graphinfo` returned: `graph_db.present=true` with
+`size_bytes=18604032`, `graph_json.present=true` with `size_bytes=21845134`,
+`structured_present=true`, `structured_json_count=62`, `node_chapter_map_present=true`, and
+`canonical_patch_json_count=12`. Preview path resolution is therefore proven in Vercel's
+`/var/task/knowledge-graph` filesystem. Preview `graph_source_env` remained `supabase` and its
+active backend was `file-based` because no Preview SQLite env was set; production was changed
+after this preview verification.
+
+**Production cutover verification 2026-08-22:** Vercel deployment
+`dpl_i1QKUoMbvPvqKofybAvxu4hcWkXB` reached READY and was aliased to
+`https://vedicastro-cvce-vercel.vercel.app`. Authenticated `/graphinfo` returned
+`graph_source_env=sqlite`, `graph_db.present=true` with size `18604032`, active backend
+`sqlite-baked@523f27371b346c100baed1c6d1ebae7abac28d64`, 26,722 nodes, and 38,881 links.
+
+**Owner decision 2026-08-22T20:44:12+0100:** Remove the Learn option from the VedicAstro
+portal. Do not build or migrate the portal Learn reader. The portal main navigation and
+masthead library search were removed, and the `/learn` route now returns not-found. CVCE
+SQLite graph cutover work remains preserved; no Learn catalog/node endpoints were retained.
 
 ---
 

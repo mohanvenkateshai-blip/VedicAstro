@@ -1,0 +1,269 @@
+{
+  "book_id": "SBC_Vedha_and_Panchang_Reference_Guide",
+  "canonical_name": "SBC Vedha and Panchang Reference Guide",
+  "source_file": "SBC_Vedha_and_Panchang_Reference_Guide.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-tithi_lunar_day",
+      "number": null,
+      "title": "Tithi (Lunar Day)",
+      "level": 1,
+      "start_line": 42,
+      "end_line": 43,
+      "sections": [],
+      "content_preview": "Tithi (Lunar Day)  Dagdha Rashi (Vedic Name)  Equivalent Western Zodiac Sign  Pratipada (1st) Dwitiya (2nd)"
+    },
+    {
+      "id": "ch-dagdha_rashi_vedic_name",
+      "number": null,
+      "title": "Dagdha Rashi (Vedic Name)",
+      "level": 1,
+      "start_line": 44,
+      "end_line": 45,
+      "sections": [],
+      "content_preview": "Dagdha Rashi (Vedic Name)  Equivalent Western Zodiac Sign  Pratipada (1st) Dwitiya (2nd) Tritiya (3rd) Chaturthi (4th)"
+    },
+    {
+      "id": "ch-equivalent_western_zodiac_sign",
+      "number": null,
+      "title": "Equivalent Western Zodiac Sign",
+      "level": 1,
+      "start_line": 46,
+      "end_line": 63,
+      "sections": [],
+      "content_preview": "Equivalent Western Zodiac Sign  Pratipada (1st) Dwitiya (2nd) Tritiya (3rd) Chaturthi (4th) Panchami (5th) Shashthi (6th)"
+    },
+    {
+      "id": "ch-amavasya_30th",
+      "number": null,
+      "title": "Amavasya (30th)",
+      "level": 1,
+      "start_line": 64,
+      "end_line": 83,
+      "sections": [],
+      "content_preview": "Amavasya (30th)  Tula, Makara Dhanu, Meena Simha, Makara Vrishabha, Kumbha Mithuna, Kanya Mesha, Simha"
+    },
+    {
+      "id": "ch-vedic_astrology_reference_manual_sarvatobhadra_chakra",
+      "number": null,
+      "title": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra",
+      "level": 1,
+      "start_line": 84,
+      "end_line": 95,
+      "sections": [],
+      "content_preview": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra  Libra, Capricorn Sagittarius, Pisces Leo, Capricorn Taurus, Aquarius Gemini, Virgo Aries, Leo"
+    },
+    {
+      "id": "ch-leo_scorpio",
+      "number": null,
+      "title": "Leo, Scorpio",
+      "level": 1,
+      "start_line": 96,
+      "end_line": 104,
+      "sections": [],
+      "content_preview": "Leo, Scorpio  Leo, Scorpio Sagittarius, Pisces Libra, Capricorn Taurus, Leo Gemini, Virgo, Sagittarius, Pisces None (Exempt)"
+    },
+    {
+      "id": "ch-none_exempt",
+      "number": null,
+      "title": "None (Exempt)",
+      "level": 1,
+      "start_line": 105,
+      "end_line": 168,
+      "sections": [],
+      "content_preview": "None (Exempt)  Page 2  ---  ## Page 3 "
+    },
+    {
+      "id": "ch-directional_restrictions_based_on_planet_type",
+      "number": null,
+      "title": "Directional Restrictions Based on Planet Type",
+      "level": 1,
+      "start_line": 169,
+      "end_line": 184,
+      "sections": [],
+      "content_preview": "Directional Restrictions Based on Planet Type  ° True Planets (Mars, Mercury, Jupiter, Venus, Saturn): Because these five physical bodies undergo all phases of velocity—direct advancement, stationary pause, and apparent retrograde motion—they are fully capable of  influencing all"
+    },
+    {
+      "id": "ch-the_motion_override_law",
+      "number": null,
+      "title": "The Motion Override Law",
+      "level": 1,
+      "start_line": 185,
+      "end_line": 213,
+      "sections": [],
+      "content_preview": "The Motion Override Law  For the five true planets that possess multi-directional lines, the relative intensity of their vectors changes instantly based  on their speed and directional shifts in the sky: ° When a planet moves with Direct / Fast Motion, its forward-leaning Left Di"
+    },
+    {
+      "id": "ch-shubha_vedha_benefic_piercing",
+      "number": null,
+      "title": "Shubha Vedha (Benefic Piercing)",
+      "level": 1,
+      "start_line": 214,
+      "end_line": 221,
+      "sections": [],
+      "content_preview": "Shubha Vedha (Benefic Piercing)  Triggered when a natural benefic planet—Jupiter, Venus, unafflicted Mercury, or a bright Waxing/Full Moon— transits a stellar coordinate. Its lines of sight infuse the targeted Nakshatras, signs, and name-consonants with supportive, expanding, and"
+    },
+    {
+      "id": "ch-papa_vedha_malefic_piercing",
+      "number": null,
+      "title": "Papa Vedha (Malefic Piercing)",
+      "level": 1,
+      "start_line": 222,
+      "end_line": 240,
+      "sections": [],
+      "content_preview": "Papa Vedha (Malefic Piercing)  Triggered when a natural malefic planet—Saturn, Mars, Rahu, Ketu, the Sun, or a dark Waning/New Moon—crosses a coordinate. Its vectors project pressure, restrictions, or sudden structural breaks onto the recipient boxes. This manifests  as bureaucra"
+    },
+    {
+      "id": "ch-transiting_planet_location",
+      "number": null,
+      "title": "Transiting Planet Location",
+      "level": 1,
+      "start_line": 241,
+      "end_line": 316,
+      "sections": [],
+      "content_preview": "Transiting Planet Location  10  11.  12. "
+    },
+    {
+      "id": "ch-frontal_vedha_straight",
+      "number": null,
+      "title": "Frontal Vedha (Straight)",
+      "level": 1,
+      "start_line": 317,
+      "end_line": 352,
+      "sections": [],
+      "content_preview": "Frontal Vedha (Straight)  Shravana Abhijit  Uttara Ashadha Purva Ashadha Mula"
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "number": null,
+      "title": "Uttara Phalguni",
+      "level": 1,
+      "start_line": 353,
+      "end_line": 354,
+      "sections": [],
+      "content_preview": "Uttara Phalguni  Vedic Astrology Reference Manual * Sarvatobhadra Chakra  Left Diagonal (Forward)  Vishakha "
+    },
+    {
+      "id": "ch-vedic_astrology_reference_manual_sarvatobhadra_chakra-2",
+      "number": null,
+      "title": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra",
+      "level": 1,
+      "start_line": 355,
+      "end_line": 356,
+      "sections": [],
+      "content_preview": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra  Left Diagonal (Forward)  Vishakha  Swati "
+    },
+    {
+      "id": "ch-left_diagonal_forward",
+      "number": null,
+      "title": "Left Diagonal (Forward)",
+      "level": 1,
+      "start_line": 357,
+      "end_line": 457,
+      "sections": [],
+      "content_preview": "Left Diagonal (Forward)  Vishakha  Swati  Chitra "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-tithi_lunar_day",
+      "title": "Tithi (Lunar Day)",
+      "chapter": "Tithi (Lunar Day)",
+      "chapter_id": "ch-tithi_lunar_day"
+    },
+    {
+      "id": "ch-dagdha_rashi_vedic_name",
+      "title": "Dagdha Rashi (Vedic Name)",
+      "chapter": "Dagdha Rashi (Vedic Name)",
+      "chapter_id": "ch-dagdha_rashi_vedic_name"
+    },
+    {
+      "id": "ch-equivalent_western_zodiac_sign",
+      "title": "Equivalent Western Zodiac Sign",
+      "chapter": "Equivalent Western Zodiac Sign",
+      "chapter_id": "ch-equivalent_western_zodiac_sign"
+    },
+    {
+      "id": "ch-amavasya_30th",
+      "title": "Amavasya (30th)",
+      "chapter": "Amavasya (30th)",
+      "chapter_id": "ch-amavasya_30th"
+    },
+    {
+      "id": "ch-vedic_astrology_reference_manual_sarvatobhadra_chakra",
+      "title": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra",
+      "chapter": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra",
+      "chapter_id": "ch-vedic_astrology_reference_manual_sarvatobhadra_chakra"
+    },
+    {
+      "id": "ch-leo_scorpio",
+      "title": "Leo, Scorpio",
+      "chapter": "Leo, Scorpio",
+      "chapter_id": "ch-leo_scorpio"
+    },
+    {
+      "id": "ch-none_exempt",
+      "title": "None (Exempt)",
+      "chapter": "None (Exempt)",
+      "chapter_id": "ch-none_exempt"
+    },
+    {
+      "id": "ch-directional_restrictions_based_on_planet_type",
+      "title": "Directional Restrictions Based on Planet Type",
+      "chapter": "Directional Restrictions Based on Planet Type",
+      "chapter_id": "ch-directional_restrictions_based_on_planet_type"
+    },
+    {
+      "id": "ch-the_motion_override_law",
+      "title": "The Motion Override Law",
+      "chapter": "The Motion Override Law",
+      "chapter_id": "ch-the_motion_override_law"
+    },
+    {
+      "id": "ch-shubha_vedha_benefic_piercing",
+      "title": "Shubha Vedha (Benefic Piercing)",
+      "chapter": "Shubha Vedha (Benefic Piercing)",
+      "chapter_id": "ch-shubha_vedha_benefic_piercing"
+    },
+    {
+      "id": "ch-papa_vedha_malefic_piercing",
+      "title": "Papa Vedha (Malefic Piercing)",
+      "chapter": "Papa Vedha (Malefic Piercing)",
+      "chapter_id": "ch-papa_vedha_malefic_piercing"
+    },
+    {
+      "id": "ch-transiting_planet_location",
+      "title": "Transiting Planet Location",
+      "chapter": "Transiting Planet Location",
+      "chapter_id": "ch-transiting_planet_location"
+    },
+    {
+      "id": "ch-frontal_vedha_straight",
+      "title": "Frontal Vedha (Straight)",
+      "chapter": "Frontal Vedha (Straight)",
+      "chapter_id": "ch-frontal_vedha_straight"
+    },
+    {
+      "id": "ch-uttara_phalguni",
+      "title": "Uttara Phalguni",
+      "chapter": "Uttara Phalguni",
+      "chapter_id": "ch-uttara_phalguni"
+    },
+    {
+      "id": "ch-vedic_astrology_reference_manual_sarvatobhadra_chakra-2",
+      "title": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra",
+      "chapter": "Vedic Astrology Reference Manual * Sarvatobhadra Chakra",
+      "chapter_id": "ch-vedic_astrology_reference_manual_sarvatobhadra_chakra-2"
+    },
+    {
+      "id": "ch-left_diagonal_forward",
+      "title": "Left Diagonal (Forward)",
+      "chapter": "Left Diagonal (Forward)",
+      "chapter_id": "ch-left_diagonal_forward"
+    }
+  ],
+  "total_chapters": 16,
+  "total_sections": 0
+}

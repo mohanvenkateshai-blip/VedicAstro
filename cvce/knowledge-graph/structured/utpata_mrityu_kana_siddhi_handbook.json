@@ -1,0 +1,141 @@
+{
+  "book_id": "utpata_mrityu_kana_siddhi_handbook",
+  "canonical_name": "utpata mrityu kana siddhi handbook",
+  "source_file": "utpata_mrityu_kana_siddhi_handbook.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-source_trail_scope",
+      "number": null,
+      "title": "Source trail & scope",
+      "level": 1,
+      "start_line": 27,
+      "end_line": 51,
+      "sections": [],
+      "content_preview": " Source trail & scope        This handbook follows the Utpātādi-yoga-catuṣṭaya rule: for each weekday, four consecutive nakshatras produce Utpāta, Mṛtyu, Kāṇa, and Siddhi, respectively.  The clearest classical source trail is Muhūrta Cintāmaṇi, in the Śubhāśubha-prakaraṇa. The te"
+    },
+    {
+      "id": "ch-master_table_vāra_nakṣatra_yoga",
+      "number": null,
+      "title": "Master table: Vāra + Nakṣatra → Yoga",
+      "level": 1,
+      "start_line": 52,
+      "end_line": 61,
+      "sections": [],
+      "content_preview": " Master table: Vāra + Nakṣatra → Yoga      Utpāta  Mṛtyu  Kāṇa  Siddhi  "
+    },
+    {
+      "id": "ch-vāra_weekdayplanetary_lordutpāta_yogamṛtyu_yogakāṇa_yogasidd",
+      "number": null,
+      "title": "Vāra / WeekdayPlanetary lordUtpāta YogaMṛtyu YogaKāṇa YogaSiddhi Yoga",
+      "level": 1,
+      "start_line": 62,
+      "end_line": 70,
+      "sections": [],
+      "content_preview": " Vāra / WeekdayPlanetary lordUtpāta YogaMṛtyu YogaKāṇa YogaSiddhi Yoga        Note: Monday’s Kāṇa entry uses Abhijit, the intercalary nakshatra placed between Uttarāṣāḍhā and Śravaṇa in the 28-nakshatra scheme.     "
+    },
+    {
+      "id": "ch-searchable_lookup",
+      "number": null,
+      "title": "Searchable lookup",
+      "level": 1,
+      "start_line": 71,
+      "end_line": 75,
+      "sections": [],
+      "content_preview": " Searchable lookup    Type a weekday, planet, nakshatra, or yoga name. This is useful when a panchang tells you “Thursday + Mṛgaśīrṣā” and you want the yoga instantly.      All yogasUtpātaMṛtyuKāṇaSiddhi  Reset  "
+    },
+    {
+      "id": "ch-all_yogasutpātamṛtyukāṇasiddhi",
+      "number": null,
+      "title": "All yogasUtpātaMṛtyuKāṇaSiddhi",
+      "level": 1,
+      "start_line": 76,
+      "end_line": 80,
+      "sections": [],
+      "content_preview": " All yogasUtpātaMṛtyuKāṇaSiddhi  Reset        WeekdayPlanetNakshatraYogaClassQuick interpretation    "
+    },
+    {
+      "id": "ch-weekdayplanetnakshatrayogaclassquick_interpretation",
+      "number": null,
+      "title": "WeekdayPlanetNakshatraYogaClassQuick interpretation",
+      "level": 1,
+      "start_line": 81,
+      "end_line": 88,
+      "sections": [],
+      "content_preview": " WeekdayPlanetNakshatraYogaClassQuick interpretation             "
+    },
+    {
+      "id": "ch-yoga-by-yoga_matrix",
+      "number": null,
+      "title": "Yoga-by-yoga matrix",
+      "level": 1,
+      "start_line": 89,
+      "end_line": 99,
+      "sections": [],
+      "content_preview": " Yoga-by-yoga matrix        YogaSundayMondayTuesdayWednesdayThursdayFridaySaturday      "
+    },
+    {
+      "id": "ch-how_to_apply_this_in_a_panchang",
+      "number": null,
+      "title": "How to apply this in a panchang",
+      "level": 1,
+      "start_line": 100,
+      "end_line": 139,
+      "sections": [],
+      "content_preview": " How to apply this in a panchang      1. Identify the Vāra  Use the weekday as per the local panchang convention. In many traditional panchangs, Vāra is sunrise-to-sunrise rather than midnight-to-midnight, so local sunrise matters for edge cases.  2. Identify the Moon’s Nakshatra"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-source_trail_scope",
+      "title": "Source trail & scope",
+      "chapter": "Source trail & scope",
+      "chapter_id": "ch-source_trail_scope"
+    },
+    {
+      "id": "ch-master_table_vāra_nakṣatra_yoga",
+      "title": "Master table: Vāra + Nakṣatra → Yoga",
+      "chapter": "Master table: Vāra + Nakṣatra → Yoga",
+      "chapter_id": "ch-master_table_vāra_nakṣatra_yoga"
+    },
+    {
+      "id": "ch-vāra_weekdayplanetary_lordutpāta_yogamṛtyu_yogakāṇa_yogasidd",
+      "title": "Vāra / WeekdayPlanetary lordUtpāta YogaMṛtyu YogaKāṇa YogaSiddhi Yoga",
+      "chapter": "Vāra / WeekdayPlanetary lordUtpāta YogaMṛtyu YogaKāṇa YogaSiddhi Yoga",
+      "chapter_id": "ch-vāra_weekdayplanetary_lordutpāta_yogamṛtyu_yogakāṇa_yogasidd"
+    },
+    {
+      "id": "ch-searchable_lookup",
+      "title": "Searchable lookup",
+      "chapter": "Searchable lookup",
+      "chapter_id": "ch-searchable_lookup"
+    },
+    {
+      "id": "ch-all_yogasutpātamṛtyukāṇasiddhi",
+      "title": "All yogasUtpātaMṛtyuKāṇaSiddhi",
+      "chapter": "All yogasUtpātaMṛtyuKāṇaSiddhi",
+      "chapter_id": "ch-all_yogasutpātamṛtyukāṇasiddhi"
+    },
+    {
+      "id": "ch-weekdayplanetnakshatrayogaclassquick_interpretation",
+      "title": "WeekdayPlanetNakshatraYogaClassQuick interpretation",
+      "chapter": "WeekdayPlanetNakshatraYogaClassQuick interpretation",
+      "chapter_id": "ch-weekdayplanetnakshatrayogaclassquick_interpretation"
+    },
+    {
+      "id": "ch-yoga-by-yoga_matrix",
+      "title": "Yoga-by-yoga matrix",
+      "chapter": "Yoga-by-yoga matrix",
+      "chapter_id": "ch-yoga-by-yoga_matrix"
+    },
+    {
+      "id": "ch-how_to_apply_this_in_a_panchang",
+      "title": "How to apply this in a panchang",
+      "chapter": "How to apply this in a panchang",
+      "chapter_id": "ch-how_to_apply_this_in_a_panchang"
+    }
+  ],
+  "total_chapters": 8,
+  "total_sections": 0
+}

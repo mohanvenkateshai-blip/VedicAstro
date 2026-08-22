@@ -31,6 +31,28 @@ _REPO_ROOT = Path(__file__).resolve().parents[2]
 _CVCE_ROOT = Path(__file__).resolve().parents[1]
 
 
+def _knowledge_graph_roots() -> list[Path]:
+    """Return possible knowledge-graph roots for repo and Vercel layouts.
+
+    Local development keeps ``knowledge-graph`` beside ``cvce``. The CVCE
+    Vercel bundle keeps a generated copy inside the project root. Resolving
+    both layouts avoids silently losing structured provenance after deploy.
+    """
+    roots: list[Path] = []
+    configured = os.environ.get("VEDICASTRO_ROOT")
+    if configured:
+        roots.append(Path(configured))
+    roots.extend((_REPO_ROOT, _CVCE_ROOT, Path.cwd()))
+    out: list[Path] = []
+    seen: set[Path] = set()
+    for root in roots:
+        candidate = (root / "knowledge-graph").resolve()
+        if candidate not in seen:
+            seen.add(candidate)
+            out.append(candidate)
+    return out
+
+
 def default_graph_path() -> Path:
     """Resolve graph.json for local dev and tests (cwd-independent)."""
     candidates = [
@@ -975,25 +997,30 @@ class KnowledgeEngine:
           - nodes_by_chapter: {chapter_id: [full_node, ...]} (best-effort lookup)
         """
         try:
-            base = _REPO_ROOT / "knowledge-graph" / "structured"
             data: dict | None = None
-            candidates = [
-                base / f"{book_id}.json",
-                base / f"{book_id.replace(' ', '_')}.json",
-            ]
-            for p in candidates:
-                if p.exists():
-                    data = json.loads(p.read_text(encoding="utf-8"))
+            for root in _knowledge_graph_roots():
+                base = root / "structured"
+                candidates = [
+                    base / f"{book_id}.json",
+                    base / f"{book_id.replace(' ', '_')}.json",
+                ]
+                for p in candidates:
+                    if p.exists():
+                        data = json.loads(p.read_text(encoding="utf-8"))
+                        break
+                if data is not None:
                     break
-            if data is None and base.exists():
-                for p in base.glob("*.json"):
-                    try:
-                        d = json.loads(p.read_text(encoding="utf-8"))
-                        if book_id in (d.get("book_id") or "") or book_id in (d.get("canonical_name") or ""):
-                            data = d
-                            break
-                    except Exception:
-                        pass
+                if base.exists():
+                    for p in base.glob("*.json"):
+                        try:
+                            d = json.loads(p.read_text(encoding="utf-8"))
+                            if book_id in (d.get("book_id") or "") or book_id in (d.get("canonical_name") or ""):
+                                data = d
+                                break
+                        except Exception:
+                            pass
+                if data is not None:
+                    break
             if not data:
                 return None
 
@@ -1055,24 +1082,30 @@ class KnowledgeEngine:
             return self._node_chapter_patch
         merged: dict = {"patches": [], "books": []}
         # 1. consolidated
-        p = Path("knowledge-graph/patches/node-chapter-map.json")
-        if p.exists():
-            try:
-                base = json.loads(p.read_text(encoding="utf-8"))
-                merged["patches"].extend(base.get("patches") or [])
-                merged["books"] = base.get("books") or []
-            except Exception:
-                pass
-        # 2. per-book patches (patch-{name}.json) — prefer/merge like portal loadNodeChapterPatch
-        patches_dir = Path("knowledge-graph/patches")
-        if patches_dir.exists():
+        # Prefer the first available root. This is the repo root locally and
+        # the generated bundle root in the Vercel function.
+        for root in _knowledge_graph_roots():
+            patches_dir = root / "patches"
+            if not patches_dir.exists():
+                continue
+            p = patches_dir / "node-chapter-map.json"
+            if p.exists():
+                try:
+                    base = json.loads(p.read_text(encoding="utf-8"))
+                    merged["patches"].extend(base.get("patches") or [])
+                    merged["books"] = base.get("books") or []
+                except Exception:
+                    pass
+            # per-book patches (patch-{name}.json); ignore alternate and
+            # backup artifacts that are not release inputs.
             try:
                 for pf in sorted(patches_dir.glob("patch-*.json")):
+                    if ".fresh." in pf.name or ".bak" in pf.name:
+                        continue
                     try:
                         extra = json.loads(pf.read_text(encoding="utf-8"))
                         extras = extra.get("patches") or (extra if isinstance(extra, list) else [])
                         for e in extras:
-                            # tag book if missing
                             if not e.get("book_id") and extra.get("book_id"):
                                 e = dict(e)
                                 e["book_id"] = extra.get("book_id")
@@ -1085,6 +1118,7 @@ class KnowledgeEngine:
                         continue
             except Exception:
                 pass
+            break
         if not merged.get("patches"):
             merged = {"patches": []}
         self._node_chapter_patch = merged

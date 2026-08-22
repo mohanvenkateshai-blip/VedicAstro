@@ -1,0 +1,285 @@
+{
+  "book_id": "Vedic_Astrology_Tithi_Guide",
+  "canonical_name": "Vedic Astrology Tithi Guide",
+  "source_file": "Vedic_Astrology_Tithi_Guide.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-vedic_astrology_panchang_tithi_guide",
+      "number": null,
+      "title": "Vedic Astrology Panchang: Tithi Guide",
+      "level": 1,
+      "start_line": 4,
+      "end_line": 18,
+      "sections": [],
+      "content_preview": "Vedic Astrology Panchang: Tithi Guide  A Comprehensive Reference for Karyakatva, Rulerships, and Dagdha Rashis  1. Understanding Tithi & Karyakatva  In Vedic Panchang, a Tithi represents a lunar day calculated by the 12-degree angular separation between the Sun and the Moon. Kary"
+    },
+    {
+      "id": "ch-category_primary_purpose_significations_best_actions",
+      "number": null,
+      "title": "Category Primary Purpose / Significations Best Actions",
+      "level": 1,
+      "start_line": 19,
+      "end_line": 46,
+      "sections": [],
+      "content_preview": "Category Primary Purpose / Significations Best Actions  Nanda 1, 6, 11 Agni / Festive energy, initiating projects, and Housewarming, Concluding final financial (Joyous) Brahma structural expansion. construction, arts, new jobs. settlements. Bhadra 2,7,12 | Vidhata/ Stability, com"
+    },
+    {
+      "id": "ch-dagdha_rashis_sanskrit_dagdha_rashis_western",
+      "number": null,
+      "title": "Dagdha Rashis (Sanskrit Dagdha Rashis (Western",
+      "level": 1,
+      "start_line": 47,
+      "end_line": 93,
+      "sections": [],
+      "content_preview": "Dagdha Rashis (Sanskrit Dagdha Rashis (Western  10 11 12 13 14 15"
+    },
+    {
+      "id": "ch-libra_capricorn",
+      "number": null,
+      "title": "Libra & Capricorn",
+      "level": 1,
+      "start_line": 94,
+      "end_line": 95,
+      "sections": [],
+      "content_preview": "Libra & Capricorn  Sagittarius & Pisces  Leo & Capricorn  Taurus & Aquarius "
+    },
+    {
+      "id": "ch-sagittarius_pisces",
+      "number": null,
+      "title": "Sagittarius & Pisces",
+      "level": 1,
+      "start_line": 96,
+      "end_line": 97,
+      "sections": [],
+      "content_preview": "Sagittarius & Pisces  Leo & Capricorn  Taurus & Aquarius  Gemini & Virgo "
+    },
+    {
+      "id": "ch-leo_capricorn",
+      "number": null,
+      "title": "Leo & Capricorn",
+      "level": 1,
+      "start_line": 98,
+      "end_line": 99,
+      "sections": [],
+      "content_preview": "Leo & Capricorn  Taurus & Aquarius  Gemini & Virgo  Aries & Leo "
+    },
+    {
+      "id": "ch-taurus_aquarius",
+      "number": null,
+      "title": "Taurus & Aquarius",
+      "level": 1,
+      "start_line": 100,
+      "end_line": 101,
+      "sections": [],
+      "content_preview": "Taurus & Aquarius  Gemini & Virgo  Aries & Leo  Cancer & Sagittarius "
+    },
+    {
+      "id": "ch-gemini_virgo",
+      "number": null,
+      "title": "Gemini & Virgo",
+      "level": 1,
+      "start_line": 102,
+      "end_line": 103,
+      "sections": [],
+      "content_preview": "Gemini & Virgo  Aries & Leo  Cancer & Sagittarius  Gemini & Virgo "
+    },
+    {
+      "id": "ch-aries_leo",
+      "number": null,
+      "title": "Aries & Leo",
+      "level": 1,
+      "start_line": 104,
+      "end_line": 105,
+      "sections": [],
+      "content_preview": "Aries & Leo  Cancer & Sagittarius  Gemini & Virgo  Leo & Scorpio "
+    },
+    {
+      "id": "ch-cancer_sagittarius",
+      "number": null,
+      "title": "Cancer & Sagittarius",
+      "level": 1,
+      "start_line": 106,
+      "end_line": 107,
+      "sections": [],
+      "content_preview": "Cancer & Sagittarius  Gemini & Virgo  Leo & Scorpio  Leo & Scorpio "
+    },
+    {
+      "id": "ch-gemini_virgo-2",
+      "number": null,
+      "title": "Gemini & Virgo",
+      "level": 1,
+      "start_line": 108,
+      "end_line": 109,
+      "sections": [],
+      "content_preview": "Gemini & Virgo  Leo & Scorpio  Leo & Scorpio  Sagittarius & Pisces "
+    },
+    {
+      "id": "ch-leo_scorpio",
+      "number": null,
+      "title": "Leo & Scorpio",
+      "level": 1,
+      "start_line": 110,
+      "end_line": 111,
+      "sections": [],
+      "content_preview": "Leo & Scorpio  Leo & Scorpio  Sagittarius & Pisces  Libra & Capricorn "
+    },
+    {
+      "id": "ch-leo_scorpio-2",
+      "number": null,
+      "title": "Leo & Scorpio",
+      "level": 1,
+      "start_line": 112,
+      "end_line": 113,
+      "sections": [],
+      "content_preview": "Leo & Scorpio  Sagittarius & Pisces  Libra & Capricorn  Taurus & Leo "
+    },
+    {
+      "id": "ch-sagittarius_pisces-2",
+      "number": null,
+      "title": "Sagittarius & Pisces",
+      "level": 1,
+      "start_line": 114,
+      "end_line": 115,
+      "sections": [],
+      "content_preview": "Sagittarius & Pisces  Libra & Capricorn  Taurus & Leo  Gemini, Virgo, Sagittarius & Pisces None (Protected by Lord Vishnu)"
+    },
+    {
+      "id": "ch-libra_capricorn-2",
+      "number": null,
+      "title": "Libra & Capricorn",
+      "level": 1,
+      "start_line": 116,
+      "end_line": 117,
+      "sections": [],
+      "content_preview": "Libra & Capricorn  Taurus & Leo  Gemini, Virgo, Sagittarius & Pisces None (Protected by Lord Vishnu)  None (Protected by Lord Shiva)"
+    },
+    {
+      "id": "ch-taurus_leo",
+      "number": null,
+      "title": "Taurus & Leo",
+      "level": 1,
+      "start_line": 118,
+      "end_line": 122,
+      "sections": [],
+      "content_preview": "Taurus & Leo  Gemini, Virgo, Sagittarius & Pisces None (Protected by Lord Vishnu)  None (Protected by Lord Shiva)  ---"
+    },
+    {
+      "id": "ch-none_protected_by_lord_shiva",
+      "number": null,
+      "title": "None (Protected by Lord Shiva)",
+      "level": 1,
+      "start_line": 123,
+      "end_line": 126,
+      "sections": [],
+      "content_preview": "None (Protected by Lord Shiva)  --- "
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-vedic_astrology_panchang_tithi_guide",
+      "title": "Vedic Astrology Panchang: Tithi Guide",
+      "chapter": "Vedic Astrology Panchang: Tithi Guide",
+      "chapter_id": "ch-vedic_astrology_panchang_tithi_guide"
+    },
+    {
+      "id": "ch-category_primary_purpose_significations_best_actions",
+      "title": "Category Primary Purpose / Significations Best Actions",
+      "chapter": "Category Primary Purpose / Significations Best Actions",
+      "chapter_id": "ch-category_primary_purpose_significations_best_actions"
+    },
+    {
+      "id": "ch-dagdha_rashis_sanskrit_dagdha_rashis_western",
+      "title": "Dagdha Rashis (Sanskrit Dagdha Rashis (Western",
+      "chapter": "Dagdha Rashis (Sanskrit Dagdha Rashis (Western",
+      "chapter_id": "ch-dagdha_rashis_sanskrit_dagdha_rashis_western"
+    },
+    {
+      "id": "ch-libra_capricorn",
+      "title": "Libra & Capricorn",
+      "chapter": "Libra & Capricorn",
+      "chapter_id": "ch-libra_capricorn"
+    },
+    {
+      "id": "ch-sagittarius_pisces",
+      "title": "Sagittarius & Pisces",
+      "chapter": "Sagittarius & Pisces",
+      "chapter_id": "ch-sagittarius_pisces"
+    },
+    {
+      "id": "ch-leo_capricorn",
+      "title": "Leo & Capricorn",
+      "chapter": "Leo & Capricorn",
+      "chapter_id": "ch-leo_capricorn"
+    },
+    {
+      "id": "ch-taurus_aquarius",
+      "title": "Taurus & Aquarius",
+      "chapter": "Taurus & Aquarius",
+      "chapter_id": "ch-taurus_aquarius"
+    },
+    {
+      "id": "ch-gemini_virgo",
+      "title": "Gemini & Virgo",
+      "chapter": "Gemini & Virgo",
+      "chapter_id": "ch-gemini_virgo"
+    },
+    {
+      "id": "ch-aries_leo",
+      "title": "Aries & Leo",
+      "chapter": "Aries & Leo",
+      "chapter_id": "ch-aries_leo"
+    },
+    {
+      "id": "ch-cancer_sagittarius",
+      "title": "Cancer & Sagittarius",
+      "chapter": "Cancer & Sagittarius",
+      "chapter_id": "ch-cancer_sagittarius"
+    },
+    {
+      "id": "ch-gemini_virgo-2",
+      "title": "Gemini & Virgo",
+      "chapter": "Gemini & Virgo",
+      "chapter_id": "ch-gemini_virgo-2"
+    },
+    {
+      "id": "ch-leo_scorpio",
+      "title": "Leo & Scorpio",
+      "chapter": "Leo & Scorpio",
+      "chapter_id": "ch-leo_scorpio"
+    },
+    {
+      "id": "ch-leo_scorpio-2",
+      "title": "Leo & Scorpio",
+      "chapter": "Leo & Scorpio",
+      "chapter_id": "ch-leo_scorpio-2"
+    },
+    {
+      "id": "ch-sagittarius_pisces-2",
+      "title": "Sagittarius & Pisces",
+      "chapter": "Sagittarius & Pisces",
+      "chapter_id": "ch-sagittarius_pisces-2"
+    },
+    {
+      "id": "ch-libra_capricorn-2",
+      "title": "Libra & Capricorn",
+      "chapter": "Libra & Capricorn",
+      "chapter_id": "ch-libra_capricorn-2"
+    },
+    {
+      "id": "ch-taurus_leo",
+      "title": "Taurus & Leo",
+      "chapter": "Taurus & Leo",
+      "chapter_id": "ch-taurus_leo"
+    },
+    {
+      "id": "ch-none_protected_by_lord_shiva",
+      "title": "None (Protected by Lord Shiva)",
+      "chapter": "None (Protected by Lord Shiva)",
+      "chapter_id": "ch-none_protected_by_lord_shiva"
+    }
+  ],
+  "total_chapters": 17,
+  "total_sections": 0
+}

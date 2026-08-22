@@ -673,6 +673,28 @@ def graphinfo():
     json_path = _os.path.abspath(
         _os.path.join(_os.path.dirname(__file__), "..", "graph_rag", "graph.json")
     )
+    provenance_root = _os.path.abspath(
+        _os.path.join(_os.path.dirname(__file__), "..", "knowledge-graph")
+    )
+    structured_root = _os.path.join(provenance_root, "structured")
+    patches_root = _os.path.join(provenance_root, "patches")
+    structured_count = 0
+    patch_count = 0
+    if _os.path.isdir(structured_root):
+        structured_count = len(
+            [name for name in _os.listdir(structured_root) if name.endswith(".json")]
+        )
+    if _os.path.isdir(patches_root):
+        patch_count = len(
+            [
+                name
+                for name in _os.listdir(patches_root)
+                if name.startswith("patch-")
+                and name.endswith(".json")
+                and ".fresh." not in name
+                and ".bak" not in name
+            ]
+        )
 
     info = {
         "graph_source_env": graph_source,
@@ -685,6 +707,15 @@ def graphinfo():
             "path": json_path,
             "present": _os.path.exists(json_path),
             "size_bytes": _os.path.getsize(json_path) if _os.path.exists(json_path) else None,
+        },
+        "provenance_bundle": {
+            "root": provenance_root,
+            "structured_present": _os.path.isdir(structured_root),
+            "structured_json_count": structured_count,
+            "node_chapter_map_present": _os.path.isfile(
+                _os.path.join(patches_root, "node-chapter-map.json")
+            ),
+            "canonical_patch_json_count": patch_count,
         },
     }
 

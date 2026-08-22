@@ -1,0 +1,2381 @@
+{
+  "book_id": "Vedanga_Jyotisa_Lagadha",
+  "canonical_name": "Vedanga Jyotisa Lagadha",
+  "source_file": "Vedanga_Jyotisa_Lagadha.md",
+  "graph_version": "newbooks-v1",
+  "parse_quality": "medium",
+  "chapters": [
+    {
+      "id": "ch-vedanga_jyotisa",
+      "number": null,
+      "title": "VEDANGA JYOTISA",
+      "level": 1,
+      "start_line": 4,
+      "end_line": 11,
+      "sections": [],
+      "content_preview": "VEDANGA JYOTISA OF  LAGADHA  IN TIS Laks mente YAJUS RECENSIONS "
+    },
+    {
+      "id": "ch-with_translation_innid_notes",
+      "number": null,
+      "title": "WITH TRANSLATION INNID NOTES",
+      "level": 1,
+      "start_line": 12,
+      "end_line": 13,
+      "sections": [],
+      "content_preview": "WITH TRANSLATION INNID NOTES OF PROF. T.S. KUPPANNA SASTRY  Edited by K.V. SARMA ## Page 3 "
+    },
+    {
+      "id": "ch-prof_ts_kuppanna_sastry",
+      "number": null,
+      "title": "PROF. T.S. KUPPANNA SASTRY",
+      "level": 1,
+      "start_line": 14,
+      "end_line": 19,
+      "sections": [],
+      "content_preview": "PROF. T.S. KUPPANNA SASTRY  Edited by K.V. SARMA ## Page 3  VEDANGA JYOTISA OF LAGADHA "
+    },
+    {
+      "id": "ch-vedanga_jyotisa_of_lagadha",
+      "number": null,
+      "title": "VEDANGA JYOTISA OF LAGADHA",
+      "level": 1,
+      "start_line": 20,
+      "end_line": 21,
+      "sections": [],
+      "content_preview": "VEDANGA JYOTISA OF LAGADHA  IN ITS RK AND YAJUS RECENSIONS  WITH THE TRANSLATION AND NOTES OF  Pror. T. S. KUPPANNA SASTRY "
+    },
+    {
+      "id": "ch-in_its_rk_and_yajus_recensions",
+      "number": null,
+      "title": "IN ITS RK AND YAJUS RECENSIONS",
+      "level": 1,
+      "start_line": 22,
+      "end_line": 23,
+      "sections": [],
+      "content_preview": "IN ITS RK AND YAJUS RECENSIONS  WITH THE TRANSLATION AND NOTES OF  Pror. T. S. KUPPANNA SASTRY  Critically edited by K. V. SARMA"
+    },
+    {
+      "id": "ch-with_the_translation_and_notes_of",
+      "number": null,
+      "title": "WITH THE TRANSLATION AND NOTES OF",
+      "level": 1,
+      "start_line": 24,
+      "end_line": 25,
+      "sections": [],
+      "content_preview": "WITH THE TRANSLATION AND NOTES OF  Pror. T. S. KUPPANNA SASTRY  Critically edited by K. V. SARMA  INDIAN NATIONAL SCIENCE ACADEMY"
+    },
+    {
+      "id": "ch-pror_t_s_kuppanna_sastry",
+      "number": null,
+      "title": "Pror. T. S. KUPPANNA SASTRY",
+      "level": 1,
+      "start_line": 26,
+      "end_line": 30,
+      "sections": [],
+      "content_preview": "Pror. T. S. KUPPANNA SASTRY  Critically edited by K. V. SARMA  INDIAN NATIONAL SCIENCE ACADEMY  NEW DELHI"
+    },
+    {
+      "id": "ch-indian_national_science_academy",
+      "number": null,
+      "title": "INDIAN NATIONAL SCIENCE ACADEMY",
+      "level": 1,
+      "start_line": 31,
+      "end_line": 32,
+      "sections": [],
+      "content_preview": "INDIAN NATIONAL SCIENCE ACADEMY  NEW DELHI ## Page 4  Published for  THE NATIONAL COMMISSION FOR THE COMPILATION"
+    },
+    {
+      "id": "ch-new_delhi",
+      "number": null,
+      "title": "NEW DELHI",
+      "level": 1,
+      "start_line": 33,
+      "end_line": 35,
+      "sections": [],
+      "content_preview": "NEW DELHI ## Page 4  Published for  THE NATIONAL COMMISSION FOR THE COMPILATION OF HISTORY OF SCIENCES IN INDIA "
+    },
+    {
+      "id": "ch-published_for",
+      "number": null,
+      "title": "Published for",
+      "level": 1,
+      "start_line": 36,
+      "end_line": 47,
+      "sections": [],
+      "content_preview": "Published for  THE NATIONAL COMMISSION FOR THE COMPILATION OF HISTORY OF SCIENCES IN INDIA  by INDIAN NATIONAL SCIENCE ACADEMY Bahadur Shah Zafar Marg. New Delhi"
+    },
+    {
+      "id": "ch-indian_national_science_academy-2",
+      "number": null,
+      "title": "Indian National Science Academy",
+      "level": 1,
+      "start_line": 48,
+      "end_line": 54,
+      "sections": [],
+      "content_preview": "Indian National Science Academy  Printed at Sree Saraswaty Press Limited (A Govt of West Bengal Undertaking) 32 A.P.C. Road, Calcutta 700 009 ## Page 5  VEDANGA JYOTISA OF LAGADHA"
+    },
+    {
+      "id": "ch-vedanga_jyotisa_of_lagadha-2",
+      "number": null,
+      "title": "VEDANGA JYOTISA OF LAGADHA",
+      "level": 1,
+      "start_line": 55,
+      "end_line": 56,
+      "sections": [],
+      "content_preview": "VEDANGA JYOTISA OF LAGADHA  Edited and Translated ## Page 6  FOREWORD  The Veddnga Jyotisa of sage Lagadha is highly significant in the history of scienc"
+    },
+    {
+      "id": "ch-edited_and_translated",
+      "number": null,
+      "title": "Edited and Translated",
+      "level": 1,
+      "start_line": 57,
+      "end_line": 102,
+      "sections": [],
+      "content_preview": "Edited and Translated ## Page 6  FOREWORD  The Veddnga Jyotisa of sage Lagadha is highly significant in the history of scienc in India, in the sense that it is the earliest full-fledged treatise on Indian astronom; As an adjunct to the Vedic lore, it forms a manual for the determ"
+    },
+    {
+      "id": "ch-foreword_o00_3",
+      "number": null,
+      "title": "FOREWORD O00 . . . . 3",
+      "level": 1,
+      "start_line": 103,
+      "end_line": 106,
+      "sections": [],
+      "content_preview": "FOREWORD O00 . . . . 3  CONTENTS . a . . . . 5  PREFACE Da Pe an a0 o 7  INTRODUCTION o 11 1. Astronomy of the Vedic ‘Sambitas— 2 Datable Vedic passages— 3. Text"
+    },
+    {
+      "id": "ch-preface_da_pe_an_a0_o_7",
+      "number": null,
+      "title": "PREFACE Da Pe an a0 o 7",
+      "level": 1,
+      "start_line": 107,
+      "end_line": 239,
+      "sections": [],
+      "content_preview": "PREFACE Da Pe an a0 o 7  INTRODUCTION o 11 1. Astronomy of the Vedic ‘Sambitas— 2 Datable Vedic passages— 3. Text of Vedanga Jyotisa (VJ)—4. Date of VJ—S. Verification of the date of Lagadha—6. Contents of the WJ—7. Accuracy of the VJ-—8.  Modern studies on VJ—9. Acknowledgements"
+    },
+    {
+      "id": "ch-8_vedanga_syotisa",
+      "number": null,
+      "title": "8 VEDANGA SYOTISA",
+      "level": 1,
+      "start_line": 240,
+      "end_line": 284,
+      "sections": [],
+      "content_preview": "8 VEDANGA SYOTISA  issued through the Indian National Science Academy, for two reasons, first, on account of this being a work on a scientific discipline and secondly the current year 1984-85 being the Jubilee Year of the Academy, a suggestion made on behalf of the Academy and ac"
+    },
+    {
+      "id": "ch-indological_truths",
+      "number": null,
+      "title": "Indological Truths",
+      "level": 1,
+      "start_line": 285,
+      "end_line": 289,
+      "sections": [],
+      "content_preview": "Indological Truths  PASS boss ba ## Page 11  PREFACE 9  Yajur-Vedanga Jyotisa"
+    },
+    {
+      "id": "ch-preface_9",
+      "number": null,
+      "title": "PREFACE 9",
+      "level": 1,
+      "start_line": 290,
+      "end_line": 458,
+      "sections": [],
+      "content_preview": "PREFACE 9  Yajur-Vedanga Jyotisa A. No. 1505, Weber, op. cit., with the commentary of Somakara. Ng. Pr. Cm. 78 ff. B. No. 374, Weber, op. cit. Ng. Pr. Cm. 5 ff. numbered 4 to 8. C. No. 375, Weber, op. cit. Ng. Pr. Cm. 6 ff. numbered 4 to 9. D. No. Wilson 502-a, Aufiecht, op. cit."
+    },
+    {
+      "id": "ch-introduction_13",
+      "number": null,
+      "title": "INTRODUCTION 13",
+      "level": 1,
+      "start_line": 459,
+      "end_line": 545,
+      "sections": [],
+      "content_preview": "INTRODUCTION 13  to the Reveda (R-VJ) and the other, which is later, larger and more advanced in its methods, to the Yayurveda (Y-VJ), though their basic content is almost the same. Later than these came the Atharvana Jyautisa, attached to the Atharva Veda, called so just for the"
+    },
+    {
+      "id": "ch-introduction_15",
+      "number": null,
+      "title": "INTRODUCTION 15",
+      "level": 1,
+      "start_line": 546,
+      "end_line": 644,
+      "sections": [],
+      "content_preview": "INTRODUCTION 15  movement (though taken to be fixed), and, reckoned from this point, the rate of preces- sion would be not the real 50”. 25, but 50”. 25 plus 8”. 5=about 59”. This error of 8”.5 has accumulated up to the time of the appearance of the Tamil Drk almanacs at the end "
+    },
+    {
+      "id": "ch-introduction_17",
+      "number": null,
+      "title": "INTRODUCTION 17",
+      "level": 1,
+      "start_line": 645,
+      "end_line": 741,
+      "sections": [],
+      "content_preview": "INTRODUCTION 17  But there is another type of error that will accumulate in course of time. 62 synodic months 1s exactly 1830-8965 days. So, the correct Mean Sun would be 4°54’ in advance of Sravisthd, each yuga. It will accumulate to 30° in 30--4-54 yugas. To bring the Sun and t"
+    },
+    {
+      "id": "ch-introduction_19",
+      "number": null,
+      "title": "INTRODUCTION 19",
+      "level": 1,
+      "start_line": 742,
+      "end_line": 781,
+      "sections": [],
+      "content_preview": "INTRODUCTION 19  ‘The Vedanga Jyotisha calendar’). In 1936, R. Shamasastry, Retd, Curator, Oriental Library, and Director of the Archaeological Researches in Mysore brought out an edition of the Y-J, with his own Sanskrit commentary and English translation and notes. It is not a "
+    },
+    {
+      "id": "ch-t_s_kuppanna_sastry",
+      "number": null,
+      "title": "T. S. KupPANNA SASTRY",
+      "level": 1,
+      "start_line": 782,
+      "end_line": 841,
+      "sections": [],
+      "content_preview": "T. S. KupPANNA SASTRY ## Page 22  20 VEDANGA JYOTISA  REFERENCES ICf. Reveda 1.164 48: "
+    },
+    {
+      "id": "ch-sut_tst_be_tea_tit_uatett_uni",
+      "number": null,
+      "title": "SUT TST Be Tea TIT UATETT UNI",
+      "level": 1,
+      "start_line": 842,
+      "end_line": 866,
+      "sections": [],
+      "content_preview": "SUT TST Be Tea TIT UATETT UNI  equaad oatarat oer ate Aareat ear carla at ATTETT: Yat (Sa WTR) UI  sree osfssret = qatrararqea | arid afiaraeg aTesramat: war ei "
+    },
+    {
+      "id": "ch-vedanga_jyotisam",
+      "number": null,
+      "title": "VEDANGA JYOTISAM",
+      "level": 1,
+      "start_line": 867,
+      "end_line": 918,
+      "sections": [],
+      "content_preview": "VEDANGA JYOTISAM  fat age aaa ( is a) feetraret a ust  ageaer aaisora fia: aatfiaett ery | STAT | BRATTATENTAT AIHA (7) ETT: 111 "
+    },
+    {
+      "id": "ch-arca_jyotisam_25",
+      "number": null,
+      "title": "ARCA JYOTISAM 25",
+      "level": 1,
+      "start_line": 919,
+      "end_line": 965,
+      "sections": [],
+      "content_preview": "ARCA JYOTISAM 25  agaeearrrat 1a ae wer J aq cfaodsreT ae (m) eee feet fret ware tang PRARTATTL RRM (a)ad ferarmat war safer wf) megTy Fae free Fert TTA NR"
+    },
+    {
+      "id": "ch-26_vedanga_jyotisam",
+      "number": null,
+      "title": "26 VEDANGA JYOTISAM",
+      "level": 1,
+      "start_line": 966,
+      "end_line": 1028,
+      "sections": [],
+      "content_preview": "26 VEDANGA JYOTISAM  aero fe «= aaretafasqar: eer Fee ara faarararedt  Srnfe de @ oe mary UR aw wifes Fa 1 aa FATT I"
+    },
+    {
+      "id": "ch-yajusa_jyotisam_27",
+      "number": null,
+      "title": "YAJUSA JYOTISAM 27",
+      "level": 1,
+      "start_line": 1029,
+      "end_line": 1084,
+      "sections": [],
+      "content_preview": "YAJUSA JYOTISAM 27  22. (c) All mss, ata sseut; F. farted.  23. @) CEF.GN. a; CD vf. @ AB. gua, CD E. dara  24. @) C.B. agar (6) All mss. yas; CE steer (c) All mss ufit; A.B. THT] ART, L. waiserearq; all other mss. warexeary (d) C.E 4 Giver, all mss. afirg"
+    },
+    {
+      "id": "ch-vedanga_jyotisam-2",
+      "number": null,
+      "title": "VEDANGA JYOTISAM",
+      "level": 1,
+      "start_line": 1085,
+      "end_line": 1123,
+      "sections": [],
+      "content_preview": "VEDANGA JYOTISAM  ALATA TT ATH OTAT TT: | qrer  comaer | area | TAT IMI eaqceene aarat ger are aarat! waraerfe at WTSI WAR NGI sat | sifrsaret |= qataeaneraaa | arta aferoraeg ATeaTamat: | AAT tel!"
+    },
+    {
+      "id": "ch-indological_truths-2",
+      "number": null,
+      "title": "Indological Truths",
+      "level": 1,
+      "start_line": 1124,
+      "end_line": 1126,
+      "sections": [],
+      "content_preview": "Indological Truths ## Page 31  YAJUSA JYOTISAM 29  erat wiasencary sat warataafe. | area = (far) araferqet (grarat) qe "
+    },
+    {
+      "id": "ch-yajusa_jyotisam_29",
+      "number": null,
+      "title": "YAJUSA JYOTISAM 29",
+      "level": 1,
+      "start_line": 1127,
+      "end_line": 1209,
+      "sections": [],
+      "content_preview": "YAJUSA JYOTISAM 29  erat wiasencary sat warataafe. | area = (far) araferqet (grarat) qe  ffir . Saiwenfaare | feast oo mega fafareraarfeaiq Rol! TT: wares wat fer"
+    },
+    {
+      "id": "ch-yajusa_jyotisam_31",
+      "number": null,
+      "title": "YAJUSA JYOTISAM 31",
+      "level": 1,
+      "start_line": 1210,
+      "end_line": 1218,
+      "sections": [],
+      "content_preview": "YAJUSA JYOTISAM 31  aghast dae ate st waft ea ae Te FT wafer  reaeaeTe (wet q) | erernae (weit &) 1 CaTTe (weit 19) | Tateqeet (wat aE) | ar: aearert (FAT 29) | Geter (weit VE) | aTaay (wat 24) 1 1 arent (weit 38) | Gad (xe vq) | ae"
+    },
+    {
+      "id": "ch-uefa_arerenfrey_gary",
+      "number": null,
+      "title": "Uefa arerenfrey gary",
+      "level": 1,
+      "start_line": 1219,
+      "end_line": 1285,
+      "sections": [],
+      "content_preview": "Uefa arerenfrey gary  argaeitfirey (¥-VJ) : VARIANT READINGS  2 © mena art 3. OF. gat; F. aay 4. ME, wifes for afr; A afer aferrq. 4-0. (c) All mss farqat for 3 gat.; all mss. teafwatar (E F. caf: ae)"
+    },
+    {
+      "id": "ch-vedanga_jyotisam-3",
+      "number": null,
+      "title": "VEDANGA JYOTISAM",
+      "level": 1,
+      "start_line": 1286,
+      "end_line": 1340,
+      "sections": [],
+      "content_preview": "VEDANGA JYOTISAM  © A. qarft, D. geht  @ A. wag. (© A. ard.) All mss WaT,  @D. gra; B. amma; A. aafa. © A fadtfrafer:. (© AF. fafrfar, B. ferfaqrat, "
+    },
+    {
+      "id": "ch-section_ii_measures_of_time_asterisms_etc",
+      "number": null,
+      "title": "Section II. Measures oF TIME, ASTERISMS ETc.",
+      "level": 1,
+      "start_line": 1341,
+      "end_line": 1345,
+      "sections": [],
+      "content_preview": "Section II. Measures oF TIME, ASTERISMS ETc.  Section III. FUNDAMENTAL AND DerivepD YUGA CONSTANTS Section IV. Trru, NAKSATRA ETC. OF CERTAIN SPECIAL Days  SecTION V. Datty Titi, NAKSATRA ETC. ## Page 37 "
+    },
+    {
+      "id": "ch-section_v_datty_titi_naksatra_etc",
+      "number": null,
+      "title": "SecTION V. Datty Titi, NAKSATRA ETC.",
+      "level": 1,
+      "start_line": 1346,
+      "end_line": 1409,
+      "sections": [],
+      "content_preview": "SecTION V. Datty Titi, NAKSATRA ETC. ## Page 37  RE-ARRANGED TEXT OF VEDANGA JYOTISA SECTION I BENEDICTION AND VALEDICTION 1, INTRODUCTION Text 1"
+    },
+    {
+      "id": "ch-3_benediction",
+      "number": null,
+      "title": "3. BENEDICTION",
+      "level": 1,
+      "start_line": 1410,
+      "end_line": 1537,
+      "sections": [],
+      "content_preview": "3. BENEDICTION  Text 3  somasiryastrearitam vidvan vedavid aSnute/ somasiiryastrcaritam lokam loke ca santatun|/R-VJ 30; Y-VJ 43  One learned in the Vedas who has also learnt this lore of the movement of"
+    },
+    {
+      "id": "ch-note_1_thus_we_have_the_table",
+      "number": null,
+      "title": "Note 1. Thus we have the table",
+      "level": 1,
+      "start_line": 1538,
+      "end_line": 1567,
+      "sections": [],
+      "content_preview": "Note 1. Thus we have the table:  5 gurvaksaras or 10 matrés = 1 kdstha  124 kdsthas = Lkala  10 1/20 kalas = 1 ndgdika "
+    },
+    {
+      "id": "ch-2_asterisms_presiding_deities",
+      "number": null,
+      "title": "2. ASTERISMS: PRESIDING DEITIES",
+      "level": 1,
+      "start_line": 1568,
+      "end_line": 1635,
+      "sections": [],
+      "content_preview": "2. ASTERISMS: PRESIDING DEITIES  Text 12  agnih prajdpatih somo rudro “ditir brhaspatih] sarpa§ ca pitaras caiva bhagas caivdryamapi cal] savita tvastétha vayus cendrdgni mitra eva cal indro nirrtir dpo vai viSvedevas' tathaiva cal]"
+    },
+    {
+      "id": "ch-oi_yuga_constants_41",
+      "number": null,
+      "title": "OI. YUGA CONSTANTS 41",
+      "level": 1,
+      "start_line": 1636,
+      "end_line": 1734,
+      "sections": [],
+      "content_preview": "OI. YUGA CONSTANTS 41  Note 1. The instruction is concise and looks like an aphorism. There are four items in a proportion, three known and one unknown, which is obtained from the three knowns. Hence the rule to get this 1s called the ‘Rule of three’. The four items are: (a) If f"
+    },
+    {
+      "id": "ch-il_yuga_constants_43",
+      "number": null,
+      "title": "Il. YUGA CONSTANTS 43",
+      "level": 1,
+      "start_line": 1735,
+      "end_line": 1830,
+      "sections": [],
+      "content_preview": "Il. YUGA CONSTANTS 43  Using the risings of Sravisthd in the yuga (viz. 1835), which are also the number of its Orient Ecliptic points (prdg-lagna), and multiplying it by the number in the group (here, of asterisms, viz. 27), we get the total number of Jagnas in the yuga (viz. 18"
+    },
+    {
+      "id": "ch-iv_tithi_naksatra_etc_45",
+      "number": null,
+      "title": "IV. TITHI, NAKSATRA ETC. 45",
+      "level": 1,
+      "start_line": 1831,
+      "end_line": 2023,
+      "sections": [],
+      "content_preview": "IV. TITHI, NAKSATRA ETC. 45  of Magha and ends with the dark fortnight of the month of Pausa. (R-VJ 32; ¥-VJ5).  Note I. This gives the epoch, necessary for calculating any item, using the rule of three given in Section II.3. "
+    },
+    {
+      "id": "ch-iv_tithi_naksatra_etc_49",
+      "number": null,
+      "title": "IV. TITHI, NAKSATRA ETC, 49",
+      "level": 1,
+      "start_line": 2024,
+      "end_line": 2118,
+      "sections": [],
+      "content_preview": "IV. TITHI, NAKSATRA ETC, 49  day, we can cast our fours, take the remainder and subtract one, two or three padas for the remainders 1, 2 or 3. Or, which is the same, we can add 3 pddas or 94 parts, add 2 padas or 62 parts, or add one pada or 31 parts to the number of the parvas f"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_51",
+      "number": null,
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 51",
+      "level": 1,
+      "start_line": 2119,
+      "end_line": 2129,
+      "sections": [],
+      "content_preview": "V. DAILY TITHI, NAKSATRA ETC. 51  is linked with the solar year by intercalary months (adhundsas) so that 1t does wander away. Now, the omission of an adhimdsa at intervals indicated by observation in the sky, will link the erroneous civil VJ calendar with the actual calendar. Bu"
+    },
+    {
+      "id": "ch-section_v",
+      "number": null,
+      "title": "SECTION V",
+      "level": 1,
+      "start_line": 2130,
+      "end_line": 2131,
+      "sections": [],
+      "content_preview": "SECTION V  DAILY TITHI, NAKSATRA ETC.  1, INTRODUCTORY  In Section IV calendric details like tithi and naksatra of certain specific days, for example, the beginning of the ayana, were given as already calculated, because they"
+    },
+    {
+      "id": "ch-daily_tithi_naksatra_etc",
+      "number": null,
+      "title": "DAILY TITHI, NAKSATRA ETC.",
+      "level": 1,
+      "start_line": 2132,
+      "end_line": 2133,
+      "sections": [],
+      "content_preview": "DAILY TITHI, NAKSATRA ETC.  1, INTRODUCTORY  In Section IV calendric details like tithi and naksatra of certain specific days, for example, the beginning of the ayana, were given as already calculated, because they are small in number. Even for the rtus, which are thirty in numbe"
+    },
+    {
+      "id": "ch-1_introductory",
+      "number": null,
+      "title": "1, INTRODUCTORY",
+      "level": 1,
+      "start_line": 2134,
+      "end_line": 2170,
+      "sections": [],
+      "content_preview": "1, INTRODUCTORY  In Section IV calendric details like tithi and naksatra of certain specific days, for example, the beginning of the ayana, were given as already calculated, because they are small in number. Even for the rtus, which are thirty in number, these details were given "
+    },
+    {
+      "id": "ch-parva-rai-3x_129_21-2_for_60_parvas_gone93",
+      "number": null,
+      "title": "Parva-rai=-(3X 12+9) 2+1-+2 (for 60 parvas gone)=93",
+      "level": 1,
+      "start_line": 2171,
+      "end_line": 2212,
+      "sections": [],
+      "content_preview": "Parva-rai=-(3X 12+9) 2+1-+2 (for 60 parvas gone)=93  Note 1, In each year there are 12 synodic months, each month having 2 parvas. After 30 months, an extra (adhika) or intercalary month is added to complete the half yuga. This is why the two parvas are added. Thus, we get the to"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_33",
+      "number": null,
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 33",
+      "level": 1,
+      "start_line": 2213,
+      "end_line": 2278,
+      "sections": [],
+      "content_preview": "V. DAILY TITHI, NAKSATRA ETC. 33  Note 2. On account of the difficulty, ‘Barhaspatya’ makes all sorts of emenda- tions. He arbitrarily divides the pratipad ito 8 parts, not known to the ydjfikas, adding some to the new moon fithi and some to the pratipad, for which he has been cr"
+    },
+    {
+      "id": "ch-5_hour_angle_and_lagna",
+      "number": null,
+      "title": "5. HOUR ANGLE AND LAGNA",
+      "level": 1,
+      "start_line": 2279,
+      "end_line": 2307,
+      "sections": [],
+      "content_preview": "5. HOUR ANGLE AND LAGNA  Text 28  navakair udgato ’mSah sydd iinah saptaguno bhavet/ avapas tv ayuje *rdham syat paulastye ’stam gate ’param|/Y-VJ 16  paksat paficadasac cordhvam tad bhuktam iti nirdi§et]"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_55",
+      "number": null,
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 55",
+      "level": 1,
+      "start_line": 2308,
+      "end_line": 2393,
+      "sections": [],
+      "content_preview": "V. DAILY TITHI, NAKSATRA ETC. 55  The Sun’s hour angle, already found, is 62, the parts of the day gone being the hour angle (cf. Y-VJ 14, Note lin Sn. V. 3 above). The sum to be got by this verse is found thus:  On dividing 93 by 9, the quotient is 10 and the remainder 3. "
+    },
+    {
+      "id": "ch-nakgatra_table_wir_symbols",
+      "number": null,
+      "title": "NakgATRA TABLE wir SyMBOLS",
+      "level": 1,
+      "start_line": 2394,
+      "end_line": 2410,
+      "sections": [],
+      "content_preview": "NakgATRA TABLE wir SyMBOLS  No. Symbol Naksatra No. Symbol Naksatra 1 Jau Asvayujau 14. Ma ttarapha 4 Khe Vigathe oP 17 Re Read 5 Sve Vidvedenth, 1) He es Mrgasirsam asa hah Mi "
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_57",
+      "number": null,
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 57",
+      "level": 1,
+      "start_line": 2411,
+      "end_line": 2502,
+      "sections": [],
+      "content_preview": "V. DAILY TITHI, NAKSATRA ETC. 57  Note 1. In the Javadi arrangement of naksatras enumerated here, they have been arranged from Asvini, each being the sixth from the previous and represented by means of indicatory symbols formed by syllables taken from their names or their deities"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_59",
+      "number": null,
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 59",
+      "level": 1,
+      "start_line": 2503,
+      "end_line": 2596,
+      "sections": [],
+      "content_preview": "V. DAILY TITHI, NAKSATRA ETC. 59  Note 2. This verification itself shows that the emendation of dvi into tri is necessary and correct. Tilak has mistaken the meaning of the word udvapet as ‘putt- ing in or adding’, and made mistakes in his interpretation. Avdpa means ‘sowing or p"
+    },
+    {
+      "id": "ch-v_daily_ththi_naksatra_etc_61",
+      "number": null,
+      "title": "V. DAILY THTHI, NAKSATRA ETC. 61",
+      "level": 1,
+      "start_line": 2597,
+      "end_line": 2742,
+      "sections": [],
+      "content_preview": "V. DAILY THTHI, NAKSATRA ETC. 61  that 1s, 7 kalas more than a day, the naksatra begins 7 kalds later each day or loosely each tthi. Hence the rule of adding 7 times the sithis.  Example. Find the beginning of the naksatra current at the end of the 8th tithi after the 93rd parva,"
+    },
+    {
+      "id": "ch-13_correction_for_the_sidereal_day",
+      "number": null,
+      "title": "13, CORRECTION FOR THE SIDEREAL DAY",
+      "level": 1,
+      "start_line": 2743,
+      "end_line": 2781,
+      "sections": [],
+      "content_preview": "13, CORRECTION FOR THE SIDEREAL DAY  Text 36  tryamso bhaseso divasamsabhagas  caturda$as cdpyapaniya bhinnam| "
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_65",
+      "number": null,
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 65",
+      "level": 1,
+      "start_line": 2782,
+      "end_line": 2983,
+      "sections": [],
+      "content_preview": "V. DAILY TITHI, NAKSATRA ETC. 65  One-third of 122 is 40%. For neglecting the fraction we may add 2/3, since we are asked to add one per half year, and make it 414 to be exact, though the rule here envisages only whole parts. Thus we have 41 parts.  14. CoRRECTION FOR THE YUGA "
+    },
+    {
+      "id": "ch-verse_pada_index",
+      "number": null,
+      "title": "VERSE (PADA) INDEX",
+      "level": 1,
+      "start_line": 2984,
+      "end_line": 3226,
+      "sections": [],
+      "content_preview": "VERSE (PADA) INDEX  [Note The entries are arranged in the Sanskrit alphabetical order. Both the Rk and Yajus recensions, with variants, of the work are mcluded m the Index and are indicated, respectively, by R and Y. The references are to verse numbers and pddas, a, b,c, d, of th"
+    },
+    {
+      "id": "ch-verse_index_71",
+      "number": null,
+      "title": "VERSE INDEX 71",
+      "level": 1,
+      "start_line": 3227,
+      "end_line": 3263,
+      "sections": [],
+      "content_preview": "VERSE INDEX 71  wise ae Y 31b; tit. 1 wea gra R 4c, Y 13c, v. 2 wat aR 33c, wv 4 Sarre R 19d; 1m 2 ware oft u. 1 aaertisfs Intro fn. 7"
+    },
+    {
+      "id": "ch-general_index",
+      "number": null,
+      "title": "GENERAL INDEX",
+      "level": 1,
+      "start_line": 3264,
+      "end_line": 3270,
+      "sections": [],
+      "content_preview": "GENERAL INDEX  [Note The references are to Section numbers and not to pages. Those from the Introduction are prefixed by ‘Intro ’ and those from Part B—Translation and Notes by the Sections (1 to v)  and the Topics therein.]  Adhaka, ii. 1"
+    },
+    {
+      "id": "ch-adhaka_ii_1",
+      "number": null,
+      "title": "Adhaka, ii. 1",
+      "level": 1,
+      "start_line": 3271,
+      "end_line": 3272,
+      "sections": [],
+      "content_preview": "Adhaka, ii. 1  Adhana (Diksd) day, v. 17  Agrahdyana, Intro. § 1  Amhaspati, Intro. § 1 "
+    },
+    {
+      "id": "ch-adhana_diksd_day_v_17",
+      "number": null,
+      "title": "Adhana (Diksd) day, v. 17",
+      "level": 1,
+      "start_line": 3273,
+      "end_line": 3274,
+      "sections": [],
+      "content_preview": "Adhana (Diksd) day, v. 17  Agrahdyana, Intro. § 1  Amhaspati, Intro. § 1  Anuvatsara, Intro 81; 1;1v 7;v 1 "
+    },
+    {
+      "id": "ch-agrahdyana_intro_1",
+      "number": null,
+      "title": "Agrahdyana, Intro. § 1",
+      "level": 1,
+      "start_line": 3275,
+      "end_line": 3276,
+      "sections": [],
+      "content_preview": "Agrahdyana, Intro. § 1  Amhaspati, Intro. § 1  Anuvatsara, Intro 81; 1;1v 7;v 1  Arthasastra, Intro §7 "
+    },
+    {
+      "id": "ch-amhaspati_intro_1",
+      "number": null,
+      "title": "Amhaspati, Intro. § 1",
+      "level": 1,
+      "start_line": 3277,
+      "end_line": 3278,
+      "sections": [],
+      "content_preview": "Amhaspati, Intro. § 1  Anuvatsara, Intro 81; 1;1v 7;v 1  Arthasastra, Intro §7  Asterism See Naksatra "
+    },
+    {
+      "id": "ch-anuvatsara_intro_81_11v_7v_1",
+      "number": null,
+      "title": "Anuvatsara, Intro 81; 1;1v 7;v 1",
+      "level": 1,
+      "start_line": 3279,
+      "end_line": 3280,
+      "sections": [],
+      "content_preview": "Anuvatsara, Intro 81; 1;1v 7;v 1  Arthasastra, Intro §7  Asterism See Naksatra  Astronomy, in the Veda, Intro 1ff See also Vedanga Jyotisa"
+    },
+    {
+      "id": "ch-arthasastra_intro_7",
+      "number": null,
+      "title": "Arthasastra, Intro §7",
+      "level": 1,
+      "start_line": 3281,
+      "end_line": 3282,
+      "sections": [],
+      "content_preview": "Arthasastra, Intro §7  Asterism See Naksatra  Astronomy, in the Veda, Intro 1ff See also Vedanga Jyotisa  Atharva Veda, Intro § 1"
+    },
+    {
+      "id": "ch-asterism_see_naksatra",
+      "number": null,
+      "title": "Asterism See Naksatra",
+      "level": 1,
+      "start_line": 3283,
+      "end_line": 3287,
+      "sections": [],
+      "content_preview": "Asterism See Naksatra  Astronomy, in the Veda, Intro 1ff See also Vedanga Jyotisa  Atharva Veda, Intro § 1  Atharvana Jyautisa, Intro. § 3"
+    },
+    {
+      "id": "ch-atharva_veda_intro_1",
+      "number": null,
+      "title": "Atharva Veda, Intro § 1",
+      "level": 1,
+      "start_line": 3288,
+      "end_line": 3289,
+      "sections": [],
+      "content_preview": "Atharva Veda, Intro § 1  Atharvana Jyautisa, Intro. § 3  Atri family of Vedic astronomers, Intro. § 1  Ayana, risings in a yuga, ui. 1 "
+    },
+    {
+      "id": "ch-atharvana_jyautisa_intro_3",
+      "number": null,
+      "title": "Atharvana Jyautisa, Intro. § 3",
+      "level": 1,
+      "start_line": 3290,
+      "end_line": 3291,
+      "sections": [],
+      "content_preview": "Atharvana Jyautisa, Intro. § 3  Atri family of Vedic astronomers, Intro. § 1  Ayana, risings in a yuga, ui. 1  Barhaspatya alias Chote Lal,—work on VJ, Intro § 8; m1. 2; 1v. 3, 6, v. 3, 4, 5, 7, 8, 10,"
+    },
+    {
+      "id": "ch-atri_family_of_vedic_astronomers_intro_1",
+      "number": null,
+      "title": "Atri family of Vedic astronomers, Intro. § 1",
+      "level": 1,
+      "start_line": 3292,
+      "end_line": 3293,
+      "sections": [],
+      "content_preview": "Atri family of Vedic astronomers, Intro. § 1  Ayana, risings in a yuga, ui. 1  Barhaspatya alias Chote Lal,—work on VJ, Intro § 8; m1. 2; 1v. 3, 6, v. 3, 4, 5, 7, 8, 10,  Bhadanakala, v 7, —at any tithi, v. 9"
+    },
+    {
+      "id": "ch-ayana_risings_in_a_yuga_ui_1",
+      "number": null,
+      "title": "Ayana, risings in a yuga, ui. 1",
+      "level": 1,
+      "start_line": 3294,
+      "end_line": 3302,
+      "sections": [],
+      "content_preview": "Ayana, risings in a yuga, ui. 1  Barhaspatya alias Chote Lal,—work on VJ, Intro § 8; m1. 2; 1v. 3, 6, v. 3, 4, 5, 7, 8, 10,  Bhadanakala, v 7, —at any tithi, v. 9  BhamSa, i. 1. See also Naksatra—parts"
+    },
+    {
+      "id": "ch-bharatiya-jyotisa-sastra_intro_8",
+      "number": null,
+      "title": "Bharatiya-Jyotisa-Sastra, Intro. § 8",
+      "level": 1,
+      "start_line": 3303,
+      "end_line": 3304,
+      "sections": [],
+      "content_preview": "Bharatiya-Jyotisa-Sastra, Intro. § 8  Bhitasankhya, Intro. § 8; ui 2, v 8  Brhatsarnhst, Intro. § 3,4 See also Varahami-  ira "
+    },
+    {
+      "id": "ch-bhitasankhya_intro_8_ui_2_v_8",
+      "number": null,
+      "title": "Bhitasankhya, Intro. § 8; ui 2, v 8",
+      "level": 1,
+      "start_line": 3305,
+      "end_line": 3306,
+      "sections": [],
+      "content_preview": "Bhitasankhya, Intro. § 8; ui 2, v 8  Brhatsarnhst, Intro. § 3,4 See also Varahami-  ira  Calendar, correction by observation, Intro. § 4, 5; iv. 7. See also Yuga, correction"
+    },
+    {
+      "id": "ch-brhatsarnhst_intro_34_see_also_varahami-",
+      "number": null,
+      "title": "Brhatsarnhst, Intro. § 3,4 See also Varahami",
+      "level": 1,
+      "start_line": 3307,
+      "end_line": 3313,
+      "sections": [],
+      "content_preview": "Brhatsarnhst, Intro. § 3,4 See also Varahami-  ira  Calendar, correction by observation, Intro. § 4, 5; iv. 7. See also Yuga, correction  Chandogyopamsad, reference to Naksatra-vidya"
+    },
+    {
+      "id": "ch-chandogyopamsad_reference_to_naksatra-vidya",
+      "number": null,
+      "title": "Chandogyopamsad, reference to Naksatra-vidya",
+      "level": 1,
+      "start_line": 3314,
+      "end_line": 3317,
+      "sections": [],
+      "content_preview": "Chandogyopamsad, reference to Naksatra-vidya  intro  Chote Lal ahas Barhaspatya See Barhaspatya  Colebrooke, H. T, on VJ, Intro § 8 "
+    },
+    {
+      "id": "ch-chote_lal_ahas_barhaspatya_see_barhaspatya",
+      "number": null,
+      "title": "Chote Lal ahas Barhaspatya See Barhaspatya",
+      "level": 1,
+      "start_line": 3318,
+      "end_line": 3319,
+      "sections": [],
+      "content_preview": "Chote Lal ahas Barhaspatya See Barhaspatya  Colebrooke, H. T, on VJ, Intro § 8  Darsapiirnamasa, Intro. § 1, 8  Dasgamalagna, iii. 2 "
+    },
+    {
+      "id": "ch-colebrooke_h_t_on_vj_intro_8",
+      "number": null,
+      "title": "Colebrooke, H. T, on VJ, Intro § 8",
+      "level": 1,
+      "start_line": 3320,
+      "end_line": 3321,
+      "sections": [],
+      "content_preview": "Colebrooke, H. T, on VJ, Intro § 8  Darsapiirnamasa, Intro. § 1, 8  Dasgamalagna, iii. 2  Day, sidereal, correction of, v. 13 "
+    },
+    {
+      "id": "ch-darsapiirnamasa_intro_1_8",
+      "number": null,
+      "title": "Darsapiirnamasa, Intro. § 1, 8",
+      "level": 1,
+      "start_line": 3322,
+      "end_line": 3323,
+      "sections": [],
+      "content_preview": "Darsapiirnamasa, Intro. § 1, 8  Dasgamalagna, iii. 2  Day, sidereal, correction of, v. 13  Day-parts, at any time, v. 12 "
+    },
+    {
+      "id": "ch-dasgamalagna_iii_2",
+      "number": null,
+      "title": "Dasgamalagna, iii. 2",
+      "level": 1,
+      "start_line": 3324,
+      "end_line": 3325,
+      "sections": [],
+      "content_preview": "Dasgamalagna, iii. 2  Day, sidereal, correction of, v. 13  Day-parts, at any time, v. 12  Day-time, iii 3; —at any parva, v. 16 "
+    },
+    {
+      "id": "ch-day_sidereal_correction_of_v_13",
+      "number": null,
+      "title": "Day, sidereal, correction of, v. 13",
+      "level": 1,
+      "start_line": 3326,
+      "end_line": 3327,
+      "sections": [],
+      "content_preview": "Day, sidereal, correction of, v. 13  Day-parts, at any time, v. 12  Day-time, iii 3; —at any parva, v. 16  Devanaksatra, Intro § 2 "
+    },
+    {
+      "id": "ch-day-parts_at_any_time_v_12",
+      "number": null,
+      "title": "Day-parts, at any time, v. 12",
+      "level": 1,
+      "start_line": 3328,
+      "end_line": 3331,
+      "sections": [],
+      "content_preview": "Day-parts, at any time, v. 12  Day-time, iii 3; —at any parva, v. 16  Devanaksatra, Intro § 2  Dikshit, S. B., work on VJ, Intro. § 8; iu. 2 "
+    },
+    {
+      "id": "ch-devanaksatra_intro_2",
+      "number": null,
+      "title": "Devanaksatra, Intro § 2",
+      "level": 1,
+      "start_line": 3332,
+      "end_line": 3335,
+      "sections": [],
+      "content_preview": "Devanaksatra, Intro § 2  Dikshit, S. B., work on VJ, Intro. § 8; iu. 2  Diksa day, v. 17  Drk almanac of Kumbhakonam Mutt, Intro 5 "
+    },
+    {
+      "id": "ch-diksa_day_v_17",
+      "number": null,
+      "title": "Diksa day, v. 17",
+      "level": 1,
+      "start_line": 3336,
+      "end_line": 3337,
+      "sections": [],
+      "content_preview": "Diksa day, v. 17  Drk almanac of Kumbhakonam Mutt, Intro 5  Drona, measure, it. 1  Epoch of VJ, iv. 1,2 "
+    },
+    {
+      "id": "ch-drk_almanac_of_kumbhakonam_mutt_intro_5",
+      "number": null,
+      "title": "Drk almanac of Kumbhakonam Mutt, Intro 5",
+      "level": 1,
+      "start_line": 3338,
+      "end_line": 3339,
+      "sections": [],
+      "content_preview": "Drk almanac of Kumbhakonam Mutt, Intro 5  Drona, measure, it. 1  Epoch of VJ, iv. 1,2  Equinox’ See Visuva "
+    },
+    {
+      "id": "ch-drona_measure_it_1",
+      "number": null,
+      "title": "Drona, measure, it. 1",
+      "level": 1,
+      "start_line": 3340,
+      "end_line": 3341,
+      "sections": [],
+      "content_preview": "Drona, measure, it. 1  Epoch of VJ, iv. 1,2  Equinox’ See Visuva  Founders of Sciences mn Ancient India, Intro, § 8 "
+    },
+    {
+      "id": "ch-epoch_of_vj_iv_12",
+      "number": null,
+      "title": "Epoch of VJ, iv. 1,2",
+      "level": 1,
+      "start_line": 3342,
+      "end_line": 3343,
+      "sections": [],
+      "content_preview": "Epoch of VJ, iv. 1,2  Equinox’ See Visuva  Founders of Sciences mn Ancient India, Intro, § 8  Gargasamhita, Intro § 3 "
+    },
+    {
+      "id": "ch-equinox_see_visuva",
+      "number": null,
+      "title": "Equinox’ See Visuva",
+      "level": 1,
+      "start_line": 3344,
+      "end_line": 3347,
+      "sections": [],
+      "content_preview": "Equinox’ See Visuva  Founders of Sciences mn Ancient India, Intro, § 8  Gargasamhita, Intro § 3  Gavamayana, Intro. § 1 "
+    },
+    {
+      "id": "ch-gargasamhita_intro_3",
+      "number": null,
+      "title": "Gargasamhita, Intro § 3",
+      "level": 1,
+      "start_line": 3348,
+      "end_line": 3349,
+      "sections": [],
+      "content_preview": "Gargasamhita, Intro § 3  Gavamayana, Intro. § 1  Godbole, H. K., work of VJ, Intro. § 8  Hour-angle, v. 5 "
+    },
+    {
+      "id": "ch-gavamayana_intro_1",
+      "number": null,
+      "title": "Gavamayana, Intro. § 1",
+      "level": 1,
+      "start_line": 3350,
+      "end_line": 3353,
+      "sections": [],
+      "content_preview": "Gavamayana, Intro. § 1  Godbole, H. K., work of VJ, Intro. § 8  Hour-angle, v. 5  Idavatsara, Intro. § 1; ii. 1; 1. 7 "
+    },
+    {
+      "id": "ch-hour-angle_v_5",
+      "number": null,
+      "title": "Hour-angle, v. 5",
+      "level": 1,
+      "start_line": 3354,
+      "end_line": 3355,
+      "sections": [],
+      "content_preview": "Hour-angle, v. 5  Idavatsara, Intro. § 1; ii. 1; 1. 7  Idavatsara, Intro. § 1; ii. 1; 1v 7  Intercalary day, v 3, 17 "
+    },
+    {
+      "id": "ch-idavatsara_intro_1_ii_1_1_7",
+      "number": null,
+      "title": "Idavatsara, Intro. § 1; ii. 1; 1. 7",
+      "level": 1,
+      "start_line": 3356,
+      "end_line": 3357,
+      "sections": [],
+      "content_preview": "Idavatsara, Intro. § 1; ii. 1; 1. 7  Idavatsara, Intro. § 1; ii. 1; 1v 7  Intercalary day, v 3, 17  Intercalary month, Intro. § 1; iv. 7 "
+    },
+    {
+      "id": "ch-idavatsara_intro_1_ii_1_1v_7",
+      "number": null,
+      "title": "Idavatsara, Intro. § 1; ii. 1; 1v 7",
+      "level": 1,
+      "start_line": 3358,
+      "end_line": 3359,
+      "sections": [],
+      "content_preview": "Idavatsara, Intro. § 1; ii. 1; 1v 7  Intercalary day, v 3, 17  Intercalary month, Intro. § 1; iv. 7  Istt,iv6 "
+    },
+    {
+      "id": "ch-intercalary_day_v_3_17",
+      "number": null,
+      "title": "Intercalary day, v 3, 17",
+      "level": 1,
+      "start_line": 3360,
+      "end_line": 3361,
+      "sections": [],
+      "content_preview": "Intercalary day, v 3, 17  Intercalary month, Intro. § 1; iv. 7  Istt,iv6  Jones, Sur William, on VJ, Intro. § 8 "
+    },
+    {
+      "id": "ch-intercalary_month_intro_1_iv_7",
+      "number": null,
+      "title": "Intercalary month, Intro. § 1; iv. 7",
+      "level": 1,
+      "start_line": 3362,
+      "end_line": 3365,
+      "sections": [],
+      "content_preview": "Intercalary month, Intro. § 1; iv. 7  Istt,iv6  Jones, Sur William, on VJ, Intro. § 8  Javadi series, v. 6, 8 "
+    },
+    {
+      "id": "ch-jones_sur_william_on_vj_intro_8",
+      "number": null,
+      "title": "Jones, Sur William, on VJ, Intro. § 8",
+      "level": 1,
+      "start_line": 3366,
+      "end_line": 3367,
+      "sections": [],
+      "content_preview": "Jones, Sur William, on VJ, Intro. § 8  Javadi series, v. 6, 8  Jpotigakaranga tats. § 6  lyotisakaranda, Intro, "
+    },
+    {
+      "id": "ch-javadi_series_v_6_8",
+      "number": null,
+      "title": "Javadi series, v. 6, 8",
+      "level": 1,
+      "start_line": 3368,
+      "end_line": 3369,
+      "sections": [],
+      "content_preview": "Javadi series, v. 6, 8  Jpotigakaranga tats. § 6  lyotisakaranda, Intro,  Kala, measure of tume, ii. 1; v. 3, 7. See also Bhadanakala"
+    },
+    {
+      "id": "ch-jpotigakaranga_tats_6",
+      "number": null,
+      "title": "Jpotigakaranga tats. § 6",
+      "level": 1,
+      "start_line": 3370,
+      "end_line": 3376,
+      "sections": [],
+      "content_preview": "Jpotigakaranga tats. § 6  lyotisakaranda, Intro,  Kala, measure of tume, ii. 1; v. 3, 7. See also Bhadanakala  Kastha, measure of time, ii. 1"
+    },
+    {
+      "id": "ch-kastha_measure_of_time_ii_1",
+      "number": null,
+      "title": "Kastha, measure of time, ii. 1",
+      "level": 1,
+      "start_line": 3377,
+      "end_line": 3378,
+      "sections": [],
+      "content_preview": "Kastha, measure of time, ii. 1  KaSyapa, Intro. § 3  Kudava (Kutapa), ii. 1  Kumbhakonam Mutt Panchanga, Intro. 5 "
+    },
+    {
+      "id": "ch-kasyapa_intro_3",
+      "number": null,
+      "title": "KaSyapa, Intro. § 3",
+      "level": 1,
+      "start_line": 3379,
+      "end_line": 3380,
+      "sections": [],
+      "content_preview": "KaSyapa, Intro. § 3  Kudava (Kutapa), ii. 1  Kumbhakonam Mutt Panchanga, Intro. 5  Lagadha, Intro § 3, 8; i. 1,4; —date of, Intro. 5 "
+    },
+    {
+      "id": "ch-kudava_kutapa_ii_1",
+      "number": null,
+      "title": "Kudava (Kutapa), ii. 1",
+      "level": 1,
+      "start_line": 3381,
+      "end_line": 3382,
+      "sections": [],
+      "content_preview": "Kudava (Kutapa), ii. 1  Kumbhakonam Mutt Panchanga, Intro. 5  Lagadha, Intro § 3, 8; i. 1,4; —date of, Intro. 5  Lagna, v. 5, in a yuga, 1, 2 "
+    },
+    {
+      "id": "ch-kumbhakonam_mutt_panchanga_intro_5",
+      "number": null,
+      "title": "Kumbhakonam Mutt Panchanga, Intro. 5",
+      "level": 1,
+      "start_line": 3383,
+      "end_line": 3386,
+      "sections": [],
+      "content_preview": "Kumbhakonam Mutt Panchanga, Intro. 5  Lagadha, Intro § 3, 8; i. 1,4; —date of, Intro. 5  Lagna, v. 5, in a yuga, 1, 2  Mahabharata, astronomy 1, Intro § 3, 7 "
+    },
+    {
+      "id": "ch-lagna_v_5_in_a_yuga_1_2",
+      "number": null,
+      "title": "Lagna, v. 5, in a yuga, 1, 2",
+      "level": 1,
+      "start_line": 3387,
+      "end_line": 3388,
+      "sections": [],
+      "content_preview": "Lagna, v. 5, in a yuga, 1, 2  Mahabharata, astronomy 1, Intro § 3, 7  Mautrdyaniya-Brahmana-Upanigad, datable passages in, Intro § 2  Masaka, 1. 1"
+    },
+    {
+      "id": "ch-mahabharata_astronomy_1_intro_3_7",
+      "number": null,
+      "title": "Mahabharata, astronomy 1, Intro § 3, 7",
+      "level": 1,
+      "start_line": 3389,
+      "end_line": 3393,
+      "sections": [],
+      "content_preview": "Mahabharata, astronomy 1, Intro § 3, 7  Mautrdyaniya-Brahmana-Upanigad, datable passages in, Intro § 2  Masaka, 1. 1  Modern calendar, corrections to, 1v 7"
+    },
+    {
+      "id": "ch-masaka_1_1",
+      "number": null,
+      "title": "Masaka, 1. 1",
+      "level": 1,
+      "start_line": 3394,
+      "end_line": 3395,
+      "sections": [],
+      "content_preview": "Masaka, 1. 1  Modern calendar, corrections to, 1v 7  Month, solar, in a yuga, m. 1  Months, Vedic, Intro § 1 "
+    },
+    {
+      "id": "ch-modern_calendar_corrections_to_1v_7",
+      "number": null,
+      "title": "Modern calendar, corrections to, 1v 7",
+      "level": 1,
+      "start_line": 3396,
+      "end_line": 3397,
+      "sections": [],
+      "content_preview": "Modern calendar, corrections to, 1v 7  Month, solar, in a yuga, m. 1  Months, Vedic, Intro § 1  Moon, tisings in a yuga, ui 1; —rtu of,i 1 "
+    },
+    {
+      "id": "ch-month_solar_in_a_yuga_m_1",
+      "number": null,
+      "title": "Month, solar, in a yuga, m. 1",
+      "level": 1,
+      "start_line": 3398,
+      "end_line": 3399,
+      "sections": [],
+      "content_preview": "Month, solar, in a yuga, m. 1  Months, Vedic, Intro § 1  Moon, tisings in a yuga, ui 1; —rtu of,i 1  Muharta, measure, 11 1 "
+    },
+    {
+      "id": "ch-months_vedic_intro_1",
+      "number": null,
+      "title": "Months, Vedic, Intro § 1",
+      "level": 1,
+      "start_line": 3400,
+      "end_line": 3403,
+      "sections": [],
+      "content_preview": "Months, Vedic, Intro § 1  Moon, tisings in a yuga, ui 1; —rtu of,i 1  Muharta, measure, 11 1  Muharta astrology, Intro § 3 "
+    },
+    {
+      "id": "ch-muharta_measure_11_1",
+      "number": null,
+      "title": "Muharta, measure, 11 1",
+      "level": 1,
+      "start_line": 3404,
+      "end_line": 3405,
+      "sections": [],
+      "content_preview": "Muharta, measure, 11 1  Muharta astrology, Intro § 3  Mulsum calendar, Intro. § 7; iv 7  Nadikd, measure of, it 1 "
+    },
+    {
+      "id": "ch-muharta_astrology_intro_3",
+      "number": null,
+      "title": "Muharta astrology, Intro § 3",
+      "level": 1,
+      "start_line": 3406,
+      "end_line": 3407,
+      "sections": [],
+      "content_preview": "Muharta astrology, Intro § 3  Mulsum calendar, Intro. § 7; iv 7  Nadikd, measure of, it 1  Naksatra, Intro 2; at any parva, v. 6; at any tithi, v. 8, 9, at the beginning of the ayanas,"
+    },
+    {
+      "id": "ch-mulsum_calendar_intro_7_iv_7",
+      "number": null,
+      "title": "Mulsum calendar, Intro. § 7; iv 7",
+      "level": 1,
+      "start_line": 3408,
+      "end_line": 3409,
+      "sections": [],
+      "content_preview": "Mulsum calendar, Intro. § 7; iv 7  Nadikd, measure of, it 1  Naksatra, Intro 2; at any parva, v. 6; at any tithi, v. 8, 9, at the beginning of the ayanas, 1. 3; deities of, ti 2; fierce and cruel, ii 2; for naming 1i 2; Javadi table, v 6, 8"
+    },
+    {
+      "id": "ch-nadikd_measure_of_it_1",
+      "number": null,
+      "title": "Nadikd, measure of, it 1",
+      "level": 1,
+      "start_line": 3410,
+      "end_line": 3416,
+      "sections": [],
+      "content_preview": "Nadikd, measure of, it 1  Naksatra, Intro 2; at any parva, v. 6; at any tithi, v. 8, 9, at the beginning of the ayanas, 1. 3; deities of, ti 2; fierce and cruel, ii 2; for naming 1i 2; Javadi table, v 6, 8  Naksatra-parts, v 3ff"
+    },
+    {
+      "id": "ch-naksatra-parts_v_3ff",
+      "number": null,
+      "title": "Naksatra-parts, v 3ff",
+      "level": 1,
+      "start_line": 3417,
+      "end_line": 3418,
+      "sections": [],
+      "content_preview": "Naksatra-parts, v 3ff  Naksatra-vidya, Intro § 2  Naming a child, 1. 2  Navaka rule, v. 5, 13 "
+    },
+    {
+      "id": "ch-naksatra-vidya_intro_2",
+      "number": null,
+      "title": "Naksatra-vidya, Intro § 2",
+      "level": 1,
+      "start_line": 3419,
+      "end_line": 3420,
+      "sections": [],
+      "content_preview": "Naksatra-vidya, Intro § 2  Naming a child, 1. 2  Navaka rule, v. 5, 13  Paitamaha Siddhanta, Intro. 3, 6, 7; ui. 3, 7 "
+    },
+    {
+      "id": "ch-naming_a_child_1_2",
+      "number": null,
+      "title": "Naming a child, 1. 2",
+      "level": 1,
+      "start_line": 3421,
+      "end_line": 3422,
+      "sections": [],
+      "content_preview": "Naming a child, 1. 2  Navaka rule, v. 5, 13  Paitamaha Siddhanta, Intro. 3, 6, 7; ui. 3, 7  Paksas, 0 a yuga, 11 1 "
+    },
+    {
+      "id": "ch-navaka_rule_v_5_13",
+      "number": null,
+      "title": "Navaka rule, v. 5, 13",
+      "level": 1,
+      "start_line": 3423,
+      "end_line": 3426,
+      "sections": [],
+      "content_preview": "Navaka rule, v. 5, 13  Paitamaha Siddhanta, Intro. 3, 6, 7; ui. 3, 7  Paksas, 0 a yuga, 11 1  Pala, measure, 11 1 "
+    },
+    {
+      "id": "ch-paksas_0_a_yuga_11_1",
+      "number": null,
+      "title": "Paksas, 0 a yuga, 11 1",
+      "level": 1,
+      "start_line": 3427,
+      "end_line": 3428,
+      "sections": [],
+      "content_preview": "Paksas, 0 a yuga, 11 1  Pala, measure, 11 1  Pancasiddhantika, Intro § 3, 4; ti. 3, 7  Parivatsara, Intro 1; ii. 1; iv. 7 "
+    },
+    {
+      "id": "ch-pala_measure_11_1",
+      "number": null,
+      "title": "Pala, measure, 11 1",
+      "level": 1,
+      "start_line": 3429,
+      "end_line": 3430,
+      "sections": [],
+      "content_preview": "Pala, measure, 11 1  Pancasiddhantika, Intro § 3, 4; ti. 3, 7  Parivatsara, Intro 1; ii. 1; iv. 7  Parva, in a yuga, 11 1; —ending time, iv. 6 "
+    },
+    {
+      "id": "ch-pancasiddhantika_intro_3_4_ti_3_7",
+      "number": null,
+      "title": "Pancasiddhantika, Intro § 3, 4; ti. 3, 7",
+      "level": 1,
+      "start_line": 3431,
+      "end_line": 3432,
+      "sections": [],
+      "content_preview": "Pancasiddhantika, Intro § 3, 4; ti. 3, 7  Parivatsara, Intro 1; ii. 1; iv. 7  Parva, in a yuga, 11 1; —ending time, iv. 6  Parva-ras1, Vv. 2 "
+    },
+    {
+      "id": "ch-parivatsara_intro_1_ii_1_iv_7",
+      "number": null,
+      "title": "Parivatsara, Intro 1; ii. 1; iv. 7",
+      "level": 1,
+      "start_line": 3433,
+      "end_line": 3436,
+      "sections": [],
+      "content_preview": "Parivatsara, Intro 1; ii. 1; iv. 7  Parva, in a yuga, 11 1; —ending time, iv. 6  Parva-ras1, Vv. 2  Pilla, L. D. Swamikannu: _Swamikannou Pilla"
+    },
+    {
+      "id": "ch-parva-ras1_vv_2",
+      "number": null,
+      "title": "Parva-ras1, Vv. 2",
+      "level": 1,
+      "start_line": 3437,
+      "end_line": 3441,
+      "sections": [],
+      "content_preview": "Parva-ras1, Vv. 2  Pilla, L. D. Swamikannu: _Swamikannou Pilla  Pindapitryaytia day, v. 17  Prag-lagna, ii. 2"
+    },
+    {
+      "id": "ch-pindapitryaytia_day_v_17",
+      "number": null,
+      "title": "Pindapitryaytia day, v. 17",
+      "level": 1,
+      "start_line": 3442,
+      "end_line": 3443,
+      "sections": [],
+      "content_preview": "Pindapitryaytia day, v. 17  Prag-lagna, ii. 2  Punarddhana, v.17  Ras (sign), of foreign orig, iv 7 "
+    },
+    {
+      "id": "ch-prag-lagna_ii_2",
+      "number": null,
+      "title": "Prag-lagna, ii. 2",
+      "level": 1,
+      "start_line": 3444,
+      "end_line": 3445,
+      "sections": [],
+      "content_preview": "Prag-lagna, ii. 2  Punarddhana, v.17  Ras (sign), of foreign orig, iv 7  Reveda, astronomy in, Intro § If. "
+    },
+    {
+      "id": "ch-punarddhana_v17",
+      "number": null,
+      "title": "Punarddhana, v.17",
+      "level": 1,
+      "start_line": 3446,
+      "end_line": 3447,
+      "sections": [],
+      "content_preview": "Punarddhana, v.17  Ras (sign), of foreign orig, iv 7  Reveda, astronomy in, Intro § If.  Rtus (seasons), Intro 1;ii.1, iv 5; —nsings in a yuga, iu 1"
+    },
+    {
+      "id": "ch-ras_sign_of_foreign_orig_iv_7",
+      "number": null,
+      "title": "Ras (sign), of foreign orig, iv 7",
+      "level": 1,
+      "start_line": 3448,
+      "end_line": 3449,
+      "sections": [],
+      "content_preview": "Ras (sign), of foreign orig, iv 7  Reveda, astronomy in, Intro § If.  Rtus (seasons), Intro 1;ii.1, iv 5; —nsings in a yuga, iu 1  Rtusesa, v. 15"
+    },
+    {
+      "id": "ch-reveda_astronomy_in_intro_if",
+      "number": null,
+      "title": "Reveda, astronomy in, Intro § If.",
+      "level": 1,
+      "start_line": 3450,
+      "end_line": 3454,
+      "sections": [],
+      "content_preview": "Reveda, astronomy in, Intro § If.  Rtus (seasons), Intro 1;ii.1, iv 5; —nsings in a yuga, iu 1  Rtusesa, v. 15  Saka era, iv. 7"
+    },
+    {
+      "id": "ch-rtusesa_v_15",
+      "number": null,
+      "title": "Rtusesa, v. 15",
+      "level": 1,
+      "start_line": 3455,
+      "end_line": 3456,
+      "sections": [],
+      "content_preview": "Rtusesa, v. 15  Saka era, iv. 7  Samsarpa, Intro 1  Sarhvatsara, Intro 1; 131.1; v 7 "
+    },
+    {
+      "id": "ch-saka_era_iv_7",
+      "number": null,
+      "title": "Saka era, iv. 7",
+      "level": 1,
+      "start_line": 3457,
+      "end_line": 3458,
+      "sections": [],
+      "content_preview": "Saka era, iv. 7  Samsarpa, Intro 1  Sarhvatsara, Intro 1; 131.1; v 7  Saros of the Greeks, Intro. "
+    },
+    {
+      "id": "ch-samsarpa_intro_1",
+      "number": null,
+      "title": "Samsarpa, Intro 1",
+      "level": 1,
+      "start_line": 3459,
+      "end_line": 3460,
+      "sections": [],
+      "content_preview": "Samsarpa, Intro 1  Sarhvatsara, Intro 1; 131.1; v 7  Saros of the Greeks, Intro.  Satapatha Brahmana, Tatro. 2"
+    },
+    {
+      "id": "ch-sarhvatsara_intro_1_1311_v_7",
+      "number": null,
+      "title": "Sarhvatsara, Intro 1; 131.1; v 7",
+      "level": 1,
+      "start_line": 3461,
+      "end_line": 3462,
+      "sections": [],
+      "content_preview": "Sarhvatsara, Intro 1; 131.1; v 7  Saros of the Greeks, Intro.  Satapatha Brahmana, Tatro. 2  Satya Prakash, work on VJ, Intro. § 8"
+    },
+    {
+      "id": "ch-saros_of_the_greeks_intro",
+      "number": null,
+      "title": "Saros of the Greeks, Intro.",
+      "level": 1,
+      "start_line": 3463,
+      "end_line": 3467,
+      "sections": [],
+      "content_preview": "Saros of the Greeks, Intro.  Satapatha Brahmana, Tatro. 2  Satya Prakash, work on VJ, Intro. § 8  Seasons, Vedic, Intro. § 1 See also Rtu _"
+    },
+    {
+      "id": "ch-satya_prakash_work_on_vj_intro_8",
+      "number": null,
+      "title": "Satya Prakash, work on VJ, Intro. § 8",
+      "level": 1,
+      "start_line": 3468,
+      "end_line": 3473,
+      "sections": [],
+      "content_preview": "Satya Prakash, work on VJ, Intro. § 8  Seasons, Vedic, Intro. § 1 See also Rtu _  Shamasastry, work on VJ, Intro. § 8; i. 4  Siddhdnta Siromani, Intro. § 5 "
+    },
+    {
+      "id": "ch-siddhdnta_siromani_intro_5",
+      "number": null,
+      "title": "Siddhdnta Siromani, Intro. § 5",
+      "level": 1,
+      "start_line": 3474,
+      "end_line": 3475,
+      "sections": [],
+      "content_preview": "Siddhdnta Siromani, Intro. § 5  Somakara, Intro. § 8  Sudhakara Dvivedi, work on VJ, Intro. § 8; iv. 6; v 3, 4,8 .  Sun, —naksatra of, at any time, v. 11, 12;"
+    },
+    {
+      "id": "ch-somakara_intro_8",
+      "number": null,
+      "title": "Somakara, Intro. § 8",
+      "level": 1,
+      "start_line": 3476,
+      "end_line": 3483,
+      "sections": [],
+      "content_preview": "Somakara, Intro. § 8  Sudhakara Dvivedi, work on VJ, Intro. § 8; iv. 6; v 3, 4,8 .  Sun, —naksatra of, at any time, v. 11, 12; —position at any time, v. 10; —rtu of, i. 1 "
+    },
+    {
+      "id": "ch-see_under",
+      "number": null,
+      "title": "See under",
+      "level": 1,
+      "start_line": 3484,
+      "end_line": 3491,
+      "sections": [],
+      "content_preview": "See under  1 datable passages, ## Page 76  14 VEDANGA JYOTISA "
+    },
+    {
+      "id": "ch-siryaprajnapti_intro_6_7",
+      "number": null,
+      "title": "Siryaprajnapti, Intro. § 6, 7",
+      "level": 1,
+      "start_line": 3492,
+      "end_line": 3493,
+      "sections": [],
+      "content_preview": "Siryaprajnapti, Intro. § 6, 7  Sar, anta, Intro. § 5  Swamikannu Pillai, L. D., on date of W, Intro. § 5, 8  Syzygy: Parva"
+    },
+    {
+      "id": "ch-sar_anta_intro_5",
+      "number": null,
+      "title": "Sar, anta, Intro. § 5",
+      "level": 1,
+      "start_line": 3494,
+      "end_line": 3498,
+      "sections": [],
+      "content_preview": "Sar, anta, Intro. § 5  Swamikannu Pillai, L. D., on date of W, Intro. § 5, 8  Syzygy: Parva  Taittiriya Aranyaka, Intro. § 1"
+    },
+    {
+      "id": "ch-syzygy_parva",
+      "number": null,
+      "title": "Syzygy: Parva",
+      "level": 1,
+      "start_line": 3499,
+      "end_line": 3500,
+      "sections": [],
+      "content_preview": "Syzygy: Parva  Taittiriya Aranyaka, Intro. § 1  Taittirtya Bra Intro. § 2  Tam Dara ar $1 §5 "
+    },
+    {
+      "id": "ch-taittiriya_aranyaka_intro_1",
+      "number": null,
+      "title": "Taittiriya Aranyaka, Intro. § 1",
+      "level": 1,
+      "start_line": 3501,
+      "end_line": 3502,
+      "sections": [],
+      "content_preview": "Taittiriya Aranyaka, Intro. § 1  Taittirtya Bra Intro. § 2  Tam Dara ar $1 §5  -panchanga, Intro. "
+    },
+    {
+      "id": "ch-taittirtya_bra_intro_2",
+      "number": null,
+      "title": "Taittirtya Bra Intro. § 2",
+      "level": 1,
+      "start_line": 3503,
+      "end_line": 3504,
+      "sections": [],
+      "content_preview": "Taittirtya Bra Intro. § 2  Tam Dara ar $1 §5  -panchanga, Intro.  Thibaut, G., work on VJ, Intro. § 8 "
+    },
+    {
+      "id": "ch-tam_dara_ar_1_5",
+      "number": null,
+      "title": "Tam Dara ar $1 §5",
+      "level": 1,
+      "start_line": 3505,
+      "end_line": 3508,
+      "sections": [],
+      "content_preview": "Tam Dara ar $1 §5  -panchanga, Intro.  Thibaut, G., work on VJ, Intro. § 8  Three, rule of, ii. 3 "
+    },
+    {
+      "id": "ch-thibaut_g_work_on_vj_intro_8",
+      "number": null,
+      "title": "Thibaut, G., work on VJ, Intro. § 8",
+      "level": 1,
+      "start_line": 3509,
+      "end_line": 3510,
+      "sections": [],
+      "content_preview": "Thibaut, G., work on VJ, Intro. § 8  Three, rule of, ii. 3  Tilak, B. G., work on WJ, Intro. 8; iv 6; v 3, 4, 5, 7, 11, 12  Time, measures of, ii. 1-3"
+    },
+    {
+      "id": "ch-three_rule_of_ii_3",
+      "number": null,
+      "title": "Three, rule of, ii. 3",
+      "level": 1,
+      "start_line": 3511,
+      "end_line": 3515,
+      "sections": [],
+      "content_preview": "Three, rule of, ii. 3  Tilak, B. G., work on WJ, Intro. 8; iv 6; v 3, 4, 5, 7, 11, 12  Time, measures of, ii. 1-3  v-1"
+    },
+    {
+      "id": "ch-time_measures_of_ii_1-3",
+      "number": null,
+      "title": "Time, measures of, ii. 1-3",
+      "level": 1,
+      "start_line": 3516,
+      "end_line": 3544,
+      "sections": [],
+      "content_preview": "Time, measures of, ii. 1-3  v-1 Tithi(s), —at viguva, iv. 4; —Bhddanakala of, v. 9; —naksatra at any time, v 8; —omitted, iv. 6; —to elapse in a rtu, v.15 Tithi-ksaya, iv. 6 Tithi-naksatra, v.8"
+    },
+    {
+      "id": "ch-visuva_1v_4",
+      "number": null,
+      "title": "Visuva, 1v. 4",
+      "level": 1,
+      "start_line": 3545,
+      "end_line": 3549,
+      "sections": [],
+      "content_preview": "Visuva, 1v. 4  Yajurveda, —astronomy m, Intro § 1; —datable passages mn, Intro § 2  Yamanaksatras, Intro § 2  Year, divisions of, i. 1"
+    },
+    {
+      "id": "ch-yamanaksatras_intro_2",
+      "number": null,
+      "title": "Yamanaksatras, Intro § 2",
+      "level": 1,
+      "start_line": 3550,
+      "end_line": 3551,
+      "sections": [],
+      "content_preview": "Yamanaksatras, Intro § 2  Year, divisions of, i. 1  Years, Vedic, Intro, § 1  Yuga of five years, ii. 1; —commencement, iv. 1, 2;—conversion of elements, in. 1; —corre-"
+    },
+    {
+      "id": "ch-year_divisions_of_i_1",
+      "number": null,
+      "title": "Year, divisions of, i. 1",
+      "level": 1,
+      "start_line": 3552,
+      "end_line": 3553,
+      "sections": [],
+      "content_preview": "Year, divisions of, i. 1  Years, Vedic, Intro, § 1  Yuga of five years, ii. 1; —commencement, iv. 1, 2;—conversion of elements, in. 1; —corre- ction for, Intro. § 8; v.13, 14;—current year, iv 7; —days, ayanas, rtus, months etc. in,"
+    },
+    {
+      "id": "ch-years_vedic_intro_1",
+      "number": null,
+      "title": "Years, Vedic, Intro, § 1",
+      "level": 1,
+      "start_line": 3554,
+      "end_line": 3569,
+      "sections": [],
+      "content_preview": "Years, Vedic, Intro, § 1  Yuga of five years, ii. 1; —commencement, iv. 1, 2;—conversion of elements, in. 1; —corre- ction for, Intro. § 8; v.13, 14;—current year, iv 7; —days, ayanas, rtus, months etc. in, iii_ 1; —divisions of, it, 1; —elements of, iii, 1; —the five years of, 1"
+    },
+    {
+      "id": "ch-academy_publications_history_of_science",
+      "number": null,
+      "title": "ACADEMY PUBLICATIONS (HISTORY OF SCIENCE)",
+      "level": 1,
+      "start_line": 3570,
+      "end_line": 3631,
+      "sections": [],
+      "content_preview": "ACADEMY PUBLICATIONS (HISTORY OF SCIENCE)  INDIAN JOURNAL OF HISTORY OF SCIENCE, Editor: S. K. MUKHERJEE.  CARAKA SAMHITA (A Scientific Synopsis) by P. RaY and H. N. Gurr, (1965). (Reprinted 1980). Rs. 30.00 or $ 10.00.  10 PHY OF SANSKRIT WORKS IN ASTRONOMY AND MATHEMATICS by"
+    }
+  ],
+  "toc": [
+    {
+      "id": "ch-vedanga_jyotisa",
+      "title": "VEDANGA JYOTISA",
+      "chapter": "VEDANGA JYOTISA",
+      "chapter_id": "ch-vedanga_jyotisa"
+    },
+    {
+      "id": "ch-with_translation_innid_notes",
+      "title": "WITH TRANSLATION INNID NOTES",
+      "chapter": "WITH TRANSLATION INNID NOTES",
+      "chapter_id": "ch-with_translation_innid_notes"
+    },
+    {
+      "id": "ch-prof_ts_kuppanna_sastry",
+      "title": "PROF. T.S. KUPPANNA SASTRY",
+      "chapter": "PROF. T.S. KUPPANNA SASTRY",
+      "chapter_id": "ch-prof_ts_kuppanna_sastry"
+    },
+    {
+      "id": "ch-vedanga_jyotisa_of_lagadha",
+      "title": "VEDANGA JYOTISA OF LAGADHA",
+      "chapter": "VEDANGA JYOTISA OF LAGADHA",
+      "chapter_id": "ch-vedanga_jyotisa_of_lagadha"
+    },
+    {
+      "id": "ch-in_its_rk_and_yajus_recensions",
+      "title": "IN ITS RK AND YAJUS RECENSIONS",
+      "chapter": "IN ITS RK AND YAJUS RECENSIONS",
+      "chapter_id": "ch-in_its_rk_and_yajus_recensions"
+    },
+    {
+      "id": "ch-with_the_translation_and_notes_of",
+      "title": "WITH THE TRANSLATION AND NOTES OF",
+      "chapter": "WITH THE TRANSLATION AND NOTES OF",
+      "chapter_id": "ch-with_the_translation_and_notes_of"
+    },
+    {
+      "id": "ch-pror_t_s_kuppanna_sastry",
+      "title": "Pror. T. S. KUPPANNA SASTRY",
+      "chapter": "Pror. T. S. KUPPANNA SASTRY",
+      "chapter_id": "ch-pror_t_s_kuppanna_sastry"
+    },
+    {
+      "id": "ch-indian_national_science_academy",
+      "title": "INDIAN NATIONAL SCIENCE ACADEMY",
+      "chapter": "INDIAN NATIONAL SCIENCE ACADEMY",
+      "chapter_id": "ch-indian_national_science_academy"
+    },
+    {
+      "id": "ch-new_delhi",
+      "title": "NEW DELHI",
+      "chapter": "NEW DELHI",
+      "chapter_id": "ch-new_delhi"
+    },
+    {
+      "id": "ch-published_for",
+      "title": "Published for",
+      "chapter": "Published for",
+      "chapter_id": "ch-published_for"
+    },
+    {
+      "id": "ch-indian_national_science_academy-2",
+      "title": "Indian National Science Academy",
+      "chapter": "Indian National Science Academy",
+      "chapter_id": "ch-indian_national_science_academy-2"
+    },
+    {
+      "id": "ch-vedanga_jyotisa_of_lagadha-2",
+      "title": "VEDANGA JYOTISA OF LAGADHA",
+      "chapter": "VEDANGA JYOTISA OF LAGADHA",
+      "chapter_id": "ch-vedanga_jyotisa_of_lagadha-2"
+    },
+    {
+      "id": "ch-edited_and_translated",
+      "title": "Edited and Translated",
+      "chapter": "Edited and Translated",
+      "chapter_id": "ch-edited_and_translated"
+    },
+    {
+      "id": "ch-foreword_o00_3",
+      "title": "FOREWORD O00 . . . . 3",
+      "chapter": "FOREWORD O00 . . . . 3",
+      "chapter_id": "ch-foreword_o00_3"
+    },
+    {
+      "id": "ch-preface_da_pe_an_a0_o_7",
+      "title": "PREFACE Da Pe an a0 o 7",
+      "chapter": "PREFACE Da Pe an a0 o 7",
+      "chapter_id": "ch-preface_da_pe_an_a0_o_7"
+    },
+    {
+      "id": "ch-8_vedanga_syotisa",
+      "title": "8 VEDANGA SYOTISA",
+      "chapter": "8 VEDANGA SYOTISA",
+      "chapter_id": "ch-8_vedanga_syotisa"
+    },
+    {
+      "id": "ch-indological_truths",
+      "title": "Indological Truths",
+      "chapter": "Indological Truths",
+      "chapter_id": "ch-indological_truths"
+    },
+    {
+      "id": "ch-preface_9",
+      "title": "PREFACE 9",
+      "chapter": "PREFACE 9",
+      "chapter_id": "ch-preface_9"
+    },
+    {
+      "id": "ch-introduction_13",
+      "title": "INTRODUCTION 13",
+      "chapter": "INTRODUCTION 13",
+      "chapter_id": "ch-introduction_13"
+    },
+    {
+      "id": "ch-introduction_15",
+      "title": "INTRODUCTION 15",
+      "chapter": "INTRODUCTION 15",
+      "chapter_id": "ch-introduction_15"
+    },
+    {
+      "id": "ch-introduction_17",
+      "title": "INTRODUCTION 17",
+      "chapter": "INTRODUCTION 17",
+      "chapter_id": "ch-introduction_17"
+    },
+    {
+      "id": "ch-introduction_19",
+      "title": "INTRODUCTION 19",
+      "chapter": "INTRODUCTION 19",
+      "chapter_id": "ch-introduction_19"
+    },
+    {
+      "id": "ch-t_s_kuppanna_sastry",
+      "title": "T. S. KupPANNA SASTRY",
+      "chapter": "T. S. KupPANNA SASTRY",
+      "chapter_id": "ch-t_s_kuppanna_sastry"
+    },
+    {
+      "id": "ch-sut_tst_be_tea_tit_uatett_uni",
+      "title": "SUT TST Be Tea TIT UATETT UNI",
+      "chapter": "SUT TST Be Tea TIT UATETT UNI",
+      "chapter_id": "ch-sut_tst_be_tea_tit_uatett_uni"
+    },
+    {
+      "id": "ch-vedanga_jyotisam",
+      "title": "VEDANGA JYOTISAM",
+      "chapter": "VEDANGA JYOTISAM",
+      "chapter_id": "ch-vedanga_jyotisam"
+    },
+    {
+      "id": "ch-arca_jyotisam_25",
+      "title": "ARCA JYOTISAM 25",
+      "chapter": "ARCA JYOTISAM 25",
+      "chapter_id": "ch-arca_jyotisam_25"
+    },
+    {
+      "id": "ch-26_vedanga_jyotisam",
+      "title": "26 VEDANGA JYOTISAM",
+      "chapter": "26 VEDANGA JYOTISAM",
+      "chapter_id": "ch-26_vedanga_jyotisam"
+    },
+    {
+      "id": "ch-yajusa_jyotisam_27",
+      "title": "YAJUSA JYOTISAM 27",
+      "chapter": "YAJUSA JYOTISAM 27",
+      "chapter_id": "ch-yajusa_jyotisam_27"
+    },
+    {
+      "id": "ch-vedanga_jyotisam-2",
+      "title": "VEDANGA JYOTISAM",
+      "chapter": "VEDANGA JYOTISAM",
+      "chapter_id": "ch-vedanga_jyotisam-2"
+    },
+    {
+      "id": "ch-indological_truths-2",
+      "title": "Indological Truths",
+      "chapter": "Indological Truths",
+      "chapter_id": "ch-indological_truths-2"
+    },
+    {
+      "id": "ch-yajusa_jyotisam_29",
+      "title": "YAJUSA JYOTISAM 29",
+      "chapter": "YAJUSA JYOTISAM 29",
+      "chapter_id": "ch-yajusa_jyotisam_29"
+    },
+    {
+      "id": "ch-yajusa_jyotisam_31",
+      "title": "YAJUSA JYOTISAM 31",
+      "chapter": "YAJUSA JYOTISAM 31",
+      "chapter_id": "ch-yajusa_jyotisam_31"
+    },
+    {
+      "id": "ch-uefa_arerenfrey_gary",
+      "title": "Uefa arerenfrey gary",
+      "chapter": "Uefa arerenfrey gary",
+      "chapter_id": "ch-uefa_arerenfrey_gary"
+    },
+    {
+      "id": "ch-vedanga_jyotisam-3",
+      "title": "VEDANGA JYOTISAM",
+      "chapter": "VEDANGA JYOTISAM",
+      "chapter_id": "ch-vedanga_jyotisam-3"
+    },
+    {
+      "id": "ch-section_ii_measures_of_time_asterisms_etc",
+      "title": "Section II. Measures oF TIME, ASTERISMS ETc.",
+      "chapter": "Section II. Measures oF TIME, ASTERISMS ETc.",
+      "chapter_id": "ch-section_ii_measures_of_time_asterisms_etc"
+    },
+    {
+      "id": "ch-section_v_datty_titi_naksatra_etc",
+      "title": "SecTION V. Datty Titi, NAKSATRA ETC.",
+      "chapter": "SecTION V. Datty Titi, NAKSATRA ETC.",
+      "chapter_id": "ch-section_v_datty_titi_naksatra_etc"
+    },
+    {
+      "id": "ch-3_benediction",
+      "title": "3. BENEDICTION",
+      "chapter": "3. BENEDICTION",
+      "chapter_id": "ch-3_benediction"
+    },
+    {
+      "id": "ch-note_1_thus_we_have_the_table",
+      "title": "Note 1. Thus we have the table",
+      "chapter": "Note 1. Thus we have the table",
+      "chapter_id": "ch-note_1_thus_we_have_the_table"
+    },
+    {
+      "id": "ch-2_asterisms_presiding_deities",
+      "title": "2. ASTERISMS: PRESIDING DEITIES",
+      "chapter": "2. ASTERISMS: PRESIDING DEITIES",
+      "chapter_id": "ch-2_asterisms_presiding_deities"
+    },
+    {
+      "id": "ch-oi_yuga_constants_41",
+      "title": "OI. YUGA CONSTANTS 41",
+      "chapter": "OI. YUGA CONSTANTS 41",
+      "chapter_id": "ch-oi_yuga_constants_41"
+    },
+    {
+      "id": "ch-il_yuga_constants_43",
+      "title": "Il. YUGA CONSTANTS 43",
+      "chapter": "Il. YUGA CONSTANTS 43",
+      "chapter_id": "ch-il_yuga_constants_43"
+    },
+    {
+      "id": "ch-iv_tithi_naksatra_etc_45",
+      "title": "IV. TITHI, NAKSATRA ETC. 45",
+      "chapter": "IV. TITHI, NAKSATRA ETC. 45",
+      "chapter_id": "ch-iv_tithi_naksatra_etc_45"
+    },
+    {
+      "id": "ch-iv_tithi_naksatra_etc_49",
+      "title": "IV. TITHI, NAKSATRA ETC, 49",
+      "chapter": "IV. TITHI, NAKSATRA ETC, 49",
+      "chapter_id": "ch-iv_tithi_naksatra_etc_49"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_51",
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 51",
+      "chapter": "V. DAILY TITHI, NAKSATRA ETC. 51",
+      "chapter_id": "ch-v_daily_tithi_naksatra_etc_51"
+    },
+    {
+      "id": "ch-section_v",
+      "title": "SECTION V",
+      "chapter": "SECTION V",
+      "chapter_id": "ch-section_v"
+    },
+    {
+      "id": "ch-daily_tithi_naksatra_etc",
+      "title": "DAILY TITHI, NAKSATRA ETC.",
+      "chapter": "DAILY TITHI, NAKSATRA ETC.",
+      "chapter_id": "ch-daily_tithi_naksatra_etc"
+    },
+    {
+      "id": "ch-1_introductory",
+      "title": "1, INTRODUCTORY",
+      "chapter": "1, INTRODUCTORY",
+      "chapter_id": "ch-1_introductory"
+    },
+    {
+      "id": "ch-parva-rai-3x_129_21-2_for_60_parvas_gone93",
+      "title": "Parva-rai=-(3X 12+9) 2+1-+2 (for 60 parvas gone)=93",
+      "chapter": "Parva-rai=-(3X 12+9) 2+1-+2 (for 60 parvas gone)=93",
+      "chapter_id": "ch-parva-rai-3x_129_21-2_for_60_parvas_gone93"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_33",
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 33",
+      "chapter": "V. DAILY TITHI, NAKSATRA ETC. 33",
+      "chapter_id": "ch-v_daily_tithi_naksatra_etc_33"
+    },
+    {
+      "id": "ch-5_hour_angle_and_lagna",
+      "title": "5. HOUR ANGLE AND LAGNA",
+      "chapter": "5. HOUR ANGLE AND LAGNA",
+      "chapter_id": "ch-5_hour_angle_and_lagna"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_55",
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 55",
+      "chapter": "V. DAILY TITHI, NAKSATRA ETC. 55",
+      "chapter_id": "ch-v_daily_tithi_naksatra_etc_55"
+    },
+    {
+      "id": "ch-nakgatra_table_wir_symbols",
+      "title": "NakgATRA TABLE wir SyMBOLS",
+      "chapter": "NakgATRA TABLE wir SyMBOLS",
+      "chapter_id": "ch-nakgatra_table_wir_symbols"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_57",
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 57",
+      "chapter": "V. DAILY TITHI, NAKSATRA ETC. 57",
+      "chapter_id": "ch-v_daily_tithi_naksatra_etc_57"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_59",
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 59",
+      "chapter": "V. DAILY TITHI, NAKSATRA ETC. 59",
+      "chapter_id": "ch-v_daily_tithi_naksatra_etc_59"
+    },
+    {
+      "id": "ch-v_daily_ththi_naksatra_etc_61",
+      "title": "V. DAILY THTHI, NAKSATRA ETC. 61",
+      "chapter": "V. DAILY THTHI, NAKSATRA ETC. 61",
+      "chapter_id": "ch-v_daily_ththi_naksatra_etc_61"
+    },
+    {
+      "id": "ch-13_correction_for_the_sidereal_day",
+      "title": "13, CORRECTION FOR THE SIDEREAL DAY",
+      "chapter": "13, CORRECTION FOR THE SIDEREAL DAY",
+      "chapter_id": "ch-13_correction_for_the_sidereal_day"
+    },
+    {
+      "id": "ch-v_daily_tithi_naksatra_etc_65",
+      "title": "V. DAILY TITHI, NAKSATRA ETC. 65",
+      "chapter": "V. DAILY TITHI, NAKSATRA ETC. 65",
+      "chapter_id": "ch-v_daily_tithi_naksatra_etc_65"
+    },
+    {
+      "id": "ch-verse_pada_index",
+      "title": "VERSE (PADA) INDEX",
+      "chapter": "VERSE (PADA) INDEX",
+      "chapter_id": "ch-verse_pada_index"
+    },
+    {
+      "id": "ch-verse_index_71",
+      "title": "VERSE INDEX 71",
+      "chapter": "VERSE INDEX 71",
+      "chapter_id": "ch-verse_index_71"
+    },
+    {
+      "id": "ch-general_index",
+      "title": "GENERAL INDEX",
+      "chapter": "GENERAL INDEX",
+      "chapter_id": "ch-general_index"
+    },
+    {
+      "id": "ch-adhaka_ii_1",
+      "title": "Adhaka, ii. 1",
+      "chapter": "Adhaka, ii. 1",
+      "chapter_id": "ch-adhaka_ii_1"
+    },
+    {
+      "id": "ch-adhana_diksd_day_v_17",
+      "title": "Adhana (Diksd) day, v. 17",
+      "chapter": "Adhana (Diksd) day, v. 17",
+      "chapter_id": "ch-adhana_diksd_day_v_17"
+    },
+    {
+      "id": "ch-agrahdyana_intro_1",
+      "title": "Agrahdyana, Intro. § 1",
+      "chapter": "Agrahdyana, Intro. § 1",
+      "chapter_id": "ch-agrahdyana_intro_1"
+    },
+    {
+      "id": "ch-amhaspati_intro_1",
+      "title": "Amhaspati, Intro. § 1",
+      "chapter": "Amhaspati, Intro. § 1",
+      "chapter_id": "ch-amhaspati_intro_1"
+    },
+    {
+      "id": "ch-anuvatsara_intro_81_11v_7v_1",
+      "title": "Anuvatsara, Intro 81; 1;1v 7;v 1",
+      "chapter": "Anuvatsara, Intro 81; 1;1v 7;v 1",
+      "chapter_id": "ch-anuvatsara_intro_81_11v_7v_1"
+    },
+    {
+      "id": "ch-arthasastra_intro_7",
+      "title": "Arthasastra, Intro §7",
+      "chapter": "Arthasastra, Intro §7",
+      "chapter_id": "ch-arthasastra_intro_7"
+    },
+    {
+      "id": "ch-asterism_see_naksatra",
+      "title": "Asterism See Naksatra",
+      "chapter": "Asterism See Naksatra",
+      "chapter_id": "ch-asterism_see_naksatra"
+    },
+    {
+      "id": "ch-atharva_veda_intro_1",
+      "title": "Atharva Veda, Intro § 1",
+      "chapter": "Atharva Veda, Intro § 1",
+      "chapter_id": "ch-atharva_veda_intro_1"
+    },
+    {
+      "id": "ch-atharvana_jyautisa_intro_3",
+      "title": "Atharvana Jyautisa, Intro. § 3",
+      "chapter": "Atharvana Jyautisa, Intro. § 3",
+      "chapter_id": "ch-atharvana_jyautisa_intro_3"
+    },
+    {
+      "id": "ch-atri_family_of_vedic_astronomers_intro_1",
+      "title": "Atri family of Vedic astronomers, Intro. § 1",
+      "chapter": "Atri family of Vedic astronomers, Intro. § 1",
+      "chapter_id": "ch-atri_family_of_vedic_astronomers_intro_1"
+    },
+    {
+      "id": "ch-ayana_risings_in_a_yuga_ui_1",
+      "title": "Ayana, risings in a yuga, ui. 1",
+      "chapter": "Ayana, risings in a yuga, ui. 1",
+      "chapter_id": "ch-ayana_risings_in_a_yuga_ui_1"
+    },
+    {
+      "id": "ch-bharatiya-jyotisa-sastra_intro_8",
+      "title": "Bharatiya-Jyotisa-Sastra, Intro. § 8",
+      "chapter": "Bharatiya-Jyotisa-Sastra, Intro. § 8",
+      "chapter_id": "ch-bharatiya-jyotisa-sastra_intro_8"
+    },
+    {
+      "id": "ch-bhitasankhya_intro_8_ui_2_v_8",
+      "title": "Bhitasankhya, Intro. § 8; ui 2, v 8",
+      "chapter": "Bhitasankhya, Intro. § 8; ui 2, v 8",
+      "chapter_id": "ch-bhitasankhya_intro_8_ui_2_v_8"
+    },
+    {
+      "id": "ch-brhatsarnhst_intro_34_see_also_varahami-",
+      "title": "Brhatsarnhst, Intro. § 3,4 See also Varahami",
+      "chapter": "Brhatsarnhst, Intro. § 3,4 See also Varahami",
+      "chapter_id": "ch-brhatsarnhst_intro_34_see_also_varahami-"
+    },
+    {
+      "id": "ch-chandogyopamsad_reference_to_naksatra-vidya",
+      "title": "Chandogyopamsad, reference to Naksatra-vidya",
+      "chapter": "Chandogyopamsad, reference to Naksatra-vidya",
+      "chapter_id": "ch-chandogyopamsad_reference_to_naksatra-vidya"
+    },
+    {
+      "id": "ch-chote_lal_ahas_barhaspatya_see_barhaspatya",
+      "title": "Chote Lal ahas Barhaspatya See Barhaspatya",
+      "chapter": "Chote Lal ahas Barhaspatya See Barhaspatya",
+      "chapter_id": "ch-chote_lal_ahas_barhaspatya_see_barhaspatya"
+    },
+    {
+      "id": "ch-colebrooke_h_t_on_vj_intro_8",
+      "title": "Colebrooke, H. T, on VJ, Intro § 8",
+      "chapter": "Colebrooke, H. T, on VJ, Intro § 8",
+      "chapter_id": "ch-colebrooke_h_t_on_vj_intro_8"
+    },
+    {
+      "id": "ch-darsapiirnamasa_intro_1_8",
+      "title": "Darsapiirnamasa, Intro. § 1, 8",
+      "chapter": "Darsapiirnamasa, Intro. § 1, 8",
+      "chapter_id": "ch-darsapiirnamasa_intro_1_8"
+    },
+    {
+      "id": "ch-dasgamalagna_iii_2",
+      "title": "Dasgamalagna, iii. 2",
+      "chapter": "Dasgamalagna, iii. 2",
+      "chapter_id": "ch-dasgamalagna_iii_2"
+    },
+    {
+      "id": "ch-day_sidereal_correction_of_v_13",
+      "title": "Day, sidereal, correction of, v. 13",
+      "chapter": "Day, sidereal, correction of, v. 13",
+      "chapter_id": "ch-day_sidereal_correction_of_v_13"
+    },
+    {
+      "id": "ch-day-parts_at_any_time_v_12",
+      "title": "Day-parts, at any time, v. 12",
+      "chapter": "Day-parts, at any time, v. 12",
+      "chapter_id": "ch-day-parts_at_any_time_v_12"
+    },
+    {
+      "id": "ch-devanaksatra_intro_2",
+      "title": "Devanaksatra, Intro § 2",
+      "chapter": "Devanaksatra, Intro § 2",
+      "chapter_id": "ch-devanaksatra_intro_2"
+    },
+    {
+      "id": "ch-diksa_day_v_17",
+      "title": "Diksa day, v. 17",
+      "chapter": "Diksa day, v. 17",
+      "chapter_id": "ch-diksa_day_v_17"
+    },
+    {
+      "id": "ch-drk_almanac_of_kumbhakonam_mutt_intro_5",
+      "title": "Drk almanac of Kumbhakonam Mutt, Intro 5",
+      "chapter": "Drk almanac of Kumbhakonam Mutt, Intro 5",
+      "chapter_id": "ch-drk_almanac_of_kumbhakonam_mutt_intro_5"
+    },
+    {
+      "id": "ch-drona_measure_it_1",
+      "title": "Drona, measure, it. 1",
+      "chapter": "Drona, measure, it. 1",
+      "chapter_id": "ch-drona_measure_it_1"
+    },
+    {
+      "id": "ch-epoch_of_vj_iv_12",
+      "title": "Epoch of VJ, iv. 1,2",
+      "chapter": "Epoch of VJ, iv. 1,2",
+      "chapter_id": "ch-epoch_of_vj_iv_12"
+    },
+    {
+      "id": "ch-equinox_see_visuva",
+      "title": "Equinox’ See Visuva",
+      "chapter": "Equinox’ See Visuva",
+      "chapter_id": "ch-equinox_see_visuva"
+    },
+    {
+      "id": "ch-gargasamhita_intro_3",
+      "title": "Gargasamhita, Intro § 3",
+      "chapter": "Gargasamhita, Intro § 3",
+      "chapter_id": "ch-gargasamhita_intro_3"
+    },
+    {
+      "id": "ch-gavamayana_intro_1",
+      "title": "Gavamayana, Intro. § 1",
+      "chapter": "Gavamayana, Intro. § 1",
+      "chapter_id": "ch-gavamayana_intro_1"
+    },
+    {
+      "id": "ch-hour-angle_v_5",
+      "title": "Hour-angle, v. 5",
+      "chapter": "Hour-angle, v. 5",
+      "chapter_id": "ch-hour-angle_v_5"
+    },
+    {
+      "id": "ch-idavatsara_intro_1_ii_1_1_7",
+      "title": "Idavatsara, Intro. § 1; ii. 1; 1. 7",
+      "chapter": "Idavatsara, Intro. § 1; ii. 1; 1. 7",
+      "chapter_id": "ch-idavatsara_intro_1_ii_1_1_7"
+    },
+    {
+      "id": "ch-idavatsara_intro_1_ii_1_1v_7",
+      "title": "Idavatsara, Intro. § 1; ii. 1; 1v 7",
+      "chapter": "Idavatsara, Intro. § 1; ii. 1; 1v 7",
+      "chapter_id": "ch-idavatsara_intro_1_ii_1_1v_7"
+    },
+    {
+      "id": "ch-intercalary_day_v_3_17",
+      "title": "Intercalary day, v 3, 17",
+      "chapter": "Intercalary day, v 3, 17",
+      "chapter_id": "ch-intercalary_day_v_3_17"
+    },
+    {
+      "id": "ch-intercalary_month_intro_1_iv_7",
+      "title": "Intercalary month, Intro. § 1; iv. 7",
+      "chapter": "Intercalary month, Intro. § 1; iv. 7",
+      "chapter_id": "ch-intercalary_month_intro_1_iv_7"
+    },
+    {
+      "id": "ch-jones_sur_william_on_vj_intro_8",
+      "title": "Jones, Sur William, on VJ, Intro. § 8",
+      "chapter": "Jones, Sur William, on VJ, Intro. § 8",
+      "chapter_id": "ch-jones_sur_william_on_vj_intro_8"
+    },
+    {
+      "id": "ch-javadi_series_v_6_8",
+      "title": "Javadi series, v. 6, 8",
+      "chapter": "Javadi series, v. 6, 8",
+      "chapter_id": "ch-javadi_series_v_6_8"
+    },
+    {
+      "id": "ch-jpotigakaranga_tats_6",
+      "title": "Jpotigakaranga tats. § 6",
+      "chapter": "Jpotigakaranga tats. § 6",
+      "chapter_id": "ch-jpotigakaranga_tats_6"
+    },
+    {
+      "id": "ch-kastha_measure_of_time_ii_1",
+      "title": "Kastha, measure of time, ii. 1",
+      "chapter": "Kastha, measure of time, ii. 1",
+      "chapter_id": "ch-kastha_measure_of_time_ii_1"
+    },
+    {
+      "id": "ch-kasyapa_intro_3",
+      "title": "KaSyapa, Intro. § 3",
+      "chapter": "KaSyapa, Intro. § 3",
+      "chapter_id": "ch-kasyapa_intro_3"
+    },
+    {
+      "id": "ch-kudava_kutapa_ii_1",
+      "title": "Kudava (Kutapa), ii. 1",
+      "chapter": "Kudava (Kutapa), ii. 1",
+      "chapter_id": "ch-kudava_kutapa_ii_1"
+    },
+    {
+      "id": "ch-kumbhakonam_mutt_panchanga_intro_5",
+      "title": "Kumbhakonam Mutt Panchanga, Intro. 5",
+      "chapter": "Kumbhakonam Mutt Panchanga, Intro. 5",
+      "chapter_id": "ch-kumbhakonam_mutt_panchanga_intro_5"
+    },
+    {
+      "id": "ch-lagna_v_5_in_a_yuga_1_2",
+      "title": "Lagna, v. 5, in a yuga, 1, 2",
+      "chapter": "Lagna, v. 5, in a yuga, 1, 2",
+      "chapter_id": "ch-lagna_v_5_in_a_yuga_1_2"
+    },
+    {
+      "id": "ch-mahabharata_astronomy_1_intro_3_7",
+      "title": "Mahabharata, astronomy 1, Intro § 3, 7",
+      "chapter": "Mahabharata, astronomy 1, Intro § 3, 7",
+      "chapter_id": "ch-mahabharata_astronomy_1_intro_3_7"
+    },
+    {
+      "id": "ch-masaka_1_1",
+      "title": "Masaka, 1. 1",
+      "chapter": "Masaka, 1. 1",
+      "chapter_id": "ch-masaka_1_1"
+    },
+    {
+      "id": "ch-modern_calendar_corrections_to_1v_7",
+      "title": "Modern calendar, corrections to, 1v 7",
+      "chapter": "Modern calendar, corrections to, 1v 7",
+      "chapter_id": "ch-modern_calendar_corrections_to_1v_7"
+    },
+    {
+      "id": "ch-month_solar_in_a_yuga_m_1",
+      "title": "Month, solar, in a yuga, m. 1",
+      "chapter": "Month, solar, in a yuga, m. 1",
+      "chapter_id": "ch-month_solar_in_a_yuga_m_1"
+    },
+    {
+      "id": "ch-months_vedic_intro_1",
+      "title": "Months, Vedic, Intro § 1",
+      "chapter": "Months, Vedic, Intro § 1",
+      "chapter_id": "ch-months_vedic_intro_1"
+    },
+    {
+      "id": "ch-muharta_measure_11_1",
+      "title": "Muharta, measure, 11 1",
+      "chapter": "Muharta, measure, 11 1",
+      "chapter_id": "ch-muharta_measure_11_1"
+    },
+    {
+      "id": "ch-muharta_astrology_intro_3",
+      "title": "Muharta astrology, Intro § 3",
+      "chapter": "Muharta astrology, Intro § 3",
+      "chapter_id": "ch-muharta_astrology_intro_3"
+    },
+    {
+      "id": "ch-mulsum_calendar_intro_7_iv_7",
+      "title": "Mulsum calendar, Intro. § 7; iv 7",
+      "chapter": "Mulsum calendar, Intro. § 7; iv 7",
+      "chapter_id": "ch-mulsum_calendar_intro_7_iv_7"
+    },
+    {
+      "id": "ch-nadikd_measure_of_it_1",
+      "title": "Nadikd, measure of, it 1",
+      "chapter": "Nadikd, measure of, it 1",
+      "chapter_id": "ch-nadikd_measure_of_it_1"
+    },
+    {
+      "id": "ch-naksatra-parts_v_3ff",
+      "title": "Naksatra-parts, v 3ff",
+      "chapter": "Naksatra-parts, v 3ff",
+      "chapter_id": "ch-naksatra-parts_v_3ff"
+    },
+    {
+      "id": "ch-naksatra-vidya_intro_2",
+      "title": "Naksatra-vidya, Intro § 2",
+      "chapter": "Naksatra-vidya, Intro § 2",
+      "chapter_id": "ch-naksatra-vidya_intro_2"
+    },
+    {
+      "id": "ch-naming_a_child_1_2",
+      "title": "Naming a child, 1. 2",
+      "chapter": "Naming a child, 1. 2",
+      "chapter_id": "ch-naming_a_child_1_2"
+    },
+    {
+      "id": "ch-navaka_rule_v_5_13",
+      "title": "Navaka rule, v. 5, 13",
+      "chapter": "Navaka rule, v. 5, 13",
+      "chapter_id": "ch-navaka_rule_v_5_13"
+    },
+    {
+      "id": "ch-paksas_0_a_yuga_11_1",
+      "title": "Paksas, 0 a yuga, 11 1",
+      "chapter": "Paksas, 0 a yuga, 11 1",
+      "chapter_id": "ch-paksas_0_a_yuga_11_1"
+    },
+    {
+      "id": "ch-pala_measure_11_1",
+      "title": "Pala, measure, 11 1",
+      "chapter": "Pala, measure, 11 1",
+      "chapter_id": "ch-pala_measure_11_1"
+    },
+    {
+      "id": "ch-pancasiddhantika_intro_3_4_ti_3_7",
+      "title": "Pancasiddhantika, Intro § 3, 4; ti. 3, 7",
+      "chapter": "Pancasiddhantika, Intro § 3, 4; ti. 3, 7",
+      "chapter_id": "ch-pancasiddhantika_intro_3_4_ti_3_7"
+    },
+    {
+      "id": "ch-parivatsara_intro_1_ii_1_iv_7",
+      "title": "Parivatsara, Intro 1; ii. 1; iv. 7",
+      "chapter": "Parivatsara, Intro 1; ii. 1; iv. 7",
+      "chapter_id": "ch-parivatsara_intro_1_ii_1_iv_7"
+    },
+    {
+      "id": "ch-parva-ras1_vv_2",
+      "title": "Parva-ras1, Vv. 2",
+      "chapter": "Parva-ras1, Vv. 2",
+      "chapter_id": "ch-parva-ras1_vv_2"
+    },
+    {
+      "id": "ch-pindapitryaytia_day_v_17",
+      "title": "Pindapitryaytia day, v. 17",
+      "chapter": "Pindapitryaytia day, v. 17",
+      "chapter_id": "ch-pindapitryaytia_day_v_17"
+    },
+    {
+      "id": "ch-prag-lagna_ii_2",
+      "title": "Prag-lagna, ii. 2",
+      "chapter": "Prag-lagna, ii. 2",
+      "chapter_id": "ch-prag-lagna_ii_2"
+    },
+    {
+      "id": "ch-punarddhana_v17",
+      "title": "Punarddhana, v.17",
+      "chapter": "Punarddhana, v.17",
+      "chapter_id": "ch-punarddhana_v17"
+    },
+    {
+      "id": "ch-ras_sign_of_foreign_orig_iv_7",
+      "title": "Ras (sign), of foreign orig, iv 7",
+      "chapter": "Ras (sign), of foreign orig, iv 7",
+      "chapter_id": "ch-ras_sign_of_foreign_orig_iv_7"
+    },
+    {
+      "id": "ch-reveda_astronomy_in_intro_if",
+      "title": "Reveda, astronomy in, Intro § If.",
+      "chapter": "Reveda, astronomy in, Intro § If.",
+      "chapter_id": "ch-reveda_astronomy_in_intro_if"
+    },
+    {
+      "id": "ch-rtusesa_v_15",
+      "title": "Rtusesa, v. 15",
+      "chapter": "Rtusesa, v. 15",
+      "chapter_id": "ch-rtusesa_v_15"
+    },
+    {
+      "id": "ch-saka_era_iv_7",
+      "title": "Saka era, iv. 7",
+      "chapter": "Saka era, iv. 7",
+      "chapter_id": "ch-saka_era_iv_7"
+    },
+    {
+      "id": "ch-samsarpa_intro_1",
+      "title": "Samsarpa, Intro 1",
+      "chapter": "Samsarpa, Intro 1",
+      "chapter_id": "ch-samsarpa_intro_1"
+    },
+    {
+      "id": "ch-sarhvatsara_intro_1_1311_v_7",
+      "title": "Sarhvatsara, Intro 1; 131.1; v 7",
+      "chapter": "Sarhvatsara, Intro 1; 131.1; v 7",
+      "chapter_id": "ch-sarhvatsara_intro_1_1311_v_7"
+    },
+    {
+      "id": "ch-saros_of_the_greeks_intro",
+      "title": "Saros of the Greeks, Intro.",
+      "chapter": "Saros of the Greeks, Intro.",
+      "chapter_id": "ch-saros_of_the_greeks_intro"
+    },
+    {
+      "id": "ch-satya_prakash_work_on_vj_intro_8",
+      "title": "Satya Prakash, work on VJ, Intro. § 8",
+      "chapter": "Satya Prakash, work on VJ, Intro. § 8",
+      "chapter_id": "ch-satya_prakash_work_on_vj_intro_8"
+    },
+    {
+      "id": "ch-siddhdnta_siromani_intro_5",
+      "title": "Siddhdnta Siromani, Intro. § 5",
+      "chapter": "Siddhdnta Siromani, Intro. § 5",
+      "chapter_id": "ch-siddhdnta_siromani_intro_5"
+    },
+    {
+      "id": "ch-somakara_intro_8",
+      "title": "Somakara, Intro. § 8",
+      "chapter": "Somakara, Intro. § 8",
+      "chapter_id": "ch-somakara_intro_8"
+    },
+    {
+      "id": "ch-see_under",
+      "title": "See under",
+      "chapter": "See under",
+      "chapter_id": "ch-see_under"
+    },
+    {
+      "id": "ch-siryaprajnapti_intro_6_7",
+      "title": "Siryaprajnapti, Intro. § 6, 7",
+      "chapter": "Siryaprajnapti, Intro. § 6, 7",
+      "chapter_id": "ch-siryaprajnapti_intro_6_7"
+    },
+    {
+      "id": "ch-sar_anta_intro_5",
+      "title": "Sar, anta, Intro. § 5",
+      "chapter": "Sar, anta, Intro. § 5",
+      "chapter_id": "ch-sar_anta_intro_5"
+    },
+    {
+      "id": "ch-syzygy_parva",
+      "title": "Syzygy: Parva",
+      "chapter": "Syzygy: Parva",
+      "chapter_id": "ch-syzygy_parva"
+    },
+    {
+      "id": "ch-taittiriya_aranyaka_intro_1",
+      "title": "Taittiriya Aranyaka, Intro. § 1",
+      "chapter": "Taittiriya Aranyaka, Intro. § 1",
+      "chapter_id": "ch-taittiriya_aranyaka_intro_1"
+    },
+    {
+      "id": "ch-taittirtya_bra_intro_2",
+      "title": "Taittirtya Bra Intro. § 2",
+      "chapter": "Taittirtya Bra Intro. § 2",
+      "chapter_id": "ch-taittirtya_bra_intro_2"
+    },
+    {
+      "id": "ch-tam_dara_ar_1_5",
+      "title": "Tam Dara ar $1 §5",
+      "chapter": "Tam Dara ar $1 §5",
+      "chapter_id": "ch-tam_dara_ar_1_5"
+    },
+    {
+      "id": "ch-thibaut_g_work_on_vj_intro_8",
+      "title": "Thibaut, G., work on VJ, Intro. § 8",
+      "chapter": "Thibaut, G., work on VJ, Intro. § 8",
+      "chapter_id": "ch-thibaut_g_work_on_vj_intro_8"
+    },
+    {
+      "id": "ch-three_rule_of_ii_3",
+      "title": "Three, rule of, ii. 3",
+      "chapter": "Three, rule of, ii. 3",
+      "chapter_id": "ch-three_rule_of_ii_3"
+    },
+    {
+      "id": "ch-time_measures_of_ii_1-3",
+      "title": "Time, measures of, ii. 1-3",
+      "chapter": "Time, measures of, ii. 1-3",
+      "chapter_id": "ch-time_measures_of_ii_1-3"
+    },
+    {
+      "id": "ch-visuva_1v_4",
+      "title": "Visuva, 1v. 4",
+      "chapter": "Visuva, 1v. 4",
+      "chapter_id": "ch-visuva_1v_4"
+    },
+    {
+      "id": "ch-yamanaksatras_intro_2",
+      "title": "Yamanaksatras, Intro § 2",
+      "chapter": "Yamanaksatras, Intro § 2",
+      "chapter_id": "ch-yamanaksatras_intro_2"
+    },
+    {
+      "id": "ch-year_divisions_of_i_1",
+      "title": "Year, divisions of, i. 1",
+      "chapter": "Year, divisions of, i. 1",
+      "chapter_id": "ch-year_divisions_of_i_1"
+    },
+    {
+      "id": "ch-years_vedic_intro_1",
+      "title": "Years, Vedic, Intro, § 1",
+      "chapter": "Years, Vedic, Intro, § 1",
+      "chapter_id": "ch-years_vedic_intro_1"
+    },
+    {
+      "id": "ch-academy_publications_history_of_science",
+      "title": "ACADEMY PUBLICATIONS (HISTORY OF SCIENCE)",
+      "chapter": "ACADEMY PUBLICATIONS (HISTORY OF SCIENCE)",
+      "chapter_id": "ch-academy_publications_history_of_science"
+    }
+  ],
+  "total_chapters": 148,
+  "total_sections": 0
+}
