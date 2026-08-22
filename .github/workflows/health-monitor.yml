@@ -8,8 +8,8 @@ name: Health Monitor
 # emails you by default). No secrets or paid services required.
 
 on:
-  schedule:
-    - cron: "*/10 * * * *" # every 10 minutes (GitHub may delay under load)
+  # Scheduled probes disabled 2026-08-22 while the sunset Fly deployment is retired.
+  # Keep manual checks available during the one-week Vercel observation window.
   workflow_dispatch: {} # allow manual "check now"
 
 permissions:

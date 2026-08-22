@@ -71,6 +71,13 @@ unreferenced Learn-era reader/asset proxy. Build, typecheck, 29 unit tests, targ
 and local/live route checks passed. Full lint still scans stale/generated `.vercel/output`
 bundles and reports baseline errors; those generated artifacts are not source changes.
 
+**Owner directive 2026-08-22T21:28:16+0100 — sunset Fly monitor:** Vercel is the sole
+production path, so the scheduled GitHub health monitor for the old Fly CVCE has been
+disabled. `workflow_dispatch` remains available during a one-week rollback observation
+window. Fly app `vedicastro-cvce` still has started machine `d8d96956ae5308` in `lhr`; stop
+or scale it to zero next. Do not delete `health-monitor.yml` until the observation window
+passes without a rollback requirement.
+
 ---
 
 ## ✅ SESSION 2026-08-11 — READ THIS FIRST (supersedes 2026-07-17 below for current status)
