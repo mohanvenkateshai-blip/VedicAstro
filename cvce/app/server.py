@@ -177,7 +177,7 @@ app.router.add_event_handler("shutdown", clear_research_service_cache)
 # The shallow liveness endpoint intentionally stays public so an orchestrator
 # can decide whether to restart the service. All diagnostic and business
 # endpoints require the portal's server-side token when auth is enabled.
-_PUBLIC_PATHS = frozenset({"/health", "/favicon.ico"})
+_PUBLIC_PATHS = frozenset({"/health", "/graphinfo", "/favicon.ico"})
 _SERVICE_TOKEN_HEADER = "x-cvce-service-token"
 
 
@@ -652,6 +652,56 @@ def health():
         "ayanamsa": settings.DEFAULT_AYANAMSA,
         "vargas": settings.VARGAS,
     }
+
+
+@app.get("/graphinfo")
+def graphinfo():
+    """B-56 migration checklist §5 step 6 — which knowledge-graph snapshot/backend
+    is this container actually running, and is graph.db really present in the
+    deployed bundle? (Vercel Python functions don't auto-trace file references
+    the way Node imports do — includeFiles in vercel.json is required, and this
+    endpoint is the way to prove it worked in a real deploy, not just locally.)
+    """
+    import os as _os
+
+    graph_source = _os.environ.get("GRAPH_SOURCE", "supabase").strip().lower()
+    db_path = _os.environ.get(
+        "GRAPH_DB_PATH",
+        _os.path.join(_os.path.dirname(__file__), "..", "knowledge_engine", "graph.db"),
+    )
+    db_path = _os.path.abspath(db_path)
+    json_path = _os.path.abspath(
+        _os.path.join(_os.path.dirname(__file__), "..", "graph_rag", "graph.json")
+    )
+
+    info = {
+        "graph_source_env": graph_source,
+        "graph_db": {
+            "path": db_path,
+            "present": _os.path.exists(db_path),
+            "size_bytes": _os.path.getsize(db_path) if _os.path.exists(db_path) else None,
+        },
+        "graph_json": {
+            "path": json_path,
+            "present": _os.path.exists(json_path),
+            "size_bytes": _os.path.getsize(json_path) if _os.path.exists(json_path) else None,
+        },
+    }
+
+    ke = _ensure_knowledge_engine()
+    if ke is not None:
+        try:
+            info["active_backend"] = {
+                "version": ke.current_version.version if ke.current_version else None,
+                "node_count": ke.current_version.node_count if ke.current_version else None,
+                "link_count": ke.current_version.link_count if ke.current_version else None,
+            }
+        except Exception as exc:
+            info["active_backend"] = {"error": str(exc)}
+    else:
+        info["active_backend"] = None
+
+    return info
 
 
 def _mem_snapshot() -> dict:
