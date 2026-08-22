@@ -78,18 +78,27 @@ def get_knowledge_engine():
             logger.debug("vedic_knowledge: KnowledgeEngine not available; using GraphRAG fallback")
             return None
         try:
-            use_supabase = os.environ.get("KE_USE_SUPABASE", "").lower() in (
-                "1",
-                "true",
-            ) or bool(os.environ.get("SUPABASE_URL"))
-            if use_supabase:
-                version = os.environ.get(
-                    "CORPUS_GRAPH_VERSION",
-                    os.environ.get("GRAPH_VERSION", "newbooks-v1"),
-                )
-                _KE = KE.with_supabase(graph_version=version)
+            # GRAPH_SOURCE=sqlite|supabase (B-56 durable fix — migration in
+            # progress, see docs/graph-sqlite-migration-playbook_1.md).
+            # Defaults to "supabase" (current live behavior unchanged) until
+            # parity between the two backends is verified in prod; flip the
+            # env var to cut over once scripts/check_graph_parity.py is clean.
+            graph_source = os.environ.get("GRAPH_SOURCE", "supabase").strip().lower()
+            if graph_source == "sqlite":
+                _KE = KE.with_sqlite(db_path=os.environ.get("GRAPH_DB_PATH"))
             else:
-                _KE = KE()
+                use_supabase = os.environ.get("KE_USE_SUPABASE", "").lower() in (
+                    "1",
+                    "true",
+                ) or bool(os.environ.get("SUPABASE_URL"))
+                if use_supabase:
+                    version = os.environ.get(
+                        "CORPUS_GRAPH_VERSION",
+                        os.environ.get("GRAPH_VERSION", "newbooks-v1"),
+                    )
+                    _KE = KE.with_supabase(graph_version=version)
+                else:
+                    _KE = KE()
             return _KE
         except Exception as exc:
             logger.warning("vedic_knowledge: KnowledgeEngine init failed: %s", exc)

@@ -1,0 +1,4 @@
+# Build-time only — used by build_graph_db.py (CI + Dockerfile graphbuild
+# stage). Must NEVER be installed into the runtime bundle: the whole point
+# of baking is that the served app never imports a JSON streaming parser.
+ijson>=3.2

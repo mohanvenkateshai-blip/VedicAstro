@@ -1,0 +1,87 @@
+name: build-and-deploy-cvce
+# B-56 durable fix (docs/graph-sqlite-migration-playbook_1.md): bakes
+# cvce/graph_rag/graph.json into cvce/knowledge_engine/graph.db and deploys
+# CVCE to production Vercel.
+#
+# Deploy mechanism note: this repo's Vercel account has documented
+# token-based CLI auth failure ("User not found", reproduced across 2
+# tokens/2 CLI versions — see panchanga_muhurtha's ci.yml deploy-production
+# job). `vercel --prod --token=...` would hit the same wall here, so this
+# workflow uses a Deploy Hook instead — Vercel builds from its own git
+# checkout of main, which is why graph.db is committed back to the repo in
+# this job rather than only living in the CI runner's working directory.
+#
+# ONE-TIME SETUP NEEDED (not something this workflow can do itself):
+#   1. Vercel dashboard -> vedicastro-cvce-vercel project -> Settings -> Git
+#      -> Deploy Hooks -> create one for branch "main".
+#   2. Add its URL as a GitHub Actions secret named DEPLOY_HOOK_CVCE on this
+#      repo (Settings -> Secrets and variables -> Actions).
+# Until that secret exists, the build+commit steps still run (so graph.db
+# stays in sync), but the final deploy-trigger step will fail loudly rather
+# than silently no-op.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - cvce/graph_rag/graph.json
+      - cvce/scripts/build_graph_db.py
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # A real user token (not the default GITHUB_ACTIONS_TOKEN) so the
+          # bot commit below can trigger the paths-filtered workflow above
+          # (publish-graph-snapshot) too, if ever wanted -- default token
+          # commits deliberately don't re-trigger other workflows, which is
+          # fine here since we don't want a loop, but recorded for clarity.
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build-time deps (ijson only — never in the runtime bundle)
+        run: pip install --no-cache-dir -r cvce/scripts/requirements-build.txt
+
+      - name: Build graph.db from the tracked graph.json
+        working-directory: cvce
+        run: python scripts/build_graph_db.py graph_rag/graph.json knowledge_engine/graph.db
+
+      - name: Sanity-check the build (non-zero counts, meta present)
+        working-directory: cvce
+        run: |
+          python3 - <<'EOF'
+          import sqlite3
+          con = sqlite3.connect("knowledge_engine/graph.db")
+          meta = dict(con.execute("SELECT key, value FROM meta").fetchall())
+          node_count = int(meta["node_count"])
+          link_count = int(meta["link_count"])
+          assert node_count > 0, "build produced zero nodes"
+          assert link_count > 0, "build produced zero links"
+          print(f"OK: {node_count} nodes, {link_count} links, commit={meta.get('built_at_commit')}")
+          EOF
+
+      - name: Commit graph.db if it changed
+        id: commit
+        working-directory: cvce
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f knowledge_engine/graph.db
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore(B-56): rebuild baked knowledge_engine/graph.db from graph.json [skip ci]"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Trigger CVCE (vedicastro-cvce-vercel) production deploy
+        run: curl -sS -f -X POST "${{ secrets.DEPLOY_HOOK_CVCE }}"

@@ -1,0 +1,39 @@
+name: publish-graph-snapshot
+# B-56 durable fix (docs/graph-sqlite-migration-playbook_1.md §4/§5.3):
+# publishes the current graph_rag/graph.json as a versioned, checksummed
+# release artifact — the source of truth the build-and-deploy workflow bakes
+# into graph.db. graph.json is already git-tracked directly (existing repo
+# convention), so this is a decoupled audit/rollback trail on top of that,
+# not a replacement for it.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - cvce/graph_rag/graph.json
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checksum
+        working-directory: cvce/graph_rag
+        run: sha256sum graph.json > graph.json.sha256
+
+      - name: Upload to the rolling graph-latest release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: cvce/graph_rag
+        run: |
+          gh release view graph-latest --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create graph-latest --repo "$GITHUB_REPOSITORY" \
+                 --title "Knowledge graph snapshot (rolling)" \
+                 --notes "Auto-published by publish-graph-snapshot.yml — always the current graph_rag/graph.json." \
+                 --latest=false
+          gh release upload graph-latest graph.json graph.json.sha256 \
+            --repo "$GITHUB_REPOSITORY" --clobber

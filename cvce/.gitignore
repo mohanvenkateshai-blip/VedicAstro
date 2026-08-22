@@ -12,3 +12,11 @@ graph_rag/graph-glm.json
 graph_rag/graph-deepseek.json
 .vercel
 .env*
+
+# Baked knowledge-graph DB (B-56 durable fix) — build artifact, regenerated
+# by scripts/build_graph_db.py from the tracked graph_rag/graph.json. Ignored
+# locally (never hand-edited/committed by a developer); the
+# build-and-deploy-cvce.yml workflow force-adds (`git add -f`) its own fresh
+# build as a bot commit, since the live deploy mechanism (Vercel Deploy Hook)
+# builds from git HEAD and needs the file to actually be there.
+knowledge_engine/graph.db

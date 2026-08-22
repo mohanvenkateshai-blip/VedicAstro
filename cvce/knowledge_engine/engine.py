@@ -22,6 +22,7 @@ from .models import GraphVersion, InvalidationReason, KnowledgeValidity
 from .registry import EngineRegistry, RegisteredEngine
 from .research_state import SQLiteKnowledgeResearchState
 from .store.base import KnowledgeStore
+from .store.sqlite_store import SQLiteKnowledgeStore
 from .store.supabase_store import SupabaseKnowledgeStore
 
 logger = logging.getLogger(__name__)
@@ -263,6 +264,13 @@ class KnowledgeEngine:
     def with_supabase(cls, graph_version: str = "newbooks-v1") -> KnowledgeEngine:
         """Convenience constructor for Supabase-backed mode."""
         store = SupabaseKnowledgeStore(graph_version=graph_version)
+        return cls(store=store)
+
+    @classmethod
+    def with_sqlite(cls, db_path: str | Path | None = None) -> KnowledgeEngine:
+        """Convenience constructor for baked-SQLite mode (B-56 durable fix —
+        takes graph reads off the live Supabase request path entirely)."""
+        store = SQLiteKnowledgeStore(db_path=db_path)
         return cls(store=store)
 
     @classmethod
