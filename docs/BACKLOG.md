@@ -42,6 +42,14 @@ removal covers `/admin/knowledge`, `KnowledgeExplorer`, `/api/admin/corpus/*`, a
 `portal/src/lib/corpus.ts`. Shared Supabase credentials and CVCE `_supabase_rest.py` remain
 because active auth/chart/storage and CVCE fallback/research consumers still use them.
 
+**V-20 release evidence 2026-08-22T21:07:38+0100:** Commit `dc55618` is pushed to
+`origin/main` and deployed to Production as Vercel deployment
+`dpl_9WqfQ8LA5roVjig3nGA2PoUhkL4M`. Local build/typecheck passed, 29 portal unit tests
+passed, targeted lint passed, and local plus live HTTP checks confirmed the homepage remains
+200, Admin auth redirects remain intact, and the removed Admin corpus/API/asset routes return
+404. Full-repository lint remains red on pre-existing generated `.vercel/output` bundles; it
+was not treated as a green gate.
+
 ---
 
 ## Open
@@ -67,7 +75,7 @@ because active auth/chart/storage and CVCE fallback/research consumers still use
 | V-10 | `cvce/graph_rag/_original_backup/`, `cvce/knowledge_engine/_original_backup/` — untracked pre-refactor safety copies. | Low | 2026-08-11 | ☑ **Deleted (owner approved, 2026-08-11).** Never tracked, nothing to commit — working tree clean. |
 | V-11 | Life-Event Prediction engine (owner mandate: "did the app predict my marriage/kid/job date") — full design doc exists (`docs/prediction-engine-strategy/LIFE_EVENT_ENGINE_PLAN.md`, 2026-07-18) but zero implementation. Not urgent relative to the items above, but easy to lose track of under the volume of new B-16/Vercel work — keeping it visible here on purpose. | Low | 2026-07-18 (carried over) | ☐ |
 | V-19 | Remove the Learn product from the VedicAstro portal; do not spend effort migrating its Supabase-backed reader. | Medium | 2026-08-22T20:44:12+0100 | ☑ **Implemented:** removed Learn from the main navigation and masthead search; the `/learn` route now returns not-found. No Learn migration or new CVCE catalog endpoints are retained. |
-| V-20 | Remove the diagnostic Admin corpus explorer and its direct Supabase graph queries; preserve shared Supabase services and CVCE fallback consumers. | Medium | 2026-08-22T21:03:30+0100 | ◐ **In progress:** source removal applied; typecheck, build, commit, deployment, and live route verification remain. |
+| V-20 | Remove the diagnostic Admin corpus explorer and its direct Supabase graph queries; preserve shared Supabase services and CVCE fallback consumers. | Medium | 2026-08-22T21:03:30+0100 | ☑ **Implemented and live:** commit `dc55618`, Vercel `dpl_9WqfQ8LA5roVjig3nGA2PoUhkL4M`; Admin corpus source/API/UI and dead Learn corpus asset remnants removed. Supabase credentials and `_supabase_rest.py` intentionally retained for active non-corpus consumers. Full lint remains blocked only by generated `.vercel/output` baseline errors; targeted lint passed. |
 
 ---
 

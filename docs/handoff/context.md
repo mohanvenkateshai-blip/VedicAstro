@@ -63,6 +63,14 @@ storage services. `cvce/knowledge_engine/_supabase_rest.py` remains because
 `SupabaseKnowledgeStore` and parity/research paths still import it; the dirty UTF-8 URL fix
 in that file is owner-owned and remains untouched.
 
+**V-20 Admin corpus removal completed 2026-08-22T21:07:38+0100:** Commit `dc55618` is
+pushed and live in Vercel Production deployment `dpl_9WqfQ8LA5roVjig3nGA2PoUhkL4M`, aliased
+at `https://portal-omega-two-10.vercel.app`. Removed `/admin/knowledge`, the
+`KnowledgeExplorer`, all `/api/admin/corpus/*` routes, `portal/src/lib/corpus.ts`, and the
+unreferenced Learn-era reader/asset proxy. Build, typecheck, 29 unit tests, targeted lint,
+and local/live route checks passed. Full lint still scans stale/generated `.vercel/output`
+bundles and reports baseline errors; those generated artifacts are not source changes.
+
 ---
 
 ## ✅ SESSION 2026-08-11 — READ THIS FIRST (supersedes 2026-07-17 below for current status)
