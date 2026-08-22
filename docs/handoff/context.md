@@ -55,6 +55,14 @@ portal. Do not build or migrate the portal Learn reader. The portal main navigat
 masthead library search were removed, and the `/learn` route now returns not-found. CVCE
 SQLite graph cutover work remains preserved; no Learn catalog/node endpoints were retained.
 
+**Owner directive 2026-08-22T21:03:30+0100:** Remove the diagnostic Admin corpus explorer.
+The `/admin/knowledge` page, `KnowledgeExplorer`, `/api/admin/corpus/*` routes, and
+`portal/src/lib/corpus.ts` are being removed. This does not alter the shared Admin layout,
+chart/prediction paths, CVCE SQLite graph, Panchanga bridge, or active Supabase auth/chart/
+storage services. `cvce/knowledge_engine/_supabase_rest.py` remains because
+`SupabaseKnowledgeStore` and parity/research paths still import it; the dirty UTF-8 URL fix
+in that file is owner-owned and remains untouched.
+
 ---
 
 ## ✅ SESSION 2026-08-11 — READ THIS FIRST (supersedes 2026-07-17 below for current status)

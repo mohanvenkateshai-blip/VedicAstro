@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireSession } from "@/lib/auth/index";
-import { Activity, Network, ShieldCheck } from "lucide-react";
+import { Activity, ShieldCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -52,12 +52,6 @@ export default async function AdminHome() {
           title="System health"
           desc="Live per-subsystem probes from CVCE — engine, knowledge, Supabase, memory."
           icon={<Activity size={18} />}
-        />
-        <AdminCard
-          href="/admin/knowledge"
-          title="Knowledge graph"
-          desc="Explore the corpus, sources, nodes and communities behind the engine."
-          icon={<Network size={18} />}
         />
       </div>
     </div>

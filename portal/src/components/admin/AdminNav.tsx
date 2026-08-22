@@ -3,12 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
-import { LayoutGrid, Activity, Network, ShieldCheck } from "lucide-react";
+import { LayoutGrid, Activity, ShieldCheck } from "lucide-react";
 
 const TABS = [
   { href: "/admin", label: "Console", icon: LayoutGrid, match: (p: string) => p === "/admin" },
   { href: "/admin/health", label: "System health", icon: Activity, match: (p: string) => p.startsWith("/admin/health") },
-  { href: "/admin/knowledge", label: "Knowledge graph", icon: Network, match: (p: string) => p.startsWith("/admin/knowledge") },
 ];
 
 /** Persistent sub-nav for the admin section — switch between admin tools without

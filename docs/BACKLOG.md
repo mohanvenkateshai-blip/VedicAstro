@@ -36,6 +36,12 @@ environment and deployed as `dpl_i1QKUoMbvPvqKofybAvxu4hcWkXB`. Live authenticat
 portal. Do not build or migrate the portal Learn reader. The decision is recorded as V-19
 below and in `docs/handoff/context.md`; the CVCE SQLite graph cutover remains in scope.
 
+**Owner directive 2026-08-22T21:03:30+0100:** Remove the diagnostic Admin corpus explorer
+because it is isolated from the production chart, prediction, auth, and CVCE paths. The
+removal covers `/admin/knowledge`, `KnowledgeExplorer`, `/api/admin/corpus/*`, and
+`portal/src/lib/corpus.ts`. Shared Supabase credentials and CVCE `_supabase_rest.py` remain
+because active auth/chart/storage and CVCE fallback/research consumers still use them.
+
 ---
 
 ## Open
@@ -61,6 +67,7 @@ below and in `docs/handoff/context.md`; the CVCE SQLite graph cutover remains in
 | V-10 | `cvce/graph_rag/_original_backup/`, `cvce/knowledge_engine/_original_backup/` — untracked pre-refactor safety copies. | Low | 2026-08-11 | ☑ **Deleted (owner approved, 2026-08-11).** Never tracked, nothing to commit — working tree clean. |
 | V-11 | Life-Event Prediction engine (owner mandate: "did the app predict my marriage/kid/job date") — full design doc exists (`docs/prediction-engine-strategy/LIFE_EVENT_ENGINE_PLAN.md`, 2026-07-18) but zero implementation. Not urgent relative to the items above, but easy to lose track of under the volume of new B-16/Vercel work — keeping it visible here on purpose. | Low | 2026-07-18 (carried over) | ☐ |
 | V-19 | Remove the Learn product from the VedicAstro portal; do not spend effort migrating its Supabase-backed reader. | Medium | 2026-08-22T20:44:12+0100 | ☑ **Implemented:** removed Learn from the main navigation and masthead search; the `/learn` route now returns not-found. No Learn migration or new CVCE catalog endpoints are retained. |
+| V-20 | Remove the diagnostic Admin corpus explorer and its direct Supabase graph queries; preserve shared Supabase services and CVCE fallback consumers. | Medium | 2026-08-22T21:03:30+0100 | ◐ **In progress:** source removal applied; typecheck, build, commit, deployment, and live route verification remain. |
 
 ---
 
