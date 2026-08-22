@@ -116,7 +116,7 @@ class KnowledgeEngine:
     _research_enumeration_cache_diagnostics: dict[str, Any] | None = field(
         default=None, repr=False
     )
-    _research_enumeration_cache_ttl_seconds: int = 300
+    _research_enumeration_cache_ttl_seconds: int = 60  # Aggressively short TTL to catch real changes (B-56 quota fix: enforced 2026-08-22)
     # Keyset (updated_at, id) cursor from the last row observed in the store
     # during the last successful full or delta scan. Lets a store that
     # supports supports_incremental_pagination() fetch only rows changed
