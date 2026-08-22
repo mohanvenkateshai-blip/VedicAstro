@@ -1,7 +1,12 @@
 # KnowledgeEngine Architecture (Final)
 
-**Date:** 2026-06-29  
-**Status:** Supabase is the default backend. KnowledgeEngine is the single source of truth.
+**Historical baseline date:** 2026-06-29
+**Current production status (2026-08-22):** Vercel CVCE is the live runtime and uses the
+baked SQLite graph (`GRAPH_SOURCE=sqlite`). Supabase remains available for explicitly
+retained fallback/parity/research paths and portal services; it is not the normal production
+graph backend. The former Fly runtime is scaled to zero.
+**Architecture note:** The diagram below is the original Fly/Supabase baseline. For the
+current cutover, read [`docs/handoff/SUPABASE_EGRESS_RETIREMENT_2026-08-22.md`](handoff/SUPABASE_EGRESS_RETIREMENT_2026-08-22.md).
 
 ---
 

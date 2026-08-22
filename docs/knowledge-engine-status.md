@@ -1,5 +1,28 @@
 # KnowledgeEngine — Final Status Report
 
+> **Current production correction — 2026-08-22:** This document began as a June baseline.
+> The current runtime is Vercel CVCE with `GRAPH_SOURCE=sqlite`, not the historical Supabase
+> default described below. The graph contains 26,722 nodes and 38,881 links; the provenance
+> bundle is deployed; the former Fly runtime is scaled to zero; and the portal Learn/Admin
+> corpus surfaces are removed. Read [`docs/handoff/context.md`](handoff/context.md) and the
+> [complete egress retirement record](handoff/SUPABASE_EGRESS_RETIREMENT_2026-08-22.md)
+> before relying on this historical report.
+
+## Current production status — 2026-08-22
+
+| Component | Current state |
+|---|---|
+| CVCE production | Vercel: `https://vedicastro-cvce-vercel.vercel.app` |
+| Graph backend | Baked SQLite; `GRAPH_SOURCE=sqlite` |
+| Live graph evidence | `/graphinfo`: 26,722 nodes, 38,881 links, SQLite database present |
+| Portal | Vercel: `https://portal-omega-two-10.vercel.app` |
+| Fly fallback | App preserved, zero machines after `fly scale count 0 -a vedicastro-cvce --yes` |
+| Supabase | Retained only for active non-cutover consumers/fallback/parity/research; not the normal production graph backend |
+| Observation gate | Keep manual health dispatch for one week; review before deleting the workflow |
+
+The remainder of this file is the **2026-06-29 historical baseline** and should not override
+the current handoff records above.
+
 **🚨 HANDOFF — 2026-06-29** (user switching AI tool/model)  
 Working tree clean. Full takeover pack generated at `docs/handoff/AI_TAKEOVER_PACK.md`.  
 Start there + CONTEXT.md + STATUS.md.

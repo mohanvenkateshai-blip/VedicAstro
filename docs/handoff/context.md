@@ -1,7 +1,11 @@
 # VedicAstro — Session Handoff Context
 
-**Snapshot:** 2026-08-22 (Codex — SQLite graph cutover live; Learn product removed from the portal)
+**Snapshot:** 2026-08-22 (Codex — SQLite graph cutover live; Learn/Admin corpus removed; Fly sunset)
 **Purpose:** Preserve working context across tool/model switches. **Read this file first.**
+
+**Canonical issue record:** [`SUPABASE_EGRESS_RETIREMENT_2026-08-22.md`](SUPABASE_EGRESS_RETIREMENT_2026-08-22.md)
+contains the complete incident timeline, owner decisions, exact commands, deployments, usage
+evidence, confirmed-versus-inferred health-monitor attribution, and the one-week close gate.
 
 ---
 
@@ -72,11 +76,10 @@ and local/live route checks passed. Full lint still scans stale/generated `.verc
 bundles and reports baseline errors; those generated artifacts are not source changes.
 
 **Owner directive 2026-08-22T21:28:16+0100 — sunset Fly monitor:** Vercel is the sole
-production path, so the scheduled GitHub health monitor for the old Fly CVCE has been
-disabled. `workflow_dispatch` remains available during a one-week rollback observation
-window. Fly app `vedicastro-cvce` still has started machine `d8d96956ae5308` in `lhr`; stop
-or scale it to zero next. Do not delete `health-monitor.yml` until the observation window
-passes without a rollback requirement.
+production path, so the scheduled GitHub health monitor for the old Fly CVCE was disabled.
+`workflow_dispatch` remains available during a one-week rollback observation window. Fly app
+`vedicastro-cvce` machine `d8d96956ae5308` in `lhr` was subsequently scaled to zero; do not
+delete `health-monitor.yml` until the observation window passes without a rollback need.
 
 **V-21 shutdown evidence 2026-08-22T21:30:24+0100:** Vercel CVCE `/health` returned 200,
 then `fly scale count 0 -a vedicastro-cvce --yes` removed machine `d8d96956ae5308`. Fly
