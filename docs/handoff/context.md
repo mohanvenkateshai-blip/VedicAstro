@@ -78,6 +78,11 @@ window. Fly app `vedicastro-cvce` still has started machine `d8d96956ae5308` in 
 or scale it to zero next. Do not delete `health-monitor.yml` until the observation window
 passes without a rollback requirement.
 
+**V-21 shutdown evidence 2026-08-22T21:30:24+0100:** Vercel CVCE `/health` returned 200,
+then `fly scale count 0 -a vedicastro-cvce --yes` removed machine `d8d96956ae5308`. Fly
+now reports no image/machine and its old URL timed out. The health workflow is pushed with
+only `workflow_dispatch`; no new scheduled probe occurred after the schedule was disabled.
+
 ---
 
 ## ✅ SESSION 2026-08-11 — READ THIS FIRST (supersedes 2026-07-17 below for current status)

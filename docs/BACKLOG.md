@@ -56,6 +56,12 @@ while manual dispatch remains available for the one-week Vercel observation wind
 shutdown is the next externally verified action; the workflow file will be deleted after
 that observation window if no rollback need appears.
 
+**V-21 shutdown evidence 2026-08-22T21:30:24+0100:** Vercel CVCE `/health` returned 200
+before shutdown. `fly scale count 0 -a vedicastro-cvce --yes` removed machine
+`d8d96956ae5308`; `fly status` now shows no running image/machine, and the old Fly URL no
+longer responds within five seconds. The monitor workflow remains manual-only for the
+one-week observation window.
+
 ---
 
 ## Open
@@ -82,7 +88,7 @@ that observation window if no rollback need appears.
 | V-11 | Life-Event Prediction engine (owner mandate: "did the app predict my marriage/kid/job date") — full design doc exists (`docs/prediction-engine-strategy/LIFE_EVENT_ENGINE_PLAN.md`, 2026-07-18) but zero implementation. Not urgent relative to the items above, but easy to lose track of under the volume of new B-16/Vercel work — keeping it visible here on purpose. | Low | 2026-07-18 (carried over) | ☐ |
 | V-19 | Remove the Learn product from the VedicAstro portal; do not spend effort migrating its Supabase-backed reader. | Medium | 2026-08-22T20:44:12+0100 | ☑ **Implemented:** removed Learn from the main navigation and masthead search; the `/learn` route now returns not-found. No Learn migration or new CVCE catalog endpoints are retained. |
 | V-20 | Remove the diagnostic Admin corpus explorer and its direct Supabase graph queries; preserve shared Supabase services and CVCE fallback consumers. | Medium | 2026-08-22T21:03:30+0100 | ☑ **Implemented and live:** commit `dc55618`, Vercel `dpl_9WqfQ8LA5roVjig3nGA2PoUhkL4M`; Admin corpus source/API/UI and dead Learn corpus asset remnants removed. Supabase credentials and `_supabase_rest.py` intentionally retained for active non-corpus consumers. Full lint remains blocked only by generated `.vercel/output` baseline errors; targeted lint passed. |
-| V-21 | Retire the sunset Fly CVCE deployment and its unattended Supabase-touching health monitor after Vercel became the sole production path. | Medium | 2026-08-22T21:28:16+0100 | ◐ **In progress:** GitHub schedule disabled; manual dispatch retained for rollback observation. Fly machine `d8d96956ae5308` is still started and must be stopped/scaled to zero. Delete the workflow after one stable week. |
+| V-21 | Retire the sunset Fly CVCE deployment and its unattended Supabase-touching health monitor after Vercel became the sole production path. | Medium | 2026-08-22T21:28:16+0100 | ◐ **Observation:** GitHub schedule disabled; manual dispatch retained. Fly machine `d8d96956ae5308` removed and Vercel `/health` verified 200. Keep the workflow for one week, then delete it if rollback is not needed. |
 
 ---
 
