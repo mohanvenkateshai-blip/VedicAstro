@@ -7,7 +7,7 @@
  *   AUTH_GOOGLE_SECRET   — Google OAuth client secret
  *   DATABASE_URL         — Neon Postgres connection string
  *
- * When auth is not configured, exports no-op stubs so Learn and other public
+ * When auth is not configured, exports no-op stubs so public
  * routes work without MissingSecret console errors.
  */
 
@@ -114,7 +114,7 @@ function createNextAuth() {
   });
 }
 
-/** No-op auth exports when OAuth is not configured (anonymous / Learn mode). */
+/** No-op auth exports when OAuth is not configured (anonymous public mode). */
 function createAuthDisabled() {
   const notConfigured = () =>
     Response.json({ error: "Auth not configured" }, { status: 503 });

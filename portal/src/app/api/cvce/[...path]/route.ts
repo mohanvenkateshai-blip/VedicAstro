@@ -63,7 +63,7 @@ const ALLOWED = new Set([
 
 const ALLOWED_GET = new Set(["places", "timezone", "version", "report/facts"]);
 
-// KnowledgeEngine structured endpoints (Learn reader owns chapter tree + node linkage)
+// KnowledgeEngine structured endpoints for server-side graph consumers.
 const KNOWLEDGE_PREFIX = "knowledge/";
 
 // Must stay comfortably under `maxDuration` (60s) — Vercel kills the function
